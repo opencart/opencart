@@ -4,7 +4,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 	public function index() {
 
-		$this->language->load('payment/sagepay_server');
+		$this->load->language('payment/sagepay_server');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -15,7 +15,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -70,22 +70,22 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('payment/sagepay_server', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('payment/sagepay_server', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['sagepay_server_vendor'])) {
 			$data['sagepay_server_vendor'] = $this->request->post['sagepay_server_vendor'];
@@ -181,7 +181,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_server.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/sagepay_server', $data));
 	}
 
 	public function install() {
@@ -202,7 +202,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$sagepay_server_order = $this->model_payment_sagepay_server->getOrder($this->request->get['order_id']);
 
 			if (!empty($sagepay_server_order)) {
-				$this->language->load('payment/sagepay_server');
+				$this->load->language('payment/sagepay_server');
 
 				$sagepay_server_order['total_released'] = $this->model_payment_sagepay_server->getTotalReleased($sagepay_server_order['sagepay_server_order_id']);
 
@@ -236,13 +236,13 @@ class ControllerPaymentSagepayServer extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/sagepay_server_order.tpl', $data);
+				return $this->load->view('payment/sagepay_server_order', $data);
 			}
 		}
 	}
 
 	public function void() {
-		$this->language->load('payment/sagepay_server');
+		$this->load->language('payment/sagepay_server');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -252,7 +252,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$void_response = $this->model_payment_sagepay_server->void($this->request->post['order_id']);
 
-			$this->model_payment_sagepay_server->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_payment_sagepay_server->logger('Void result', $void_response);
 
 			if ($void_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'void', 0.00);
@@ -277,7 +277,7 @@ class ControllerPaymentSagepayServer extends Controller {
 	}
 
 	public function release() {
-		$this->language->load('payment/sagepay_server');
+		$this->load->language('payment/sagepay_server');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -287,7 +287,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$release_response = $this->model_payment_sagepay_server->release($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_server->logger('Release result:\r\n' . print_r($release_response, 1));
+			$this->model_payment_sagepay_server->logger('Release result', $release_response);
 
 			if ($release_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'payment', $this->request->post['amount']);
@@ -323,7 +323,7 @@ class ControllerPaymentSagepayServer extends Controller {
 	}
 
 	public function rebate() {
-		$this->language->load('payment/sagepay_server');
+		$this->load->language('payment/sagepay_server');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
@@ -333,7 +333,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$rebate_response = $this->model_payment_sagepay_server->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_server->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_payment_sagepay_server->logger('Rebate result', $rebate_response);
 
 			if ($rebate_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'rebate', $this->request->post['amount'] * -1);

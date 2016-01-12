@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutLogin extends Controller {
 	public function index() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		$data['text_checkout_account'] = $this->language->get('text_checkout_account');
 		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
@@ -31,15 +31,11 @@ class ControllerCheckoutLogin extends Controller {
 
 		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/login.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/login.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/login.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
 
 	public function save() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		$json = array();
 
@@ -80,9 +76,6 @@ class ControllerCheckoutLogin extends Controller {
 		}
 
 		if (!$json) {
-			// Trigger customer pre login event
-			$this->event->trigger('pre.customer.login');
-
 			// Unset guest
 			unset($this->session->data['guest']);
 
@@ -117,9 +110,6 @@ class ControllerCheckoutLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
-
-			// Trigger customer post login event
-			$this->event->trigger('post.customer.login');
 
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}

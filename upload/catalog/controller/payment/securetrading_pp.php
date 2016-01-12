@@ -4,7 +4,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('localisation/zone');
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -74,18 +74,14 @@ class ControllerPaymentSecureTradingPp extends Controller {
 			$data['text_payment_details'] = $this->language->get('text_payment_details');
 			$data['entry_card_type'] = $this->language->get('entry_card_type');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/securetrading_pp.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/securetrading_pp.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/securetrading_pp.tpl', $data);
-			}
+			return $this->load->view('payment/securetrading_pp', $data);
 		}
 	}
 
 	public function ipn() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/securetrading_pp');
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 
 		$keys = array_keys($this->request->post);
 		sort($keys);

@@ -7,7 +7,7 @@ class ControllerAccountAccount extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/account');
+		$this->load->language('account/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -71,12 +71,8 @@ class ControllerAccountAccount extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/account.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/account.tpl', $data));
-		}
+		
+		$this->response->setOutput($this->load->view('account/account', $data));
 	}
 
 	public function country() {

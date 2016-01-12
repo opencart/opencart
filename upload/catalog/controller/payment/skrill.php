@@ -3,7 +3,7 @@ class ControllerPaymentSkrill extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
-		$this->language->load('payment/skrill');
+		$this->load->language('payment/skrill');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -44,11 +44,7 @@ class ControllerPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/skrill.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/skrill.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/skrill.tpl', $data);
-		}
+		return $this->load->view('payment/skrill', $data);
 	}
 
 	public function callback() {

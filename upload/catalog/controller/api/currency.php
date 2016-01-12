@@ -1,7 +1,7 @@
 <?php
 class ControllerApiCurrency extends Controller {
 	public function index() {
-		$this->language->load('api/currency');
+		$this->load->language('api/currency');
 
 		$json = array();
 
@@ -13,7 +13,7 @@ class ControllerApiCurrency extends Controller {
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['currency']);
 
 			if ($currency_info) {
-				$this->currency->set($this->request->post['currency']);
+				$this->session->data['currency'] = $this->request->post['currency'];
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);

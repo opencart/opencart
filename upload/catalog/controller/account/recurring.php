@@ -7,7 +7,7 @@ class ControllerAccountRecurring extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/recurring');
+		$this->load->language('account/recurring');
 
 		$this->load->model('account/recurring');
 
@@ -99,16 +99,12 @@ class ControllerAccountRecurring extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/recurring_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/recurring_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/recurring_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/recurring_list', $data));
 	}
 
 	public function info() {
 		$this->load->model('account/recurring');
-		$this->language->load('account/recurring');
+		$this->load->language('account/recurring');
 
 		if (isset($this->request->get['recurring_id'])) {
 			$recurring_id = $this->request->get['recurring_id'];
@@ -226,11 +222,7 @@ class ControllerAccountRecurring extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/recurring_info.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/recurring_info.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/account/recurring_info.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('account/recurring_info', $data));
 		} else {
 			$this->response->redirect($this->url->link('account/recurring', '', true));
 		}

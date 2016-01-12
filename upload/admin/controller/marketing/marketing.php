@@ -3,7 +3,7 @@ class ControllerMarketingMarketing extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('marketing/marketing');
+		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerMarketingMarketing extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('marketing/marketing');
+		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -50,14 +50,14 @@ class ControllerMarketingMarketing extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function edit() {
-		$this->language->load('marketing/marketing');
+		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -94,14 +94,14 @@ class ControllerMarketingMarketing extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->language->load('marketing/marketing');
+		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -140,7 +140,7 @@ class ControllerMarketingMarketing extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -217,16 +217,16 @@ class ControllerMarketingMarketing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('marketing/marketing/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('marketing/marketing/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['marketings'] = array();
 
@@ -252,7 +252,7 @@ class ControllerMarketingMarketing extends Controller {
 				'clicks'       => $result['clicks'],
 				'orders'       => $result['orders'],
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
+				'edit'         => $this->url->ssl('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
 			);
 		}
 
@@ -324,9 +324,9 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.name' . $url, true);
-		$data['sort_code'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.code' . $url, true);
-		$data['sort_date_added'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.date_added' . $url, true);
+		$data['sort_name'] = $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.name' . $url, true);
+		$data['sort_code'] = $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.code' . $url, true);
+		$data['sort_date_added'] = $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.date_added' . $url, true);
 
 		$url = '';
 
@@ -354,7 +354,7 @@ class ControllerMarketingMarketing extends Controller {
 		$pagination->total = $marketing_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -371,7 +371,7 @@ class ControllerMarketingMarketing extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/marketing_list.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/marketing_list', $data));
 	}
 
 	protected function getForm() {
@@ -438,21 +438,21 @@ class ControllerMarketingMarketing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['marketing_id'])) {
-			$data['action'] = $this->url->link('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, true);
+			$data['action'] = $this->url->ssl('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('marketing/marketing', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['marketing_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
@@ -490,7 +490,7 @@ class ControllerMarketingMarketing extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/marketing_form.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/marketing_form', $data));
 	}
 
 	protected function validateForm() {

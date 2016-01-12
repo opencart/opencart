@@ -3,32 +3,32 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	private $error;
 
 	public function create() {
-		$data = $this->language->load('openbay/etsy_create');
+		$data = $this->load->language('openbay/etsy_create');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], true);
-		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true);
+		$data['action']   = $this->url->ssl('openbay/etsy_product/create', 'token=' . $this->session->data['token'], true);
+		$data['cancel']   = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'], true);
 		$data['token']    = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy_product/create', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -121,11 +121,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_create', $data));
 	}
 
 	public function createSubmit() {
-		$this->language->load('openbay/etsy_create');
+		$this->load->language('openbay/etsy_create');
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->request->post;
@@ -200,32 +200,32 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function edit() {
-		$data = $this->language->load('openbay/etsy_edit');
+		$data = $this->load->language('openbay/etsy_edit');
 		$this->load->model('openbay/etsy_product');
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data['action']   = $this->url->link('openbay/etsy_product/editSubmit', 'token=' . $this->session->data['token'], true);
-		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true);
+		$data['action']   = $this->url->ssl('openbay/etsy_product/editSubmit', 'token=' . $this->session->data['token'], true);
+		$data['cancel']   = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'], true);
 		$data['token']    = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], true),
+			'href' => $this->url->ssl('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], true),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -254,11 +254,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_edit.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_edit', $data));
 	}
 
 	public function editSubmit() {
-		$this->language->load('openbay/etsy_edit');
+		$this->load->language('openbay/etsy_edit');
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->request->post;
@@ -301,7 +301,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function addImage() {
-		$this->language->load('openbay/etsy_create');
+		$this->load->language('openbay/etsy_create');
 
 		$data = $this->request->post;
 
@@ -354,7 +354,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function addLink() {
-		$this->language->load('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 		$this->load->model('openbay/etsy_product');
 		$this->load->model('catalog/product');
 
@@ -414,7 +414,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function deleteLink() {
-		$this->language->load('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 
 		$data = $this->request->post;
 
@@ -432,9 +432,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function links() {
 		$this->load->model('openbay/etsy_product');
 
-		$data = $this->language->load('openbay/etsy_links');
+		$data = $this->load->language('openbay/etsy_links');
 
-		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true);
+		$data['cancel']   = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'], true);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -442,27 +442,27 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_etsy'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$data['return']       = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true);
-		//$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', true);
+		$data['return']       = $this->url->ssl('openbay/etsy', 'token=' . $this->session->data['token'], true);
+		//$data['edit_url']     = $this->url->ssl('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', true);
 		//$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];
 
@@ -481,7 +481,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $limit;
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('openbay/etsy/itemLinks', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->ssl('openbay/etsy/itemLinks', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($total_linked) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($total_linked - $limit)) ? $total_linked : ((($page - 1) * $limit) + $limit), $total_linked, ceil($total_linked / $limit));
@@ -492,11 +492,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_links.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_links', $data));
 	}
 
 	public function listings() {
-		$data = $this->language->load('openbay/etsy_listings');
+		$data = $this->load->language('openbay/etsy_listings');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -509,21 +509,21 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_etsy'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -596,7 +596,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$pagination->total = $response['data']['count'];
 			$pagination->page = $response['data']['pagination']['effective_page'];
 			$pagination->limit = $response['data']['pagination']['effective_limit'];
-			$pagination->url = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'] . '&page={page}&' . http_build_query($filter), true);
+			$pagination->url = $this->url->ssl('openbay/etsy_product/listings', 'token=' . $this->session->data['token'] . '&page={page}&' . http_build_query($filter), true);
 
 			$data['pagination'] = $pagination->render();
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($response['data']['count']) ? (($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) + 1 : 0, ((($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) > ($response['data']['count'] - $response['data']['pagination']['effective_limit'])) ? $response['data']['count'] : ((($response['data']['pagination']['effective_page'] - 1) * $response['data']['pagination']['effective_limit']) + $response['data']['pagination']['effective_limit']), $response['data']['count'], ceil($response['data']['count'] / $response['data']['pagination']['effective_limit']));
@@ -634,11 +634,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_listings.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_listings', $data));
 	}
 
 	public function endListing() {
-		$this->language->load('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 
 		$data = $this->request->post;
 
@@ -665,7 +665,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function deactivateListing() {
-		$this->language->load('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 
 		$data = $this->request->post;
 
@@ -692,7 +692,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function activateListing() {
-		$this->language->load('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 
 		$data = $this->request->post;
 

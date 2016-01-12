@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$data['text_testmode'] = $this->language->get('text_testmode');
 		$data['button_confirm'] = $this->language->get('button_confirm');
@@ -96,11 +96,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 			$data['custom'] = $this->session->data['order_id'];
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/pp_standard.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/pp_standard.tpl', $data);
-			}
+			return $this->load->view('payment/pp_standard', $data);
 		}
 	}
 

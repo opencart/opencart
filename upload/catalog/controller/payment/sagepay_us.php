@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentSagepayUS extends Controller {
 	public function index() {
-		$this->language->load('payment/sagepay_us');
+		$this->load->language('payment/sagepay_us');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -33,11 +33,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay_us.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/sagepay_us.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/sagepay_us.tpl', $data);
-		}
+		return $this->load->view('payment/sagepay_us', $data);
 	}
 
 	public function send() {

@@ -2,7 +2,7 @@
 class ControllerPaymentSecureTradingWs extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -54,11 +54,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/securetrading_ws.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/securetrading_ws.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/securetrading_ws.tpl', $data);
-			}
+			return $this->load->view('payment/securetrading_ws', $data);
 		}
 	}
 
@@ -66,7 +62,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('payment/securetrading_ws');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -223,7 +219,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	public function threedreturn() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/securetrading_ws');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		// Using unmodified $_POST to access values as per Secure Trading's requirements
 		if (isset($_POST['PaRes']) && !empty($_POST['PaRes']) && isset($_POST['MD']) && !empty($_POST['MD'])) {

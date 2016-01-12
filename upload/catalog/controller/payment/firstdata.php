@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentFirstdata extends Controller {
 	public function index() {
-		$this->language->load('payment/firstdata');
+		$this->load->language('payment/firstdata');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_new_card'] = $this->language->get('text_new_card');
@@ -82,11 +82,7 @@ class ControllerPaymentFirstdata extends Controller {
 			$data['stored_cards'] = array();
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/firstdata.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/firstdata.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/firstdata.tpl', $data);
-		}
+		return $this->load->view('payment/firstdata', $data);
 	}
 
 	public function notify() {
@@ -94,7 +90,7 @@ class ControllerPaymentFirstdata extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$this->language->load('payment/firstdata');
+		$this->load->language('payment/firstdata');
 
 		$message = '';
 
@@ -238,7 +234,7 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	public function fail() {
-		$this->language->load('payment/firstdata');
+		$this->load->language('payment/firstdata');
 
 		if (isset($this->request->post['fail_reason']) && !empty($this->request->post['fail_reason'])) {
 			$this->session->data['error'] = $this->request->post['fail_reason'];

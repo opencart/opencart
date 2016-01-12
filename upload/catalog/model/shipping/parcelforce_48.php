@@ -1,7 +1,7 @@
 <?php
 class ModelShippingParcelforce48 extends Model {
 	function getQuote($address) {
-		$this->language->load('shipping/parcelforce_48');
+		$this->load->language('shipping/parcelforce_48');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('parcelforce_48_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -58,7 +58,7 @@ class ModelShippingParcelforce48 extends Model {
 				}
 
 				if ($this->config->get('parcelforce_48_display_insurance') && (float)$insurance) {
-					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
+					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance, $this->session->data['currency']) . ')';
 				}
 
 				if ($this->config->get('parcelforce_48_display_time')) {
@@ -70,7 +70,7 @@ class ModelShippingParcelforce48 extends Model {
 					'title'        => $text,
 					'cost'         => $cost,
 					'tax_class_id' => $this->config->get('parcelforce_48_tax_class_id'),
-					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('parcelforce_48_tax_class_id'), $this->config->get('config_tax')))
+					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('parcelforce_48_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 				);
 
 				$method_data = array(

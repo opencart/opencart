@@ -14,7 +14,7 @@ class ControllerPaymentCardinity extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token']));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,22 +63,22 @@ class ControllerPaymentCardinity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/cardinity', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('payment/cardinity', 'token=' . $this->session->data['token'])
 		);
 
-		$data['action'] = $this->url->link('payment/cardinity', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('payment/cardinity', 'token=' . $this->session->data['token']);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token']);
 
 		if (isset($this->request->post['cardinity_key'])) {
 			$data['cardinity_key'] = $this->request->post['cardinity_key'];
@@ -140,17 +140,17 @@ class ControllerPaymentCardinity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/cardinity.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/cardinity', $data));
 	}
 
-	public function action() {
+	public function order() {
 		$this->load->language('payment/cardinity');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['token'] = $this->session->data['token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
-		return $this->load->view('payment/cardinity_order.tpl', $data);
+		return $this->load->view('payment/cardinity_order', $data);
 	}
 
 	public function getPayment() {
@@ -234,7 +234,7 @@ class ControllerPaymentCardinity extends Controller {
 			$data['max_refund_amount'] = $this->currency->format($max_refund_amount, $payment->getCurrency(), '1.00000000', false);
 		}
 
-		$this->response->setOutput($this->load->view('payment/cardinity_order_ajax.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/cardinity_order_ajax', $data));
 	}
 
 	public function refund() {

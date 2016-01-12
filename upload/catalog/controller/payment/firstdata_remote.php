@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentFirstdataRemote extends Controller {
 	public function index() {
-		$this->language->load('payment/firstdata_remote');
+		$this->load->language('payment/firstdata_remote');
 		$this->load->model('payment/firstdata_remote');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
@@ -55,17 +55,13 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/firstdata_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/firstdata_remote.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/firstdata_remote.tpl', $data);
-		}
+		return $this->load->view('payment/firstdata_remote', $data);
 	}
 
 	public function send() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/firstdata_remote');
-		$this->language->load('payment/firstdata_remote');
+		$this->load->language('payment/firstdata_remote');
 
 		$address_codes = array(
 			'PPX' => $this->language->get('text_address_ppx'),

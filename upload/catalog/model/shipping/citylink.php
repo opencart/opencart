@@ -1,7 +1,7 @@
 <?php
 class ModelShippingCitylink extends Model {
 	function getQuote($address) {
-		$this->language->load('shipping/citylink');
+		$this->load->language('shipping/citylink');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('citylink_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -41,7 +41,7 @@ class ModelShippingCitylink extends Model {
 					'title'        => $this->language->get('text_title') . '  (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
 					'cost'         => $cost,
 					'tax_class_id' => $this->config->get('citylink_tax_class_id'),
-					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('citylink_tax_class_id'), $this->config->get('config_tax')))
+					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('citylink_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 				);
 
 				$method_data = array(

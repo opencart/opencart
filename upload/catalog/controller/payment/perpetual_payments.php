@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPerpetualPayments extends Controller {
 	public function index() {
-		$this->language->load('payment/perpetual_payments');
+		$this->load->language('payment/perpetual_payments');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -46,15 +46,11 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/perpetual_payments.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/perpetual_payments.tpl', $data);
-		}
+		return $this->load->view('payment/perpetual_payments', $data);
 	}
 
 	public function send() {
-		$this->language->load('payment/perpetual_payments');
+		$this->load->language('payment/perpetual_payments');
 
 		$this->load->model('checkout/order');
 

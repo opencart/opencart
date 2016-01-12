@@ -191,56 +191,21 @@ header h3 small {
 
 /*Visit*/
 .visit {
-	padding: 0 0 50px 0;
+	padding: 50px 0 50px 0;
 	color: #fff;
 	background: #23a1d1;
+}
+.visit p {
+	color: #FFF;
+	margin-bottom: 20px;
+}
+.visit i {
+	font-size: 100px;
 }
 .visit img {
 	height: 71px;
 	margin: 50px auto 25px auto;
 	display: block;
-}
-
-/*Language*/
-.language {
-	padding: 50px;
-	background: #173642;
-	text-align: center;
-}
-@media (min-width: 992px) {
-	.language {
-		padding: 50px 100px;
-		text-align: left;
-	}
-}
-@media (min-width: 992px) {
-	.language img {
-		margin: 0 50px 0 0;
-		float: left;
-	}
-}
-.language h3 {
-	margin: 25px 0 15px 0;
-	color: #fff;
-}
-@media (min-width: 992px) {
-	.language h3 {
-		margin: 0;
-		float: left;
-	}
-}
-.language h3 small {
-	margin: 10px 0 0 0;
-	display: block;
-	color: #fff;
-}
-@media (min-width: 992px) {
-	.language a {
-		float: right;
-	}
-}
-.language .btn {
-	margin: 10px 0 0 0;
 }
 
 /*Modules*/
@@ -264,40 +229,44 @@ header h3 small {
 }
 
 /*Mailing list*/
-.mailing-list {
+.mailing {
 	padding: 50px;
 	background: #23A1D1;
 	text-align: center;
 }
+.mailing i {
+	color: #FFF;
+}
+
 @media (min-width: 992px) {
-	.mailing-list {
+	.mailing {
 		padding: 50px 100px;
 		text-align: left;
 	}
 }
 @media (min-width: 992px) {
-	.mailing-list img {
+	.mailing i {
 		margin: 0 50px 0 0;
 		float: left;
 	}
 }
-.mailing-list h3 {
+.mailing h3 {
 	margin: 25px 0;
 	color: #fff;
 }
 @media (min-width: 992px) {
-	.mailing-list h3 {
+	.mailing h3 {
 		margin: 0;
 		float: left;
 	}
 }
-.mailing-list h3 small {
+.mailing h3 small {
 	margin: 10px 0 0 0;
 	display: block;
 	color: #fff;
 }
 @media (min-width: 992px) {
-	.mailing-list a {
+	.mailing a {
 		float: right;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentPPStandard extends Model {
 	public function getMethod($address, $total) {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('pp_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -43,7 +43,7 @@ class ModelPaymentPPStandard extends Model {
 			'RUB'
 		);
 
-		if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
+		if (!in_array(strtoupper($this->session->data['currency']), $currencies)) {
 			$status = false;
 		}
 

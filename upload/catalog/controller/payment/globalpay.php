@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentGlobalpay extends Controller {
 	public function index() {
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 
@@ -82,11 +82,7 @@ class ControllerPaymentGlobalpay extends Controller {
 
 		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/globalpay/notify';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/globalpay.tpl', $data);
-		}
+		return $this->load->view('payment/globalpay', $data);
 	}
 
 	public function notify() {
@@ -94,7 +90,7 @@ class ControllerPaymentGlobalpay extends Controller {
 
 		$this->model_payment_globalpay->logger(print_r($this->request->post, 1));
 
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 
 		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('globalpay_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
 		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
@@ -257,10 +253,6 @@ class ControllerPaymentGlobalpay extends Controller {
 			}
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_response.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/globalpay_response.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/globalpay_response.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/globalpay_response', $data));
 	}
 }

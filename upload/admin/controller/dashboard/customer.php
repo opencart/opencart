@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardCustomer extends Controller {
 	public function index() {
-		$this->language->load('dashboard/customer');
+		$this->load->language('dashboard/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -38,8 +38,8 @@ class ControllerDashboardCustomer extends Controller {
 			$data['total'] = $customer_total;
 		}
 
-		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
+		$data['customer'] = $this->url->ssl('customer/customer', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/customer.tpl', $data);
+		return $this->load->view('dashboard/customer', $data);
 	}
 }

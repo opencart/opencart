@@ -1,9 +1,7 @@
 <?php
 class ModelLocalisationLanguage extends Model {
 	public function addLanguage($data) {
-		$this->event->trigger('pre.admin.language.add', $data);
-
-		$this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', directory = '" . $this->db->escape($data['directory']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('language');
 
@@ -197,24 +195,16 @@ class ModelLocalisationLanguage extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "recurring_description SET recurring_id = '" . (int)$recurring['recurring_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($recurring['name']));
 		}
 
-		$this->event->trigger('post.admin.language.add', $language_id);
-
 		return $language_id;
 	}
 
 	public function editLanguage($language_id, $data) {
-		$this->event->trigger('pre.admin.language.edit', $data);
-
-		$this->db->query("UPDATE " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', directory = '" . $this->db->escape($data['directory']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "' WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "' WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->cache->delete('language');
-
-		$this->event->trigger('post.admin.language.edit', $language_id);
 	}
 
 	public function deleteLanguage($language_id) {
-		$this->event->trigger('pre.admin.language.delete', $language_id);
-
 		$this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->cache->delete('language');
@@ -276,8 +266,6 @@ class ModelLocalisationLanguage extends Model {
 		$this->cache->delete('weight_class');
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$language_id . "'");
-
-		$this->event->trigger('post.admin.language.delete', $language_id);
 	}
 
 	public function getLanguage($language_id) {
@@ -336,9 +324,6 @@ class ModelLocalisationLanguage extends Model {
 						'language_id' => $result['language_id'],
 						'name'        => $result['name'],
 						'code'        => $result['code'],
-						'locale'      => $result['locale'],
-						'image'       => $result['image'],
-						'directory'   => $result['directory'],
 						'sort_order'  => $result['sort_order'],
 						'status'      => $result['status']
 					);

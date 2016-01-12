@@ -3,7 +3,7 @@ class ControllerLocalisationLocation extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('localisation/location');
+		$this->load->language('localisation/location');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerLocalisationLocation extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('localisation/location');
+		$this->load->language('localisation/location');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,14 +38,14 @@ class ControllerLocalisationLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function edit() {
-		$this->language->load('localisation/location');
+		$this->load->language('localisation/location');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -70,14 +70,14 @@ class ControllerLocalisationLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->language->load('localisation/location');
+		$this->load->language('localisation/location');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -104,7 +104,7 @@ class ControllerLocalisationLocation extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationLocation extends Controller {
 
 		$data['breadcrumbs'][] =   array(
 			'text' =>  $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] =   array(
 			'text' =>  $this->language->get('heading_title'),
-			'href' =>  $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true)
+			'href' =>  $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('localisation/location/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/location/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('localisation/location/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('localisation/location/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['location'] = array();
 
@@ -176,7 +176,7 @@ class ControllerLocalisationLocation extends Controller {
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address'     => $result['address'],
-				'edit'        => $this->url->link('localisation/location/edit', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, true)
+				'edit'        => $this->url->ssl('localisation/location/edit', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, true)
 			);
 		}
 
@@ -226,8 +226,8 @@ class ControllerLocalisationLocation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_address'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=address' . $url, true);
+		$data['sort_name'] = $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_address'] = $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . '&sort=address' . $url, true);
 
 		$url = '';
 
@@ -243,7 +243,7 @@ class ControllerLocalisationLocation extends Controller {
 		$pagination->total = $location_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -256,7 +256,7 @@ class ControllerLocalisationLocation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/location_list.tpl', $data));
+		$this->response->setOutput($this->load->view('localisation/location_list', $data));
 	}
 
 	protected function getForm() {
@@ -326,21 +326,21 @@ class ControllerLocalisationLocation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['location_id'])) {
-			$data['action'] = $this->url->link('localisation/location/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('localisation/location/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('localisation/location/edit', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, true);
+			$data['action'] = $this->url->ssl('localisation/location/edit', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('localisation/location', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['location_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
@@ -430,7 +430,7 @@ class ControllerLocalisationLocation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/location_form.tpl', $data));
+		$this->response->setOutput($this->load->view('localisation/location_form', $data));
 	}
 
 	protected function validateForm() {

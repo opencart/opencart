@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentWebPaymentSoftware extends Controller {
 	public function index() {
-		$this->language->load('payment/web_payment_software');
+		$this->load->language('payment/web_payment_software');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -34,11 +34,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/web_payment_software.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/web_payment_software.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/web_payment_software.tpl', $data);
-		}
+		return $this->load->view('payment/web_payment_software', $data);
 	}
 
 	public function send() {

@@ -7,7 +7,7 @@ class ControllerAccountTransaction extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/transaction');
+		$this->load->language('account/transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -78,7 +78,7 @@ class ControllerAccountTransaction extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$data['total'] = $this->currency->format($this->customer->getBalance());
+		$data['total'] = $this->currency->format($this->customer->getBalance(), $this->session->data['currency']);
 
 		$data['continue'] = $this->url->link('account/account', '', true);
 
@@ -89,10 +89,6 @@ class ControllerAccountTransaction extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/transaction.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/transaction.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/transaction.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/transaction', $data));
 	}
 }

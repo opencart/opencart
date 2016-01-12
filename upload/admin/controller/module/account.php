@@ -3,7 +3,7 @@ class ControllerModuleAccount extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/account');
+		$this->load->language('module/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerModuleAccount extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -38,22 +38,22 @@ class ControllerModuleAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/account', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('module/account', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/account', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('module/account', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['account_status'])) {
 			$data['account_status'] = $this->request->post['account_status'];
@@ -65,7 +65,7 @@ class ControllerModuleAccount extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/account.tpl', $data));
+		$this->response->setOutput($this->load->view('module/account', $data));
 	}
 
 	protected function validate() {

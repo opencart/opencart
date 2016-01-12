@@ -1,7 +1,7 @@
 <?php
 class ControllerAccountSuccess extends Controller {
 	public function index() {
-		$this->language->load('account/success');
+		$this->load->language('account/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -49,10 +49,6 @@ class ControllerAccountSuccess extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 }

@@ -7,7 +7,7 @@ class ControllerAffiliateTracking extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
-		$this->language->load('affiliate/tracking');
+		$this->load->language('affiliate/tracking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -51,11 +51,7 @@ class ControllerAffiliateTracking extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/tracking.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/tracking.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/tracking.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/tracking', $data));
 	}
 
 	public function autocomplete() {

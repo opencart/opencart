@@ -10,6 +10,8 @@ class ModelLocalisationLengthClass extends Model {
 		}
 
 		$this->cache->delete('length_class');
+		
+		return $length_class_id;
 	}
 
 	public function editLengthClass($length_class_id, $data) {

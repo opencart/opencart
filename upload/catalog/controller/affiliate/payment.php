@@ -9,7 +9,7 @@ class ControllerAffiliatePayment extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
-		$this->language->load('affiliate/payment');
+		$this->load->language('affiliate/payment');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -157,10 +157,6 @@ class ControllerAffiliatePayment extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/payment.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/payment.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/payment.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/payment', $data));
 	}
 }

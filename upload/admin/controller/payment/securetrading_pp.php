@@ -6,7 +6,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/geo_zone');
 		$this->load->model('localisation/order_status');
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->request->post['securetrading_pp_site_reference'] = trim($this->request->post['securetrading_pp_site_reference']);
@@ -15,7 +15,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		if (isset($this->request->post['securetrading_pp_site_reference'])) {
@@ -237,17 +237,17 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/securetrading_pp', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('payment/securetrading_pp', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -272,15 +272,15 @@ class ControllerPaymentSecureTradingPp extends Controller {
 			'100' => $this->language->get('text_pending_settled'),
 		);
 
-		$data['action'] = $this->url->link('payment/securetrading_pp', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('payment/securetrading_pp', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/securetrading_pp.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/securetrading_pp', $data));
 	}
 
 	public function install() {
@@ -301,7 +301,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 			$securetrading_pp_order = $this->model_payment_securetrading_pp->getOrder($this->request->get['order_id']);
 
 			if (!empty($securetrading_pp_order)) {
-				$this->language->load('payment/securetrading_pp');
+				$this->load->language('payment/securetrading_pp');
 
 				$securetrading_pp_order['total_released'] = $this->model_payment_securetrading_pp->getTotalReleased($securetrading_pp_order['securetrading_pp_order_id']);
 
@@ -335,15 +335,13 @@ class ControllerPaymentSecureTradingPp extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				$this->template = 'payment/securetrading_pp_order.tpl';
-
-				$this->response->setOutput($this->render());
+				return $this->load->view('payment/securetrading_pp_order', $data);
 			}
 		}
 	}
 
 	public function void() {
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -393,7 +391,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 	}
 
 	public function release() {
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 		$json = array();
 
 		$amount = number_format($this->request->post['amount'], 2);
@@ -456,7 +454,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 	}
 
 	public function rebate() {
-		$this->language->load('payment/securetrading_pp');
+		$this->load->language('payment/securetrading_pp');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

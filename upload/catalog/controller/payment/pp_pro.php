@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPPro extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_pro');
+		$this->load->language('payment/pp_pro');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_start_date'] = $this->language->get('text_start_date');
@@ -81,11 +81,7 @@ class ControllerPaymentPPPro extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_pro.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/pp_pro.tpl', $data);
-		}
+		return $this->load->view('payment/pp_pro', $data);
 	}
 
 	public function send() {

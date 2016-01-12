@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardOnline extends Controller {
 	public function index() {
-		$this->language->load('dashboard/online');
+		$this->load->language('dashboard/online');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -27,8 +27,8 @@ class ControllerDashboardOnline extends Controller {
 			$data['total'] = $online_total;
 		}
 
-		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
+		$data['online'] = $this->url->ssl('report/customer_online', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/online.tpl', $data);
+		return $this->load->view('dashboard/online', $data);
 	}
 }

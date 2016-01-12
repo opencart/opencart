@@ -1302,6 +1302,7 @@ CREATE TABLE `oc_custom_field` (
   `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
+  `validation` varchar(255) NOT NULL,
   `location` varchar(7) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
@@ -1374,7 +1375,7 @@ CREATE TABLE `oc_custom_field_value_description` (
 DROP TABLE IF EXISTS `oc_download`;
 CREATE TABLE `oc_download` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(128) NOT NULL,
+  `filename` varchar(160) NOT NULL,
   `mask` varchar(128) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_id`)
@@ -1414,7 +1415,7 @@ CREATE TABLE `oc_event` (
 --
 
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
-(1, 'voucher', 'post.order.history.add', 'total/voucher/send');
+(1, 'voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'total/voucher/send');
 
 -- --------------------------------------------------------
 
@@ -1453,7 +1454,8 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (16, 'total', 'voucher'),
 (17, 'payment', 'free_checkout'),
 (18, 'module', 'featured'),
-(19, 'module', 'slideshow');
+(19, 'module', 'slideshow'),
+(20, 'theme', 'theme_default');
 
 -- --------------------------------------------------------
 
@@ -1650,7 +1652,7 @@ CREATE TABLE `oc_language` (
 --
 
 INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+(1, 'English', 'en-gb', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -3139,27 +3141,20 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (255, 0, 'config', 'config_ftp_username', '', 0),
 (254, 0, 'config', 'config_ftp_port', '21', 0),
 (253, 0, 'config', 'config_ftp_hostname', '', 0),
-(252, 0, 'config', 'config_image_location_height', '50', 0),
-(251, 0, 'config', 'config_image_location_width', '268', 0),
-(250, 0, 'config', 'config_image_cart_height', '47', 0),
-(249, 0, 'config', 'config_image_cart_width', '47', 0),
-(248, 0, 'config', 'config_image_wishlist_height', '47', 0),
 (181, 0, 'config', 'config_meta_title', 'Your Store', 0),
 (182, 0, 'config', 'config_meta_description', 'My Store', 0),
 (183, 0, 'config', 'config_meta_keyword', '', 0),
-(184, 0, 'config', 'config_template', 'default', 0),
+(184, 0, 'config', 'config_theme', 'theme_default', 0),
 (185, 0, 'config', 'config_layout_id', '4', 0),
 (186, 0, 'config', 'config_country_id', '222', 0),
 (187, 0, 'config', 'config_zone_id', '3563', 0),
-(188, 0, 'config', 'config_language', 'en', 0),
-(189, 0, 'config', 'config_admin_language', 'en', 0),
+(188, 0, 'config', 'config_language', 'en-gb', 0),
+(189, 0, 'config', 'config_admin_language', 'en-gb', 0),
 (190, 0, 'config', 'config_currency', 'USD', 0),
 (191, 0, 'config', 'config_currency_auto', '1', 0),
 (192, 0, 'config', 'config_length_class_id', '1', 0),
 (193, 0, 'config', 'config_weight_class_id', '1', 0),
 (194, 0, 'config', 'config_product_count', '1', 0),
-(195, 0, 'config', 'config_product_limit', '15', 0),
-(196, 0, 'config', 'config_product_description_length', '100', 0),
 (197, 0, 'config', 'config_limit_admin', '20', 0),
 (198, 0, 'config', 'config_review_status', '1', 0),
 (199, 0, 'config', 'config_review_guest', '1', 0),
@@ -3196,21 +3191,6 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (230, 0, 'config', 'config_return_status_id', '2', 0),
 (231, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
 (232, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
-(233, 0, 'config', 'config_image_category_width', '80', 0),
-(234, 0, 'config', 'config_image_category_height', '80', 0),
-(235, 0, 'config', 'config_image_thumb_width', '228', 0),
-(236, 0, 'config', 'config_image_thumb_height', '228', 0),
-(237, 0, 'config', 'config_image_popup_width', '500', 0),
-(238, 0, 'config', 'config_image_popup_height', '500', 0),
-(239, 0, 'config', 'config_image_product_width', '228', 0),
-(240, 0, 'config', 'config_image_product_height', '228', 0),
-(241, 0, 'config', 'config_image_additional_width', '74', 0),
-(242, 0, 'config', 'config_image_additional_height', '74', 0),
-(243, 0, 'config', 'config_image_related_width', '80', 0),
-(244, 0, 'config', 'config_image_related_height', '80', 0),
-(245, 0, 'config', 'config_image_compare_width', '90', 0),
-(246, 0, 'config', 'config_image_compare_height', '90', 0),
-(247, 0, 'config', 'config_image_wishlist_width', '47', 0),
 (180, 0, 'config', 'config_comment', '', 0),
 (179, 0, 'config', 'config_open', '', 0),
 (178, 0, 'config', 'config_image', '', 0),
@@ -3242,7 +3222,31 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (286, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
 (287, 0, 'config', 'config_captcha', 'basic_captcha', 0),
 (288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
-(289, 0, 'config', 'config_login_attempts', '5', 0);
+(289, 0, 'config', 'config_login_attempts', '5', 0),
+(290, 0, 'theme_default', 'theme_default_product_limit', '15', 0),
+(291, 0, 'theme_default', 'theme_default_product_description_length', '100', 0),
+(292, 0, 'theme_default', 'theme_default_image_thumb_width', '228', 0),
+(293, 0, 'theme_default', 'theme_default_image_thumb_height', '228', 0),
+(294, 0, 'theme_default', 'theme_default_image_popup_width', '500', 0),
+(295, 0, 'theme_default', 'theme_default_image_popup_height', '500', 0),
+(296, 0, 'theme_default', 'theme_default_image_category_width', '80', 0),
+(297, 0, 'theme_default', 'theme_default_image_category_height', '80', 0),
+(298, 0, 'theme_default', 'theme_default_image_product_width', '228', 0),
+(299, 0, 'theme_default', 'theme_default_image_product_height', '228', 0),
+(300, 0, 'theme_default', 'theme_default_image_additional_width', '74', 0),
+(301, 0, 'theme_default', 'theme_default_image_additional_height', '74', 0),
+(302, 0, 'theme_default', 'theme_default_image_related_width', '80', 0),
+(303, 0, 'theme_default', 'theme_default_image_related_height', '80', 0),
+(304, 0, 'theme_default', 'theme_default_image_compare_width', '90', 0),
+(305, 0, 'theme_default', 'theme_default_image_compare_height', '90', 0),
+(306, 0, 'theme_default', 'theme_default_image_wishlist_width', '47', 0),
+(307, 0, 'theme_default', 'theme_default_image_wishlist_height', '47', 0),
+(308, 0, 'theme_default', 'theme_default_image_cart_height', '47', 0),
+(309, 0, 'theme_default', 'theme_default_image_cart_width', '47', 0),
+(310, 0, 'theme_default', 'theme_default_image_location_height', '50', 0),
+(311, 0, 'theme_default', 'theme_default_image_location_width', '268', 0),
+(312, 0, 'theme_default', 'theme_default_directory', 'default', 0),
+(313, 0, 'theme_default', 'theme_default_status', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -6326,7 +6330,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (2734, 176, 'Chita', 'CI', 1),
 (2735, 176, 'Dudinka', 'DU', 1),
 (2736, 176, 'Elista', 'EL', 1),
-(2737, 176, 'Gomo-Altaysk', 'GO', 1),
 (2738, 176, 'Gorno-Altaysk', 'GA', 1),
 (2739, 176, 'Groznyy', 'GR', 1),
 (2740, 176, 'Irkutsk', 'IR', 1),

@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleAccount extends Controller {
 	public function index() {
-		$this->language->load('module/account');
+		$this->load->language('module/account');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -40,10 +40,6 @@ class ControllerModuleAccount extends Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/account.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/account.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/account.tpl', $data);
-		}
+		return $this->load->view('module/account', $data);
 	}
 }

@@ -3,7 +3,7 @@
 class ControllerPaymentWorldpay extends Controller {
 
 	public function index() {
-		$this->language->load('payment/worldpay');
+		$this->load->language('payment/worldpay');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -47,15 +47,11 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/worldpay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/worldpay.tpl', $data);
-		}
+		return $this->load->view('payment/worldpay', $data);
 	}
 
 	public function send() {
-		$this->language->load('payment/worldpay');
+		$this->load->language('payment/worldpay');
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('payment/worldpay');
@@ -138,7 +134,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function deleteCard() {
-		$this->language->load('payment/worldpay');
+		$this->load->language('payment/worldpay');
 		$this->load->model('payment/worldpay');
 
 		if (isset($this->request->post['token'])) {

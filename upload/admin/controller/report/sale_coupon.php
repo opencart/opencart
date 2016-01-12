@@ -1,7 +1,7 @@
 <?php
 class ControllerReportSaleCoupon extends Controller {
 	public function index() {
-		$this->language->load('report/sale_coupon');
+		$this->load->language('report/sale_coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -41,12 +41,12 @@ class ControllerReportSaleCoupon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('report/sale_coupon', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/coupon');
@@ -70,7 +70,7 @@ class ControllerReportSaleCoupon extends Controller {
 				'code'   => $result['code'],
 				'orders' => $result['orders'],
 				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'   => $this->url->link('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, true)
+				'edit'   => $this->url->ssl('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, true)
 			);
 		}
 
@@ -108,7 +108,7 @@ class ControllerReportSaleCoupon extends Controller {
 		$pagination->total = $coupon_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/sale_coupon', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -121,6 +121,6 @@ class ControllerReportSaleCoupon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/sale_coupon.tpl', $data));
+		$this->response->setOutput($this->load->view('report/sale_coupon', $data));
 	}
 }

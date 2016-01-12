@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleAffiliate extends Controller {
 	public function index() {
-		$this->language->load('module/affiliate');
+		$this->load->language('module/affiliate');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -28,10 +28,6 @@ class ControllerModuleAffiliate extends Controller {
 		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
 		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/affiliate.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/affiliate.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/affiliate.tpl', $data);
-		}
+		return $this->load->view('module/affiliate', $data);
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleFeatured extends Controller {
 	public function index($setting) {
-		$this->language->load('module/featured');
+		$this->load->language('module/featured');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -35,19 +35,19 @@ class ControllerModuleFeatured extends Controller {
 					}
 
 					if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-						$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+						$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					} else {
 						$price = false;
 					}
 
 					if ((float)$product_info['special']) {
-						$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+						$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					} else {
 						$special = false;
 					}
 
 					if ($this->config->get('config_tax')) {
-						$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
+						$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
 					} else {
 						$tax = false;
 					}
@@ -62,7 +62,7 @@ class ControllerModuleFeatured extends Controller {
 						'product_id'  => $product_info['product_id'],
 						'thumb'       => $image,
 						'name'        => $product_info['name'],
-						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
 						'price'       => $price,
 						'special'     => $special,
 						'tax'         => $tax,
@@ -74,11 +74,7 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if ($data['products']) {
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/featured.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/featured.tpl', $data);
-			}
+			return $this->load->view('module/featured', $data);
 		}
 	}
 }

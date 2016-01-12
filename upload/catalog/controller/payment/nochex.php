@@ -3,7 +3,7 @@
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
 class ControllerPaymentNochex extends Controller {
 	public function index() {
-		$this->language->load('payment/nochex');
+		$this->load->language('payment/nochex');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -66,15 +66,11 @@ class ControllerPaymentNochex extends Controller {
 		$data['declined_url'] = $this->url->link('payment/nochex/callback', 'method=decline', true);
 		$data['callback_url'] = $this->url->link('payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/nochex.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/nochex.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/nochex.tpl', $data);
-		}
+		return $this->load->view('payment/nochex', $data);
 	}
 
 	public function callback() {
-		$this->language->load('payment/nochex');
+		$this->load->language('payment/nochex');
 
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');

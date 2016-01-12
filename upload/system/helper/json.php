@@ -121,7 +121,7 @@ if (!function_exists('json_decode')) {
 
 		$json = preg_replace('~([\s\(,>])(-?)0~', '$1$2', $json);
 
-		$json = strtr($json, $m2s);
+		$json = strtr($json, array_map('stripcslashes', $m2s));
 
 		$function = @create_function('', "return {$json};");
 		$return = ($function) ? $function() : null;

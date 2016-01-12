@@ -3,7 +3,7 @@ class ControllerSaleOrder extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -23,7 +23,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -129,17 +129,17 @@ class ControllerSaleOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], true);
-		$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'], true);
-		$data['add'] = $this->url->link('sale/order/add', 'token=' . $this->session->data['token'], true);
+		$data['invoice'] = $this->url->ssl('sale/order/invoice', 'token=' . $this->session->data['token'], true);
+		$data['shipping'] = $this->url->ssl('sale/order/shipping', 'token=' . $this->session->data['token'], true);
+		$data['add'] = $this->url->ssl('sale/order/add', 'token=' . $this->session->data['token'], true);
 
 		$data['orders'] = array();
 
@@ -169,8 +169,8 @@ class ControllerSaleOrder extends Controller {
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_code' => $result['shipping_code'],
-				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
-				'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
+				'view'          => $this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
+				'edit'          => $this->url->ssl('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
 			);
 		}
 
@@ -251,12 +251,12 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, true);
-		$data['sort_customer'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
-		$data['sort_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, true);
-		$data['sort_date_added'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, true);
-		$data['sort_date_modified'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_modified' . $url, true);
+		$data['sort_order'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, true);
+		$data['sort_customer'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
+		$data['sort_status'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_total'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, true);
+		$data['sort_date_added'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, true);
+		$data['sort_date_modified'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_modified' . $url, true);
 
 		$url = '';
 
@@ -296,7 +296,7 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -316,7 +316,7 @@ class ControllerSaleOrder extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['store'] = HTTPS_CATALOG;
+		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
 		// API login
 		$this->load->model('user/api');
@@ -337,7 +337,7 @@ class ControllerSaleOrder extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/order_list.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_list', $data));
 	}
 
 	public function getForm() {
@@ -464,15 +464,15 @@ class ControllerSaleOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
@@ -481,6 +481,7 @@ class ControllerSaleOrder extends Controller {
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
+			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
 			$data['customer'] = $order_info['customer'];
 			$data['customer_id'] = $order_info['customer_id'];
@@ -569,6 +570,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
+			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			
 			$data['customer'] = '';
 			$data['customer_id'] = '';
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
@@ -630,7 +633,6 @@ class ControllerSaleOrder extends Controller {
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default'),
-			'href'     => HTTP_CATALOG
 		);
 
 		$results = $this->model_setting_store->getStores();
@@ -638,8 +640,7 @@ class ControllerSaleOrder extends Controller {
 		foreach ($results as $result) {
 			$data['stores'][] = array(
 				'store_id' => $result['store_id'],
-				'name'     => $result['name'],
-				'href'     => $result['url']
+				'name'     => $result['name']
 			);
 		}
 
@@ -709,7 +710,7 @@ class ControllerSaleOrder extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_form', $data));
 	}
 
 	public function info() {
@@ -724,7 +725,7 @@ class ControllerSaleOrder extends Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->language->load('sale/order');
+			$this->load->language('sale/order');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -834,18 +835,18 @@ class ControllerSaleOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true)
+				'href' => $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url, true)
 			);
 
-			$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
-			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
-			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
-			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
+			$data['shipping'] = $this->url->ssl('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
+			$data['invoice'] = $this->url->ssl('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
+			$data['edit'] = $this->url->ssl('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
+			$data['cancel'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . $url, true);
 
 			$data['order_id'] = $this->request->get['order_id'];
 
@@ -864,7 +865,7 @@ class ControllerSaleOrder extends Controller {
 			$data['lastname'] = $order_info['lastname'];
 
 			if ($order_info['customer_id']) {
-				$data['customer'] = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], true);
+				$data['customer'] = $this->url->ssl('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], true);
 			} else {
 				$data['customer'] = '';
 			}
@@ -982,7 +983,7 @@ class ControllerSaleOrder extends Controller {
 								'name'  => $option['name'],
 								'value' => $upload_info['name'],
 								'type'  => $option['type'],
-								'href'  => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $upload_info['code'], true)
+								'href'  => $this->url->ssl('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $upload_info['code'], true)
 							);
 						}
 					}
@@ -997,7 +998,7 @@ class ControllerSaleOrder extends Controller {
 					'quantity'		   => $product['quantity'],
 					'price'    		   => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    		   => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'     		   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], true)
+					'href'     		   => $this->url->ssl('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], true)
 				);
 			}
 
@@ -1009,7 +1010,7 @@ class ControllerSaleOrder extends Controller {
 				$data['vouchers'][] = array(
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], true)
+					'href'        => $this->url->ssl('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], true)
 				);
 			}
 
@@ -1020,7 +1021,7 @@ class ControllerSaleOrder extends Controller {
 			foreach ($totals as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
 
@@ -1036,7 +1037,7 @@ class ControllerSaleOrder extends Controller {
 			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 
 			if ($order_info['affiliate_id']) {
-				$data['affiliate'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], true);
+				$data['affiliate'] = $this->url->ssl('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], true);
 			} else {
 				$data['affiliate'] = '';
 			}
@@ -1240,7 +1241,7 @@ class ControllerSaleOrder extends Controller {
 			$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
 
 			if ($content) {
-				$this->language->load('payment/' . $order_info['payment_code']);
+				$this->load->language('payment/' . $order_info['payment_code']);
 
 				$data['tabs'][] = array(
 					'code'    => $order_info['payment_code'],
@@ -1253,7 +1254,7 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
-					$this->language->load('fraud/' . $extension);
+					$this->load->language('fraud/' . $extension);
 
 					$content = $this->load->controller('fraud/' . $extension . '/order');
 
@@ -1286,9 +1287,9 @@ class ControllerSaleOrder extends Controller {
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
-			$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));
+			$this->response->setOutput($this->load->view('sale/order_info', $data));
 		} else {
-			$this->language->load('error/not_found');
+			$this->load->language('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1300,24 +1301,24 @@ class ControllerSaleOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->ssl('error/not_found', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 
 	public function createInvoiceNo() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$json = array();
 
@@ -1346,7 +1347,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function addReward() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$json = array();
 
@@ -1381,7 +1382,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function removeReward() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$json = array();
 
@@ -1412,7 +1413,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function addCommission() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$json = array();
 
@@ -1447,7 +1448,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function removeCommission() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$json = array();
 
@@ -1478,7 +1479,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function history() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -1514,17 +1515,17 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('sale/order/history', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&page={page}', true);
+		$pagination->url = $this->url->ssl('sale/order/history', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/order_history.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_history', $data));
 	}
 
 	public function invoice() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$data['title'] = $this->language->get('text_invoice');
 
@@ -1723,39 +1724,39 @@ class ControllerSaleOrder extends Controller {
 				foreach ($totals as $total) {
 					$total_data[] = array(
 						'title' => $total['title'],
-						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
 					);
 				}
 
 				$data['orders'][] = array(
-					'order_id'	         => $order_id,
-					'invoice_no'         => $invoice_no,
-					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'         => $order_info['store_name'],
-					'store_url'          => rtrim($order_info['store_url'], '/'),
-					'store_address'      => nl2br($store_address),
-					'store_email'        => $store_email,
-					'store_telephone'    => $store_telephone,
-					'store_fax'          => $store_fax,
-					'email'              => $order_info['email'],
-					'telephone'          => $order_info['telephone'],
-					'shipping_address'   => $shipping_address,
-					'shipping_method'    => $order_info['shipping_method'],
-					'payment_address'    => $payment_address,
-					'payment_method'     => $order_info['payment_method'],
-					'product'            => $product_data,
-					'voucher'            => $voucher_data,
-					'total'              => $total_data,
-					'comment'            => nl2br($order_info['comment'])
+					'order_id'	       => $order_id,
+					'invoice_no'       => $invoice_no,
+					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+					'store_name'       => $order_info['store_name'],
+					'store_url'        => rtrim($order_info['store_url'], '/'),
+					'store_address'    => nl2br($store_address),
+					'store_email'      => $store_email,
+					'store_telephone'  => $store_telephone,
+					'store_fax'        => $store_fax,
+					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
+					'shipping_address' => $shipping_address,
+					'shipping_method'  => $order_info['shipping_method'],
+					'payment_address'  => $payment_address,
+					'payment_method'   => $order_info['payment_method'],
+					'product'          => $product_data,
+					'voucher'          => $voucher_data,
+					'total'            => $total_data,
+					'comment'          => nl2br($order_info['comment'])
 				);
 			}
 		}
 
-		$this->response->setOutput($this->load->view('sale/order_invoice.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_invoice', $data));
 	}
 
 	public function shipping() {
-		$this->language->load('sale/order');
+		$this->load->language('sale/order');
 
 		$data['title'] = $this->language->get('text_shipping');
 
@@ -1954,6 +1955,6 @@ class ControllerSaleOrder extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
 }

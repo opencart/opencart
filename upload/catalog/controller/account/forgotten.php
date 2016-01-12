@@ -7,14 +7,14 @@ class ControllerAccountForgotten extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
-		$this->language->load('account/forgotten');
+		$this->load->language('account/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->language->load('mail/forgotten');
+			$this->load->language('mail/forgotten');
 
 			$password = substr(sha1(uniqid(mt_rand(), true)), 0, 10);
 
@@ -105,11 +105,7 @@ class ControllerAccountForgotten extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/forgotten.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/forgotten.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/forgotten.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/forgotten', $data));
 	}
 
 	protected function validate() {

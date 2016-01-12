@@ -9,7 +9,7 @@ class ControllerAccountPassword extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/password');
+		$this->load->language('account/password');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -95,11 +95,7 @@ class ControllerAccountPassword extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/password.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/password.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/password.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/password', $data));
 	}
 
 	protected function validate() {

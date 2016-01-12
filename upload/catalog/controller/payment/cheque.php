@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentCheque extends Controller {
 	public function index() {
-		$this->language->load('payment/cheque');
+		$this->load->language('payment/cheque');
 
 		$data['text_instruction'] = $this->language->get('text_instruction');
 		$data['text_payable'] = $this->language->get('text_payable');
@@ -16,16 +16,12 @@ class ControllerPaymentCheque extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cheque.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/cheque.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/cheque.tpl', $data);
-		}
+		return $this->load->view('payment/cheque', $data);
 	}
 
 	public function confirm() {
 		if ($this->session->data['payment_method']['code'] == 'cheque') {
-			$this->language->load('payment/cheque');
+			$this->load->language('payment/cheque');
 
 			$this->load->model('checkout/order');
 

@@ -1,7 +1,7 @@
 <?php
 class ControllerReportMarketing extends Controller {
 	public function index() {
-		$this->language->load('report/marketing');
+		$this->load->language('report/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -51,12 +51,12 @@ class ControllerReportMarketing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/marketing', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('report/marketing', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/marketing');
@@ -80,7 +80,7 @@ class ControllerReportMarketing extends Controller {
 
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
+				'href' => $this->url->ssl('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
 			);
 
 			$data['marketings'][] = array(
@@ -137,7 +137,7 @@ class ControllerReportMarketing extends Controller {
 		$pagination->total = $marketing_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/marketing', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/marketing', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -151,6 +151,6 @@ class ControllerReportMarketing extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/marketing.tpl', $data));
+		$this->response->setOutput($this->load->view('report/marketing', $data));
 	}
 }

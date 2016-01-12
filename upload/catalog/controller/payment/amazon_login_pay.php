@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentAmazonLoginPay extends Controller {
 	public function address() {
-		$this->language->load('payment/amazon_login_pay');
+		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('payment/amazon_login_pay');
@@ -13,7 +13,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'))));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -52,15 +52,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_address.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_address.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_address.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_address', $data));
 	}
 
 	public function paymentMethod() {
-		$this->language->load('payment/amazon_login_pay');
+		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('payment/amazon_login_pay');
@@ -72,7 +68,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'))));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -103,16 +99,12 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_payment.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_payment.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_payment.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_payment', $data));
 	}
 
 	public function confirm() {
-		$this->language->load('payment/amazon_login_pay');
-		$this->language->load('checkout/checkout');
+		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('checkout/checkout');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
@@ -125,7 +117,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'))));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
@@ -175,10 +167,18 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', true));
 		}
 
-		$total_data = array();
-		$total = 0;
+		// Totals
+		$totals = array();
 		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		$old_taxes = $taxes;
 		$lpa_tax = array();
 
@@ -192,6 +192,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			} else {
 				$code = $value['key'];
 			}
+			
 			$sort_order[$key] = $this->config->get($code . '_sort_order');
 		}
 
@@ -203,13 +204,15 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			} else {
 				$code = $result['key'];
 			}
+			
 			if ($this->config->get($code . '_status')) {
 				$this->load->model('total/' . $code);
+				
+				// We have to put the totals in an array so that they pass by reference.
+				$this->{'model_total_' . $code}->getTotal($total_data);
 
-				$this->{'model_total_' . $code}->getTotal($total_data, $total, $taxes);
-
-				if (!empty($total_data[count($total_data) - 1]) && !isset($total_data[count($total_data) - 1]['code'])) {
-					$total_data[count($total_data) - 1]['code'] = $code;
+				if (!empty($totals[count($totals) - 1]) && !isset($totals[count($totals) - 1]['code'])) {
+					$totals[count($totals) - 1]['code'] = $code;
 				}
 
 				$tax_difference = 0;
@@ -232,7 +235,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$sort_order = array();
 
-		foreach ($total_data as $key => $value) {
+		foreach ($totals as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 
 			if (isset($lpa_tax[$value['code']])) {
@@ -242,7 +245,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 		}
 
-		array_multisort($sort_order, SORT_ASC, $total_data);
+		array_multisort($sort_order, SORT_ASC, $totals);
 
 		$order_data = array();
 
@@ -400,11 +403,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		$order_data['language_id'] = $this->config->get('config_language_id');
-		$order_data['currency_id'] = $this->currency->getId();
-		$order_data['currency_code'] = $this->currency->getCode();
-		$order_data['currency'] = $this->currency->getCode();
-		$order_data['currency_value'] = $this->currency->getValue($this->currency->getCode());
-		$order_data['value'] = $this->currency->getValue($this->currency->getCode());
+		$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+		$order_data['currency_code'] = $this->session->data['currency'];
+		$order_data['currency'] = $this->session->data['currency'];
+		$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
+		$order_data['value'] = $this->currency->getValue($this->session->data['currency']);
 		$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 		if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
@@ -462,8 +465,8 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				'model' => $product['model'],
 				'option' => $option_data,
 				'quantity' => $product['quantity'],
-				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'])
+				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency'])
 			);
 		}
 
@@ -471,10 +474,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['totals'] = array();
 
-		foreach ($total_data as $total) {
+		foreach ($totals as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
-				'text' => $this->currency->format($total['value'])
+				'text' => $this->currency->format($total['value'], $this->session->data['currency'])
 			);
 		}
 
@@ -488,15 +491,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_confirm.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_confirm.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_confirm.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_confirm', $data));
 	}
 
 	public function processOrder() {
-		$this->language->load('payment/amazon_login_pay');
+		$this->load->language('payment/amazon_login_pay');
 		$this->load->model('checkout/order');
 		$this->load->model('total/coupon');
 		$this->load->model('account/order');
@@ -598,7 +597,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function loginFailure() {
-		$this->language->load('payment/amazon_login_pay');
+		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -617,15 +616,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_failure.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_failure.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_failure.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_failure', $data));
 	}
 
 	public function shippingQuotes() {
-		$this->language->load('payment/amazon_login_pay');
+		$this->load->language('payment/amazon_login_pay');
 
 		$this->load->model('extension/extension');
 		$this->load->model('payment/amazon_login_pay');

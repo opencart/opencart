@@ -2,23 +2,15 @@
 class Session {
 	public $data = array();
 
-	public function __construct($driver = '') {
-		$args = func_get_args();
-		
-		array_shift($args);
-		
-		$class = 'Session\\' . $driver;
-		
-		if ($driver && class_exists($class)) {
-			call_user_func($class, $registry);
-		
+	public function __construct($handler = '') {
+		if ($handler) {
 			session_set_save_handler(
-				array($session, 'open'),
-				array($session, 'close'),
-				array($session, 'read'),
-				array($session, 'write'),
-				array($session, 'destroy'),
-				array($session, 'gc')
+				array($handler, 'open'),
+				array($handler, 'close'),
+				array($handler, 'read'),
+				array($handler, 'write'),
+				array($handler, 'destroy'),
+				array($handler, 'gc')
 			);	
 		}
 	}
@@ -49,7 +41,7 @@ class Session {
 		if (!isset($_SESSION[$key])) {
 			$_SESSION[$key] = array();
 		}
-				
+		
 		$this->data =& $_SESSION[$key];	
 		
 		return true;			

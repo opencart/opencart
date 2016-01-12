@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentGlobalpayRemote extends Controller {
 	public function index() {
-		$this->language->load('payment/globalpay_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -58,18 +58,14 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay_remote.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/globalpay_remote.tpl', $data);
-		}
+		return $this->load->view('payment/globalpay_remote', $data);
 	}
 
 	public function send() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/globalpay_remote');
 
-		$this->language->load('payment/globalpay_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		if ($this->request->post['cc_number'] == '') {
 			$json['error'] = $this->language->get('error_card_number');
@@ -95,7 +91,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
+		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$currency = $order_info['currency_code'];
 
 		$accounts = $this->config->get('globalpay_remote_account');
@@ -162,7 +158,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 				// Unable to Verify Enrollment. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result) && $verify_3ds->result == '110' && isset($verify_3ds->enrolled) && $verify_3ds->enrolled == 'U') {
 					if ($this->config->get('globalpay_remote_liability') != 1) {
-						$this->language->load('payment/globalpay_remote');
+						$this->load->language('payment/globalpay_remote');
 
 						$json['error'] = $this->language->get('error_3d_unable');
 
@@ -185,7 +181,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 				// Invalid response from Enrollment Server. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result)  && $verify_3ds->result >= 500 && $verify_3ds->result < 600) {
 					if ($this->config->get('globalpay_remote_liability') != 1) {
-						$this->language->load('payment/globalpay_remote');
+						$this->load->language('payment/globalpay_remote');
 
 						$json['error'] = (string)$verify_3ds->message;
 
@@ -295,7 +291,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 				if ($this->config->get('globalpay_remote_liability') != 1) {
 					// this is the check for liability shift - if the merchant does not want to accept, redirect to checkout with message
-					$this->language->load('payment/globalpay_remote');
+					$this->load->language('payment/globalpay_remote');
 
 					$message = $this->language->get('error_3d_unsuccessful');
 					$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $this->language->get('text_3d_s' . (int)$eci_ref);

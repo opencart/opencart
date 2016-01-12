@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonSearch extends Controller {
 	public function index() {
-		$this->language->load('common/search');
+		$this->load->language('common/search');
 
 		$data['text_search'] = $this->language->get('text_search');
 
@@ -11,10 +11,6 @@ class ControllerCommonSearch extends Controller {
 			$data['search'] = '';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/search.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/search.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/search.tpl', $data);
-		}
+		return $this->load->view('common/search', $data);
 	}
 }

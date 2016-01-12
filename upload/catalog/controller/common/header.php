@@ -10,7 +10,7 @@ class ControllerCommonHeader extends Controller {
 
 		foreach ($analytics as $analytic) {
 			if ($this->config->get($analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code']);
+				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code'], $this->config->get($analytic['code'] . '_status'));
 			}
 		}
 
@@ -43,7 +43,7 @@ class ControllerCommonHeader extends Controller {
 			$data['logo'] = '';
 		}
 
-		$this->language->load('common/header');
+		$this->load->language('common/header');
 
 		$data['text_home'] = $this->language->get('text_home');
 
@@ -84,20 +84,6 @@ class ControllerCommonHeader extends Controller {
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 		$data['contact'] = $this->url->link('information/contact');
 		$data['telephone'] = $this->config->get('config_telephone');
-
-		$status = true;
-
-		if (isset($this->request->server['HTTP_USER_AGENT'])) {
-			$robots = explode("\n", str_replace(array("\r\n", "\r"), "\n", trim($this->config->get('config_robots'))));
-
-			foreach ($robots as $robot) {
-				if ($robot && strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
-					$status = false;
-
-					break;
-				}
-			}
-		}
 
 		// Menu
 		$this->load->model('catalog/category');
@@ -142,27 +128,6 @@ class ControllerCommonHeader extends Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 
-		// For page specific css
-		if (isset($this->request->get['route'])) {
-			if (isset($this->request->get['product_id'])) {
-				$class = '-' . $this->request->get['product_id'];
-			} elseif (isset($this->request->get['path'])) {
-				$class = '-' . $this->request->get['path'];
-			} elseif (isset($this->request->get['manufacturer_id'])) {
-				$class = '-' . $this->request->get['manufacturer_id'];
-			} else {
-				$class = '';
-			}
-
-			$data['class'] = str_replace('/', '-', $this->request->get['route']) . $class;
-		} else {
-			$data['class'] = 'common-home';
-		}
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/header.tpl', $data);
-		}
+		return $this->load->view('common/header', $data);
 	}
 }

@@ -3,11 +3,15 @@ class ModelLocalisationCurrency extends Model {
 	public function addCurrency($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "currency SET title = '" . $this->db->escape($data['title']) . "', code = '" . $this->db->escape($data['code']) . "', symbol_left = '" . $this->db->escape($data['symbol_left']) . "', symbol_right = '" . $this->db->escape($data['symbol_right']) . "', decimal_place = '" . $this->db->escape($data['decimal_place']) . "', value = '" . $this->db->escape($data['value']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW()");
 
+		$currency_id = $this->db->getLastId();
+
 		if ($this->config->get('config_currency_auto')) {
 			$this->refresh(true);
 		}
 
 		$this->cache->delete('currency');
+		
+		return $currency_id;
 	}
 
 	public function editCurrency($currency_id, $data) {

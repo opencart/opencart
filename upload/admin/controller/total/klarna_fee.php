@@ -3,7 +3,7 @@ class ControllerTotalKlarnaFee extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('total/klarna_fee');
+		$this->load->language('total/klarna_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -24,7 +24,7 @@ class ControllerTotalKlarnaFee extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -53,22 +53,22 @@ class ControllerTotalKlarnaFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_total'),
-			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('total/klarna_fee', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('total/klarna_fee', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true);
 
 		$data['countries'] = array();
 
@@ -116,7 +116,7 @@ class ControllerTotalKlarnaFee extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/klarna_fee.tpl', $data));
+		$this->response->setOutput($this->load->view('total/klarna_fee', $data));
 	}
 
 	private function validate() {

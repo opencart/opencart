@@ -2,7 +2,7 @@
 class ModelPaymentG2APay extends Model {
 
 	public function getMethod($address, $total) {
-		$this->language->load('payment/g2apay');
+		$this->load->language('payment/g2apay');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('g2apay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -73,7 +73,7 @@ class ModelPaymentG2APay extends Model {
 		if ($this->config->get('g2apay_debug') == 1) {
 			$log = new Log('g2apay.log');
 			$backtrace = debug_backtrace();
-			$log->write('Origin: ' . $backtrace[1]['class'] . '::' . $backtrace[1]['function']);
+			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}
 	}

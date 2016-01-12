@@ -1,7 +1,7 @@
 <?php
 class ModelShippingAusPost extends Model {
 	public function getQuote($address) {
-		$this->language->load('shipping/auspost');
+		$this->load->language('shipping/auspost');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('auspost_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -56,7 +56,7 @@ class ModelShippingAusPost extends Model {
 							'title'        => $title,
 							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
 							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->session->data['currency']), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);
 					}
 				}
@@ -98,7 +98,7 @@ class ModelShippingAusPost extends Model {
 							'title'        => $title,
 							'cost'         => $this->currency->convert($response_info['charge'], 'AUD', $this->config->get('config_currency')),
 							'tax_class_id' => $this->config->get('auspost_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->currency->getCode()), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_info['charge'], 'AUD', $this->session->data['currency']), $this->config->get('auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);
 					}
 				}

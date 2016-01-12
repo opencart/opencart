@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonStats extends Controller {
 	public function index() {
-		$this->language->load('common/stats');
+		$this->load->language('common/stats');
 
 		$data['text_complete_status'] = $this->language->get('text_complete_status');
 		$data['text_processing_status'] = $this->language->get('text_processing_status');
@@ -12,7 +12,7 @@ class ControllerCommonStats extends Controller {
 		$order_total = $this->model_sale_order->getTotalOrders();
 
 		$complete_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
-
+		
 		if ($complete_total) {
 			$data['complete_status'] = round(($complete_total / $order_total) * 100);
 		} else {
@@ -47,6 +47,6 @@ class ControllerCommonStats extends Controller {
 			$data['other_status'] = 0;
 		}
 
-		return $this->load->view('common/stats.tpl', $data);
+		return $this->load->view('common/stats', $data);
 	}
 }

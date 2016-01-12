@@ -32,10 +32,10 @@ class ControllerPaymentCardinity extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cardinity.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/cardinity.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cardinity')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/cardinity', $data);
 		} else {
-			return $this->load->view('default/template/payment/cardinity.tpl', $data);
+			return $this->load->view('default/template/payment/cardinity', $data);
 		}
 	}
 
@@ -82,11 +82,11 @@ class ControllerPaymentCardinity extends Controller {
 			} catch (Cardinity\Exception\Declined $exception) {
 				$this->failedOrder($this->language->get('error_payment_declined'), $this->language->get('error_payment_declined'));
 
-				$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+				$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 			} catch (Exception $exception) {
 				$this->failedOrder();
 
-				$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+				$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 			}
 
 			$successful_order_statuses = array(
@@ -98,7 +98,7 @@ class ControllerPaymentCardinity extends Controller {
 				if (!in_array($payment->getStatus(), $successful_order_statuses)) {
 					$this->failedOrder($payment->getStatus());
 
-					$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+					$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 				} else {
 					$this->model_payment_cardinity->addOrder(array(
 						'order_id'   => $this->session->data['order_id'],
@@ -119,13 +119,13 @@ class ControllerPaymentCardinity extends Controller {
 						$json['3ds'] = array(
 							'url'     => $authorization_information->getUrl(),
 							'PaReq'   => $authorization_information->getData(),
-							'TermUrl' => $this->url->link('payment/cardinity/threedSecureCallback', '', 'SSL'),
+							'TermUrl' => $this->url->link('payment/cardinity/threeDSecureCallback', '', true),
 							'hash'    => $hash
 						);
 					} elseif ($payment->getStatus() == 'approved') {
 						$this->finalizeOrder($payment);
 
-						$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
+						$json['redirect'] = $this->url->link('checkout/success', '', true);
 					}
 				}
 			}
@@ -137,7 +137,7 @@ class ControllerPaymentCardinity extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function threedSecureForm() {
+	public function threeDSecureForm() {
 		$this->load->model('payment/cardinity');
 
 		$this->load->language('payment/cardinity');
@@ -162,16 +162,16 @@ class ControllerPaymentCardinity extends Controller {
 		} else {
 			$this->failedOrder($this->language->get('error_invalid_hash'));
 
-			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
+			$redirect = $this->url->link('checkout/checkout', '', true);
 		}
 
 		$data['success'] = $success;
 		$data['redirect'] = $redirect;
 
-		$this->response->setOutput($this->load->view('default/template/payment/cardinity_3ds.tpl', $data));
+		$this->response->setOutput($this->load->view('default/template/payment/cardinity_3ds', $data));
 	}
 
-	public function threedSecureCallback() {
+	public function threeDSecureCallback() {
 		$this->load->model('payment/cardinity');
 
 		$this->load->language('payment/cardinity');
@@ -208,11 +208,11 @@ class ControllerPaymentCardinity extends Controller {
 		if ($success) {
 			$this->finalizeOrder($payment);
 
-			$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/success', '', true));
 		} else {
 			$this->failedOrder($error);
 
-			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
 	}
 

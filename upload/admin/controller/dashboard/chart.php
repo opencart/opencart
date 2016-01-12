@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardChart extends Controller {
 	public function index() {
-		$this->language->load('dashboard/chart');
+		$this->load->language('dashboard/chart');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -13,11 +13,11 @@ class ControllerDashboardChart extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		return $this->load->view('dashboard/chart.tpl', $data);
+		return $this->load->view('dashboard/chart', $data);
 	}
 
 	public function chart() {
-		$this->language->load('dashboard/chart');
+		$this->load->language('dashboard/chart');
 
 		$json = array();
 

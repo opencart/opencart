@@ -1,7 +1,7 @@
 <?php
 class ControllerReportProductViewed extends Controller {
 	public function index() {
-		$this->language->load('report/product_viewed');
+		$this->load->language('report/product_viewed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -21,12 +21,12 @@ class ControllerReportProductViewed extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('report/product_viewed', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/product');
@@ -78,7 +78,7 @@ class ControllerReportProductViewed extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['reset'] = $this->url->link('report/product_viewed/reset', 'token=' . $this->session->data['token'] . $url, true);
+		$data['reset'] = $this->url->ssl('report/product_viewed/reset', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -102,7 +102,7 @@ class ControllerReportProductViewed extends Controller {
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/product_viewed', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -112,11 +112,11 @@ class ControllerReportProductViewed extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/product_viewed.tpl', $data));
+		$this->response->setOutput($this->load->view('report/product_viewed', $data));
 	}
 
 	public function reset() {
-		$this->language->load('report/product_viewed');
+		$this->load->language('report/product_viewed');
 
 		if (!$this->user->hasPermission('modify', 'report/product_viewed')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -128,6 +128,6 @@ class ControllerReportProductViewed extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->ssl('report/product_viewed', 'token=' . $this->session->data['token'], true));
 	}
 }

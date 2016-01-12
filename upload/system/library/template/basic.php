@@ -7,11 +7,11 @@ final class Basic {
 		$this->data[$key] = $value;
 	}
 	
-	public function render($template) {
+	public function render($template, array $data = null) {
 		$file = DIR_TEMPLATE . $template;
 
 		if (file_exists($file)) {
-			extract($this->data);
+			extract($data ? array_merge($this->data, $data) : $this->data);
 
 			ob_start();
 

@@ -124,13 +124,7 @@ final class Loader {
 	}
 	
 	protected function callback($registry, $route) {
-		return function($args) use($registry, &$route) {
-			
-			$std = new stdClass();
-			
-			$std->args = $args;
-			$std->output = '';
-			
+		return function($args) use($registry, &$route) {			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route) + $args);
 			

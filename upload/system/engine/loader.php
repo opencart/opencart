@@ -126,7 +126,7 @@ final class Loader {
 	protected function callback($registry, $route) {
 		return function($args) use($registry, &$route) {			
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route) + $args);
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
 			
 			if ($result) {
 				return $result;
@@ -151,7 +151,7 @@ final class Loader {
 			}
 													
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$output) + $args);
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route, &$output), $args));
 			
 			if ($result) {
 				return $result;

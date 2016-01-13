@@ -9,6 +9,7 @@
       "vendor-dir": "upload/system/vendor"
     },
     "require": {
+        "cardinity/cardinity-sdk-php": "^1.0",
         "braintree/braintree_php" : "3.2.0",
         "php": ">=5.4.0"
     }

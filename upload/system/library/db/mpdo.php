@@ -8,7 +8,7 @@ final class mPDO {
 		try {
 			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch(\PDOException $e) {
-			throw new \Exception('Unknown database \'' . $database . '\'');
+			throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
 		}
 
 		$this->connection->exec("SET NAMES 'utf8'");

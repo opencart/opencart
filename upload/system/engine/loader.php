@@ -125,6 +125,12 @@ final class Loader {
 	
 	protected function callback($registry, $route) {
 		return function($args) use($registry, &$route) {
+			
+			$std = new stdClass();
+			
+			$std->args = $args;
+			$std->output = '';
+			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route) + $args);
 			
@@ -154,8 +160,6 @@ final class Loader {
 			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$output) + $args);
 			
 			if ($result) {
-				$this->log->write('hi');
-				
 				return $result;
 			}
 						

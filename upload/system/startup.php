@@ -114,7 +114,6 @@ function vendor($class) {
 }
 
 spl_autoload_register('library');
-spl_autoload_register('vendor');
 spl_autoload_extensions('.php');
 
 // Engine

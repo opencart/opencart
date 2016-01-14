@@ -85,8 +85,8 @@ function modification($filename) {
 
 // Autoloader
 
-if (file_exists(DIR_SYSTEM .' vendor/autoload.php')) {
-	require_once(DIR_SYSTEM . 'vendor/autoload.php');
+if (file_exists(DIR_SYSTEM . '../../vendor/autoload.php')) {
+	require_once(DIR_SYSTEM . '../../vendor/autoload.php');
 }
 
 function library($class) {

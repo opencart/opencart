@@ -30,6 +30,5 @@ class ControllerStartupSetting extends Controller {
 				$this->config->set($result['key'], json_decode($result['value'], true));
 			}
 		}		
-		
 	}
 }

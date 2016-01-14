@@ -1,66 +1,66 @@
 <?php
 // Site
-$_['site.base']            = '';
-$_['site.ssl']             = false;
+$_['site_base']            = '';
+$_['site_ssl']             = false;
 
 // Language
-$_['language.default']     = 'en-gb';
-$_['language.autoload']    = array('en-gb');
+$_['language_default']     = 'en-gb';
+$_['language_autoload']    = array('en-gb');
 
 // Database
-$_['db.autostart']         = false;
-$_['db.type']              = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
-$_['db.hostname']          = 'localhost';
-$_['db.username']          = 'root';
-$_['db.password']          = '';
-$_['db.database']          = '';
-$_['db.port']              = 3306;
+$_['db_autostart']         = false;
+$_['db_type']              = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_hostname']          = 'localhost';
+$_['db_username']          = 'root';
+$_['db_password']          = '';
+$_['db_database']          = '';
+$_['db_port']              = 3306;
 
 // Mail
-$_['mail.protocol']        = 'mail'; // mail or smtp
-$_['mail.from']            = ''; // Your E-Mail
-$_['mail.sender']          = ''; // Your name or company name
-$_['mail.reply_to']        = ''; // Reply to E-Mail
-$_['mail.smtp_hostname']   = '';
-$_['mail.smtp_username']   = '';
-$_['mail.smtp_password']   = '';
-$_['mail.smtp_port']       = 25;
-$_['mail.smtp_timeout']    = 5;
-$_['mail.verp']            = false;
-$_['mail.parameter']       = '';
+$_['mail_protocol']        = 'mail'; // mail or smtp
+$_['mail_from']            = ''; // Your E-Mail
+$_['mail_sender']          = ''; // Your name or company name
+$_['mail_reply_to']        = ''; // Reply to E-Mail
+$_['mail_smtp_hostname']   = '';
+$_['mail_smtp_username']   = '';
+$_['mail_smtp_password']   = '';
+$_['mail_smtp_port']       = 25;
+$_['mail_smtp_timeout']    = 5;
+$_['mail_verp']            = false;
+$_['mail_parameter']       = '';
 
 // Cache
-$_['cache.type']           = 'file'; // apc, file or mem
-$_['cache.expire']         = 3600;
+$_['cache_type']           = 'file'; // apc, file or mem
+$_['cache_expire']         = 3600;
 
 // Session
-$_['session.autostart']    = true;
-$_['session.name']         = 'PHPSESSID';
+$_['session_autostart']    = true;
+$_['session_name']         = 'PHPSESSID';
 
 // Template
-$_['template.type']        = 'basic';
+$_['template_type']        = 'basic';
 
 // Error
-$_['error.display']        = true;
-$_['error.log']            = true;
-$_['error.filename']       = 'error.txt';
+$_['error_display']        = true;
+$_['error_log']            = true;
+$_['error_filename']       = 'error.txt';
 
 // Reponse
-$_['response.header']      = array('Content-Type: text/html; charset=utf-8');
-$_['response.compression'] = 0;
+$_['response_header']      = array('Content-Type: text/html; charset=utf-8');
+$_['response_compression'] = 0;
 
 // Autoload Configs
-$_['config.autoload']      = array();
+$_['config_autoload']      = array();
 
 // Autoload Libraries
-$_['library.autoload']     = array();
+$_['library_autoload']     = array();
 
 // Autoload Libraries
-$_['model.autoload']       = array();
+$_['model_autoload']       = array();
 
 // Actions
-$_['action.default']       = 'common/home';
-$_['action.router']        = 'startup/router';
-$_['action.error']         = 'error/not_found';
-$_['action.pre_action']    = array();
-$_['action.event']         = array();
+$_['action_default']       = 'common/home';
+$_['action_router']        = 'startup/router';
+$_['action_error']         = 'error/not_found';
+$_['action_pre_action']    = array();
+$_['action_event']         = array();

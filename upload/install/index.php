@@ -2,15 +2,15 @@
 // Error Reporting
 error_reporting(E_ALL);
 
-// HTTP
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-
-
 // Rewrite HTTPS index based on proxy
-$ssl_pool = array(!empty($_SERVER['HTTPS']), !empty($_SERVER['HTTP_X_FORWARDED_PROTO']), !empty($_SERVER['HTTP_X_FORWARDED_PROTOCOL']), !empty($_SERVER['HTTP_X_FORWARDED_SSL']), !empty($_SERVER['HTTP_FRONT_END_HTTPS']), !empty($_SERVER['HTTP_X_URL_SCHEME']), !empty($_SERVER['SERVER_PORT']));
+if ($_SERVER['HTTPS']) {
+	$protocol = 'https://';
+} else {
+	$protocol = 'http://';
+}
 
-define('HTTP_SERVER', $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
-define('HTTP_OPENCART', $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
+define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
+define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 // DIR
 define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');

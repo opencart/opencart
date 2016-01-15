@@ -1,19 +1,19 @@
 <?php
 // Site
-$_['site.base']        = substr(HTTP_SERVER, 7);
-$_['site.ssl']         = false;
+$_['site_base']        = substr(HTTP_SERVER, 7);
+$_['site_ssl']         = false;
 
 // Database
-$_['db.autostart']     = true;
-$_['db.type']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
-$_['db.hostname']      = DB_HOSTNAME;
-$_['db.username']      = DB_USERNAME;
-$_['db.password']      = DB_PASSWORD;
-$_['db.database']      = DB_DATABASE;
-$_['db.port']          = DB_PORT;
+$_['db_autostart']     = true;
+$_['db_type']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_hostname']      = DB_HOSTNAME;
+$_['db_username']      = DB_USERNAME;
+$_['db_password']      = DB_PASSWORD;
+$_['db_database']      = DB_DATABASE;
+$_['db_port']          = DB_PORT;
 
 // Autoload Libraries
-$_['library.autoload'] = array(
+$_['library_autoload'] = array(
 	'cart/customer',
 	'cart/affiliate',
 	'cart/currency',
@@ -25,7 +25,7 @@ $_['library.autoload'] = array(
 );
 
 // Actions
-$_['action.pre_action'] = array(
+$_['action_pre_action'] = array(
 	'startup/setting',
 	'startup/error',
 	'startup/event',
@@ -40,8 +40,7 @@ $_['action.pre_action'] = array(
 );
 
 // Action Events
-$_['action.event'] = array(
+$_['action_event'] = array(
 	'view/*/before' => 'event/theme',
-	'model/*/after' => 'event/debug',
 	//'model/*/after' => 'event/debug'
 );

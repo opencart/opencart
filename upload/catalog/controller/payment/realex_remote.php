@@ -91,7 +91,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
+		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$currency = $order_info['currency_code'];
 
 		$accounts = $this->config->get('realex_remote_account');

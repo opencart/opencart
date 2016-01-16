@@ -7,6 +7,12 @@ class Proxy {
 	}
 		
 	public function __call($method, $args) {
-		return call_user_func($this->data[$method]->bindTo($this), $args);	
+		if (isset($this->data[$method])) {
+			return call_user_func($this->data[$method], $args);	
+		} else {
+			$trace = debug_backtrace();
+
+			throw new \Exception('Error in: ' . $trace[0]['file'] . ' line ' . $trace[0]['line'] . '!');
+		}
 	}
 }

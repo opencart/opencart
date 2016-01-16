@@ -1,12 +1,11 @@
 <?php
 class ModelUpgrade1000 extends Model {
 	public function upgrade() {
-		/*	
 		// This is a generic upgrade script. 
-		// Specific DB changes should be done using event actions.
-		// Upgrade script to opgrade opencart to the latest version.
-		// Oldest version supported is 1.3.2
-
+		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema. 
+		// The uprade script is not coherent because of the changes over time to the upgrades so im grouping the changes into different files
+		// Future version should have a upgrade file name that matches the version number being changed to
+		
 		// Load the sql file
 		$file = DIR_APPLICATION . 'opencart.sql';
 
@@ -172,140 +171,7 @@ class ModelUpgrade1000 extends Model {
 				if (isset($table['option']['CHARSET']) && isset($table['option']['COLLATE'])) {
 					$this->db->query("ALTER TABLE `" . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['option']['CHARSET'] . "` COLLATE `" . $table['option']['COLLATE'] . "`");
 				}
-
-				$i = 0;
-
-				foreach ($table['field'] as $field) {
-					// If field is not found create it
-					if (!in_array($field['name'], $table_old_data[$table['name']])) {
-						$sql = "ALTER TABLE `" . $table['name'] . "` ADD `" . $field['name'] . "` " . $field['type'];
-
-						if ($field['size']) {
-							$sql .= "(" . $field['size'] . ")";
-						}
-
-						if ($field['collation']) {
-							$sql .= " " . $field['collation'];
-						}
-
-						if ($field['notnull']) {
-							$sql .= " " . $field['notnull'];
-						}
-
-						if ($field['default']) {
-							$sql .= " DEFAULT '" . $field['default'] . "'";
-						}
-
-						if (isset($table['field'][$i - 1])) {
-							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
-						} else {
-							$sql .= " FIRST";
-						}
-
-						$this->db->query($sql);
-					} else {
-						// Remove auto increment from all fields
-						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "` " . strtoupper($field['type']);
-
-						if ($field['size']) {
-							$sql .= "(" . $field['size'] . ")";
-						}
-
-						if ($field['collation']) {
-							$sql .= " " . $field['collation'];
-						}
-
-						if ($field['notnull']) {
-							$sql .= " " . $field['notnull'];
-						}
-
-						if ($field['default']) {
-							$sql .= " DEFAULT '" . $field['default'] . "'";
-						}
-
-						if (isset($table['field'][$i - 1])) {
-							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
-						} else {
-							$sql .= " FIRST";
-						}
-
-						$this->db->query($sql);
-					}
-
-					$i++;
-				}
-
-				$status = false;
-
-				// Drop primary keys and indexes.
-				$query = $this->db->query("SHOW INDEXES FROM `" . $table['name'] . "`");
-
-				foreach ($query->rows as $result) {
-					if ($result['Key_name'] != 'PRIMARY') {
-						$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP INDEX `" . $result['Key_name'] . "`");
-					} else {
-						$status = true;
-					}
-				}
-
-				if ($status) {
-					$this->db->query("ALTER TABLE `" . $table['name'] . "` DROP PRIMARY KEY");
-				}
-
-				// Add a new primary key.
-				$primary_data = array();
-
-				foreach ($table['primary'] as $primary) {
-					$primary_data[] = "`" . $primary . "`";
-				}
-
-				if ($primary_data) {
-					$this->db->query("ALTER TABLE `" . $table['name'] . "` ADD PRIMARY KEY(" . implode(',', $primary_data) . ")");
-				}
-
-				// Add the new indexes
-				foreach ($table['index'] as $index) {
-					$index_data = array();
-
-					foreach ($index as $key) {
-						$index_data[] = '`' . $key . '`';
-					}
-
-					if ($index_data) {
-						$this->db->query("ALTER TABLE `" . $table['name'] . "` ADD INDEX (" . implode(',', $index_data) . ")");
-					}
-				}
-
-				// Add auto increment to primary keys again
-				foreach ($table['field'] as $field) {
-					if ($field['autoincrement']) {
-						$sql = "ALTER TABLE `" . $table['name'] . "` CHANGE `" . $field['name'] . "` `" . $field['name'] . "` " . strtoupper($field['type']);
-
-						if ($field['size']) {
-							$sql .= "(" . $field['size'] . ")";
-						}
-
-						if ($field['collation']) {
-							$sql .= " " . $field['collation'];
-						}
-
-						if ($field['notnull']) {
-							$sql .= " " . $field['notnull'];
-						}
-
-						if ($field['default']) {
-							$sql .= " DEFAULT '" . $field['default'] . "'";
-						}
-
-						if ($field['autoincrement']) {
-							$sql .= " AUTO_INCREMENT";
-						}
-
-						$this->db->query($sql);
-					}
-				}
 			}
 		}
-		*/
 	}
 }

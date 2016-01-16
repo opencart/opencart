@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-setting" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" id="button-save" form="form-setting" data-toggle="tooltip" title="<?php echo $button_save; ?>" disabled="disabled" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -68,7 +68,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     <?php foreach ($themes as $theme) { ?>
-                    <?php if ($theme['code'] == $config_theme) { ?>
+                    <?php if ($theme['value'] == $config_theme) { ?>
                     <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
@@ -1164,7 +1164,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-mail-smtp-password"><?php echo $entry_mail_smtp_password; ?></label>
+                <label class="col-sm-2 control-label" for="input-mail-smtp-password"><span data-toggle="tooltip" title="<?php echo $help_mail_smtp_password; ?>"><?php echo $entry_mail_smtp_password; ?></span></label>
                 <div class="col-sm-10">
                   <input type="text" name="config_mail_smtp_password" value="<?php echo $config_mail_smtp_password; ?>" placeholder="<?php echo $entry_mail_smtp_password; ?>" id="input-mail-smtp-password" class="form-control" />
                 </div>
@@ -1452,6 +1452,8 @@ $('select[name=\'config_country_id\']').on('change', function() {
 			}
 
 			$('select[name=\'config_zone_id\']').html(html);
+			
+			$('#button-save').prop('disabled', false);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

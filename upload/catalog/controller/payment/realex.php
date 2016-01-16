@@ -61,7 +61,7 @@ class ControllerPaymentRealex extends Controller {
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
 		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 
-		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
+		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$data['currency'] = $order_info['currency_code'];
 
 		$tmp = $data['timestamp'] . '.' . $data['merchant_id'] . '.' . $data['order_id'] . '.' . $data['amount'] . '.' . $data['currency'];

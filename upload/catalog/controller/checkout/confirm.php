@@ -294,9 +294,9 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$order_data['language_id'] = $this->config->get('config_language_id');
-			$order_data['currency_id'] = $this->currency->getId();
-			$order_data['currency_code'] = $this->currency->getCode();
-			$order_data['currency_value'] = $this->currency->getValue($this->currency->getCode());
+			$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+			$order_data['currency_code'] = $this->session->data['currency'];
+			$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 			$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
@@ -370,13 +370,13 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 
 					if ($product['recurring']['trial']) {
-						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 					}
 
 					if ($product['recurring']['duration']) {
-						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					} else {
-						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					}
 				}
 
@@ -389,9 +389,9 @@ class ControllerCheckoutConfirm extends Controller {
 					'recurring'  => $recurring,
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
-					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				);
 			}
 
@@ -402,7 +402,7 @@ class ControllerCheckoutConfirm extends Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$data['vouchers'][] = array(
 						'description' => $voucher['description'],
-						'amount'      => $this->currency->format($voucher['amount'])
+						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 					);
 				}
 			}
@@ -412,7 +412,7 @@ class ControllerCheckoutConfirm extends Controller {
 			foreach ($order_data['totals'] as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value']),
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 				);
 			}
 

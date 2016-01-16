@@ -31,7 +31,7 @@ class ModelPaymentSagePayDirect extends Model {
 
 	public function getCards($customer_id) {
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_card WHERE customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_card WHERE customer_id = '" . (int)$customer_id . "' ORDER BY card_id");
 
 		$card_data = array();
 
@@ -51,34 +51,34 @@ class ModelPaymentSagePayDirect extends Model {
 		return $card_data;
 	}
 
-	public function addFullCard($order_id, $card_data) {
-		$this->db->query("INSERT into " . DB_PREFIX . "sagepay_direct_card SET customer_id = '" . $this->db->escape($card_data['customer_id']) . "', order_id = '" . $this->db->escape($order_id) . "', digits = '" . $this->db->escape($card_data['Last4Digits']) . "', expiry = '" . $this->db->escape($card_data['ExpiryDate']) . "', type = '" . $this->db->escape($card_data['CardType']) . "', token = '" . $this->db->escape($card_data['Token']) . "'");
-	}
-
-	public function addCard($order_id, $card_data) {
-		$this->db->query("INSERT into " . DB_PREFIX . "sagepay_direct_card SET customer_id = '" . $this->db->escape($card_data['customer_id']) . "', order_id = '" . $this->db->escape($order_id) . "', digits = '" . $this->db->escape($card_data['Last4Digits']) . "', expiry = '" . $this->db->escape($card_data['ExpiryDate']) . "', type = '" . $this->db->escape($card_data['CardType']) . "'");
-	}
-
-	public function updateCard($order_id, $token) {
-		$this->db->query("UPDATE " . DB_PREFIX . "sagepay_direct_card SET token = '" . $this->db->escape($token) . "' WHERE order_id = '" . (int)$order_id . "'");
-	}
-
-	public function deleteCard($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "sagepay_direct_card WHERE order_id = '" . (int)$order_id . "'");
-	}
-
-	public function addFullOrder($order_info, $data, $payment_data) {
-		if (!isset($data['TxAuthNo'])) {
-			$data['TxAuthNo'] = '';
-		}
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_direct_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `VPSTxId` = '" . $this->db->escape($data['VPSTxId']) . "', `VendorTxCode` = '" . $this->db->escape($payment_data['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($data['SecurityKey']) . "', `TxAuthNo` = '" . $this->db->escape($data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($payment_data['Currency']) . "', `total` = '" . $this->currency->format($payment_data['Amount'], $payment_data['Currency'], false, false) . "'");
+	public function addCard($card_data) {
+		$this->db->query("INSERT into " . DB_PREFIX . "sagepay_direct_card SET customer_id = '" . $this->db->escape($card_data['customer_id']) . "', digits = '" . $this->db->escape($card_data['Last4Digits']) . "', expiry = '" . $this->db->escape($card_data['ExpiryDate']) . "', type = '" . $this->db->escape($card_data['CardType']) . "', token = '" . $this->db->escape($card_data['Token']) . "'");
 
 		return $this->db->getLastId();
 	}
 
-	public function addOrder($order_id, $payment_data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_direct_order` SET `order_id` = '" . (int)$order_id . "', `VendorTxCode` = '" . $this->db->escape($payment_data['VendorTxCode']) . "',`date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($payment_data['Currency']) . "', `total` = '" . $this->currency->format($payment_data['Amount'], $payment_data['Currency'], false, false) . "'");
+	public function updateCard($card_id, $token) {
+		$this->db->query("UPDATE " . DB_PREFIX . "sagepay_direct_card SET token = '" . $this->db->escape($token) . "' WHERE card_id = '" . (int)$card_id . "'");
+	}
+
+	public function getCard($card_id, $token) {
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_card WHERE (card_id = '" . $this->db->escape($card_id) . "' OR token = '" . $this->db->escape($token) . "') AND customer_id = '" . (int)$this->customer->getId() . "'");
+
+		if ($qry->num_rows) {
+			return $qry->row;
+		} else {
+			return false;
+		}
+	}
+
+	public function deleteCard($card_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "sagepay_direct_card WHERE card_id = '" . (int)$card_id . "'");
+	}
+
+	public function addOrder($order_id, $response_data, $payment_data, $card_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_direct_order` SET `order_id` = '" . (int)$order_id . "', `VPSTxId` = '" . $this->db->escape($response_data['VPSTxId']) . "', `VendorTxCode` = '" . $this->db->escape($payment_data['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($response_data['SecurityKey']) . "', `TxAuthNo` = '" . $this->db->escape($response_data['TxAuthNo']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($payment_data['Currency']) . "', `total` = '" . $this->currency->format($payment_data['Amount'], $payment_data['Currency'], false, false) . "', `card_id` = '" . $this->db->escape($card_id) . "'");
+
+		return $this->db->getLastId();
 	}
 
 	public function getOrder($order_id) {
@@ -125,14 +125,14 @@ class ModelPaymentSagePayDirect extends Model {
 		//trial information
 		if ($item['recurring_trial'] == 1) {
 			$price = $item['recurring_trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
 		} else {
 			$price = $item['recurring_price'];
 			$trial_text = '';
 		}
 
-		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
 
 		if ($item['recurring_duration'] > 0) {
@@ -200,8 +200,8 @@ class ModelPaymentSagePayDirect extends Model {
 		$payment_data['TxType'] = 'REPEAT';
 		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
-		$payment_data['Amount'] = $this->currency->format($price, $this->currency->getCode(), false, false);
-		$payment_data['Currency'] = $this->currency->getCode();
+		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
+		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($recurring_name, 0, 100);
 		$payment_data['RelatedVPSTxId'] = trim($sagepay_order_info['VPSTxId'], '{}');
 		$payment_data['RelatedVendorTxCode'] = $sagepay_order_info['VendorTxCode'];
@@ -419,10 +419,11 @@ class ModelPaymentSagePayDirect extends Model {
 		return $data;
 	}
 
-	public function logger($message) {
-		if ($this->config->get('sagepay_direct_debug') == 1) {
+	public function logger($title, $data) {
+		if ($this->config->get('sagepay_direct_debug')) {
 			$log = new Log('sagepay_direct.log');
-			$log->write($message);
+			$backtrace = debug_backtrace();
+			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' - ' . $title . ': ' . print_r($data, 1));
 		}
 	}
 

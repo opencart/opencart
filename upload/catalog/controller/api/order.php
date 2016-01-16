@@ -273,19 +273,19 @@ class ControllerApiOrder extends Controller {
 
 				$sort_order = array();
 
-				foreach ($totals as $key => $value) {
+				foreach ($total_data['totals'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $totals);
+				array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+
+				$order_data = array_merge($order_data, $total_data);
 
 				if (isset($this->request->post['comment'])) {
 					$order_data['comment'] = $this->request->post['comment'];
 				} else {
 					$order_data['comment'] = '';
 				}
-
-				$order_data['total'] = $total;
 
 				if (isset($this->request->post['affiliate_id'])) {
 					$subtotal = $this->cart->getSubTotal();
@@ -314,9 +314,9 @@ class ControllerApiOrder extends Controller {
 				}
 
 				$order_data['language_id'] = $this->config->get('config_language_id');
-				$order_data['currency_id'] = $this->currency->getId();
-				$order_data['currency_code'] = $this->currency->getCode();
-				$order_data['currency_value'] = $this->currency->getValue($this->currency->getCode());
+				$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+				$order_data['currency_code'] = $this->session->data['currency'];
+				$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 				$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 				if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
@@ -648,19 +648,19 @@ class ControllerApiOrder extends Controller {
 
 					$sort_order = array();
 
-					foreach ($totals as $key => $value) {
+					foreach ($total_data['totals'] as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $totals);
+					array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+
+					$order_data = array_merge($order_data, $total_data);
 
 					if (isset($this->request->post['comment'])) {
 						$order_data['comment'] = $this->request->post['comment'];
 					} else {
 						$order_data['comment'] = '';
 					}
-
-					$order_data['total'] = $total_data['total'];
 
 					if (isset($this->request->post['affiliate_id'])) {
 						$subtotal = $this->cart->getSubTotal();

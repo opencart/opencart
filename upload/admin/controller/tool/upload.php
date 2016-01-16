@@ -24,7 +24,7 @@ class ControllerToolUpload extends Controller {
 				// Remove file before deleting DB record.
 				$upload_info = $this->model_tool_upload->getUpload($upload_id);
 
-				if ($upload_info && is_file(DIR_DOWNLOAD . $upload_info['filename'])) {
+				if ($upload_info && is_file(DIR_UPLOAD . $upload_info['filename'])) {
 					unlink(DIR_UPLOAD . $upload_info['filename']);
 				}
 

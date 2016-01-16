@@ -53,7 +53,7 @@ class ControllerTotalVoucher extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function send($order_id) {
+	public function send($route, $output, $order_id, $order_status_id) {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -64,8 +64,8 @@ class ControllerTotalVoucher extends Controller {
 
 			if ($voucher_query->num_rows) {
 				// Send out any gift voucher mails
-				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_directory']);
+				$language = new Language($order_info['language_code']);
+				$language->load($order_info['language_code']);
 				$language->load('mail/voucher');
 
 				foreach ($voucher_query->rows as $voucher) {

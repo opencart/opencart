@@ -209,9 +209,11 @@ class ModelPaymentAmazonLoginPay extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_login_pay_order_transaction` WHERE `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "'");
 
 		$transactions = array();
+
 		if ($query->num_rows) {
 			foreach ($query->rows as $row) {
 				$row['amount'] = $this->currency->format($row['amount'], $currency_code, true, true);
+
 				$transactions[] = $row;
 			}
 			return $transactions;
@@ -462,7 +464,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 		if ($this->config->get('amazon_login_pay_debug')) {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
-			$log->write($backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ' Data:  ' . print_r($data, 1));
+			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));
 		}
 	}
 

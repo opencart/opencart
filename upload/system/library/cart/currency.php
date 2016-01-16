@@ -1,14 +1,11 @@
 <?php
 namespace Cart;
 class Currency {
-	private $code;
 	private $currencies = array();
 
 	public function __construct($registry) {
-		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
-		$this->request = $registry->get('request');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
@@ -23,27 +20,11 @@ class Currency {
 			);
 		}
 	}
-	
-	public function set($currency) {
-		$this->code = $currency;
 
-		if (!isset($this->request->cookie['currency']) || ($this->request->cookie['currency'] != $currency)) {
-			setcookie('currency', $currency, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
-		}
-	}
-
-	public function format($number, $currency = '', $value = '', $format = true) {
-		if ($currency && $this->has($currency)) {
-			$symbol_left   = $this->currencies[$currency]['symbol_left'];
-			$symbol_right  = $this->currencies[$currency]['symbol_right'];
-			$decimal_place = $this->currencies[$currency]['decimal_place'];
-		} else {
-			$symbol_left   = $this->currencies[$this->code]['symbol_left'];
-			$symbol_right  = $this->currencies[$this->code]['symbol_right'];
-			$decimal_place = $this->currencies[$this->code]['decimal_place'];
-
-			$currency = $this->code;
-		}
+	public function format($number, $currency, $value = '', $format = true) {
+		$symbol_left = $this->currencies[$currency]['symbol_left'];
+		$symbol_right = $this->currencies[$currency]['symbol_right'];
+		$decimal_place = $this->currencies[$currency]['decimal_place'];
 
 		if (!$value) {
 			$value = $this->currencies[$currency]['value'];
@@ -87,55 +68,41 @@ class Currency {
 
 		return $value * ($to / $from);
 	}
-
-	public function getId($currency = '') {
-		if (!$currency) {
-			return $this->currencies[$this->code]['currency_id'];
-		} elseif ($currency && isset($this->currencies[$currency])) {
+	
+	public function getId($currency) {
+		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['currency_id'];
 		} else {
 			return 0;
 		}
 	}
 
-	public function getSymbolLeft($currency = '') {
-		if (!$currency) {
-			return $this->currencies[$this->code]['symbol_left'];
-		} elseif ($currency && isset($this->currencies[$currency])) {
+	public function getSymbolLeft($currency) {
+		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_left'];
 		} else {
 			return '';
 		}
 	}
 
-	public function getSymbolRight($currency = '') {
-		if (!$currency) {
-			return $this->currencies[$this->code]['symbol_right'];
-		} elseif ($currency && isset($this->currencies[$currency])) {
+	public function getSymbolRight($currency) {
+		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_right'];
 		} else {
 			return '';
 		}
 	}
 
-	public function getDecimalPlace($currency = '') {
-		if (!$currency) {
-			return $this->currencies[$this->code]['decimal_place'];
-		} elseif ($currency && isset($this->currencies[$currency])) {
+	public function getDecimalPlace($currency) {
+		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['decimal_place'];
 		} else {
 			return 0;
 		}
 	}
 
-	public function getCode() {
-		return $this->code;
-	}
-
-	public function getValue($currency = '') {
-		if (!$currency) {
-			return $this->currencies[$this->code]['value'];
-		} elseif ($currency && isset($this->currencies[$currency])) {
+	public function getValue($currency) {
+		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['value'];
 		} else {
 			return 0;

@@ -26,7 +26,8 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?>
-            <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
             <div class="col-sm-10">
@@ -55,4 +56,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

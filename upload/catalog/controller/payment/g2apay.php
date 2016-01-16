@@ -18,9 +18,9 @@ class ControllerPaymentG2APay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$order_data = array();
-		
+
 		$this->load->model('extension/extension');
-		
+
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
@@ -31,15 +31,15 @@ class ControllerPaymentG2APay extends Controller {
 			'taxes'  => &$taxes,
 			'total'  => &$total
 		);
-			
+
 		$i = 0;
-		
+
 		$results = $this->model_extension_extension->getExtensions('total');
-		
+
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
 				$this->load->model('total/' . $result['code']);
-				
+
 				// We have to put the totals in an array so that they pass by reference.
 				$this->{'model_total_' . $result['code']}->getTotal($total_data);
 
@@ -50,9 +50,12 @@ class ControllerPaymentG2APay extends Controller {
 						$item->name = $order_data['totals'][$i]['title'];
 						$item->amount = number_format($order_data['totals'][$i]['value'], 2);
 						$item->qty = 1;
+						$item->id = $order_data['totals'][$i]['code'];
+						$item->price = $order_data['totals'][$i]['value'];
+						$item->url = $this->url->link('common/home', '', true);
 						$items[] = $item;
 					}
-					
+
 					$i++;
 				}
 			}
@@ -66,6 +69,9 @@ class ControllerPaymentG2APay extends Controller {
 			$item->name = $product['name'];
 			$item->amount = $product['price'] * $product['quantity'];
 			$item->qty = $product['quantity'];
+			$item->id = $product['product_id'];
+			$item->price = $product['price'];
+			$item->url = $this->url->link('product/product', 'product_id=' . $product['product_id'], true);
 			$items[] = $item;
 		}
 
@@ -131,7 +137,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		if ($order_info) {
 			$this->load->model('payment/g2apay');
-			
+
 			$g2apay_order_info = $this->model_payment_g2apay->getG2aOrder($order_id);
 
 			$this->model_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);

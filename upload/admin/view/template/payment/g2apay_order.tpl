@@ -55,17 +55,17 @@
 </table>
 <script type="text/javascript"><!--
     $("#btn_refund").click(function () {
-//      if (confirm('<?php echo $text_confirm_refund ?>')) {
+      if (confirm('<?php echo $text_confirm_refund ?>')) {
         $.ajax({
           type: 'POST',
           dataType: 'json',
           data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#refund_amount').val()},
           url: 'index.php?route=payment/g2apay/refund&token=<?php echo $token; ?>',
           beforeSend: function () {
-//            $('#btn_refund').hide();
-//            $('#refund_amount').hide();
-//            $('#img_loading_refund').show();
-//            $('#g2apay_transaction_msg').hide();
+            $('#btn_refund').hide();
+            $('#refund_amount').hide();
+            $('#img_loading_refund').show();
+            $('#g2apay_transaction_msg').hide();
           },
           success: function (data) {
             if (data.error == false) {
@@ -98,6 +98,6 @@
             $('#img_loading_refund').hide();
           }
         });
-//      }
+      }
     });
 //--></script>

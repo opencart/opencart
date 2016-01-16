@@ -13,7 +13,7 @@ class ModelTotalShipping extends Model {
 				$tax_rates = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {
-					if (!isset($taxes[$tax_rate['tax_rate_id']])) {
+					if (!isset($total['taxes'][$tax_rate['tax_rate_id']])) {
 						$total['taxes'][$tax_rate['tax_rate_id']] = $tax_rate['amount'];
 					} else {
 						$total['taxes'][$tax_rate['tax_rate_id']] += $tax_rate['amount'];

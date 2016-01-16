@@ -14,7 +14,7 @@
   </header>
   <div class="row">
     <div class="col-sm-9">
-      <h3><?php echo $text_steps; ?></h3>
+      <h3><?php echo $text_server ?></h3>
       <fieldset>
         <ol>
           <li><?php echo $text_error; ?></li>
@@ -25,7 +25,7 @@
           <li><?php echo $text_store; ?></li>
         </ol>
       </fieldset>
-      <h3>Upgrade Progress</h3>
+      <h3><?php echo $text_steps; ?></h3>
       <fieldset>
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
@@ -78,7 +78,7 @@ function start(url) {
 				
 				if (json['next']) {
 					start(json['next']);
-				} else {
+				} else if (!json['error']) {
 					$('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
 				}
 				

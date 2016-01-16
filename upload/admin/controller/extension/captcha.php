@@ -48,10 +48,6 @@ class ControllerExtensionCaptcha extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('captcha', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('captcha/' . $this->request->get['extension'] . '/uninstall');
 
@@ -128,7 +124,7 @@ class ControllerExtensionCaptcha extends Controller {
 					'install'   => $this->url->ssl('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('captcha/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->ssl('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

@@ -13,7 +13,7 @@ class ControllerApiCurrency extends Controller {
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['currency']);
 
 			if ($currency_info) {
-				$this->currency->set($this->request->post['currency']);
+				$this->session->data['currency'] = $this->request->post['currency'];
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);

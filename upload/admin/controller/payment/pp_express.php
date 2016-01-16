@@ -1329,6 +1329,6 @@ class ControllerPaymentPPExpress extends Controller {
 			);
 		}
 
-		return $this->load->view('common/buttons', $data);
+		return $this->load->view('sale/recurring_button', $data);
 	}
 }

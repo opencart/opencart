@@ -61,7 +61,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$max_amount = $this->cart->getTotal() * 1.5;
-		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
+		$max_amount = $this->currency->format($max_amount, $this->session->data['currency'], '', false);
 
 		$data = array(
 			'METHOD'             => 'SetExpressCheckout',
@@ -455,7 +455,7 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+				$image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
 			} else {
 				$image = '';
 			}
@@ -483,14 +483,14 @@ class ControllerPaymentPPExpress extends Controller {
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$price = false;
 			}
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']);
+				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$total = false;
 			}
@@ -507,11 +507,11 @@ class ControllerPaymentPPExpress extends Controller {
 				);
 
 				if ($product['recurring']['trial']) {
-					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					$recurring_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 				}
 
-				$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+				$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 
 				if ($product['recurring']['duration']) {
 					$recurring_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
@@ -665,7 +665,7 @@ class ControllerPaymentPPExpress extends Controller {
 		foreach ($totals as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value']),
+				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
 			);
 		}
 
@@ -1054,9 +1054,9 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			$data['language_id'] = $this->config->get('config_language_id');
-			$data['currency_id'] = $this->currency->getId();
-			$data['currency_code'] = $this->currency->getCode();
-			$data['currency_value'] = $this->currency->getValue($this->currency->getCode());
+			$data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+			$data['currency_code'] = $this->session->data['currency'];
+			$data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
@@ -1189,8 +1189,8 @@ class ControllerPaymentPPExpress extends Controller {
 							'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
 							'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 							'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
-							'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-							'CURRENCYCODE'       => $this->currency->getCode()
+							'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'],
+							'CURRENCYCODE'       => $this->session->data['currency']
 						);
 
 						//trial information
@@ -1199,10 +1199,10 @@ class ControllerPaymentPPExpress extends Controller {
 								'TRIALBILLINGPERIOD'      => $billing_period[$item['recurring']['trial_frequency']],
 								'TRIALBILLINGFREQUENCY'   => $item['recurring']['trial_cycle'],
 								'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
-								'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
+								'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity']
 							);
 
-							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 							$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 							$data = array_merge($data, $data_trial);
@@ -1210,7 +1210,7 @@ class ControllerPaymentPPExpress extends Controller {
 							$trial_text = '';
 						}
 
-						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'] . ' ' . $this->currency->getCode();
+						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * $item['quantity'] . ' ' . $this->session->data['currency'];
 						$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 						if ($item['recurring']['duration'] > 0) {
@@ -1282,7 +1282,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$max_amount = $this->cart->getTotal() * 1.5;
-		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
+		$max_amount = $this->currency->format($max_amount, $this->session->data['currency'], '', false);
 
 		if ($this->cart->hasShipping()) {
 			$shipping = 0;
@@ -1468,8 +1468,8 @@ class ControllerPaymentPPExpress extends Controller {
 						'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
 						'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 						'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
-						'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-						'CURRENCYCODE'       => $this->currency->getCode()
+						'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'],
+						'CURRENCYCODE'       => $this->session->data['currency']
 					);
 
 					//trial information
@@ -1478,10 +1478,10 @@ class ControllerPaymentPPExpress extends Controller {
 							'TRIALBILLINGPERIOD'      => $billing_period[$item['recurring']['trial_frequency']],
 							'TRIALBILLINGFREQUENCY'   => $item['recurring']['trial_cycle'],
 							'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
-							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
+							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity']
 						);
 
-						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 						$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 						$data = array_merge($data, $data_trial);
@@ -1489,7 +1489,7 @@ class ControllerPaymentPPExpress extends Controller {
 						$trial_text = '';
 					}
 
-					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'] . ' ' . $this->currency->getCode();
+					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * $item['quantity'] . ' ' . $this->session->data['currency'];
 					$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 					if ($item['recurring']['duration'] > 0) {
@@ -1685,9 +1685,9 @@ class ControllerPaymentPPExpress extends Controller {
 					 * If the capture payment is now complete
 					 */
 					if (isset($this->request->post['auth_status']) && $this->request->post['auth_status'] == 'Completed' && $parent_transaction['payment_status'] == 'Pending') {
-						$captured = $this->currency->format($this->model_payment_pp_express->totalCaptured($parent_transaction['paypal_order_id']), false, false, false);
-						$refunded = $this->currency->format($this->model_payment_pp_express->totalRefundedOrder($parent_transaction['paypal_order_id']), false, false, false);
-						$remaining = $this->currency->format($parent_transaction['amount'] - $captured + $refunded, false, false, false);
+						$captured = $this->currency->format($this->model_payment_pp_express->totalCaptured($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
+						$refunded = $this->currency->format($this->model_payment_pp_express->totalRefundedOrder($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
+						$remaining = $this->currency->format($parent_transaction['amount'] - $captured + $refunded, $this->session->data['currency'], false, false);
 
 						if ($this->config->get('pp_express_debug') == 1) {
 							$this->log->write('Captured: ' . $captured);
@@ -1997,6 +1997,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'link' => $this->url->link('account/recurring', '', true)
 		);
 
-		return $this->load->view('common/buttons', $data);
+		return $this->load->view('sale/recurring_button', $data);
 	}
 }

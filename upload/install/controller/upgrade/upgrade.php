@@ -8,6 +8,7 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_upgrade'] = $this->language->get('text_upgrade');
+		$data['text_server'] = $this->language->get('text_server');
 		$data['text_steps'] = $this->language->get('text_steps');
 		$data['text_error'] = $this->language->get('text_error');
 		$data['text_clear'] = $this->language->get('text_clear');
@@ -46,15 +47,13 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		if (isset($files[$step - 1])) {
 			// Get the upgrade file
-			$code = basename($files[$step - 1], '.php');
-			
 			try {
-				$this->load->model('upgrade/' . $code);
+				$this->load->model('upgrade/' . basename($files[$step - 1], '.php'));
 				
 				// All upgrade methods require a upgrade method
-				$this->{'model_upgrade_' . str_replace('.', '', $code)}->upgrade();
+				$this->{'model_upgrade_' . str_replace('.', '', basename($files[$step - 1], '.php'))}->upgrade();
 			
-				$json['success'] = sprintf($this->language->get('text_progress'), $code, $step, count($files));
+				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step - 1], '.php'), $step, count($files));
 			
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1)));
 			} catch(Exception $exception) {

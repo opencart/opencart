@@ -43,9 +43,6 @@ $language = new Language($config->get('language_default'));
 $language->load($config->get('language_default'));
 $registry->set('language', $language);
 
-// Log
-//$registry->set('log', new Log($config->get('error.filename')));
-
 // Document
 $registry->set('document', new Document());
 

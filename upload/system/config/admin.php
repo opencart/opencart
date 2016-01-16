@@ -15,25 +15,12 @@ $_['db_port']           = DB_PORT;
 // Session
 $_['session_autostart'] = true;
 
-// Autoload Libraries
-$_['library_autoload']  = array(
-	'cart/customer',
-	'cart/affiliate',
-	'cart/currency',
-	'cart/tax',
-	'cart/weight',
-	'cart/length',
-	'cart/cart',
-	'openbay'
-);
-
 // Actions
 $_['action_pre_action']  = array(
-	'startup/setting',
+	'startup/startup',
 	'startup/error',
 	'startup/event',
 	'startup/sass',
-	'startup/language',	
 	'startup/login',
 	'startup/permission'
 );

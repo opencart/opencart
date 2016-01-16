@@ -8,8 +8,6 @@ class ControllerStartupRouter extends Controller {
 			$route = $this->config->get('action_default');
 		}
 		
-		$data = array();
-		
 		// Sanitize the call
 		$route = str_replace('../', '', (string)$route);
 		

@@ -101,18 +101,6 @@ function library($class) {
 	}
 }
 
-function vendor($class) {
-	$file = DIR_SYSTEM . 'vendor/' . str_replace('\\', '/', strtolower($class)) . '.php';
-
-	if (is_file($file)) {
-		include_once(modification($file));
-
-		return true;
-	} else {
-		return false;
-	}
-}
-
 spl_autoload_register('library');
 spl_autoload_extensions('.php');
 

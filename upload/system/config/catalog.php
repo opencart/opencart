@@ -14,29 +14,17 @@ $_['db_port']          = DB_PORT;
 
 // Autoload Libraries
 $_['library_autoload'] = array(
-	'cart/customer',
-	'cart/affiliate',
-	'cart/currency',
-	'cart/tax',
-	'cart/weight',
-	'cart/length',
-	'cart/cart',
 	'openbay'
 );
 
 // Actions
 $_['action_pre_action'] = array(
-	'startup/setting',
+	'startup/startup',
 	'startup/error',
-	'startup/event',
-	'startup/session',
-	'startup/language',
-	'startup/currency',
-	'startup/customer_group',
-	'startup/tax',
-	'startup/tracking',
 	'startup/maintenance',
-	'startup/seo_url'
+	'startup/seo_url',
+	'startup/event',
+	'startup/session'
 );
 
 // Action Events

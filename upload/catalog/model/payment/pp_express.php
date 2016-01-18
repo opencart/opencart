@@ -268,7 +268,7 @@ class ModelPaymentPPExpress extends Model {
 			}
 		}
 
-		foreach ($total_data as $total_row) {
+		foreach ($total_data['totals'] as $total_row) {
 			if (!in_array($total_row['code'], array('total', 'sub_total'))) {
 				if ($total_row['value'] != 0) {
 					$item_price = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);

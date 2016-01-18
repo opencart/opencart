@@ -287,7 +287,7 @@ class ModelShippingRoyalMail extends Model {
 					}
 
 					if ($this->config->get('royal_mail_display_insurance')) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(500) . ')';
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(500, $this->session->data['currency']) . ')';
 					}
 
 					$quote_data['special_delivery_500'] = array(
@@ -295,7 +295,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -327,7 +327,7 @@ class ModelShippingRoyalMail extends Model {
 					}
 
 					if ($this->config->get('royal_mail_display_insurance')) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(1000) . ')';
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(1000, $this->session->data['currency']) . ')';
 
 					}
 
@@ -336,7 +336,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -368,7 +368,7 @@ class ModelShippingRoyalMail extends Model {
 					}
 
 					if ($this->config->get('royal_mail_display_insurance')) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(2500) . ')';
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(2500, $this->session->data['currency']) . ')';
 					}
 
 					$quote_data['special_delivery_2500'] = array(
@@ -376,7 +376,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -411,7 +411,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -446,7 +446,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -481,7 +481,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -516,7 +516,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -839,7 +839,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -934,7 +934,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -1025,7 +1025,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -1270,7 +1270,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}
@@ -1305,7 +1305,7 @@ class ModelShippingRoyalMail extends Model {
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')))
+						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('royal_mail_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 					);
 				}
 			}

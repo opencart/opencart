@@ -17,7 +17,7 @@ class ControllerModuleAmazonPay extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -62,25 +62,25 @@ class ControllerModuleAmazonPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('module/amazon_pay', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
-		$data['action'] = $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('module/amazon_pay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -118,7 +118,7 @@ class ControllerModuleAmazonPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/amazon_pay.tpl', $data));
+		$this->response->setOutput($this->load->view('module/amazon_pay', $data));
 	}
 
 	protected function validate() {

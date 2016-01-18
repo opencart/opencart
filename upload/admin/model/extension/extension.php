@@ -18,5 +18,6 @@ class ModelExtensionExtension extends Model {
 
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

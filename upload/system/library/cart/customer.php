@@ -12,7 +12,6 @@ class Customer {
 	private $address_id;
 
 	public function __construct($registry) {
-		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');

@@ -107,14 +107,14 @@ class ModelPaymentWorldpay extends Model {
 		//trial information
 		if ($item['recurring']['trial'] == 1) {
 			$price = $item['recurring']['trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 		} else {
 			$price = $item['recurring']['price'];
 			$trial_text = '';
 		}
 
-		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+		$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 		$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 		if ($item['recurring']['duration'] > 0) {
@@ -358,7 +358,7 @@ class ModelPaymentWorldpay extends Model {
 		if ($this->config->get('worldpay_debug')) {
 			$log = new Log('worldpay_debug.log');
 			$backtrace = debug_backtrace();
-			$log->write($backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ' Data:  ' . print_r($data, 1));
+			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));
 		}
 	}
 

@@ -14,7 +14,7 @@ class ControllerTotalHandling extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -45,22 +45,22 @@ class ControllerTotalHandling extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_total'),
-			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/handling', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('total/handling', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/handling', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('total/handling', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['handling_total'])) {
 			$data['handling_total'] = $this->request->post['handling_total'];
@@ -100,7 +100,7 @@ class ControllerTotalHandling extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/handling.tpl', $data));
+		$this->response->setOutput($this->load->view('total/handling', $data));
 	}
 
 	protected function validate() {

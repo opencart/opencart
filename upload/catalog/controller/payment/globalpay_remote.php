@@ -58,11 +58,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay_remote.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/globalpay_remote.tpl', $data);
-		}
+		return $this->load->view('payment/globalpay_remote', $data);
 	}
 
 	public function send() {
@@ -95,7 +91,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
+		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$currency = $order_info['currency_code'];
 
 		$accounts = $this->config->get('globalpay_remote_account');

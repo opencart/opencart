@@ -1,24 +1,23 @@
 <?php
 namespace DB;
 final class MySQLi {
-	private $link;
+	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$this->link = new \mysqli($hostname, $username, $password, $database, $port);
+		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
-		if ($this->link->connect_error) {
-			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
-			exit();
+		if ($this->connection->connect_error) {
+			throw new \Exception('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
 		}
 
-		$this->link->set_charset("utf8");
-		$this->link->query("SET SQL_MODE = ''");
+		$this->connection->set_charset("utf8");
+		$this->connection->query("SET SQL_MODE = ''");
 	}
 
 	public function query($sql) {
-		$query = $this->link->query($sql);
+		$query = $this->connection->query($sql);
 
-		if (!$this->link->errno) {
+		if (!$this->connection->errno) {
 			if ($query instanceof \mysqli_result) {
 				$data = array();
 
@@ -38,23 +37,27 @@ final class MySQLi {
 				return true;
 			}
 		} else {
-			trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
+			throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
 		}
 	}
 
 	public function escape($value) {
-		return $this->link->real_escape_string($value);
+		return $this->connection->real_escape_string($value);
 	}
-
+	
 	public function countAffected() {
-		return $this->link->affected_rows;
+		return $this->connection->affected_rows;
 	}
 
 	public function getLastId() {
-		return $this->link->insert_id;
+		return $this->connection->insert_id;
 	}
-
+	
+	public function connected() {
+		return $this->connection->connected();
+	}
+	
 	public function __destruct() {
-		$this->link->close();
+		$this->connection->close();
 	}
 }

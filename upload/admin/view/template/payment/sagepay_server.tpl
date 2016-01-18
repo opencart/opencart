@@ -70,6 +70,11 @@
                 <?php } else { ?>
                 <option value="DEFERRED"><?php echo $text_defered; ?></option>
                 <?php } ?>
+				<?php if ($sagepay_server_transaction == 'AUTHENTICATE') { ?>
+                <option value="AUTHENTICATE" selected="selected"><?php echo $text_authenticate; ?></option>
+                <?php } else { ?>
+                <option value="AUTHENTICATE"><?php echo $text_authenticate; ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -175,4 +180,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

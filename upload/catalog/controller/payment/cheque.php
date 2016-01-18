@@ -16,11 +16,7 @@ class ControllerPaymentCheque extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cheque.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/cheque.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/cheque.tpl', $data);
-		}
+		return $this->load->view('payment/cheque', $data);
 	}
 
 	public function confirm() {

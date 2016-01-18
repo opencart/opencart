@@ -17,6 +17,7 @@ class ModelPaymentSagepayDirect extends Model {
 			  `rebate_status` INT(1) DEFAULT NULL,
 			  `currency_code` CHAR(3) NOT NULL,
 			  `total` DECIMAL( 10, 2 ) NOT NULL,
+			  `card_id` INT(11),
 			  PRIMARY KEY (`sagepay_direct_order_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 
@@ -53,7 +54,6 @@ class ModelPaymentSagepayDirect extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "sagepay_direct_card` (
 			  `card_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `customer_id` INT(11) NOT NULL,
-			  `order_id` INT(11) NOT NULL,
 			  `token` VARCHAR(50) NOT NULL,
 			  `digits` VARCHAR(4) NOT NULL,
 			  `expiry` VARCHAR(5) NOT NULL,
@@ -256,10 +256,10 @@ class ModelPaymentSagepayDirect extends Model {
 		return $data;
 	}
 
-	public function logger($message) {
-		if ($this->config->get('sagepay_direct_debug') == 1) {
+	public function logger($title, $data) {
+		if ($this->config->get('sagepay_direct_debug')) {
 			$log = new Log('sagepay_direct.log');
-			$log->write($message);
+			$log->write($title . ': ' . print_r($data, 1));
 		}
 	}
 }

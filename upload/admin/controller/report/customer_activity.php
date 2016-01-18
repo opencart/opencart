@@ -60,12 +60,12 @@ class ControllerReportCustomerActivity extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'] . $url, true),
+			'href' => $this->url->ssl('report/customer_activity', 'token=' . $this->session->data['token'] . $url, true),
 			'text' => $this->language->get('heading_title')
 		);
 
@@ -95,8 +95,8 @@ class ControllerReportCustomerActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', true),
-				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', true)
+				$this->url->ssl('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', true),
+				$this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', true)
 			);
 
 			$data['activities'][] = array(
@@ -147,7 +147,7 @@ class ControllerReportCustomerActivity extends Controller {
 		$pagination->total = $activity_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/customer_activity', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -162,6 +162,6 @@ class ControllerReportCustomerActivity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/customer_activity.tpl', $data));
+		$this->response->setOutput($this->load->view('report/customer_activity', $data));
 	}
 }

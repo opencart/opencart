@@ -77,12 +77,12 @@ class ControllerAccountReturn extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $return_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_product_limit');
+		$pagination->limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		$pagination->url = $this->url->link('account/return', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_product_limit')) > ($return_total - $this->config->get('config_product_limit'))) ? $return_total : ((($page - 1) * $this->config->get('config_product_limit')) + $this->config->get('config_product_limit')), $return_total, ceil($return_total / $this->config->get('config_product_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) > ($return_total - $this->config->get($this->config->get('config_theme') . '_product_limit'))) ? $return_total : ((($page - 1) * $this->config->get($this->config->get('config_theme') . '_product_limit')) + $this->config->get($this->config->get('config_theme') . '_product_limit')), $return_total, ceil($return_total / $this->config->get($this->config->get('config_theme') . '_product_limit')));
 
 		$data['continue'] = $this->url->link('account/account', '', true);
 
@@ -93,11 +93,7 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/return_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/return_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/return_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/return_list', $data));
 	}
 
 	public function info() {
@@ -214,11 +210,7 @@ class ControllerAccountReturn extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/return_info.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/return_info.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/account/return_info.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('account/return_info', $data));
 		} else {
 			$this->document->setTitle($this->language->get('text_return'));
 
@@ -265,11 +257,7 @@ class ControllerAccountReturn extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 
@@ -546,11 +534,7 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/return_form.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/return_form.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/return_form.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/return_form', $data));
 	}
 
 	protected function validate() {
@@ -566,7 +550,7 @@ class ControllerAccountReturn extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -639,10 +623,6 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 }

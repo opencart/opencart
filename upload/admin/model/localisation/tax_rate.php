@@ -10,6 +10,8 @@ class ModelLocalisationTaxRate extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rate_to_customer_group SET tax_rate_id = '" . (int)$tax_rate_id . "', customer_group_id = '" . (int)$customer_group_id . "'");
 			}
 		}
+		
+		return $tax_rate_id;
 	}
 
 	public function editTaxRate($tax_rate_id, $data) {

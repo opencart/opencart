@@ -17,7 +17,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -120,22 +120,22 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['amazon_login_pay_merchant_id'])) {
 			$data['amazon_login_pay_merchant_id'] = $this->request->post['amazon_login_pay_merchant_id'];
@@ -291,7 +291,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay', $data));
 	}
 
 	public function install() {
@@ -357,7 +357,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/amazon_login_pay_order.tpl', $data);
+				return $this->load->view('payment/amazon_login_pay_order', $data);
 			}
 		}
 	}

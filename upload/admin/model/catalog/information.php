@@ -1,8 +1,6 @@
 <?php
 class ModelCatalogInformation extends Model {
 	public function addInformation($data) {
-		$this->event->trigger('pre.admin.information.add', $data);
-
 		$this->db->query("INSERT INTO " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "'");
 
 		$information_id = $this->db->getLastId();
@@ -29,14 +27,10 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->event->trigger('post.admin.information.add', $information_id);
-
 		return $information_id;
 	}
 
 	public function editInformation($information_id, $data) {
-		$this->event->trigger('pre.admin.information.edit', $data);
-
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "' WHERE information_id = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
@@ -68,13 +62,9 @@ class ModelCatalogInformation extends Model {
 		}
 
 		$this->cache->delete('information');
-
-		$this->event->trigger('post.admin.information.edit', $information_id);
 	}
 
 	public function deleteInformation($information_id) {
-		$this->event->trigger('pre.admin.information.delete', $information_id);
-
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
@@ -82,8 +72,6 @@ class ModelCatalogInformation extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
 
 		$this->cache->delete('information');
-
-		$this->event->trigger('post.admin.information.delete', $information_id);
 	}
 
 	public function getInformation($information_id) {

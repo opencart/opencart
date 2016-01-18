@@ -6,7 +6,7 @@ class ControllerCommonColumnLeft extends Controller {
 			$data['menu'] = $this->load->controller('common/menu');
 			$data['stats'] = $this->load->controller('common/stats');
 
-			return $this->load->view('common/column_left.tpl', $data);
+			return $this->load->view('common/column_left', $data);
 		}
 	}
 }

@@ -31,7 +31,7 @@ class ModelShippingItem extends Model {
 				'title'        => $this->language->get('text_description'),
 				'cost'         => $this->config->get('item_cost') * $items,
 				'tax_class_id' => $this->config->get('item_tax_class_id'),
-				'text'         => $this->currency->format($this->tax->calculate($this->config->get('item_cost') * $items, $this->config->get('item_tax_class_id'), $this->config->get('config_tax')))
+				'text'         => $this->currency->format($this->tax->calculate($this->config->get('item_cost') * $items, $this->config->get('item_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 			);
 
 			$method_data = array(

@@ -4,6 +4,8 @@ class ModelLocalisationZone extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "zone SET status = '" . (int)$data['status'] . "', name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', country_id = '" . (int)$data['country_id'] . "'");
 
 		$this->cache->delete('zone');
+		
+		return $this->db->getLastId();
 	}
 
 	public function editZone($zone_id, $data) {

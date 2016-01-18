@@ -41,15 +41,15 @@ class ControllerMarketingContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('marketing/contact', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('marketing/contact', 'token=' . $this->session->data['token'], true);
 
 		$this->load->model('setting/store');
 
@@ -63,7 +63,7 @@ class ControllerMarketingContact extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/contact.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/contact', $data));
 	}
 
 	public function send() {
@@ -222,7 +222,7 @@ class ControllerMarketingContact extends Controller {
 					}
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), true));
+						$json['next'] = str_replace('&amp;', '&', $this->url->ssl('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), true));
 					} else {
 						$json['next'] = '';
 					}
@@ -236,7 +236,7 @@ class ControllerMarketingContact extends Controller {
 					$message .= '</html>' . "\n";
 
 					foreach ($emails as $email) {
-						if (preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
+						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 							$mail = new Mail();
 							$mail->protocol = $this->config->get('config_mail_protocol');
 							$mail->parameter = $this->config->get('config_mail_parameter');

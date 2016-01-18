@@ -295,8 +295,6 @@ class ControllerOpenbayAmazon extends Controller {
 			}
 		}
 
-		$this->event->trigger('post.order.history.add', $order_id);
-
 		$logger->write('Order ' . $amazon_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 

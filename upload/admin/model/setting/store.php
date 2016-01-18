@@ -1,8 +1,6 @@
 <?php
 class ModelSettingStore extends Model {
 	public function addStore($data) {
-		$this->event->trigger('pre.admin.store.add', $data);
-
 		$this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "'");
 
 		$store_id = $this->db->getLastId();
@@ -16,30 +14,20 @@ class ModelSettingStore extends Model {
 
 		$this->cache->delete('store');
 
-		$this->event->trigger('post.admin.store.add', $store_id);
-
 		return $store_id;
 	}
 
 	public function editStore($store_id, $data) {
-		$this->event->trigger('pre.admin.store.edit', $data);
-
 		$this->db->query("UPDATE " . DB_PREFIX . "store SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "' WHERE store_id = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
-
-		$this->event->trigger('post.admin.store.edit', $store_id);
 	}
 
 	public function deleteStore($store_id) {
-		$this->event->trigger('pre.admin.store.delete', $store_id);
-
 		$this->db->query("DELETE FROM " . DB_PREFIX . "store WHERE store_id = '" . (int)$store_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE store_id = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
-
-		$this->event->trigger('post.admin.store.delete', $store_id);
 	}
 
 	public function getStore($store_id) {

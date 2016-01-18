@@ -13,7 +13,7 @@ class ControllerDashboardChart extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		return $this->load->view('dashboard/chart.tpl', $data);
+		return $this->load->view('dashboard/chart', $data);
 	}
 
 	public function chart() {

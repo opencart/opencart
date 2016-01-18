@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
             <div class="col-sm-10">
               <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                 <input type="text" name="custom_field_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
               </div>
               <?php if (isset($error_name[$language['language_id']])) { ?>
@@ -121,6 +121,12 @@
               <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
             </div>
           </div>
+          <div class="form-group" id="display-validation">
+            <label class="col-sm-2 control-label" for="input-validation"><span data-toggle="tooltip" title="<?php echo $help_regex ?>"><?php echo $entry_validation ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="validation" id="input-validation" value="<?php echo $validation ?>" placeholder="<?php echo $text_regex ?>"  class="form-control"/>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
             <div class="col-sm-10">
@@ -195,7 +201,7 @@
               <tr id="custom-field-value-row<?php echo $custom_field_value_row; ?>">
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[<?php echo $custom_field_value_row; ?>][custom_field_value_id]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                   <?php foreach ($languages as $language) { ?>
-                  <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                  <div class="input-group"> <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                     <input type="text" name="custom_field_value[<?php echo $custom_field_value_row; ?>][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_value['custom_field_value_description'][$language['language_id']]) ? $custom_field_value['custom_field_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_custom_value; ?>" class="form-control" />
                   </div>
                   <?php if (isset($error_custom_field_value[$custom_field_value_row][$language['language_id']])) { ?>
@@ -223,10 +229,10 @@
 $('select[name=\'type\']').on('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
 		$('#custom-field-value').show();
-		$('#display-value').hide();
+		$('#display-value, #display-validation').hide();
 	} else {
 		$('#custom-field-value').hide();
-		$('#display-value').show();
+		$('#display-value, #display-validation').show();
 	}
 	
 	if (this.value == 'date') {
@@ -264,7 +270,7 @@ function addCustomFieldValue() {
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="input-group">';
-	html += '      <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_custom_value; ?>" class="form-control" />';
+	html += '      <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_custom_value; ?>" class="form-control" />';
     html += '    </div>';
 	<?php } ?>
 	html += '  </td>';

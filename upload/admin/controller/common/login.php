@@ -8,16 +8,16 @@ class ControllerCommonLogin extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true));
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['token'] = token(32);
-
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
+			
+			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
 				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
 			} else {
-				$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true));
 			}
 		}
 
@@ -49,7 +49,7 @@ class ControllerCommonLogin extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/login', '', true);
+		$data['action'] = $this->url->ssl('common/login', '', true);
 
 		if (isset($this->request->post['username'])) {
 			$data['username'] = $this->request->post['username'];
@@ -75,13 +75,13 @@ class ControllerCommonLogin extends Controller {
 				$url .= http_build_query($this->request->get);
 			}
 
-			$data['redirect'] = $this->url->link($route, $url, true);
+			$data['redirect'] = $this->url->ssl($route, $url, true);
 		} else {
 			$data['redirect'] = '';
 		}
 
 		if ($this->config->get('config_password')) {
-			$data['forgotten'] = $this->url->link('common/forgotten', '', true);
+			$data['forgotten'] = $this->url->ssl('common/forgotten', '', true);
 		} else {
 			$data['forgotten'] = '';
 		}
@@ -89,7 +89,7 @@ class ControllerCommonLogin extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/login.tpl', $data));
+		$this->response->setOutput($this->load->view('common/login', $data));
 	}
 
 	protected function validate() {
@@ -98,38 +98,5 @@ class ControllerCommonLogin extends Controller {
 		}
 
 		return !$this->error;
-	}
-
-	public function check() {
-		$route = isset($this->request->get['route']) ? $this->request->get['route'] : '';
-
-		$ignore = array(
-			'common/login',
-			'common/forgotten',
-			'common/reset'
-		);
-
-		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
-			return new Action('common/login');
-		}
-
-		if (isset($this->request->get['route'])) {
-			$ignore = array(
-				'common/login',
-				'common/logout',
-				'common/forgotten',
-				'common/reset',
-				'error/not_found',
-				'error/permission'
-			);
-
-			if (!in_array($route, $ignore) && (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token']))) {
-				return new Action('common/login');
-			}
-		} else {
-			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-				return new Action('common/login');
-			}
-		}
 	}
 }

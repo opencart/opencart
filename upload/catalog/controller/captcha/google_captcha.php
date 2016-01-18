@@ -3,7 +3,7 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
     public function index($error = array()) {
         $this->load->language('captcha/google_captcha');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+		$data['text_captcha'] = $this->language->get('text_captcha');
 
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
@@ -17,11 +17,7 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
 
         $data['route'] = $this->request->get['route']; 
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/captcha/google_captcha.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/captcha/google_captcha.tpl', $data);
-		} else {
-			return $this->load->view('default/template/captcha/google_captcha.tpl', $data);
-		}
+		return $this->load->view('captcha/google_captcha', $data);
     }
 
     public function validate() {

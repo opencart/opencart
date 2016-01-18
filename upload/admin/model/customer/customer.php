@@ -16,6 +16,8 @@ class ModelCustomerCustomer extends Model {
 				}
 			}
 		}
+		
+		return $customer_id;
 	}
 
 	public function editCustomer($customer_id, $data) {
@@ -383,7 +385,7 @@ class ModelCustomerCustomer extends Model {
 			}
 
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
-			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
+			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id), $this->session->data['currency']));
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -515,6 +517,7 @@ class ModelCustomerCustomer extends Model {
 		}
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
+		
 		return $query->rows;
 	}
 

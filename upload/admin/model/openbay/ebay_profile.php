@@ -71,19 +71,19 @@ class ModelOpenbayEbayProfile extends Model{
 		$types = array(
 			0 => array(
 				'name'          => $this->language->get('text_type_shipping'),
-				'template'      => 'openbay/ebay_profile_form_shipping.tpl'
+				'template'      => 'openbay/ebay_profile_form_shipping'
 			),
 			1 => array(
 				'name'          => $this->language->get('text_type_returns'),
-				'template'      => 'openbay/ebay_profile_form_returns.tpl'
+				'template'      => 'openbay/ebay_profile_form_returns'
 			),
 			2 => array(
 				'name'          => $this->language->get('text_type_template'),
-				'template'      => 'openbay/ebay_profile_form_template.tpl'
+				'template'      => 'openbay/ebay_profile_form_template'
 			),
 			3 => array(
 				'name'          => $this->language->get('text_type_general'),
-				'template'      => 'openbay/ebay_profile_form_generic.tpl'
+				'template'      => 'openbay/ebay_profile_form_generic'
 			)
 		);
 

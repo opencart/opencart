@@ -38,7 +38,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerUserUser extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerUserUser extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('user/user/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('user/user/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('user/user/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('user/user/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['users'] = array();
 
@@ -177,7 +177,7 @@ class ControllerUserUser extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, true)
+				'edit'       => $this->url->ssl('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, true)
 			);
 		}
 
@@ -228,9 +228,9 @@ class ControllerUserUser extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_username'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=username' . $url, true);
-		$data['sort_status'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_username'] = $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . '&sort=username' . $url, true);
+		$data['sort_status'] = $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -246,7 +246,7 @@ class ControllerUserUser extends Controller {
 		$pagination->total = $user_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -259,7 +259,7 @@ class ControllerUserUser extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('user/user_list.tpl', $data));
+		$this->response->setOutput($this->load->view('user/user_list', $data));
 	}
 
 	protected function getForm() {
@@ -336,21 +336,21 @@ class ControllerUserUser extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['user_id'])) {
-			$data['action'] = $this->url->link('user/user/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('user/user/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $this->request->get['user_id'] . $url, true);
+			$data['action'] = $this->url->ssl('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $this->request->get['user_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('user/user', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
@@ -444,7 +444,7 @@ class ControllerUserUser extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('user/user_form.tpl', $data));
+		$this->response->setOutput($this->load->view('user/user_form', $data));
 	}
 
 	protected function validateForm() {

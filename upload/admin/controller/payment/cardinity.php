@@ -293,6 +293,12 @@ class ControllerPaymentCardinity extends Controller {
 			$check_credentials = false;
 		}
 
+		if (!class_exists('Cardinity\Client')) {
+			$this->error['warning'] = $this->language->get('error_composer');
+
+			$check_credentials = false;
+		}
+
 		if ($check_credentials) {
 			$client = $this->model_payment_cardinity->createClient(array(
 				'key'    => $this->request->post['cardinity_key'],

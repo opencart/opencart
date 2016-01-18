@@ -93,27 +93,27 @@ class ModelPaymentCardinity extends Model {
 		);
 	}
 
-	public function log($data, $step = 1) {
+	public function log($data, $class_step = 6, $function_step = 6) {
 		if ($this->config->get('cardinity_debug')) {
 			$backtrace = debug_backtrace();
 			$log = new Log('cardinity.log');
-			$log->write('(' . $backtrace[$step]['class'] . '::' . $backtrace[$step]['function'] . ') - ' . print_r($data, true));
+			$log->write('(' . $backtrace[$class_step]['class'] . '::' . $backtrace[$function_step]['function'] . ') - ' . print_r($data, true));
 		}
 	}
 
 	private function exception(Exception $exception) {
-		$this->log($exception->getMessage(), 2);
+		$this->log($exception->getMessage(), 1, 2);
 
 		switch (true) {
 			case $exception instanceof CardinityException\Request:
 				if ($exception->getErrorsAsString()) {
-					$this->log($exception->getErrorsAsString(), 2);
+					$this->log($exception->getErrorsAsString(), 1, 2);
 				}
 
 				break;
 			case $exception instanceof CardinityException\InvalidAttributeValue:
 				foreach ($exception->getViolations() as $violation) {
-					$this->log($violation->getMessage(), 2);
+					$this->log($violation->getMessage(), 1, 2);
 				}
 
 				break;

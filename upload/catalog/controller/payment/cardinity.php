@@ -32,11 +32,7 @@ class ControllerPaymentCardinity extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cardinity')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/cardinity', $data);
-		} else {
-			return $this->load->view('default/template/payment/cardinity', $data);
-		}
+		return $this->load->view('payment/cardinity', $data);
 	}
 
 	public function send() {
@@ -168,7 +164,7 @@ class ControllerPaymentCardinity extends Controller {
 		$data['success'] = $success;
 		$data['redirect'] = $redirect;
 
-		$this->response->setOutput($this->load->view('default/template/payment/cardinity_3ds', $data));
+		$this->response->setOutput($this->load->view('payment/cardinity_3ds', $data));
 	}
 
 	public function threeDSecureCallback() {

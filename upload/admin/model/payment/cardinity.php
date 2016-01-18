@@ -25,6 +25,8 @@ class ModelPaymentCardinity extends Model {
 
 			return true;
 		} catch (Exception $e) {
+			$this->log($e->getMessage());
+
 			return false;
 		}
 	}

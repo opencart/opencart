@@ -470,9 +470,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function getOrderInfo() {
-		$data = array();
-
-		$data = array_merge($data, $this->load->language('extension/openbay'));
+		$data = $this->load->language('extension/openbay');
 
 		if ($this->config->get('ebay_status') == 1) {
 			if ($this->openbay->ebay->getOrder($this->request->get['order_id']) !== false) {

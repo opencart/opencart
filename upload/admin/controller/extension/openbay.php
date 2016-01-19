@@ -71,8 +71,9 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/version');
+		$this->load->language('extension/openbay');
 
-		$data = $this->load->language('extension/openbay');
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -156,8 +157,9 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function manage() {
 		$this->load->model('setting/setting');
+		$this->load->language('extension/openbay');
 
-		$data = $this->load->language('extension/openbay');
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('text_manage'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -470,7 +472,9 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function getOrderInfo() {
-		$data = $this->load->language('extension/openbay');
+		$this->load->language('extension/openbay');
+
+		$data = $this->language->all();
 
 		if ($this->config->get('ebay_status') == 1) {
 			if ($this->openbay->ebay->getOrder($this->request->get['order_id']) !== false) {
@@ -569,10 +573,12 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function orderList() {
-		$this->load->language('sale/order');
 		$this->load->model('openbay/order');
+		$this->load->language('sale/order');
+		$this->load->language('openbay/openbay_order');
 
-		$data = $this->load->language('openbay/openbay_order');
+		$data = $this->language->all();
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -869,7 +875,10 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function orderListUpdate() {
-		$data = $this->load->language('openbay/openbay_order');
+		$this->load->language('openbay/openbay_order');
+
+		$data = $this->language->all();
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
@@ -1000,7 +1009,9 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('openbay/openbay');
 		$this->load->model('localisation/order_status');
 
-		$data = $this->load->language('openbay/openbay_order');
+		$this->load->language('openbay/openbay_order');
+
+		$data = $this->language->all();
 
 		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
 		$status_mapped = array();
@@ -1141,10 +1152,10 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$data = array();
+		$this->load->language('catalog/product');
+		$this->load->language('openbay/openbay_itemlist');
 
-		$data = array_merge($data, $this->load->language('catalog/product'));
-		$data = array_merge($data, $this->load->language('openbay/openbay_itemlist'));
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

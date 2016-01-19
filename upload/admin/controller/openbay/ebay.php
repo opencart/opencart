@@ -25,7 +25,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function index() {
-		$data = $this->load->language('openbay/ebay');
+		$this->load->language('openbay/ebay');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -76,7 +78,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function settings() {
-		$data = $this->load->language('openbay/ebay_settings');
+		$this->load->language('openbay/ebay_settings');
+
+		$data = $this->language->all();
 
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/ebay');
@@ -542,7 +546,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function summary() {
-		$data = $this->load->language('openbay/ebay_summary');
+		$this->load->language('openbay/ebay_summary');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -601,7 +607,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function viewItemImport() {
 		$this->load->model('openbay/ebay_product');
 
-		$data = $this->load->language('openbay/ebay_import');
+		$this->load->language('openbay/ebay_import');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -730,7 +738,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function subscription() {
-		$data = $this->load->language('openbay/ebay_subscription');
+		$this->load->language('openbay/ebay_subscription');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -769,7 +779,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function viewUsage() {
-		$data = $this->load->language('openbay/ebay_usage');
+		$this->load->language('openbay/ebay_usage');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -820,7 +832,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function viewOrderImport() {
-		$data = $this->load->language('openbay/ebay_orders');
+		$this->load->language('openbay/ebay_orders');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -859,7 +873,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function syncronise() {
-		$data = $this->load->language('openbay/ebay_syncronise');
+		$this->load->language('openbay/ebay_syncronise');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -906,7 +922,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function viewItemLinks() {
 		$this->load->model('openbay/ebay');
 
-		$data = $this->load->language('openbay/ebay_links');
+		$this->load->language('openbay/ebay_links');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -1068,7 +1086,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function edit() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->get['product_id'])) {
-				$data = $this->load->language('openbay/ebay_edit');
+				$this->load->language('openbay/ebay_edit');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');
@@ -1250,7 +1270,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function create() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->get['product_id'])) {
-				$data = $this->load->language('openbay/ebay_new');
+				$this->load->language('openbay/ebay_new');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');
@@ -1475,7 +1497,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function createBulk() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->post['selected'])) {
-				$data = $this->load->language('openbay/ebay_newbulk');
+				$this->load->language('openbay/ebay_newbulk');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');

@@ -3,7 +3,9 @@ class ControllerOpenbayEbayProfile extends Controller {
 	private $error = array();
 
 	public function profileAll() {
-		$data = $this->load->language('openbay/ebay_profile');
+		$this->load->language('openbay/ebay_profile');
+
+		$data = $this->language->all();
 
 		$this->load->model('openbay/ebay_profile');
 
@@ -60,9 +62,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function add() {
-		$data = $this->load->language('openbay/ebay_profile');
-
 		$this->load->model('openbay/ebay_profile');
+
+		$this->load->language('openbay/ebay_profile');
+
+		$data = $this->language->all();
 
 		$data['btn_save'] = $this->url->ssl('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->ssl('openbay/ebay_profile/profileall', 'token=' . $this->session->data['token'], true);
@@ -95,9 +99,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function edit() {
-		$data = $this->load->language('openbay/ebay_profile');
-
 		$this->load->model('openbay/ebay_profile');
+
+		$this->load->language('openbay/ebay_profile');
+
+		$data = $this->language->all();
 
 		if ($this->request->post && $this->profileValidate()) {
 			$this->session->data['success'] = $data['text_updated'];

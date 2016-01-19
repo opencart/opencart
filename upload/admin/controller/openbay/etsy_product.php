@@ -3,9 +3,12 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	private $error;
 
 	public function create() {
-		$data = $this->load->language('openbay/etsy_create');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+
+		$this->load->language('openbay/etsy_create');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -195,7 +198,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function edit() {
-		$data = $this->load->language('openbay/etsy_edit');
+		$this->load->language('openbay/etsy_edit');
+
+		$data = $this->language->all();
+
 		$this->load->model('openbay/etsy_product');
 		$this->load->model('tool/image');
 
@@ -463,9 +469,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function links() {
 		$this->load->model('openbay/etsy_product');
 
-		$data = $this->load->language('openbay/etsy_links');
+		$this->load->language('openbay/etsy_links');
 
-		$data['cancel']   = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'], true);
+		$data = $this->language->all();
+
+		$data['cancel'] = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'], true);
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -527,7 +535,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function listings() {
-		$data = $this->load->language('openbay/etsy_listings');
+		$this->load->language('openbay/etsy_listings');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

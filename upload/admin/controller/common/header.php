@@ -44,23 +44,23 @@ class ControllerCommonHeader extends Controller {
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = '';
 
-			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
+			$data['home'] = $this->url->ssl('common/dashboard', '', true);
 		} else {
 			$data['logged'] = true;
 
-			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
-			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
+			$data['home'] = $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true);
+			$data['logout'] = $this->url->ssl('common/logout', 'token=' . $this->session->data['token'], true);
 
 			// Orders
 			$this->load->model('sale/order');
 
 			// Processing Orders
 			$data['processing_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status'))));
-			$data['processing_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_processing_status')), 'SSL');
+			$data['processing_status'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_processing_status')), true);
 
 			// Complete Orders
 			$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
-			$data['complete_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), 'SSL');
+			$data['complete_status'] = $this->url->ssl('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), true);
 
 			// Returns
 			$this->load->model('sale/return');
@@ -69,21 +69,21 @@ class ControllerCommonHeader extends Controller {
 
 			$data['return_total'] = $return_total;
 
-			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
+			$data['return'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'], true);
 
 			// Customers
 			$this->load->model('report/customer');
 
 			$data['online_total'] = $this->model_report_customer->getTotalCustomersOnline();
 
-			$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
+			$data['online'] = $this->url->ssl('report/customer_online', 'token=' . $this->session->data['token'], true);
 
 			$this->load->model('customer/customer');
 
 			$customer_total = $this->model_customer_customer->getTotalCustomers(array('filter_approved' => false));
 
 			$data['customer_total'] = $customer_total;
-			$data['customer_approval'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
+			$data['customer_approval'] = $this->url->ssl('customer/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', true);
 
 			// Products
 			$this->load->model('catalog/product');
@@ -92,7 +92,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['product_total'] = $product_total;
 
-			$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&filter_quantity=0', 'SSL');
+			$data['product'] = $this->url->ssl('catalog/product', 'token=' . $this->session->data['token'] . '&filter_quantity=0', true);
 
 			// Reviews
 			$this->load->model('catalog/review');
@@ -101,7 +101,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['review_total'] = $review_total;
 
-			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
+			$data['review'] = $this->url->ssl('catalog/review', 'token=' . $this->session->data['token'] . '&filter_status=0', true);
 
 			// Affliate
 			$this->load->model('marketing/affiliate');
@@ -109,7 +109,7 @@ class ControllerCommonHeader extends Controller {
 			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates(array('filter_approved' => false));
 
 			$data['affiliate_total'] = $affiliate_total;
-			$data['affiliate_approval'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=1', 'SSL');
+			$data['affiliate_approval'] = $this->url->ssl('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=1', true);
 
 			$data['alerts'] = $customer_total + $product_total + $review_total + $return_total + $affiliate_total;
 
@@ -133,6 +133,6 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 
-		return $this->load->view('common/header.tpl', $data);
+		return $this->load->view('common/header', $data);
 	}
 }

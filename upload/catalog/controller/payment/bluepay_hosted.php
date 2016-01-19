@@ -37,10 +37,10 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		}
 
 		$data["AMOUNT"] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
-		$data['APPROVED_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', 'SSL');
-		$data['DECLINED_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', 'SSL');
-		$data['MISSING_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', 'SSL');
-		$data['REDIRECT_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', 'SSL');
+		$data['APPROVED_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', true);
+		$data['DECLINED_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', true);
+		$data['MISSING_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', true);
+		$data['REDIRECT_URL'] = $this->url->link('payment/bluepay_hosted/callback', '', true);
 
 		$data['TPS_DEF'] = "MERCHANT APPROVED_URL DECLINED_URL MISSING_URL MODE TRANSACTION_TYPE TPS_DEF AMOUNT";
 		$data['TAMPER_PROOF_SEAL'] = md5($this->config->get('bluepay_hosted_secret_key') . $data['MERCHANT'] . $data['APPROVED_URL'] . $data['DECLINED_URL'] . $data['MISSING_URL'] . $data['MODE'] . $data['TRANSACTION_TYPE'] . $data['TPS_DEF'] . $data['AMOUNT']);
@@ -51,11 +51,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/bluepay_hosted.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/bluepay_hosted.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/bluepay_hosted.tpl', $data);
-		}
+		return $this->load->view('payment/bluepay_hosted', $data);
 	}
 
 	public function callback() {
@@ -83,14 +79,14 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 
 				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_hosted_order_status_id'));
 
-				$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/success', '', true));
 			} else {
 				$this->session->data['error'] = $response_data['Result'] . ' : ' . $response_data['MESSAGE'];
 
-				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/checkout', '', true));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 	}
 

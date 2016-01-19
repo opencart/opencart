@@ -176,8 +176,8 @@ class ModelOpenbayEbayOrder extends Model{
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			if ($notify) {
-				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_directory']);
+				$language = new Language($order_info['language_code']);
+				$language->load($order_info['language_code']);
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
@@ -245,14 +245,14 @@ class ModelOpenbayEbayOrder extends Model{
 				foreach ($order_total_query->rows as $order_total) {
 					$this->load->model('total/' . $order_total['code']);
 
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					if (property_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
 						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}
 
 				// Send out order confirmation mail
-				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_directory']);
+				$language = new Language($order_info['language_code']);
+				$language->load($order_info['language_code']);
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
@@ -426,12 +426,6 @@ class ModelOpenbayEbayOrder extends Model{
 					);
 				}
 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
-					$html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $data);
-				} else {
-					$html = $this->load->view('default/template/mail/order.tpl', $data);
-				}
-
 				// Text Mail
 				$text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 				$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
@@ -496,7 +490,7 @@ class ModelOpenbayEbayOrder extends Model{
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 					$mail->setSubject($subject);
-					$mail->setHtml($html);
+					$mail->setHtml($this->load->view('mail/order', $data));
 					$mail->setText($text);
 					$mail->send();
 				}

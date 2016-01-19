@@ -65,11 +65,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 			$data['shipping_address_custom_field'] = array();
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping_address.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/shipping_address.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/shipping_address.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
 	}
 
 	public function save() {
@@ -79,12 +75,12 @@ class ControllerCheckoutShippingAddress extends Controller {
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate cart has products and has stock.
@@ -159,7 +155,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 

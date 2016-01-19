@@ -71,14 +71,14 @@ class ControllerInformationSitemap extends Controller {
 		}
 
 		$data['special'] = $this->url->link('product/special');
-		$data['account'] = $this->url->link('account/account', '', 'SSL');
-		$data['edit'] = $this->url->link('account/edit', '', 'SSL');
-		$data['password'] = $this->url->link('account/password', '', 'SSL');
-		$data['address'] = $this->url->link('account/address', '', 'SSL');
-		$data['history'] = $this->url->link('account/order', '', 'SSL');
-		$data['download'] = $this->url->link('account/download', '', 'SSL');
+		$data['account'] = $this->url->link('account/account', '', true);
+		$data['edit'] = $this->url->link('account/edit', '', true);
+		$data['password'] = $this->url->link('account/password', '', true);
+		$data['address'] = $this->url->link('account/address', '', true);
+		$data['history'] = $this->url->link('account/order', '', true);
+		$data['download'] = $this->url->link('account/download', '', true);
 		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 		$data['search'] = $this->url->link('product/search');
 		$data['contact'] = $this->url->link('information/contact');
 
@@ -100,10 +100,6 @@ class ControllerInformationSitemap extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/sitemap.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/sitemap.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/information/sitemap.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('information/sitemap', $data));
 	}
 }

@@ -26,10 +26,10 @@ class ControllerDashboardActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
-				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
-				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'),
-				$this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=', 'SSL')
+				$this->url->ssl('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', true),
+				$this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', true),
+				$this->url->ssl('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', true),
+				$this->url->ssl('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=', true)
 			);
 
 			$data['activities'][] = array(
@@ -38,6 +38,6 @@ class ControllerDashboardActivity extends Controller {
 			);
 		}
 
-		return $this->load->view('dashboard/activity.tpl', $data);
+		return $this->load->view('dashboard/activity', $data);
 	}
 }

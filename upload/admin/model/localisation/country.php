@@ -4,6 +4,8 @@ class ModelLocalisationCountry extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "country SET name = '" . $this->db->escape($data['name']) . "', iso_code_2 = '" . $this->db->escape($data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape($data['iso_code_3']) . "', address_format = '" . $this->db->escape($data['address_format']) . "', postcode_required = '" . (int)$data['postcode_required'] . "', status = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('country');
+		
+		return $this->db->getLastId();
 	}
 
 	public function editCountry($country_id, $data) {

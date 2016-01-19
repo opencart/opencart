@@ -55,11 +55,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/firstdata_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/firstdata_remote.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/firstdata_remote.tpl', $data);
-		}
+		return $this->load->view('payment/firstdata_remote', $data);
 	}
 
 	public function send() {

@@ -40,7 +40,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/ebay_order');
 
-		$this->language->load('openbay/ebay_order');
+		$this->load->language('openbay/ebay_order');
 
 		if ($this->model_openbay_ebay_order->lockExists($order->smpId) == true) {
 			return;
@@ -410,7 +410,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 	private function updateOrderWithConfirmedData($order_id, $order) {
 		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
-		$totals_language = $this->language->load('openbay/ebay_order');
+		$totals_language = $this->load->language('openbay/ebay_order');
 
 		$name_parts     = $this->openbay->splitName((string)$order->address->name);
 		$user           = array();

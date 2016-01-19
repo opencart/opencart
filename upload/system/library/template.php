@@ -1,39 +1,22 @@
 <?php
 class Template {
-	private $data = array();
+	private $adaptor;
 
-  public function __construct($driver) {
-	    $class = 'Template\\' . $driver;
+  	public function __construct($adaptor) {
+	    $class = 'Template\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->template = new $class($expire);
+			$this->adaptor = new $class($expire);
 		} else {
-			exit('Error: Could not load template driver ' . $driver . ' cache!');
+			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
 		}
 	}
 
 	public function set($key, $value) {
-		$this->data[$key] = $value;
+		$this->adaptor->set($key, $value);
 	}
 
-	public function render() {
-		$file = DIR_TEMPLATE . $template;
-
-		if (file_exists($file)) {
-			extract($data);
-
-			ob_start();
-
-			require($file);
-
-			$output = ob_get_contents();
-
-			ob_end_clean();
-
-			return $output;
-		} else {
-			trigger_error('Error: Could not load template ' . $file . '!');
-			exit();
-		}
+	public function render($template) {
+		return $this->adaptor->render($template);
 	}
 }

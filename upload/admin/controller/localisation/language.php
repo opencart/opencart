@@ -38,7 +38,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('localisation/language/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->ssl('localisation/language/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('localisation/language/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['languages'] = array();
 
@@ -177,7 +177,7 @@ class ControllerLocalisationLanguage extends Controller {
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : null),
 				'code'        => $result['code'],
 				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('localisation/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, 'SSL')
+				'edit'        => $this->url->ssl('localisation/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, true)
 			);
 		}
 
@@ -228,9 +228,9 @@ class ControllerLocalisationLanguage extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$data['sort_code'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . '&sort=code' . $url, 'SSL');
-		$data['sort_sort_order'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
+		$data['sort_name'] = $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_code'] = $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
+		$data['sort_sort_order'] = $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, true);
 
 		$url = '';
 
@@ -246,7 +246,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$pagination->total = $language_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -257,7 +257,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/language_list.tpl', $data));
+		$this->response->setOutput($this->load->view('localisation/language_list', $data));
 	}
 
 	protected function getForm() {
@@ -269,16 +269,9 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_code'] = $this->language->get('entry_code');
-		$data['entry_locale'] = $this->language->get('entry_locale');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_directory'] = $this->language->get('entry_directory');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 
-		$data['help_code'] = $this->language->get('help_code');
-		$data['help_locale'] = $this->language->get('help_locale');
-		$data['help_image'] = $this->language->get('help_image');
-		$data['help_directory'] = $this->language->get('help_directory');
 		$data['help_status'] = $this->language->get('help_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -302,30 +295,6 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['error_code'] = '';
 		}
 
-		if (isset($this->error['locale'])) {
-			$data['error_locale'] = $this->error['locale'];
-		} else {
-			$data['error_locale'] = '';
-		}
-
-		if (isset($this->error['image'])) {
-			$data['error_image'] = $this->error['image'];
-		} else {
-			$data['error_image'] = '';
-		}
-
-		if (isset($this->error['directory'])) {
-			$data['error_directory'] = $this->error['directory'];
-		} else {
-			$data['error_directory'] = '';
-		}
-
-		if (isset($this->error['filename'])) {
-			$data['error_filename'] = $this->error['filename'];
-		} else {
-			$data['error_filename'] = '';
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -344,21 +313,21 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['language_id'])) {
-			$data['action'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->ssl('localisation/language/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('localisation/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, 'SSL');
+			$data['action'] = $this->url->ssl('localisation/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->ssl('localisation/language', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
@@ -379,29 +348,13 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['code'] = '';
 		}
+		
+		$data['languages'] = array();
+		
+		$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
-		if (isset($this->request->post['locale'])) {
-			$data['locale'] = $this->request->post['locale'];
-		} elseif (!empty($language_info)) {
-			$data['locale'] = $language_info['locale'];
-		} else {
-			$data['locale'] = '';
-		}
-
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($language_info)) {
-			$data['image'] = $language_info['image'];
-		} else {
-			$data['image'] = '';
-		}
-
-		if (isset($this->request->post['directory'])) {
-			$data['directory'] = $this->request->post['directory'];
-		} elseif (!empty($language_info)) {
-			$data['directory'] = $language_info['directory'];
-		} else {
-			$data['directory'] = '';
+		foreach ($folders as $folder) {
+			$data['languages'][] = basename($folder);
 		}
 
 		if (isset($this->request->post['sort_order'])) {
@@ -424,7 +377,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/language_form.tpl', $data));
+		$this->response->setOutput($this->load->view('localisation/language_form', $data));
 	}
 
 	protected function validateForm() {
@@ -438,18 +391,6 @@ class ControllerLocalisationLanguage extends Controller {
 
 		if (utf8_strlen($this->request->post['code']) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
-		}
-
-		if (!$this->request->post['locale']) {
-			$this->error['locale'] = $this->language->get('error_locale');
-		}
-
-		if (!$this->request->post['directory']) {
-			$this->error['directory'] = $this->language->get('error_directory');
-		}
-
-		if ((utf8_strlen($this->request->post['image']) < 3) || (utf8_strlen($this->request->post['image']) > 32)) {
-			$this->error['image'] = $this->language->get('error_image');
 		}
 
 		return !$this->error;

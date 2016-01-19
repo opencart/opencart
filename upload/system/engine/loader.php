@@ -1,113 +1,163 @@
 <?php
 final class Loader {
-	private $registry;
+	protected $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-
+	
 	public function controller($route, $data = array()) {
-		// $this->event->trigger('pre.controller.' . $route, $data);
-
-		$parts = explode('/', str_replace('../', '', (string)$route));
-
-		// Break apart the route
-		while ($parts) {
-			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
-			$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', implode('/', $parts));
-
-			if (is_file($file)) {
-				include_once($file);
-
-				break;
-			} else {
-				$method = array_pop($parts);
-			}
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+		
+		// Trigger the pre events
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
+		
+		if ($result) {
+			return $result;
 		}
-
-		$controller = new $class($this->registry);
-
-		if (!isset($method)) {
-			$method = 'index';
-		}
-
-		// Stop any magical methods being called
-		if (substr($method, 0, 2) == '__') {
+		
+		$action = new Action($route);
+		$output = $action->execute($this->registry, array(&$data));
+			
+		// Trigger the post events
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
+		
+		if (!($output instanceof Exception)) {
+			return $output;
+		} else {
 			return false;
 		}
+	}
+	
+	public function model($route) {
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+		
+		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
+		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
-		$output = '';
+		if (is_file($file)) {
+			include_once($file);
+			//echo $class;
+			$proxy = new Proxy();
 
-		if (is_callable(array($controller, $method))) {
-			$output = call_user_func(array($controller, $method), $data);
+			foreach (get_class_methods($class) as $method) {
+				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
+			}
+
+			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+		} else {
+			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
+	}
 
-		// $this->event->trigger('post.controller.' . $route, $output);
-
+	public function view($route, $data = array()) {
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+		
+		// Trigger the pre events
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
+		
+		if ($result) {
+			return $result;
+		}
+		
+		$template = new Template('basic');
+		
+		foreach ($data as $key => $value) {
+			$template->set($key, $value);
+		}
+		
+		$output = $template->render($route . '.tpl');
+		
+		// Trigger the post e
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
+		
+		if ($result) {
+			return $result;
+		}
+		
 		return $output;
 	}
 
-	public function model($model, $data = array()) {
-		// $this->event->trigger('pre.model.' . str_replace('/', '.', (string)$model), $data);
+	public function library($route) {
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+			
+		$file = DIR_SYSTEM . 'library/' . $route . '.php';
+		$class = str_replace('/', '\\', $route);
 
-		$model = str_replace('../', '', (string)$model);
-
-		$file = DIR_APPLICATION . 'model/' . $model . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			include_once($file);
 
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
+			$this->registry->set(basename($route), new $class($this->registry));
 		} else {
-			trigger_error('Error: Could not load model ' . $file . '!');
-			exit();
+			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
-
-		// $this->event->trigger('post.model.' . str_replace('/', '.', (string)$model), $output);
 	}
+	
+	public function helper($route) {
+		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$route) . '.php';
 
-	public function view($template, $data = array()) {
-		// $this->event->trigger('pre.view.' . str_replace('/', '.', $template), $data);
-
-		$file = DIR_TEMPLATE . $template;
-
-		if (file_exists($file)) {
-			extract($data);
-
-			ob_start();
-
-			require($file);
-
-			$output = ob_get_contents();
-
-			ob_end_clean();
-		} else {
-			trigger_error('Error: Could not load template ' . $file . '!');
-			exit();
-		}
-
-		// $this->event->trigger('post.view.' . str_replace('/', '.', $template), $output);
-
-		return $output;
-	}
-
-	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$helper) . '.php';
-
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			include_once($file);
 		} else {
-			trigger_error('Error: Could not load helper ' . $file . '!');
-			exit();
+			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
-
-	public function config($config) {
-		$this->registry->get('config')->load($config);
+	
+	public function config($route) {
+		$this->registry->get('event')->trigger('config/' . $route . '/before', $route);
+		
+		$this->registry->get('config')->load($route);
+		
+		$this->registry->get('event')->trigger('config/' . $route . '/after', $route);
 	}
 
-	public function language($language) {
-		return $this->registry->get('language')->load($language);
+	public function language($route) {
+		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
+		
+		$this->registry->get('language')->load($route);
+		
+		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
 	}
+	
+	protected function callback($registry, $route) {
+		return function($args) use($registry, &$route) {			
+			// Trigger the pre events
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
+			
+			if ($result) {
+				return $result;
+			}
+			
+			$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
+			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
+			$method = substr($route, strrpos($route, '/') + 1);
+	
+			if (is_file($file)) {
+				include_once($file);
+			
+				$model = new $class($registry);
+			} else {
+				throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
+			}
+			
+			if (method_exists($model, $method)) {
+				$output = call_user_func_array(array($model, $method), $args);
+			} else {
+				throw new \Exception('Error: Could not call model/' . $route . '!');
+			}
+													
+			// Trigger the post events
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route, &$output), $args));
+			
+			if ($result) {
+				return $result;
+			}
+						
+			return $output;
+		};
+	}	
 }

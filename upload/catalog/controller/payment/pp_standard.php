@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$data['text_testmode'] = $this->language->get('text_testmode');
 		$data['button_confirm'] = $this->language->get('button_confirm');
@@ -85,8 +85,8 @@ class ControllerPaymentPPStandard extends Controller {
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 			$data['lc'] = $this->session->data['language'];
 			$data['return'] = $this->url->link('checkout/success');
-			$data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');
-			$data['cancel_return'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', true);
+			$data['cancel_return'] = $this->url->link('checkout/checkout', '', true);
 
 			if (!$this->config->get('pp_standard_transaction')) {
 				$data['paymentaction'] = 'authorization';
@@ -96,11 +96,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 			$data['custom'] = $this->session->data['order_id'];
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/pp_standard.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/pp_standard.tpl', $data);
-			}
+			return $this->load->view('payment/pp_standard', $data);
 		}
 	}
 

@@ -20,11 +20,11 @@
 		</div>
 	<?php } ?>
 	<div class="alert alert-info">
-	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link; ?>" ><?php echo $text_paypal_join; ?></a>
+	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_paypal_join; ?></a>
 	  <button type="button" class="close" data-dismiss="alert">&times;</button>
 	</div>
 	<div class="alert alert-info">
-	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link_sandbox; ?>" ><?php echo $text_paypal_join_sandbox; ?></a>
+	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link_sandbox; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_paypal_join_sandbox; ?></a>
 	  <button type="button" class="close" data-dismiss="alert">&times;</button>
 	</div>
 	<div class="panel panel-default">
@@ -386,7 +386,7 @@
 			  <div class="form-group">
 				<label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_logo; ?>"><?php echo $entry_logo; ?></span></label>
 				<div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-				  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" />
+				  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" id="input-logo" />
 				</div>
 			  </div>
 			</div>

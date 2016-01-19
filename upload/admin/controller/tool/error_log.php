@@ -2,9 +2,9 @@
 class ControllerToolErrorLog extends Controller {
 	private $error = array();
 
-	public function index() {
+	public function index() {		
 		$this->load->language('tool/error_log');
-
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -12,6 +12,7 @@ class ControllerToolErrorLog extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
+		$data['button_download'] = $this->language->get('button_download');
 		$data['button_clear'] = $this->language->get('button_clear');
 
 		if (isset($this->session->data['error'])) {
@@ -36,15 +37,16 @@ class ControllerToolErrorLog extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('tool/error_log', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], 'SSL');
+		$data['download'] = $this->url->ssl('tool/error_log/download', 'token=' . $this->session->data['token'], true);
+		$data['clear'] = $this->url->ssl('tool/error_log/clear', 'token=' . $this->session->data['token'], true);
 
 		$data['log'] = '';
 
@@ -83,9 +85,20 @@ class ControllerToolErrorLog extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('tool/error_log.tpl', $data));
+		$this->response->setOutput($this->load->view('tool/error_log', $data));
 	}
 
+	public function download() {
+		$this->response->addheader('Pragma: public');
+		$this->response->addheader('Expires: 0');
+		$this->response->addheader('Content-Description: File Transfer');
+		$this->response->addheader('Content-Type: application/octet-stream');
+		$this->response->addheader('Content-Disposition: attachment; filename=' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log');
+		$this->response->addheader('Content-Transfer-Encoding: binary');
+
+		$this->response->setOutput(file_get_contents(DIR_LOGS . $this->config->get('config_error_filename'), FILE_USE_INCLUDE_PATH, null));
+	}
+	
 	public function clear() {
 		$this->load->language('tool/error_log');
 
@@ -101,6 +114,6 @@ class ControllerToolErrorLog extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->ssl('tool/error_log', 'token=' . $this->session->data['token'], true));
 	}
 }

@@ -61,7 +61,7 @@ class ControllerPaymentRealex extends Controller {
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
 		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 
-		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
+		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$data['currency'] = $order_info['currency_code'];
 
 		$tmp = $data['timestamp'] . '.' . $data['merchant_id'] . '.' . $data['order_id'] . '.' . $data['amount'] . '.' . $data['currency'];
@@ -82,11 +82,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/realex/notify';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/realex.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/realex.tpl', $data);
-		}
+		return $this->load->view('payment/realex', $data);
 	}
 
 	public function notify() {
@@ -103,7 +99,7 @@ class ControllerPaymentRealex extends Controller {
 		//Check to see if hashes match or not
 		if ($hash != $this->request->post['SHA1HASH']) {
 			$data['text_response'] = $this->language->get('text_hash_failed');
-			$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+			$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 		} else {
 			$this->load->model('checkout/order');
 
@@ -218,49 +214,45 @@ class ControllerPaymentRealex extends Controller {
 				}
 
 				$data['text_response'] = $this->language->get('text_success');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', true));
 			} elseif ($this->request->post['RESULT'] == "101") {
 				// Decline
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "102") {
 				// Referal B
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_pending_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "103") {
 				// Referal A
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_stolen_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "200") {
 				// Error Connecting to Bank
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "204") {
 				// Error Connecting to Bank
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "205") {
 				// Comms Error
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} else {
 				// Other error
 				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_generic_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			}
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex_response.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/realex_response.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/realex_response.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/realex_response', $data));
 	}
 }

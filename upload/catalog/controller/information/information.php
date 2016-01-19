@@ -45,11 +45,7 @@ class ControllerInformationInformation extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/information.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/information.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/information/information.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('information/information', $data));
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),
@@ -75,11 +71,7 @@ class ControllerInformationInformation extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 

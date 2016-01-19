@@ -1,7 +1,7 @@
 <?php
 class ControllerModulePPButton extends Controller {
 	public function index() {
-		$this->language->load('module/pp_button');
+		$this->load->language('module/pp_button');
 
 		$this->load->model('setting/setting');
 
@@ -12,7 +12,7 @@ class ControllerModulePPButton extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -36,22 +36,22 @@ class ControllerModulePPButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('module/pp_button', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('module/pp_button', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pp_button_status'])) {
 			$data['pp_button_status'] = $this->request->post['pp_button_status'];
@@ -63,7 +63,7 @@ class ControllerModulePPButton extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_button.tpl', $data));
+		$this->response->setOutput($this->load->view('module/pp_button', $data));
 	}
 
 	protected function validate() {

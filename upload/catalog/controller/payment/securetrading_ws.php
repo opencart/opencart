@@ -2,7 +2,7 @@
 class ControllerPaymentSecureTradingWs extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -54,11 +54,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/securetrading_ws.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/securetrading_ws.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/securetrading_ws.tpl', $data);
-			}
+			return $this->load->view('payment/securetrading_ws', $data);
 		}
 	}
 
@@ -66,7 +62,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('payment/securetrading_ws');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -81,7 +77,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 				$merchant_node = $request_node->addChild('merchant');
 				$merchant_node->addChild('orderreference', $order_info['order_id']);
-				$merchant_node->addChild('termurl', $this->url->link('payment/securetrading_ws/threedreturn', '', 'SSL'));
+				$merchant_node->addChild('termurl', $this->url->link('payment/securetrading_ws/threedreturn', '', true));
 
 				$settlement_node = $request_node->addChild('settlement');
 				$settlement_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('securetrading_ws_settle_due_date') . ' days'));
@@ -136,7 +132,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 								$json['acs_url'] = $acs_url;
 								$json['md'] = $md;
 								$json['pareq'] = $pareq;
-								$json['term_url'] = $this->url->link('payment/securetrading_ws/threedreturn', '', 'SSL');
+								$json['term_url'] = $this->url->link('payment/securetrading_ws/threedreturn', '', true);
 							} else {
 								$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 								$requestblock_xml->addAttribute('version', '3.67');
@@ -223,7 +219,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	public function threedreturn() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/securetrading_ws');
-		$this->language->load('payment/securetrading_ws');
+		$this->load->language('payment/securetrading_ws');
 
 		// Using unmodified $_POST to access values as per Secure Trading's requirements
 		if (isset($_POST['PaRes']) && !empty($_POST['PaRes']) && isset($_POST['MD']) && !empty($_POST['MD'])) {
@@ -286,24 +282,24 @@ class ControllerPaymentSecureTradingWs extends Controller {
 						$this->model_payment_securetrading_ws->confirmOrder($order_id, $this->config->get('securetrading_ws_order_status_id'));
 						$this->model_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_order_status_id'), $message);
 
-						$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+						$this->response->redirect($this->url->link('checkout/success', '', true));
 					} else {
 						$this->model_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_declined_order_status_id'));
 
 						$this->session->data['error'] = $this->language->get('text_transaction_declined');
-						$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+						$this->response->redirect($this->url->link('checkout/checkout', '', true));
 					}
 				} else {
 					$this->session->data['error'] = $this->language->get('error_failure');
-					$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+					$this->response->redirect($this->url->link('checkout/checkout', '', true));
 				}
 			} else {
 				$this->session->data['error'] = $this->language->get('error_failure');
-				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/checkout', '', true));
 			}
 		} else {
 			$this->session->data['error'] = $this->language->get('error_failure');
-			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
 	}
 

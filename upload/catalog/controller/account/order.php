@@ -4,9 +4,9 @@ class ControllerAccountOrder extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/order');
@@ -22,7 +22,7 @@ class ControllerAccountOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$url = '';
@@ -33,7 +33,7 @@ class ControllerAccountOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/order', $url, 'SSL')
+			'href' => $this->url->link('account/order', $url, true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -75,7 +75,7 @@ class ControllerAccountOrder extends Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'href'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], 'SSL'),
+				'href'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], true),
 			);
 		}
 
@@ -83,13 +83,13 @@ class ControllerAccountOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('account/order', 'page={page}', 'SSL');
+		$pagination->url = $this->url->link('account/order', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
 
-		$data['continue'] = $this->url->link('account/account', '', 'SSL');
+		$data['continue'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -98,11 +98,7 @@ class ControllerAccountOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/order_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
 	public function info() {
@@ -115,9 +111,9 @@ class ControllerAccountOrder extends Controller {
 		}
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->model('account/order');
@@ -136,7 +132,7 @@ class ControllerAccountOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')
+				'href' => $this->url->link('account/account', '', true)
 			);
 
 			$url = '';
@@ -147,12 +143,12 @@ class ControllerAccountOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/order', $url, 'SSL')
+				'href' => $this->url->link('account/order', $url, true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL')
+				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, true)
 			);
 
 			$data['heading_title'] = $this->language->get('text_order');
@@ -314,7 +310,7 @@ class ControllerAccountOrder extends Controller {
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
-					$reorder = $this->url->link('account/order/reorder', 'order_id=' . $order_id . '&order_product_id=' . $product['order_product_id'], 'SSL');
+					$reorder = $this->url->link('account/order/reorder', 'order_id=' . $order_id . '&order_product_id=' . $product['order_product_id'], true);
 				} else {
 					$reorder = '';
 				}
@@ -327,7 +323,7 @@ class ControllerAccountOrder extends Controller {
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
+					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], true)
 				);
 			}
 
@@ -370,7 +366,7 @@ class ControllerAccountOrder extends Controller {
 				);
 			}
 
-			$data['continue'] = $this->url->link('account/order', '', 'SSL');
+			$data['continue'] = $this->url->link('account/order', '', true);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -379,11 +375,7 @@ class ControllerAccountOrder extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_info.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_info.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/account/order_info.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('account/order_info', $data));
 		} else {
 			$this->document->setTitle($this->language->get('text_order'));
 
@@ -402,20 +394,20 @@ class ControllerAccountOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')
+				'href' => $this->url->link('account/account', '', true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/order', '', 'SSL')
+				'href' => $this->url->link('account/order', '', true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL')
+				'href' => $this->url->link('account/order/info', 'order_id=' . $order_id, true)
 			);
 
-			$data['continue'] = $this->url->link('account/order', '', 'SSL');
+			$data['continue'] = $this->url->link('account/order', '', true);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -424,11 +416,7 @@ class ControllerAccountOrder extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 

@@ -2,9 +2,9 @@
 class ControllerAccountNewsletter extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/newsletter', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/newsletter');
@@ -18,7 +18,7 @@ class ControllerAccountNewsletter extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -30,12 +30,12 @@ class ControllerAccountNewsletter extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_newsletter'),
-			'href' => $this->url->link('account/newsletter', '', 'SSL')
+			'href' => $this->url->link('account/newsletter', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -48,11 +48,11 @@ class ControllerAccountNewsletter extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
-		$data['action'] = $this->url->link('account/newsletter', '', 'SSL');
+		$data['action'] = $this->url->link('account/newsletter', '', true);
 
 		$data['newsletter'] = $this->customer->getNewsletter();
 
-		$data['back'] = $this->url->link('account/account', '', 'SSL');
+		$data['back'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -61,10 +61,6 @@ class ControllerAccountNewsletter extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/newsletter.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/newsletter.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/newsletter', $data));
 	}
 }

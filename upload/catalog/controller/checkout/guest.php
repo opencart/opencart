@@ -162,17 +162,13 @@ class ControllerCheckoutGuest extends Controller {
 		}
 
 		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
 			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'));
 		} else {
 			$data['captcha'] = '';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/guest.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/guest.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('checkout/guest', $data));
 	}
 
 	public function save() {
@@ -182,7 +178,7 @@ class ControllerCheckoutGuest extends Controller {
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate cart has products and has stock.
@@ -192,7 +188,7 @@ class ControllerCheckoutGuest extends Controller {
 
 		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		if (!$json) {
@@ -204,7 +200,7 @@ class ControllerCheckoutGuest extends Controller {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
@@ -232,7 +228,7 @@ class ControllerCheckoutGuest extends Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
@@ -255,7 +251,7 @@ class ControllerCheckoutGuest extends Controller {
 			}
 
 			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
 				$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
 
 				if ($captcha) {

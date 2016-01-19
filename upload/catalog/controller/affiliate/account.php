@@ -2,9 +2,9 @@
 class ControllerAffiliateAccount extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/account', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/account', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
 		$this->load->language('affiliate/account');
@@ -18,7 +18,7 @@ class ControllerAffiliateAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -42,11 +42,11 @@ class ControllerAffiliateAccount extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['edit'] = $this->url->link('affiliate/edit', '', 'SSL');
-		$data['password'] = $this->url->link('affiliate/password', '', 'SSL');
-		$data['payment'] = $this->url->link('affiliate/payment', '', 'SSL');
-		$data['tracking'] = $this->url->link('affiliate/tracking', '', 'SSL');
-		$data['transaction'] = $this->url->link('affiliate/transaction', '', 'SSL');
+		$data['edit'] = $this->url->link('affiliate/edit', '', true);
+		$data['password'] = $this->url->link('affiliate/password', '', true);
+		$data['payment'] = $this->url->link('affiliate/payment', '', true);
+		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
+		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -55,10 +55,6 @@ class ControllerAffiliateAccount extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/account.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/account.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/account.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/account', $data));
 	}
 }

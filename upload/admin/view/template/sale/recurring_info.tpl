@@ -57,7 +57,7 @@
             <td><?php echo $date_added; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_payment_reference; ?></td>
+            <td><?php echo $entry_reference; ?></td>
             <td><?php echo $reference; ?></td>
           </tr>
           <tr>
@@ -73,7 +73,7 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_recurring_description; ?></td>
+            <td><?php echo $entry_description; ?></td>
             <td><?php echo $recurring_description; ?></td>
           </tr>
           <tr>

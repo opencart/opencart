@@ -4,7 +4,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_pro_iframe');
 
-		$this->language->load('payment/pp_pro_iframe');
+		$this->load->language('payment/pp_pro_iframe');
 
 		if ($this->config->get('pp_pro_iframe_checkout_method') == 'redirect') {
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -27,15 +27,11 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_iframe.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_pro_iframe.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/pp_pro_iframe.tpl', $data);
-		}
+		return $this->load->view('payment/pp_pro_iframe', $data);
 	}
 
 	public function create() {
-		$this->language->load('payment/pp_pro_iframe');
+		$this->load->language('payment/pp_pro_iframe');
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_pro_iframe');
 
@@ -65,11 +61,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/pp_pro_iframe_body.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_body', $data));
 	}
 
 	public function notify() {
@@ -244,8 +236,8 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR18'] = 'billing_zip=' . urlencode($order_info['payment_postcode']);
 		$s_data['L_BUTTONVAR19'] = 'billing_country=' . urlencode($order_info['payment_iso_code_2']);
 
-		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('payment/pp_pro_iframe/notify', '', 'SSL');
-		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', 'SSL');
+		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('payment/pp_pro_iframe/notify', '', true);
+		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', true);
 		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('pp_pro_iframe_transaction_method');
 		$s_data['L_BUTTONVAR23'] = 'currency_code=' . urlencode($order_info['currency_code']);
 		$s_data['L_BUTTONVAR26'] = 'showBillingAddress=false';
@@ -265,7 +257,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR50'] = 'PageButtonBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR51'] = 'orderSummaryBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
-		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', 'SSL');
+		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', true);
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
 
 		if ($this->config->get('pp_pro_iframe_test')) {

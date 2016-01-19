@@ -18,9 +18,8 @@ class ControllerCommonLanguage extends Controller {
 		foreach ($results as $result) {
 			if ($result['status']) {
 				$data['languages'][] = array(
-					'name'  => $result['name'],
-					'code'  => $result['code'],
-					'image' => $result['image']
+					'name' => $result['name'],
+					'code' => $result['code']
 				);
 			}
 		}
@@ -29,8 +28,6 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link('common/home');
 		} else {
 			$url_data = $this->request->get;
-
-			unset($url_data['_route_']);
 
 			$route = $url_data['route'];
 
@@ -45,11 +42,7 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/language.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/language.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/language.tpl', $data);
-		}
+		return $this->load->view('common/language', $data);
 	}
 
 	public function language() {

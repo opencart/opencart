@@ -1,7 +1,7 @@
 <?php
 class ModelTotalReward extends Model {
-	public function getTotal(&$total_data, &$total, &$taxes) {
-		if ($this->config->get('credit_status') && isset($this->session->data['reward'])) {
+	public function getTotal($total) {
+		if (isset($this->session->data['reward'])) {
 			$this->load->language('total/reward');
 
 			$points = $this->customer->getRewardPoints();
@@ -30,7 +30,7 @@ class ModelTotalReward extends Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+									$total['taxes'][$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 								}
 							}
 						}
@@ -39,14 +39,14 @@ class ModelTotalReward extends Model {
 					$discount_total += $discount;
 				}
 
-				$total_data[] = array(
+				$total['totals'][] = array(
 					'code'       => 'reward',
 					'title'      => sprintf($this->language->get('text_reward'), $this->session->data['reward']),
 					'value'      => -$discount_total,
 					'sort_order' => $this->config->get('reward_sort_order')
 				);
 
-				$total -= $discount_total;
+				$total['total'] -= $discount_total;
 			}
 		}
 	}
@@ -65,7 +65,7 @@ class ModelTotalReward extends Model {
 
 		$this->load->model('account/customer');
 
-		if ($this->model_account_customer->getRewardTotal($order_info['customer_id']) < $points) {
+		if ($this->model_account_customer->getRewardTotal($order_info['customer_id']) >= $points) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$order_info['customer_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', description = '" . $this->db->escape(sprintf($this->language->get('text_order_id'), (int)$order_info['order_id'])) . "', points = '" . (float)-$points . "', date_added = NOW()");
 		} else {
 			return $this->config->get('config_fraud_status_id');

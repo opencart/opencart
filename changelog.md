@@ -1,16 +1,125 @@
 # OpenCart 2.0 change log
 
-## v2.1.0.0 (Pending)
-~~
-This version is currently in RC stage. Please report any bugs on GitHub.
-~~
+## v2.1.0.1 (06.10.2015)
+#### Bugs fixed
+* Use the ip address from data in Fraudlanbs module and update language strings
+#### Changes
+* Allow download of the error log
+
+## v2.1.0.0 (29.09.2015)
 #### Bugs fixed
 * Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
 * Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)
+* Added missing $json var declarartion in sale/order API (https://github.com/opencart/opencart/commit/a2d529e9929d80f2b4dad09648476c2f75382d06)
+* Customers orders report wrong information #3101 (https://github.com/opencart/opencart/commit/e30de743e09537ffdb03455f8a0768dc6342d89f)
+* Replaced wrong model (affiliate/affiliate) with right one (account/customer) (https://github.com/opencart/opencart/commit/9e5aa27e04df686a7d687908fe4a0f0200d453b7)
+* Fixed call to undefined methods and calling method on null object (https://github.com/opencart/opencart/commit/f9105bf21b9b3d77cfde69578a46f0e39e6bfdfc)
+* Bootstrap info button showing blue border #3126 (https://github.com/opencart/opencart/issues/3126)
+* Fixed missing DB_PORT when creating new DB object (https://github.com/opencart/opencart/commit/c990cec427f367dd54eed0c2a149e679c01c064d)
+* Warning ini_set() A session is active (https://github.com/opencart/opencart/issues/3131)
+* Password Decode Failure, Step 3 Installation (https://github.com/opencart/opencart/issues/3185)
+* Notification Menu on Pending Orders #3180 (https://github.com/opencart/opencart/issues/3180)
+* Encryption is not required for 'File' type option (https://github.com/opencart/opencart/commit/cdee8cbee943f4b0c1f91555829ed55a97afa595)
+* updated the sql to drop tables if exist because the data still gets dumped in (https://github.com/opencart/opencart/commit/d0c5674bba7ff596b8cd0a75930cab0934348b27)
+* Add "required" asterisk to locale field (https://github.com/opencart/opencart/commit/6d5149d6c52857820be259a8fc533d6c76cd461e)
+* Fix worldpay validate modify permission. (https://github.com/opencart/opencart/commit/c70ae43253fee57a1d5ac26586d8552ab23d9625)
+* library-image->watermark (https://github.com/opencart/opencart/issues/3119)
+* Missing meta data in add language #3184 (https://github.com/opencart/opencart/issues/3184)
+* Placeholder display issue in product edit -> special -> priority field #3157 (https://github.com/opencart/opencart/issues/3157)
+* Remove forward slash from download #3246 (https://github.com/opencart/opencart/issues/3246)
+* Print shipping list - wrong weight (https://github.com/opencart/opencart/issues/3155)
+* reward points not added to returning customer (https://github.com/opencart/opencart/issues/3161)
+* Wrong order status if clause #2722 (https://github.com/opencart/opencart/issues/2722)
+* Gift voucher mails not sent automatically!! #3093 (https://github.com/opencart/opencart/issues/3093)
+* Can't void order if in banip or fraud #2720 (https://github.com/opencart/opencart/issues/2720)
+* Fixed broken layout when adding a new discount (https://github.com/opencart/opencart/commit/5763695e5b7faa00b29d01673a17bc59eb57f3d3)
+* Fixed broken layout when adding a new image to a banner (https://github.com/opencart/opencart/commit/8035fc8038e9c49c16d6adae07a128da9ddeb167)
+* Category canonical & breadcrumbs are incorrect - Generate from found category_id and not uri path #3179 (https://github.com/opencart/opencart/issues/3179)
+* Document selection "lost" in filemanager when a filter is applied #3253 (https://github.com/opencart/opencart/issues/3253)
+* Forgottern password check account has been approved #3266 (https://github.com/opencart/opencart/issues/3266)
+* Wrong redirect on shipping and review form #3276 (https://github.com/opencart/opencart/issues/3276)
+* Add an attribute without group #3274 (https://github.com/opencart/opencart/issues/3274)
+* G2A - form bug fix (https://github.com/opencart/opencart/commit/e8b2fc5faea23afff44b1d2dace53715fd8ab8da)
+* Added missing error_filetype text. (https://github.com/opencart/opencart/commit/65a18352c3ba39150bd8aa5d25f06c1aa0687110)
+* Remove </form> #3305 (https://github.com/opencart/opencart/issues/3305)
+* G2A Pay Module Not Working (vat totals) #3290 (https://github.com/opencart/opencart/issues/3290)
+* Warning in order return page #3328 (https://github.com/opencart/opencart/issues/3328)
+* Convert Limit Value To Integer (https://github.com/opencart/opencart/pull/3330)
+* Manufacturer empty canonical #3333 (https://github.com/opencart/opencart/issues/3333)
+* remove duplicate lines #3337 (https://github.com/opencart/opencart/pull/3337)
+* Fix bluepay_redirect.php when releasing funds in the admin. (https://github.com/opencart/opencart/commit/169fc38c2d47a421943863331adba32034ae0586)
+* Fixed usages of btn_ language tag to the correct button_ (https://github.com/opencart/opencart/commit/1ef7ba8745a3f2ac5f8059648f5a17f8183f22bc)
+* Fixed calculated totals for Bluepay module. (https://github.com/opencart/opencart/commit/56361d47bfc85eb233eba16ffee3c39c8d659a65)
+* HTTP_IMAGE is removed, starting from 1.5.?.? version, but still exists in cli_install.php file #3346 (https://github.com/opencart/opencart/issues/3346)
+* Missing setTitle #3348 (https://github.com/opencart/opencart/issues/3348)
+* Fix dspan to div #3350 (https://github.com/opencart/opencart/pull/3350)
+* Bug fix: if $mail->reply_to is set, use that (instead of $mail->from) in the email headers #3023 (https://github.com/opencart/opencart/pull/3023)
+* Remove PayPal Pro "Please Wait..." message after completion #3156 (https://github.com/opencart/opencart/pull/3156)
+* Coupon per category does not work #3354 (https://github.com/opencart/opencart/issues/3354)
+* stylesheet form-group fix (https://github.com/opencart/opencart/commit/86b16c0074db9d4a075b92efbab87e703eb848cd)
+* Version 2.0.3.1 Error ----PP_EXPRESS Error #3377 (https://github.com/opencart/opencart/issues/3377)
+
 
 #### Changes
+* Changes to the order API system (https://github.com/opencart/opencart/tree/master/upload/catalog/controller/api)
 * Pondicherry to Puducherry in oc_zone table
 * Amazon checkout payment module removed. Replaced with newer Login and Pay module.
+* Added data to the pre.order.history.add event trigger (https://github.com/opencart/opencart/commit/77830eec0dcfcecd99bc38150b37083c646396f6)
+* Korea, Republic of > South Korea in country list (https://github.com/opencart/opencart/commit/dae5e0d42869ce1765661597d6677e4afcd3afcb)
+* Modification to pre.order.history.add event trigger (https://github.com/opencart/opencart/commit/61aa9d7961cab8527f11ac293469f8e132c8d07c)
+* Moved the country ajax to one central location (https://github.com/opencart/opencart/commit/652167f7447eb3004be4e579a5f0073af668991b)
+* Removed testing code (https://github.com/opencart/opencart/commit/bcfd7d9541f7ecebb5e3de851a11b955c5df1d7f)
+* Replaced old country method with new location (https://github.com/opencart/opencart/commit/a011d9ce6284d57966b4dcdefadeec4674e3af6c)
+* $this->load->language > $this->language->load (https://github.com/opencart/opencart/commit/9f3ab03c355a6f06e4cfbb38e8f5bf1385a8170f)
+* Added PHPUnit bootstrap.php file to .gitignore (https://github.com/opencart/opencart/commit/47e0b99f1d377680254d63b6f1c88a49f6ec1307)
+* No need to tell the customer they already added the same product to the wish list (https://github.com/opencart/opencart/commit/0761b30bcd20513412c26eeccbab58867516541e)
+* Removed restore cart and wishlist from customer class as you don't want your cart restored on each login (https://github.com/opencart/opencart/commit/0db2555371228c887a83bd271b4542cacc22603f)
+* Better login token (https://github.com/opencart/opencart/commit/b79cdf365dc86491479d3568c86a3724739113da)
+* API login moved also added a proper encryption key (https://github.com/opencart/opencart/commit/c1da341df8ad9f9ebac5f0d834e4f9d73eeeec8d)
+* Prevent html content inside modules dropdown (https://github.com/opencart/opencart/commit/16825ac6af4ad580b92f1db4093bd31cd62be098)
+* added a token generator. md5(mt_rand()) is not good enough (https://github.com/opencart/opencart/commit/564b4d07bbe501d1de2101d5c8bb054972c6745e)
+* use mt_rand() instead of rand() (https://github.com/opencart/opencart/commit/16010252a27529a24d35f71477d6cf2a4f062ce0)
+* changed the method name ijn payment gateways from action to order (https://github.com/opencart/opencart/commit/e9ea2833ac64709c232fac95cc68931fec33a447)
+* affiliate code changes (https://github.com/opencart/opencart/commit/a0ff7c6a072751358f67289f387632ce39811a26)
+* upload/admin/controller/sale/customer.php (https://github.com/opencart/opencart/commit/0a42c054e462854d6bf74088a329097c4d9c41f1)
+* updated git ignore with storage folder changes (https://github.com/opencart/opencart/commit/5a702e15e1270277ada35f7a64be7bf6e348eea2)
+* moved all the customer files to their own folder (https://github.com/opencart/opencart/commit/2bcf39e02a0e5aab513c1a90d4ed78b00984837c)
+* Updated cli_install.php to include changes for storage folder and also db_port option (https://github.com/opencart/opencart/commit/21c76f5022e69efe99f267df7afb1a989e707917)
+* changed unserialize to json_decode for the settings table (https://github.com/opencart/opencart/commit/141de8ac42ee10851d9d8736462e5e1418569be5)
+* updated the salt to use token (https://github.com/opencart/opencart/commit/c775c554443da3c21d9393458db3ca1d3966d0c1)
+* Changes session library class
+* moved the general fields and store fields around as they are suited better under the different tabs (https://github.com/opencart/opencart/commit/3a254ea5053d00b96acd4fcab9827b2ccff6f23c)
+* Update usps.php > OriginZip (https://github.com/opencart/opencart/commit/919a074368e9f781878cc26b4fd6f6076fca95e0)
+* Update to Google recaptcha
+* remove redundant conditions for product left & right sections (https://github.com/opencart/opencart/commit/cb69dc56895368b16b8ad92c83c8c95b85972177)
+* add russian ruble to pp_standard (https://github.com/opencart/opencart/commit/a90e15c5b9b95de1588a97f99d628052e871bf60)
+* added latest css bootstrap and font icons (https://github.com/opencart/opencart/commit/8031629ffd7345227130629902c232816a87044e)
+* Updated PayPal Pro iFrame endpoint to new PayPal requirement. (https://github.com/opencart/opencart/commit/116ee0ad943d0f4443b73174f26583cd9b854705)
+* image manager code rearrange (https://github.com/opencart/opencart/commit/2dea4545b0321e212afee558b7755d6ddb505d96)
+* Google maps geocode language (https://github.com/opencart/opencart/commit/664c39c888c626a4b45726660779a1fb217a3369)
+* Remove unused bootstrap files (https://github.com/opencart/opencart/commit/0d4fc2da477820e6981fc979e7e35cd398afd7f7)
+* FedEx shipping module improvements #3019 (https://github.com/opencart/opencart/issues/3019)
+* Amazon Login & Pay module update & fixes
+* updated admin bootstrap and added the sass files for theme developers. (https://github.com/opencart/opencart/commit/67a69c8ff5d1da1d5e794fde5527144cd3dc3279)
+* Removed "final" declaration from Action class to make it mockable in PHPUnit (https://github.com/opencart/opencart/commit/0bff4ddbc051034a87a940d79d7f1282d233838e)
+* Change SEO Keyword Text to SEO URL (https://github.com/opencart/opencart/commit/06622c6c8937eef329368ff9851459cc0104dc9b)
+* google_base.php missing "google_product_category" #3228 (https://github.com/opencart/opencart/issues/3228)
+* Updated Sagepay logo to new branding. (https://github.com/opencart/opencart/commit/c3f2b2508aaff8da9353136e92a544cf1f15cf53)
+* Fixed Bluepay transaction logging to use the correct standard for a payment type (payment not sale) (https://github.com/opencart/opencart/commit/ac24c81bbf1ec56183faa18e2396986f22d1a2d3)
+* Improved UX for slow payment gateways/shipping methods as loading button resets when checkout step is properly loaded (https://github.com/opencart/opencart/commit/2b475e1d99bb7d1eb0fd109f17114ddde233382b)
+* Ability to login at checkout step using enter key on the inputs (https://github.com/opencart/opencart/commit/7a6dd6d145995cf713d106b6ad08d8e408ac13b6)
+* Adding config_login_attempts = 5 to install sql (https://github.com/opencart/opencart/commit/2431f8d67442b91d12c8dd812d92e17e52a615d5)
+
+#### Added
+* Latest OpenBay Pro release.
+* add event *.admin.language.* (https://github.com/opencart/opencart/commit/6bdc37dd654f109a239b6744a0012f371b2fd590)
+* added api IP table (https://github.com/opencart/opencart/commit/6933ac7c50a9bc3be2ca1f6328cc0c9566450d74)
+* Friendly error when mPDO error occurs on installation of Opencart (https://github.com/opencart/opencart/commit/06f28dca66fb55f33a2c1753cfdec1e345348e4f)
+* Added Croatia to the list of EU countries (https://github.com/opencart/opencart/commit/9e5d13e3b241fa7f4bdc94fd3facdab85eb5c635)
+* Added Telangana as a state (https://github.com/opencart/opencart/commit/6ca2cdd46a04ba5468c63e1d61ecc1e47a471562)
+* Moved the fraud handling into separate module type
+* Moved analyitics into separate module type
+* Added priority to event listener. Higher priority means more importance. (https://github.com/opencart/opencart/commit/e69ec5a94622fe3b3e9964e4a4ea650cffeb9d33)
 
 ## v2.0.3.1
 #### Bugs fixed

@@ -4,9 +4,9 @@ class ControllerAffiliateEdit extends Controller {
 
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/edit', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/edit', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
 		$this->load->language('affiliate/edit');
@@ -30,7 +30,7 @@ class ControllerAffiliateEdit extends Controller {
 
 			$this->model_affiliate_activity->addActivity('edit', $activity_data);
 
-			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -42,12 +42,12 @@ class ControllerAffiliateEdit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_edit'),
-			'href' => $this->url->link('affiliate/edit', '', 'SSL')
+			'href' => $this->url->link('affiliate/edit', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -133,7 +133,7 @@ class ControllerAffiliateEdit extends Controller {
 			$data['error_zone'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/edit', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->affiliate->getId());
@@ -236,7 +236,7 @@ class ControllerAffiliateEdit extends Controller {
 		}
 
 		if (isset($this->request->post['zone_id'])) {
-			$data['zone_id'] = $this->request->post['zone_id'];
+			$data['zone_id'] = (int)$this->request->post['zone_id'];
 		} elseif (!empty($affiliate_info)) {
 			$data['zone_id'] = $affiliate_info['zone_id'];
 		} else {
@@ -247,7 +247,7 @@ class ControllerAffiliateEdit extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$data['back'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['back'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -256,11 +256,7 @@ class ControllerAffiliateEdit extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/edit.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/edit.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/edit.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/edit', $data));
 	}
 
 	protected function validate() {
@@ -272,7 +268,7 @@ class ControllerAffiliateEdit extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -303,7 +299,7 @@ class ControllerAffiliateEdit extends Controller {
 			$this->error['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 			$this->error['zone'] = $this->language->get('error_zone');
 		}
 

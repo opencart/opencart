@@ -71,11 +71,7 @@ class ControllerModuleFilter extends Controller {
 					);
 				}
 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
-					return $this->load->view($this->config->get('config_template') . '/template/module/filter.tpl', $data);
-				} else {
-					return $this->load->view('default/template/module/filter.tpl', $data);
-				}
+				return $this->load->view('module/filter', $data);
 			}
 		}
 	}

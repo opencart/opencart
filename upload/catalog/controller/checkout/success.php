@@ -56,7 +56,7 @@ class ControllerCheckoutSuccess extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', 'SSL')
+			'href' => $this->url->link('checkout/checkout', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -67,7 +67,7 @@ class ControllerCheckoutSuccess extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		if ($this->customer->isLogged()) {
-			$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
+			$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', true), $this->url->link('account/order', '', true), $this->url->link('account/download', '', true), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
 		}
@@ -83,10 +83,6 @@ class ControllerCheckoutSuccess extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 }

@@ -16,13 +16,9 @@ class ControllerPaymentPayza extends Controller {
 		$data['ap_itemname'] = $this->config->get('config_name') . ' - #' . $this->session->data['order_id'];
 		$data['ap_itemcode'] = $this->session->data['order_id'];
 		$data['ap_returnurl'] = $this->url->link('checkout/success');
-		$data['ap_cancelurl'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['ap_cancelurl'] = $this->url->link('checkout/checkout', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/payza.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/payza.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/payza.tpl', $data);
-		}
+		return $this->load->view('payment/payza', $data);
 	}
 
 	public function callback() {

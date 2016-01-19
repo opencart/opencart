@@ -14,7 +14,7 @@ class ControllerTotalCredit extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -39,22 +39,22 @@ class ControllerTotalCredit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_total'),
-			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/credit', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('total/credit', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/credit', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('total/credit', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['credit_status'])) {
 			$data['credit_status'] = $this->request->post['credit_status'];
@@ -72,7 +72,7 @@ class ControllerTotalCredit extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/credit.tpl', $data));
+		$this->response->setOutput($this->load->view('total/credit', $data));
 	}
 
 	protected function validate() {

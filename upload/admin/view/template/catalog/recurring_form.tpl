@@ -30,7 +30,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
             <div class="col-sm-10">
               <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                 <input type="text" name="recurring_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($recurring_description[$language['language_id']]) ? $recurring_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
               </div>
               <?php if (isset($error_name[$language['language_id']])) { ?>

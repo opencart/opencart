@@ -186,8 +186,8 @@ class ModelShippingUps extends Model {
 			if ($this->config->get('ups_insurance')) {
 				$xml .= '           <PackageServiceOptions>';
 				$xml .= '               <InsuredValue>';
-				$xml .= '                   <CurrencyCode>' . $this->currency->getCode() . '</CurrencyCode>';
-				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), false, false, false) . '</MonetaryValue>';
+				$xml .= '                   <CurrencyCode>' . $this->session->data['currency'] . '</CurrencyCode>';
+				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), $this->session->data['currency'], false, false) . '</MonetaryValue>';
 				$xml .= '               </InsuredValue>';
 				$xml .= '           </PackageServiceOptions>';
 			}
@@ -226,10 +226,18 @@ class ModelShippingUps extends Model {
 					$this->log->write("UPS DATA SENT: " . $xml);
 					$this->log->write("UPS DATA RECV: " . $result);
 				}
-
+				
+				$previous_value = libxml_use_internal_errors(true);
+				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($result);
 
+				libxml_use_internal_errors($previous_value);
+				
+				if (libxml_get_errors()) {
+					return false;
+				}
+				
 				$rating_service_selection_response = $dom->getElementsByTagName('RatingServiceSelectionResponse')->item(0);
 
 				$response = $rating_service_selection_response->getElementsByTagName('Response')->item(0);
@@ -262,7 +270,7 @@ class ModelShippingUps extends Model {
 								'title'        => $service_code[$this->config->get('ups_origin')][$code],
 								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
 								'tax_class_id' => $this->config->get('ups_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->currency->getCode()), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->currency->getCode(), 1.0000000)
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);
 						}
 					}

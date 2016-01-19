@@ -2,9 +2,9 @@
 class ControllerAffiliateTransaction extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/transaction', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/transaction', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
 		$this->load->language('affiliate/transaction');
@@ -20,12 +20,12 @@ class ControllerAffiliateTransaction extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_transaction'),
-			'href' => $this->url->link('affiliate/transaction', '', 'SSL')
+			'href' => $this->url->link('affiliate/transaction', '', true)
 		);
 
 		$this->load->model('affiliate/transaction');
@@ -72,15 +72,15 @@ class ControllerAffiliateTransaction extends Controller {
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('affiliate/transaction', 'page={page}', 'SSL');
+		$pagination->url = $this->url->link('affiliate/transaction', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$data['balance'] = $this->currency->format($this->model_affiliate_transaction->getBalance());
+		$data['balance'] = $this->currency->format($this->model_affiliate_transaction->getBalance(), $this->session->data['currency']);
 
-		$data['continue'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['continue'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -89,10 +89,6 @@ class ControllerAffiliateTransaction extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/transaction.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/transaction.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/transaction.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/transaction', $data));
 	}
 }

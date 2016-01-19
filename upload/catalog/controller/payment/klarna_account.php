@@ -57,9 +57,16 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			}
 
 			// Store Taxes to send to Klarna
-			$total_data = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			// Because __call can not keep var references so we put them into an array.
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
 
 			$this->load->model('extension/extension');
 
@@ -80,8 +87,9 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					$taxes = array();
-
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 
 					$amount = 0;
 
@@ -93,21 +101,21 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				}
 			}
 
-			foreach ($total_data as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 
 				if (isset($klarna_tax[$value['code']])) {
 					if ($klarna_tax[$value['code']]) {
-						$total_data[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
+						$totals[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
 					} else {
-						$total_data[$key]['tax_rate'] = 0;
+						$totals[$key]['tax_rate'] = 0;
 					}
 				} else {
-					$total_data[$key]['tax_rate'] = '0';
+					$totals[$key]['tax_rate'] = '0';
 				}
 			}
 
-			$this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
+			$this->session->data['klarna'][$this->session->data['order_id']] = $totals;
 
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
@@ -268,15 +276,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			foreach ($payment_option as $payment_option) {
 				$data['payment_options'][] = array(
 					'code'  => $payment_option['pclass_id'],
-					'title' => sprintf($this->language->get('text_monthly_payment'), $payment_option['title'], $this->currency->format($this->currency->convert($payment_option['monthly_cost'], $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getCode()), 1, 1))
+					'title' => sprintf($this->language->get('text_monthly_payment'), $payment_option['title'], $this->currency->format($this->currency->convert($payment_option['monthly_cost'], $country_to_currency[$order_info['payment_iso_code_3']], $this->session->data['currency']), $this->session->data['currency'], 1))
 				);
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_account.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/klarna_account.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/klarna_account.tpl', $data);
-			}
+			return $this->load->view('payment/klarna_account', $data);
 		}
 	}
 

@@ -17,21 +17,17 @@ class ControllerModuleAffiliate extends Controller {
 		$data['text_transaction'] = $this->language->get('text_transaction');
 
 		$data['logged'] = $this->affiliate->isLogged();
-		$data['register'] = $this->url->link('affiliate/register', '', 'SSL');
-		$data['login'] = $this->url->link('affiliate/login', '', 'SSL');
-		$data['logout'] = $this->url->link('affiliate/logout', '', 'SSL');
-		$data['forgotten'] = $this->url->link('affiliate/forgotten', '', 'SSL');
-		$data['account'] = $this->url->link('affiliate/account', '', 'SSL');
-		$data['edit'] = $this->url->link('affiliate/edit', '', 'SSL');
-		$data['password'] = $this->url->link('affiliate/password', '', 'SSL');
-		$data['payment'] = $this->url->link('affiliate/payment', '', 'SSL');
-		$data['tracking'] = $this->url->link('affiliate/tracking', '', 'SSL');
-		$data['transaction'] = $this->url->link('affiliate/transaction', '', 'SSL');
+		$data['register'] = $this->url->link('affiliate/register', '', true);
+		$data['login'] = $this->url->link('affiliate/login', '', true);
+		$data['logout'] = $this->url->link('affiliate/logout', '', true);
+		$data['forgotten'] = $this->url->link('affiliate/forgotten', '', true);
+		$data['account'] = $this->url->link('affiliate/account', '', true);
+		$data['edit'] = $this->url->link('affiliate/edit', '', true);
+		$data['password'] = $this->url->link('affiliate/password', '', true);
+		$data['payment'] = $this->url->link('affiliate/payment', '', true);
+		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
+		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/affiliate.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/affiliate.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/affiliate.tpl', $data);
-		}
+		return $this->load->view('module/affiliate', $data);
 	}
 }

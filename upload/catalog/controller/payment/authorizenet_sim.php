@@ -17,7 +17,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['x_show_form'] = 'PAYMENT_FORM';
 		$data['x_test_request'] = $this->config->get('authorizenet_sim_mode');
 		$data['x_type'] = 'AUTH_CAPTURE';
-		$data['x_currency_code'] = $this->currency->getCode();
+		$data['x_currency_code'] = $this->session->data['currency'];
 		$data['x_invoice_num'] = $this->session->data['order_id'];
 		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 		$data['x_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
@@ -43,11 +43,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 
 		$data['x_fp_hash'] = hash_hmac('md5', $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'], $this->config->get('authorizenet_sim_transaction_key'));
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/authorizenet_sim.tpl', $data);
-		}
+		return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim', $data);
 	}
 
 	public function callback() {

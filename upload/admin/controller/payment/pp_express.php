@@ -18,7 +18,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -140,22 +140,22 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['action'] = $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
-		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['search'] = $this->url->ssl('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pp_express_username'])) {
 			$data['pp_express_username'] = $this->request->post['pp_express_username'];
@@ -359,7 +359,7 @@ class ControllerPaymentPPExpress extends Controller {
 				. '&partnerId=9PDNYE4RZBVFJ'
 				. '&productIntentID=addipmt'
 				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/live', 'token=' . $this->session->data['token'], 'SSL')))
+				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->ssl('payment/pp_express/live', 'token=' . $this->session->data['token'], true)))
 				. '&subIntegrationType=S';
 
 		$data['text_paypal_link_sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
@@ -370,7 +370,7 @@ class ControllerPaymentPPExpress extends Controller {
 				. '&partnerId=T4E8WSXT43QPJ'
 				. '&productIntentID=addipmt'
 				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], 'SSL')))
+				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->ssl('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true)))
 				. '&subIntegrationType=S';
 
 		$data['token'] = $this->session->data['token'];
@@ -379,7 +379,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/pp_express', $data));
 	}
 
 	public function imageLogo() {
@@ -447,7 +447,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->session->data['error_api'] = $this->language->get('error_api');
 			}
 		}
-		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true));
 	}
 
 	public function sandbox() {
@@ -473,7 +473,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
 			}
 		}
-		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true));
 	}
 
 	public function resend() {
@@ -735,22 +735,22 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_pp_express'),
-			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express/refund', 'token=' . $this->session->data['token'], true),
 		);
 
 		//button actions
-		$data['action'] = $this->url->link('payment/pp_express/doRefund', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('payment/pp_express/doRefund', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true);
 
 		$data['transaction_id'] = $this->request->get['transaction_id'];
 
@@ -783,7 +783,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_refund.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/pp_express_refund', $data));
 	}
 
 	public function doRefund() {
@@ -840,7 +840,7 @@ class ControllerPaymentPPExpress extends Controller {
 					if ($result == false) {
 						$transaction['payment_status'] = 'Failed';
 						$this->model_payment_pp_express->addTransaction($transaction, $call_data);
-						$this->response->redirect($this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $paypal_order['order_id'], 'SSL'));
+						$this->response->redirect($this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $paypal_order['order_id'], true));
 					} else if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 
 						$transaction['transaction_id'] = $result['REFUNDTRANSACTIONID'];
@@ -858,20 +858,20 @@ class ControllerPaymentPPExpress extends Controller {
 						}
 
 						//redirect back to the order
-						$this->response->redirect($this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $paypal_order['order_id'], 'SSL'));
+						$this->response->redirect($this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $paypal_order['order_id'], true));
 					} else {
 						$this->model_payment_pp_express->log(json_encode($result));
 						$this->session->data['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error') . (isset($result['L_LONGMESSAGE0']) ? '<br />' . $result['L_LONGMESSAGE0'] : '');
-						$this->response->redirect($this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], 'SSL'));
+						$this->response->redirect($this->url->ssl('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], true));
 					}
 				} else {
 					$this->session->data['error'] = $this->language->get('error_data_missing');
-					$this->response->redirect($this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], 'SSL'));
+					$this->response->redirect($this->url->ssl('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], true));
 				}
 			}
 		} else {
 			$this->session->data['error'] = $this->language->get('error_data');
-			$this->response->redirect($this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], 'SSL'));
+			$this->response->redirect($this->url->ssl('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], true));
 		}
 	}
 
@@ -937,11 +937,11 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['paypal_order']['refunded'] = $refunded;
 				$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 
-				$data['refund_link'] = $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], 'SSL');
-				$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
-				$data['resend_link'] = $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'], 'SSL');
+				$data['refund_link'] = $this->url->ssl('payment/pp_express/refund', 'token=' . $this->session->data['token'], true);
+				$data['view_link'] = $this->url->ssl('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], true);
+				$data['resend_link'] = $this->url->ssl('payment/pp_express/resend', 'token=' . $this->session->data['token'], true);
 
-				return $this->load->view('payment/pp_express_order.tpl', $data);
+				return $this->load->view('payment/pp_express_order', $data);
 			}
 		}
 	}
@@ -1030,29 +1030,29 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_pp_express'),
-			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express/search', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['token'] = $this->session->data['token'];
 		$data['date_start'] = date("Y-m-d", strtotime('-30 days'));
 		$data['date_end'] = date("Y-m-d");
-		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
+		$data['view_link'] = $this->url->ssl('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_search.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/pp_express_search', $data));
 	}
 
 	public function doSearch() {
@@ -1158,8 +1158,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['transaction'] = $this->model_payment_pp_express->getTransaction($this->request->get['transaction_id']);
 		$data['lines'] = $this->formatRows($data['transaction']);
-		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
+		$data['view_link'] = $this->url->ssl('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
 		$data['token'] = $this->session->data['token'];
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1250,24 +1250,24 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_pp_express'),
-			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->get['transaction_id'], 'SSL'),
+			'href' => $this->url->ssl('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->get['transaction_id'], true),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_view.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/pp_express_view', $data));
 	}
 
 	private function formatRows($data) {
@@ -1292,7 +1292,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->load->model('sale/recurring');
 		$this->load->model('payment/pp_express');
-		$this->language->load('sale/recurring');
+		$this->load->language('sale/recurring');
 
 		$recurring = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
 
@@ -1312,7 +1312,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['error'] = $this->language->get('error_not_found');
 		}
 
-		$this->response->redirect($this->url->link('sale/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], 'SSL'));
+		$this->response->redirect($this->url->ssl('sale/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], true));
 	}
 
 	public function recurringButtons() {
@@ -1325,10 +1325,10 @@ class ControllerPaymentPPExpress extends Controller {
 		if ($recurring['status_id'] == 2 || $recurring['status_id'] == 3) {
 			$data['buttons'][] = array(
 				'text' => $this->language->get('button_cancel_recurring'),
-				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], 'SSL')
+				'link' => $this->url->ssl('payment/pp_express/recurringCancel', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], true)
 			);
 		}
 
-		return $this->load->view('common/buttons.tpl', $data);
+		return $this->load->view('sale/recurring_button', $data);
 	}
 }

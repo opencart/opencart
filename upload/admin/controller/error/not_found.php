@@ -13,18 +13,18 @@ class ControllerErrorNotFound extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('error/not_found', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+		$this->response->setOutput($this->load->view('error/not_found', $data));
 	}
 }

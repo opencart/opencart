@@ -1,12 +1,12 @@
 <?php
 class ControllerPaymentPPPayflow extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_payflow');
+		$this->load->language('payment/pp_payflow');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_start_date'] = $this->language->get('text_start_date');
 		$data['text_issue'] = $this->language->get('text_issue');
-		$data['text_wait'] = $this->language->get('text_wait');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
@@ -75,15 +75,11 @@ class ControllerPaymentPPPayflow extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_payflow.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/pp_payflow.tpl', $data);
-		}
+		return $this->load->view('payment/pp_payflow', $data);
 	}
 
 	public function send() {
-		$this->language->load('payment/pp_payflow');
+		$this->load->language('payment/pp_payflow');
 
 		$this->load->model('checkout/order');
 

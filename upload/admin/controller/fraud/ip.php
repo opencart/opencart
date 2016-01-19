@@ -14,7 +14,7 @@ class ControllerFraudIp extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -52,22 +52,22 @@ class ControllerFraudIp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_fraud'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('fraud/ip', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('fraud/ip', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('fraud/ip', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('fraud/ip', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['ip_order_status_id'])) {
 			$data['ip_order_status_id'] = $this->request->post['ip_order_status_id'];
@@ -89,7 +89,7 @@ class ControllerFraudIp extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/ip.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/ip', $data));
 	}
 
 	public function install() {
@@ -143,7 +143,7 @@ class ControllerFraudIp extends Controller {
 				'ip'         => $result['ip'],
 				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'date_added' => date('d/m/y', strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL')
+				'filter_ip'  => $this->url->ssl('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], true)
 			);
 		}
 
@@ -153,13 +153,13 @@ class ControllerFraudIp extends Controller {
 		$pagination->total = $ip_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('fraud/ip/ip', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+		$pagination->url = $this->url->ssl('fraud/ip/ip', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
-		$this->response->setOutput($this->load->view('fraud/ip_ip.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/ip_ip', $data));
 	}
 
 	public function addIp() {

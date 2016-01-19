@@ -34,16 +34,16 @@ class ControllerCommonFooter extends Controller {
 		}
 
 		$data['contact'] = $this->url->link('information/contact');
-		$data['return'] = $this->url->link('account/return/add', '', 'SSL');
+		$data['return'] = $this->url->link('account/return/add', '', true);
 		$data['sitemap'] = $this->url->link('information/sitemap');
 		$data['manufacturer'] = $this->url->link('product/manufacturer');
-		$data['voucher'] = $this->url->link('account/voucher', '', 'SSL');
-		$data['affiliate'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['voucher'] = $this->url->link('account/voucher', '', true);
+		$data['affiliate'] = $this->url->link('affiliate/account', '', true);
 		$data['special'] = $this->url->link('product/special');
-		$data['account'] = $this->url->link('account/account', '', 'SSL');
-		$data['order'] = $this->url->link('account/order', '', 'SSL');
-		$data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
-		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+		$data['account'] = $this->url->link('account/account', '', true);
+		$data['order'] = $this->url->link('account/order', '', true);
+		$data['wishlist'] = $this->url->link('account/wishlist', '', true);
+		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 
@@ -72,10 +72,6 @@ class ControllerCommonFooter extends Controller {
 			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/footer.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/footer.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/footer.tpl', $data);
-		}
+		return $this->load->view('common/footer', $data);
 	}
 }

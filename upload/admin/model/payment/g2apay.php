@@ -137,7 +137,7 @@ class ModelPaymentG2aPay extends Model {
 		if ($this->config->get('g2apay_debug') == 1) {
 			$log = new Log('g2apay.log');
 			$backtrace = debug_backtrace();
-			$log->write('Origin: ' . $backtrace[1]['class'] . '::' . $backtrace[1]['function']);
+			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}
 	}

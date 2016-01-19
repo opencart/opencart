@@ -60,12 +60,12 @@ class ControllerReportAffiliateActivity extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href' => $this->url->ssl('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url, true),
 			'text' => $this->language->get('heading_title')
 		);
 
@@ -90,7 +90,7 @@ class ControllerReportAffiliateActivity extends Controller {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
 
 			$data['activities'][] = array(
-				'comment'    => str_replace('affiliate_id=', $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'), $comment),
+				'comment'    => str_replace('affiliate_id=', $this->url->ssl('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', true), $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
@@ -137,7 +137,7 @@ class ControllerReportAffiliateActivity extends Controller {
 		$pagination->total = $activity_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->ssl('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -152,6 +152,6 @@ class ControllerReportAffiliateActivity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/affiliate_activity.tpl', $data));
+		$this->response->setOutput($this->load->view('report/affiliate_activity', $data));
 	}
 }

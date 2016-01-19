@@ -1,5 +1,5 @@
 /////////////////////////////////
-///       OpenCart V2.0.x     ///
+///       OpenCart V2.x     ///
 ///    Install Instructions   ///
 ///  http://www.opencart.com  ///
 /////////////////////////////////
@@ -22,10 +22,11 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 3. For Linux/Unix make sure the following folders and files are writeable.
 
-		chmod 0755 or 0777 system/cache/
-		chmod 0755 or 0777 system/logs/
-		chmod 0755 or 0777 system/download/
-		chmod 0755 or 0777 system/upload/
+		chmod 0755 or 0777 system/storage/cache/
+		chmod 0755 or 0777 system/storage/logs/
+		chmod 0755 or 0777 system/storage/download/
+		chmod 0755 or 0777 system/storage/upload/
+		chmod 0755 or 0777 system/storage/modification/
 		chmod 0755 or 0777 image/
 		chmod 0755 or 0777 image/cache/
 		chmod 0755 or 0777 image/catalog/
@@ -42,6 +43,8 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 6. You should be taken to the installer page. Follow the on screen instructions.
 
 7. After successful install, delete the /install/ directory from ftp.
+
+8. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
 
 
 - Windows Install -
@@ -85,3 +88,13 @@ Godaddy Issues
 If your hosting on godaddy you might need to rename the php.ini to user.ini
 
 It seems godadddy has started changing the industry standard names of files.
+
+----------------------------
+COMPOSER OR NOT TO COMPOSER
+----------------------------
+From version 2.2 composer has been added to aid developers who want to use composer libraries. 2 versions of OpenCart
+will become available, one compiled and one non-compiled (composer.json only - no files in vendor folder).
+
+We STRONGLY advise leaving the vendor folder outside of the webroot - so files cannot be accessed directly.
+
+Composer installing is extremely simple - https://getcomposer.org

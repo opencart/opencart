@@ -14,7 +14,7 @@ class ControllerPaymentCod extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -45,22 +45,22 @@ class ControllerPaymentCod extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/cod', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('payment/cod', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/cod', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('payment/cod', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['cod_total'])) {
 			$data['cod_total'] = $this->request->post['cod_total'];
@@ -104,7 +104,7 @@ class ControllerPaymentCod extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/cod.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/cod', $data));
 	}
 
 	protected function validate() {

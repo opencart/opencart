@@ -7,7 +7,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazon_order');
-		$this->language->load('openbay/amazon_order');
+		$this->load->language('openbay/amazon_order');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/order - started');
@@ -293,8 +293,6 @@ class ControllerOpenbayAmazon extends Controller {
 				$this->model_openbay_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
 			}
 		}
-
-		$this->event->trigger('post.order.history.add', $order_id);
 
 		$logger->write('Order ' . $amazon_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");

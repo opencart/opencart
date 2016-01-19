@@ -33,11 +33,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/authorizenet_aim.tpl', $data);
-		}
+		return $this->load->view('payment/authorizenet_aim', $data);
 	}
 
 	public function send() {
@@ -75,7 +71,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_email'] = $order_info['email'];
 		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
-		$data['x_currency_code'] = $this->currency->getCode();
+		$data['x_currency_code'] = $this->session->data['currency'];
 		$data['x_method'] = 'CC';
 		$data['x_type'] = ($this->config->get('authorizenet_aim_method') == 'capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY';
 		$data['x_card_num'] = str_replace(' ', '', $this->request->post['cc_number']);
@@ -172,7 +168,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 				}
 
-				$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
+				$json['redirect'] = $this->url->link('checkout/success', '', true);
 			} else {
 				$json['error'] = $response_info[4];
 			}

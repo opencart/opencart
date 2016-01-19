@@ -14,7 +14,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -69,22 +69,22 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/sagepay_direct', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('payment/sagepay_direct', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/sagepay_direct', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('payment/sagepay_direct', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['sagepay_direct_vendor'])) {
 			$data['sagepay_direct_vendor'] = $this->request->post['sagepay_direct_vendor'];
@@ -180,7 +180,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_direct.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/sagepay_direct', $data));
 	}
 
 	public function install() {
@@ -236,7 +236,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/sagepay_direct_order.tpl', $data);
+				return $this->load->view('payment/sagepay_direct_order', $data);
 			}
 		}
 	}
@@ -252,7 +252,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$void_response = $this->model_payment_sagepay_direct->void($this->request->post['order_id']);
 
-			$this->model_payment_sagepay_direct->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_payment_sagepay_direct->logger('Void result', $void_response);
 
 			if ($void_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_direct->addTransaction($sagepay_direct_order['sagepay_direct_order_id'], 'void', 0.00);
@@ -287,7 +287,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$release_response = $this->model_payment_sagepay_direct->release($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_direct->logger('Release result:\r\n' . print_r($release_response, 1));
+			$this->model_payment_sagepay_direct->logger('Release result', $release_response);
 
 			if ($release_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_direct->addTransaction($sagepay_direct_order['sagepay_direct_order_id'], 'payment', $this->request->post['amount']);
@@ -333,7 +333,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$rebate_response = $this->model_payment_sagepay_direct->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_direct->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_payment_sagepay_direct->logger('Rebate result', $rebate_response);
 
 			if ($rebate_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_direct->addTransaction($sagepay_direct_order['sagepay_direct_order_id'], 'rebate', $this->request->post['amount'] * -1);

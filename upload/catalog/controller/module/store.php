@@ -4,7 +4,7 @@ class ControllerModuleStore extends Controller {
 		$status = true;
 
 		if ($this->config->get('store_admin')) {
-			$this->user = new User($this->registry);
+			$this->user = new Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
 		}
@@ -38,11 +38,7 @@ class ControllerModuleStore extends Controller {
 				);
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/store.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/store.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/store.tpl', $data);
-			}
+			return $this->load->view('module/store', $data);
 		}
 	}
 }

@@ -4,9 +4,9 @@ class ControllerAffiliatePayment extends Controller {
 
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/payment', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/payment', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
 		$this->load->language('affiliate/payment');
@@ -30,7 +30,7 @@ class ControllerAffiliatePayment extends Controller {
 
 			$this->model_affiliate_activity->addActivity('payment', $activity_data);
 
-			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -42,12 +42,12 @@ class ControllerAffiliatePayment extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('affiliate/payment', '', 'SSL')
+			'href' => $this->url->link('affiliate/payment', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -70,7 +70,7 @@ class ControllerAffiliatePayment extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
-		$data['action'] = $this->url->link('affiliate/payment', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/payment', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->affiliate->getId());
@@ -148,7 +148,7 @@ class ControllerAffiliatePayment extends Controller {
 			$data['bank_account_number'] = '';
 		}
 
-		$data['back'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['back'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -157,10 +157,6 @@ class ControllerAffiliatePayment extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/payment.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/payment.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/payment.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/payment', $data));
 	}
 }

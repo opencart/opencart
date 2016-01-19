@@ -5,13 +5,11 @@ final class Postgre {
 
 	public function __construct($hostname, $username, $password, $database, $port = '5432') {
 		if (!$this->link = pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database)) {
-			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
-			exit();
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
 		if (!mysql_select_db($database, $this->link)) {
-			trigger_error('Error: Could not connect to database ' . $database);
-			exit();
+			throw new \Exception('Error: Could not connect to database ' . $database);
 		}
 
 		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");
@@ -46,8 +44,7 @@ final class Postgre {
 				return true;
 			}
 		} else {
-			trigger_error('Error: ' . pg_result_error($this->link) . '<br />' . $sql);
-			exit();
+			throw new \Exception('Error: ' . pg_result_error($this->link) . '<br />' . $sql);
 		}
 	}
 

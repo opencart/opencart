@@ -14,7 +14,7 @@ class ControllerShippingRoyalMail extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -74,22 +74,22 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('shipping/royal_mail', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->ssl('shipping/royal_mail', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true);
 
 		// Special Delivery < 500
 		if (isset($this->request->post['royal_mail_special_delivery_500_rate'])) {
@@ -367,7 +367,7 @@ class ControllerShippingRoyalMail extends Controller {
 		// International Economy
 		if (isset($this->request->post['royal_mail_international_economy_rate'])) {
 			$data['royal_mail_international_economy_rate'] = $this->request->post['royal_mail_international_economy_rate'];
-		} elseif ($this->config->has('royal_mail_economy_rate')) {
+		} elseif ($this->config->has('royal_mail_international_economy_rate')) {
 			$data['royal_mail_international_economy_rate'] = $this->config->get('royal_mail_international_economy_rate');
 		} else {
 			$data['royal_mail_international_economy_rate'] = '0.02:0.81,0.06:1.43,0.1:2.80,0.25:3.65,0.5:5.10,0.75:6.55,1:8.00,1.25:9.45,1.5:10.90,1.75:12.35,2:13.80';
@@ -437,7 +437,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/royal_mail.tpl', $data));
+		$this->response->setOutput($this->load->view('shipping/royal_mail', $data));
 	}
 
 	protected function validate() {

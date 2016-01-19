@@ -15,22 +15,22 @@ class ModelPaymentPPExpress extends Model {
 
 	public function call($data) {
 
-		if ($this->config->get('pp_express_test') == 1) {
-			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-			$user = $this->config->get('pp_express_sandbox_username');
-			$password = $this->config->get('pp_express_sandbox_password');
-			$signature = $this->config->get('pp_express_sandbox_signature');
+		if ($this->config->get('pp_express_test')) {
+			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_sandbox_username');
+			$api_password = $this->config->get('pp_express_sandbox_password');
+			$api_signature = $this->config->get('pp_express_sandbox_signature');
 		} else {
-			$api_endpoint = 'https://api-3t.paypal.com/nvp';
-			$user = $this->config->get('pp_express_username');
-			$password = $this->config->get('pp_express_password');
-			$signature = $this->config->get('pp_express_signature');
+			$api_url = 'https://api-3t.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_username');
+			$api_password = $this->config->get('pp_express_password');
+			$api_signature = $this->config->get('pp_express_signature');
 		}
 
 		$settings = array(
-			'USER' => $user,
-			'PWD' => $password,
-			'SIGNATURE' => $signature,
+			'USER' => $api_user,
+			'PWD' => $api_password,
+			'SIGNATURE' => $api_signature,
 			'VERSION' => '109.0',
 			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);
@@ -40,7 +40,7 @@ class ModelPaymentPPExpress extends Model {
 		$defaults = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $api_endpoint,
+			CURLOPT_URL => $api_url,
 			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,
@@ -155,7 +155,7 @@ class ModelPaymentPPExpress extends Model {
 	public function paymentRequestInfo() {
 
 		$data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
-		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->currency->getCode();
+		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->session->data['currency'];
 		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('pp_express_method');
 
 		$i = 0;
@@ -180,7 +180,7 @@ class ModelPaymentPPExpress extends Model {
 
 			$data['L_PAYMENTREQUEST_0_DESC' . $i] = substr($data['L_PAYMENTREQUEST_0_DESC' . $i], 0, 126);
 
-			$item_price = $this->currency->format($item['price'], false, false, false);
+			$item_price = $this->currency->format($item['price'], $this->session->data['currency'], false, false);
 
 			$data['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
@@ -213,13 +213,13 @@ class ModelPaymentPPExpress extends Model {
 
 		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $voucher) {
-				$item_total += $this->currency->format($voucher['amount'], false, false, false);
+				$item_total += $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
 
 				$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
 				$data['L_PAYMENTREQUEST_0_NAME' . $i] = $voucher['description'];
 				$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = 'VOUCHER';
 				$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
-				$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($voucher['amount'], false, false, false);
+				$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($voucher['amount'], $this->session->data['currency'], false, false);
 				$i++;
 			}
 		}
@@ -227,10 +227,17 @@ class ModelPaymentPPExpress extends Model {
 		// Totals
 		$this->load->model('extension/extension');
 
-		$total_data = array();
-		$total = 0;
+		$totals = array();
 		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -247,27 +254,28 @@ class ModelPaymentPPExpress extends Model {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
 
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 
 				$sort_order = array();
 
-				foreach ($total_data as $key => $value) {
+				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $total_data);
+				array_multisort($sort_order, SORT_ASC, $totals);
 			}
 		}
 
-		foreach ($total_data as $total_row) {
+		foreach ($total_data['totals'] as $total_row) {
 			if (!in_array($total_row['code'], array('total', 'sub_total'))) {
 				if ($total_row['value'] != 0) {
-					$item_price = $this->currency->format($total_row['value'], false, false, false);
+					$item_price = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 
 					$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $total_row['code'];
 					$data['L_PAYMENTREQUEST_0_NAME' . $i] = $total_row['title'];
-					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], false, false, false);
+					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], $this->session->data['currency'], false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 
 					$item_total = $item_total + $item_price;
@@ -284,19 +292,19 @@ class ModelPaymentPPExpress extends Model {
 		$recurring_products = $this->cart->getRecurringProducts();
 
 		if ($recurring_products) {
-			$this->language->load('payment/pp_express');
+			$this->load->language('payment/pp_express');
 
 			foreach ($recurring_products as $item) {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
 				if ($item['recurring']['trial']) {
-					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 					$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 				} else {
 					$trial_text = '';
 				}
 
-				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'] . ' ' . $this->currency->getCode();
+				$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false)  * $item['quantity'] . ' ' . $this->session->data['currency'];
 				$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 				if ($item['recurring']['duration'] > 0) {

@@ -45,8 +45,8 @@ class ControllerPaymentPaypoint extends Controller {
 			$data['ship_country'] = '';
 		}
 
-		$data['currency'] = $this->currency->getCode();
-		$data['callback'] = $this->url->link('payment/paypoint/callback', '', 'SSL');
+		$data['currency'] = $this->session->data['currency'];
+		$data['callback'] = $this->url->link('payment/paypoint/callback', '', true);
 
 		switch ($this->config->get('paypoint_test')) {
 			case 'live':
@@ -63,11 +63,7 @@ class ControllerPaymentPaypoint extends Controller {
 
 		$data['options'] = 'test_status=' . $status . ',dups=false,cb_post=false';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/paypoint.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/paypoint.tpl', $data);
-		}
+		return $this->load->view('payment/paypoint', $data);
 	}
 
 	public function callback() {
@@ -150,11 +146,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_success.tpl')) {
-					$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/paypoint_success.tpl', $data));
-				} else {
-					$this->response->setOutput($this->load->view('default/template/payment/paypoint_success.tpl', $data));
-				}
+				$this->response->setOutput($this->load->view('payment/paypoint_success', $data));
 			} else {
 				$data['continue'] = $this->url->link('checkout/cart');
 
@@ -165,11 +157,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl')) {
-					$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/paypoint_failure.tpl', $data));
-				} else {
-					$this->response->setOutput($this->load->view('default/template/payment/paypoint_failure.tpl', $data));
-				}
+				$this->response->setOutput($this->load->view('payment/paypoint_failure', $data));
 			}
 		}
 	}

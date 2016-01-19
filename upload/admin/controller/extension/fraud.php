@@ -32,7 +32,7 @@ class ControllerExtensionFraud extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -48,16 +48,12 @@ class ControllerExtensionFraud extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('fraud', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('fraud/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 	}
 
@@ -66,12 +62,12 @@ class ControllerExtensionFraud extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->ssl('extension/fraud', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -125,10 +121,10 @@ class ControllerExtensionFraud extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'install'   => $this->url->ssl('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->ssl('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('fraud/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+					'edit'      => $this->url->ssl('fraud/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
@@ -137,7 +133,7 @@ class ControllerExtensionFraud extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/fraud.tpl', $data));
+		$this->response->setOutput($this->load->view('extension/fraud', $data));
 	}
 
 	protected function validate() {

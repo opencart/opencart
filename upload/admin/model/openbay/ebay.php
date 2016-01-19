@@ -320,7 +320,7 @@ class ModelOpenbayEbay extends Model{
 					'model'         => $row['model'],
 					'qty'           => $row['quantity'],
 					'name'          => $row['name'],
-					'link_edit'     => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
+					'link_edit'     => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], true),
 					'link_ebay'     => $this->config->get('ebay_itm_link') . $row['ebay_item_id'],
 					'reserve'       => (int)$row['reserve'],
 				);

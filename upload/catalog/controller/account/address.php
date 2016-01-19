@@ -4,9 +4,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/address');
@@ -20,9 +20,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function add() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/address');
@@ -37,7 +37,7 @@ class ControllerAccountAddress extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->request->post);
-
+			
 			$this->session->data['success'] = $this->language->get('text_add');
 
 			// Add to activity log
@@ -50,7 +50,7 @@ class ControllerAccountAddress extends Controller {
 
 			$this->model_account_activity->addActivity('address_add', $activity_data);
 
-			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/address', '', true));
 		}
 
 		$this->getForm();
@@ -58,9 +58,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function edit() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/address');
@@ -72,7 +72,7 @@ class ControllerAccountAddress extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
-
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
@@ -104,7 +104,7 @@ class ControllerAccountAddress extends Controller {
 
 			$this->model_account_activity->addActivity('address_edit', $activity_data);
 
-			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/address', '', true));
 		}
 
 		$this->getForm();
@@ -112,9 +112,9 @@ class ControllerAccountAddress extends Controller {
 
 	public function delete() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/address');
@@ -149,10 +149,10 @@ class ControllerAccountAddress extends Controller {
 				'customer_id' => $this->customer->getId(),
 				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
 			);
-
+			
 			$this->model_account_activity->addActivity('address_delete', $activity_data);
 
-			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/address', '', true));
 		}
 
 		$this->getList();
@@ -166,12 +166,12 @@ class ControllerAccountAddress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', 'SSL')
+			'href' => $this->url->link('account/address', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -238,13 +238,13 @@ class ControllerAccountAddress extends Controller {
 			$data['addresses'][] = array(
 				'address_id' => $result['address_id'],
 				'address'    => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id'], 'SSL'),
-				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'], 'SSL')
+				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id'], true),
+				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'], true)
 			);
 		}
 
-		$data['add'] = $this->url->link('account/address/add', '', 'SSL');
-		$data['back'] = $this->url->link('account/account', '', 'SSL');
+		$data['add'] = $this->url->link('account/address/add', '', true);
+		$data['back'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -253,11 +253,7 @@ class ControllerAccountAddress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/address_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/address_list', $data));
 	}
 
 	protected function getForm() {
@@ -270,23 +266,23 @@ class ControllerAccountAddress extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', 'SSL')
+			'href' => $this->url->link('account/address', '', true)
 		);
 
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/add', '', 'SSL')
+				'href' => $this->url->link('account/address/add', '', true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL')
+				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], true)
 			);
 		}
 
@@ -363,9 +359,9 @@ class ControllerAccountAddress extends Controller {
 		}
 		
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address/add', '', 'SSL');
+			$data['action'] = $this->url->link('account/address/add', '', true);
 		} else {
-			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL');
+			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], true);
 		}
 
 		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -429,7 +425,7 @@ class ControllerAccountAddress extends Controller {
 		}
 
 		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = $this->request->post['country_id'];
+			$data['country_id'] = (int)$this->request->post['country_id'];
 		}  elseif (!empty($address_info)) {
 			$data['country_id'] = $address_info['country_id'];
 		} else {
@@ -437,7 +433,7 @@ class ControllerAccountAddress extends Controller {
 		}
 
 		if (isset($this->request->post['zone_id'])) {
-			$data['zone_id'] = $this->request->post['zone_id'];
+			$data['zone_id'] = (int)$this->request->post['zone_id'];
 		}  elseif (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
@@ -469,7 +465,7 @@ class ControllerAccountAddress extends Controller {
 			$data['default'] = false;
 		}
 
-		$data['back'] = $this->url->link('account/address', '', 'SSL');
+		$data['back'] = $this->url->link('account/address', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -478,11 +474,8 @@ class ControllerAccountAddress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_form.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_form.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/address_form.tpl', $data));
-		}
+
+		$this->response->setOutput($this->load->view('account/address_form', $data));
 	}
 
 	protected function validateForm() {
@@ -510,11 +503,11 @@ class ControllerAccountAddress extends Controller {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 
-		if ($this->request->post['country_id'] == '') {
+		if ($this->request->post['country_id'] == '' || !is_numeric($this->request->post['country_id'])) {
 			$this->error['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 			$this->error['zone'] = $this->language->get('error_zone');
 		}
 

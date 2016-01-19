@@ -12,7 +12,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', true));
 		}
 
-		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
+		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal()) {
 			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
@@ -67,7 +67,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', true));
 		}
 
-		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
+		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal()) {
 			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
@@ -116,7 +116,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', true));
 		}
 
-		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
+		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal()) {
 			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 

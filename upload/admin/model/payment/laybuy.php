@@ -318,13 +318,13 @@ class ModelPaymentLaybuy extends Model {
 		$this->model_extension_event->addEvent('laybuy', 'post.order.delete', 'payment/laybuy/deleteOrder');
 	}
 
-	public function log($data) {
+	public function log($data, $step = 6) {
 		if ($this->config->get('laybuy_logging')) {
 			$backtrace = debug_backtrace();
 
 			$log = new Log('laybuy.log');
 
-			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . $data);
+			$log->write('(' . $backtrace[$step]['class'] . '::' . $backtrace[$step]['function'] . ') - ' . $data);
 		}
 	}
 

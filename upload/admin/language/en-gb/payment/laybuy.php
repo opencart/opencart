@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']                 = 'Lay-Buy';
-$_['heading_transaction_title']     = 'Transaction Details';
+$_['heading_transaction_title']     = 'Transaction';
 
 // Tab
 $_['tab_settings']                  = 'Settings';
@@ -14,6 +14,7 @@ $_['tab_modify']                    = 'Modify Plan';
 // Text
 $_['text_payment']                  = 'Payment';
 $_['text_success']                  = 'Success: You have modified Lay-Buy payment module!';
+$_['text_edit']                     = 'Edit Lay-Buy';
 $_['text_laybuy']                   = '<a href="https://www.lay-buys.com" target="_blank"><img src="view/image/payment/laybuys.png" style="width:94px;height:25px" alt="Lay-Buys" title="Lay-Buys"></a>';
 $_['text_cancel_success']           = 'Transaction was canceled successfully.';
 $_['text_cancel_failure']           = 'Cancel request was unsuccessful. Please try again!';
@@ -28,6 +29,7 @@ $_['text_status_50']                = 'Revise Requested';
 $_['text_status_51']                = 'Revised';
 $_['text_fetched_some']             = 'Successfully updated %d transaction(s)';
 $_['text_fetched_none']             = 'There are no transactions to update.';
+$_['text_transaction_details']      = 'Transaction Details';
 $_['text_not_found']                = 'There is no transaction with that ID.';
 $_['text_paypal_profile_id']        = 'PayPal Profile ID';
 $_['text_laybuy_ref_no']            = 'Lay-Buy Reference ID';

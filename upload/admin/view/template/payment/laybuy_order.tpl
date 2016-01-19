@@ -10,11 +10,11 @@
  <?php } ?>
 </ul>
 <div class="tab-content">
- <div class="tab-pane active" id="tab-reference">
-	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_paypal_profile_id; ?></label>
-	  <div class="col-sm-10">
-	    <?php echo $transaction['paypal_profile_id']; ?>
+  <div class="tab-pane active" id="tab-reference">
+    <div class="form-group">
+      <label class="col-sm-2 control-label"><?php echo $text_paypal_profile_id; ?></label>
+      <div class="col-sm-10">
+        <?php echo $transaction['paypal_profile_id']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
@@ -28,9 +28,9 @@
 	  <div class="col-sm-10">
 	    <?php echo $transaction['order_id']; ?>
 	  </div>
-	</div>
- </div>
- <div class="tab-pane" id="tab-customer">
+    </div>
+  </div>
+  <div class="tab-pane" id="tab-customer">
 	<div class="form-group">
 	  <label class="col-sm-2 control-label"><?php echo $text_firstname; ?></label>
 	  <div class="col-sm-10">
@@ -79,8 +79,8 @@
 	    <?php echo $transaction['postcode']; ?>
 	  </div>
 	</div>
- </div>
- <div class="tab-pane" id="tab-payment-plan">
+  </div>
+  <div class="tab-pane" id="tab-payment-plan">
 	<div class="form-group">
 	  <label class="col-sm-2 control-label"><?php echo $text_status; ?></label>
 	  <div class="col-sm-10" id="laybuy-status">
@@ -166,9 +166,9 @@
 	    </table>
 	  </div>
 	</div>
- </div>
- <?php if ($transaction['status_id'] == 1) { ?>
- <div class="tab-pane" id="tab-modify">
+  </div>
+  <?php if ($transaction['status_id'] == 1) { ?>
+  <div class="tab-pane" id="tab-modify">
 	<div class="form-group">
 	  <label class="col-sm-2 control-label"><?php echo $text_cancel_plan; ?></label>
 	  <div class="col-sm-10">
@@ -215,17 +215,17 @@
 		        <th class="text-right"><?php echo $text_amount; ?></th>
 		      </thead>
 		      <tbody>
-		        <tr>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-		      </tbody>
-		    </table>
-		  </div>
-		</div>
-	  </div>
-	</div>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 <?php } ?>
 </div>

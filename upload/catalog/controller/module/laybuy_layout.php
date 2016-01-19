@@ -52,11 +52,7 @@ class ControllerModuleLaybuyLayout extends Controller {
 							'report'             => unserialize($transaction_info['report'])
 						);
 
-						if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/laybuy_layout.tpl')) {
-							return $this->load->view($this->config->get('config_template') . '/template/module/laybuy_layout.tpl', $data);
-						} else {
-							return $this->load->view('default/template/module/laybuy_layout.tpl', $data);
-						}
+						return $this->load->view('module/laybuy_layout', $data);
 					}
 				}
 			}

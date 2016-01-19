@@ -1,16 +1,16 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-	<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-		<li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-	<?php } ?>
-  </ul>
   <div class="page-header">
-	<div class="container-fluid">
-	  <div class="pull-right">
-		<a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-	  <h1><i class="fa fa-credit-card"></i> <?php echo $heading_title; ?></h1>
-	</div>
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
+    </div>
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
@@ -23,242 +23,247 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
-	<div class="panel-body">
-	  <?php if ($transaction) { ?>
-	  <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction" class="form-horizontal">
-		<ul class="nav nav-tabs">
-		  <li class="active"><a href="#tab-reference" data-toggle="tab"><?php echo $tab_reference; ?></a></li>
-		  <li class=""><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
-		  <li class=""><a href="#tab-payment-plan" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
-  		  <?php if ($transaction['status_id'] == 1) { ?>
-		  <li class=""><a href="#tab-modify" data-toggle="tab"><?php echo $tab_modify; ?></a></li>
-		  <?php } ?>
-		</ul>
-		<div class="tab-content">
-		  <div class="tab-pane active" id="tab-reference">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_paypal_profile_id; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['paypal_profile_id']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_laybuy_ref_no; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['laybuy_ref_no']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_order_id; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['order_id']; ?>
-			  </div>
-			</div>
-		  </div>
-		  <div class="tab-pane" id="tab-customer">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_firstname; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['firstname']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_lastname; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['lastname']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_email; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['email']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_address; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['address']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_suburb; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['suburb']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_state; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['state']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_country; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['country']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_postcode; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['postcode']; ?>
-			  </div>
-			</div>
-		  </div>
-		  <div class="tab-pane" id="tab-payment-plan">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_status; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['status']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_amount; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['amount']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_downpayment_percent; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['downpayment'] . '%'; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_months; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['months']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_downpayment_amount; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['downpayment_amount']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_payment_amounts; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['payment_amounts']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_first_payment_due; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['first_payment_due']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_last_payment_due; ?></label>
-			  <div class="col-sm-10">
-			    <?php echo $transaction['last_payment_due']; ?>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_report; ?></label>
-			  <div class="col-sm-10">
-			    <table class="table table-striped">
-				  <thead>
-				    <tr>
-					  <th><?php echo $text_instalment; ?></th>
-					  <th><?php echo $text_amount; ?></th>
-					  <th><?php echo $text_date; ?></th>
-					  <th><?php echo $text_pp_trans_id; ?></th>
-					  <th><?php echo $text_status; ?></th>
-					</tr>
-				  </thead>
-				  <tbody>
-				  <?php foreach ($transaction['report'] as $report) { ?>
-				    <?php if ($report['instalment'] == '0') { ?>
-				      <tr>
-					    <td><?php echo $text_downpayment; ?></td>
-					    <td><?php echo $report['amount']; ?></td>
-					    <td><?php echo $report['date']; ?></td>
-					    <td><?php echo $report['pp_trans_id']; ?></td>
-					    <td><?php echo $report['status']; ?></td>
-					  </tr>
-				    <?php } else { ?>
-				      <tr>
-					    <td><?php echo $text_month . ' ' . $report['instalment']; ?></td>
-					    <td><?php echo $report['amount']; ?></td>
-					    <td><?php echo $report['date']; ?></td>
-					    <td><?php echo $report['pp_trans_id']; ?></td>
-					    <td><?php echo $report['status']; ?></td>
-					  </tr>
-				    <?php } ?>
-				  <?php } ?>
-				  </tbody>
-			    </table>
-			  </div>
-			</div>
-		  </div>
-		  <?php if ($transaction['status_id'] == 1) { ?>
-		  <div class="tab-pane" id="tab-modify">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_cancel_plan; ?></label>
-			  <div class="col-sm-10">
-			    <button class="btn btn-primary btn-xs" id="cancel-plan"><?php echo $button_cancel_plan; ?></button>
-			  </div>
-			</div>
-			<div class="form-group">
-			  <label class="col-sm-2 control-label"><?php echo $text_revise_plan; ?></label>
-			  <div class="col-sm-10">
-			    <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px"><?php echo $button_revise_plan; ?></button>
-				<div class="amount_remaining">
-				  <b><?php echo $text_remaining; ?></b> <?php echo $transaction['remaining']; ?>
-				  <input type="hidden" id="amount" name="amount" value="<?php echo $total; ?>" />
-				</div>
-			    <select name="payment_type" id="payment-type">
-    	          <option value="1"><?php echo $text_type_laybuy; ?></option>
-    	          <option value="0"><?php echo $text_type_buynow; ?></option>
-      			</select>
-				<div class="laybuy_section">
-				  <br>
-			      <select name="INIT" id="down-payment">
-	                <?php foreach ($initial_payments as $percent) { ?>
-	   		          <?php if ($percent == $transaction['downpayment']) { ?>
-    	                <option value="<?php echo $percent; ?>" selected="selected"><?php echo $percent; ?>%</option>
-        	          <?php } else { ?>
-    	                <option value="<?php echo $percent; ?>"><?php echo $percent; ?>%</option>
-				      <?php } ?>
-			        <?php } ?>
-      		      </select>
-			  	  <select name="MONTHS" id="months">
-		            <?php foreach ($months as $month) { ?>
-		   		      <?php if ($month['value'] == $transaction['months']) { ?>
-		                <option value="<?php echo $month['value']; ?>" selected="selected"><?php echo $month['label']; ?></option>
-				      <?php } else { ?>
-		                <option value="<?php echo $month['value']; ?>"><?php echo $month['label']; ?></option>
-				      <?php } ?>
-		            <?php } ?>
-			      </select>
-				  <div class="table-responsive">
-				    <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
-				      <thead>
-				        <th><?php echo $text_payment; ?></th>
-				        <th><?php echo $text_due_date; ?></th>
-				        <th class="text-right"><?php echo $text_amount; ?></th>
-				      </thead>
-				      <tbody>
-				        <tr>
-				          <td></td>
-				          <td></td>
-				          <td></td>
-				        </tr>
-				      </tbody>
-				    </table>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </div>
-		  <?php } ?>
-		</div>
-	  </form>
-	  <?php } else { ?>
-		<?php echo $text_not_found; ?>
-	  <?php } ?>
-	</div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_transaction_details; ?></h3>
+      </div>
+      <div class="panel-body">
+        <?php if ($transaction) { ?>
+        <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction" class="form-horizontal">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-reference" data-toggle="tab"><?php echo $tab_reference; ?></a></li>
+          <li class=""><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
+          <li class=""><a href="#tab-payment-plan" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
+            <?php if ($transaction['status_id'] == 1) { ?>
+          <li class=""><a href="#tab-modify" data-toggle="tab"><?php echo $tab_modify; ?></a></li>
+          <?php } ?>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-reference">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_paypal_profile_id; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['paypal_profile_id']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_laybuy_ref_no; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['laybuy_ref_no']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_order_id; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['order_id']; ?>
+            </div>
+          </div>
+          </div>
+          <div class="tab-pane" id="tab-customer">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_firstname; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['firstname']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_lastname; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['lastname']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_email; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['email']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_address; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['address']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_suburb; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['suburb']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_state; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['state']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_country; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['country']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_postcode; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['postcode']; ?>
+            </div>
+          </div>
+          </div>
+          <div class="tab-pane" id="tab-payment-plan">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_status; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['status']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_amount; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['amount']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_downpayment_percent; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['downpayment'] . '%'; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_months; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['months']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_downpayment_amount; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['downpayment_amount']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_payment_amounts; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['payment_amounts']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_first_payment_due; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['first_payment_due']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_last_payment_due; ?></label>
+            <div class="col-sm-10">
+              <?php echo $transaction['last_payment_due']; ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_report; ?></label>
+            <div class="col-sm-10">
+              <table class="table table-striped">
+              <thead>
+                <tr>
+                <th><?php echo $text_instalment; ?></th>
+                <th><?php echo $text_amount; ?></th>
+                <th><?php echo $text_date; ?></th>
+                <th><?php echo $text_pp_trans_id; ?></th>
+                <th><?php echo $text_status; ?></th>
+              </tr>
+              </thead>
+              <tbody>
+              <?php foreach ($transaction['report'] as $report) { ?>
+                <?php if ($report['instalment'] == '0') { ?>
+                  <tr>
+                  <td><?php echo $text_downpayment; ?></td>
+                  <td><?php echo $report['amount']; ?></td>
+                  <td><?php echo $report['date']; ?></td>
+                  <td><?php echo $report['pp_trans_id']; ?></td>
+                  <td><?php echo $report['status']; ?></td>
+                </tr>
+                <?php } else { ?>
+                  <tr>
+                  <td><?php echo $text_month . ' ' . $report['instalment']; ?></td>
+                  <td><?php echo $report['amount']; ?></td>
+                  <td><?php echo $report['date']; ?></td>
+                  <td><?php echo $report['pp_trans_id']; ?></td>
+                  <td><?php echo $report['status']; ?></td>
+                </tr>
+                <?php } ?>
+              <?php } ?>
+              </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+          <?php if ($transaction['status_id'] == 1) { ?>
+          <div class="tab-pane" id="tab-modify">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_cancel_plan; ?></label>
+            <div class="col-sm-10">
+              <button class="btn btn-primary btn-xs" id="cancel-plan"><?php echo $button_cancel_plan; ?></button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_revise_plan; ?></label>
+            <div class="col-sm-10">
+              <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px"><?php echo $button_revise_plan; ?></button>
+            <div class="amount_remaining">
+              <b><?php echo $text_remaining; ?></b> <?php echo $transaction['remaining']; ?>
+              <input type="hidden" id="amount" name="amount" value="<?php echo $total; ?>" />
+            </div>
+              <select name="payment_type" id="payment-type">
+                    <option value="1"><?php echo $text_type_laybuy; ?></option>
+                    <option value="0"><?php echo $text_type_buynow; ?></option>
+                </select>
+            <div class="laybuy_section">
+              <br>
+                <select name="INIT" id="down-payment">
+                      <?php foreach ($initial_payments as $percent) { ?>
+                      <?php if ($percent == $transaction['downpayment']) { ?>
+                          <option value="<?php echo $percent; ?>" selected="selected"><?php echo $percent; ?>%</option>
+                        <?php } else { ?>
+                          <option value="<?php echo $percent; ?>"><?php echo $percent; ?>%</option>
+                  <?php } ?>
+                  <?php } ?>
+                    </select>
+                <select name="MONTHS" id="months">
+                    <?php foreach ($months as $month) { ?>
+                    <?php if ($month['value'] == $transaction['months']) { ?>
+                        <option value="<?php echo $month['value']; ?>" selected="selected"><?php echo $month['label']; ?></option>
+                  <?php } else { ?>
+                        <option value="<?php echo $month['value']; ?>"><?php echo $month['label']; ?></option>
+                  <?php } ?>
+                    <?php } ?>
+                </select>
+              <div class="table-responsive">
+                <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
+                  <thead>
+                    <th><?php echo $text_payment; ?></th>
+                    <th><?php echo $text_due_date; ?></th>
+                    <th class="text-right"><?php echo $text_amount; ?></th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </div>
+          </div>
+          </div>
+          <?php } ?>
+        </div>
+        </form>
+        <?php } else { ?>
+        <?php echo $text_not_found; ?>
+        <?php } ?>
+      </div>
+    </div>
   </div>
 </div>
 

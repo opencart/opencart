@@ -190,7 +190,6 @@ class ControllerSaleOrder extends Controller {
 		$data['column_date_modified'] = $this->language->get('column_date_modified');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['entry_return_id'] = $this->language->get('entry_return_id');
 		$data['entry_order_id'] = $this->language->get('entry_order_id');
 		$data['entry_customer'] = $this->language->get('entry_customer');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');

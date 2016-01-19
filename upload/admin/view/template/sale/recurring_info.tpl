@@ -29,43 +29,43 @@
       <div class="panel-body">
         <table class="table table-striped table-bordered">
           <tr>
-            <td><?php echo $entry_order_recurring; ?></td>
+            <td><?php echo $text_order_recurring; ?></td>
             <td><?php echo $order_recurring_id; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_order_id; ?></td>
+            <td><?php echo $text_order_id; ?></td>
             <td><a href="<?php echo $order_href; ?>"><?php echo $order_id; ?></a></td>
           </tr>
           <tr>
-            <td><?php echo $entry_customer; ?></td>
-            <td><?php if ($customer_href) { ?>
+            <td><?php echo $text_customer; ?></td>
+            <td><?php if ($customer) { ?>
               <a href="<?php echo $customer_href ?>"><?php echo $customer; ?></a>
               <?php } else { ?>
               <?php echo $customer; ?>
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_email; ?></td>
+            <td><?php echo $text_email; ?></td>
             <td><?php echo $email; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_status; ?></td>
+            <td><?php echo $text_status; ?></td>
             <td><?php echo $status; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_date_added; ?></td>
+            <td><?php echo $text_date_added; ?></td>
             <td><?php echo $date_added; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_reference; ?></td>
+            <td><?php echo $text_reference; ?></td>
             <td><?php echo $reference; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_payment_method; ?></td>
+            <td><?php echo $text_payment_method; ?></td>
             <td><?php echo $payment_method; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_recurring; ?></td>
+            <td><?php echo $text_recurring; ?></td>
             <td><?php if ($recurring) { ?>
               <a href="<?php echo $recurring; ?>"><?php echo $recurring_name; ?></a>
               <?php } else { ?>
@@ -73,15 +73,15 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_description; ?></td>
+            <td><?php echo $text_description; ?></td>
             <td><?php echo $recurring_description; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_product; ?></td>
+            <td><?php echo $text_product; ?></td>
             <td><?php echo $product; ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_quantity; ?></td>
+            <td><?php echo $text_quantity; ?></td>
             <td><?php echo $quantity; ?></td>
           </tr>
         </table>
@@ -96,11 +96,17 @@
             </tr>
           </thead>
           <tbody>
+            <?php if ($recurrings) { ?>
             <?php foreach ($transactions as $transaction) { ?>
             <tr>
               <td class="text-left"><?php echo $transaction['date_added']; ?></td>
               <td class="text-left"><?php echo $transaction['amount']; ?></td>
               <td class="text-left"><?php echo $transaction['type']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -109,4 +115,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

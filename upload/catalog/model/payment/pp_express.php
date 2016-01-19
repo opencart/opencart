@@ -15,22 +15,22 @@ class ModelPaymentPPExpress extends Model {
 
 	public function call($data) {
 
-		if ($this->config->get('pp_express_test') == 1) {
-			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-			$user = $this->config->get('pp_express_sandbox_username');
-			$password = $this->config->get('pp_express_sandbox_password');
-			$signature = $this->config->get('pp_express_sandbox_signature');
+		if ($this->config->get('pp_express_test')) {
+			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_sandbox_username');
+			$api_password = $this->config->get('pp_express_sandbox_password');
+			$api_signature = $this->config->get('pp_express_sandbox_signature');
 		} else {
-			$api_endpoint = 'https://api-3t.paypal.com/nvp';
-			$user = $this->config->get('pp_express_username');
-			$password = $this->config->get('pp_express_password');
-			$signature = $this->config->get('pp_express_signature');
+			$api_url = 'https://api-3t.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_username');
+			$api_password = $this->config->get('pp_express_password');
+			$api_signature = $this->config->get('pp_express_signature');
 		}
 
 		$settings = array(
-			'USER' => $user,
-			'PWD' => $password,
-			'SIGNATURE' => $signature,
+			'USER' => $api_user,
+			'PWD' => $api_password,
+			'SIGNATURE' => $api_signature,
 			'VERSION' => '109.0',
 			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);
@@ -40,7 +40,7 @@ class ModelPaymentPPExpress extends Model {
 		$defaults = array(
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $api_endpoint,
+			CURLOPT_URL => $api_url,
 			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,

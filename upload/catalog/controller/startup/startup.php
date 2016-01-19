@@ -38,11 +38,11 @@ class ControllerStartupStartup extends Controller {
 		
 		$languages = $this->model_localisation_language->getLanguages();
 		
-		if (isset($this->session->data['currency'])) {
-			$code = $this->session->data['currency'];
+		if (isset($this->session->data['language'])) {
+			$code = $this->session->data['language'];
 		}
 				
-		if (isset($this->request->cookie['language']) && !in_array($code, $languages)) {
+		if (isset($this->request->cookie['language']) && !array_key_exists($code, $languages)) {
 			$code = $this->request->cookie['language'];
 		}
 		
@@ -115,11 +115,11 @@ class ControllerStartupStartup extends Controller {
 			$code = $this->session->data['currency'];
 		}
 		
-		if (isset($this->request->cookie['currency']) && !in_array($code, $currencies)) {
+		if (isset($this->request->cookie['currency']) && !array_key_exists($code, $currencies)) {
 			$code = $this->request->cookie['currency'];
 		}
 		
-		if (!in_array($code, $currencies)) {
+		if (!array_key_exists($code, $currencies)) {
 			$code = $this->config->get('config_currency');
 		}
 		

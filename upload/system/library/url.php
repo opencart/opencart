@@ -14,7 +14,7 @@ class Url {
 	}
 
 	public function link($route, $args = '', $secure = false) {
-		if (!$secure) {
+		if ($secure) {
 			return $this->ssl($route, $args);
 		}
 

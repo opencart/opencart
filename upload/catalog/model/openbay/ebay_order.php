@@ -245,7 +245,7 @@ class ModelOpenbayEbayOrder extends Model{
 				foreach ($order_total_query->rows as $order_total) {
 					$this->load->model('total/' . $order_total['code']);
 
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					if (property_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
 						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}

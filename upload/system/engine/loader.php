@@ -43,7 +43,7 @@ final class Loader {
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
-				$proxy->attach($method, $this->callback($this->registry, $route . '/' . $method));
+				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
 			}
 
 			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);

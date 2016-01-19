@@ -1,18 +1,14 @@
 <?php
 class Proxy {
-	protected $data = array();
+	public function __get($key) {
+		return $this->{$key};
+	}	
 	
-	public function attach($method, $value) {
-		$this->data[$method] = $value;
+	public function __set($key, $value) {
+		 $this->{$key} = $value;
 	}
-		
-	public function __call($method, $args) {
-		if (isset($this->data[$method])) {
-			return call_user_func($this->data[$method], $args);	
-		} else {
-			$trace = debug_backtrace();
-
-			throw new \Exception('Error in: ' . $trace[0]['file'] . ' line ' . $trace[0]['line'] . '!');
-		}
+	
+	public function __call($key, $args) {
+		return call_user_func($this->{$key}, $args);	
 	}
 }

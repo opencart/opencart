@@ -40,7 +40,7 @@
             <div class="col-sm-10">
               <select name="maxmind_order_status_id" id="input-order-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $maxmind_status_id) { ?>
+                <?php if ($order_status['order_status_id'] == $maxmind_order_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>

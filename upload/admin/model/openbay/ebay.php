@@ -1,6 +1,10 @@
 <?php
 class ModelOpenbayEbay extends Model{
 	public function install() {
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/after', 'openbay/ebay/eventAddOrderHistory');
+
 		$value                                  = array();
 		$value["ebay_token"]              = '';
 		$value["ebay_secret"]             = '';
@@ -217,15 +221,6 @@ class ModelOpenbayEbay extends Model{
 				  `html` MEDIUMTEXT NOT NULL,
 				  PRIMARY KEY (`template_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
-
-		// register the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-			$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
-		} else {
-			$this->load->model('tool/event');
-			$this->model_tool_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
-		}
 	}
 
 	public function uninstall() {
@@ -240,29 +235,13 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_order`;");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
-		// remove the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-			$this->model_extension_event->deleteEvent('openbaypro_ebay');
-		} else {
-			$this->load->model('tool/event');
-			$this->model_tool_event->deleteEvent('openbaypro_ebay');
-		}
+		$this->load->model('extension/event');
+		$this->model_extension_event->deleteEvent('openbaypro_ebay');
 	}
 
 	public function patch() {
 		if ($this->config->get('ebay_status') == 1) {
-			$this->load->model('setting/setting');
 
-			$this->openbay->ebay->updateSettings();
-
-			//remove the current events
-			$this->model_extension_event->deleteEvent('openbaypro_ebay');
-
-			//re-add the correct events
-			$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
-
-			return true;
 		}
 	}
 

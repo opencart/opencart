@@ -4,17 +4,7 @@ class ModelOpenbayOpenbay extends Model {
 	private $error;
 
 	public function patch() {
-		/**
-		 * Fix to update event names on versions later than 2.0.1 due to the change.
-		 */
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
 
-			$this->model_extension_event->deleteEvent('openbay');
-
-			$this->model_extension_event->addEvent('openbay', 'post.admin.product.delete', 'extension/openbay/eventDeleteProduct');
-			$this->model_extension_event->addEvent('openbay', 'post.admin.product.edit', 'extension/openbay/eventEditProduct');
-		}
 	}
 
 	public function updateV2Test() {

@@ -65,7 +65,7 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba', $data));
     }
 
     public function settings() {
@@ -206,7 +206,7 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_settings.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba_settings', $data));
     }
 
     public function verifyCredentials() {
@@ -319,7 +319,7 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_form.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_form', $data));
     }
 
     public function fulfillmentList() {
@@ -399,7 +399,7 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_list.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_list', $data));
     }
 
     public function shipFulfillment() {
@@ -703,7 +703,7 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_order_list.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba_order_list', $data));
     }
 
     public function order() {
@@ -891,6 +891,6 @@ class ControllerOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_order_info.tpl', $data));
+        $this->response->setOutput($this->load->view('openbay/fba_order_info', $data));
     }
 }

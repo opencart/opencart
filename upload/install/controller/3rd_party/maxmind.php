@@ -3,11 +3,11 @@ class Controller3rdPartyMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('3rd-party/maxmind');
+		$this->language->load('3rd_party/maxmind');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('3rd-party/maxmind');
+		$this->load->model('3rd_party/maxmind');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_3rd_party_maxmind->editSetting($this->request->post);
@@ -32,7 +32,7 @@ class Controller3rdPartyMaxmind extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
-		$data['action'] = $this->url->link('3rd-party/maxmind');
+		$data['action'] = $this->url->link('3rd_party/maxmind');
 
 		if (isset($this->error['key'])) {
 			$data['error_key'] = $this->error['key'];
@@ -71,7 +71,7 @@ class Controller3rdPartyMaxmind extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('3rd-party/maxmind', $data));
+		$this->response->setOutput($this->load->view('3rd_party/maxmind', $data));
 	}
 
 	private function validate() {

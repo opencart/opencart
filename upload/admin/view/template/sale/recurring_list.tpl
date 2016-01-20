@@ -192,5 +192,5 @@ $('#form input').keydown(function(e) {
 $('.date').datetimepicker({ 
 	pickTime: false 
 });
-//--></script> </div>
+//--></script></div>
 <?php echo $footer; ?>

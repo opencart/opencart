@@ -333,13 +333,19 @@ class ControllerSaleRecurring extends Controller {
 	}
 
 	public function info() {
-		$this->load->language('sale/recurring');
-		
 		$this->load->model('sale/recurring');
-
-		$order_recurring_info = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
+		
+		if (isset($this->request->get['order_recurring_id'])) {
+			$order_recurring_id = $this->request->get['order_recurring_id'];
+		} else {
+			$order_recurring_id = 0;
+		}
+		
+		$order_recurring_info = $this->model_sale_recurring->getRecurring($order_recurring_id);
 
 		if ($order_recurring_info) {
+			$this->load->language('sale/recurring');
+		
 			$this->load->model('sale/order');
 			
 			$order_info = $this->model_sale_order->getOrder($order_recurring_info['order_id']);
@@ -411,6 +417,10 @@ class ControllerSaleRecurring extends Controller {
 			}
 
 			$data['heading_title'] = $this->language->get('heading_title');
+		
+			$data['column_date_added'] = $this->language->get('column_date_added');
+			$data['column_amount'] = $this->language->get('column_amount');
+			$data['column_type'] = $this->language->get('column_type');
 
 			$data['text_transactions'] = $this->language->get('text_transactions');
 			$data['text_cancel_confirm'] = $this->language->get('text_cancel_confirm');

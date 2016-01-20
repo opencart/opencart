@@ -27,6 +27,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
+        <h3><?php echo $text_transactions; ?></h3>
         <table class="table table-striped table-bordered">
           <tr>
             <td><?php echo $text_order_recurring; ?></td>
@@ -56,6 +57,9 @@
             <td><?php echo $text_date_added; ?></td>
             <td><?php echo $date_added; ?></td>
           </tr>
+        </table>
+        <h3><?php echo $text_transactions; ?></h3>
+        <table class="table table-striped table-bordered">
           <tr>
             <td><?php echo $text_reference; ?></td>
             <td><?php echo $reference; ?></td>
@@ -76,6 +80,10 @@
             <td><?php echo $text_description; ?></td>
             <td><?php echo $recurring_description; ?></td>
           </tr>
+          
+          </table>
+        <h3><?php echo $text_transactions; ?></h3>
+        <table class="table table-striped table-bordered">        
           <tr>
             <td><?php echo $text_product; ?></td>
             <td><?php echo $product; ?></td>
@@ -86,21 +94,21 @@
           </tr>
         </table>
         <?php echo $buttons; ?>
-        <h2><?php echo $text_transactions; ?></h2>
+        <h3><?php echo $text_transactions; ?></h3>
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $entry_date_added; ?></td>
-              <td class="text-left"><?php echo $entry_amount; ?></td>
-              <td class="text-left"><?php echo $entry_type; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
+              <td class="text-right"><?php echo $column_amount; ?></td>
+              <td class="text-left"><?php echo $column_type; ?></td>
             </tr>
           </thead>
           <tbody>
-            <?php if ($recurrings) { ?>
+            <?php if ($transactions) { ?>
             <?php foreach ($transactions as $transaction) { ?>
             <tr>
               <td class="text-left"><?php echo $transaction['date_added']; ?></td>
-              <td class="text-left"><?php echo $transaction['amount']; ?></td>
+              <td class="text-right"><?php echo $transaction['amount']; ?></td>
               <td class="text-left"><?php echo $transaction['type']; ?></td>
             </tr>
             <?php } ?>

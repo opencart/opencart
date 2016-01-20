@@ -176,31 +176,37 @@ class ModelSaleRecurring extends Model {
 	
 	public function getTotalRecurrings($data) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` o ON (`or`.order_id = `o`.order_id)";
+		
+		$implode = array();
 
 		if (!empty($data['filter_order_recurring_id'])) {
-			$sql .= " AND or.order_recurring_id = " . (int)$data['filter_order_recurring_id'];
+			$implode[] .= "or.order_recurring_id = " . (int)$data['filter_order_recurring_id'];
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$sql .= " AND or.order_id = " . (int)$data['filter_order_id'];
+			$implode[] .= "or.order_id = " . (int)$data['filter_order_id'];
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$sql .= " AND or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
+			$implode[] .= " or.reference LIKE '" . $this->db->escape($data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
+			$implode[] .= "CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_status'])) {
-			$sql .= " AND or.status = " . (int)$data['filter_status'];
+			$implode[] .= "or.status = " . (int)$data['filter_status'];
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+			$implode[] .= "DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
-
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		} 
+		
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];

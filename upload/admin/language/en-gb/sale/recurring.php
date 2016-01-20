@@ -56,6 +56,8 @@ $_['column_reference']                      = 'Payment Reference';
 $_['column_customer']                       = 'Customer';
 $_['column_date_added']                     = 'Date Added';
 $_['column_status']                         = 'Status';
+$_['column_amount']                         = 'Amount';
+$_['column_type']                           = 'Type';
 $_['column_action']                         = 'Action';
 
 // Entry
@@ -76,6 +78,6 @@ $_['entry_recurring']                      = 'Recurring Profile';
 $_['entry_payment_method']                 = 'Payment Method';
 $_['entry_cancel_payment']                 = 'Cancel Payment';
 
-// Error / Success
+// Error
 $_['error_not_cancelled']                  = 'Error: %s';
 $_['error_not_found']                      = 'Could not cancel recurring profile';

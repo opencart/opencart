@@ -4,7 +4,7 @@ class Action {
 	private $method = 'index';
 
 	public function __construct($route) {
-		$parts = explode('/', str_replace('../', '', (string)$route));
+		$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', str_replace('../', '', (string)$route)));
 
 		// Break apart the route
 		while ($parts) {

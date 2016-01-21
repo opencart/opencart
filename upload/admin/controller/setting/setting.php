@@ -409,6 +409,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_theme'] = $this->config->get('config_theme');
 		}
 
+		if ($this->request->server['HTTPS']) {
+			$data['store_url'] = HTTPS_CATALOG;
+		} else {
+			$data['store_url'] = HTTP_CATALOG;
+		}
+
 		$data['themes'] = array();
 
 		$this->load->model('extension/extension');

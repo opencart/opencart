@@ -76,7 +76,7 @@
                     <?php } ?>
                   </select>
                   <br />
-                  <img id="theme" src="" alt="" class="img-thumbnail" /></div>
+                  <img src="" alt="" id="theme" class="img-thumbnail" /></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -1418,7 +1418,22 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
-	$('#theme').attr('src', '<?php echo $store_url; ?>catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
+	$.ajax({
+		url: 'index.php?route=setting/setting/theme&token=<?php echo $token; ?>&theme=' + this.value,
+		dataType: 'html',
+		beforeSend: function() {
+			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(html) {
+			$('#theme').attr('src', html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('select[name=\'config_theme\']').trigger('change');

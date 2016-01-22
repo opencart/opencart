@@ -1217,4 +1217,25 @@ class ControllerSettingSetting extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function theme() {
+		if ($this->request->server['HTTPS']) {
+			$server = HTTPS_CATALOG;
+		} else {
+			$server = HTTP_CATALOG;
+		}
+		
+		// This is only here for compatibility with old themes.
+		if ($this->request->get['theme'] == 'theme_default') {
+			$theme = $this->config->get('theme_default_directory');
+		} else {
+			$theme = basename($this->request->get['theme']);
+		}
+		
+		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
+			$this->response->setOutput($server . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+		} else {
+			$this->response->setOutput($server . 'image/no_image.png');
+		}
+	}	
 }

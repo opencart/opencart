@@ -28,11 +28,11 @@ class ModelPaymentPPExpress extends Model {
 		}
 
 		$settings = array(
-			'USER' => $api_user,
-			'PWD' => $api_password,
-			'SIGNATURE' => $api_signature,
-			'VERSION' => '109.0',
-			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
+			'USER'         => $api_user,
+			'PWD'          => $api_password,
+			'SIGNATURE'    => $api_signature,
+			'VERSION'      => '109.0',
+			'BUTTONSOURCE' => 'OpenCart_2.0_EC'
 		);
 
 		$this->log($data, 'Call data');

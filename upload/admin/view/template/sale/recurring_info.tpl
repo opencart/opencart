@@ -27,7 +27,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
-        <h3><?php echo $text_transactions; ?></h3>
+        <h3>Recurring Order Details</h3>
         <table class="table table-striped table-bordered">
           <tr>
             <td><?php echo $text_order_recurring; ?></td>
@@ -40,9 +40,9 @@
           <tr>
             <td><?php echo $text_customer; ?></td>
             <td><?php if ($customer) { ?>
-              <a href="<?php echo $customer_href ?>"><?php echo $customer; ?></a>
+              <a href="<?php echo $customer ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a>
               <?php } else { ?>
-              <?php echo $customer; ?>
+              <?php echo $firstname; ?> <?php echo $lastname; ?>
               <?php } ?></td>
           </tr>
           <tr>
@@ -58,15 +58,11 @@
             <td><?php echo $date_added; ?></td>
           </tr>
         </table>
-        <h3><?php echo $text_transactions; ?></h3>
+        <h3>Payment Details</h3>
         <table class="table table-striped table-bordered">
           <tr>
             <td><?php echo $text_reference; ?></td>
             <td><?php echo $reference; ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $text_payment_method; ?></td>
-            <td><?php echo $payment_method; ?></td>
           </tr>
           <tr>
             <td><?php echo $text_recurring; ?></td>
@@ -80,10 +76,13 @@
             <td><?php echo $text_description; ?></td>
             <td><?php echo $recurring_description; ?></td>
           </tr>
-          
-          </table>
-        <h3><?php echo $text_transactions; ?></h3>
-        <table class="table table-striped table-bordered">        
+          <tr>
+            <td><?php echo $text_payment_method; ?></td>
+            <td><?php echo $payment_method; ?></td>
+          </tr>
+        </table>
+        <h3>Product Details</h3>
+        <table class="table table-striped table-bordered">
           <tr>
             <td><?php echo $text_product; ?></td>
             <td><?php echo $product; ?></td>

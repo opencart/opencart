@@ -14,7 +14,7 @@ class ControllerShippingAusPost extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -57,22 +57,22 @@ class ControllerShippingAusPost extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('shipping/auspost', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->ssl('shipping/auspost', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['auspost_postcode'])) {
 			$data['auspost_postcode'] = $this->request->post['auspost_postcode'];

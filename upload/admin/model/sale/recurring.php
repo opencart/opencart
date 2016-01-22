@@ -1,7 +1,7 @@
 <?php
 class ModelSaleRecurring extends Model {
 	public function getRecurrings($data) {
-		$sql = "SELECT `or`.order_recurring_id, `or`.order_id, `or`.reference, `or`.`status`, `or`.`date_added`, CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.order_id = `o`.order_id)";
+		$sql = "SELECT `or`.order_recurring_id, `or`.order_id, `or`.reference, `or`.`status`, `or`.`date_added`, `o`.`firstname`, `o`.`lastname` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.order_id = `o`.order_id)";
 
 		$implode = array();
 

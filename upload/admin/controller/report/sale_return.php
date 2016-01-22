@@ -61,12 +61,12 @@ class ControllerReportSaleReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('report/sale_return', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('report/sale_return', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/return');
@@ -163,7 +163,7 @@ class ControllerReportSaleReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->ssl('report/sale_return', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

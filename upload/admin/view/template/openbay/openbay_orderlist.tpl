@@ -87,7 +87,7 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <button onclick="filter();" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -178,95 +178,68 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-  function filter() {
-    url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
-    var filter_order_id = $('input[name=\'filter_order_id\']').val();
-    if (filter_order_id) {
-      url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-    }
+$('#button-filter').on('click', function() {
+  url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
 
-    var filter_customer = $('input[name=\'filter_customer\']').val();
-    if (filter_customer) {
-      url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
+  var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
-    var filter_order_status_id = $('select[name=\'filter_order_status_id\']').find(":selected").val();
-    if (filter_order_status_id != '*') {
-      url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-    }
-
-    var filter_channel = $('select[name=\'filter_channel\']').find(":selected").val();
-
-    if (filter_channel != '') {
-      url += '&filter_channel=' + encodeURIComponent(filter_channel);
-    }
-
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
-    if (filter_date_added) {
-      url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-    }
-
-    location = url;
+  if (filter_order_id) {
+    url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
   }
+
+  var filter_customer = $('input[name=\'filter_customer\']').val();
+
+  if (filter_customer) {
+    url += '&filter_customer=' + encodeURIComponent(filter_customer);
+  }
+
+  var filter_order_status_id = $('select[name=\'filter_order_status_id\']').find(":selected").val();
+
+  if (filter_order_status_id != '*') {
+    url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+  }
+
+  var filter_channel = $('select[name=\'filter_channel\']').find(":selected").val();
+
+  if (filter_channel != '') {
+    url += '&filter_channel=' + encodeURIComponent(filter_channel);
+  }
+
+  var filter_date_added = $('input[name=\'filter_date_added\']').val();
+
+  if (filter_date_added) {
+    url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+  }
+
+	location = url;
+});
 //--></script>
 <script type="text/javascript"><!--
-  $(document).ready(function() {
-	  $('.date').datepicker({dateFormat: 'yy-mm-dd'});
-  });
-//--></script>
-<script type="text/javascript"><!--
-  $('#form input').keydown(function(e) {
-    if (e.keyCode == 13) {
-      filter();
+  $('input[name=\'filter_customer\']').autocomplete({
+    'source': function(request, response) {
+      $.ajax({
+        url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        dataType: 'json',
+        success: function(json) {
+          response($.map(json, function(item) {
+            return {
+              label: item['name'],
+              value: item['customer_id']
+            }
+          }));
+        }
+      });
+    },
+    'select': function(item) {
+      $('input[name=\'filter_customer\']').val(item['label']);
     }
   });
-//--></script>
-<script type="text/javascript"><!--
-    $.widget('custom.catcomplete', $.ui.autocomplete, {
-        _renderMenu: function(ul, items) {
-            var self = this, currentCategory = '';
-
-            $.each(items, function(index, item) {
-                if (item.category != currentCategory) {
-                    ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-
-                    currentCategory = item.category;
-                }
-
-                self._renderItem(ul, item);
-            });
-        }
-    });
-
-    $('input[name=\'filter_customer\']').catcomplete({
-        delay: 0,
-        source: function(request, response) {
-            $.ajax({
-                url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            category: item.customer_group,
-                            label: item.name,
-                            value: item.customer_id
-                        }
-                    }));
-                }
-            });
-        },
-        select: function(event, ui) {
-            $('input[name=\'filter_customer\']').val(ui.item.label);
-
-            return false;
-        }
-    });
 //--></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
-$('.date').datetimepicker({
-  pickTime: false
-});
+  $('.date').datetimepicker({
+    pickTime: false
+  });
 //--></script>
 <?php echo $footer; ?>

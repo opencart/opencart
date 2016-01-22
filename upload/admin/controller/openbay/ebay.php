@@ -25,7 +25,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function index() {
-		$data = $this->load->language('openbay/ebay');
+		$this->load->language('openbay/ebay');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -76,7 +78,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function settings() {
-		$data = $this->load->language('openbay/ebay_settings');
+		$this->load->language('openbay/ebay_settings');
+
+		$data = $this->language->all();
 
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/ebay');
@@ -138,27 +142,27 @@ class ControllerOpenbayEbay extends Controller {
 		}
 
 		if (isset($this->request->post['ebay_token'])) {
-			$data['ebay_token'] = $this->request->post['ebay_token'];
+			$data['ebay_token'] = trim($this->request->post['ebay_token']);
 		} else {
-			$data['ebay_token'] = $this->config->get('ebay_token');
+			$data['ebay_token'] = trim($this->config->get('ebay_token'));
 		}
 
 		if (isset($this->request->post['ebay_secret'])) {
-			$data['ebay_secret'] = $this->request->post['ebay_secret'];
+			$data['ebay_secret'] = trim($this->request->post['ebay_secret']);
 		} else {
-			$data['ebay_secret'] = $this->config->get('ebay_secret');
+			$data['ebay_secret'] = trim($this->config->get('ebay_secret'));
 		}
 
 		if (isset($this->request->post['ebay_string1'])) {
-			$data['ebay_string1'] = $this->request->post['ebay_string1'];
+			$data['ebay_string1'] = trim($this->request->post['ebay_string1']);
 		} else {
-			$data['ebay_string1'] = $this->config->get('ebay_string1');
+			$data['ebay_string1'] = trim($this->config->get('ebay_string1'));
 		}
 
 		if (isset($this->request->post['ebay_string2'])) {
-			$data['ebay_string2'] = $this->request->post['ebay_string2'];
+			$data['ebay_string2'] = trim($this->request->post['ebay_string2']);
 		} else {
-			$data['ebay_string2'] = $this->config->get('ebay_string2');
+			$data['ebay_string2'] = trim($this->config->get('ebay_string2'));
 		}
 
 		if (isset($this->request->post['ebay_enditems'])) {
@@ -427,7 +431,13 @@ class ControllerOpenbayEbay extends Controller {
 		$recommendation_data = array();
 
 		if (isset($response['data']['Recommendations']['NameRecommendation'])) {
-			foreach($response['data']['Recommendations']['NameRecommendation'] as $name_recommendation_key => $name_recommendation) {
+			if (isset($response['data']['Recommendations']['NameRecommendation']['Name'])) {
+				$recommendations = array($response['data']['Recommendations']['NameRecommendation']);
+			} else {
+				$recommendations = $response['data']['Recommendations']['NameRecommendation'];
+			}
+
+			foreach ($recommendations as $name_recommendation_key => $name_recommendation) {
 				$recommendation_data_option = array(
 					'name' => $name_recommendation['Name'],
 					'validation' =>
@@ -536,7 +546,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function summary() {
-		$data = $this->load->language('openbay/ebay_summary');
+		$this->load->language('openbay/ebay_summary');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -595,7 +607,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function viewItemImport() {
 		$this->load->model('openbay/ebay_product');
 
-		$data = $this->load->language('openbay/ebay_import');
+		$this->load->language('openbay/ebay_import');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -724,7 +738,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function subscription() {
-		$data = $this->load->language('openbay/ebay_subscription');
+		$this->load->language('openbay/ebay_subscription');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -763,7 +779,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function viewUsage() {
-		$data = $this->load->language('openbay/ebay_usage');
+		$this->load->language('openbay/ebay_usage');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -814,7 +832,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function viewOrderImport() {
-		$data = $this->load->language('openbay/ebay_orders');
+		$this->load->language('openbay/ebay_orders');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -853,7 +873,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function syncronise() {
-		$data = $this->load->language('openbay/ebay_syncronise');
+		$this->load->language('openbay/ebay_syncronise');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -900,7 +922,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function viewItemLinks() {
 		$this->load->model('openbay/ebay');
 
-		$data = $this->load->language('openbay/ebay_links');
+		$this->load->language('openbay/ebay_links');
+
+		$data = $this->language->all();
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -1062,7 +1086,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function edit() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->get['product_id'])) {
-				$data = $this->load->language('openbay/ebay_edit');
+				$this->load->language('openbay/ebay_edit');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');
@@ -1244,7 +1270,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function create() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->get['product_id'])) {
-				$data = $this->load->language('openbay/ebay_new');
+				$this->load->language('openbay/ebay_new');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');
@@ -1469,7 +1497,9 @@ class ControllerOpenbayEbay extends Controller {
 	public function createBulk() {
 		if ($this->checkConfig() == true) {
 			if (!empty($this->request->post['selected'])) {
-				$data = $this->load->language('openbay/ebay_newbulk');
+				$this->load->language('openbay/ebay_newbulk');
+
+				$data = $this->language->all();
 
 				$this->load->model('catalog/product');
 				$this->load->model('tool/image');
@@ -1820,6 +1850,9 @@ class ControllerOpenbayEbay extends Controller {
 				$data['condition'] = (isset($post['condition']) && $post['condition'] != 0 ? $post['condition'] : '');
 				$data['auction_type'] = 'FixedPriceItem';
 				$data['catalog_epid'] = (isset($post['catalog_epid']) && $post['catalog_epid'] != 0 ? $post['catalog_epid'] : '');
+				$data['identifier_upc']     = (isset($post['identifier_upc']) && $post['identifier_upc'] != '' ? $post['identifier_upc'] : '');
+				$data['identifier_isbn']    = (isset($post['identifier_isbn']) && $post['identifier_isbn'] != '' ? $post['identifier_isbn'] : '');
+				$data['identifier_ean']     = (isset($post['identifier_ean']) && $post['identifier_ean'] != '' ? $post['identifier_ean'] : '');
 
 				$data['ebay_payment_immediate'] = $this->config->get('ebay_payment_immediate');
 				$data['paypal_email'] = $this->config->get('ebay_payment_paypal_address');
@@ -1937,6 +1970,25 @@ class ControllerOpenbayEbay extends Controller {
 
 					$data['img_tpl']        = $tmp_gallery_array;
 					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
+				}
+
+				$weight_parts = explode('.', $product_info['weight']);
+
+				// package size and weights
+				$data['package']['depth'] = $product_info['height'];
+				$data['package']['irregular'] = 0;
+				$data['package']['length'] = $product_info['length'];
+				$data['package']['unit'] = $this->config->get('ebay_measurement');
+				$data['package']['weight_major'] = (int)$weight_parts[0];
+				$data['package']['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
+				$data['package']['width'] = $product_info['width'];
+
+				$package_types = $this->openbay->ebay->getSetting('package_type');
+
+				foreach ($package_types as $package_type) {
+					if ($package_type['default'] == 1) {
+						$data['package']['package']	= $package_type['code'];
+					}
 				}
 
 				$data = array_merge($data, $profile_shipping['data']);
@@ -2106,6 +2158,9 @@ class ControllerOpenbayEbay extends Controller {
 				$data['condition'] = (isset($post['condition']) && $post['condition'] != 0 ? $post['condition'] : '');
 				$data['auction_type'] = 'FixedPriceItem';
 				$data['catalog_epid'] = (isset($post['catalog_epid']) && $post['catalog_epid'] != 0 ? $post['catalog_epid'] : '');
+				$data['identifier_upc'] = (isset($post['identifier_upc']) && $post['identifier_upc'] != '' ? $post['identifier_upc'] : '');
+				$data['identifier_isbn'] = (isset($post['identifier_isbn']) && $post['identifier_isbn'] != '' ? $post['identifier_isbn'] : '');
+				$data['identifier_ean']  = (isset($post['identifier_ean']) && $post['identifier_ean'] != '' ? $post['identifier_ean'] : '');
 
 				$data['ebay_payment_immediate'] = $this->config->get('ebay_payment_immediate');
 				$data['paypal_email'] = $this->config->get('ebay_payment_paypal_address');
@@ -2223,6 +2278,25 @@ class ControllerOpenbayEbay extends Controller {
 
 					$data['img_tpl']        = $tmp_gallery_array;
 					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
+				}
+
+				$weight_parts = explode('.', $product_info['weight']);
+
+				// package size and weights
+				$data['package']['depth'] = $product_info['height'];
+				$data['package']['irregular'] = 0;
+				$data['package']['length'] = $product_info['length'];
+				$data['package']['unit'] = $this->config->get('ebay_measurement');
+				$data['package']['weight_major'] = (int)$weight_parts[0];
+				$data['package']['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
+				$data['package']['width'] = $product_info['width'];
+
+				$package_types = $this->openbay->ebay->getSetting('package_type');
+
+				foreach ($package_types as $package_type) {
+					if ($package_type['default'] == 1) {
+						$data['package']['package']	= $package_type['code'];
+					}
 				}
 
 				$data = array_merge($data, $profile_shipping['data']);

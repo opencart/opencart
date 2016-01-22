@@ -236,7 +236,13 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
 
-		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
+		if (isset($order->order->currency_id) && !empty($order->order->currency_id)) {
+			$currency = $this->model_localisation_currency->getCurrencyByCode($order->order->currency_id);
+		}
+
+		if (empty($currency)) {
+			$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
+		}
 
 		if ($this->config->get('ebay_create_date') == 1) {
 			$created_date_obj = new DateTime((string)$order->order->created);

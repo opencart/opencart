@@ -1,6 +1,10 @@
 <?php
 class ModelOpenbayAmazon extends Model {
 	public function install() {
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->addEvent('openbaypro_amazon', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/amazon/eventAddOrderHistory');
+
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
 			  `order_id` int(11) NOT NULL ,
@@ -80,15 +84,6 @@ class ModelOpenbayAmazon extends Model {
 				`price` decimal(10,4) NOT NULL,
 				PRIMARY KEY (`marketplace`,`sku`)
 			) DEFAULT COLLATE=utf8_general_ci;");
-
-		// add the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-			$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
-		} else {
-			$this->load->model('tool/event');
-			$this->model_tool_event->addEvent('openbaypro_amazon', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
-		}
 	}
 
 	public function uninstall() {
@@ -106,61 +101,13 @@ class ModelOpenbayAmazon extends Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazon'");
 
-		// remove the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-			$this->model_extension_event->deleteEvent('openbaypro_amazon');
-		} else {
-			$this->load->model('tool/event');
-			$this->model_tool_event->deleteEvent('openbaypro_amazon');
-		}
+		$this->load->model('extension/event');
+		$this->model_extension_event->deleteEvent('openbaypro_amazon');
 	}
 
 	public function patch() {
 		if ($this->config->get('openbay_amazon_status') == 1) {
-			/*
-			 * Manual flag to true is set when the user runs the patch method manually
-			 * false is when the module is updated using the update system
-			 */
-			$this->load->model('setting/setting');
 
-			$settings = $this->model_setting_setting->getSetting('openbay_amazon');
-
-			if ($settings) {
-				$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
-					`product_id` int(11) NOT NULL,
-					`marketplace` enum('uk','de','es','it','fr') NOT NULL,
-					`status` enum('searching','finished') NOT NULL,
-					`matches` int(11) DEFAULT NULL,
-					`data` text,
-					PRIMARY KEY (`product_id`,`marketplace`)
-				) DEFAULT COLLATE=utf8_general_ci;");
-
-				$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_listing_report` (
-					`marketplace` enum('uk','de','fr','es','it') NOT NULL,
-					`sku` varchar(255) NOT NULL,
-					`quantity` int(10) unsigned NOT NULL,
-					`asin` varchar(255) NOT NULL,
-					`price` decimal(10,4) NOT NULL,
-					PRIMARY KEY (`marketplace`,`sku`)
-				) DEFAULT COLLATE=utf8_general_ci;");
-
-				if (!$this->config->get('openbay_amazon_processing_listing_reports')) {
-					$settings['openbay_amazon_processing_listing_reports'] = array();
-				}
-
-				$this->model_setting_setting->editSetting('openbay_amazon', $settings);
-			}
-
-			//remove the current events
-			$this->model_extension_event->deleteEvent('openbaypro_amazon');
-
-			//re-add the correct events
-			$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
-
-			return true;
 		}
 	}
 
@@ -436,8 +383,6 @@ class ModelOpenbayAmazon extends Model {
 
 		$product_links = $this->db->query($query)->rows;
 
-		$this->load->library('openbay/amazon');
-
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
@@ -462,9 +407,7 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function getUnlinkedProducts() {
-		$this->load->library('openbay/amazon');
 		if ($this->openbay->addonLoad('openstock')) {
-
 			$rows = $this->db->query("
 				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combination`, `p`.`has_option`
 				FROM `" . DB_PREFIX . "product` as `p`
@@ -579,8 +522,6 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
-		$this->load->library('openbay/amazon');
-
 		$result = null;
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {

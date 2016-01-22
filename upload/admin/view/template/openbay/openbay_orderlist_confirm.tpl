@@ -60,7 +60,6 @@
                   <?php } ?>
                 <?php } ?>
                 <?php if ($order['channel'] == 'Amazon EU') { ?>
-                  <a href="openbay_orderlist_confirm.tpl"></a>
                   <?php if ($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                     <div class="form-group">
                       <label class="control-label"><?php echo $entry_carrier; ?></label>

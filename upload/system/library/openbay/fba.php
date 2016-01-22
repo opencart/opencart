@@ -4,8 +4,7 @@ namespace openbay;
 class fba {
 	private $api_key;
 	private $api_account_id;
-	//private $url = 'https://api.openbaypro.io/';
-	private $url = 'http://dev.openbaypro.io/';
+	private $url = 'https://api.openbaypro.io/';
 	private $registry;
 
 	private $logging = 1;

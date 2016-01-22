@@ -110,11 +110,15 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if ($implode) {
-					$sql .= " " . implode(" AND ", $implode) . "";
+					$sql .= " (" . implode(" AND ", $implode) . ")";
 				}
 
-				if (!empty($data['filter_description'])) {
-					$sql .= " OR pd.description LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+				if (!empty($data['filter_description']) && $implode) {
+					$implode = array();
+					foreach ($words as $word) {
+						$implode[] = "pd.description LIKE '%" . $this->db->escape($word) . "%'";
+					}
+					$sql .= " OR (" . implode(" AND ", $implode) . ")";
 				}
 			}
 

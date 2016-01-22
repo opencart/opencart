@@ -21,7 +21,7 @@ class ControllerToolBackup extends Controller {
 
 				$this->session->data['success'] = $this->language->get('text_success');
 
-				$this->response->redirect($this->url->ssl('tool/backup', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
 			} else {
 				$this->error['warning'] = $this->language->get('error_empty');
 			}
@@ -60,17 +60,17 @@ class ControllerToolBackup extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('tool/backup', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['restore'] = $this->url->ssl('tool/backup', 'token=' . $this->session->data['token'], true);
+		$data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true);
 
-		$data['backup'] = $this->url->ssl('tool/backup/backup', 'token=' . $this->session->data['token'], true);
+		$data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], true);
 
 		$data['tables'] = $this->model_tool_backup->getTables();
 
@@ -87,7 +87,7 @@ class ControllerToolBackup extends Controller {
 		if (!isset($this->request->post['backup'])) {
 			$this->session->data['error'] = $this->language->get('error_export');
 
-			$this->response->redirect($this->url->ssl('tool/backup', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
 		} elseif ($this->user->hasPermission('modify', 'tool/backup')) {
 			$this->response->addheader('Pragma: public');
 			$this->response->addheader('Expires: 0');
@@ -102,7 +102,7 @@ class ControllerToolBackup extends Controller {
 		} else {
 			$this->session->data['error'] = $this->language->get('error_permission');
 
-			$this->response->redirect($this->url->ssl('tool/backup', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
 		}
 	}
 }

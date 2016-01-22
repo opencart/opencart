@@ -18,24 +18,24 @@ class ControllerPaymentLaybuy extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/payment', 'token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token']));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'])
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -112,11 +112,11 @@ class ControllerPaymentLaybuy extends Controller {
 		$data['button_filter'] = $this->language->get('button_filter');
 		$data['button_view'] = $this->language->get('button_view');
 
-		$data['action'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token']);
+		$data['action'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token']);
 
-		$data['fetch'] = $this->url->ssl('payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab');
+		$data['fetch'] = $this->url->link('payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab');
 
-		$data['cancel'] = $this->url->ssl('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
 
 		if (isset($this->request->post['laybuys_membership_id'])) {
 			$data['laybuys_membership_id'] = $this->request->post['laybuys_membership_id'];
@@ -398,13 +398,13 @@ class ControllerPaymentLaybuy extends Controller {
 			$customer_id = $this->model_payment_laybuy->getCustomerIdByOrderId($result['order_id']);
 
 			if ($customer_id) {
-				$customer_url = $this->url->ssl('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . (int)$customer_id);
+				$customer_url = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . (int)$customer_id);
 			}
 
 			$data['reports'][] = array(
 				'id'			=> $result['laybuy_transaction_id'],
 				'order_id'		=> $result['order_id'],
-				'order_url'		=> $this->url->ssl('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$result['order_id']),
+				'order_url'		=> $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$result['order_id']),
 				'customer_name'	=> $result['firstname'] . ' ' . $result['lastname'],
 				'customer_url'	=> $customer_url,
 				'amount'		=> $this->currency->format($result['amount'], $result['currency']),
@@ -415,7 +415,7 @@ class ControllerPaymentLaybuy extends Controller {
 				'last_payment'	=> date($this->language->get('date_format_short'), strtotime($result['last_payment_due'])),
 				'status'		=> $this->model_payment_laybuy->getStatusLabel($result['status']),
 				'date_added'	=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'			=> $this->url->ssl('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . (int)$result['laybuy_transaction_id'])
+				'view'			=> $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . (int)$result['laybuy_transaction_id'])
 			);
 		}
 
@@ -461,16 +461,16 @@ class ControllerPaymentLaybuy extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order_id'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.order_id' . $url . '#reportstab');
-		$data['sort_customer'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=customer' . $url . '#reportstab');
-		$data['sort_amount'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.amount' . $url . '#reportstab');
-		$data['sort_dp_percent'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment' . $url . '#reportstab');
-		$data['sort_months'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.months' . $url . '#reportstab');
-		$data['sort_dp_amount'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab');
-		$data['sort_first_payment'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.first_payment_due' . $url . '#reportstab');
-		$data['sort_last_payment'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.last_payment_due' . $url . '#reportstab');
-		$data['sort_status'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.status' . $url . '#reportstab');
-		$data['sort_date_added'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.date_added' . $url . '#reportstab');
+		$data['sort_order_id'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.order_id' . $url . '#reportstab');
+		$data['sort_customer'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=customer' . $url . '#reportstab');
+		$data['sort_amount'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.amount' . $url . '#reportstab');
+		$data['sort_dp_percent'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment' . $url . '#reportstab');
+		$data['sort_months'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.months' . $url . '#reportstab');
+		$data['sort_dp_amount'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab');
+		$data['sort_first_payment'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.first_payment_due' . $url . '#reportstab');
+		$data['sort_last_payment'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.last_payment_due' . $url . '#reportstab');
+		$data['sort_status'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.status' . $url . '#reportstab');
+		$data['sort_date_added'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.date_added' . $url . '#reportstab');
 
 		$url = '';
 
@@ -510,7 +510,7 @@ class ControllerPaymentLaybuy extends Controller {
 		$pagination->total = $report_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . $url . '&page={page}#reportstab');
+		$pagination->url = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . $url . '&page={page}#reportstab');
 
 		$data['pagination'] = $pagination->render();
 
@@ -700,13 +700,13 @@ class ControllerPaymentLaybuy extends Controller {
 					$this->session->data['success'] = $this->language->get('text_fetched_none');
 				}
 
-				$this->response->redirect($this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token']));
+				$this->response->redirect($this->url->link('payment/laybuy', 'token=' . $this->session->data['token']));
 			} else {
 				$this->model_payment_laybuy->log('No PayPal Profile IDs to update');
 
 				$this->session->data['success'] = $this->language->get('text_fetched_none');
 
-				$this->response->redirect($this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token']));
+				$this->response->redirect($this->url->link('payment/laybuy', 'token=' . $this->session->data['token']));
 			}
 		} else {
 			$this->model_payment_laybuy->log('User does not have permission');
@@ -750,29 +750,29 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->ssl('extension/payment', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab')
+			'href' => $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_transaction_title'),
-			'href' => $this->url->ssl('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id)
+			'href' => $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_transaction_title');
 
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['cancel'] = $this->url->ssl('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab');
+		$data['cancel'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab');
 
 		$transaction_info = $this->model_payment_laybuy->getTransaction($id);
 
@@ -985,9 +985,9 @@ class ControllerPaymentLaybuy extends Controller {
 			}
 
 			if ($this->request->get['source'] == 'order') {
-				$json['reload'] = $this->url->ssl('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token']);
+				$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token']);
 			} else {
-				$json['reload'] = $this->url->ssl('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id);
+				$json['reload'] = $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id);
 			}
 
 			$this->response->setOutput(json_encode($json));
@@ -1138,9 +1138,9 @@ class ControllerPaymentLaybuy extends Controller {
 				}
 
 				if ($this->request->get['source'] == 'order') {
-					$json['reload'] = $this->url->ssl('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token']);
+					$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token']);
 				} else {
-					$json['reload'] = $this->url->ssl('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id);
+					$json['reload'] = $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id);
 				}
 
 				$this->response->setOutput(json_encode($json));

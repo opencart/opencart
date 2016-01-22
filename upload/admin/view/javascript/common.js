@@ -101,30 +101,66 @@ $(document).ready(function() {
 	});
 
 	// Override summernotes image manager
-	$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
-
-	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
-		$('#modal-image').remove();
-
-		$(this).parents('.note-editor').find('.note-editable').focus();
-
-		$.ajax({
-			url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-			dataType: 'html',
-			beforeSend: function() {
-				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$('#button-image').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-image').prop('disabled', false);
-			},
-			success: function(html) {
-				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-
-				$('#modal-image').modal('show');
+	var image_button = function(context) {
+		var ui = $.summernote.ui;
+		alert($(this).parent().parent().parent().attr('class'));
+		// create button
+		var button = ui.button({
+			contents: '<i class="fa fa-image" />',
+			tooltip: '',
+			click: function () {
+				$('#modal-image').remove();
+				
+				$(this).parents('.note-editor').find('.note-editable').focus();
+				
+				$.ajax({
+					url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+					dataType: 'html',
+					beforeSend: function() {
+						$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+						$('#button-image').prop('disabled', true);
+					},
+					complete: function() {
+						$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+						$('#button-image').prop('disabled', false);
+					},
+					success: function(html) {
+						$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+				
+						$('#modal-image').modal('show');
+					}
+				});
 			}
 		});
+	
+		return button.render();   // return button as jquery object 
+	}	
+
+	$('.summernote').summernote({
+		height: 300,
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'underline', 'clear']],
+			['fontname', ['fontname']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['table', ['table']],
+			['insert', ['link', 'image', 'video']],
+			['view', ['fullscreen', 'codeview', 'help']]
+		],
+		buttons: {
+			image: image_button
+		}	
+	});
+	
+	
+	
+	
+	//$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
+
+
+	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
+
 	});
 
 	// Image Manager

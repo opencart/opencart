@@ -14,7 +14,7 @@ class ControllerTotalLowOrderFee extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -45,22 +45,22 @@ class ControllerTotalLowOrderFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_total'),
-			'href' => $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('total/low_order_fee', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->ssl('total/low_order_fee', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->ssl('extension/total', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['low_order_fee_total'])) {
 			$data['low_order_fee_total'] = $this->request->post['low_order_fee_total'];

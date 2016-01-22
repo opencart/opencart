@@ -20,7 +20,7 @@ class ControllerSettingSetting extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('setting/store', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -358,17 +358,17 @@ class ControllerSettingSetting extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_stores'),
-			'href' => $this->url->ssl('setting/store', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('setting/setting', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true)
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -379,9 +379,9 @@ class ControllerSettingSetting extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->ssl('setting/setting', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->ssl('setting/store', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -1217,4 +1217,25 @@ class ControllerSettingSetting extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function theme() {
+		if ($this->request->server['HTTPS']) {
+			$server = HTTPS_CATALOG;
+		} else {
+			$server = HTTP_CATALOG;
+		}
+		
+		// This is only here for compatibility with old themes.
+		if ($this->request->get['theme'] == 'theme_default') {
+			$theme = $this->config->get('theme_default_directory');
+		} else {
+			$theme = basename($this->request->get['theme']);
+		}
+		
+		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
+			$this->response->setOutput($server . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+		} else {
+			$this->response->setOutput($server . 'image/no_image.png');
+		}
+	}	
 }

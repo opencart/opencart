@@ -22,18 +22,18 @@ class ControllerAccountRecurring extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', true),
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/recurring', $url, true),
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/recurring', $url, true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');

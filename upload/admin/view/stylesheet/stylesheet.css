@@ -7,7 +7,7 @@ html, body {
 	font-size: 12px;
 	color: #666666;
 	text-rendering: optimizeLegibility;
-	background: #f9f9f9;
+	/*background: #f9f9f9;*/
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;

@@ -38,7 +38,7 @@ class ControllerSaleVoucherTheme extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerSaleVoucherTheme extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerSaleVoucherTheme extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->ssl('sale/voucher_theme/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->ssl('sale/voucher_theme/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('sale/voucher_theme/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('sale/voucher_theme/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['voucher_themes'] = array();
 
@@ -175,7 +175,7 @@ class ControllerSaleVoucherTheme extends Controller {
 			$data['voucher_themes'][] = array(
 				'voucher_theme_id' => $result['voucher_theme_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->ssl('sale/voucher_theme/edit', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url, true)
+				'edit'             => $this->url->link('sale/voucher_theme/edit', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url, true)
 			);
 		}
 
@@ -224,7 +224,7 @@ class ControllerSaleVoucherTheme extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_name'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
 
 		$url = '';
 
@@ -240,7 +240,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$pagination->total = $voucher_theme_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -303,21 +303,21 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['action'] = $this->url->ssl('sale/voucher_theme/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('sale/voucher_theme/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->ssl('sale/voucher_theme/edit', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id'] . $url, true);
+			$data['action'] = $this->url->link('sale/voucher_theme/edit', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->ssl('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);

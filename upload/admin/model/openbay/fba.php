@@ -4,7 +4,7 @@ class ModelOpenbayFba extends Model {
         $this->load->model('extension/event');
 
 		$this->model_extension_event->addEvent('openbay_fba', 'catalog/model/checkout/order/addOrder/after', 'openbay/fba/eventAddOrder');
-		$this->model_extension_event->addEvent('openbay_fba', 'catalog/model/checkout/order/addOrderHistory/after', 'openbay/fba/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_fba', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/fba/eventAddOrderHistory');
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (

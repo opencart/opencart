@@ -241,15 +241,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazonus');
 
-		if (version_compare(VERSION, '2.0.3.1', '>')) {
-			$this->load->model('customer/customer_group');
+		$this->load->model('customer/customer_group');
 
-			$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-		} else {
-			$this->load->model('sale/customer_group');
-
-			$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
-		}
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 

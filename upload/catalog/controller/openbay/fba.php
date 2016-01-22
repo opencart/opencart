@@ -1,6 +1,6 @@
 <?php
 class ControllerOpenbayFba extends Controller {
-	public function eventAddOrderHistory($order_id) {
+	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
 			$this->load->model('openbay/fba_order');
 			$this->load->model('checkout/order');
@@ -100,7 +100,7 @@ class ControllerOpenbayFba extends Controller {
 		}
 	}
 
-	public function eventAddOrder($order_id) {
+	public function eventAddOrder($route, $order_id) {
 		$this->load->model('checkout/order');
 
 		$this->openbay->fba->log('eventAddOrder Event fired for order ID: ' . $order_id);

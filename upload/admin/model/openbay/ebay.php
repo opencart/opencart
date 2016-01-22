@@ -3,7 +3,7 @@ class ModelOpenbayEbay extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/after', 'openbay/ebay/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/ebay/eventAddOrderHistory');
 
 		$value                                  = array();
 		$value["ebay_token"]              = '';

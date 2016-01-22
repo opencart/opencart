@@ -76,7 +76,7 @@
                     <?php } ?>
                   </select>
                   <br />
-                  <img src="" alt="" class="img-thumbnail" /></div>
+                  <img id="theme" src="" alt="" class="img-thumbnail" /></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -1418,7 +1418,7 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
-	$('#theme').attr('src', $('input[name=\'config_url\']') + '/catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
+	$('#theme').attr('src', '<?php echo $store_url; ?>catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
 });
 
 $('select[name=\'config_theme\']').trigger('change');

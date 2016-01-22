@@ -279,7 +279,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_description; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="description" id="description-field"><?php echo $product['description']; ?></textarea>
+                  <textarea name="description" id="description-field" class="form-control summernote"><?php echo $product['description']; ?></textarea>
                 </div>
               </div>
             </div>
@@ -2494,7 +2494,7 @@
         profileThemeUpdate();
     <?php } ?>
 
-    $('#description-field').summernote({height: 300});
+   // $('#description-field').summernote({height: 300});
   });
 
   $('#measure-unit').bind('change', function() {

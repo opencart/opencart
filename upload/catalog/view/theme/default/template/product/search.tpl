@@ -197,6 +197,7 @@ $('#content input[name=\'search\']').bind('keydown', function(e) {
 $('select[name=\'category_id\']').on('change', function() {
 	if (this.value == '0') {
 		$('input[name=\'sub_category\']').prop('disabled', true);
+		$('input[name=\'sub_category\']').removeAttr('checked');
 	} else {
 		$('input[name=\'sub_category\']').prop('disabled', false);
 	}

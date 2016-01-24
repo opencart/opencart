@@ -103,7 +103,7 @@ $(document).ready(function() {
 	// Override summernotes image manager
 	var image_button = function(context) {
 		var ui = $.summernote.ui;
-		alert($(this).parent().parent().parent().attr('class'));
+		
 		// create button
 		var button = ui.button({
 			contents: '<i class="fa fa-image" />',

@@ -29,6 +29,7 @@
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
               <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
               <input type="hidden" name="quantity" value="<?php echo $product['quantity']; ?>"/>
+              <input type="hidden" name="taxonomy_id" value="" id="taxonomy-id" />
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                 <li><a href="#tab-listing-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
@@ -36,34 +37,15 @@
               </ul>
               <div class="tab-content">
                 <div id="tab-listing-general" class="tab-pane active">
-                  <div class="well">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="form-group required">
-                          <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_category; ?> <span id="category-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
-                          <div class="col-sm-10">
-                            <div class="alert alert-success" id="category-selected" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_category_selected; ?></div>
-                            <select name="top_category" id="input-category" class="form-control">
-                              <option id="category-default"><?php echo $text_option; ?></option>
-                              <?php foreach ($setting['top_categories'] as $value) { ?>
-                                <option value="<?php echo $value['category_name']; ?>"><?php echo $value['long_name']; ?></option>
-                              <?php } ?>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group" style="display:none;" id="container-sub-category">
-                          <label class="col-sm-2 control-label" for="input-sub-category"><span id="sub-category-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
-                          <div class="col-sm-10">
-                            <select name="top_category" id="input-sub-category" class="form-control">
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group" style="display:none;" id="container-sub-sub-category">
-                          <label class="col-sm-2 control-label" for="input-sub-sub-category"><span id="sub-sub-category-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
-                          <div class="col-sm-10">
-                            <select name="top_category" id="input-sub-sub-category" class="form-control">
-                            </select>
-                          </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="form-group required">
+                        <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
+                        <div class="col-sm-10">
+                          <div id="category-selected" class="alert alert-success" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_category_selected; ?> <a class="label label-info" id="reset-category"><?php echo $button_edit; ?></a></div>
+                          <span id="category-loading"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                          <span id="category-parents"></span>
+                          <div id="category-select-container" style="display: none;"></div>
                         </div>
                       </div>
                     </div>
@@ -194,7 +176,6 @@
                       <input type="text" name="processing_max" value="" placeholder="<?php echo $entry_processing_max; ?>" id="input-processing-max" class="form-control" />
                     </div>
                   </div>
-                  <input type="hidden" name="category_id" value="" id="category-id" />
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-material"><?php echo $entry_materials; ?></label>
                     <div class="col-sm-10">
@@ -393,108 +374,50 @@
     }
   }
 
-  $('#input-category').on('change', function() {
+  $('body').on('change', '.etsy-category', function() {
+    getCategories($(this).val());
+  });
+
+  $('body').on('click', '#reset-category', function() {
+    getCategories(0);
+  });
+
+  var select_html;
+
+  function getCategories(id_path) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getsubcategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getCategories&token=<?php echo $token; ?>&id_path=' + id_path,
       beforeSend: function(){
-        $('#input-category').attr('disabled','disabled');
-        $('#input-sub-category').empty();
-        $('#input-sub-sub-category').empty();
-        $('#container-sub-category').hide();
-        $('#container-sub-sub-category').hide();
-        $('#category-id').val('');
-        $('#category-loading').show();
         $('#category-selected').hide();
-        $('#category-sub-default').remove();
+        $('#category-select-container').hide();
+        $('#category-loading').show();
+        $('#taxonomy-id').val('');
       },
-      type: 'post',
-      data: {'tag' : $(this).val()},
+      type: 'get',
       dataType: 'json',
       success: function(json) {
-        $('#input-sub-category').append('<option id="category-sub-default" selected="selected"><?php echo $text_option; ?></option>');
-        $.each(json.data, function( k, v ) {
-          $('#input-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
-        });
+        if (json.final_category == true) {
+          $('#category-parents').text(json.parent_text);
+          $('#category-selected').show();
+          $('#taxonomy-id').val(json.last_id);
+        } else {
+          select_html = '<select name="category" class="etsy-category form-control">';
+          select_html += '<option selected="true" disabled="disabled"><?php echo $text_select; ?></option> ';
+          $.each(json.data, function( key, category ) {
+            select_html += '<option value="' + category.id_path + '">' + category.name + '</option>';
+          });
+          select_html += '</select>';
 
-        $('#input-category').removeAttr('disabled');
-        $('#container-sub-category').show();
+          $('#category-select-container').empty().html(select_html).fadeIn();
+          $('#category-parents').text(json.parent_text);
+        }
+
         $('#category-loading').hide();
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-        $('#input-category').removeAttr('disabled');
       }
     });
-  });
-
-  $('#input-sub-category').on('change', function() {
-    var sub_tag = $(this).val();
-
-    $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getsubsubcategory&token=<?php echo $token; ?>',
-      beforeSend: function(){
-        $('#input-category').attr('disabled','disabled');
-        $('#input-sub-category').attr('disabled','disabled');
-        $('#input-sub-sub-category').empty();
-        $('#container-sub-sub-category').hide();
-        $('#category-id').val('');
-        $('#sub-category-loading').show();
-        $('#category-selected').hide();
-        $('#category-sub-default').remove();
-      },
-      type: 'post',
-      data: {'sub_tag' : sub_tag},
-      dataType: 'json',
-      success: function(json) {
-        if ($.isEmptyObject(json.data)) {
-          var category;
-
-          category = getCategory(sub_tag);
-        } else {
-          $('#input-sub-sub-category').append('<option id="category-sub-sub-default" selected="selected"><?php echo $text_option; ?></option>');
-          $.each(json.data, function( k, v ) {
-            $('#input-sub-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
-          });
-
-          $('#container-sub-sub-category').show();
-        }
-
-        $('#input-category').removeAttr('disabled');
-        $('#input-sub-category').removeAttr('disabled');
-        $('#sub-category-loading').hide();
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-        $('#input-category').removeAttr('disabled');
-        $('#input-sub-category').removeAttr('disabled');
-      }
-    });
-  });
-
-  $('#input-sub-sub-category').on('change', function() {
-    $('#category-sub-sub-default').remove();
-    getCategory($(this).val());
-  });
-
-  function getCategory(tag) {
-    $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getcategory&token=<?php echo $token; ?>',
-      beforeSend: function(){ },
-      type: 'post',
-      data: {'tag' : tag},
-      dataType: 'json',
-      success: function(json) {
-        setCategory(json.data.category_id);
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      }
-    });
-  }
-
-  function setCategory(id) {
-    $('#category-id').val(id);
-    $('#category-selected').show();
   }
 
   function getShippingProfiles() {
@@ -552,6 +475,7 @@
   $(document).ready(function() {
     getShippingProfiles();
     getShopSection();
+    getCategories(0);
   });
 
 //--></script>

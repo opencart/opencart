@@ -53,7 +53,7 @@ final class Ebay {
 				CURLOPT_POST            => 1,
 				CURLOPT_HEADER          => 0,
 				CURLOPT_URL             => $this->url . $call,
-				CURLOPT_USERAGENT       => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
+				CURLOPT_USERAGENT       => "OpenBay Pro for eBay",
 				CURLOPT_FRESH_CONNECT   => 1,
 				CURLOPT_RETURNTRANSFER  => 1,
 				CURLOPT_FORBID_REUSE    => 1,
@@ -143,8 +143,6 @@ final class Ebay {
 	}
 
 	private function setLogger() {
-		$this->load->library('log');
-
 		if(file_exists(DIR_LOGS . 'ebaylog.log')) {
 			if(filesize(DIR_LOGS . 'ebaylog.log') > ($this->max_log_size * 1000000)) {
 				rename(DIR_LOGS . 'ebaylog.log', DIR_LOGS . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');

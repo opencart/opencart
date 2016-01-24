@@ -13,68 +13,68 @@
   </div>
   <div class="container-fluid">
     <?php if ($bulk_listing_status) { ?>
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-12 text-right"><a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
-      </div>
-    </div>
-    <form id="bulk-list-form" class="form-horizontal">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th class="text-center"><input type="checkbox"/></th>
-            <th class="text-center"><?php echo $column_image; ?></th>
-            <th class="text-left"><?php echo $column_name; ?></th>
-            <th class="text-right"><?php echo $column_model; ?></th>
-            <th class="text-right"><?php echo $column_status; ?></th>
-            <th class="text-right"><?php echo $column_matches; ?></th>
-            <th class="text-left"><?php echo $column_result; ?></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (!empty($products)) { ?>
-          <?php foreach ($products as $product) { ?>
-          <tr>
-            <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
-            <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
-            <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-            <td class="text-right"><?php echo $product['model'] ?></td>
-            <td class="text-right"><?php echo $product['search_status'] ?></td>
-            <td class="text-right"><?php if ($product['matches'] !== null) { ?>
-              <?php echo $product['matches'] ?>
-              <?php } else { ?>
-              -
-              <?php } ?></td>
-            <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
-              <?php $checked = false; ?>
-              <?php if ($product['matches'] > 0) { ?>
-              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
-              <?php echo $text_dont_list ?><br/>
-              <?php foreach ($product['search_results'] as $search_result) { ?>
-              <?php if (!$checked) { ?>
-              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
-              <?php $checked = true; ?>
-              <?php } else { ?>
-              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
-              <?php } ?>
-              <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
-              <?php } ?>
-              <?php } else { ?>
-              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
-              <?php echo $text_dont_list ?><br/>
-              <?php } ?>
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
       <div class="well">
-        <h4><?php echo $text_listing_values ?></h4>
+        <div class="row">
+          <div class="col-sm-12 text-right"><a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+        </div>
+      </div>
+      <form id="bulk-list-form" class="form-horizontal">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'product_ids[]\']').prop('checked', this.checked);"/></th>
+              <th class="text-center"><?php echo $column_image; ?></th>
+              <th class="text-left"><?php echo $column_name; ?></th>
+              <th class="text-right"><?php echo $column_model; ?></th>
+              <th class="text-right"><?php echo $column_status; ?></th>
+              <th class="text-right"><?php echo $column_matches; ?></th>
+              <th class="text-left"><?php echo $column_result; ?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (!empty($products)) { ?>
+            <?php foreach ($products as $product) { ?>
+            <tr>
+              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
+              <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
+              <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
+              <td class="text-right"><?php echo $product['model'] ?></td>
+              <td class="text-right"><?php echo $product['search_status'] ?></td>
+              <td class="text-right"><?php echo ($product['matches'] !== null ? $product['matches'] : '-'); ?></td>
+              <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
+                <?php $checked = false; ?>
+                <?php if ($product['matches'] > 0) { ?>
+                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <?php echo $text_dont_list ?><br/>
+                <?php foreach ($product['search_results'] as $search_result) { ?>
+                <?php if (!$checked) { ?>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <?php $checked = true; ?>
+                <?php } else { ?>
+                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <?php } ?>
+                <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
+                <?php } ?>
+                <?php } else { ?>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <?php echo $text_dont_list ?><br/>
+                <?php } ?>
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
+      <div class="well" style="margin-top:10px;">
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
@@ -114,13 +114,8 @@
           </div>
         </div>
       </div>
-    </form>
-    <div class="row">
-      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-    </div>
     <?php } else { ?>
-    <div class="warning"><?php echo $error_bulk_listing_permission ?></div>
+      <div class="warning"><?php echo $error_bulk_listing_permission ?></div>
     <?php } ?>
   </div>
 </div>
@@ -198,7 +193,7 @@ $('#button-search').bind('click', function(e) {
     request_data += '&marketplace=<?php echo $filter_marketplace ?>';
 
     $.ajax({
-      url: 'index.php?route=openbay/amazonus/doBulkSearch&token=<?php echo $token ?>',
+      url: 'index.php?route=openbay/amazonus/dobulksearch&token=<?php echo $token ?>',
       data: request_data,
       dataType: 'json',
       type: 'POST',

@@ -1,12 +1,14 @@
 <?php
 class ControllerOpenbayAmazonusProduct extends Controller{
 	public function index() {
-		$this->load->language('catalog/product');
-		$data = $this->load->language('openbay/amazonus_listing');
-
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+
+		$this->load->language('catalog/product');
+		$this->load->language('openbay/amazonus_listing');
+
+		$data = $this->language->all();
 
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->setTitle($this->language->get('heading_title'));

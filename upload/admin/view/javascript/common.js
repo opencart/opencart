@@ -101,42 +101,7 @@ $(document).ready(function() {
 	});
 
 	// Override summernotes image manager
-	var image_button = function(context) {
-		var ui = $.summernote.ui;
-		alert($(this).parent().parent().parent().attr('class'));
-		// create button
-		var button = ui.button({
-			contents: '<i class="fa fa-image" />',
-			tooltip: '',
-			click: function () {
-				$('#modal-image').remove();
-				
-				$(this).parents('.note-editor').find('.note-editable').focus();
-				
-				$.ajax({
-					url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-					dataType: 'html',
-					beforeSend: function() {
-						$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-						$('#button-image').prop('disabled', true);
-					},
-					complete: function() {
-						$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-						$('#button-image').prop('disabled', false);
-					},
-					success: function(html) {
-						$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-				
-						$('#modal-image').modal('show');
-					}
-				});
-			}
-		});
-	
-		return button.render();   // return button as jquery object 
-	}	
-
-	$('.summernote').summernote({
+	var option = {
 		height: 300,
 		toolbar: [
 			['style', ['style']],
@@ -148,20 +113,55 @@ $(document).ready(function() {
 			['insert', ['link', 'image', 'video']],
 			['view', ['fullscreen', 'codeview', 'help']]
 		],
+		callbacks: {
+			onFocus: function(event) {
+				//alert($(event.target).attr('style'));
+				
+				
+				var test = $(event.target);
+				
+				console.log(event);
+			}
+		},		
 		buttons: {
-			image: image_button
+			image: function() {
+				var ui = $.summernote.ui;
+
+				// create button
+				var button = ui.button({
+					contents: '<i class="fa fa-image" />',
+					tooltip: 'lang.image.resizeFull',
+					click: function(context) {
+						$('#modal-image').remove();
+						
+						//$(this).parents('.note-editor').find('.note-editable').focus();
+						
+						$.ajax({
+							url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+							dataType: 'html',
+							beforeSend: function() {
+								$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+								$('#button-image').prop('disabled', true);
+							},
+							complete: function() {
+								$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+								$('#button-image').prop('disabled', false);
+							},
+							success: function(html) {
+								$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+						
+								$('#modal-image').modal('show');
+							}
+						});
+					}
+				});
+			
+				return button.render();   // return button as jquery object 				
+			}
 		}	
-	});
+	};
 	
-	
-	
-	
-	//$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
-
-
-	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
-
-	});
+	$('.summernote').summernote(option);
 
 	// Image Manager
 	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {

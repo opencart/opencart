@@ -63,6 +63,8 @@ $('a.thumbnail').on('click', function(e) {
 // Get the current selection
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
+	alert(test);
+	$('.summernote').summernote('focus');
 	
 	$('.summernote').summernote('insertImage', $(this).attr('href'));
 

@@ -17,8 +17,6 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');

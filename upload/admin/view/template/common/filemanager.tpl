@@ -58,16 +58,6 @@ $('a.thumbnail').on('click', function(e) {
 
 	$('#modal-image').modal('hide');
 });
-
-<?php } else { ?>
-// Get the current selection
-$('a.thumbnail').on('click', function(e) {
-	e.preventDefault();
-	
-	$('.summernote').summernote('insertImage', $(this).attr('href'));
-
-	$('#modal-image').modal('hide');
-});
 <?php } ?>
 
 $('a.directory').on('click', function(e) {

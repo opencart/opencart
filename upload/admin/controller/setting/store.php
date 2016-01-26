@@ -395,12 +395,12 @@ class ControllerSettingStore extends Controller {
 			$data['config_meta_keyword'] = '';
 		}
 
-		if (isset($this->request->post['config_template'])) {
-			$data['config_template'] = $this->request->post['config_template'];
-		} elseif (isset($store_info['config_template'])) {
-			$data['config_template'] = $store_info['config_template'];
+		if (isset($this->request->post['config_theme'])) {
+			$data['config_theme'] = $this->request->post['config_theme'];
+		} elseif (isset($store_info['config_theme'])) {
+			$data['config_theme'] = $store_info['config_theme'];
 		} else {
-			$data['config_template'] = '';
+			$data['config_theme'] = '';
 		}
 
 		$data['themes'] = array();

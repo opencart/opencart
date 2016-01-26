@@ -118,9 +118,11 @@ final class Loader {
 	public function language($route) {
 		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
 		
-		$this->registry->get('language')->load($route);
+		$output = $this->registry->get('language')->load($route);
 		
 		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
+		
+		return $output;
 	}
 	
 	protected function callback($registry, $route) {

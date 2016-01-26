@@ -117,42 +117,42 @@ $(document).ready(function() {
 				['view', ['fullscreen', 'codeview', 'help']]
 			],
 			buttons: {
-    			image: function (context) {
-				  var ui = $.summernote.ui;
-				  
-				  // create button
-				  var button = ui.button({
-					contents: '<i class="fa fa-image" />',
-					tooltip: 'hello',
-					click: function () {
-						$('#modal-image').remove();
-					
-						$.ajax({
-							url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-							dataType: 'html',
-							beforeSend: function() {
-								$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-								$('#button-image').prop('disabled', true);
-							},
-							complete: function() {
-								$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-								$('#button-image').prop('disabled', false);
-							},
-							success: function(html) {
-								$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-								
-								$('#modal-image').modal('show');
-								
-								$('#modal-image a.thumbnail').on('click', function(e) {
-									e.preventDefault();
+    			image: function() {
+					var ui = $.summernote.ui;
+
+					// create button
+					var button = ui.button({
+						contents: '<i class="fa fa-image" />',
+						tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+						click: function () {
+							$('#modal-image').remove();
+						
+							$.ajax({
+								url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+								dataType: 'html',
+								beforeSend: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+									$('#button-image').prop('disabled', true);
+								},
+								complete: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+									$('#button-image').prop('disabled', false);
+								},
+								success: function(html) {
+									$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 									
-									$(element).summernote('insertImage', $(this).attr('href'));
-																
-									$('#modal-image').modal('hide');
-								});
-							}
-						});						
-					}
+									$('#modal-image').modal('show');
+									
+									$('#modal-image a.thumbnail').on('click', function(e) {
+										e.preventDefault();
+										
+										$(element).summernote('insertImage', $(this).attr('href'));
+																	
+										$('#modal-image').modal('hide');
+									});
+								}
+							});						
+						}
 					});
 				
 					return button.render();

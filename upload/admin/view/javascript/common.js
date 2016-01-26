@@ -101,41 +101,32 @@ $(document).ready(function() {
 	});
 
 	// Override summernotes image manager
-	var option = {
-		height: 300,
-		toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'underline', 'clear']],
-			['fontname', ['fontname']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['table', ['table']],
-			['insert', ['link', 'image', 'video']],
-			['view', ['fullscreen', 'codeview', 'help']]
-		],
-		callbacks: {
-			onFocus: function(event) {
-				//alert($(event.target).attr('style'));
-				
-				
-				var test = $(event.target);
-				
-				console.log(event);
-			}
-		},		
-		buttons: {
-			image: function() {
-				var ui = $.summernote.ui;
-
-				// create button
-				var button = ui.button({
+	$('.summernote').each(function() {
+		var element = this;
+		
+		$(element).summernote({
+			height: 300,
+			toolbar: [
+				['style', ['style']],
+				['font', ['bold', 'underline', 'clear']],
+				['fontname', ['fontname']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['table', ['table']],
+				['insert', ['link', 'image', 'video']],
+				['view', ['fullscreen', 'codeview', 'help']]
+			],
+			buttons: {
+    			image: function (context) {
+				  var ui = $.summernote.ui;
+				  
+				  // create button
+				  var button = ui.button({
 					contents: '<i class="fa fa-image" />',
-					tooltip: 'lang.image.resizeFull',
-					click: function(context) {
+					tooltip: 'hello',
+					click: function () {
 						$('#modal-image').remove();
-						
-						//$(this).parents('.note-editor').find('.note-editable').focus();
-						
+					
 						$.ajax({
 							url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
 							dataType: 'html',
@@ -149,19 +140,26 @@ $(document).ready(function() {
 							},
 							success: function(html) {
 								$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-						
+								
 								$('#modal-image').modal('show');
+								
+								$('#modal-image a.thumbnail').on('click', function(e) {
+									e.preventDefault();
+									
+									$(element).summernote('insertImage', $(this).attr('href'));
+																
+									$('#modal-image').modal('hide');
+								});
 							}
-						});
+						});						
 					}
-				});
-			
-				return button.render();   // return button as jquery object 				
-			}
-		}	
-	};
-	
-	$('.summernote').summernote(option);
+					});
+				
+					return button.render();
+				}
+  			}
+		});
+	});
 
 	// Image Manager
 	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {

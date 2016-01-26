@@ -142,7 +142,7 @@ class ControllerThemeThemeDefault extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
 		);
 
 		$data['action'] = $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);

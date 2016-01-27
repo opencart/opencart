@@ -37,7 +37,7 @@
 <?php echo $analytic; ?>
 <?php } ?>
 </head>
-<body>
+<body class="<?php echo $class; ?>">
 <nav id="top">
   <div class="container">
     <?php echo $currency; ?>

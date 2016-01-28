@@ -216,7 +216,7 @@ class ModelPaymentLaybuy extends Model {
 			);
 		}
 
-		$data['report'] = serialize($report_content);
+		$data['report'] = json_encode($report_content);
 
 		return $data;
 	}

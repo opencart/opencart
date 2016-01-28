@@ -260,13 +260,13 @@ class ControllerPaymentLaybuy extends Controller {
 
 						$old_transaction = $this->model_payment_laybuy->getTransaction($revised_transaction['laybuy_transaction_id']);
 
-						$report_content = unserialize($old_transaction['report']);
+						$report_content = json_decode($old_transaction['report']);
 
 						foreach ($report_content as &$array) {
 							$array['status'] = str_replace('Pending', 'Canceled', $array['status']);
 						}
 
-						$report_content = serialize($report_content);
+						$report_content = json_encode($report_content);
 
 						if ($old_transaction['paypal_profile_id']) {
 							$this->model_payment_laybuy->log('Canceling transaction');
@@ -464,7 +464,7 @@ class ControllerPaymentLaybuy extends Controller {
 							}
 						}
 
-						$report_content = serialize($report_content);
+						$report_content = json_encode($report_content);
 
 						switch ($status) {
 							case -1: // Cancel

@@ -97,7 +97,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
 			if ($this->config->get('pp_express_debug') == 1) {
-				$this->log->write(serialize($result));
+				$this->log->write(json_encode($result));
 			}
 
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));
@@ -1336,7 +1336,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
 			if ($this->config->get('pp_express_debug') == 1) {
-				$this->log->write(serialize($result));
+				$this->log->write(json_encode($result));
 			}
 
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));

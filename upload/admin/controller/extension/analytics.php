@@ -108,6 +108,7 @@ class ControllerExtensionAnalytics extends Controller {
 			}
 		}
 		
+		$this->load->model('setting/setting');
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();

@@ -260,7 +260,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 						$old_transaction = $this->model_payment_laybuy->getTransaction($revised_transaction['laybuy_transaction_id']);
 
-						$report_content = json_decode($old_transaction['report']);
+						$report_content = json_decode($old_transaction['report'], true);
 
 						foreach ($report_content as &$array) {
 							$array['status'] = str_replace('Pending', 'Canceled', $array['status']);

@@ -238,7 +238,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 			$post = $this->request->post;
 
-			$md = json_decode($this->encryption->decrypt($post['MD']));
+			$md = json_decode($this->encryption->decrypt($post['MD']), true);
 
 			$signature_result = $this->model_payment_realex_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
 

@@ -336,6 +336,12 @@ class ModelLocalisationLanguage extends Model {
 		}
 	}
 
+	public function getLanguageByCode($code) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getTotalLanguages() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "language");
 

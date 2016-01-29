@@ -97,7 +97,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
 			if ($this->config->get('pp_express_debug') == 1) {
-				$this->log->write(serialize($result));
+				$this->log->write(json_encode($result));
 			}
 
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));
@@ -1336,7 +1336,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
 			if ($this->config->get('pp_express_debug') == 1) {
-				$this->log->write(serialize($result));
+				$this->log->write(json_encode($result));
 			}
 
 			$this->response->redirect($this->url->link('checkout/checkout', '', true));
@@ -1636,10 +1636,10 @@ class ControllerPaymentPPExpress extends Controller {
 
 				//if the transaction is pending but the new status is completed
 				if ($transaction['payment_status'] != $this->request->post['payment_status']) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = '" . $this->request->post['payment_status'] . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = '" . $this->db->escape($this->request->post['payment_status']) . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
 				} elseif ($transaction['payment_status'] == 'Pending' && ($transaction['pending_reason'] != $this->request->post['pending_reason'])) {
 					//payment is still pending but the pending reason has changed, update it.
-					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->request->post['pending_reason'] . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->db->escape($this->request->post['pending_reason']) . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
 				}
 			} else {
 				if ($this->config->get('pp_express_debug') == 1) {

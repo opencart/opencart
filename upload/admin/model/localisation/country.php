@@ -64,14 +64,14 @@ class ModelLocalisationCountry extends Model {
 
 			return $query->rows;
 		} else {
-			$country_data = $this->cache->get('country');
+			$country_data = $this->cache->get('country.admin');
 
 			if (!$country_data) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country ORDER BY name ASC");
 
 				$country_data = $query->rows;
 
-				$this->cache->set('country', $country_data);
+				$this->cache->set('country.admin', $country_data);
 			}
 
 			return $country_data;

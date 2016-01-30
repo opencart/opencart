@@ -7,14 +7,14 @@ class ModelLocalisationCountry extends Model {
 	}
 
 	public function getCountries() {
-		$country_data = $this->cache->get('country.status');
+		$country_data = $this->cache->get('country.catalog');
 
 		if (!$country_data) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE status = '1' ORDER BY name ASC");
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.status', $country_data);
+			$this->cache->set('country.catalog', $country_data);
 		}
 
 		return $country_data;

@@ -877,11 +877,13 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function install() {
 		$this->load->model('payment/pp_express');
+		
 		$this->model_payment_pp_express->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/pp_express');
+		
 		$this->model_payment_pp_express->uninstall();
 	}
 
@@ -1322,7 +1324,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['buttons'] = array();
 
-		if ($recurring['status_id'] == 2 || $recurring['status_id'] == 3) {
+		if ($recurring['status'] == 2 || $recurring['status'] == 3) {
 			$data['buttons'][] = array(
 				'text' => $this->language->get('button_cancel_recurring'),
 				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], true)

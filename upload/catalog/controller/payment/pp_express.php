@@ -1139,7 +1139,7 @@ class ControllerPaymentPPExpress extends Controller {
 				//add order to paypal table
 				$paypal_order_data = array(
 					'order_id'         => $order_id,
-					'capture_status'   => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
+					'capture_status'   => ($this->config->get('pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
 					'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 					'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 					'total'            => $result['PAYMENTINFO_0_AMT']
@@ -1158,7 +1158,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
 					'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
 					'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
-					'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
+					'transaction_entity'    => ($this->config->get('pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
 					'amount'                => $result['PAYMENTINFO_0_AMT'],
 					'debug_data'            => json_encode($result)
 				);
@@ -1421,7 +1421,7 @@ class ControllerPaymentPPExpress extends Controller {
 			//add order to paypal table
 			$paypal_order_data = array(
 				'order_id'         => $order_id,
-				'capture_status'   => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
+				'capture_status'   => ($this->config->get('pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
 				'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 				'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 				'total'            => $result['PAYMENTINFO_0_AMT']
@@ -1440,7 +1440,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
 				'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
 				'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
-				'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
+				'transaction_entity'    => ($this->config->get('pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
 				'amount'                => $result['PAYMENTINFO_0_AMT'],
 				'debug_data'            => json_encode($result)
 			);

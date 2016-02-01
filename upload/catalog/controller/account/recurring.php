@@ -9,8 +9,6 @@ class ControllerAccountRecurring extends Controller {
 
 		$this->load->language('account/recurring');
 
-		$this->load->model('account/recurring');
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
@@ -37,12 +35,15 @@ class ControllerAccountRecurring extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		
+		$data['text_empty'] = $this->language->get('text_empty');
+		
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_action'] = $this->language->get('column_action');
 		$data['column_recurring_id'] = $this->language->get('column_recurring_id');
-		$data['text_empty'] = $this->language->get('text_empty');
+		
 		$data['button_view'] = $this->language->get('button_view');
 		$data['button_continue'] = $this->language->get('button_continue');
 
@@ -53,7 +54,9 @@ class ControllerAccountRecurring extends Controller {
 		}
 
 		$data['orders'] = array();
-
+		
+		$this->load->model('account/recurring');
+		
 		$recurring_total = $this->model_account_recurring->getTotalRecurring();
 
 		$results = $this->model_account_recurring->getAllProfiles(($page - 1) * 10, 10);
@@ -214,7 +217,7 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['recurring'] = $recurring;
 
-			$data['buttons'] = $this->load->controller('payment/' . $recurring['payment_code'] . '/recurringButtons');
+			//$data['buttons'] = $this->load->controller('payment/' . $recurring['payment_code'] . '/recurringButtons');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

@@ -12,9 +12,9 @@ $_['text_sale']						 = 'Sale';
 $_['text_clear']					 = 'Clear';
 $_['text_browse']					 = 'Browse';
 $_['text_image_manager']			 = 'Image manager';
-$_['text_ipn']						 = 'IPN URL';
-$_['text_paypal_join']               = 'Sign up for PayPal - save your settings first as this page will be refreshed';
-$_['text_paypal_join_sandbox']       = 'Sign up for PayPal Sandbox - save your settings first as this page will be refreshed';
+
+$_['text_signup']                    = 'Sign up for PayPal - save your settings first as this page will be refreshed';
+$_['text_sandbox']                   = 'Sign up for PayPal Sandbox - save your settings first as this page will be refreshed';
 
 // Entry
 $_['entry_username']				 = 'API Username';
@@ -23,15 +23,18 @@ $_['entry_signature']				 = 'API Signature';
 $_['entry_sandbox_username']		 = 'API Sandbox Username';
 $_['entry_sandbox_password']		 = 'API Sandbox Password';
 $_['entry_sandbox_signature']		 = 'API Sandbox Signature';
+$_['entry_ipn']						 = 'IPN URL';
 $_['entry_test']					 = 'Test (Sandbox) Mode';
-$_['entry_method']					 = 'Transaction Method';
+$_['entry_debug']					 = 'Debug logging';
+$_['entry_currency']				 = 'Default currency';
+$_['entry_transaction']		         = 'Transaction Method';
+$_['entry_total']					 = 'Total';
 $_['entry_geo_zone']				 = 'Geo Zone';
 $_['entry_status']					 = 'Status';
 $_['entry_sort_order']				 = 'Sort Order';
-$_['entry_icon_sort_order']			 = 'Icon Sort Order';
-$_['entry_debug']					 = 'Debug logging';
-$_['entry_total']					 = 'Total';
-$_['entry_currency']				 = 'Default currency';
+
+
+
 $_['entry_recurring_cancellation']	 = 'Allow customers to cancel recurring payments';
 $_['entry_canceled_reversal_status'] = 'Canceled Reversal Status';
 $_['entry_completed_status']		 = 'Completed Status';
@@ -71,7 +74,7 @@ $_['error_signature']				 = 'API Signature Required!';
 $_['error_sandbox_username']	 	 = 'API Sandbox Username Required!';
 $_['error_sandbox_password']		 = 'API Sandbox Password Required!';
 $_['error_sandbox_signature']		 = 'API Sandbox Signature Required!';
-$_['error_data']					 = 'Data missing from request';
-$_['error_timeout']					 = 'Request timed out';
 $_['error_api']						 = 'Paypal Authorization Error';
 $_['error_api_sandbox']				 = 'Paypal Sandbox Authorization Error';
+$_['error_data']					 = 'Data missing from request';
+$_['error_timeout']					 = 'Request timed out';

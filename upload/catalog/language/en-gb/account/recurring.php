@@ -1,25 +1,20 @@
 <?php
+// Heading
 $_['heading_title'] = 'Recurring Payments';
-$_['button_continue'] = 'Continue';
-$_['button_view'] = 'View';
+
+// Text
 $_['text_empty'] = 'No recurring payments found';
+
 $_['text_product'] = 'Product: ';
-$_['text_order'] = 'Order: ';
+$_['text_order']     = 'Order: ';
 $_['text_quantity'] = 'Quantity: ';
 $_['text_account'] = 'Account';
-$_['text_action'] = 'Action';
-$_['text_recurring'] = 'Recurring payment';
-$_['text_transactions'] = 'Transactions';
-$_['button_return'] = 'Return';
+$_['text_action']             = 'Action';
+$_['text_recurring']          = 'Recurring payment';
+$_['text_transactions']       = 'Transactions';
+
 $_['text_empty_transactions'] = 'No transactions for this recurring profile';
 
-$_['column_date_added'] = 'Created';
-$_['column_type'] = 'Type';
-$_['column_amount'] = 'Amount';
-$_['column_status'] = 'Status';
-$_['column_product'] = 'Product';
-$_['column_action'] = 'Action';
-$_['column_recurring_id'] = 'Profile ID';
 
 $_['text_recurring_detail'] = 'Recurring payment details';
 $_['text_recurring_id'] = 'Profile ID: ';
@@ -47,6 +42,23 @@ $_['text_transaction_suspended_failed'] = 'Suspended from failed payment';
 $_['text_transaction_outstanding_failed'] = 'Outstanding payment failed';
 $_['text_transaction_expired'] = 'Expired';
 
+
+$_['text_cancelled'] = 'Recurring payment has been cancelled';
+
+
+
+// Column
+$_['column_date_added'] = 'Created';
+$_['column_type'] = 'Type';
+$_['column_amount'] = 'Amount';
+$_['column_status'] = 'Status';
+$_['column_product'] = 'Product';
+$_['column_action'] = 'Action';
+$_['column_recurring_id'] = 'Profile ID';
+
+// Error
 $_['error_not_cancelled'] = 'Error: %s';
 $_['error_not_found'] = 'Could not cancel recurring';
-$_['text_cancelled'] = 'Recurring payment has been cancelled';
+
+// Button
+$_['button_return'] = 'Return';

@@ -8,12 +8,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('extension/extension');
-		$this->load->model('payment/pp_express');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			unset($this->request->post['pp_express_module']);
-
 			$this->model_setting_setting->editSetting('pp_express', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -24,7 +20,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_image_manager'] = $this->language->get('text_image_manager');
+		$data['text_signup'] = $this->language->get('text_signup');
+		$data['text_sandbox'] = $this->language->get('text_sandbox');		
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -32,28 +29,23 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_authorization'] = $this->language->get('text_authorization');
 		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_clear'] = $this->language->get('text_clear');
-		$data['text_browse'] = $this->language->get('text_browse');
-		$data['text_ipn'] = $this->language->get('text_ipn');
-		$data['text_ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_express/ipn';
-		$data['text_paypal_join'] = $this->language->get('text_paypal_join');
-		$data['text_paypal_join_sandbox'] = $this->language->get('text_paypal_join_sandbox');
-
+		
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_signature'] = $this->language->get('entry_signature');
 		$data['entry_sandbox_username'] = $this->language->get('entry_sandbox_username');
 		$data['entry_sandbox_password'] = $this->language->get('entry_sandbox_password');
 		$data['entry_sandbox_signature'] = $this->language->get('entry_sandbox_signature');
+		$data['entry_ipn'] = $this->language->get('entry_ipn');
 
 		$data['entry_test'] = $this->language->get('entry_test');
 		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_method'] = $this->language->get('entry_method');
+		$data['entry_transaction'] = $this->language->get('entry_transaction');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_icon_sort_order'] = $this->language->get('entry_icon_sort_order');
+		
 		$data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
 		$data['entry_completed_status'] = $this->language->get('entry_completed_status');
 		$data['entry_denied_status'] = $this->language->get('entry_denied_status');
@@ -74,7 +66,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
 
 		$data['help_total'] = $this->language->get('help_total');
-		$data['help_encryption'] = $this->language->get('help_encryption');
 		$data['help_ipn'] = $this->language->get('help_ipn');
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_logo'] = $this->language->get('help_logo');
@@ -157,6 +148,9 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
 
+		$this->load->model('extension/extension');
+		$this->load->model('payment/pp_express');
+
 		if (isset($this->request->post['pp_express_username'])) {
 			$data['pp_express_username'] = $this->request->post['pp_express_username'];
 		} else {
@@ -193,16 +187,18 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_sandbox_signature'] = $this->config->get('pp_express_sandbox_signature');
 		}
 
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_express/ipn';
+
 		if (isset($this->request->post['pp_express_test'])) {
 			$data['pp_express_test'] = $this->request->post['pp_express_test'];
 		} else {
 			$data['pp_express_test'] = $this->config->get('pp_express_test');
 		}
 
-		if (isset($this->request->post['pp_express_method'])) {
-			$data['pp_express_method'] = $this->request->post['pp_express_method'];
+		if (isset($this->request->post['pp_express_transaction'])) {
+			$data['pp_express_transaction'] = $this->request->post['pp_express_transaction'];
 		} else {
-			$data['pp_express_method'] = $this->config->get('pp_express_method');
+			$data['pp_express_transaction'] = $this->config->get('pp_express_transaction');
 		}
 
 		if (isset($this->request->post['pp_express_total'])) {
@@ -351,6 +347,10 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 
+
+
+
+
 		$data['text_paypal_link'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
 				. 'countryCode=' . $country['iso_code_2']
 				. '&integrationType=F'
@@ -447,6 +447,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->session->data['error_api'] = $this->language->get('error_api');
 			}
 		}
+		
 		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
 	}
 

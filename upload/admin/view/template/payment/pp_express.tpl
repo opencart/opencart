@@ -19,10 +19,10 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="alert alert-info"> <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?></a>
+    <div class="alert alert-info"> <a data-paypal-button="true" target="PPFrame" href="<?php echo $signup; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?></a>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <div class="alert alert-info"> <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link_sandbox; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_sandbox; ?></a>
+    <div class="alert alert-info"> <a data-paypal-button="true" target="PPFrame" href="<?php echo $sandbox; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_sandbox; ?></a>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <div class="panel panel-default">
@@ -135,21 +135,21 @@
                 <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $help_currency; ?>"><?php echo $entry_currency; ?></span></label>
                 <div class="col-sm-10">
                   <select name="pp_express_currency" id="input-currency" class="form-control">
-                    <?php foreach ($currency_codes as $code) { ?>
-                    <?php if ($code == $pp_express_currency) { ?>
-                    <option value="<?php echo $code; ?>" selected="selected"><?php echo $code; ?></option>
+                    <?php foreach ($currencies as $currency) { ?>
+                    <?php if ($currency == $pp_express_currency) { ?>
+                    <option value="<?php echo $currency; ?>" selected="selected"><?php echo $currency; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
+                    <option value="<?php echo $currency; ?>"><?php echo $currency; ?></option>
                     <?php } ?>
                     <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-recurring-cancel"><?php echo $entry_recurring_cancellation; ?></label>
+                <label class="col-sm-2 control-label" for="input-recurring-cancel"><?php echo $entry_recurring_cancel; ?></label>
                 <div class="col-sm-10">
-                  <select name="pp_express_recurring_cancel_status" id="input-recurring-cancel" class="form-control">
-                    <?php if ($pp_express_recurring_cancel_status) { ?>
+                  <select name="pp_express_recurring_cancel" id="input-recurring-cancel" class="form-control">
+                    <?php if ($pp_express_recurring_cancel) { ?>
                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                     <option value="0"><?php echo $text_disabled; ?></option>
                     <?php } else { ?>
@@ -376,9 +376,9 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-page-color"><span data-toggle="tooltip" title="<?php echo $help_colour; ?>"><?php echo $entry_page_colour; ?></span></label>
+                <label class="col-sm-2 control-label" for="input-color"><span data-toggle="tooltip" title="<?php echo $help_colour; ?>"><?php echo $entry_colour; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="pp_express_page_colour" value="<?php echo $pp_express_page_colour; ?>" placeholder="<?php echo $entry_page_colour; ?>" id="input-page-color" class="form-control" />
+                  <input type="text" name="pp_express_colour" value="<?php echo $pp_express_colour; ?>" placeholder="<?php echo $entry_colour; ?>" id="input-color" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
@@ -397,12 +397,14 @@
 <script type="text/javascript"><!--
 (function (d, s, id) {
       var js, ref = d.getElementsByTagName(s)[0];
-      if (!d.getElementById(id)) {
+     
+	  if (!d.getElementById(id)) {
         js = d.createElement(s);
         js.id = id;
         js.async = true;
         js.src = "https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js";
-        ref.parentNode.insertBefore(js, ref);
+        
+		ref.parentNode.insertBefore(js, ref);
       }
     }(document, "script", "paypal-js"));
 --></script> 

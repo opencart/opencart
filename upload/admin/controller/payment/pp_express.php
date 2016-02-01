@@ -37,15 +37,15 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_sandbox_password'] = $this->language->get('entry_sandbox_password');
 		$data['entry_sandbox_signature'] = $this->language->get('entry_sandbox_signature');
 		$data['entry_ipn'] = $this->language->get('entry_ipn');
-
 		$data['entry_test'] = $this->language->get('entry_test');
 		$data['entry_debug'] = $this->language->get('entry_debug');
+		$data['entry_currency'] = $this->language->get('entry_currency');
+		$data['entry_recurring_cancel'] = $this->language->get('entry_recurring_cancel');		
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
 		$data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
 		$data['entry_completed_status'] = $this->language->get('entry_completed_status');
 		$data['entry_denied_status'] = $this->language->get('entry_denied_status');
@@ -56,14 +56,9 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
-		$data['entry_currency'] = $this->language->get('entry_currency');
-		$data['entry_recurring_cancellation'] = $this->language->get('entry_recurring_cancellation');
-		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
-		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
-		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
-		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
+		$data['entry_colour'] = $this->language->get('entry_colour');
 
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_ipn'] = $this->language->get('help_ipn');
@@ -79,6 +74,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_checkout'] = $this->language->get('tab_checkout');
+		
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -148,8 +145,31 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
 
-		$this->load->model('extension/extension');
-		$this->load->model('payment/pp_express');
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+		$data['signup'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
+				. 'countryCode=' . $country_info['iso_code_2']
+				. '&integrationType=F'
+				. '&merchantId=David111'
+				. '&displayMode=minibrowser'
+				. '&partnerId=9PDNYE4RZBVFJ'
+				. '&productIntentID=addipmt'
+				. '&receiveCredentials=TRUE'
+				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/live', 'token=' . $this->session->data['token'], true)))
+				. '&subIntegrationType=S';
+
+		$data['sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
+				. 'countryCode=' . $country_info['iso_code_2']
+				. '&integrationType=F'
+				. '&merchantId=David111'
+				. '&displayMode=minibrowser'
+				. '&partnerId=T4E8WSXT43QPJ'
+				. '&productIntentID=addipmt'
+				. '&receiveCredentials=TRUE'
+				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true)))
+				. '&subIntegrationType=S';
 
 		if (isset($this->request->post['pp_express_username'])) {
 			$data['pp_express_username'] = $this->request->post['pp_express_username'];
@@ -195,6 +215,28 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_test'] = $this->config->get('pp_express_test');
 		}
 
+		if (isset($this->request->post['pp_express_debug'])) {
+			$data['pp_express_debug'] = $this->request->post['pp_express_debug'];
+		} else {
+			$data['pp_express_debug'] = $this->config->get('pp_express_debug');
+		}
+		
+		if (isset($this->request->post['pp_express_currency'])) {
+			$data['pp_express_currency'] = $this->request->post['pp_express_currency'];
+		} else {
+			$data['pp_express_currency'] = $this->config->get('pp_express_currency');
+		}
+
+		$this->load->model('payment/pp_express');
+
+		$data['currencies'] = $this->model_payment_pp_express->currencyCodes();
+		
+		if (isset($this->request->post['pp_express_recurring_cancel'])) {
+			$data['pp_express_recurring_cancel'] = $this->request->post['pp_express_recurring_cancel'];
+		} else {
+			$data['pp_express_recurring_cancel'] = $this->config->get('pp_express_recurring_cancel');
+		}			
+				
 		if (isset($this->request->post['pp_express_transaction'])) {
 			$data['pp_express_transaction'] = $this->request->post['pp_express_transaction'];
 		} else {
@@ -207,23 +249,27 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_total'] = $this->config->get('pp_express_total');
 		}
 
-		if (isset($this->request->post['pp_express_debug'])) {
-			$data['pp_express_debug'] = $this->request->post['pp_express_debug'];
+		if (isset($this->request->post['pp_express_geo_zone_id'])) {
+			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];
 		} else {
-			$data['pp_express_debug'] = $this->config->get('pp_express_debug');
+			$data['pp_express_geo_zone_id'] = $this->config->get('pp_express_geo_zone_id');
 		}
 
-		if (isset($this->request->post['pp_express_currency'])) {
-			$data['pp_express_currency'] = $this->request->post['pp_express_currency'];
+		$this->load->model('localisation/geo_zone');
+
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+		if (isset($this->request->post['pp_express_status'])) {
+			$data['pp_express_status'] = $this->request->post['pp_express_status'];
 		} else {
-			$data['pp_express_currency'] = $this->config->get('pp_express_currency');
+			$data['pp_express_status'] = $this->config->get('pp_express_status');
 		}
 
-		$data['currency_codes'] = $this->model_payment_pp_express->currencyCodes();
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		if (isset($this->request->post['pp_express_sort_order'])) {
+			$data['pp_express_sort_order'] = $this->request->post['pp_express_sort_order'];
+		} else {
+			$data['pp_express_sort_order'] = $this->config->get('pp_express_sort_order');
+		}
 
 		if (isset($this->request->post['pp_express_canceled_reversal_status_id'])) {
 			$data['pp_express_canceled_reversal_status_id'] = $this->request->post['pp_express_canceled_reversal_status_id'];
@@ -285,28 +331,26 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_voided_status_id'] = $this->config->get('pp_express_voided_status_id');
 		}
 
+		$this->load->model('localisation/order_status');
+		
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
 		if (isset($this->request->post['pp_express_allow_note'])) {
 			$data['pp_express_allow_note'] = $this->request->post['pp_express_allow_note'];
 		} else {
 			$data['pp_express_allow_note'] = $this->config->get('pp_express_allow_note');
 		}
 
+		if (isset($this->request->post['pp_express_colour'])) {
+			$data['pp_express_colour'] = str_replace('#', '', $this->request->post['pp_express_colour']);
+		} else {
+			$data['pp_express_colour'] = $this->config->get('pp_express_colour');
+		}
+		
 		if (isset($this->request->post['pp_express_logo'])) {
 			$data['pp_express_logo'] = $this->request->post['pp_express_logo'];
 		} else {
 			$data['pp_express_logo'] = $this->config->get('pp_express_logo');
-		}
-
-		if (isset($this->request->post['pp_express_page_colour'])) {
-			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour']);
-		} else {
-			$data['pp_express_page_colour'] = $this->config->get('pp_express_page_colour');
-		}
-
-		if (isset($this->request->post['pp_express_recurring_cancel_status'])) {
-			$data['pp_express_recurring_cancel_status'] = $this->request->post['pp_express_recurring_cancel_status'];
-		} else {
-			$data['pp_express_recurring_cancel_status'] = $this->config->get('pp_express_recurring_cancel_status');
 		}
 
 		$this->load->model('tool/image');
@@ -320,60 +364,6 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
-
-		if (isset($this->request->post['pp_express_geo_zone_id'])) {
-			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];
-		} else {
-			$data['pp_express_geo_zone_id'] = $this->config->get('pp_express_geo_zone_id');
-		}
-
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
-		if (isset($this->request->post['pp_express_status'])) {
-			$data['pp_express_status'] = $this->request->post['pp_express_status'];
-		} else {
-			$data['pp_express_status'] = $this->config->get('pp_express_status');
-		}
-
-		if (isset($this->request->post['pp_express_sort_order'])) {
-			$data['pp_express_sort_order'] = $this->request->post['pp_express_sort_order'];
-		} else {
-			$data['pp_express_sort_order'] = $this->config->get('pp_express_sort_order');
-		}
-
-		$this->load->model('localisation/country');
-
-		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
-
-
-
-
-
-		$data['text_paypal_link'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
-				. 'countryCode=' . $country['iso_code_2']
-				. '&integrationType=F'
-				. '&merchantId=David111'
-				. '&displayMode=minibrowser'
-				. '&partnerId=9PDNYE4RZBVFJ'
-				. '&productIntentID=addipmt'
-				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/live', 'token=' . $this->session->data['token'], true)))
-				. '&subIntegrationType=S';
-
-		$data['text_paypal_link_sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
-				. 'countryCode=' . $country['iso_code_2']
-				. '&integrationType=F'
-				. '&merchantId=David111'
-				. '&displayMode=minibrowser'
-				. '&partnerId=T4E8WSXT43QPJ'
-				. '&productIntentID=addipmt'
-				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true)))
-				. '&subIntegrationType=S';
-
-		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -395,7 +385,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ($this->request->post['pp_express_test'] == 1) {
+		if ($this->request->post['pp_express_test']) {
 			if (!$this->request->post['pp_express_sandbox_username']) {
 				$this->error['sandbox_username'] = $this->language->get('error_sandbox_username');
 			}

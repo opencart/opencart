@@ -9,10 +9,6 @@ $_['text_edit']                      = 'Edit PayPal Express Checkout';
 $_['text_pp_express']				 = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization']			 = 'Authorization';
 $_['text_sale']						 = 'Sale';
-$_['text_clear']					 = 'Clear';
-$_['text_browse']					 = 'Browse';
-$_['text_image_manager']			 = 'Image manager';
-
 $_['text_signup']                    = 'Sign up for PayPal - save your settings first as this page will be refreshed';
 $_['text_sandbox']                   = 'Sign up for PayPal Sandbox - save your settings first as this page will be refreshed';
 
@@ -27,15 +23,12 @@ $_['entry_ipn']						 = 'IPN URL';
 $_['entry_test']					 = 'Test (Sandbox) Mode';
 $_['entry_debug']					 = 'Debug logging';
 $_['entry_currency']				 = 'Default currency';
+$_['entry_recurring_cancel']	     = 'Allow customers to cancel recurring payments';
 $_['entry_transaction']		         = 'Transaction Method';
 $_['entry_total']					 = 'Total';
 $_['entry_geo_zone']				 = 'Geo Zone';
 $_['entry_status']					 = 'Status';
 $_['entry_sort_order']				 = 'Sort Order';
-
-
-
-$_['entry_recurring_cancellation']	 = 'Allow customers to cancel recurring payments';
 $_['entry_canceled_reversal_status'] = 'Canceled Reversal Status';
 $_['entry_completed_status']		 = 'Completed Status';
 $_['entry_denied_status']			 = 'Denied Status';
@@ -46,15 +39,11 @@ $_['entry_processed_status']		 = 'Processed Status';
 $_['entry_refunded_status']			 = 'Refunded Status';
 $_['entry_reversed_status']			 = 'Reversed Status';
 $_['entry_voided_status']			 = 'Voided Status';
-$_['entry_display_checkout']		 = 'Display quick checkout icon';
 $_['entry_allow_notes']				 = 'Allow notes';
+$_['entry_colour']	      			 = 'Page background colour';
 $_['entry_logo']					 = 'Logo';
-$_['entry_border_colour']			 = 'Header border colour';
-$_['entry_header_colour']			 = 'Header background colour';
-$_['entry_page_colour']				 = 'Page background colour';
 
 // Tab
-$_['tab_general']					 = 'General';
 $_['tab_api']				         = 'API Details';
 $_['tab_order_status']				 = 'Order status';
 $_['tab_checkout']					 = 'Checkout';

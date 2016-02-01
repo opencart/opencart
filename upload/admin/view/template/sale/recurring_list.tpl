@@ -30,26 +30,8 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
-                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-reference"><?php echo $entry_reference; ?></label>
-                <input type="text" name="filter_reference" value="<?php echo $filter_reference; ?>" placeholder="<?php echo $entry_reference; ?>" id="input-reference" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-                <select name="filter_status" id="input-status" class="form-control">
-                  <?php foreach ($statuses as $status) { ?>
-                  <?php if ($filter_status == $status['value']) { ?>
-                  <option value="<?php echo $status['value']; ?>" selected="selected"><?php echo $status['text'] ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $status['value']; ?>"><?php echo $status['text'] ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
+                <label class="control-label" for="input-order-recurring-id"><?php echo $entry_order_recurring_id; ?></label>
+                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_recurring_id; ?>" id="input-order-recurring-id" class="form-control" />
               </div>
               <div class="form-group">
                 <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
@@ -58,6 +40,28 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
+                <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
+                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <select name="filter_status" id="input-status" class="form-control">
+                  <?php foreach ($recurring_statuses as $recurring_status) { ?>
+                  <?php if ($filter_status == $recurring_status['value']) { ?>
+                  <option value="<?php echo $recurring_status['value']; ?>" selected="selected"><?php echo $recurring_status['text'] ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $recurring_status['value']; ?>"><?php echo $recurring_status['text'] ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-reference"><?php echo $entry_reference; ?></label>
+                <input type="text" name="filter_reference" value="<?php echo $filter_reference; ?>" placeholder="<?php echo $entry_reference; ?>" id="input-reference" class="form-control" />
+              </div>
+              <div class="form-group">
                 <label class="control-label" for="input-date-date_added"><?php echo $entry_date_added; ?></label>
                 <div class="input-group date">
                   <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
@@ -65,10 +69,6 @@
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter ?></button>
             </div>
           </div>

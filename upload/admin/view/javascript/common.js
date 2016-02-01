@@ -100,6 +100,11 @@ $(document).ready(function() {
 		}
 	});
 
+	// Tooltip remove fixed
+	$(document).delegate('[data-toggle=\'tooltip\']', 'click', function(e) {
+		$('body > .tooltip').remove();
+	});
+
 	// Override summernotes image manager
 	$('.summernote').each(function() {
 		var element = this;

@@ -435,7 +435,6 @@ class ControllerSaleRecurring extends Controller {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($order_recurring_info['order_id']);
-		
 			
 			$data['payment_method'] = $order_info['payment_method'];
 			

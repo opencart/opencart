@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_payment_info']				= 'Payment information';
+$_['text_payment_info']				= 'Payment Information';
 $_['text_capture_status']			= 'Capture status';
 $_['text_amount_auth']				= 'Amount authorised';
 $_['text_amount_captured']			= 'Amount captured';
@@ -21,7 +21,7 @@ $_['column_amount']					= 'Amount';
 $_['column_type']					= 'Payment type';
 $_['column_status']					= 'Status';
 $_['column_pend_reason']			= 'Pending reason';
-$_['column_date_added']				= 'Created';
+$_['column_date_added']				= 'Date Added';
 $_['column_action']					= 'Action';
 
 // Button

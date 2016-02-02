@@ -248,6 +248,108 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->model_payment_pp_pro_iframe->uninstall();
 	}
 
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'payment/pp_pro_iframe')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!$this->request->post['pp_pro_iframe_sig']) {
+			$this->error['sig'] = $this->language->get('error_sig');
+		}
+
+		if (!$this->request->post['pp_pro_iframe_user']) {
+			$this->error['user'] = $this->language->get('error_user');
+		}
+
+		if (!$this->request->post['pp_pro_iframe_password']) {
+			$this->error['password'] = $this->language->get('error_password');
+		}
+
+		return !$this->error;
+	}
+
+	public function order() {
+		$this->load->model('payment/pp_pro_iframe');
+		$this->load->language('payment/pp_pro_iframe');
+
+		$paypal_order = $this->model_payment_pp_pro_iframe->getOrder($this->request->get['order_id']);
+
+		if ($paypal_order) {
+			$data['text_payment_info'] = $this->language->get('text_payment_info');
+			$data['text_capture_status'] = $this->language->get('text_capture_status');
+			$data['text_amount_auth'] = $this->language->get('text_amount_auth');
+			$data['button_void'] = $this->language->get('button_void');
+			$data['button_capture'] = $this->language->get('button_capture');
+			$data['button_reauthorise'] = $this->language->get('button_reauthorise');
+			$data['text_reauthorise'] = $this->language->get('text_reauthorise');
+			$data['text_reauthorised'] = $this->language->get('text_reauthorised');
+			$data['text_amount_captured'] = $this->language->get('text_amount_captured');
+			$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
+			$data['text_capture_amount'] = $this->language->get('text_capture_amount');
+			$data['text_complete_capture'] = $this->language->get('text_complete_capture');
+			$data['text_transactions'] = $this->language->get('text_transactions');
+			$data['text_complete'] = $this->language->get('text_complete');
+			$data['text_confirm_void'] = $this->language->get('text_confirm_void');
+			$data['error_capture_amt'] = $this->language->get('error_capture_amt');
+			$data['text_view'] = $this->language->get('text_view');
+			$data['text_refund'] = $this->language->get('text_refund');
+			$data['text_resend'] = $this->language->get('text_resend');
+			$data['column_trans_id'] = $this->language->get('column_trans_id');
+			$data['column_amount'] = $this->language->get('column_amount');
+			$data['column_type'] = $this->language->get('column_type');
+			$data['column_status'] = $this->language->get('column_status');
+			$data['column_pend_reason'] = $this->language->get('column_pend_reason');
+			$data['column_date_added'] = $this->language->get('column_date_added');
+			$data['column_action'] = $this->language->get('column_action');
+
+			$data['paypal_order'] = $paypal_order;
+			$data['token'] = $this->session->data['token'];
+
+			$data['order_id'] = $this->request->get['order_id'];
+
+			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($data['paypal_order']['paypal_iframe_order_id']), 2);
+			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($data['paypal_order']['paypal_iframe_order_id']), 2);
+
+			$data['paypal_order']['captured'] = $captured;
+			$data['paypal_order']['refunded'] = $refunded;
+			$data['paypal_order']['remaining'] = number_format($data['paypal_order']['total'] - $captured, 2);
+
+			$data['transactions'] = array();
+
+			$data['view_link'] = $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'], true);
+			$data['refund_link'] = $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], true);
+			$data['resend_link'] = $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'], true);
+
+			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($paypal_order['paypal_iframe_order_id']), 2);
+			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($paypal_order['paypal_iframe_order_id']), 2);
+
+			$data['paypal_order'] = $paypal_order;
+
+			$data['paypal_order']['captured'] = $captured;
+			$data['paypal_order']['refunded'] = $refunded;
+			$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
+
+			foreach ($paypal_order['transactions'] as $transaction) {
+				$data['transactions'][] = array(
+					'paypal_iframe_order_transaction_id' => $transaction['paypal_iframe_order_transaction_id'],
+					'transaction_id' => $transaction['transaction_id'],
+					'amount' => $transaction['amount'],
+					'date_added' => $transaction['date_added'],
+					'payment_type' => $transaction['payment_type'],
+					'payment_status' => $transaction['payment_status'],
+					'pending_reason' => $transaction['pending_reason'],
+					'view' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], true),
+					'refund' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'], true),
+					'resend' => $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id'], true),
+				);
+			}
+
+			$data['reauthorise_link'] = $this->url->link('payment/pp_pro_iframe/reauthorise', 'token=' . $this->session->data['token'], true);
+
+			return $this->load->view('payment/pp_pro_iframe_order', $data);
+		}
+	}
+
 	public function refund() {
 		$this->load->language('payment/pp_pro_iframe');
 		$this->load->model('payment/pp_pro_iframe');
@@ -769,88 +871,6 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function order() {
-		$this->load->model('payment/pp_pro_iframe');
-		$this->load->language('payment/pp_pro_iframe');
-
-		$paypal_order = $this->model_payment_pp_pro_iframe->getOrder($this->request->get['order_id']);
-
-		if ($paypal_order) {
-			$data['text_payment_info'] = $this->language->get('text_payment_info');
-			$data['text_capture_status'] = $this->language->get('text_capture_status');
-			$data['text_amount_auth'] = $this->language->get('text_amount_auth');
-			$data['button_void'] = $this->language->get('button_void');
-			$data['button_capture'] = $this->language->get('button_capture');
-			$data['button_reauthorise'] = $this->language->get('button_reauthorise');
-			$data['text_reauthorise'] = $this->language->get('text_reauthorise');
-			$data['text_reauthorised'] = $this->language->get('text_reauthorised');
-			$data['text_amount_captured'] = $this->language->get('text_amount_captured');
-			$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
-			$data['text_capture_amount'] = $this->language->get('text_capture_amount');
-			$data['text_complete_capture'] = $this->language->get('text_complete_capture');
-			$data['text_transactions'] = $this->language->get('text_transactions');
-			$data['text_complete'] = $this->language->get('text_complete');
-			$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-			$data['error_capture_amt'] = $this->language->get('error_capture_amt');
-			$data['text_view'] = $this->language->get('text_view');
-			$data['text_refund'] = $this->language->get('text_refund');
-			$data['text_resend'] = $this->language->get('text_resend');
-			$data['column_trans_id'] = $this->language->get('column_trans_id');
-			$data['column_amount'] = $this->language->get('column_amount');
-			$data['column_type'] = $this->language->get('column_type');
-			$data['column_status'] = $this->language->get('column_status');
-			$data['column_pend_reason'] = $this->language->get('column_pend_reason');
-			$data['column_date_added'] = $this->language->get('column_date_added');
-			$data['column_action'] = $this->language->get('column_action');
-
-			$data['paypal_order'] = $paypal_order;
-			$data['token'] = $this->session->data['token'];
-
-			$data['order_id'] = $this->request->get['order_id'];
-
-			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($data['paypal_order']['paypal_iframe_order_id']), 2);
-			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($data['paypal_order']['paypal_iframe_order_id']), 2);
-
-			$data['paypal_order']['captured'] = $captured;
-			$data['paypal_order']['refunded'] = $refunded;
-			$data['paypal_order']['remaining'] = number_format($data['paypal_order']['total'] - $captured, 2);
-
-			$data['transactions'] = array();
-
-			$data['view_link'] = $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'], true);
-			$data['refund_link'] = $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], true);
-			$data['resend_link'] = $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'], true);
-
-			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($paypal_order['paypal_iframe_order_id']), 2);
-			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($paypal_order['paypal_iframe_order_id']), 2);
-
-			$data['paypal_order'] = $paypal_order;
-
-			$data['paypal_order']['captured'] = $captured;
-			$data['paypal_order']['refunded'] = $refunded;
-			$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
-
-			foreach ($paypal_order['transactions'] as $transaction) {
-				$data['transactions'][] = array(
-					'paypal_iframe_order_transaction_id' => $transaction['paypal_iframe_order_transaction_id'],
-					'transaction_id' => $transaction['transaction_id'],
-					'amount' => $transaction['amount'],
-					'date_added' => $transaction['date_added'],
-					'payment_type' => $transaction['payment_type'],
-					'payment_status' => $transaction['payment_status'],
-					'pending_reason' => $transaction['pending_reason'],
-					'view' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], true),
-					'refund' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'], true),
-					'resend' => $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id'], true),
-				);
-			}
-
-			$data['reauthorise_link'] = $this->url->link('payment/pp_pro_iframe/reauthorise', 'token=' . $this->session->data['token'], true);
-
-			return $this->load->view('payment/pp_pro_iframe_order', $data);
-		}
-	}
-
 	public function resend() {
 		$this->load->model('payment/pp_pro_iframe');
 		$this->load->language('payment/pp_pro_iframe');
@@ -915,25 +935,5 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_pro_iframe')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		if (!$this->request->post['pp_pro_iframe_sig']) {
-			$this->error['sig'] = $this->language->get('error_sig');
-		}
-
-		if (!$this->request->post['pp_pro_iframe_user']) {
-			$this->error['user'] = $this->language->get('error_user');
-		}
-
-		if (!$this->request->post['pp_pro_iframe_password']) {
-			$this->error['password'] = $this->language->get('error_password');
-		}
-
-		return !$this->error;
 	}
 }

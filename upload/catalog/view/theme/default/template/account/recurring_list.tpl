@@ -34,7 +34,7 @@
                 <td class="text-left"><?php echo $recurring['date_added']; ?></td>
                 <td class="text-left"><?php echo $status_types[$recurring['status']]; ?></td>
                 <td class="text-left"><?php echo $recurring['name']; ?></td>
-                <td class="text-right"><a href="<?php echo $recurring['href']; ?>" class="btn btn-info"><?php echo $button_view; ?></a></td>
+                <td class="text-right"><a href="<?php echo $recurring['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
               </tr>
             <?php } ?>
           </tbody>

@@ -185,17 +185,17 @@ function doSearch() {
       } else {
         if (data.result != '') {
           html += '<thead><tr>';
-          html += '<td class="left"><?php echo $tbl_column_date; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_type; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_email; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_name; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_transid; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_status; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_currency; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_amount; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_fee; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_netamt; ?></td>';
-          html += '<td class="center"><?php echo $tbl_column_action; ?></td>';
+          html += '<td class="left"><?php echo $column_date; ?></td>';
+          html += '<td class="left"><?php echo $column_type; ?></td>';
+          html += '<td class="left"><?php echo $column_email; ?></td>';
+          html += '<td class="left"><?php echo $column_name; ?></td>';
+          html += '<td class="left"><?php echo $column_transid; ?></td>';
+          html += '<td class="left"><?php echo $column_status; ?></td>';
+          html += '<td class="left"><?php echo $column_currency; ?></td>';
+          html += '<td class="right"><?php echo $column_amount; ?></td>';
+          html += '<td class="right"><?php echo $column_fee; ?></td>';
+          html += '<td class="right"><?php echo $column_netamt; ?></td>';
+          html += '<td class="center"><?php echo $column_action; ?></td>';
           html += '</tr></thead>';
 
           $.each(data.result, function (k, v) {

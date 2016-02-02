@@ -540,17 +540,17 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_trans_bal_affect'] = $this->language->get('entry_trans_bal_affect');
 		$data['entry_trans_echeque'] = $this->language->get('entry_trans_echeque');
 
-		$data['tbl_column_date'] = $this->language->get('tbl_column_date');
-		$data['tbl_column_type'] = $this->language->get('tbl_column_type');
-		$data['tbl_column_email'] = $this->language->get('tbl_column_email');
-		$data['tbl_column_name'] = $this->language->get('tbl_column_name');
-		$data['tbl_column_transid'] = $this->language->get('tbl_column_transid');
-		$data['tbl_column_status'] = $this->language->get('tbl_column_status');
-		$data['tbl_column_currency'] = $this->language->get('tbl_column_currency');
-		$data['tbl_column_amount'] = $this->language->get('tbl_column_amount');
-		$data['tbl_column_fee'] = $this->language->get('tbl_column_fee');
-		$data['tbl_column_netamt'] = $this->language->get('tbl_column_netamt');
-		$data['tbl_column_action'] = $this->language->get('tbl_column_action');
+		$data['column_date'] = $this->language->get('column_date');
+		$data['column_type'] = $this->language->get('column_type');
+		$data['column_email'] = $this->language->get('column_email');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_transid'] = $this->language->get('column_transid');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_currency'] = $this->language->get('column_currency');
+		$data['column_amount'] = $this->language->get('column_amount');
+		$data['column_fee'] = $this->language->get('column_fee');
+		$data['column_netamt'] = $this->language->get('column_netamt');
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -678,7 +678,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
+		
 		$data['text_product_lines'] = $this->language->get('text_product_lines');
 		$data['text_ebay_txn_id'] = $this->language->get('text_ebay_txn_id');
 		$data['text_name'] = $this->language->get('text_name');
@@ -758,6 +758,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['text_multi_item'] = $this->language->get('text_multi_item');
 		$data['text_sub_amt'] = $this->language->get('text_sub_amt');
 		$data['text_sub_period'] = $this->language->get('text_sub_period');
+		
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['breadcrumbs'] = array();
 
@@ -783,67 +785,17 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->response->setOutput($this->load->view('payment/pp_express_view', $data));
 	}
 			
-	public function live() {
-		if (isset($this->request->get['merchantId'])) {
-			$this->load->language('payment/pp_express');
-
-			$this->load->model('payment/pp_express');
-			$this->load->model('setting/setting');
-
-			$token = $this->model_payment_pp_express->getTokens('live');
-
-			if (isset($token->access_token)) {
-				$user_info = $this->model_payment_pp_express->getUserInfo($this->request->get['merchantId'], 'live', $token->access_token);
-			} else {
-				$this->session->data['error_api'] = $this->language->get('error_api');
-			}
-
-			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_username', $user_info->api_user_name);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_password', $user_info->api_password);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_signature', $user_info->signature);
-			} else {
-				$this->session->data['error_api'] = $this->language->get('error_api');
-			}
-		}
-		
-		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
-	}
-		
-	public function sandbox() {
-		if (isset($this->request->get['merchantId'])) {
-			$this->load->language('payment/pp_express');
-
-			$this->load->model('payment/pp_express');
-			$this->load->model('setting/setting');
-
-			$token = $this->model_payment_pp_express->getTokens('sandbox');
-
-			if (isset($token->access_token)) {
-				$user_info = $this->model_payment_pp_express->getUserInfo($this->request->get['merchantId'], 'sandbox', $token->access_token);
-			} else {
-				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
-			}
-
-			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_username', $user_info->api_user_name);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_password', $user_info->api_password);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_signature', $user_info->signature);
-			} else {
-				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
-			}
-		}
-		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
-	}
-
 	public function capture() {
+		$json = array();
+		
 		$this->load->language('payment/pp_express');
-		/**
-		 * used to capture authorised payments
-		 *
-		 * capture can be full or partial amounts
-		 */
-		if (isset($this->request->post['order_id']) && $this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
+
+		
+
+		if (isset($this->request->post['order_id']) && 
+			alert('<?php echo $error_capture_amount; ?>');
+		
+		$this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
 
 			$this->load->model('payment/pp_express');
 
@@ -1261,6 +1213,59 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($response));
 		}
+	}
+
+	public function live() {
+		if (isset($this->request->get['merchantId'])) {
+			$this->load->language('payment/pp_express');
+
+			$this->load->model('payment/pp_express');
+			$this->load->model('setting/setting');
+
+			$token = $this->model_payment_pp_express->getTokens('live');
+
+			if (isset($token->access_token)) {
+				$user_info = $this->model_payment_pp_express->getUserInfo($this->request->get['merchantId'], 'live', $token->access_token);
+			} else {
+				$this->session->data['error_api'] = $this->language->get('error_api');
+			}
+
+			if (isset($user_info->api_user_name)) {
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_password', $user_info->api_password);
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_signature', $user_info->signature);
+			} else {
+				$this->session->data['error_api'] = $this->language->get('error_api');
+			}
+		}
+		
+		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
+	}
+		
+	public function sandbox() {
+		if (isset($this->request->get['merchantId'])) {
+			$this->load->language('payment/pp_express');
+
+			$this->load->model('payment/pp_express');
+			$this->load->model('setting/setting');
+
+			$token = $this->model_payment_pp_express->getTokens('sandbox');
+
+			if (isset($token->access_token)) {
+				$user_info = $this->model_payment_pp_express->getUserInfo($this->request->get['merchantId'], 'sandbox', $token->access_token);
+			} else {
+				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
+			}
+
+			if (isset($user_info->api_user_name)) {
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_password', $user_info->api_password);
+				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_signature', $user_info->signature);
+			} else {
+				$this->session->data['error_api'] = $this->language->get('error_api_sandbox');
+			}
+		}
+		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
 	}
 
 	private function formatRows($data) {

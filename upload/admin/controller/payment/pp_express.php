@@ -424,12 +424,12 @@ class ControllerPaymentPPExpress extends Controller {
 			
 			$this->load->model('payment/pp_express');
 			
-			$paypal_order = $this->model_payment_pp_express->getOrder($this->request->get['order_id']);
+			$paypal_info = $this->model_payment_pp_express->getOrder($this->request->get['order_id']);
 
-			if ($paypal_order) {
-				$data['text_payment_info'] = $this->language->get('text_payment_info');
+			if ($paypal_info) {
+				$data['text_payment'] = $this->language->get('text_payment');				
 				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_amount_auth'] = $this->language->get('text_amount_auth');
+				$data['text_amount_authorised'] = $this->language->get('text_amount_authorised');
 				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
 				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
 				$data['text_capture_amount'] = $this->language->get('text_capture_amount');
@@ -437,48 +437,56 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['text_transactions'] = $this->language->get('text_transactions');
 				$data['text_complete'] = $this->language->get('text_complete');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_view'] = $this->language->get('text_view');
-				$data['text_refund'] = $this->language->get('text_refund');
-				$data['text_resend'] = $this->language->get('text_resend');
+				$data['text_loading'] = $this->language->get('text_loading');
 				
-				$data['column_trans_id'] = $this->language->get('column_trans_id');
+				$data['column_transaction'] = $this->language->get('column_transaction');
 				$data['column_amount'] = $this->language->get('column_amount');
 				$data['column_type'] = $this->language->get('column_type');
 				$data['column_status'] = $this->language->get('column_status');
-				$data['column_pend_reason'] = $this->language->get('column_pend_reason');
+				$data['column_pending_reason'] = $this->language->get('column_pending_reason');
 				$data['column_date_added'] = $this->language->get('column_date_added');
 				$data['column_action'] = $this->language->get('column_action');
 				
-				$data['error_capture_amt'] = $this->language->get('error_capture_amt');
+				$data['error_capture_amount'] = $this->language->get('error_capture_amount');
 				
 				$data['button_void'] = $this->language->get('button_void');
 				$data['button_capture'] = $this->language->get('button_capture');
-				
+				$data['button_view'] = $this->language->get('button_view');
+				$data['button_refund'] = $this->language->get('button_refund');
+				$data['button_resend'] = $this->language->get('button_resend');
+	
 				$data['token'] = $this->session->data['token'];
 				
-				$data['paypal_order'] = $paypal_order;
 				$data['order_id'] = $this->request->get['order_id'];
 				
+				$data['capture_status'] = $paypal_info['capture_status'];
+				
+				$data['total'] = $paypal_info['total'];
 
-				$captured = number_format($this->model_payment_pp_express->totalCaptured($data['paypal_order']['paypal_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($data['paypal_order']['paypal_order_id']), 2);
+				$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_info['paypal_order_id']), 2);
+				$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_info['paypal_order_id']), 2);
 
-				$data['paypal_order']['captured'] = $captured;
-				$data['paypal_order']['refunded'] = $refunded;
-				$data['paypal_order']['remaining'] = number_format($data['paypal_order']['total'] - $captured, 2);
+				$data['captured'] = $captured;
+				$data['refunded'] = $refunded;
+				$data['remaining'] = number_format($paypal_info['total'] - $captured, 2);
+				
+				$data['transactions'] = array();
+				
+				$results = $this->model_payment_pp_express->getTransactions($paypal_info['paypal_order_id']);
 
-				$captured = number_format($this->model_payment_pp_express->totalCaptured($paypal_order['paypal_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($paypal_order['paypal_order_id']), 2);
-
-				$data['paypal_order'] = $paypal_order;
-
-				$data['paypal_order']['captured'] = $captured;
-				$data['paypal_order']['refunded'] = $refunded;
-				$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
-
-				$data['refund_link'] = $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], true);
-				$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], true);
-				$data['resend_link'] = $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'], true);
+				foreach ($results as $result) {
+					$data['transactions'][] = array(
+						'transaction_id' => $result['transaction_id'],
+                        'amount'         => $result['amount'],
+                        'payment_type'   => $result['payment_type'],
+                        'payment_status' => $result['payment_status'],
+                        'pending_reason' => $result['pending_reason'],
+                        'date_added'     => $result['date_added'],
+                        'view'           => $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $transaction['transaction_id'], true),
+                        'refund'         => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $transaction['paypal_order_transaction_id'], true),
+                        'resend'         => $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $transaction['paypal_order_transaction_id'], true),
+					);
+				}
 
 				return $this->load->view('payment/pp_express_order', $data);
 			}
@@ -487,13 +495,19 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function search() {
 		$this->load->language('payment/pp_express_search');
-		$this->load->model('payment/pp_express');
-
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_search'] = $this->language->get('button_search');
-		$data['button_edit'] = $this->language->get('button_edit');
+		
+		$data['text_buyer_info'] = $this->language->get('text_buyer_info');
+		$data['text_name'] = $this->language->get('text_name');
+		$data['text_searching'] = $this->language->get('text_searching');
+		$data['text_view'] = $this->language->get('text_view');
+		$data['text_format'] = $this->language->get('text_format');
+		$data['text_date_search'] = $this->language->get('text_date_search');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		
 		$data['entry_date'] = $this->language->get('entry_date');
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
@@ -510,18 +524,13 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_auction'] = $this->language->get('entry_auction');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_recurring_id'] = $this->language->get('entry_recurring_id');
-		$data['text_buyer_info'] = $this->language->get('text_buyer_info');
-		$data['entry_salutation'] = $this->language->get('entry_salutation');
-		$data['text_name'] = $this->language->get('text_name');
+
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_middlename'] = $this->language->get('entry_middlename');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_suffix'] = $this->language->get('entry_suffix');
-		$data['text_searching'] = $this->language->get('text_searching');
-		$data['text_view'] = $this->language->get('text_view');
-		$data['text_format'] = $this->language->get('text_format');
-		$data['text_date_search'] = $this->language->get('text_date_search');
-		$data['text_no_results'] = $this->language->get('text_no_results');
+		
+		$data['entry_salutation'] = $this->language->get('entry_salutation');
 
 		$data['entry_status_all'] = $this->language->get('entry_status_all');
 		$data['entry_status_pending'] = $this->language->get('entry_status_pending');
@@ -561,6 +570,13 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['tbl_column_fee'] = $this->language->get('tbl_column_fee');
 		$data['tbl_column_netamt'] = $this->language->get('tbl_column_netamt');
 		$data['tbl_column_action'] = $this->language->get('tbl_column_action');
+
+		$data['button_search'] = $this->language->get('button_search');
+		$data['button_edit'] = $this->language->get('button_edit');
+
+		$this->load->model('payment/pp_express');
+
+
 
 		$data['currency_codes'] = $this->model_payment_pp_express->currencyCodes();
 		$data['default_currency'] = $this->config->get('pp_express_currency');
@@ -637,7 +653,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['amount_original'] = $pp_transaction['AMT'];
 		$data['currency_code'] = $pp_transaction['CURRENCYCODE'];
 
-		$refunded = number_format($this->model_payment_pp_express->totalRefundedTransaction($this->request->get['transaction_id']), 2);
+		$refunded = number_format($this->model_payment_pp_express->getTotalRefundedTransaction($this->request->get['transaction_id']), 2);
 
 		if ($refunded != 0.00) {
 			$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
@@ -968,8 +984,8 @@ class ControllerPaymentPPExpress extends Controller {
 				unset($transaction['debug_data']);
 				$transaction['date_added'] = date("Y-m-d H:i:s");
 
-				$captured = number_format($this->model_payment_pp_express->totalCaptured($paypal_order['paypal_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($paypal_order['paypal_order_id']), 2);
+				$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_order['paypal_order_id']), 2);
+				$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_order['paypal_order_id']), 2);
 
 				$transaction['captured'] = $captured;
 				$transaction['refunded'] = $refunded;

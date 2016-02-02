@@ -340,8 +340,6 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function getForm() {
-		$this->load->model('customer/customer');
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');

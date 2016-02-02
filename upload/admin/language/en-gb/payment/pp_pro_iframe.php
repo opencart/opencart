@@ -113,7 +113,7 @@ $_['column_trans_id']				= 'Transaction ID';
 $_['column_amount']					= 'Amount';
 $_['column_type']					= 'Payment type';
 $_['column_status']					= 'Status';
-$_['column_pend_reason']			= 'Pending reason';
+$_['column_pending_reason']			= 'Pending reason';
 $_['column_date_added']				= 'Created';
 $_['column_action']					= 'Action';
 
@@ -170,4 +170,4 @@ $_['error_timeout']					= 'Request timed out';
 $_['error_transaction_missing']		= 'Could not find the transaction';
 $_['error_missing_data']			= 'Missing data';
 $_['error_general']					= 'There was an error';
-$_['error_capture_amt']				= 'Enter an amount to capture';
+$_['error_capture_amount']				= 'Enter an amount to capture';

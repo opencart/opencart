@@ -149,27 +149,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 
-		$data['signup'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
-				. 'countryCode=' . $country_info['iso_code_2']
-				. '&integrationType=F'
-				. '&merchantId=David111'
-				. '&displayMode=minibrowser'
-				. '&partnerId=9PDNYE4RZBVFJ'
-				. '&productIntentID=addipmt'
-				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/live', 'token=' . $this->session->data['token'], true)))
-				. '&subIntegrationType=S';
-
-		$data['sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?'
-				. 'countryCode=' . $country_info['iso_code_2']
-				. '&integrationType=F'
-				. '&merchantId=David111'
-				. '&displayMode=minibrowser'
-				. '&partnerId=T4E8WSXT43QPJ'
-				. '&productIntentID=addipmt'
-				. '&receiveCredentials=TRUE'
-				. '&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true)))
-				. '&subIntegrationType=S';
+		$data['signup'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=9PDNYE4RZBVFJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/live', 'token=' . $this->session->data['token'], true))) . '&subIntegrationType=S';
+		$data['sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=T4E8WSXT43QPJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true))) . '&subIntegrationType=S';
 
 		if (isset($this->request->post['pp_express_username'])) {
 			$data['pp_express_username'] = $this->request->post['pp_express_username'];
@@ -229,7 +210,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->load->model('payment/pp_express');
 
-		$data['currencies'] = $this->model_payment_pp_express->currencyCodes();
+		$data['currencies'] = $this->model_payment_pp_express->getCurrencies();
 		
 		if (isset($this->request->post['pp_express_recurring_cancel'])) {
 			$data['pp_express_recurring_cancel'] = $this->request->post['pp_express_recurring_cancel'];
@@ -482,9 +463,9 @@ class ControllerPaymentPPExpress extends Controller {
                         'payment_status' => $result['payment_status'],
                         'pending_reason' => $result['pending_reason'],
                         'date_added'     => $result['date_added'],
-                        'view'           => $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $transaction['transaction_id'], true),
-                        'refund'         => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $transaction['paypal_order_transaction_id'], true),
-                        'resend'         => $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $transaction['paypal_order_transaction_id'], true),
+                        'view'           => $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $result['transaction_id'], true),
+                        'refund'         => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $result['paypal_order_transaction_id'], true),
+                        'resend'         => $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'] . '&paypal_order_transaction_id=' . $result['paypal_order_transaction_id'], true),
 					);
 				}
 
@@ -574,11 +555,12 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_edit'] = $this->language->get('button_edit');
 
+		$data['token'] = $this->session->data['token'];
+		
 		$this->load->model('payment/pp_express');
 
 
-
-		$data['currency_codes'] = $this->model_payment_pp_express->currencyCodes();
+		$data['currency_codes'] = $this->model_payment_pp_express->getCurrencies();
 		$data['default_currency'] = $this->config->get('pp_express_currency');
 
 		$data['breadcrumbs'] = array();
@@ -598,7 +580,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['token'] = $this->session->data['token'];
+		
 		$data['date_start'] = date("Y-m-d", strtotime('-30 days'));
 		$data['date_end'] = date("Y-m-d");
 		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], true);
@@ -616,13 +598,16 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
+		
+		$data['text_refund'] = $this->language->get('text_refund');
+	
 		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
 		$data['entry_full_refund'] = $this->language->get('entry_full_refund');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['button_refund'] = $this->language->get('button_refund');
-		$data['text_refund'] = $this->language->get('text_refund');
+		
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['breadcrumbs'] = array();
 
@@ -648,6 +633,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['transaction_id'] = $this->request->get['transaction_id'];
 
 		$this->load->model('payment/pp_express');
+		
 		$pp_transaction = $this->model_payment_pp_express->getTransaction($this->request->get['transaction_id']);
 
 		$data['amount_original'] = $pp_transaction['AMT'];
@@ -850,73 +836,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->response->redirect($this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], true));
 	}
 
-	public function resend() {
-		$this->load->model('payment/pp_express');
-		$this->load->language('payment/pp_express');
-
-		$json = array();
-
-		if (isset($this->request->get['paypal_order_transaction_id'])) {
-			$transaction = $this->model_payment_pp_express->getFailedTransaction($this->request->get['paypal_order_transaction_id']);
-
-			if ($transaction) {
-				$call_data = json_decode($transaction['call_data'], true);
-
-				$result = $this->model_payment_pp_express->call($call_data);
-
-				if ($result) {
-
-					$parent_transaction = $this->model_payment_pp_express->getLocalTransaction($transaction['parent_transaction_id']);
-
-					if ($parent_transaction['amount'] == abs($transaction['amount'])) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
-					} else {
-						$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Partially-Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
-					}
-
-					if (isset($result['REFUNDTRANSACTIONID'])) {
-						$transaction['transaction_id'] = $result['REFUNDTRANSACTIONID'];
-					} else {
-						$transaction['transaction_id'] = $result['TRANSACTIONID'];
-					}
-
-					if (isset($result['PAYMENTTYPE'])) {
-						$transaction['payment_type'] = $result['PAYMENTTYPE'];
-					} else {
-						$transaction['payment_type'] = $result['REFUNDSTATUS'];
-					}
-
-					if (isset($result['PAYMENTSTATUS'])) {
-						$transaction['payment_status'] = $result['PAYMENTSTATUS'];
-					} else {
-						$transaction['payment_status'] = 'Refunded';
-					}
-
-					if (isset($result['AMT'])) {
-						$transaction['amount'] = $result['AMT'];
-					} else {
-						$transaction['amount'] = $transaction['amount'];
-					}
-
-					$transaction['pending_reason'] = (isset($result['PENDINGREASON']) ? $result['PENDINGREASON'] : '');
-
-					$this->model_payment_pp_express->updateTransaction($transaction);
-
-					$json['success'] = $this->language->get('success_transaction_resent');
-				} else {
-					$json['error'] = $this->language->get('error_timeout');
-				}
-			} else {
-				$json['error'] = $this->language->get('error_transaction_missing');
-			}
-		} else {
-			$json['error'] = $this->language->get('error_data');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function capture() {
 		$this->load->language('payment/pp_express');
 		/**
@@ -947,18 +866,18 @@ class ControllerPaymentPPExpress extends Controller {
 			$result = $this->model_payment_pp_express->call($call_data);
 
 			$transaction = array(
-				'paypal_order_id' => $paypal_order['paypal_order_id'],
-				'transaction_id' => '',
+				'paypal_order_id'       => $paypal_order['paypal_order_id'],
+				'transaction_id'        => '',
 				'parent_transaction_id' => $paypal_order['authorization_id'],
-				'note' => '',
-				'msgsubid' => $call_data['MSGSUBID'],
-				'receipt_id' => '',
-				'payment_type' => '',
-				'payment_status' => '',
-				'pending_reason' => '',
-				'transaction_entity' => 'payment',
-				'amount' => '',
-				'debug_data' => json_encode($result)
+				'note'                  => '',
+				'msgsubid'              => $call_data['MSGSUBID'],
+				'receipt_id'            => '',
+				'payment_type'          => '',
+				'payment_status'        => '',
+				'pending_reason'        => '',
+				'transaction_entity'    => 'payment',
+				'amount'                => '',
+				'debug_data'            => json_encode($result)
 			);
 
 			if ($result == false) {
@@ -1036,6 +955,74 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function resend() {
+		$this->load->model('payment/pp_express');
+		$this->load->language('payment/pp_express');
+
+		$json = array();
+
+		if (isset($this->request->get['paypal_order_transaction_id'])) {
+			$transaction = $this->model_payment_pp_express->getFailedTransaction($this->request->get['paypal_order_transaction_id']);
+
+			if ($transaction) {
+				$call_data = json_decode($transaction['call_data'], true);
+
+				$result = $this->model_payment_pp_express->call($call_data);
+
+				if ($result) {
+
+					$parent_transaction = $this->model_payment_pp_express->getLocalTransaction($transaction['parent_transaction_id']);
+
+					if ($parent_transaction['amount'] == abs($transaction['amount'])) {
+						$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
+					} else {
+						$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Partially-Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
+					}
+
+					if (isset($result['REFUNDTRANSACTIONID'])) {
+						$transaction['transaction_id'] = $result['REFUNDTRANSACTIONID'];
+					} else {
+						$transaction['transaction_id'] = $result['TRANSACTIONID'];
+					}
+
+					if (isset($result['PAYMENTTYPE'])) {
+						$transaction['payment_type'] = $result['PAYMENTTYPE'];
+					} else {
+						$transaction['payment_type'] = $result['REFUNDSTATUS'];
+					}
+
+					if (isset($result['PAYMENTSTATUS'])) {
+						$transaction['payment_status'] = $result['PAYMENTSTATUS'];
+					} else {
+						$transaction['payment_status'] = 'Refunded';
+					}
+
+					if (isset($result['AMT'])) {
+						$transaction['amount'] = $result['AMT'];
+					} else {
+						$transaction['amount'] = $transaction['amount'];
+					}
+
+					$transaction['pending_reason'] = (isset($result['PENDINGREASON']) ? $result['PENDINGREASON'] : '');
+
+					$this->model_payment_pp_express->updateTransaction($transaction);
+
+					$json['success'] = $this->language->get('success_transaction_resent');
+				} else {
+					$json['error'] = $this->language->get('error_timeout');
+				}
+			} else {
+				$json['error'] = $this->language->get('error_transaction_missing');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_data');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 
 	public function void() {
 		/**

@@ -71,29 +71,13 @@ class ModelPaymentPPExpress extends Model {
 		return $paypal_order_transaction_id;
 	}
 
-	public function getFailedTransaction($paypal_order_transaction_id) {
-		$result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_order_transaction
-			WHERE paypal_order_transaction_id = " . (int)$paypal_order_transaction_id . "
-		")->row;
-
-		if ($result) {
-			return $result;
-		} else {
-			return false;
-		}
-	}
-
 	public function updateTransaction($transaction) {
 		$this->db->query("
 			UPDATE " . DB_PREFIX . "paypal_order_transaction
 			SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ",
 				transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
 				parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
-				date_added = '" . $this->db->escape($transaction['date_added']) . "',
-				note = '" . $this->db->escape($transaction['note']) . "',
-				msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
+				date_added = '" . $this->db->escape($transaction['date_added']) . "', note = '" . $this->db->escape($transaction['note']) . "', msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
 				receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',
 				payment_type = '" . $this->db->escape($transaction['payment_type']) . "',
 				payment_status = '" . $this->db->escape($transaction['payment_status']) . "',
@@ -101,35 +85,27 @@ class ModelPaymentPPExpress extends Model {
 				transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "',
 				amount = '" . $this->db->escape($transaction['amount']) . "',
 				debug_data = '" . $this->db->escape($transaction['debug_data']) . "',
-				call_data = '" . $this->db->escape($transaction['call_data']) . "'
-			WHERE paypal_order_transaction_id = " . (int)$transaction['paypal_order_transaction_id'] . "
-		");
+				call_data = '" . $this->db->escape($transaction['call_data']) . "' WHERE paypal_order_transaction_id = '" . (int)$transaction['paypal_order_transaction_id'] . "'");
 	}
 
 	private function getTransactions($paypal_order_id) {
-		$qry = $this->db->query("SELECT `ot`.*, (SELECT count(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_transaction_id` = `ot`.`transaction_id` ) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
+		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_transaction_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
-		} else {
-			return false;
-		}
+		return $query->rows;
 	}
 
 	public function getLocalTransaction($transaction_id) {
-		$result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_order_transaction
-			WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'
-		")->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'");
 
-		if ($result) {
-			return $result;
-		} else {
-			return false;
-		}
+		return $query->rows;
 	}
+	
+	public function getFailedTransaction($paypal_order_transaction_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE paypal_order_transaction_id = '" . (int)$paypal_order_transaction_id . "'");
 
+		return $query->row;
+	}
+	
 	public function getTransaction($transaction_id) {
 		$call_data = array(
 			'METHOD' => 'GetTransactionDetails',
@@ -139,37 +115,7 @@ class ModelPaymentPPExpress extends Model {
 		return $this->call($call_data);
 	}
 
-	public function cleanReturn($data) {
-		$data = explode('&', $data);
-
-		$arr = array();
-
-		foreach ($data as $k => $v) {
-			$tmp = explode('=', $v);
-			$arr[$tmp[0]] = urldecode($tmp[1]);
-		}
-
-		return $arr;
-	}
-
-
-	public function log($data, $title = null) {
-		if ($this->config->get('pp_express_debug')) {
-			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
-		}
-	}
-
-	public function getOrderId($transaction_id) {
-		$qry = $this->db->query("SELECT `o`.`order_id` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` LEFT JOIN `" . DB_PREFIX . "paypal_order` `o`  ON `o`.`paypal_order_id` = `ot`.`paypal_order_id`  WHERE `ot`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			return $qry->row['order_id'];
-		} else {
-			return false;
-		}
-	}
-
-	public function currencyCodes() {
+	public function getCurrencies() {
 		return array(
 			'AUD',
 			'BRL',
@@ -197,6 +143,37 @@ class ModelPaymentPPExpress extends Model {
 			'USD',
 		);
 	}
+
+	public function cleanReturn($data) {
+		$data = explode('&', $data);
+
+		$arr = array();
+
+		foreach ($data as $k => $v) {
+			$tmp = explode('=', $v);
+			$arr[$tmp[0]] = urldecode($tmp[1]);
+		}
+
+		return $arr;
+	}
+	
+	public function log($data, $title = null) {
+		if ($this->config->get('pp_express_debug')) {
+			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
+		}
+	}
+
+	public function getOrderId($transaction_id) {
+		$qry = $this->db->query("SELECT `o`.`order_id` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` LEFT JOIN `" . DB_PREFIX . "paypal_order` `o`  ON `o`.`paypal_order_id` = `ot`.`paypal_order_id`  WHERE `ot`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
+
+		if ($qry->num_rows) {
+			return $qry->row['order_id'];
+		} else {
+			return false;
+		}
+	}
+
+
 
 	public function recurringCancel($ref) {
 
@@ -296,7 +273,6 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-
 		if ($this->config->get('pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 			$user = $this->config->get('pp_express_sandbox_username');

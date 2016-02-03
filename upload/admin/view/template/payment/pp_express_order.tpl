@@ -73,21 +73,11 @@ $('#button-capture').on('click', function() {
 	var captureComplete;
 	var voidTransaction = false;
 
-	if ($('#paypal_capture_complete').prop('checked') == true) {
-		captureComplete = 1;
-	} else {
-		captureComplete = 0;
-	}
-
 	$.ajax({
 		url: 'index.php?route=payment/pp_express/capture&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: {
-			'amount': $('#paypal-capture-amount').val(), 
-			'order_id': <?php echo $order_id; ?>,
-			'complete': captureComplete
-		},
+		data: 'amount=' + $('#paypal-capture-amount').val() + '&order_id=<?php echo $order_id; ?>&complete=' + $('#paypal_capture_complete').prop('checked'),
 		beforeSend: function() {
 			$('#button-capture').button('loading');
 		},
@@ -121,7 +111,7 @@ $('#button-capture').on('click', function() {
 					html += '  <td class="text-left"></td>';
 					html += '</tr>';
 
-					$('#paypal_transactions').append(html);
+					$('#paypal-transaction tbody').append(html);
 				}
 
 				if (json['status']) {
@@ -137,11 +127,11 @@ $('#button-capture').on('click', function() {
 					html = '';
 					html += '<tr>';
 					html += '<td class="text-left"></td>';
-					html += '<td class="text-left">' + json['failed_transaction.amount + '</td>';
+					html += '<td class="text-left">' + json['failed_transaction']['amount'] + '</td>';
 					html += '<td class="text-left"></td>';
 					html += '<td class="text-left"></td>';
 					html += '<td class="text-left"></td>';
-					html += '<td class="text-left">' + json['failed_transaction.date_added + '</td>';
+					html += '<td class="text-left">' + json['failed_transaction']['date_added'] + '</td>';
 					html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_order_transaction_id=' + data.failed_transaction.paypal_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
 					html += '/<tr>';
 

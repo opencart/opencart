@@ -219,15 +219,19 @@ $('input[name=\'payment_address\']').on('change', function() {
 <script type="text/javascript"><!--
 // Sort the custom fields
 $('#collapse-payment-address .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment-address .form-group').length) {
-		$('#collapse-payment-address .form-group').eq($(this).attr('data-sort')).before(this);
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment-address .form-group').length-2) {
+		$('#collapse-payment-address .form-group').eq(parseInt($(this).attr('data-sort'))+2).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#collapse-payment-address .form-group').length) {
+	if ($(this).attr('data-sort') > $('#collapse-payment-address .form-group').length-2) {
 		$('#collapse-payment-address .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#collapse-payment-address .form-group').length) {
+	if ($(this).attr('data-sort') == $('#collapse-payment-address .form-group').length-2) {
+		$('#collapse-payment-address .form-group:last').after(this);
+	}
+
+	if ($(this).attr('data-sort') < -$('#collapse-payment-address .form-group').length-2) {
 		$('#collapse-payment-address .form-group:first').before(this);
 	}
 });

@@ -78,7 +78,7 @@
         var amt = $('#paypal_capture_amount').val();
 
         if (amt == '' || amt == 0) {
-            alert('<?php echo $error_capture_amount; ?>');
+            alert('<?php echo $error_capture; ?>');
             return false;
         } else {
             var captureComplete;

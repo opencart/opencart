@@ -290,7 +290,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['text_transactions'] = $this->language->get('text_transactions');
 			$data['text_complete'] = $this->language->get('text_complete');
 			$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-			$data['error_capture_amount'] = $this->language->get('error_capture_amount');
+			$data['error_capture'] = $this->language->get('error_capture');
 			$data['text_view'] = $this->language->get('text_view');
 			$data['text_refund'] = $this->language->get('text_refund');
 			$data['text_resend'] = $this->language->get('text_resend');
@@ -316,7 +316,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 			$data['transactions'] = array();
 
-			$data['view_link'] = $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'], true);
+			$data['view_link'] = $this->url->link('payment/pp_pro_iframe/info', 'token=' . $this->session->data['token'], true);
 			$data['refund_link'] = $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], true);
 			$data['resend_link'] = $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'], true);
 
@@ -338,7 +338,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					'payment_type' => $transaction['payment_type'],
 					'payment_status' => $transaction['payment_status'],
 					'pending_reason' => $transaction['pending_reason'],
-					'view' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], true),
+					'view' => $this->url->link('payment/pp_pro_iframe/info', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], true),
 					'refund' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'], true),
 					'resend' => $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id'], true),
 				);
@@ -439,7 +439,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$this->load->language('payment/pp_pro_iframe');
 
 			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
-				$this->session->data['error'] = $this->language->get('error_capture_amount');
+				$this->session->data['error'] = $this->language->get('error_capture');
 				$this->response->redirect($this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], true));
 			} else {
 				$order_id = $this->model_payment_pp_pro_iframe->getOrderId($this->request->post['transaction_id']);
@@ -575,7 +575,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function viewTransaction() {
+	public function info() {
 		$this->load->model('payment/pp_pro_iframe');
 		$this->load->language('payment/pp_pro_iframe');
 
@@ -675,14 +675,14 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_transaction'),
-			'href' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->get['transaction_id'], true)
+			'href' => $this->url->link('payment/pp_pro_iframe/info', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->get['transaction_id'], true)
 		);
 
 		$transaction = $this->model_payment_pp_pro_iframe->getTransaction($this->request->get['transaction_id']);
 		$transaction = array_map('urldecode', $transaction);
 
 		$data['transaction'] = $transaction;
-		$data['view_link'] = $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'], true);
+		$data['view_link'] = $this->url->link('payment/pp_pro_iframe/info', 'token=' . $this->session->data['token'], true);
 		$data['token'] = $this->session->data['token'];
 
 		$this->document->setTitle($this->language->get('text_transaction'));

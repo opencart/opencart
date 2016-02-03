@@ -8,7 +8,7 @@
     <td><?php echo $text_amount_authorised; ?></td>
     <td><?php echo $total; ?>
       <?php if ($capture_status != 'Complete') { ?>
-      &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
       <button type="button" id="button-void" class="btn btn-danger"><?php echo $button_void; ?></button>
       <?php } ?></td>
   </tr>
@@ -56,7 +56,7 @@
       <td class="text-left"><?php echo $transaction['pending_reason']; ?></td>
       <td class="text-left"><?php echo $transaction['date_added']; ?></td>
       <td class="text-left"><?php if ($transaction['transaction_id']) { ?>
-        <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-default"><i class="fa fa-eye"></i></a>
+        <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
         <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
         &nbsp;<a href="<?php echo $transaction['refund']; ?>" data-toggle="tooltip" title="<?php echo $button_refund; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>
         <?php } ?>
@@ -77,7 +77,7 @@ $('#button-capture').on('click', function() {
 		url: 'index.php?route=payment/pp_express/capture&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'amount=' + $('#paypal-capture-amount').val() + '&order_id=<?php echo $order_id; ?>&complete=' + $('#paypal_capture_complete').prop('checked'),
+		data: 'amount=' + $('#paypal-capture-amount').val() + '&order_id=<?php echo $order_id; ?>&complete=' + $('#paypal-capture-complete').prop('checked'),
 		beforeSend: function() {
 			$('#button-capture').button('loading');
 		},
@@ -85,6 +85,28 @@ $('#button-capture').on('click', function() {
 			$('#button-capture').button('reset');
 		},			
 		success: function(json) {
+			if (json['error']) {
+				alert(data.msg);
+
+				if (data.failed_transaction) {
+					html  = '<tr>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-left">' + json['failed_transaction']['amount'] + '</td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-left">' + json['failed_transaction']['date_added'] + '</td>';
+					html += '  <td class="text-left">
+					
+					<button type="button" value="' + json['failed_transaction']['resend'] + '" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></button>
+					
+					<a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_order_transaction_id=' + data.failed_transaction.paypal_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
+					html += '<tr>';
+
+					$('#paypal-transaction tbody').append(html);
+				}
+			}			
+			
 			if (!json['error']) {
 				html  = '<tr>';
 				html += '  <td class="text-left">' + json['transaction_id'] + '</td>';
@@ -117,25 +139,6 @@ $('#button-capture').on('click', function() {
 				if (json['status']) {
 					$('#capture_status').text('<?php echo $text_complete; ?>');
 					$('.paypal_capture').hide();
-				}
-			}
-			
-			if (json['error']) {
-				alert(data.msg);
-
-				if (data.failed_transaction) {
-					html = '';
-					html += '<tr>';
-					html += '<td class="text-left"></td>';
-					html += '<td class="text-left">' + json['failed_transaction']['amount'] + '</td>';
-					html += '<td class="text-left"></td>';
-					html += '<td class="text-left"></td>';
-					html += '<td class="text-left"></td>';
-					html += '<td class="text-left">' + json['failed_transaction']['date_added'] + '</td>';
-					html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_order_transaction_id=' + data.failed_transaction.paypal_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
-					html += '/<tr>';
-
-					$('#paypal_transactions').append(html);
 				}
 			}
 		}

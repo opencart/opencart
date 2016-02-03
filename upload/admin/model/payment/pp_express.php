@@ -72,23 +72,10 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function updateTransaction($transaction) {
-		$this->db->query("
-			UPDATE " . DB_PREFIX . "paypal_order_transaction
-			SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ",
-				transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
-				parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
-				date_added = '" . $this->db->escape($transaction['date_added']) . "', note = '" . $this->db->escape($transaction['note']) . "', msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
-				receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',
-				payment_type = '" . $this->db->escape($transaction['payment_type']) . "',
-				payment_status = '" . $this->db->escape($transaction['payment_status']) . "',
-				pending_reason = '" . $this->db->escape($transaction['pending_reason']) . "',
-				transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "',
-				amount = '" . $this->db->escape($transaction['amount']) . "',
-				debug_data = '" . $this->db->escape($transaction['debug_data']) . "',
-				call_data = '" . $this->db->escape($transaction['call_data']) . "' WHERE paypal_order_transaction_id = '" . (int)$transaction['paypal_order_transaction_id'] . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "paypal_order_transaction SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ", transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "', parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "', date_added = '" . $this->db->escape($transaction['date_added']) . "', note = '" . $this->db->escape($transaction['note']) . "', msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "', receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "', payment_type = '" . $this->db->escape($transaction['payment_type']) . "', payment_status = '" . $this->db->escape($transaction['payment_status']) . "', pending_reason = '" . $this->db->escape($transaction['pending_reason']) . "', transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "', amount = '" . $this->db->escape($transaction['amount']) . "', debug_data = '" . $this->db->escape($transaction['debug_data']) . "', call_data = '" . $this->db->escape($transaction['call_data']) . "' WHERE paypal_order_transaction_id = '" . (int)$transaction['paypal_order_transaction_id'] . "'");
 	}
 
-	private function getTransactions($paypal_order_id) {
+	public function getTransactions($paypal_order_id) {
 		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_transaction_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
 
 		return $query->rows;
@@ -143,6 +130,16 @@ class ModelPaymentPPExpress extends Model {
 			'USD',
 		);
 	}
+	
+	public function getOrderId($transaction_id) {
+		$qry = $this->db->query("SELECT `o`.`order_id` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` LEFT JOIN `" . DB_PREFIX . "paypal_order` `o`  ON `o`.`paypal_order_id` = `ot`.`paypal_order_id`  WHERE `ot`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
+
+		if ($qry->num_rows) {
+			return $qry->row['order_id'];
+		} else {
+			return false;
+		}
+	}
 
 	public function cleanReturn($data) {
 		$data = explode('&', $data);
@@ -163,20 +160,7 @@ class ModelPaymentPPExpress extends Model {
 		}
 	}
 
-	public function getOrderId($transaction_id) {
-		$qry = $this->db->query("SELECT `o`.`order_id` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` LEFT JOIN `" . DB_PREFIX . "paypal_order` `o`  ON `o`.`paypal_order_id` = `ot`.`paypal_order_id`  WHERE `ot`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			return $qry->row['order_id'];
-		} else {
-			return false;
-		}
-	}
-
-
-
 	public function recurringCancel($ref) {
-
 		$data = array(
 			'METHOD' => 'ManageRecurringPaymentsProfileStatus',
 			'PROFILEID' => $ref,

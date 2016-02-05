@@ -103,28 +103,31 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
-                    <?php if ($layout_module['position'] == 'content_top') { ?>
-                    <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
-                    <?php } else { ?>
-                    <option value="content_top"><?php echo $text_content_top; ?></option>
+                <td class="text-left">
+                  <select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
+                    <?php foreach ($positions as $position) { ?>
+                      <?php if (!isset($position['child'])) { ?>
+                        <?php if ($layout_module['position'] == $position['value']) { ?>
+                          <option value="<?php echo $position['value']; ?>" selected="selected"><?php echo $position['title']; ?></option>
+                        <?php } else { ?>
+                          <option value="<?php echo $position['value']; ?>"><?php echo $position['title']; ?></option>
+                        <?php } ?>
+                      <?php } ?>
+
+                      <?php if (!empty($position['child'])) { ?>
+                        <optgroup label="<?php echo $position['title']; ?>">
+                          <?php foreach ($position['child'] as $pos) { ?>
+                            <?php if ($layout_module['position'] == $pos['value']) { ?>
+                              <option value="<?php echo $pos['value']; ?>" selected="selected"><?php echo $pos['title']; ?></option>
+                            <?php } else { ?>
+                              <option value="<?php echo $pos['value']; ?>"><?php echo $pos['title']; ?></option>
+                            <?php } ?>
+                          <?php } ?>
+                        </optgroup>
+                      <?php } ?>
                     <?php } ?>
-                    <?php if ($layout_module['position'] == 'content_bottom') { ?>
-                    <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
-                    <?php } else { ?>
-                    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
-                    <?php } ?>
-                    <?php if ($layout_module['position'] == 'column_left') { ?>
-                    <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
-                    <?php } else { ?>
-                    <option value="column_left"><?php echo $text_column_left; ?></option>
-                    <?php } ?>
-                    <?php if ($layout_module['position'] == 'column_right') { ?>
-                    <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
-                    <?php } else { ?>
-                    <option value="column_right"><?php echo $text_column_right; ?></option>
-                    <?php } ?>
-                  </select></td>
+                  </select>
+                </td>
                 <td class="text-right"><input type="text" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
@@ -179,12 +182,29 @@ function addModule() {
 	<?php } ?>
 	<?php } ?>
     html += '  </select></td>'; 
-	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';
-    html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
-    html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-    html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
-    html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
-    html += '  </select></td>';
+  html += '<td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';
+  <?php foreach ($positions as $position) { ?>
+    <?php if (!isset($position['child'])) { ?>
+      <?php if ($layout_module['position'] == $position['value']) { ?>
+        html += '<option value="<?php echo $position["value"]; ?>" selected="selected"><?php echo $position["title"]; ?></option>';
+      <?php } else { ?>
+        html += '<option value="<?php echo $position["value"]; ?>"><?php echo $position["title"]; ?></option>';
+      <?php } ?>
+    <?php } ?>
+
+    <?php if (isset($position['child'])) { ?>
+      html += "<optgroup label='<?php echo $position['title']; ?>'>"; 
+        <?php foreach ($position['child'] as $pos) { ?>
+          <?php if ($layout_module['position'] == $pos['value']) { ?>
+            html += '<option value="<?php echo $pos["value"]; ?>" selected="selected"><?php echo $pos["title"]; ?></option>';
+          <?php } else { ?>
+            html += '<option value="<?php echo $pos["value"]; ?>"><?php echo $pos["title"]; ?></option>';
+          <?php } ?>
+        <?php } ?>
+      html += "</optgroup>";
+    <?php } ?>
+  <?php } ?>
+  html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';

@@ -263,10 +263,6 @@ class ControllerDesignLayout extends Controller {
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_store'] = $this->language->get('entry_store');
@@ -391,6 +387,24 @@ class ControllerDesignLayout extends Controller {
 				);
 			}
 		}
+
+		$data['positions'] = array();
+		$data['positions'][] = array(
+			'title' => $this->language->get('text_content_top'),
+			'value' => 'content_top'
+		);
+		$data['positions'][] = array(
+			'title' => $this->language->get('text_content_bottom'),
+			'value' => 'content_bottom'
+		);
+		$data['positions'][] = array(
+			'title' => $this->language->get('text_column_left'),
+			'value' => 'column_left'
+		);
+		$data['positions'][] = array(
+			'title' => $this->language->get('text_column_right'),
+			'value' => 'column_right'
+		);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

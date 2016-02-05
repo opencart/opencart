@@ -48,7 +48,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('config,site,language,response,mail', $this->request->post, $this->request->get['store_id']);
+			$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

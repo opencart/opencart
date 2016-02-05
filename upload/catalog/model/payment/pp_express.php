@@ -329,13 +329,13 @@ class ModelPaymentPPExpress extends Model {
 		}
 	}
 
-	public function totalCaptured($paypal_order_id) {
+	public function getTotalCaptured($paypal_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `pending_reason` != 'authorization' AND `pending_reason` != 'paymentreview' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
 
 		return $qry->row['amount'];
 	}
 
-	public function totalRefundedOrder($paypal_order_id) {
+	public function getTotalRefunded($paypal_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `payment_status` = 'Refunded'");
 
 		return $qry->row['amount'];

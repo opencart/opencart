@@ -1,5 +1,5 @@
 <h2><?php echo $text_payment; ?></h2>
-<table class="table table-striped table-bordered">
+<table class="table table-bordered">
   <tr>
     <td><?php echo $text_capture_status; ?></td>
     <td id="capture-status"><?php echo $capture_status; ?></td>
@@ -39,9 +39,6 @@
 $('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
 $('#button-capture').on('click', function() {
-	var captureComplete;
-	var voidTransaction = false;
-
 	$.ajax({
 		url: 'index.php?route=payment/pp_express/capture&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -58,7 +55,7 @@ $('#button-capture').on('click', function() {
 				alert(json['error']);
 			}
 			
-			if (!json['error']) {
+			if (!json['success']) {
 				$('#paypal-captured').text(json['captured']);
 				$('#paypal-capture-amount').val(json['remaining']);
 
@@ -85,10 +82,7 @@ $('#button-void').on('click', function() {
 				$('#button-void').button('reset');
 			},			
 			success: function(json) {
-				if (!json['error']) {
-					
-					$('#paypal-transaction tbody').append(html);
-					
+				if (!json['error']) {					
 					$('#capture-status').text('<?php echo $text_complete; ?>');
 					
 					$('.paypal_capture_live').hide();

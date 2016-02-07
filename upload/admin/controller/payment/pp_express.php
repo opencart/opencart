@@ -398,6 +398,50 @@ class ControllerPaymentPPExpress extends Controller {
 		
 		$this->model_payment_pp_express->uninstall();
 	}
+
+	public function order() {
+		if ($this->config->get('pp_express_status')) {
+			$this->load->language('payment/pp_express_order');
+			
+			$this->load->model('payment/pp_express');
+			
+			$paypal_info = $this->model_payment_pp_express->getOrder($this->request->get['order_id']);
+
+			if ($paypal_info) {
+				$data['text_payment'] = $this->language->get('text_payment');				
+				$data['text_capture_status'] = $this->language->get('text_capture_status');
+				$data['text_amount_authorised'] = $this->language->get('text_amount_authorised');
+				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
+				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
+				$data['text_capture_amount'] = $this->language->get('text_capture_amount');
+				$data['text_complete_capture'] = $this->language->get('text_complete_capture');
+				$data['text_transactions'] = $this->language->get('text_transactions');
+				$data['text_complete'] = $this->language->get('text_complete');
+				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
+				$data['text_loading'] = $this->language->get('text_loading');
+								
+				$data['button_void'] = $this->language->get('button_void');
+				$data['button_capture'] = $this->language->get('button_capture');
+	
+				$data['token'] = $this->session->data['token'];
+				
+				$data['order_id'] = $this->request->get['order_id'];
+				
+				$data['capture_status'] = $paypal_info['capture_status'];
+				
+				$data['total'] = $paypal_info['total'];
+
+				$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_info['paypal_order_id']), 2);
+				$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_info['paypal_order_id']), 2);
+
+				$data['captured'] = $captured;
+				$data['refunded'] = $refunded;
+				$data['remaining'] = number_format($paypal_info['total'] - $captured, 2);
+				
+				return $this->load->view('payment/pp_express_order', $data);
+			}
+		}
+	}
 	
 	public function transaction() {
 		$this->load->language('payment/pp_express_order');
@@ -407,6 +451,10 @@ class ControllerPaymentPPExpress extends Controller {
 		} else {
 			$order_id = 0;
 		}	
+
+		$this->load->model('payment/pp_express');
+		
+		$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
 		
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		
@@ -423,11 +471,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['button_resend'] = $this->language->get('button_resend');
 
 		$data['transactions'] = array();
-		
-		$this->load->model('payment/pp_express');
-		
-		$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
-		
+				
 		if ($paypal_info) {	
 			$results = $this->model_payment_pp_express->getTransactions($paypal_info['paypal_order_id']);
 	
@@ -526,7 +570,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'transaction_id'        => '',
 					'parent_transaction_id' => $paypal_info['authorization_id'],
 					'note'                  => '',
-					'msgsubid'              => $call_data['MSGSUBID'],
+					'msgsubid'              => $request['MSGSUBID'],
 					'receipt_id'            => '',
 					'payment_type'          => '',
 					'payment_status'        => '',
@@ -559,8 +603,6 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->model_payment_pp_express->addTransaction($transaction_data, $request);
 	
 					$json['error'] = $this->language->get('error_timeout');
-				
-				
 				} elseif (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 					$transaction_data = array(
 						'paypal_order_id'       => $paypal_info['paypal_order_id'],
@@ -579,10 +621,6 @@ class ControllerPaymentPPExpress extends Controller {
 	
 					$this->model_payment_pp_express->addTransaction($transaction_data);
 	
-					unset($transaction['debug_data']);
-					
-					$transaction['date_added'] = date("Y-m-d H:i:s");
-	
 					$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_order['paypal_order_id']), 2);
 					$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_order['paypal_order_id']), 2);
 	
@@ -590,18 +628,16 @@ class ControllerPaymentPPExpress extends Controller {
 					$json['refunded'] = $refunded;
 					$json['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 	
-					$transaction['status'] = 0;
+					$json['status'] = 0;
 					 
-					 if ($transaction['remaining'] == 0.00) {
+					 if ($json['remaining'] == 0.00) {
 						$json['status'] = 1;
 						
 						$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
 					}
 	
-					$transaction['void'] = '';
-	
-					if ($this->request->post['complete'] == 1 && $transaction['remaining'] > 0) {
-						$transaction['void'] = array(
+					if ($this->request->post['complete'] == 1 && $json['remaining'] > 0) {
+						$transaction_data = array(
 							'paypal_order_id'       => $paypal_order['paypal_order_id'],
 							'transaction_id'        => '',
 							'parent_transaction_id' => $paypal_order['authorization_id'],
@@ -616,27 +652,19 @@ class ControllerPaymentPPExpress extends Controller {
 							'transaction_entity'    => 'auth',
 						);
 	
-						$this->model_payment_pp_express->addTransaction($transaction['void']);
-						
+						$this->model_payment_pp_express->addTransaction($transaction_data);
 						
 						$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
 							
-						$transaction['status'] = 1;
+						$json['status'] = 1;
 					}
-	
-	
 	
 					$json['success'] = true;
 				} else {
-					$json['error'] = true;
-					$json['msg'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error');
+					$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error');
 				}
-				
-				
-				
 		} else {
-			$json['error'] = true;
-			$json['msg'] = 'Missing data';
+			$json['error'] = 'Missing data';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -724,6 +752,8 @@ class ControllerPaymentPPExpress extends Controller {
 			$paypal_order = $this->model_payment_pp_express->getOrder($this->request->post['order_id']);
 
 			$call_data = array();
+			
+			
 			$call_data['METHOD'] = 'DoVoid';
 			$call_data['AUTHORIZATIONID'] = $paypal_order['authorization_id'];
 
@@ -858,65 +888,6 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 	}
 	
-	
-	
-	
-	
-	public function order() {
-		if ($this->config->get('pp_express_status')) {
-			$this->load->language('payment/pp_express_order');
-			
-			$this->load->model('payment/pp_express');
-			
-			$paypal_info = $this->model_payment_pp_express->getOrder($this->request->get['order_id']);
-
-			if ($paypal_info) {
-				$data['text_payment'] = $this->language->get('text_payment');				
-				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_amount_authorised'] = $this->language->get('text_amount_authorised');
-				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
-				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
-				$data['text_capture_amount'] = $this->language->get('text_capture_amount');
-				$data['text_complete_capture'] = $this->language->get('text_complete_capture');
-				$data['text_transactions'] = $this->language->get('text_transactions');
-				$data['text_complete'] = $this->language->get('text_complete');
-				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
-				$data['text_loading'] = $this->language->get('text_loading');
-				
-				$data['column_transaction'] = $this->language->get('column_transaction');
-				$data['column_amount'] = $this->language->get('column_amount');
-				$data['column_type'] = $this->language->get('column_type');
-				$data['column_status'] = $this->language->get('column_status');
-				$data['column_pending_reason'] = $this->language->get('column_pending_reason');
-				$data['column_date_added'] = $this->language->get('column_date_added');
-				$data['column_action'] = $this->language->get('column_action');
-				
-				$data['button_void'] = $this->language->get('button_void');
-				$data['button_capture'] = $this->language->get('button_capture');
-				$data['button_view'] = $this->language->get('button_view');
-				$data['button_refund'] = $this->language->get('button_refund');
-				$data['button_resend'] = $this->language->get('button_resend');
-	
-				$data['token'] = $this->session->data['token'];
-				
-				$data['order_id'] = $this->request->get['order_id'];
-				
-				$data['capture_status'] = $paypal_info['capture_status'];
-				
-				$data['total'] = $paypal_info['total'];
-
-				$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_info['paypal_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_info['paypal_order_id']), 2);
-
-				$data['captured'] = $captured;
-				$data['refunded'] = $refunded;
-				$data['remaining'] = number_format($paypal_info['total'] - $captured, 2);
-				
-				return $this->load->view('payment/pp_express_order', $data);
-			}
-		}
-	}
-
 	public function search() {
 		$this->load->language('payment/pp_express_search');
 		

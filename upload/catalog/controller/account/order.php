@@ -161,6 +161,7 @@ class ControllerAccountOrder extends Controller {
 			$data['text_payment_address'] = $this->language->get('text_payment_address');
 			$data['text_history'] = $this->language->get('text_history');
 			$data['text_comment'] = $this->language->get('text_comment');
+			$data['text_no_results'] = $this->language->get('text_no_results');
 
 			$data['column_name'] = $this->language->get('column_name');
 			$data['column_model'] = $this->language->get('column_model');

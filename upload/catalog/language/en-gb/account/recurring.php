@@ -4,13 +4,20 @@ $_['heading_title']           = 'Recurring Payments';
 
 // Text
 $_['text_account']            = 'Account';
+$_['text_recurring']          = 'Recurring Payment Information';
 $_['text_recurring_detail']   = 'Recurring Payment Details';
+$_['text_order_recurring_id'] = 'Recurring ID:';
+$_['text_date_added']         = 'Date Added:';
+$_['text_status']             = 'Status:';
+$_['text_payment_method']     = 'Payment method:';
+
+
 $_['text_order_id']           = 'Order ID: ';
 $_['text_product']            = 'Product: ';
 
 $_['text_quantity']           = 'Quantity: ';
 
-$_['text_recurring']          = 'Recurring Payment Information';
+
 
 
 
@@ -20,12 +27,11 @@ $_['text_recurring']          = 'Recurring Payment Information';
 $_['text_transaction']           = 'Transactions';
 
 
-$_['text_order_recurring_id']    = 'Recurring ID: ';
-$_['text_payment_method']        = 'Payment method: ';
-$_['text_date_added']            = 'Date Added';
-$_['text_recurring_description'] = 'Description';
-$_['text_status']                = 'Status:';
-$_['text_reference']             = 'Reference:';
+
+
+
+$_['text_description']    = 'Description';
+$_['text_reference']             = 'Reference';
 
 
 $_['text_empty']                 = 'No recurring payments found!';
@@ -79,6 +85,30 @@ $_['text_cancelled'] = 'Recurring payment has been cancelled';
 			8 => $this->language->get('text_transaction_outstanding_failed'),
 			9 => $this->language->get('text_transaction_expired'),
 		);
+		
+			private $recurring_status = array(
+		0 => 'Inactive',
+		1 => 'Active',
+		2 => 'Suspended',
+		3 => 'Cancelled',
+		4 => 'Expired / Complete'
+	);
+
+	private $transaction_type = array(
+		0 => 'Created',
+		1 => 'Payment',
+		2 => 'Outstanding payment',
+		3 => 'Payment skipped',
+		4 => 'Payment failed',
+		5 => 'Cancelled',
+		6 => 'Suspended',
+		7 => 'Suspended from failed payment',
+		8 => 'Outstanding payment failed',
+		9 => 'Expired'
+	);
+
+		
+		
 */
 
 

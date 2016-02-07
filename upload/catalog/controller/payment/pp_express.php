@@ -1981,7 +1981,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function recurringButtons() {
 		$this->load->language('payment/pp_express');
 
-		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
+		$recurring = $this->model_account_recurring->getProfile($this->request->get['order_recurring_id']);
 
 		$data['buttons'] = array();
 

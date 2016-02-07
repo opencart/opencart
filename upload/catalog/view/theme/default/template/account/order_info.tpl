@@ -149,6 +149,7 @@
           </tr>
         </thead>
         <tbody>
+          <?php if ($histories) { ?>
           <?php foreach ($histories as $history) { ?>
           <tr>
             <td class="text-left"><?php echo $history['date_added']; ?></td>
@@ -156,6 +157,11 @@
             <td class="text-left"><?php echo $history['comment']; ?></td>
           </tr>
           <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>          
         </tbody>
       </table>
       <?php } ?>

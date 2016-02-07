@@ -23,20 +23,23 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><p><b><?php echo $text_order_recurring_id; ?></b> #<?php echo $order_recurring_id; ?></p>
+            <td class="text-left" style="width: 50%; vertical-align: top;"><b><?php echo $text_order_recurring_id; ?></b> #<?php echo $order_recurring_id; ?><br />
               <p><b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></p>
-              <p><b><?php echo $text_status; ?></b> <?php echo $recurring_status; ?></p>
+              <p><b><?php echo $text_status; ?></b> <?php echo $status; ?></p>
               <p><b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?></p></td>
-            <td class="left" style="width: 50%; vertical-align: top;"><p><b><?php echo $text_product; ?></b><a href="<?php echo $recurring['product']; ?>"><?php echo $product_name; ?></a></p>
-              <p><b><?php echo $text_quantity; ?></b> <?php echo $quantity; ?></p>
-              <p><b><?php echo $text_order_id; ?></b> <a href="<?php echo $recurring['order']; ?>">#<?php echo $order_id; ?></a></p></td>
+            <td class="left" style="width: 50%; vertical-align: top;">
+            <p><b><?php echo $text_order_id; ?></b> <a href="<?php echo $order; ?>">#<?php echo $order_id; ?></a></p>
+            
+              <p><b><?php echo $text_product; ?></b><a href="<?php echo $product; ?>"><?php echo $product_name; ?></a></p>
+              <p><b><?php echo $text_quantity; ?></b> <?php echo $product_quantity; ?></p>
+              </td>
           </tr>
         </tbody>
       </table>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left"><?php echo $text_recurring_description; ?></td>
+            <td class="text-left"><?php echo $text_description; ?></td>
             <td class="text-left"><?php echo $text_reference; ?></td>
           </tr>
         </thead>

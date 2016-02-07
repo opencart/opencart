@@ -21,16 +21,10 @@ class ModelAccountRecurring extends Model {
 		9 => 'Expired'
 	);
 
-	public function getOrderRecurring($recurring_id) {
-		$result = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`payment_code`,`o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `or`.`order_recurring_id` = '" . (int)$recurring_id . "' AND `o`.`customer_id` = '" . (int)$this->customer->getId() . "' LIMIT 1");
+	public function getOrderRecurring($order_recurring_id) {
+		$query = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`payment_code`,`o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `or`.`order_recurring_id` = '" . (int)$order_recurring_id . "' AND `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 
-		if ($result->num_rows > 0) {
-			$recurring = $result->row;
-
-			return $recurring;
-		} else {
-			return false;
-		}
+		return $query->row;
 	}
 
 	public function getOrderRecurrings($start = 0, $limit = 20) {

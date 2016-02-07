@@ -1,36 +1,39 @@
 <?php
 // Heading
-$_['heading_title'] = 'Recurring Payments';
+$_['heading_title']           = 'Recurring Payments';
 
 // Text
 $_['text_account']            = 'Account';
+$_['text_recurring_detail']   = 'Recurring Payment Details';
+$_['text_order_id']           = 'Order ID: ';
+$_['text_product']            = 'Product: ';
 
+$_['text_quantity']           = 'Quantity: ';
 
-
-$_['text_recurring_detail']   = 'Recurring payment details'
-
-
-$_['text_product'] = 'Product: ';
-$_['text_order']     = 'Order: ';
-$_['text_quantity'] = 'Quantity: ';
-
-$_['text_recurring']          = 'Recurring payment';
-
-$_['text_empty']     = 'No recurring payments found';
+$_['text_recurring']          = 'Recurring Payment Information';
 
 
 
 
-$_['text_transactions']       = 'Transactions';
 
 
-;
-$_['text_recurring_id']       = 'Profile ID: ';
+$_['text_transaction']           = 'Transactions';
+
+
+$_['text_order_recurring_id']    = 'Recurring ID: ';
 $_['text_payment_method']        = 'Payment method: ';
 $_['text_date_added']            = 'Date Added';
-$_['text_recurring_description'] = 'Description: ';
-$_['text_status']                = 'Status: ';
-$_['text_ref']                   = 'Reference: ';
+$_['text_recurring_description'] = 'Description';
+$_['text_status']                = 'Status:';
+$_['text_reference']             = 'Reference:';
+
+
+$_['text_empty']                 = 'No recurring payments found!';
+$_['text_error']                 = 'The recurring order you requested could not be found!';
+
+
+
+
 
 $_['text_status_1'] = 'Active';
 $_['text_status_2'] = 'Inactive';
@@ -80,17 +83,16 @@ $_['text_cancelled'] = 'Recurring payment has been cancelled';
 
 
 // Column
-$_['column_date_added'] = 'Date Added';
-$_['column_type']       = 'Type';
-$_['column_amount'] = 'Amount';
-$_['column_status'] = 'Status';
-$_['column_product'] = 'Product';
-$_['column_action'] = 'Action';
-$_['column_recurring_id'] = 'Profile ID';
+$_['column_date_added']   = 'Date Added';
+$_['column_type']         = 'Type';
+$_['column_amount']       = 'Amount';
+$_['column_status']       = 'Status';
+$_['column_product']      = 'Product';
+$_['column_recurring_id'] = 'Recurring ID';
 
 // Error
 $_['error_not_cancelled'] = 'Error: %s';
-$_['error_not_found'] = 'Could not cancel recurring';
+$_['error_not_found']     = 'Could not cancel recurring';
 
 // Button
-$_['button_return'] = 'Return';
+$_['button_return']       = 'Return';

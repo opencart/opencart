@@ -7,6 +7,7 @@ $_['text_confirm_title']        = 'Review bulk status update';
 // Button
 $_['button_status']           	= 'Change status';
 $_['button_update']           	= 'Update';
+$_['button_ship']           	= 'Ship order';
 
 // Column
 $_['column_channel']        	= 'Order Channel';

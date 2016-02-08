@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <table class="list table table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" colspan="2"><?php echo $text_return_detail; ?></td>
@@ -30,8 +30,8 @@
           </tr>
         </tbody>
       </table>
-      <h2><?php echo $text_product; ?></h2>
-      <table class="list table table-bordered table-hover">
+      <h3><?php echo $text_product; ?></h3>
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" style="width: 33.3%;"><?php echo $column_product; ?></td>
@@ -47,6 +47,7 @@
           </tr>
         </tbody>
       </table>
+      <h3><?php echo $text_reason; ?></h3>
       <table class="list table table-bordered table-hover">
         <thead>
           <tr>
@@ -64,7 +65,7 @@
         </tbody>
       </table>
       <?php if ($comment) { ?>
-      <table class="list table table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $text_comment; ?></td>
@@ -79,7 +80,7 @@
       <?php } ?>
       <?php if ($histories) { ?>
       <h2><?php echo $text_history; ?></h2>
-      <table class="list table table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" style="width: 33.3%;"><?php echo $column_date_added; ?></td>

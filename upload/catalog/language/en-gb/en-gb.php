@@ -18,6 +18,7 @@ $_['text_select']           = ' --- Please Select --- ';
 $_['text_all_zones']        = 'All Zones';
 $_['text_pagination']       = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']          = 'Loading...';
+$_['text_no_results']       = 'No results!';
 
 // Buttons
 $_['button_address_add']    = 'Add Address';

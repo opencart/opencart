@@ -1,7 +1,7 @@
 <?php
 class ControllerStartupError extends Controller {
 	public function index() {
-		$this->registry->set('log', new Log($this->config->get('config_error_filename')));
+		$this->registry->set('log', new Log($this->config->get('error_filename')));
 		
 		set_error_handler(array($this, 'handler'));	
 	}
@@ -30,11 +30,11 @@ class ControllerStartupError extends Controller {
 				break;
 		}
 	
-		if ($this->config->get('config_error_display')) {
+		if ($this->config->get('error_display')) {
 			echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 		}
 	
-		if ($this->config->get('config_error_log')) {
+		if ($this->config->get('error_log')) {
 			$this->log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 		}
 	

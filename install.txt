@@ -1,5 +1,5 @@
 /////////////////////////////////
-///       OpenCart V2.0.x     ///
+///       OpenCart V2.x     ///
 ///    Install Instructions   ///
 ///  http://www.opencart.com  ///
 /////////////////////////////////
@@ -44,6 +44,8 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 7. After successful install, delete the /install/ directory from ftp.
 
+8. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
+
 
 - Windows Install -
 
@@ -86,3 +88,13 @@ Godaddy Issues
 If your hosting on godaddy you might need to rename the php.ini to user.ini
 
 It seems godadddy has started changing the industry standard names of files.
+
+----------------------------
+COMPOSER OR NOT TO COMPOSER
+----------------------------
+From version 2.2 composer has been added to aid developers who want to use composer libraries. 2 versions of OpenCart
+will become available, one compiled and one non-compiled (composer.json only - no files in vendor folder).
+
+We STRONGLY advise leaving the vendor folder outside of the webroot - so files cannot be accessed directly.
+
+Composer installing is extremely simple - https://getcomposer.org

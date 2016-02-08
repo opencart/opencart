@@ -20,7 +20,7 @@ class ControllerModuleSpecial extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -67,33 +67,33 @@ class ControllerModuleSpecial extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
 		);
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->ssl('module/special', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->ssl('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
+				'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->ssl('module/special', 'token=' . $this->session->data['token'], true);
+			$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->ssl('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+			$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
-		$data['cancel'] = $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);

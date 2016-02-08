@@ -51,12 +51,12 @@ class ControllerReportCustomerOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('report/customer_order', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('report/customer_order', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/customer');
@@ -84,7 +84,7 @@ class ControllerReportCustomerOrder extends Controller {
 				'orders'         => $result['orders'],
 				'products'       => $result['products'],
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->ssl('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, true)
+				'edit'           => $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, true)
 			);
 		}
 
@@ -135,7 +135,7 @@ class ControllerReportCustomerOrder extends Controller {
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->ssl('report/customer_order', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/customer_order', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

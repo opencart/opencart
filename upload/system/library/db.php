@@ -12,8 +12,8 @@ class DB {
 		}
 	}
 
-	public function query($sql) {
-		return $this->adaptor->query($sql);
+	public function query($sql, $params = array()) {
+		return $this->adaptor->query($sql, $params);
 	}
 
 	public function escape($value) {
@@ -30,5 +30,5 @@ class DB {
 	
 	public function connected() {
 		return $this->adaptor->connected();
-	}	
+	}
 }

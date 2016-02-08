@@ -43,13 +43,12 @@
                     <tr>
                       <td class="text-left"><?php echo $extension['name']; ?></td>
                       <td class="text-center"><?php echo $extension['status']; ?></td>
-                      <td class="text-right"><?php if ($extension['installed']) { ?>
-                        <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" id="button-edit-<?php echo $extension['code']; ?>"><i class="fa fa-pencil"></i></a>
-                        <?php } ?>
+                      <td class="text-right">
                         <?php if (!$extension['installed']) { ?>
-                        <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success" id="button-install-<?php echo $extension['code']; ?>"><i class="fa fa-plus-circle"></i></a>
+                          <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success" id="button-install-<?php echo $extension['code']; ?>"><i class="fa fa-plus-circle"></i></a>
                         <?php } else { ?>
-                        <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger" id="button-uninstall-<?php echo $extension['code']; ?>"><i class="fa fa-minus-circle"></i></a>
+                          <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" id="button-edit-<?php echo $extension['code']; ?>"><i class="fa fa-pencil"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger" id="button-uninstall-<?php echo $extension['code']; ?>"><i class="fa fa-minus-circle"></i></a>
                         <?php } ?></td>
                     </tr>
                     <?php } ?>

@@ -333,6 +333,10 @@ $('#account .form-group[data-sort]').detach().each(function() {
 		$('#account .form-group:last').after(this);
 	}
 
+	if ($(this).attr('data-sort') == $('#account .form-group').length) {
+		$('#account .form-group:last').after(this);
+	}
+
 	if ($(this).attr('data-sort') < -$('#account .form-group').length) {
 		$('#account .form-group:first').before(this);
 	}
@@ -344,6 +348,10 @@ $('#address .form-group[data-sort]').detach().each(function() {
 	}
 
 	if ($(this).attr('data-sort') > $('#address .form-group').length) {
+		$('#address .form-group:last').after(this);
+	}
+
+	if ($(this).attr('data-sort') == $('#address .form-group').length) {
 		$('#address .form-group:last').after(this);
 	}
 

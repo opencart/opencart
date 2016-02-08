@@ -70,7 +70,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -134,7 +134,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -200,7 +200,7 @@ class ControllerSaleReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -323,16 +323,16 @@ class ControllerSaleReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->ssl('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->ssl('sale/return/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('sale/return/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['returns'] = array();
 
@@ -365,7 +365,7 @@ class ControllerSaleReturn extends Controller {
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->ssl('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, true)
+				'edit'          => $this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, true)
 			);
 		}
 
@@ -470,14 +470,14 @@ class ControllerSaleReturn extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_return_id'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.return_id' . $url, true);
-		$data['sort_order_id'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.order_id' . $url, true);
-		$data['sort_customer'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
-		$data['sort_product'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=product' . $url, true);
-		$data['sort_model'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=model' . $url, true);
-		$data['sort_status'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, true);
-		$data['sort_date_modified'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_modified' . $url, true);
+		$data['sort_return_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.return_id' . $url, true);
+		$data['sort_order_id'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.order_id' . $url, true);
+		$data['sort_customer'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
+		$data['sort_product'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=product' . $url, true);
+		$data['sort_model'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=model' . $url, true);
+		$data['sort_status'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, true);
+		$data['sort_date_modified'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . '&sort=r.date_modified' . $url, true);
 
 		$url = '';
 
@@ -525,7 +525,7 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -698,21 +698,21 @@ class ControllerSaleReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['return_id'])) {
-			$data['action'] = $this->url->ssl('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('sale/return/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->ssl('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . $url, true);
+			$data['action'] = $this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->ssl('sale/return', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$return_info = $this->model_sale_return->getReturn($this->request->get['return_id']);
@@ -977,7 +977,7 @@ class ControllerSaleReturn extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->ssl('sale/return/history', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . '&page={page}', true);
+		$pagination->url = $this->url->link('sale/return/history', 'token=' . $this->session->data['token'] . '&return_id=' . $this->request->get['return_id'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

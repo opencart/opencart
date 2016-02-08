@@ -26,18 +26,17 @@
           <input type="hidden" name="openbay_menu" value="<?php echo $openbay_menu; ?>" />
 
           <ul id="update-tabs" class="nav nav-tabs">
-            <li class="active"><a href="#tab-update-v2" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
-            <li><a href="#tab-update-v1" data-toggle="tab"><?php echo $tab_update_v2; ?></a></li>
+            <li class="active"><a href="#tab-update-tool" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
             <li><a href="#tab-update-patch" data-toggle="tab"><?php echo $tab_patch; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-update-v2">
+            <div class="tab-pane active" id="tab-update-tool">
               <p><?php echo $text_update_description; ?></p>
               <div class="well">
                 <div class="alert alert-danger" id="update-error" style="display:none;"></div>
                 <div id="update-v2-box">
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="update-v2-beta"><span data-toggle="tooltip" title="<?php echo $help_ftp_beta; ?>"><?php echo $entry_ftp_beta; ?></span></label>
+                    <label class="col-sm-3 control-label" for="update-v2-beta"><span data-toggle="tooltip" title="<?php echo $help_beta; ?>"><?php echo $entry_beta; ?></span></label>
                     <div class="col-sm-8">
                       <select id="update-v2-beta" class="form-control">
                         <option value="1"><?php echo $text_yes; ?></option>
@@ -57,83 +56,6 @@
                     <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="loading-bar"></div>
                   </div>
                   <h4 class="text-center" id="update-text"></h4>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="tab-update-v1">
-              <p><?php echo $text_update_description; ?></p>
-              <div class="well">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-username"><span data-toggle="tooltip" title="<?php echo $help_ftp_username; ?>"><?php echo $entry_ftp_username; ?></span></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="openbay_ftp_username" value="<?php echo $openbay_ftp_username; ?>" placeholder="<?php echo $entry_ftp_username; ?>" id="ftp-username" class="form-control ftp-setting" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-password"><span data-toggle="tooltip" title="<?php echo $help_ftp_password; ?>"><?php echo $entry_ftp_password; ?></span></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="openbay_ftp_pw" value="<?php echo $openbay_ftp_pw;?>" placeholder="<?php echo $entry_ftp_password; ?>" id="ftp-password" class="form-control ftp-setting" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-server"><span data-toggle="tooltip" title="<?php echo $help_ftp_server; ?>"><?php echo $entry_ftp_server; ?></span></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="openbay_ftp_server" value="<?php echo $openbay_ftp_server;?>" placeholder="<?php echo $entry_ftp_server; ?>" id="ftp-server" class="form-control ftp-setting" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-root"><span data-toggle="tooltip" title="<?php echo $help_ftp_root; ?>"><?php echo $entry_ftp_root; ?></span></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="openbay_ftp_rootpath" value="<?php echo $openbay_ftp_rootpath;?>" placeholder="<?php echo $entry_ftp_root; ?>" id="ftp-root" class="form-control ftp-setting" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="admin-directory"><span data-toggle="tooltip" title="<?php echo $help_ftp_admin; ?>"><?php echo $entry_ftp_admin; ?></span></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="openbay_admin_directory" value="<?php echo $openbay_admin_directory;?>" placeholder="<?php echo $entry_ftp_admin; ?>" id="admin-directory" class="form-control ftp-setting" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-pasv"><span data-toggle="tooltip" title="<?php echo $help_ftp_pasv; ?>"><?php echo $entry_ftp_pasv; ?></span></label>
-                  <div class="col-sm-8">
-                    <select name="openbay_ftp_pasv" id="ftp-pasv" class="form-control ftp-setting">
-                      <?php if ($openbay_ftp_pasv) { ?>
-                        <option value="1" selected="selected"><?php echo $text_yes; ?></option>
-                        <option value="0"><?php echo $text_no; ?></option>
-                      <?php } else { ?>
-                        <option value="1"><?php echo $text_yes; ?></option>
-                        <option value="0" selected="selected"><?php echo $text_no; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="ftp-beta"><span data-toggle="tooltip" title="<?php echo $help_ftp_beta; ?>"><?php echo $entry_ftp_beta; ?></span></label>
-                  <div class="col-sm-8">
-                    <select name="openbay_ftp_beta" id="ftp-beta" class="form-control ftp-setting">
-                      <?php if ($openbay_ftp_beta) { ?>
-                      <option value="1" selected="selected"><?php echo $text_yes; ?></option>
-                      <option value="0"><?php echo $text_no; ?></option>
-                      <?php } else { ?>
-                      <option value="1"><?php echo $text_yes; ?></option>
-                      <option value="0" selected="selected"><?php echo $text_no; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group" id="ftp-test-row">
-                  <label class="col-sm-3 control-label" for="button-clear-faq"><?php echo $text_test_connection; ?></label>
-                  <div class="col-sm-8">
-                    <button class="btn btn-primary" id="ftp-test"><?php echo $button_ftp_test; ?></button>
-                    <div class="btn btn-primary" style="display:none;" id="ftp-test-loading"><i class="fa fa-cog fa-lg fa-spin"></i></div>
-                  </div>
-                </div>
-                <div class="form-group" style="display:none;" id="ftp-update-row">
-                  <label class="col-sm-3 control-label" for="ftp-update-module"><?php echo $text_run_update; ?></label>
-                  <div class="col-sm-8">
-                    <button class="btn btn-primary" id="ftp-update-module"><?php echo $button_update; ?></button>
-                    <div class="btn btn-primary" style="display:none;" id="ftp-update-module-loading"><i class="fa fa-cog fa-lg fa-spin"></i></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -184,42 +106,6 @@
 </div>
 
 <script type="text/javascript"><!--
-  $('.ftp-setting').keypress(function() {
-    $('#ftp-update-module').hide();
-    $('#ftp-test-row').show();
-    $('#ftp-update-row').hide();
-  });
-
-  $('#ftp-test').bind('click', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-      url: 'index.php?route=extension/openbay/updatetest&token=<?php echo $token; ?>',
-      type: 'post',
-      data: $('.ftp-setting').serialize(),
-      dataType: 'json',
-      beforeSend: function() {
-        $('#ftp-test').hide();
-        $('#ftp-test-loading').show();
-      },
-      success: function(json) {
-        alert(json.msg);
-
-        if (json.connection == true) {
-          $('#ftp-test-row').hide();
-          $('#ftp-update-module').show();
-          $('#ftp-update-row').show();
-        }
-
-        $('#ftp-test').show();
-        $('#ftp-test-loading').hide();
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      }
-    });
-  });
-
   $('#button-patch').bind('click', function(e) {
     e.preventDefault();
 
@@ -259,31 +145,6 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         $('#button-clear-faq').empty().html('<?php echo $button_clear; ?>');
-        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      }
-    });
-  });
-
-  $('#ftp-update-module').bind('click', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-      url: 'index.php?route=extension/openbay/update&token=<?php echo $token; ?>',
-      type: 'post',
-      data: $('.ftp-setting').serialize(),
-      dataType: 'json',
-      beforeSend: function() {
-        $('#ftp-update-module').hide();
-        $('#ftp-update-module-loading').show();
-      },
-      success: function(json) {
-        alert(json.msg);
-        $('#text-version').text(json.version);
-        $('input[name=\'openbay_version\']').val(json.version);
-        $('#ftp-update-module').show();
-        $('#ftp-update-module-loading').hide();
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

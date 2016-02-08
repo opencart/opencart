@@ -94,8 +94,6 @@ final class Etsy {
 	}
 
 	private function setLogger() {
-		$this->load->library('log');
-
 		if(file_exists(DIR_LOGS . 'etsylog.log')) {
 			if(filesize(DIR_LOGS . 'etsylog.log') > ($this->max_log_size * 1000000)) {
 				rename(DIR_LOGS . 'etsylog.log', DIR_LOGS . '_etsylog_' . date('Y-m-d_H-i-s') . '.log');

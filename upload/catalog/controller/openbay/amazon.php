@@ -5,7 +5,6 @@ class ControllerOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->library('log');
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazon_order');
 		$this->load->language('openbay/amazon_order');
@@ -299,7 +298,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$logger->write("Finished processing the order");
 
 		$logger->write("Notifying Openbay::addOrder($order_id)");
-		$this->openbay->addOrder($order_id);
+		$this->openbay->orderNew($order_id);
 		$logger->write("Openbay notified");
 
 		$this->model_openbay_amazon_order->acknowledgeOrder($order_id);
@@ -317,8 +316,6 @@ class ControllerOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->library('log');
-		$this->load->library('openbay/amazon');
 		$this->load->model('openbay/amazon_listing');
 		$this->load->model('openbay/amazon_product');
 
@@ -416,9 +413,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		ob_start();
 
-		$this->load->library('openbay/amazon');
 		$this->load->model('openbay/amazon_product');
-		$this->load->library('log');
 		$logger = new Log('amazon_product.log');
 
 		$logger->write("AmazonProduct/inbound: incoming data");
@@ -577,7 +572,7 @@ class ControllerOpenbayAmazon extends Controller {
 		}
 	}
 
-	public function eventAddOrderHistory($order_id) {
+	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
 			$this->load->model('openbay/amazon_order');
 

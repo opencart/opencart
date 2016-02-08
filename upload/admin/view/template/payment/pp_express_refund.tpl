@@ -71,5 +71,5 @@ function refundAmount() {
     $('#partial_amount_row').show();
   }
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

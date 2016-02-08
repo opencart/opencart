@@ -1,18 +1,20 @@
 <?php
 class Proxy {
-	protected $data = array();
+	public function __get($key) {
+		return $this->{$key};
+	}	
 	
-	public function attach($method, $value) {
-		$this->data[$method] = $value;
+	public function __set($key, $value) {
+		 $this->{$key} = $value;
 	}
-		
-	public function __call($method, $args) {
-		if (isset($this->data[$method])) {
-			return call_user_func($this->data[$method], $args);	
+	
+	public function __call($key, $args) {
+		if (isset($this->{$key})) {		
+			return call_user_func($this->{$key}, $args);	
 		} else {
 			$trace = debug_backtrace();
-
-			throw new \Exception('Error in: ' . $trace[0]['file'] . ' line ' . $trace[0]['line'] . '!');
+			
+			exit('<b>Notice</b>:  Undefined property: Proxy::' . $key . ' in <b>' . $trace[1]['file'] . '</b> on line <b>' . $trace[1]['line'] . '</b>');
 		}
 	}
 }

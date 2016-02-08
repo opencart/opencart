@@ -1,46 +1,35 @@
 <?php
 // Site
-$_['site.base']        = substr(HTTP_SERVER, 7);
-$_['site.ssl']         = false;
+$_['site_base']        = substr(HTTP_SERVER, 7);
+$_['site_ssl']         = false;
 
 // Database
-$_['db.autostart']     = true;
-$_['db.type']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
-$_['db.hostname']      = DB_HOSTNAME;
-$_['db.username']      = DB_USERNAME;
-$_['db.password']      = DB_PASSWORD;
-$_['db.database']      = DB_DATABASE;
-$_['db.port']          = DB_PORT;
+$_['db_autostart']     = true;
+$_['db_type']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_hostname']      = DB_HOSTNAME;
+$_['db_username']      = DB_USERNAME;
+$_['db_password']      = DB_PASSWORD;
+$_['db_database']      = DB_DATABASE;
+$_['db_port']          = DB_PORT;
 
 // Autoload Libraries
-$_['library.autoload'] = array(
-	'cart/customer',
-	'cart/affiliate',
-	'cart/currency',
-	'cart/tax',
-	'cart/weight',
-	'cart/length',
-	'cart/cart',
+$_['library_autoload'] = array(
 	'openbay'
 );
 
 // Actions
-$_['action.pre_action'] = array(
-	'startup/setting',
+$_['action_pre_action'] = array(
+	'startup/startup',
 	'startup/error',
 	'startup/event',
-	'startup/session',
-	'startup/language',
-	'startup/currency',
-	'startup/customer_group',
-	'startup/tax',
-	'startup/tracking',
 	'startup/maintenance',
-	'startup/seo_url'
+	'startup/seo_url',
+	'startup/session'
 );
 
 // Action Events
-$_['action.event'] = array(
+$_['action_event'] = array(
 	'view/*/before' => 'event/theme',
-	//'model/*/after' => 'event/debug',
+	//'model/*/before' => 'event/debug/before'
+	//'model/*/after' => 'event/debug/after'
 );

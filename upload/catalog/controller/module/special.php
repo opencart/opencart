@@ -34,7 +34,7 @@ class ControllerModuleSpecial extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
 
-				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$price = false;

@@ -7,6 +7,7 @@ html, body {
 	font-size: 12px;
 	color: #666666;
 	text-rendering: optimizeLegibility;
+	/*background: #f9f9f9;*/
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -271,7 +272,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: right;
 	margin-right: 8px;
 }
-#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after {
+#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after, #column-left.active #menu > li li.open > a.parent:after {
 	font-family: FontAwesome;
 	content: "\f107";
 	float: right;

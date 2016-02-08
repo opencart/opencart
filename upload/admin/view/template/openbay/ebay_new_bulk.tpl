@@ -675,7 +675,6 @@
 
                   var html_inj = '';
                   var html_inj2 = '';
-                  var specific_count = 0;
                   var show_other = 0;
                   var show_other_value = '';
 
@@ -725,13 +724,13 @@
 
                                     html_inj += '<div class="row">';
                                       html_inj += '<div class="col-sm-7">';
-                                        html_inj += '<select name="feat[' + option_specific_value.name + ']" class="openbay_data_' + id + ' form-control" id="spec_sel_' + specific_count + '" onchange="toggleSpecOther(' + specific_count + ');">' + html_inj2 + '</select>';
+                                        html_inj += '<select name="feat[' + option_specific_value.name + ']" class="openbay_data_' + id + ' form-control" id="spec_sel_' + id + '" onchange="toggleSpecOther(' + id + ');">' + html_inj2 + '</select>';
                                       html_inj += '</div>';
 
                                       if (show_other == true) {
-                                        html_inj += '<div class="col-sm-5" id="spec_' + specific_count + '_other">';
+                                        html_inj += '<div class="col-sm-5" id="spec_' + id + '_other">';
                                       } else {
-                                        html_inj += '<div class="col-sm-5" id="spec_' + specific_count + '_other" style="display:none;">';
+                                        html_inj += '<div class="col-sm-5" id="spec_' + id + '_other" style="display:none;">';
                                       }
                                       html_inj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother[' + option_specific_value.name + ']" class="form-control openbay_data_' + id + '" value="' + show_other_value + '"/>';
                                       html_inj += '</div>';
@@ -755,8 +754,6 @@
                                   }
 
                                   html_inj += '</div>';
-
-                                specific_count++;
                                 html_inj += '</div>';
                               });
                             html_inj += '</div>';

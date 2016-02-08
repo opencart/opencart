@@ -8,7 +8,7 @@ final class Loader {
 	
 	public function controller($route, $data = array()) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
@@ -23,16 +23,16 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if ($result) {
-			return $result;
+		if (!($output instanceof Exception)) {
+			return $output;
+		} else {
+			return false;
 		}
-		
-		return $output;
 	}
 	
 	public function model($route) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
@@ -43,7 +43,7 @@ final class Loader {
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
-				$proxy->attach($method, $this->callback($this->registry, $route . '/' . $method));
+				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
 			}
 
 			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
@@ -83,7 +83,7 @@ final class Loader {
 
 	public function library($route) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 			
 		$file = DIR_SYSTEM . 'library/' . $route . '.php';
 		$class = str_replace('/', '\\', $route);
@@ -118,13 +118,15 @@ final class Loader {
 	public function language($route) {
 		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
 		
-		$this->registry->get('language')->load($route);
+		$output = $this->registry->get('language')->load($route);
 		
 		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
+		
+		return $output;
 	}
 	
 	protected function callback($registry, $route) {
-		return function($args) use($registry, &$route) {
+		return function($args) use($registry, &$route) {			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
 			
@@ -149,32 +151,12 @@ final class Loader {
 			} else {
 				throw new \Exception('Error: Could not call model/' . $route . '!');
 			}
-			
-			if ($route == 'checkout/order/addOrderHistory') {
-				//$registry->get('log')->write('hi');
-				
-				//$test = array();
-				
-				//$test[] = &$route;
-				
-				//$test = array_merge($test, $args);
-				
-				//$test[] = &$output;
-				
-				//$registry->get('log')->write('after');
-				//$registry->get('log')->write($test);
-			}
 													
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route), $args, array(&$output)));
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route, &$output), $args));
 			
 			if ($result) {
 				return $result;
-			}
-			
-			if ($route == 'checkout/order/addOrderHistory') {
-				//$registry->get('log')->write('hi');
-				$registry->get('log')->write(array_merge(array(&$route), $args, array(&$output)));
 			}
 						
 			return $output;

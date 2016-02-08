@@ -58,29 +58,6 @@ $('a.thumbnail').on('click', function(e) {
 
 	$('#modal-image').modal('hide');
 });
-
-<?php } else { ?>
-// Get the current selection
-var range = window.getSelection().getRangeAt(0);
-var node = range.startContainer;
-var startOffset = range.startOffset;  // where the range starts
-var endOffset = range.endOffset;      // where the range ends
-
-$('a.thumbnail').on('click', function(e) {
-	e.preventDefault();
-
-    // Create a new range from the orginal selection
-    var range = document.createRange();
-    range.setStart(node, startOffset);
-    range.setEnd(node, endOffset);
-
-    var img = document.createElement('img');
-	img.src = $(this).attr('href');
-
-	range.insertNode(img);
-
-	$('#modal-image').modal('hide');
-});
 <?php } ?>
 
 $('a.directory').on('click', function(e) {

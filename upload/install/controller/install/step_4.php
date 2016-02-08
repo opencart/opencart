@@ -44,8 +44,8 @@ class ControllerInstallStep4 extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['maxmind'] = $this->url->link('3rd-party/maxmind');
-		$data['openbay'] = $this->url->link('3rd-party/openbay');
+		$data['maxmind'] = $this->url->link('3rd_party/maxmind');
+		$data['openbay'] = $this->url->link('3rd_party/openbay');
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');

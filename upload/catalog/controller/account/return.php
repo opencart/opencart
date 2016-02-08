@@ -158,6 +158,7 @@ class ControllerAccountReturn extends Controller {
 			$data['text_status'] = $this->language->get('text_status');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_product'] = $this->language->get('text_product');
+			$data['text_reason'] = $this->language->get('text_reason');
 			$data['text_comment'] = $this->language->get('text_comment');
 			$data['text_history'] = $this->language->get('text_history');
 

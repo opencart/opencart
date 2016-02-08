@@ -45,30 +45,6 @@
               <b><?php echo $text_shipping_method; ?></b> <?php echo $shipping_method; ?>
               <?php } ?></td>
           </tr>
-          <tr>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-          </tr>
-          <tr>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-          </tr>
-          <tr>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-          </tr>
-          <tr>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-            <td class="text-left"></td>
-          </tr>
         </tbody>
       </table>
       <table class="table table-bordered table-hover">

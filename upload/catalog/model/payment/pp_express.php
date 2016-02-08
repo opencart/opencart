@@ -1,18 +1,5 @@
 <?php
 class ModelPaymentPPExpress extends Model {
-	public function cleanReturn($data) {
-		$data = explode('&', $data);
-
-		$arr = array();
-
-		foreach ($data as $k=>$v) {
-			$tmp = explode('=', $v);
-			$arr[$tmp[0]] = urldecode($tmp[1]);
-		}
-
-		return $arr;
-	}
-
 	public function call($data) {
 		if ($this->config->get('pp_express_test')) {
 			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
@@ -361,4 +348,17 @@ class ModelPaymentPPExpress extends Model {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
 	}	
+	
+	public function cleanReturn($data) {
+		$data = explode('&', $data);
+
+		$arr = array();
+
+		foreach ($data as $k=>$v) {
+			$tmp = explode('=', $v);
+			$arr[$tmp[0]] = urldecode($tmp[1]);
+		}
+
+		return $arr;
+	}
 }

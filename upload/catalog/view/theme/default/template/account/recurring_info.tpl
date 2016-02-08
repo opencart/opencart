@@ -23,38 +23,13 @@
         </thead>
         <tbody>
           <tr>
-            <td style="width: 50%;"><table style="width: 100%;">
-                <tr>
-                  <td class="text-left" style="width: 50%;"><b><?php echo $text_order_recurring_id; ?></b></td>
-                  <td class="text-left" style="width: 50%;">#<?php echo $order_recurring_id; ?></td>
-                </tr>
-                <tr>
-                  <td class="text-left"><b><?php echo $text_date_added; ?></b></td>
-                  <td class="text-left"><?php echo $date_added; ?></td>
-                </tr>
-                <tr>
-                  <td class="text-left"><b><?php echo $text_status; ?></b></td>
-                  <td class="text-left"><?php echo $status; ?></td>
-                </tr>
-                <tr>
-                  <td class="text-left"><b><?php echo $text_payment_method; ?></b></td>
-                  <td class="text-left"><?php echo $payment_method; ?></td>
-                </tr>
-              </table></td>
-            <td style="width: 50%;"><table style="width: 100%;">
-                <tr>
-                  <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b></td>
-                  <td class="text-left" style="width: 50%;"><a href="<?php echo $order; ?>">#<?php echo $order_id; ?></a></td>
-                </tr>
-                <tr>
-                  <td class="text-left"><b><?php echo $text_product; ?></b></td>
-                  <td class="text-left"><a href="<?php echo $product; ?>"><?php echo $product_name; ?></a></td>
-                </tr>
-                <tr>
-                  <td class="text-left"><b><?php echo $text_quantity; ?></b></td>
-                  <td class="text-left"><?php echo $product_quantity; ?></td>
-                </tr>
-              </table></td>
+            <td class="text-left" style="width: 50%;"><b><?php echo $text_order_recurring_id; ?></b> #<?php echo $order_recurring_id; ?><br />
+              <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?><br />
+              <b><?php echo $text_status; ?></b> <?php echo $status; ?><br />
+              <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?></td>
+            <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b> <a href="<?php echo $order; ?>">#<?php echo $order_id; ?></a><br />
+              <b><?php echo $text_product; ?></b> <a href="<?php echo $product; ?>"><?php echo $product_name; ?></a><br />
+              <b><?php echo $text_quantity; ?></b> <?php echo $product_quantity; ?></td>
           </tr>
         </tbody>
       </table>
@@ -67,8 +42,8 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%;"><p style="margin: 5px;"><?php echo $recurring_description; ?></p></td>
-            <td class="text-left" style="width: 50%;"><p style="margin: 5px;"><?php echo $reference; ?></p></td>
+            <td class="text-left" style="width: 50%;"><?php echo $recurring_description; ?></td>
+            <td class="text-left" style="width: 50%;"><?php echo $reference; ?></td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +52,7 @@
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_date_added; ?></td>
-            <td class="text-center"><?php echo $column_type; ?></td>
+            <td class="text-left"><?php echo $column_type; ?></td>
             <td class="text-right"><?php echo $column_amount; ?></td>
           </tr>
         </thead>
@@ -86,7 +61,7 @@
           <?php foreach ($transactions as $transaction) { ?>
           <tr>
             <td class="text-left"><?php echo $transaction['date_added']; ?></td>
-            <td class="text-center"><?php echo $transaction['type']; ?></td>
+            <td class="text-left"><?php echo $transaction['type']; ?></td>
             <td class="text-right"><?php echo $transaction['amount']; ?></td>
           </tr>
           <?php } ?>

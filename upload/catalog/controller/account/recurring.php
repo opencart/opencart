@@ -2,7 +2,7 @@
 class ControllerAccountRecurring extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/recurring', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
@@ -38,7 +38,7 @@ class ControllerAccountRecurring extends Controller {
 		
 		$data['text_empty'] = $this->language->get('text_empty');
 		
-		$data['column_recurring_id'] = $this->language->get('column_recurring_id');
+		$data['column_order_recurring_id'] = $this->language->get('column_order_recurring_id');
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
@@ -115,7 +115,7 @@ class ControllerAccountRecurring extends Controller {
 		
 		$this->load->model('account/recurring');
 
-		$recurring_info = $this->model_account_recurring->getOrderRecurring($this->request->get['order_recurring_id']);
+		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
 
 		if ($recurring_info) {
 			$this->document->setTitle($this->language->get('text_recurring'));
@@ -181,7 +181,6 @@ class ControllerAccountRecurring extends Controller {
 			$data['order_id'] = $recurring_info['order_id'];
 			$data['product_name'] = $recurring_info['product_name'];
 			$data['product_quantity'] = $recurring_info['product_quantity'];
-			
 			$data['recurring_description'] = $recurring_info['recurring_description'];
 			$data['reference'] = $recurring_info['reference'];
 			
@@ -198,10 +197,10 @@ class ControllerAccountRecurring extends Controller {
 				);
 			}
 			
-			$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id'], true);
 			$data['order'] = $this->url->link('account/order/info', 'order_id=' . $recurring_info['order_id'], true);
+			$data['product'] = $this->url->link('product/product', 'product_id=' . $recurring_info['product_id'], true);
 			
-			$data['button'] = $this->load->controller('payment/' . $recurring_info['payment_code'] . '/recurringButtons');
+			$data['recurring'] = $this->load->controller('payment/' . $recurring_info['payment_code'] . '/recurring');
 			
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

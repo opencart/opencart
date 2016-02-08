@@ -23,16 +23,38 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><b><?php echo $text_order_recurring_id; ?></b> #<?php echo $order_recurring_id; ?><br />
-              <p><b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></p>
-              <p><b><?php echo $text_status; ?></b> <?php echo $status; ?></p>
-              <p><b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?></p></td>
-            <td class="left" style="width: 50%; vertical-align: top;">
-            <p><b><?php echo $text_order_id; ?></b> <a href="<?php echo $order; ?>">#<?php echo $order_id; ?></a></p>
-            
-              <p><b><?php echo $text_product; ?></b><a href="<?php echo $product; ?>"><?php echo $product_name; ?></a></p>
-              <p><b><?php echo $text_quantity; ?></b> <?php echo $product_quantity; ?></p>
-              </td>
+            <td style="width: 50%;"><table style="width: 100%;">
+                <tr>
+                  <td class="text-left" style="width: 50%;"><b><?php echo $text_order_recurring_id; ?></b></td>
+                  <td class="text-left" style="width: 50%;">#<?php echo $order_recurring_id; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b><?php echo $text_date_added; ?></b></td>
+                  <td class="text-left"><?php echo $date_added; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b><?php echo $text_status; ?></b></td>
+                  <td class="text-left"><?php echo $status; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b><?php echo $text_payment_method; ?></b></td>
+                  <td class="text-left"><?php echo $payment_method; ?></td>
+                </tr>
+              </table></td>
+            <td style="width: 50%;"><table style="width: 100%;">
+                <tr>
+                  <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b></td>
+                  <td class="text-left" style="width: 50%;"><a href="<?php echo $order; ?>">#<?php echo $order_id; ?></a></td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b><?php echo $text_product; ?></b></td>
+                  <td class="text-left"><a href="<?php echo $product; ?>"><?php echo $product_name; ?></a></td>
+                </tr>
+                <tr>
+                  <td class="text-left"><b><?php echo $text_quantity; ?></b></td>
+                  <td class="text-left"><?php echo $product_quantity; ?></td>
+                </tr>
+              </table></td>
           </tr>
         </tbody>
       </table>
@@ -75,7 +97,7 @@
           <?php } ?>
         </tbody>
       </table>
-      <?php echo $buttons; ?><?php echo $content_bottom; ?></div>
+      <?php echo $recurring; ?><?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>

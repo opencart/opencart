@@ -33,17 +33,41 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><?php if ($invoice_no) { ?>
+            <td class="text-left" style="width: 50%;"><?php if ($invoice_no) { ?>
               <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
               <?php } ?>
               <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
               <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><?php if ($payment_method) { ?>
+            <td class="text-left" style="width: 50%;"><?php if ($payment_method) { ?>
               <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
               <?php } ?>
               <?php if ($shipping_method) { ?>
               <b><?php echo $text_shipping_method; ?></b> <?php echo $shipping_method; ?>
               <?php } ?></td>
+          </tr>
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+          </tr>
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+          </tr>
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+          </tr>
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
+            <td class="text-left"></td>
           </tr>
         </tbody>
       </table>
@@ -161,7 +185,7 @@
           <tr>
             <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
           </tr>
-          <?php } ?>          
+          <?php } ?>
         </tbody>
       </table>
       <?php } ?>

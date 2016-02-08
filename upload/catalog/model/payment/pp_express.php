@@ -14,7 +14,6 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-
 		if ($this->config->get('pp_express_test')) {
 			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
 			$api_user = $this->config->get('pp_express_sandbox_username');
@@ -64,25 +63,6 @@ class ModelPaymentPPExpress extends Model {
 		curl_close($ch);
 
 		return $this->cleanReturn($result);
-	}
-
-	public function createToken($len = 32) {
-		$base = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
-		$max = strlen($base)-1;
-		$activate_code = '';
-		mt_srand((float)microtime()*1000000);
-
-		while (strlen($activate_code)<$len+1) {
-			$activate_code .= $base{mt_rand(0, $max)};
-		}
-
-		return $activate_code;
-	}
-
-	public function log($data, $title = null) {
-		if ($this->config->get('pp_express_debug')) {
-			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
-		}
 	}
 
 	public function getMethod($address, $total) {
@@ -318,17 +298,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $data;
 	}
-
-	public function getTransactionRow($transaction_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
-
-		if ($qry->num_rows > 0) {
-			return $qry->row;
-		} else {
-			return false;
-		}
-	}
-
+	
 	public function getTotalCaptured($paypal_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `pending_reason` != 'authorization' AND `pending_reason` != 'paymentreview' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
 
@@ -340,13 +310,22 @@ class ModelPaymentPPExpress extends Model {
 
 		return $qry->row['amount'];
 	}
+	
+	public function getTransactionRow($transaction_id) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
+
+		if ($qry->num_rows > 0) {
+			return $qry->row;
+		} else {
+			return false;
+		}
+	}
 
 	public function updateOrder($capture_status, $order_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function recurringCancel($ref) {
-
 		$data = array(
 			'METHOD' => 'ManageRecurringPaymentsProfileStatus',
 			'PROFILEID' => $ref,
@@ -363,4 +342,23 @@ class ModelPaymentPPExpress extends Model {
 		 */
 		return true;
 	}
+
+	public function createToken($len = 32) {
+		$base = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
+		$max = strlen($base)-1;
+		$activate_code = '';
+		mt_srand((float)microtime()*1000000);
+
+		while (strlen($activate_code)<$len+1) {
+			$activate_code .= $base{mt_rand(0, $max)};
+		}
+
+		return $activate_code;
+	}
+
+	public function log($data, $title = null) {
+		if ($this->config->get('pp_express_debug')) {
+			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
+		}
+	}	
 }

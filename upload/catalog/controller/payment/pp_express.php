@@ -1879,34 +1879,6 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 	}
 
-	public function recurringCancel() {
-		//cancel an active recurring
-
-		$this->load->model('account/recurring');
-		$this->load->model('payment/pp_express');
-		$this->load->language('account/recurring');
-
-		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
-
-		if ($recurring && !empty($recurring['reference'])) {
-
-			$result = $this->model_payment_pp_express->recurringCancel($recurring['reference']);
-
-			if (isset($result['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
-
-				$this->session->data['success'] = $this->language->get('text_cancelled');
-			} else {
-				$this->session->data['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
-			}
-		} else {
-			$this->session->data['error'] = $this->language->get('error_not_found');
-		}
-
-		$this->response->redirect($this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'], true));
-	}
-
 	protected function validateCoupon() {
 		$this->load->model('total/coupon');
 
@@ -1977,26 +1949,61 @@ class ControllerPaymentPPExpress extends Controller {
 			return false;
 		}
 	}
-
-	public function recurringButtons() {
+	
+	public function recurring() {
 		$this->load->language('payment/pp_express');
+		
+		if (isset($this->request->get['order_recurring_id'])) {
+			$order_recurring_id = $this->request->get['order_recurring_id'];
+		} else {
+			$order_recurring_id = 0;
+		}
+		
+		$this->load->model('account/recurring');
 
-		$recurring = $this->model_account_recurring->getProfile($this->request->get['order_recurring_id']);
+		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
+		
+		if ($recurring_info) {
+			$data['button_continue'] = $this->language->get('button_continue');
+			$data['button_cancel'] = $this->language->get('button_cancel_recurring');
+			
+			$data['continue'] = $this->url->link('account/recurring', '', true);	
+			
+			//if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
+				$data['cancel'] = $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id=' . $order_recurring_id, true);
+			//} else {
+			//	$data['cancel'] = '';
+			//}
 
-		$data['buttons'] = array();
+			return $this->load->view('payment/pp_express_recurring', $data);
+		}
+	}
+	
+	public function recurringCancel() {
+		$this->load->language('account/recurring');
+		
+		//cancel an active recurring
+		$this->load->model('account/recurring');
 
-		if ($recurring['status'] == 2 || $recurring['status'] == 3) {
-			$data['buttons'][] = array(
-				'text' => $this->language->get('button_cancel_recurring'),
-				'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id=' . $this->request->get['recurring_id'], true)
-			);
+		$recurring_info = $this->model_account_recurring->getOrderRecurring($this->request->get['order_recurring_id']);
+
+		if ($recurring_info && !empty($recurring_info['reference'])) {
+			$this->load->model('payment/pp_express');
+			
+			$result = $this->model_payment_pp_express->recurringCancel($recurring_info['reference']);
+
+			if (isset($result['PROFILEID'])) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
+
+				$this->session->data['success'] = $this->language->get('text_cancelled');
+			} else {
+				$this->session->data['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
+			}
+		} else {
+			$this->session->data['error'] = $this->language->get('error_not_found');
 		}
 
-		$data['buttons'][] = array(
-			'text' => $this->language->get('button_continue'),
-			'link' => $this->url->link('account/recurring', '', true)
-		);
-
-		return $this->load->view('sale/recurring_button', $data);
-	}
+		$this->response->redirect($this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'], true));
+	}	
 }

@@ -683,6 +683,7 @@ class ControllerCustomerCustomer extends Controller {
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$data['entry_language'] = $this->language->get('entry_language');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
@@ -865,6 +866,18 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
+
+		if (isset($this->request->post['language_code'])) {
+			$data['language_code'] = $this->request->post['language_code'];
+		} elseif (!empty($customer_info)) {
+			$data['language_code'] = $customer_info['language_code'];
+		} else {
+			$data['language_code'] = '';
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];

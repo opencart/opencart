@@ -19,6 +19,7 @@ $_['button_express_coupon']   = 'Add';
 $_['button_express_confirm']  = 'Confirm';
 $_['button_express_login']    = 'Continue to PayPal';
 $_['button_express_shipping'] = 'Update shipping';
+$_['button_cancel']           = 'Cancel Recurring Payment';
 
 // Error
 $_['error_heading_title']	  = 'There was an error';

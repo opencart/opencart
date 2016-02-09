@@ -68,7 +68,7 @@ class ControllerRecurringPPExpress extends Controller {
 				'BUTTONSOURCE' => 'OpenCart_2.0_EC'
 			);
 		
-			$this->log($data, 'Call data');
+			
 		
 			$defaults = array(
 				CURLOPT_POST => 1,
@@ -83,8 +83,8 @@ class ControllerRecurringPPExpress extends Controller {
 				CURLOPT_SSL_VERIFYHOST => 0,
 				CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
 			);
-		
-			$ch = curl_init();
+		$this->log($data, 'Call data');
+			
 		
 			curl_setopt_array($ch, $defaults);
 		
@@ -98,9 +98,7 @@ class ControllerRecurringPPExpress extends Controller {
 
 
 
-
-
-
+			$curl = curl_init($api_url);
 
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
@@ -109,6 +107,7 @@ class ControllerRecurringPPExpress extends Controller {
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
+			$ressponse = curl_exec($ch);
 
 			$this->load->model('payment/pp_express');
 

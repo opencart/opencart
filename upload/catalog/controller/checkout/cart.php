@@ -421,6 +421,8 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
+			
+			$json['redirect'] = $this->url->link('checkout/cart');
 
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
@@ -447,7 +449,9 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
-
+                        
+                        $json['redirect'] = $this->url->link('checkout/cart');
+                        
 			// Totals
 			$this->load->model('extension/extension');
 

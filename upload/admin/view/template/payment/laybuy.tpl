@@ -92,12 +92,6 @@
                       <option value="4" <?php if ($laybuy_max_months == '4') { echo 'selected="selected"'; } ?> >4</option>
                       <option value="5" <?php if ($laybuy_max_months == '5') { echo 'selected="selected"'; } ?> >5</option>
                       <option value="6" <?php if ($laybuy_max_months == '6') { echo 'selected="selected"'; } ?> >6</option>
-                      <option value="7" <?php if ($laybuy_max_months == '7') { echo 'selected="selected"'; } ?> >7</option>
-                      <option value="8" <?php if ($laybuy_max_months == '8') { echo 'selected="selected"'; } ?> >8</option>
-                      <option value="9" <?php if ($laybuy_max_months == '9') { echo 'selected="selected"'; } ?> >9</option>
-                      <option value="10" <?php if ($laybuy_max_months == '10') { echo 'selected="selected"'; } ?> >10</option>
-                      <option value="11" <?php if ($laybuy_max_months == '11') { echo 'selected="selected"'; } ?> >11</option>
-                      <option value="12" <?php if ($laybuy_max_months == '12') { echo 'selected="selected"'; } ?> >12</option>
 			      </select>
 			    </div>
 			  </div>

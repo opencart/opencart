@@ -34,7 +34,7 @@ class ControllerProductCategory extends Controller {
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = (int)$this->request->get['limit'];
+			$limit = ((int)$this->request->get['limit'] > 0) ? (int)$this->request->get['limit'] :  $this->config->get('config_product_limit');
 		} else {
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}

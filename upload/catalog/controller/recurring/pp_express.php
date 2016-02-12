@@ -60,43 +60,20 @@ class ControllerRecurringPPExpress extends Controller {
 				$api_signature = $this->config->get('pp_express_signature');
 			}
 		
-			$settings = array(
+			$request = array(
 				'USER'         => $api_user,
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
-				'BUTTONSOURCE' => 'OpenCart_2.0_EC'
-			);
-		
-			
-		
-			$defaults = array(
-				CURLOPT_POST => 1,
-				CURLOPT_HEADER => 0,
-				CURLOPT_URL => $api_url,
-				CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
-				CURLOPT_FRESH_CONNECT => 1,
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_FORBID_REUSE => 1,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_SSL_VERIFYPEER => 0,
-				CURLOPT_SSL_VERIFYHOST => 0,
-				CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
-			);
-		$this->log($data, 'Call data');
-			
-		
-			curl_setopt_array($ch, $defaults);
-		
-			if (!$result = curl_exec($ch)) {
-				$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
-			}
-		
-			$this->log($result, 'Result');
-		
-			curl_close($ch);
+				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
+				'METHOD'       => 'SetExpressCheckout'
+				PAYMENTREQUEST_0_AMT : // payment amount
+				PAYMENTREQUEST_0_PAYMENTACTION : // type of transaction
+				PAYMENTREQUEST_0_CURRENCYCODE : // payment currency code
+				returnUrl : // redirect URL for use if the customer authorizes payment
+				cancelUrl : // redirect URL for use if the customer does not authorize payment
 
-
+			);
 
 			$curl = curl_init($api_url);
 
@@ -107,7 +84,19 @@ class ControllerRecurringPPExpress extends Controller {
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-			$ressponse = curl_exec($ch);
+			$response = curl_exec($curl);
+			
+			if (!$response) {
+				$this->log(array(
+					'error' => curl_error($ch), 
+					'errno' => curl_errno($ch)), 'cURL failed'
+				);
+			}
+			
+			curl_close($curl);
+
+
+
 
 			$this->load->model('payment/pp_express');
 

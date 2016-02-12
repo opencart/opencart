@@ -1,4 +1,9 @@
 <?php
+// FPD fix
+if (!defined('DIR_SYSTEM')) {
+	header('Location: /index.php');
+	exit;
+}
 // Error Reporting
 error_reporting(E_ALL);
 

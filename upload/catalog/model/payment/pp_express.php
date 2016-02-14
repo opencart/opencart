@@ -1,57 +1,5 @@
 <?php
 class ModelPaymentPPExpress extends Model {
-	public function call($data) {
-		if ($this->config->get('pp_express_test')) {
-			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-			$api_user = $this->config->get('pp_express_sandbox_username');
-			$api_password = $this->config->get('pp_express_sandbox_password');
-			$api_signature = $this->config->get('pp_express_sandbox_signature');
-		} else {
-			$api_url = 'https://api-3t.paypal.com/nvp';
-			$api_user = $this->config->get('pp_express_username');
-			$api_password = $this->config->get('pp_express_password');
-			$api_signature = $this->config->get('pp_express_signature');
-		}
-
-		$settings = array(
-			'USER'         => $api_user,
-			'PWD'          => $api_password,
-			'SIGNATURE'    => $api_signature,
-			'VERSION'      => '109.0',
-			'BUTTONSOURCE' => 'OpenCart_2.0_EC'
-		);
-
-		$this->log($data, 'Call data');
-
-		$defaults = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $api_url,
-			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
-		);
-
-		$ch = curl_init();
-
-		curl_setopt_array($ch, $defaults);
-
-		if (!$result = curl_exec($ch)) {
-			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
-		}
-
-		$this->log($result, 'Result');
-
-		curl_close($ch);
-
-		return $this->cleanReturn($result);
-	}
-
 	public function getMethod($address, $total) {
 		$this->load->language('payment/pp_express');
 
@@ -312,14 +260,56 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function recurringCancel($ref) {
-		$data = array(
-			'METHOD' => 'ManageRecurringPaymentsProfileStatus',
-			'PROFILEID' => $ref,
-			'ACTION' => 'Cancel'
+	public function call($data) {
+		if ($this->config->get('pp_express_test')) {
+			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_sandbox_username');
+			$api_password = $this->config->get('pp_express_sandbox_password');
+			$api_signature = $this->config->get('pp_express_sandbox_signature');
+		} else {
+			$api_url = 'https://api-3t.paypal.com/nvp';
+			$api_user = $this->config->get('pp_express_username');
+			$api_password = $this->config->get('pp_express_password');
+			$api_signature = $this->config->get('pp_express_signature');
+		}
+
+		$settings = array(
+			'USER'         => $api_user,
+			'PWD'          => $api_password,
+			'SIGNATURE'    => $api_signature,
+			'VERSION'      => '109.0',
+			'BUTTONSOURCE' => 'OpenCart_2.0_EC'
 		);
 
-		return $this->call($data);
+		$this->log($data, 'Call data');
+
+		$defaults = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => $api_url,
+			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
+		);
+
+		$ch = curl_init();
+
+		curl_setopt_array($ch, $defaults);
+
+		if (!$result = curl_exec($ch)) {
+			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
+		}
+
+		$this->log($result, 'Result');
+
+		curl_close($ch);
+
+		return $this->cleanReturn($result);
 	}
 
 	public function recurringPayments() {

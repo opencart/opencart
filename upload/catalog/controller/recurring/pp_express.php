@@ -34,7 +34,7 @@ class ControllerRecurringPPExpress extends Controller {
 	public function cancel() {
 		$json = array();
 		
-		$this->load->language('recurring/recurring');
+		$this->load->language('recurring/pp_express');
 		
 		//cancel an active recurring
 		$this->load->model('account/recurring');
@@ -66,13 +66,10 @@ class ControllerRecurringPPExpress extends Controller {
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
 				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
-				'METHOD'       => 'SetExpressCheckout'
-				PAYMENTREQUEST_0_AMT : // payment amount
-				PAYMENTREQUEST_0_PAYMENTACTION : // type of transaction
-				PAYMENTREQUEST_0_CURRENCYCODE : // payment currency code
-				returnUrl : // redirect URL for use if the customer authorizes payment
-				cancelUrl : // redirect URL for use if the customer does not authorize payment
-
+				'METHOD'       => 'SetExpressCheckout',
+				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
+				'PROFILEID'    => $recurring_info['reference'],
+				'ACTION'       => 'Cancel'
 			);
 
 			$curl = curl_init($api_url);
@@ -88,26 +85,20 @@ class ControllerRecurringPPExpress extends Controller {
 			
 			if (!$response) {
 				$this->log(array(
-					'error' => curl_error($ch), 
-					'errno' => curl_errno($ch)), 'cURL failed'
+					'error' => curl_error($curl), 
+					'errno' => curl_errno($curl)), 'cURL failed'
 				);
 			}
 			
 			curl_close($curl);
+			
+			$response_info = array();
+			
+			parse_str($response, $response_info);
 
-
-
-
-			$this->load->model('payment/pp_express');
-
-
-
-			$result = $this->model_payment_pp_express->recurringCancel($recurring_info['reference']);
-
-
-			if (isset($result['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
+			if (isset($response_info['PROFILEID'])) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '4' WHERE `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "' LIMIT 1");
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {

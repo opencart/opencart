@@ -21,11 +21,11 @@ class ControllerRecurringPPExpress extends Controller {
 			
 			$data['continue'] = $this->url->link('account/recurring', '', true);	
 			
-			//if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
+			if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
 				$data['order_recurring_id'] = $order_recurring_id;
-			//} else {
-			//	$data['order_recurring_id'] = '';
-			//}
+			} else {
+				$data['order_recurring_id'] = '';
+			}
 
 			return $this->load->view('recurring/pp_express', $data);
 		}
@@ -50,18 +50,18 @@ class ControllerRecurringPPExpress extends Controller {
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_sandbox_username');
+				$api_username = $this->config->get('pp_express_sandbox_username');
 				$api_password = $this->config->get('pp_express_sandbox_password');
 				$api_signature = $this->config->get('pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_username');
+				$api_username = $this->config->get('pp_express_username');
 				$api_password = $this->config->get('pp_express_password');
 				$api_signature = $this->config->get('pp_express_signature');
 			}
 		
 			$request = array(
-				'USER'         => $api_user,
+				'USER'         => $api_username,
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
@@ -98,11 +98,11 @@ class ControllerRecurringPPExpress extends Controller {
 
 			if (isset($response_info['PROFILEID'])) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '4' WHERE `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '4' WHERE `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "'");
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {
-				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
+				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $response_info['L_LONGMESSAGE0']);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');

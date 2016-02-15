@@ -97,7 +97,7 @@ class ControllerRecurringPPExpress extends Controller {
 			parse_str($response, $response_info);
 
 			if (isset($response_info['PROFILEID'])) {
-				$this->model_account_recurring->addOrderRecurringStatus($order_recurring_id, 4);
+				$this->model_account_recurring->editOrderRecurringStatus($order_recurring_id, 4);
 				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');

@@ -97,8 +97,8 @@ class ControllerRecurringPPExpress extends Controller {
 			parse_str($response, $response_info);
 
 			if (isset($response_info['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '4' WHERE `order_recurring_id` = '" . (int)$recurring_info['order_recurring_id'] . "'");
+				$this->model_account_recurring->addOrderRecurringStatus($order_recurring_id, 4);
+				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {

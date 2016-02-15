@@ -255,7 +255,7 @@ class ModelPaymentPPExpress extends Model {
 			return false;
 		}
 	}
-
+		
 	public function updateOrder($capture_status, $order_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}

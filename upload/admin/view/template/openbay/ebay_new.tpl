@@ -1987,10 +1987,8 @@
   }
 
   $('#button-verify').bind('click', function() {
-    // bind latest changes for summernote
-    $('#description-field').val($('#description-field').code());
-
     var err = 0;
+
     $('.listing-error').remove();
 
     if ($('.checkbox-ebay-image:checked').length > 0) {

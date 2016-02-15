@@ -239,7 +239,7 @@
                   $('#search-result-container tbody').html(html);
                   $('#search-result-container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
               } else {
-                  $('#search-error').empty().text('<i class="fa fa-exclamation-circle"></i><?php echo $text_no_results; ?>').show();
+                  $('#search-error').empty().html('<i class="fa fa-exclamation-circle"></i><?php echo $text_no_results; ?>').show();
               }
           }
 

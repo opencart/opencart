@@ -84,10 +84,7 @@ class ControllerRecurringPPExpress extends Controller {
 			$response = curl_exec($curl);
 			
 			if (!$response) {
-				$this->log(array(
-					'error' => curl_error($curl), 
-					'errno' => curl_errno($curl)), 'cURL failed'
-				);
+				$this->log(sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl)));
 			}
 			
 			curl_close($curl);

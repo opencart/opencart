@@ -402,10 +402,16 @@ class ControllerPaymentPPExpress extends Controller {
 	public function order() {
 		if ($this->config->get('pp_express_status')) {
 			$this->load->language('payment/pp_express_order');
-			
+		
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}	
+					
 			$this->load->model('payment/pp_express');
 			
-			$paypal_info = $this->model_payment_pp_express->getOrder($this->request->get['order_id']);
+			$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
 
 			if ($paypal_info) {
 				$data['text_payment'] = $this->language->get('text_payment');				
@@ -558,12 +564,17 @@ class ControllerPaymentPPExpress extends Controller {
 
 				$response = curl_exec($curl);
 
-				curl_close($curl);
-
 				if (!$response) {
-					$json['error'] = $this->language->get('error_curl');
+					$json['error'] = sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl));
 				}
 				
+				curl_close($curl);
+			
+				$response_info = array();
+				
+				parse_str($response, $response_info);
+			
+							
 				// remove after
 				$transaction_data = array(
 					'paypal_order_id'       => $paypal_info['paypal_order_id'],
@@ -580,30 +591,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'debug_data'            => json_encode($response)
 				);
 	
-				if ($response == false) {
-					unset($request['USER']);
-					unset($request['PWD']);
-					unset($request['SIGNATURE']);
-				
-					$transaction_data = array(
-						'paypal_order_id'       => $paypal_info['paypal_order_id'],
-						'transaction_id'        => '',
-						'parent_transaction_id' => $paypal_info['authorization_id'],
-						'note'                  => '',
-						'msgsubid'              => $call_data['MSGSUBID'],
-						'receipt_id'            => '',
-						'payment_type'          => '',
-						'payment_status'        => '',
-						'pending_reason'        => '',
-						'transaction_entity'    => 'payment',
-						'amount'                => number_format($this->request->post['amount'], 2),
-						'debug_data'            => json_encode($response)
-					);
-									
-					$this->model_payment_pp_express->addTransaction($transaction_data, $request);
-	
-					$json['error'] = $this->language->get('error_timeout');
-				} elseif (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
+				if (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 					$transaction_data = array(
 						'paypal_order_id'       => $paypal_info['paypal_order_id'],
 						'transaction_id'        => $result['TRANSACTIONID'],
@@ -663,8 +651,6 @@ class ControllerPaymentPPExpress extends Controller {
 				} else {
 					$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error');
 				}
-		} else {
-			$json['error'] = 'Missing data';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

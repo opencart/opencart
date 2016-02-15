@@ -28,7 +28,9 @@
         <?php echo $text_complete_capture; ?></label>
       <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
         <input type="text" value="<?php echo $remaining; ?>" size="10" id="paypal-capture-amount" class="form-control" />
+        <div class="input-group-btn">
         <button type="button" id="button-capture" class="btn btn-primary"><?php echo $button_capture; ?></button>
+        </div>
       </div></td>
   </tr>
   <?php } ?>
@@ -52,15 +54,17 @@ $('#button-capture').on('click', function() {
 		},			
 		success: function(json) {
 			if (json['error']) {
-				alert(json['error']);
+				$('#tab-pp_express').prepend(json['error']);
 			}
 			
 			if (!json['success']) {
+				$('#tab-pp_express').prepend(json['error']);
+				
 				$('#paypal-captured').text(json['captured']);
 				$('#paypal-capture-amount').val(json['remaining']);
 
 				if (json['status']) {
-					$('#capture_status').text('<?php echo $text_complete; ?>');
+					$('#capture-status').text('<?php echo $text_complete; ?>');
 					$('.paypal_capture').hide();
 				}
 			}				
@@ -114,8 +118,6 @@ $('#paypal-transaction').delegate('button', 'click', function() {
 			}
 
 			if (json['success']) {
-				location.reload();
-				
 				$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 			}
 		}

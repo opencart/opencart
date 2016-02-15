@@ -72,26 +72,9 @@ class ModelSaleRecurring extends Model {
 	}
 
 	public function getRecurring($order_recurring_id) {
-		$recurring = array();
-
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
 
-		if ($query->num_rows) {
-			$recurring = array(
-				'order_recurring_id'    => $query->row['order_recurring_id'],
-				'order_id'              => $query->row['order_id'],
-				'reference'             => $query->row['reference'],
-				'recurring_id'          => $query->row['recurring_id'],
-				'recurring_name'        => $query->row['recurring_name'],
-				'recurring_description' => $query->row['recurring_description'],
-				'product_name'          => $query->row['product_name'],
-				'product_quantity'      => $query->row['product_quantity'],
-				'status'                => $this->getStatus($query->row['status']),
-				'status_id'             => $query->row['status']
-			);
-		}
-
-		return $recurring;
+		return $query->row;
 	}
 
 	public function getRecurringTransactions($order_recurring_id) {

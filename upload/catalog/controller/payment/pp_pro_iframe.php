@@ -286,7 +286,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		
 		if ($this->config->get('pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
-			$log->write(print_r(serialize($response_data), 1));
+			$log->write(print_r(json_encode($response_data), 1));
 		}
 		
 		curl_close($curl);

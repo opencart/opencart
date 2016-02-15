@@ -20,22 +20,22 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_recurring_id; ?></td>
-              <td class="text-left"><?php echo $column_date_added; ?></td>
-              <td class="text-left"><?php echo $column_status; ?></td>
+              <td class="text-right"><?php echo $column_order_recurring_id; ?></td>
               <td class="text-left"><?php echo $column_product; ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
+              <td class="text-left"><?php echo $column_status; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
+              <td class="text-right"></td>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($recurrings as $recurring) { ?>
-              <tr>
-                <td class="text-left">#<?php echo $recurring['id']; ?></td>
-                <td class="text-left"><?php echo $recurring['date_added']; ?></td>
-                <td class="text-left"><?php echo $status_types[$recurring['status']]; ?></td>
-                <td class="text-left"><?php echo $recurring['name']; ?></td>
-                <td class="text-right"><a href="<?php echo $recurring['href']; ?>" class="btn btn-info"><?php echo $button_view; ?></a></td>
-              </tr>
+            <tr>
+              <td class="text-right">#<?php echo $recurring['order_recurring_id']; ?></td>
+              <td class="text-left"><?php echo $recurring['product']; ?></td>
+              <td class="text-left"><?php echo $recurring['status']; ?></td>
+              <td class="text-left"><?php echo $recurring['date_added']; ?></td>
+              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+            </tr>
             <?php } ?>
           </tbody>
         </table>

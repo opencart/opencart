@@ -4,7 +4,6 @@ $_['express_text_title']      = 'Confirm order';
 
 // Text
 $_['text_title']              = 'PayPal Express Checkout';
-$_['button_continue']         = 'Continue';
 $_['text_cart']               = 'Shopping Cart';
 $_['text_shipping_updated']   = 'Shipping service updated';
 $_['text_trial']              = '%s every %s %s for %s payments then ';
@@ -20,7 +19,6 @@ $_['button_express_coupon']   = 'Add';
 $_['button_express_confirm']  = 'Confirm';
 $_['button_express_login']    = 'Continue to PayPal';
 $_['button_express_shipping'] = 'Update shipping';
-$_['button_cancel_recurring'] = 'Cancel payments';
 
 // Error
 $_['error_heading_title']	  = 'There was an error';

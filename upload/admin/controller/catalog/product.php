@@ -570,6 +570,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_additional_image'] = $this->language->get('entry_additional_image');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
 		$data['entry_download'] = $this->language->get('entry_download');

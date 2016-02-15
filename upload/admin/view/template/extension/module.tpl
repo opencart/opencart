@@ -49,7 +49,11 @@
                     <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                     <?php } ?>
                     <?php if ($extension['installed']) { ?>
+                    <?php if ($extension['module']) { ?>
+                    <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                    <?php } else { ?>
                     <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <?php } ?>
                     <?php } else { ?>
                     <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
                     <?php } ?></td>
@@ -74,4 +78,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

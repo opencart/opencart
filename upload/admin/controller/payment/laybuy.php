@@ -670,7 +670,7 @@ class ControllerPaymentLaybuy extends Controller {
 							}
 						}
 
-						$report_content = serialize($report_content);
+						$report_content = json_encode($report_content);
 
 						switch ($status) {
 							case -1: // Cancel
@@ -864,7 +864,7 @@ class ControllerPaymentLaybuy extends Controller {
 				'payment_amounts'	=> $this->currency->format($transaction_info['payment_amounts'], $transaction_info['currency']),
 				'first_payment_due' => date($this->language->get('date_format_short'), strtotime($transaction_info['first_payment_due'])),
 				'last_payment_due'  => date($this->language->get('date_format_short'), strtotime($transaction_info['last_payment_due'])),
-				'report'        	=> unserialize($transaction_info['report'])
+				'report'        	=> json_decode($transaction_info['report'], true)
 			);
 		} else {
 			$data['transaction'] = array();
@@ -963,13 +963,13 @@ class ControllerPaymentLaybuy extends Controller {
 			if ($cancel) {
 				$this->model_payment_laybuy->log('Transaction canceled');
 
-				$report_content = unserialize($transaction_info['report']);
+				$report_content = json_decode($transaction_info['report'], true);
 
 				foreach ($report_content as &$array) {
 					$array['status'] = str_replace('Pending', 'Canceled', $array['status']);
 				}
 
-				$report_content = serialize($report_content);
+				$report_content = json_encode($report_content);
 
 				$this->model_payment_laybuy->updateTransaction($transaction_info['laybuy_transaction_id'], '7', $report_content, $transaction_info['transaction']);
 

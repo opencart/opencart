@@ -16,13 +16,15 @@ class ModelUpgrade1006 extends Model {
 			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
 		
 			foreach ($files as $file) {
-				$upgrade = false;
+				$upgrade = true;
 		
 				$lines = file($file);
 		
 				foreach ($lines as $line) {
-					if (strpos($line, 'DB_PORT')) {
-						$upgrade = true;
+					if (strpos($line, 'DB_PORT') !== false) {
+						$upgrade = false;
+						
+						break;
 					}
 				}
 				

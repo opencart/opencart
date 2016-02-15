@@ -164,7 +164,7 @@ class ControllerSaleOrder extends Controller {
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
-				'status'        => $result['status'],
+				'order_status'  => $result['order_status'],
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
@@ -308,12 +308,12 @@ class ControllerSaleOrder extends Controller {
 		$data['filter_date_added'] = $filter_date_added;
 		$data['filter_date_modified'] = $filter_date_modified;
 
+		$data['sort'] = $sort;
+		$data['order'] = $order;
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
@@ -340,8 +340,6 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function getForm() {
-		$this->load->model('customer/customer');
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -849,7 +847,7 @@ class ControllerSaleOrder extends Controller {
 			$data['order_id'] = $this->request->get['order_id'];
 
 			$data['store_name'] = $order_info['store_name'];
-			$data['store_url'] = $order_info['store_url'];
+			$data['store_url'] = $this->request->server['HTTPS'] ? str_replace("http", "https", $order_info['store_url']) : $order_info['store_url'];
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];

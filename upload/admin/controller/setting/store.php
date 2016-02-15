@@ -48,7 +48,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('config,site,language,response,mail', $this->request->post, $this->request->get['store_id']);
+			$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -395,12 +395,12 @@ class ControllerSettingStore extends Controller {
 			$data['config_meta_keyword'] = '';
 		}
 
-		if (isset($this->request->post['config_template'])) {
-			$data['config_template'] = $this->request->post['config_template'];
-		} elseif (isset($store_info['config_template'])) {
-			$data['config_template'] = $store_info['config_template'];
+		if (isset($this->request->post['config_theme'])) {
+			$data['config_theme'] = $this->request->post['config_theme'];
+		} elseif (isset($store_info['config_theme'])) {
+			$data['config_theme'] = $store_info['config_theme'];
 		} else {
-			$data['config_template'] = '';
+			$data['config_theme'] = '';
 		}
 
 		$data['themes'] = array();

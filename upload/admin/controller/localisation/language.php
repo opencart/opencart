@@ -393,6 +393,18 @@ class ControllerLocalisationLanguage extends Controller {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 
+		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
+
+		if (!isset($this->request->get['language_id'])) {
+			if ($language_info) {
+				$this->error['warning'] = $this->language->get('error_exists');
+			}
+		} else {
+			if ($language_info && ($this->request->get['language_id'] != $language_info['language_id'])) {
+				$this->error['warning'] = $this->language->get('error_exists');
+			}
+		}
+
 		return !$this->error;
 	}
 

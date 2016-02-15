@@ -21,11 +21,11 @@
           <thead>
             <tr>
               <td class="text-right"><?php echo $column_order_id; ?></td>
-              <td class="text-left"><?php echo $column_status; ?></td>
-              <td class="text-left"><?php echo $column_date_added; ?></td>
-              <td class="text-right"><?php echo $column_product; ?></td>
               <td class="text-left"><?php echo $column_customer; ?></td>
+              <td class="text-right"><?php echo $column_product; ?></td>
+              <td class="text-left"><?php echo $column_status; ?></td>
               <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
               <td></td>
             </tr>
           </thead>
@@ -33,12 +33,12 @@
             <?php foreach ($orders as $order) { ?>
             <tr>
               <td class="text-right">#<?php echo $order['order_id']; ?></td>
-              <td class="text-left"><?php echo $order['status']; ?></td>
-              <td class="text-left"><?php echo $order['date_added']; ?></td>
-              <td class="text-right"><?php echo $order['products']; ?></td>
               <td class="text-left"><?php echo $order['name']; ?></td>
+              <td class="text-right"><?php echo $order['products']; ?></td>
+              <td class="text-left"><?php echo $order['status']; ?></td>
               <td class="text-right"><?php echo $order['total']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><?php echo $order['date_added']; ?></td>
+              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
           </tbody>

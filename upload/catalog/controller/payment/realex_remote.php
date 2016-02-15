@@ -129,7 +129,7 @@ class ControllerPaymentRealexRemote extends Controller {
 						'cc_issue' => $this->request->post['cc_issue']
 					);
 
-					$md = $this->encryption->encrypt(serialize($enc_data));
+					$md = $this->encryption->encrypt(json_encode($enc_data));
 
 					$json = array();
 					$json['ACSURL'] = (string)$verify_3ds->url;
@@ -238,7 +238,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 			$post = $this->request->post;
 
-			$md = unserialize($this->encryption->decrypt($post['MD']));
+			$md = json_decode($this->encryption->decrypt($post['MD']), true);
 
 			$signature_result = $this->model_payment_realex_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
 

@@ -50,19 +50,19 @@ class ModelPaymentPPProIframe extends Model {
 		}
 	}
 
-	public function totalCaptured($paypal_iframe_order_id) {
+	public function getTotalCaptured($paypal_iframe_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_iframe_order_transaction` WHERE `paypal_iframe_order_id` = '" . (int)$paypal_iframe_order_id . "' AND `pending_reason` != 'authorization' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
 
 		return $qry->row['amount'];
 	}
 
-	public function totalRefundedOrder($paypal_iframe_order_id) {
+	public function getTotalRefunded($paypal_iframe_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_iframe_order_transaction` WHERE `paypal_iframe_order_id` = '" . (int)$paypal_iframe_order_id . "' AND `payment_status` = 'Refunded'");
 
 		return $qry->row['amount'];
 	}
 
-	public function totalRefundedTransaction($transaction_id) {
+	public function getTotalRefundedTransaction($transaction_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_iframe_order_transaction` WHERE `parent_transaction_id` = '" . $this->db->escape($transaction_id) . "' AND `payment_type` = 'refund'");
 
 		return $qry->row['amount'];
@@ -74,7 +74,7 @@ class ModelPaymentPPProIframe extends Model {
 		if ($qry->num_rows) {
 			$order = $qry->row;
 			$order['transactions'] = $this->getTransactions($order['paypal_iframe_order_id']);
-			$order['captured'] = $this->totalCaptured($order['paypal_iframe_order_id']);
+			$order['captured'] = $this->getTotalCaptured($order['paypal_iframe_order_id']);
 			return $order;
 		} else {
 			return false;

@@ -16,7 +16,7 @@ class ControllerEventTheme extends Controller {
 			$directory = $this->config->get('config_theme');
 		}
 
-		if (is_file(DIR_TEMPLATE . 'theme/' . $directory . '/template/' . $view . '.tpl')) {
+		if (is_file(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')) {
 			$view = $directory . '/template/' . $view;
 		} else {
 			$view = 'default/template/' . $view;

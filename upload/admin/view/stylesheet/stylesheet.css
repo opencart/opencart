@@ -272,7 +272,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: right;
 	margin-right: 8px;
 }
-#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after {
+#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after, #column-left.active #menu > li li.open > a.parent:after {
 	font-family: FontAwesome;
 	content: "\f107";
 	float: right;

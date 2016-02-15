@@ -18,7 +18,7 @@ class ControllerCommonCart extends Controller {
 		);
 			
 		// Display prices
-		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
 			$results = $this->model_extension_extension->getExtensions('total');
@@ -91,14 +91,14 @@ class ControllerCommonCart extends Controller {
 			}
 
 			// Display prices
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$price = false;
 			}
 
 			// Display prices
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$total = false;

@@ -8,7 +8,7 @@ final class Loader {
 	
 	public function controller($route, $data = array()) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
@@ -32,7 +32,7 @@ final class Loader {
 	
 	public function model($route) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
@@ -83,7 +83,7 @@ final class Loader {
 
 	public function library($route) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 			
 		$file = DIR_SYSTEM . 'library/' . $route . '.php';
 		$class = str_replace('/', '\\', $route);
@@ -118,9 +118,11 @@ final class Loader {
 	public function language($route) {
 		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
 		
-		$this->registry->get('language')->load($route);
+		$output = $this->registry->get('language')->load($route);
 		
 		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
+		
+		return $output;
 	}
 	
 	protected function callback($registry, $route) {

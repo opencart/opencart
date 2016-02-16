@@ -1614,12 +1614,12 @@
             },
             success: function(data) {
                 if (data.error == false) {
-                    if (data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
+                    if (data.results == 0) {
                         $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $error_catalog_data; ?></div>');
                     } else {
-                        data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
+                        data.products = $.makeArray(data.products);
 
-                        $.each(data.data.productSearchResult.products, function(key, val) {
+                        $.each(data.products, function(key, val) {
                           html = '<div class="col-sm-3">';
                             html += '<div class="well">';
                               html += '<div class="row">';

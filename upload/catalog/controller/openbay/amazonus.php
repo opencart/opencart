@@ -297,16 +297,14 @@ class ControllerOpenbayAmazonus extends Controller {
 		$logger->write('Order ' . $amazonus_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
-		$logger->write("Notifying Openbay::addOrder($order_id)");
-		$this->openbay->orderNew($order_id);
-		$logger->write("Openbay notified");
-
 		$this->model_openbay_amazonus_order->acknowledgeOrder($order_id);
 
 		//send an email to the administrator about the sale
 		if($this->config->get('openbay_amazonus_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
+
+		$this->event->trigger('post.order.history.add', $order_id);
 
 		$logger->write("Ok");
 		$this->response->setOutput('Ok');

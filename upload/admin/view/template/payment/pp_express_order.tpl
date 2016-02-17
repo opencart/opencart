@@ -31,7 +31,7 @@
       <label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
       <div class="col-sm-10">
         <div class="input-group">
-          <input type="text" name="paypal_capture_complete" value="<?php echo $remaining; ?>" id="input-capture-amount" class="form-control" />
+          <input type="text" name="paypal_capture_amount" value="<?php echo $remaining; ?>" id="input-capture-amount" class="form-control" />
           <div class="input-group-btn">
             <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
           </div>
@@ -47,6 +47,7 @@
   </fieldset>
 </form>
 <?php } ?>
+<br />
 <fieldset>
 <legend><?php echo $text_transaction; ?></legend>
   <div id="paypal-transaction"></div>

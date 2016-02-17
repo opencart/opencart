@@ -6,14 +6,13 @@ $_['text_capture_status']		 = 'Capture status';
 $_['text_amount_authorised']	 = 'Amount authorised';
 $_['text_amount_captured']		 = 'Amount captured';
 $_['text_amount_refunded']		 = 'Amount refunded';
-
 $_['text_transaction']			 = 'Transactions';
 $_['text_complete']				 = 'Complete';
 $_['text_confirm_void']			 = 'If you void you cannot capture any further funds';
 $_['text_view']					 = 'View';
 $_['text_refund']				 = 'Refund';
 $_['text_resend']				 = 'Resend';
-$_['success_transaction_resent'] = 'Transaction was successfully resent';
+$_['text_success']               = 'Transaction was successfully sent';
 
 // Column
 $_['column_transaction']		 = 'Transaction ID';
@@ -35,4 +34,4 @@ $_['button_capture']			 = 'Capture';
 // Error
 $_['error_capture']		        = 'Enter an amount to capture';
 $_['error_timeout']				= 'Request timed out';
-$_['error_transaction_missing']	= 'Transaction could not be found';
+$_['error_not_found']	        = 'Transaction could not be found';

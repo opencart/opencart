@@ -515,7 +515,7 @@ class ControllerPaymentPPExpress extends Controller {
 		
 			$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
 		
-			if ($paypal_info) 
+			if ($paypal_info) {
 				// Curl
 				if (!$this->config->get('pp_express_test')) {
 					$api_url = 'https://api-3t.paypal.com/nvp';
@@ -604,9 +604,12 @@ class ControllerPaymentPPExpress extends Controller {
 		
 					$json['success'] = $this->language->get('text_success');
 				} else {
-					$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : '');
+					$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : '');
 				}
+			} else {
+				$json['error'] = $this->language->get('error_not_found');
 			}
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

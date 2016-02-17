@@ -1,42 +1,56 @@
-<h2><?php echo $text_payment; ?></h2>
-<table class="table table-bordered">
-  <tr>
-    <td><?php echo $text_capture_status; ?></td>
-    <td id="capture-status"><?php echo $capture_status; ?></td>
-  </tr>
-  <tr>
-    <td><?php echo $text_amount_authorised; ?></td>
-    <td><?php echo $total; ?>
-      <?php if ($capture_status != 'Complete') { ?>
-      &nbsp;&nbsp;&nbsp;
-      <button type="button" id="button-void" class="btn btn-danger"><?php echo $button_void; ?></button>
-      <?php } ?></td>
-  </tr>
-  <tr>
-    <td><?php echo $text_amount_captured; ?></td>
-    <td id="paypal-captured"><?php echo $captured; ?></td>
-  </tr>
-  <tr>
-    <td><?php echo $text_amount_refunded; ?></td>
-    <td id="paypal-refunded"><?php echo $refunded; ?></td>
-  </tr>
-  <?php if ($capture_status != 'Complete') { ?>
-  <tr class="paypal-capture">
-    <td><?php echo $text_capture_amount; ?></td>
-    <td><label>
-        <input type="checkbox" name="paypal_capture_complete" id="paypal-capture-complete" value="1" class="form-control" />
-        <?php echo $text_complete_capture; ?></label>
-      <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-        <input type="text" value="<?php echo $remaining; ?>" size="10" id="paypal-capture-amount" class="form-control" />
-        <div class="input-group-btn">
-        <button type="button" id="button-capture" class="btn btn-primary"><?php echo $button_capture; ?></button>
+<fieldset>
+  <legend><?php echo $text_payment; ?></legend>
+  <table class="table table-bordered">
+    <tr>
+      <td><?php echo $text_capture_status; ?></td>
+      <td id="capture-status"><?php echo $capture_status; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $text_amount_authorised; ?></td>
+      <td><?php echo $total; ?>
+        <?php if ($capture_status != 'Complete') { ?>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" id="button-void" data-loading="<?php echo $text_loading; ?>" class="btn btn-danger"><?php echo $button_void; ?></button>
+        <?php } ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $text_amount_captured; ?></td>
+      <td id="paypal-captured"><?php echo $captured; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $text_amount_refunded; ?></td>
+      <td id="paypal-refunded"><?php echo $refunded; ?></td>
+    </tr>
+  </table>
+</fieldset>
+<?php if ($capture_status != 'Complete') { ?>
+<form class="form-horizontal">
+  <fieldset id="paypal-capture">
+    <legend><?php echo $text_capture; ?></legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group">
+          <input type="text" name="paypal_capture_complete" value="<?php echo $remaining; ?>" id="input-capture-amount" class="form-control" />
+          <div class="input-group-btn">
+            <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
+          </div>
         </div>
-      </div></td>
-  </tr>
-  <?php } ?>
-</table>
-<h2><?php echo $text_transactions; ?></h2>
-<div id="paypal-transaction"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="input-capture-complete"><?php echo $entry_capture_complete; ?></label>
+      <div class="col-sm-10">
+        <input type="checkbox" name="paypal_capture_complete" value="1" id="input-capture-complete" class="form-control" />
+      </div>
+    </div>
+  </fieldset>
+</form>
+<?php } ?>
+<fieldset>
+<legend><?php echo $text_transaction; ?></legend>
+  <div id="paypal-transaction"></div>
+</fieldset>
 <script type="text/javascript"><!--
 $('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
@@ -53,19 +67,24 @@ $('#button-capture').on('click', function() {
 			$('#button-capture').button('reset');
 		},			
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
-				$('#tab-pp_express').prepend(json['error']);
+				$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (!json['success']) {
-				$('#tab-pp_express').prepend(json['error']);
+				$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#paypal-captured').text(json['captured']);
 				$('#paypal-capture-amount').val(json['remaining']);
 
-				if (json['status']) {
-					$('#capture-status').text('<?php echo $text_complete; ?>');
-					$('.paypal_capture').hide();
+				if (json['capture_status']) {
+					$('#capture-status').text(json['capture_status']);
+					
+					$('#paypal-capture').remove();
+					
+					$('#button-void').button('disable');
 				}
 			}				
 			
@@ -86,14 +105,20 @@ $('#button-void').on('click', function() {
 				$('#button-void').button('reset');
 			},			
 			success: function(json) {
-				if (!json['error']) {					
-					$('#capture-status').text('<?php echo $text_complete; ?>');
+				if (json['error']) {	
+					$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					
 					$('.paypal_capture_live').hide();
-				} else {
-					alert(json['error']);
-				}				
+				} 
 				
+				if (json['capture_status']) {
+					$('#capture-status').text(json['capture_status']);
+					
+					$('#paypal-capture').remove();
+					
+					$('#button-void').button('disable');
+				}				
+			
 				$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 			}
 		});

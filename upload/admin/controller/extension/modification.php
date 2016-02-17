@@ -359,11 +359,6 @@ class ControllerExtensionModification extends Controller {
 											// Log
 											$log[] = 'NOT FOUND!';
 
-											// Skip current operation
-											if ($error == 'skip') {
-												break;
-											}
-
 											// Abort applying this modification completely.
 											if ($error == 'abort') {
 												$modification = $recovery;
@@ -372,6 +367,11 @@ class ControllerExtensionModification extends Controller {
 												$log[] = 'ABORTING!';
 
 												break 5;
+											}
+
+											// Skip current operation or break
+											if ($error == 'skip') continue;
+											else break;
 											}
 										}
 									}

@@ -12,22 +12,24 @@ class ModelOpenbayAmazonusListing extends Model {
 
 		$products = array();
 
-		foreach ($results['Products'] as $result) {
-			if ($result['price']['amount'] && $result['price']['currency']) {
-				$price = $result['price']['amount'] . ' ' . $result['price']['currency'];
-			} else {
-				$price = '-';
+		if (!empty($results)) {
+			foreach ($results['Products'] as $result) {
+				if ($result['price']['amount'] && $result['price']['currency']) {
+					$price = $result['price']['amount'] . ' ' . $result['price']['currency'];
+				} else {
+					$price = '-';
+				}
+
+				$link = 'http://www.amazon.com/gp/product/' . $result['asin'] . '/';
+
+				$products[] = array(
+					'name' => $result['name'],
+					'asin' => $result['asin'],
+					'image' => $result['image'],
+					'price' => $price,
+					'link' => $link,
+				);
 			}
-
-			$link = 'http://www.amazon.com/gp/product/' . $result['asin'] . '/';
-
-			$products[] = array(
-				'name' => $result['name'],
-				'asin' => $result['asin'],
-				'image' => $result['image'],
-				'price' => $price,
-				'link' => $link,
-			);
 		}
 
 		return $products;

@@ -78,8 +78,7 @@
         </tbody>
       </table>
       <?php } ?>
-      <?php if ($histories) { ?>
-      <h2><?php echo $text_history; ?></h2>
+      <h3><?php echo $text_history; ?></h3>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -89,6 +88,7 @@
           </tr>
         </thead>
         <tbody>
+          <?php if ($histories) { ?>
           <?php foreach ($histories as $history) { ?>
           <tr>
             <td class="text-left"><?php echo $history['date_added']; ?></td>
@@ -96,9 +96,13 @@
             <td class="text-left"><?php echo $history['comment']; ?></td>
           </tr>
           <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
         </tbody>
       </table>
-      <?php } ?>
       <div class="buttons clearfix">
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>

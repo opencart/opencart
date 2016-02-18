@@ -6,8 +6,8 @@ class ModelCheckoutRecurring extends Model {
 		return $this->db->getLastId();
 	}
 
-	public function addReference($recurring_id, $ref) {
-		$this->db->query("UPDATE " . DB_PREFIX . "order_recurring SET reference = '" . $this->db->escape($ref) . "' WHERE order_recurring_id = '" . (int)$recurring_id . "'");
+	public function addReference($order_recurring_id, $reference) {
+		$this->db->query("UPDATE " . DB_PREFIX . "order_recurring SET reference = '" . $this->db->escape($reference) . "' WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
 
 		if ($this->db->countAffected() > 0) {
 			return true;

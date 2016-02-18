@@ -21,11 +21,11 @@ class ControllerRecurringPPExpress extends Controller {
 			
 			$data['continue'] = $this->url->link('account/recurring', '', true);	
 			
-			//if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
+			if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
 				$data['order_recurring_id'] = $order_recurring_id;
-			//} else {
-			//	$data['order_recurring_id'] = '';
-			//}
+			} else {
+				$data['order_recurring_id'] = '';
+			}
 
 			return $this->load->view('recurring/pp_express', $data);
 		}
@@ -34,7 +34,7 @@ class ControllerRecurringPPExpress extends Controller {
 	public function cancel() {
 		$json = array();
 		
-		$this->load->language('recurring/recurring');
+		$this->load->language('recurring/pp_express');
 		
 		//cancel an active recurring
 		$this->load->model('account/recurring');
@@ -50,53 +50,27 @@ class ControllerRecurringPPExpress extends Controller {
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_sandbox_username');
+				$api_username = $this->config->get('pp_express_sandbox_username');
 				$api_password = $this->config->get('pp_express_sandbox_password');
 				$api_signature = $this->config->get('pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_username');
+				$api_username = $this->config->get('pp_express_username');
 				$api_password = $this->config->get('pp_express_password');
 				$api_signature = $this->config->get('pp_express_signature');
 			}
 		
-			$settings = array(
-				'USER'         => $api_user,
+			$request = array(
+				'USER'         => $api_username,
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
-				'BUTTONSOURCE' => 'OpenCart_2.0_EC'
+				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
+				'METHOD'       => 'SetExpressCheckout',
+				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
+				'PROFILEID'    => $recurring_info['reference'],
+				'ACTION'       => 'Cancel'
 			);
-		
-			
-		
-			$defaults = array(
-				CURLOPT_POST => 1,
-				CURLOPT_HEADER => 0,
-				CURLOPT_URL => $api_url,
-				CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
-				CURLOPT_FRESH_CONNECT => 1,
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_FORBID_REUSE => 1,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_SSL_VERIFYPEER => 0,
-				CURLOPT_SSL_VERIFYHOST => 0,
-				CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
-			);
-		$this->log($data, 'Call data');
-			
-		
-			curl_setopt_array($ch, $defaults);
-		
-			if (!$result = curl_exec($ch)) {
-				$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
-			}
-		
-			$this->log($result, 'Result');
-		
-			curl_close($ch);
-
-
 
 			$curl = curl_init($api_url);
 
@@ -107,22 +81,25 @@ class ControllerRecurringPPExpress extends Controller {
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-			$ressponse = curl_exec($ch);
+			$response = curl_exec($curl);
+			
+			if (!$response) {
+				$this->log(sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl)));
+			}
+			
+			curl_close($curl);
+			
+			$response_info = array();
+			
+			parse_str($response, $response_info);
 
-			$this->load->model('payment/pp_express');
-
-
-
-			$result = $this->model_payment_pp_express->recurringCancel($recurring_info['reference']);
-
-
-			if (isset($result['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
+			if (isset($response_info['PROFILEID'])) {
+				$this->model_account_recurring->editOrderRecurringStatus($order_recurring_id, 4);
+				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {
-				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
+				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $response_info['L_LONGMESSAGE0']);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');

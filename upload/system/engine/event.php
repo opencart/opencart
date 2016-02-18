@@ -1,4 +1,9 @@
 <?php
+/*
+* Event System Userguide
+* 
+* https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
+*/
 class Event {
 	protected $registry;
 	public $data = array();

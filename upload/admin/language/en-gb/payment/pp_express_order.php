@@ -25,13 +25,14 @@ $_['column_action']				 = 'Action';
 
 // Entry
 $_['entry_capture_amount']		 = 'Capture amount';
-$_['entry_capture_complete']     = 'Complete capture';
+$_['entry_capture_complete'] = 'Complete capture';
 
 // Button
-$_['button_void']				 = 'Void';
-$_['button_capture']			 = 'Capture';
+$_['button_void']			 = 'Void';
+$_['button_capture']		 = 'Capture';
 
 // Error
-$_['error_capture']		        = 'Enter an amount to capture';
-$_['error_timeout']				= 'Request timed out';
-$_['error_not_found']	        = 'Transaction could not be found';
+$_['error_capture']		     = 'Enter an amount to capture';
+$_['error_timeout']			 = 'Request timed out';
+$_['error_transaction']	     = 'Transaction could not be carried out!';
+$_['error_not_found']	     = 'Transaction could not be found!';

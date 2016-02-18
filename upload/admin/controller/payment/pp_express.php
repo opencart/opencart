@@ -498,7 +498,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function capture() {
 		$json = array();
 		
-		$this->load->language('payment/pp_express');
+		$this->load->language('payment/pp_express_order');
 		
 		if (!isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
 			$json['error'] = $this->language->get('error_capture');
@@ -599,12 +599,12 @@ class ControllerPaymentPPExpress extends Controller {
 					if ($this->request->post['complete'] || $json['remaining'] = 0.00) {
 						$json['capture_status'] = $this->language->get('text_complete');
 						
-						$this->model_payment_pp_express->editPayPalOrder($this->request->post['order_id'], 'Complete');
+						$this->model_payment_pp_express->editPayPalOrder($order_id, 'Complete');
 					}
 		
 					$json['success'] = $this->language->get('text_success');
 				} else {
-					$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : '');
+					$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -614,7 +614,103 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-/*
+	
+	/**
+	 * used to void an authorised payment
+	 */	
+	public function void() {
+		$json = array();
+		
+		$this->load->language('payment/pp_express_order');		
+		
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		$this->load->model('payment/pp_express');
+
+		$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
+
+		if ($paypal_info) {
+			// Curl
+			if (!$this->config->get('pp_express_test')) {
+				$api_url = 'https://api-3t.paypal.com/nvp';
+				$api_username = $this->config->get('pp_express_username');
+				$api_password = $this->config->get('pp_express_password');
+				$api_signature = $this->config->get('pp_express_signature');
+			} else {				
+				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
+				$api_username = $this->config->get('pp_express_sandbox_username');
+				$api_password = $this->config->get('pp_express_sandbox_password');
+				$api_signature = $this->config->get('pp_express_sandbox_signature');
+			}			
+			
+			$request = array(
+				'USER'            => $api_username,
+				'PWD'             => $api_password,
+				'SIGNATURE'       => $api_signature,
+				'VERSION'         => '84',
+				'BUTTONSOURCE'    => 'OpenCart_Cart_EC',	
+				'METHOD'          => 'DoVoid',
+				'AUTHORIZATIONID' => $paypal_info['authorization_id'],
+				'MSGSUBID'        => uniqid(mt_rand(), true)
+			);
+	
+			$curl = curl_init($api_url);
+			
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	
+			$response = curl_exec($curl);
+			
+			if (!$response) {
+				$json['error'] = sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl));
+			}
+	
+			curl_close($curl);
+	
+			$response_info = array();
+			
+			parse_str($response, $response_info);
+
+			if (isset($response_info['ACK']) && ($response_info['ACK'] != 'Failure') && ($response_info['ACK'] != 'FailureWithWarning')) {
+				$transaction_data = array(
+					'paypal_order_id'       => $paypal_info['paypal_order_id'],
+					'transaction_id'        => '',
+					'parent_transaction_id' => $paypal_info['authorization_id'],
+					'note'                  => '',
+					'msgsubid'              => '',
+					'receipt_id'            => '',
+					'payment_type'          => 'void',
+					'payment_status'        => 'Void',
+					'pending_reason'        => '',
+					'transaction_entity'    => 'auth',
+					'amount'                => '',
+					'debug_data'            => json_encode($response)
+				);
+
+				$this->model_payment_pp_express->addTransaction($transaction_data);
+				
+				$this->model_payment_pp_express->editPayPalOrder($order_id, 'Complete');
+				
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
+			}
+		} else {
+			$json['error'] = $this->language->get('error_not_found');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
 	public function resend() {
 		$json = array();
 		
@@ -685,64 +781,6 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 		} else {
 			$json['error'] = $this->language->get('error_transaction_missing');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-*/
-
-	public function void() {
-		/**
-		 * used to void an authorised payment
-		 */
-		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/pp_express');
-
-			$paypal_order = $this->model_payment_pp_express->getOrder($this->request->post['order_id']);
-
-			$call_data = array();
-			
-			
-			$call_data['METHOD'] = 'DoVoid';
-			$call_data['AUTHORIZATIONID'] = $paypal_order['authorization_id'];
-
-			$result = $this->model_payment_pp_express->call($call_data);
-
-			if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
-				$transaction = array(
-					'paypal_order_id' => $paypal_order['paypal_order_id'],
-					'transaction_id' => '',
-					'parent_transaction_id' => $paypal_order['authorization_id'],
-					'note' => '',
-					'msgsubid' => '',
-					'receipt_id'         => '',
-					'payment_type'       => 'void',
-					'payment_status'     => 'Void',
-					'pending_reason'     => '',
-					'transaction_entity' => 'auth',
-					'amount'             => '',
-					'debug_data'         => json_encode($result)
-				);
-
-				$this->model_payment_pp_express->addTransaction($transaction);
-				
-				$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
-
-				unset($transaction['debug_data']);
-				
-				$transaction['date_added'] = date("Y-m-d H:i:s");
-
-				$json['data'] = $transaction;
-				$json['error'] = false;
-				$json['msg'] = 'Transaction void';
-			} else {
-				$json['error'] = true;
-				$json['msg'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error');
-			}
-		} else {
-			$json['error'] = true;
-			$json['msg'] = 'Missing data';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

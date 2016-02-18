@@ -1,4 +1,8 @@
 <fieldset>
+  <legend><?php echo $text_transaction; ?></legend>
+  <div id="paypal-transaction"></div>
+</fieldset>
+<fieldset>
   <legend><?php echo $text_payment; ?></legend>
   <table class="table table-bordered">
     <tr>
@@ -24,8 +28,8 @@
   </table>
 </fieldset>
 <?php if ($capture_status != 'Complete') { ?>
-<form class="form-horizontal">
-  <fieldset id="paypal-capture">
+<form id="paypal-capture" class="form-horizontal">
+  <fieldset>
     <legend><?php echo $text_capture; ?></legend>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
@@ -48,10 +52,6 @@
 </form>
 <?php } ?>
 <br />
-<fieldset>
-<legend><?php echo $text_transaction; ?></legend>
-  <div id="paypal-transaction"></div>
-</fieldset>
 <script type="text/javascript"><!--
 $('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
@@ -71,11 +71,11 @@ $('#button-capture').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-pp_express').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (!json['success']) {
-				$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#tab-pp_express').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#paypal-captured').text(json['captured']);
 				$('#paypal-capture-amount').val(json['remaining']);
@@ -106,10 +106,10 @@ $('#button-void').on('click', function() {
 				$('#button-void').button('reset');
 			},			
 			success: function(json) {
-				if (json['error']) {	
-					$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-					
-					$('.paypal_capture_live').hide();
+				$('.alert').remove();
+				
+				if (json['error']) {
+					$('#tab-pp_express').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				} 
 				
 				if (json['capture_status']) {
@@ -138,9 +138,11 @@ $('#paypal-transaction').delegate('button', 'click', function() {
 		complete: function() {
 			$(element).button('reset');
 		},		
-		success: function(data) {
+		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
-				alert(json['error']);
+				$('#tab-pp_express').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {

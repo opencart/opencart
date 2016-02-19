@@ -179,8 +179,8 @@ function check_requirements() {
 
 function setup_db($dbdata) {
 	global $loader, $registry;
-	$loader->model('install');
-	$model = $registry->get('model_install');
+	$loader->model('install/install');
+	$model = $registry->get('model_install_install');
 	$model->database($dbdata);
 }
 

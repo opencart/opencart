@@ -191,7 +191,7 @@ function setup_db($data) {
 	if ($lines) {
 		$sql = '';
 
-		foreach($lines as $line) {
+		foreach ($lines as $line) {
 			if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
 				$sql .= $line;
 
@@ -232,6 +232,7 @@ function setup_db($data) {
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
+	}
 }
 
 

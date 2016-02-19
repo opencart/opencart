@@ -373,8 +373,10 @@ class ControllerExtensionModification extends Controller {
 											}
 
 											// Skip current operation or break
-											if ($error == 'skip') continue;
-											else break;
+											if ($error == 'skip') {
+												continue;
+											} else {
+											 	break;
 											}
 										}
 									}

@@ -39,7 +39,7 @@ class ControllerAccountAccount extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_password'] = $this->language->get('text_password');
 		$data['text_address'] = $this->language->get('text_address');
-		$data['text_creditcard'] = $this->language->get('text_creditcard');
+		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_wishlist'] = $this->language->get('text_wishlist');
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_download'] = $this->language->get('text_download');
@@ -53,25 +53,22 @@ class ControllerAccountAccount extends Controller {
 		$data['password'] = $this->url->link('account/password', '', true);
 		$data['address'] = $this->url->link('account/address', '', true);
 		
-		$status = false;
+		$data['credit_cards'] = array();
 		
-		$files = glob(DIR_APPLICATION . 'controller/creditcard/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/credit_card/*.php');
 		
 		foreach ($files as $file) {
 			$code = basename($file, '.php');
 			
-			if ($this->config->get($code . '_status') && $this->config->get($code . '_card')) {
-				$status = true;
+		//	if ($this->config->get($code . '_status') && $this->config->get($code . '_card')) {
+				$this->load->language('credit_card/' . $code);
 				
-				break;
-			}
+				$data['credit_cards'][] = array(
+					'name' => $this->language->get('heading_title'),
+					'href' => $this->url->link('credit_card/' . $code, '', true)
+				);
+		//	}
 		}
-
-		//if ($status) {
-			$data['creditcard'] = $this->url->link('account/creditcard', '', true);
-		//} else {
-		//	$data['creditcard'] = '';
-		//}
 		
 		$data['wishlist'] = $this->url->link('account/wishlist');
 		$data['order'] = $this->url->link('account/order', '', true);

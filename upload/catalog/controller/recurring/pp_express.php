@@ -21,11 +21,11 @@ class ControllerRecurringPPExpress extends Controller {
 			
 			$data['continue'] = $this->url->link('account/recurring', '', true);	
 			
-			//if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
+			if ($recurring_info['status'] == 2 || $recurring_info['status'] == 3) {
 				$data['order_recurring_id'] = $order_recurring_id;
-			//} else {
-			//	$data['order_recurring_id'] = '';
-			//}
+			} else {
+				$data['order_recurring_id'] = '';
+			}
 
 			return $this->load->view('recurring/pp_express', $data);
 		}
@@ -34,7 +34,7 @@ class ControllerRecurringPPExpress extends Controller {
 	public function cancel() {
 		$json = array();
 		
-		$this->load->language('recurring/recurring');
+		$this->load->language('recurring/pp_express');
 		
 		//cancel an active recurring
 		$this->load->model('account/recurring');
@@ -50,29 +50,26 @@ class ControllerRecurringPPExpress extends Controller {
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_sandbox_username');
+				$api_username = $this->config->get('pp_express_sandbox_username');
 				$api_password = $this->config->get('pp_express_sandbox_password');
 				$api_signature = $this->config->get('pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_user = $this->config->get('pp_express_username');
+				$api_username = $this->config->get('pp_express_username');
 				$api_password = $this->config->get('pp_express_password');
 				$api_signature = $this->config->get('pp_express_signature');
 			}
 		
 			$request = array(
-				'USER'         => $api_user,
+				'USER'         => $api_username,
 				'PWD'          => $api_password,
 				'SIGNATURE'    => $api_signature,
 				'VERSION'      => '109.0',
 				'BUTTONSOURCE' => 'OpenCart_2.0_EC',
-				'METHOD'       => 'SetExpressCheckout'
-				PAYMENTREQUEST_0_AMT : // payment amount
-				PAYMENTREQUEST_0_PAYMENTACTION : // type of transaction
-				PAYMENTREQUEST_0_CURRENCYCODE : // payment currency code
-				returnUrl : // redirect URL for use if the customer authorizes payment
-				cancelUrl : // redirect URL for use if the customer does not authorize payment
-
+				'METHOD'       => 'SetExpressCheckout',
+				'METHOD'       => 'ManageRecurringPaymentsProfileStatus',
+				'PROFILEID'    => $recurring_info['reference'],
+				'ACTION'       => 'Cancel'
 			);
 
 			$curl = curl_init($api_url);
@@ -87,31 +84,22 @@ class ControllerRecurringPPExpress extends Controller {
 			$response = curl_exec($curl);
 			
 			if (!$response) {
-				$this->log(array(
-					'error' => curl_error($ch), 
-					'errno' => curl_errno($ch)), 'cURL failed'
-				);
+				$this->log(sprintf($this->language->get('error_curl'), curl_errno($curl), curl_error($curl)));
 			}
 			
 			curl_close($curl);
+			
+			$response_info = array();
+			
+			parse_str($response, $response_info);
 
-
-
-
-			$this->load->model('payment/pp_express');
-
-
-
-			$result = $this->model_payment_pp_express->recurringCancel($recurring_info['reference']);
-
-
-			if (isset($result['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
+			if (isset($response_info['PROFILEID'])) {
+				$this->model_account_recurring->editOrderRecurringStatus($order_recurring_id, 4);
+				$this->model_account_recurring->addOrderRecurringTransaction($order_recurring_id, 5);
 
 				$json['success'] = $this->language->get('text_cancelled');
 			} else {
-				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
+				$json['error'] = sprintf($this->language->get('error_not_cancelled'), $response_info['L_LONGMESSAGE0']);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');

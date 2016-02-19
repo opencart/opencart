@@ -8,7 +8,7 @@
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_score; ?>"><?php echo $text_score; ?></span></td>
-    <td><span><strong><?php echo $flp_score; ?></strong></td>
+    <td><img class="img-responsive" alt="" src="//fraudlabspro.hexa-soft.com/images/fraudscore/fraudlabsproscore<?php echo $flp_score; ?>.png" /></td>
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_status; ?>"><?php echo $text_status; ?></span></td>
@@ -87,14 +87,14 @@
     <td><?php echo $flp_credits . ' ' . $text_flp_upgrade; ?></td>
   </tr>
   <tr>
-    <td><?php echo $text_message; ?></td>
+    <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_message; ?>"><?php echo $text_message; ?></span></td>
     <td><?php echo $flp_message; ?></td>
   </tr>
   
   
   <?php if (strtolower($flp_status) == 'review'){?>
   <tr style="background-color:#eee;">
-    <td id="flp_action">
+    <td id="flp_action" colspan="2">
       <form id="review-action" method="post">
 	<div align="center">
 	  <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="fa fa-check"></i> Approve</button>

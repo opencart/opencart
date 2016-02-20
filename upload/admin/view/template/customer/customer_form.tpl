@@ -65,6 +65,20 @@
                           </select>
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-language-code"><?php echo $entry_language; ?></label>
+                        <div class="col-sm-10">
+                          <select name="language_code" id="input-language-code" class="form-control">
+                            <?php foreach ($languages as $language) { ?>
+                            <?php if ($language['code'] == $language_code) { ?>
+                            <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                          </select>
+                        </div>
+                      </div>
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
                         <div class="col-sm-10">

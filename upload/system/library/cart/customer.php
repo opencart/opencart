@@ -2,6 +2,7 @@
 namespace Cart;
 class Customer {
 	private $customer_id;
+	private $language;
 	private $firstname;
 	private $lastname;
 	private $customer_group_id;
@@ -21,6 +22,7 @@ class Customer {
 
 			if ($customer_query->num_rows) {
 				$this->customer_id = $customer_query->row['customer_id'];
+				$this->language = $customer_query->row['language_code'];
 				$this->firstname = $customer_query->row['firstname'];
 				$this->lastname = $customer_query->row['lastname'];
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
@@ -54,6 +56,7 @@ class Customer {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
 			$this->customer_id = $customer_query->row['customer_id'];
+			$this->language = $customer_query->row['language_code'];
 			$this->firstname = $customer_query->row['firstname'];
 			$this->lastname = $customer_query->row['lastname'];
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
@@ -75,6 +78,7 @@ class Customer {
 		unset($this->session->data['customer_id']);
 
 		$this->customer_id = '';
+		$this->language = '';
 		$this->firstname = '';
 		$this->lastname = '';
 		$this->customer_group_id = '';
@@ -91,6 +95,10 @@ class Customer {
 
 	public function getId() {
 		return $this->customer_id;
+	}
+
+	public function getLanguage() {
+		return $this->language;
 	}
 
 	public function getFirstName() {

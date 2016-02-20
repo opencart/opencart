@@ -66,6 +66,7 @@ class ControllerAccountEdit extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');
+		$data['entry_language'] = $this->language->get('entry_language');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
@@ -152,6 +153,18 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
+
+		if (isset($this->request->post['language_code'])) {
+			$data['language_code'] = $this->request->post['language_code'];
+		} elseif (!empty($customer_info)) {
+			$data['language_code'] = $customer_info['language_code'];
+		} else {
+			$data['language_code'] = '';
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		// Custom Fields
 		$this->load->model('account/custom_field');

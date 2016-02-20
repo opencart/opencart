@@ -13,7 +13,7 @@ class ControllerExtensionTheme extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/feed');
+		$this->load->language('extension/theme');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

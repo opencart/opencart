@@ -76,7 +76,7 @@ class ModelPaymentPPExpress extends Model {
 		return $query->rows;
 	}
 
-	public function getLocalTransaction($transaction_id) {
+	public function getPaypalOrderByTransactionId($transaction_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'");
 
 		return $query->rows;
@@ -149,7 +149,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $query->row['amount'];
 	}
-
+		
 	public function cleanReturn($data) {
 		$data = explode('&', $data);
 
@@ -169,15 +169,7 @@ class ModelPaymentPPExpress extends Model {
 		}
 	}
 
-	public function recurringCancel($ref) {
-		$data = array(
-			'METHOD' => 'ManageRecurringPaymentsProfileStatus',
-			'PROFILEID' => $ref,
-			'ACTION' => 'Cancel'
-		);
 
-		return $this->call($data);
-	}
 	public function getTokens($test) {
 		if ($test == 'sandbox') {
 			$endpoint = 'https://api.sandbox.paypal.com/v1/oauth2/token';

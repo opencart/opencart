@@ -13,7 +13,7 @@ $_['text_refund']			 = 'Refund';
 $_['text_resend']			 = 'Resend';
 $_['text_success']           = 'Transaction was successfully sent';
 
-$_['text_current_refunds']			= 'Refunds have already been done for this transaction. The max refund is';
+$_['text_current_refunds']   = 'Refunds have already been done for this transaction. The max refund is';
 
 // Column
 $_['column_transaction']	 = 'Transaction ID';
@@ -29,7 +29,10 @@ $_['entry_capture_amount']	 = 'Capture amount';
 $_['entry_capture_complete'] = 'Complete capture';
 $_['entry_full_refund']		 = 'Full refund';
 $_['entry_amount']			 = 'Amount';
-$_['entry_comment']          = 'Comment';
+$_['entry_note']             = 'Note';
+
+// Help
+$_['help_capture_complete']  = 'If this is athe last capture.';
 
 // Tab
 $_['tab_capture']		     = 'Capture';
@@ -44,4 +47,4 @@ $_['button_refund']		     = 'Issue refund';
 $_['error_capture']		     = 'Enter an amount to capture';
 $_['error_transaction']	     = 'Transaction could not be carried out!';
 $_['error_not_found']	     = 'Transaction could not be found!';
-$_['error_partial_amt']				= 'You must enter a partial refund amount';
+$_['error_partial_amt']		 = 'You must enter a partial refund amount';

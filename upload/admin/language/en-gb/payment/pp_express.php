@@ -65,5 +65,3 @@ $_['error_sandbox_password']		 = 'API Sandbox Password Required!';
 $_['error_sandbox_signature']		 = 'API Sandbox Signature Required!';
 $_['error_api']						 = 'Paypal Authorization Error';
 $_['error_api_sandbox']				 = 'Paypal Sandbox Authorization Error';
-$_['error_data']					 = 'Data missing from request';
-$_['error_timeout']					 = 'Request timed out';

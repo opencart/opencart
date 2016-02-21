@@ -27,60 +27,62 @@
     </tr>
   </table>
 </fieldset>
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#tab-capture" data-toggle="tab"><?php echo $tab_capture; ?></a></li>
-  <li><a href="#tab-refund" data-toggle="tab"><?php echo $tab_refund; ?></a></li>
-</ul>
-<div class="tab-content">
-  <div class="tab-pane active" id="tab-capture">
-    <?php if ($capture_status != 'Complete') { ?>
-    <form id="paypal-capture" class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
-          <div class="col-sm-10">
-            <div class="input-group">
-              <input type="text" name="paypal_capture_amount" value="<?php echo $remaining; ?>" id="input-capture-amount" class="form-control" />
-              <div class="input-group-btn">
-                <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
-              </div>
+<form id="paypal-capture" class="form-horizontal">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab-capture" data-toggle="tab"><?php echo $tab_capture; ?></a></li>
+    <li><a href="#tab-refund" data-toggle="tab"><?php echo $tab_refund; ?></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab-capture">
+      <?php if ($capture_status != 'Complete') { ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_capture_amount; ?></label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input type="text" name="amount" value="<?php echo $capture_remaining; ?>" id="input-amount" class="form-control" />
+            <div class="input-group-btn">
+              <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-capture-complete"><?php echo $entry_capture_complete; ?></label>
-          <div class="col-sm-10">
-            <input type="checkbox" name="paypal_capture_complete" value="1" id="input-capture-complete" class="form-control" />
-          </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-complete"><?php echo $entry_capture_complete; ?></label>
+        <div class="col-sm-10">
+          <input type="checkbox" name="complete" value="1" id="input-complete" class="form-control" />
         </div>
-    </form>
-    <?php } ?>
+      </div>
+      <?php } ?>
+    </div>
+    <div class="tab-pane" id="tab-refund">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_full_refund; ?></label>
+        <div class="col-sm-10">
+          <input type="checkbox" name="type" id="full" value="1" />
+        </div>
+      </div>
+      
+      <?php if ($refund_available == '') { ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-refund-amount"><?php echo $entry_amount; ?></label>
+        <div class="col-sm-10">
+          <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="<?php echo $entry_amount; ?>" id="input-refund-amount" class="form-control"/>
+        </div>
+      </div>
+      <?php } ?>
+      
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-note"><?php echo $entry_note; ?></label>
+        <div class="col-sm-10">
+          <textarea name="note" cols="40" rows="5" id="input-note" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="pull-right">
+        <button type="button" id="button-refund" data-loading="<?php echo $text_loading; ?>" class="btn btn-danger"><?php echo $button_refund; ?></button>
+      </div>
+    </div>
   </div>
-  <div class="tab-pane" id="tab-refund">
-    <div class="form-group">
-      <label class="col-sm-2 control-label"><?php echo $entry_full_refund; ?></label>
-      <div class="col-sm-10">
-        <input type="hidden" name="refund_full" value="0"/>
-        <input type="checkbox" name="refund_full" id="refund_full" value="1" <?php echo ($refund_available == '' ? 'checked="checked"' : ''); ?> onchange="refundAmount();"/>
-      </div>
-    </div>
-    
-    <div class="form-group" <?php echo ($refund_available == '' ? 'style="display:none;" ' : ''); ?>id="partial_amount_row">
-      <label class="col-sm-2 control-label"><?php echo $entry_amount; ?></label>
-      <div class="col-sm-10">
-        <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="<?php echo $entry_amount; ?>" class="form-control"/>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-sm-2 control-label"><?php echo $entry_message; ?></label>
-      <div class="col-sm-10">
-        <textarea name="comment" id="message" cols="40" rows="5" class="form-control"></textarea>
-      </div>
-    </div>
-    <div class="pull-right">
-    <button type="button" id="button-refund" data-loading="<?php echo $text_loading; ?>" class="btn btn-danger"><?php echo $button_refund; ?></button></div>
-  </div>
-</div>
+</form>
 <br />
 <script type="text/javascript"><!--
 $('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
@@ -159,7 +161,9 @@ $('#button-void').on('click', function() {
 $('#button-refund').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/pp_express/refund&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
 		dataType: 'json',
+		data: 'amount=' + $('#paypal-capture-amount').val() + '&complete=' + $('#paypal-capture-complete').prop('checked'),
 		beforeSend: function() {
 			$('#button-refund').button('loading');
 		},
@@ -186,7 +190,7 @@ $('#button-refund').on('click', function() {
 	});
 });
 
-function refundAmount() {
+$('#button-refund').on('change', function() {
 	var valChecked = $('#refund_full').prop('checked');
 	
 	if (valChecked == true) {
@@ -194,7 +198,7 @@ function refundAmount() {
 	} else {
 		$('#partial_amount_row').show();
 	}
-}
+});
 
 $('#paypal-transaction').delegate('button', 'click', function() {
 	var element = this;

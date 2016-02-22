@@ -28,7 +28,6 @@ $_['text_images_text_1']            = 'eBay images will be uploaded to eBay. Sup
 $_['text_images_text_2']            = 'Template images will be added to your listing description and hosted from your web site, these are free. (Your listing template must have the {gallery} tag)';
 $_['text_image_ebay']               = 'eBay image';
 $_['text_images_none']              = 'You have no images for this product, you must add images before you can list';
-$_['text_width']      				= 'Width';
 $_['text_height']      				= 'Height';
 $_['text_px']      					= 'px';
 $_['text_item_postcode_help']       = 'A postcode will help eBay choose a correct location for your listing';

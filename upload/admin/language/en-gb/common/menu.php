@@ -41,7 +41,6 @@ $_['text_order']                       = 'Orders';
 $_['text_order_status']                = 'Order Statuses';
 $_['text_payment']                     = 'Payments';
 $_['text_paypal']                      = 'PayPal';
-$_['text_paypal_search']               = 'Search Transactions';
 $_['text_product']                     = 'Products';
 $_['text_reports']                     = 'Reports';
 $_['text_report_sale_order']           = 'Orders';

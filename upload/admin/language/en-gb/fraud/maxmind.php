@@ -65,7 +65,6 @@ $_['entry_order_status']                      = 'Order Status';
 $_['entry_status']                            = 'Status';
 
 // Help
-$_['help_score']                              = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
 $_['help_order_status']                       = 'Orders that have a score over your set risk score will be assigned this order status and will not be allowed to reach the complete status automatically.';
 $_['help_country_match']                      = 'Whether country of IP address matches billing address country (mismatch = higher risk).';
 $_['help_country_code']                       = 'Country Code of the IP address.';

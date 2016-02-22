@@ -17,7 +17,6 @@ $_['text_affiliate']                  = 'Affiliates';
 $_['text_captcha']                    = 'Captcha';
 $_['text_register']                   = 'Register';
 $_['text_guest']                      = 'Guest Checkout';
-$_['text_review']                     = 'Reviews';
 $_['text_return']                     = 'Returns';
 $_['text_contact']                    = 'Contact';
 $_['text_shipping']                   = 'Shipping Address';

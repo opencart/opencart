@@ -10,7 +10,6 @@ class ModelAffiliateAffiliate extends Model {
 		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
 		$message  = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
-		$message .= $this->language->get('text_approval') . "\n";
 
 		if (!$this->config->get('config_affiliate_approval')) {
 			$message .= $this->language->get('text_login') . "\n";

@@ -10,7 +10,6 @@ $_['text_desc2'] 					= 'For each item that is updated the local stock (the stoc
 $_['text_desc3']                    = 'You can link items manually by entering Amazon SKU and product name or load all unlinked products and then enter amazon SKUs. (Uploading products from OpenCart to Amazon will automatically add links)';
 $_['text_new_link']                 = 'New link';
 $_['text_autocomplete_product']     = 'Product (Auto complete from name)';
-$_['text_amazon_sku']               = 'Amazon item SKU';
 $_['text_action']                   = 'Action';
 $_['text_linked_items']             = 'Linked items';
 $_['text_unlinked_items']           = 'Unlinked items';

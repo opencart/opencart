@@ -21,7 +21,6 @@ $_['entry_status']				 		 = 'Status';
 $_['entry_sort_order']			 		 = 'Sort Order';
 $_['entry_debug']				 		 = 'Debug logging';
 
-$_['entry_order_status']				 = 'Order Status';
 $_['entry_complete_status']				 = 'Complete Status:';
 $_['entry_rejected_status']				 = 'Rejected Status:';
 $_['entry_cancelled_status']			 = 'Canceled Status:';

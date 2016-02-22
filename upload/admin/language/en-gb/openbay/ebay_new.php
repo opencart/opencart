@@ -186,7 +186,6 @@ $_['error_category_load']   		= 'Unable to load categories';
 $_['error_features']   				= 'Error loading features';
 $_['error_catalog_load']   			= 'Error loading catalog';
 $_['error_category_sync']          	= 'You must fix your category problem before you can list. Try re-syncing them in the module admin area.';
-$_['error_choose_category']			= 'Please choose an eBay category';
 $_['error_sku']           			= 'Cannot submit a product without an SKU';
 $_['error_name']          			= 'Cannot submit a product without a name';
 $_['error_name_length']      		= 'Product name must be under 80 characters';

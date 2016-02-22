@@ -46,7 +46,6 @@ $_['text_weight_major']       		= 'Weight major';
 $_['text_weight_minor']       		= 'Weight minor';
 $_['text_package']       			= 'Package type';
 $_['text_shape']       				= 'Irregular shape';
-$_['text_width']       				= 'Width';
 $_['text_length']       			= 'Length';
 $_['text_depth']       				= 'Depth / Height';
 $_['text_return_accepted']          = 'Returns accepted?';

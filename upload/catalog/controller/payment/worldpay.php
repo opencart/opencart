@@ -81,7 +81,7 @@ class ControllerPaymentWorldpay extends Controller {
 		$order = array(
 			"token" => $this->request->post['token'],
 			"orderType" => $order_type,
-			"amount" => (int)($order_info['total'] * 100),
+			"amount" => round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100),
 			"currencyCode" => $order_info['currency_code'],
 			"name" => $order_info['firstname'] . ' ' . $order_info['lastname'],
 			"orderDescription" => $order_info['store_name'] . ' - ' . date('Y-m-d H:i:s'),

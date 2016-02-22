@@ -42,7 +42,6 @@ $_['column_estimated_arrive'] 				= 'Estimated arrive';
 
 // Errors
 $_['error_loading_fulfillment']             = 'There was a problem getting the fulfillment order information from Amazon';
-$_['error_ship']             				= 'There was a problem confirming the shipment with Amazon';
 $_['error_cancel']             				= 'There was a problem cancelling the fulfillment with Amazon';
 $_['error_ship']             				= 'There was a problem confirming the fulfillment with Amazon';
 $_['error_missing_id']             			= 'Missing ID in the request';

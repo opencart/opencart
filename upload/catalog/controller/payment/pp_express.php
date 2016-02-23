@@ -2,9 +2,53 @@
 class ControllerPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('payment/pp_express');
+		
+		$request = array(
+			// sale / authorize / order
+			
+			'intent' => 'sale'
+			"payer": {
+					"payment_method": "paypal",
+					"payer_info": {
+					"email": "npurayil-uspr-60@paypal.com",
+					"first_name": "Brian",
+					"last_name": "Robinson",
+					"payer_id": "JMKDKJ4D7DG7G",
+					"shipping_address": {
+					"line1": "4thFloor",
+					"line2": "unit#34",
+					"city": "SAn Jose",
+					"state": "CA",
+					"postal_code": "95131",
+					"country_code": "US",
+					"phone": "011862212345678",
+					"recipient_name": "HelloWorld"
+				}
+				}
+			},
+		);
+		
+	
+		if (!$this->config->get('pp_standard_test')) {
+			$curl = curl_init('https://www.paypal.com/v1/payments/payment');
+		} else {
+			$curl = curl_init('https://api.sandbox.paypal.com/v1/payments/payment');
+		}
+
+
+
+
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
 
 		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_continue_action'] = $this->url->link('payment/pp_express/checkout', '', true);
+		
+		$data['continue'] = $this->url->link('payment/pp_express/checkout', '', true);
 
 		/**
 		 * if there is any other paypal session data, clear it
@@ -1151,7 +1195,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$paypal_transaction_data = array(
 					'paypal_order_id'       => $paypal_order_id,
 					'transaction_id'        => $result['PAYMENTINFO_0_TRANSACTIONID'],
-					'parent_transaction_id' => '',
+					'parent_id' => '',
 					'note'                  => '',
 					'msgsubid'              => '',
 					'receipt_id'            => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
@@ -1433,7 +1477,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$paypal_transaction_data = array(
 				'paypal_order_id'       => $paypal_order_id,
 				'transaction_id'        => $result['PAYMENTINFO_0_TRANSACTIONID'],
-				'parent_transaction_id' => '',
+				'parent_id' => '',
 				'note'                  => '',
 				'msgsubid'              => '',
 				'receipt_id'            => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
@@ -1656,7 +1700,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$transaction = array(
 						'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 						'transaction_id'        => $this->request->post['txn_id'],
-						'parent_transaction_id' => $this->request->post['parent_txn_id'],
+						'parent_id' => $this->request->post['parent_txn_id'],
 						'note'                  => '',
 						'msgsubid'              => '',
 						'receipt_id'            => (isset($this->request->post['receipt_id']) ? $this->request->post['receipt_id'] : ''),
@@ -1686,7 +1730,7 @@ class ControllerPaymentPPExpress extends Controller {
 					 */
 					if (isset($this->request->post['auth_status']) && $this->request->post['auth_status'] == 'Completed' && $parent_transaction['payment_status'] == 'Pending') {
 						$captured = $this->currency->format($this->model_payment_pp_express->getTotalCaptured($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
-						$refunded = $this->currency->format($this->model_payment_pp_express->getTotalRefunded($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
+						$refunded = $this->currency->format($this->model_payment_pp_express->getRefundedTotal($parent_transaction['paypal_order_id']), $this->session->data['currency'], false, false);
 						$remaining = $this->currency->format($parent_transaction['amount'] - $captured + $refunded, $this->session->data['currency'], false, false);
 
 						if ($this->config->get('pp_express_debug') == 1) {
@@ -1699,7 +1743,7 @@ class ControllerPaymentPPExpress extends Controller {
 							$transaction = array(
 								'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 								'transaction_id'        => '',
-								'parent_transaction_id' => $this->request->post['parent_txn_id'],
+								'parent_id' => $this->request->post['parent_txn_id'],
 								'note'                  => '',
 								'msgsubid'              => '',
 								'receipt_id'            => '',

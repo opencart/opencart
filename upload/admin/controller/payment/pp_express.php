@@ -406,22 +406,24 @@ class ControllerPaymentPPExpress extends Controller {
 					
 			$this->load->model('payment/pp_express');
 			
-			$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
+			$paypal_info = $this->model_payment_pp_express->getPayPalOrder($order_id);
 
 			if ($paypal_info) {
 				$data['text_payment'] = $this->language->get('text_payment');				
 				$data['text_capture'] = $this->language->get('text_capture');
 				$data['text_transaction'] = $this->language->get('text_transaction');
 				$data['text_capture_status'] = $this->language->get('text_capture_status');
-				$data['text_amount_authorised'] = $this->language->get('text_amount_authorised');
-				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
-				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
+				$data['text_authorise_amount'] = $this->language->get('text_authorise_amount');
+				$data['text_capture_amount'] = $this->language->get('text_capture_amount');
+				$data['text_refund_amount'] = $this->language->get('text_refund_amount');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
+				$data['text_full'] = $this->language->get('text_full');
+				$data['text_partial'] = $this->language->get('text_partial');
 				$data['text_loading'] = $this->language->get('text_loading');
 								
 				$data['entry_capture_amount'] = $this->language->get('entry_capture_amount');
 				$data['entry_capture_complete'] = $this->language->get('entry_capture_complete');								
-				$data['entry_full_refund'] = $this->language->get('entry_full_refund');
+				$data['entry_type'] = $this->language->get('entry_type');
 				$data['entry_note'] = $this->language->get('entry_note');
 								
 				$data['button_capture'] = $this->language->get('button_capture');
@@ -439,23 +441,20 @@ class ControllerPaymentPPExpress extends Controller {
 				
 				$data['total'] = $paypal_info['total'];
 
-				$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_info['paypal_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_info['paypal_order_id']), 2);
+				$captured = number_format($this->model_payment_pp_express->getCapturedTotal($paypal_info['paypal_order_id']), 2);
 
 				$data['captured'] = $captured;
-				$data['refunded'] = $refunded;
 				
 				$data['capture_remaining'] = number_format($paypal_info['total'] - $captured, 2);
 		
-				$data['refund_remaining'] = 
+				$refunded = number_format($this->model_payment_pp_express->getRefundedTotal($paypal_info['paypal_order_id']), 2);
 		
-				$refunded = number_format($this->model_payment_pp_express->getTotalRefundedTransaction($paypal_info['transaction_id']), 2);
-		
-		
+				$data['refunded'] = $refunded;
+				
+				$data['refund_remaining'] = $refunded;
+						
 				if ($refunded != 0.00) {
-					$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
-					
-					$data['attention'] = $this->language->get('text_current_refunds') . ': ' . $data['refund_available'];
+					$data['refund_remaining'] = number_format($data['amount_original'] + $refunded, 2);
 				} else {
 					$data['refund_remaining'] = '';
 				}
@@ -595,7 +594,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$transaction_data = array(
 						'paypal_order_id'       => $paypal_info['paypal_order_id'],
 						'transaction_id'        => $response_info['TRANSACTIONID'],
-						'parent_transaction_id' => $paypal_info['authorization_id'],
+						'parent_id'             => $paypal_info['authorization_id'],
 						'note'                  => '',
 						'msgsubid'              => $response_info['MSGSUBID'],
 						'receipt_id'            => '',
@@ -609,8 +608,8 @@ class ControllerPaymentPPExpress extends Controller {
 		
 					$this->model_payment_pp_express->addTransaction($transaction_data);
 		
-					$captured = number_format($this->model_payment_pp_express->getTotalCaptured($paypal_info['paypal_order_id']), 2);
-					$refunded = number_format($this->model_payment_pp_express->getTotalRefunded($paypal_info['paypal_order_id']), 2);
+					$captured = number_format($this->model_payment_pp_express->getCapturedTotal($paypal_info['paypal_order_id']), 2);
+					$refunded = number_format($this->model_payment_pp_express->getRefundedTotal($paypal_info['paypal_order_id']), 2);
 		
 					$json['captured'] = $captured;
 					$json['refunded'] = $refunded;
@@ -726,7 +725,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$transaction_data = array(
 						'paypal_order_id'       => $paypal_order['paypal_order_id'],
 						'transaction_id'        => $response_info['REFUNDTRANSACTIONID'],
-						'parent_transaction_id' => $paypal_info['transaction_id'],
+						'parent_id'             => $paypal_info['transaction_id'],
 						'note'                  => $this->request->post['note'],
 						'msgsubid'              => $response_info['MSGSUBID'],
 						'receipt_id'            => '',
@@ -828,7 +827,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$transaction_data = array(
 					'paypal_order_id'       => $paypal_info['paypal_order_id'],
 					'transaction_id'        => '',
-					'parent_transaction_id' => $paypal_info['authorization_id'],
+					'parent_id'             => $paypal_info['authorization_id'],
 					'note'                  => '',
 					'msgsubid'              => '',
 					'receipt_id'            => '',
@@ -958,12 +957,12 @@ class ControllerPaymentPPExpress extends Controller {
 
 			if ($response_info) {
 
-				$parent_transaction = $this->model_payment_pp_express->getLocalTransaction($transaction['parent_transaction_id']);
+				$parent_transaction = $this->model_payment_pp_express->getLocalTransaction($transaction['parent_id']);
 
 				if ($parent_transaction['amount'] == abs($transaction['amount'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_id']) . "' LIMIT 1");
 				} else {
-					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Partially-Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_transaction_id']) . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Partially-Refunded' WHERE `transaction_id` = '" . $this->db->escape($transaction['parent_id']) . "' LIMIT 1");
 				}
 
 				if (isset($result['REFUNDTRANSACTIONID'])) {

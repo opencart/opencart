@@ -54,7 +54,7 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET
 			`paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "',
 			`transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "',
-			`parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "',
+			`parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "',
 			`date_added` = NOW(),
 			`note` = '" . $this->db->escape($transaction_data['note']) . "',
 			`msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "',

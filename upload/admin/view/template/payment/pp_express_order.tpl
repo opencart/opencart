@@ -10,7 +10,7 @@
       <td id="capture-status"><?php echo $capture_status; ?></td>
     </tr>
     <tr>
-      <td><?php echo $text_amount_authorised; ?></td>
+      <td><?php echo $text_authorise_amount; ?></td>
       <td><?php echo $total; ?>
         <?php if ($capture_status != 'Complete') { ?>
         &nbsp;&nbsp;&nbsp;
@@ -18,63 +18,73 @@
         <?php } ?></td>
     </tr>
     <tr>
-      <td><?php echo $text_amount_captured; ?></td>
-      <td id="paypal-captured"><?php echo $captured; ?></td>
+      <td><?php echo $text_capture_amount; ?></td>
+      <td id="paypal-capture"><?php echo $captured; ?></td>
     </tr>
     <tr>
-      <td><?php echo $text_amount_refunded; ?></td>
-      <td id="paypal-refunded"><?php echo $refunded; ?></td>
+      <td><?php echo $text_refund_amount; ?></td>
+      <td id="paypal-refund"><?php echo $refunded; ?></td>
     </tr>
   </table>
 </fieldset>
 <form id="paypal-capture" class="form-horizontal">
   <ul class="nav nav-tabs">
+    <?php if ($capture_status != 'Complete') { ?>
     <li class="active"><a href="#tab-capture" data-toggle="tab"><?php echo $tab_capture; ?></a></li>
+    <?php } ?>
     <li><a href="#tab-refund" data-toggle="tab"><?php echo $tab_refund; ?></a></li>
   </ul>
   <div class="tab-content">
+    <?php if ($capture_status != 'Complete') { ?>
     <div class="tab-pane active" id="tab-capture">
-      <?php if ($capture_status != 'Complete') { ?>
+      
+      
+
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_capture_amount; ?></label>
+        <label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
         <div class="col-sm-10">
-          <div class="input-group">
-            <input type="text" name="amount" value="<?php echo $capture_remaining; ?>" id="input-amount" class="form-control" />
-            <div class="input-group-btn">
-              <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
-            </div>
-          </div>
+          <input type="text" name="amount" value="<?php echo $capture_remaining; ?>" id="input-capture-amount" class="form-control" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-complete"><?php echo $entry_capture_complete; ?></label>
+        <label class="col-sm-2 control-label" for="input-capture-complete"><?php echo $entry_capture_complete; ?></label>
         <div class="col-sm-10">
-          <input type="checkbox" name="complete" value="1" id="input-complete" class="form-control" />
+          <input type="checkbox" name="complete" value="1" id="input-capture-complete" class="form-control" />
         </div>
       </div>
-      <?php } ?>
+      <div class="pull-right">
+        <button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
+      </div>
     </div>
+    <?php } ?>
+    
+    
     <div class="tab-pane" id="tab-refund">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_full_refund; ?></label>
+        <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
         <div class="col-sm-10">
-          <input type="checkbox" name="type" id="full" value="1" />
+          <select name="type" id="input-type" class="form-control">
+            <option value="full"><?php echo $text_full; ?></option>
+            <option value="partial"><?php echo $text_partial; ?></option>
+          </select>
         </div>
       </div>
       
-      <?php if ($refund_available == '') { ?>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-refund-amount"><?php echo $entry_amount; ?></label>
         <div class="col-sm-10">
-          <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="<?php echo $entry_amount; ?>" id="input-refund-amount" class="form-control"/>
+          <?php if ($refund_remaining) { ?>
+          <input type="text" name="amount" value="<?php echo $refund_remaining; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-refund-amount" class="form-control" />
+          <?php } else { ?>
+          <input type="text" name="amount" value="<?php echo $refund_remaining; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-refund-amount" disabled="disabled" class="form-control" />
+          <?php } ?>
         </div>
       </div>
-      <?php } ?>
       
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-note"><?php echo $entry_note; ?></label>
+        <label class="col-sm-2 control-label" for="input-refund-note"><?php echo $entry_note; ?></label>
         <div class="col-sm-10">
-          <textarea name="note" cols="40" rows="5" id="input-note" class="form-control"></textarea>
+          <textarea name="note" cols="40" rows="5" id="input-refund-note" class="form-control"></textarea>
         </div>
       </div>
       <div class="pull-right">
@@ -190,13 +200,11 @@ $('#button-refund').on('click', function() {
 	});
 });
 
-$('#button-refund').on('change', function() {
-	var valChecked = $('#refund_full').prop('checked');
-	
-	if (valChecked == true) {
-		$('#partial_amount_row').hide();
+$('#tab-refund select[name=\'type\']').on('change', function() {
+	if (this.value == 'full') {
+		$('#input-refund-amount').prop('disabled', true);
 	} else {
-		$('#partial_amount_row').show();
+		$('#input-refund-amount').prop('disabled', false);
 	}
 });
 

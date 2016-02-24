@@ -38,7 +38,7 @@
               <?php } ?>
               <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
               <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-            <td class="text-left"><?php if ($payment_method) { ?>
+            <td class="text-left" style="width: 50%;"><?php if ($payment_method) { ?>
               <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
               <?php } ?>
               <?php if ($shipping_method) { ?>
@@ -50,9 +50,9 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" style="width: 50%;"><?php echo $text_payment_address; ?></td>
+            <td class="text-left" style="width: 50%; vertical-align: top;"><?php echo $text_payment_address; ?></td>
             <?php if ($shipping_address) { ?>
-            <td class="text-left"><?php echo $text_shipping_address; ?></td>
+            <td class="text-left" style="width: 50%; vertical-align: top;"><?php echo $text_shipping_address; ?></td>
             <?php } ?>
           </tr>
         </thead>
@@ -149,11 +149,17 @@
           </tr>
         </thead>
         <tbody>
+          <?php if ($histories) { ?>
           <?php foreach ($histories as $history) { ?>
           <tr>
             <td class="text-left"><?php echo $history['date_added']; ?></td>
             <td class="text-left"><?php echo $history['status']; ?></td>
             <td class="text-left"><?php echo $history['comment']; ?></td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>

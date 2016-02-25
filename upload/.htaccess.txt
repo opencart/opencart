@@ -17,9 +17,11 @@ Options -Indexes
 
 # SEO URL Settings
 RewriteEngine On
-# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
+# If OpenCart is installed outside of your server's normal DocumentRoot, or the URL gets rewritten by some other part of the server config 
+# (whether by an Alias or RewriteRule), you may need to uncomment the RewriteBase line and set it to reflect the URL that should be used. 
+# Most installations are within the DocumentRoot (or a subdirectory of it), in which case this is NOT required.
+# RewriteBase /
 
-RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
 RewriteRule ^system/download/(.*) index.php?route=error/not_found [L]

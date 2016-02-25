@@ -325,6 +325,8 @@ class ModelLocalisationLanguage extends Model {
 						'name'        => $result['name'],
 						'code'        => $result['code'],
 						'locale'      => $result['locale'],
+						'image'       => $result['image'],
+						'directory'   => $result['directory'],
 						'sort_order'  => $result['sort_order'],
 						'status'      => $result['status']
 					);

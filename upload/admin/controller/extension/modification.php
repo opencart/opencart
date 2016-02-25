@@ -201,7 +201,7 @@ class ControllerExtensionModification extends Controller {
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);
 
 										// Log
-										$log[] = 'FILE: ' . $key;
+										$log[] = PHP_EOL . 'FILE: ' . $key;
 									}
 
 									foreach ($operations as $operation) {
@@ -359,23 +359,23 @@ class ControllerExtensionModification extends Controller {
 										}
 
 										if (!$status) {
-											// Log
-											$log[] = 'NOT FOUND!';
-
 											// Abort applying this modification completely.
 											if ($error == 'abort') {
 												$modification = $recovery;
-
 												// Log
-												$log[] = 'ABORTING!';
-
+												$log[] = 'NOT FOUND - ABORTING !';
 												break 5;
 											}
-
 											// Skip current operation or break
-											if ($error == 'skip') {
+											elseif ($error == 'skip') {
+												// Log
+												$log[] = 'NOT FOUND - OPERATION SKIPPED !';
 												continue;
-											} else {
+											}
+											// Break current operations
+											else {
+												// Log
+												$log[] = 'NOT FOUND - OPERATIONS ABORTED !';
 											 	break;
 											}
 										}

@@ -467,7 +467,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					$transaction = array(
 						'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 						'transaction_id' => '',
-						'parent_transaction_id' => $this->request->post['transaction_id'],
+						'parent_id' => $this->request->post['transaction_id'],
 						'note' => $this->request->post['refund_message'],
 						'msgsubid' => $call_data['MSGSUBID'],
 						'receipt_id' => '',
@@ -543,7 +543,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$transaction = array(
 					'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 					'transaction_id' => '',
-					'parent_transaction_id' => $paypal_order['authorization_id'],
+					'parent_id' => $paypal_order['authorization_id'],
 					'note' => '',
 					'msgsubid' => '',
 					'receipt_id' => '',
@@ -731,7 +731,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$transaction = array(
 				'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 				'transaction_id' => '',
-				'parent_transaction_id' => $paypal_order['authorization_id'],
+				'parent_id' => $paypal_order['authorization_id'],
 				'note' => '',
 				'msgsubid' => $call_data['MSGSUBID'],
 				'receipt_id' => '',
@@ -785,7 +785,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					$transaction['void'] = array(
 						'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 						'transaction_id' => '',
-						'parent_transaction_id' => $paypal_order['authorization_id'],
+						'parent_id' => $paypal_order['authorization_id'],
 						'note' => '',
 						'msgsubid' => '',
 						'receipt_id' => '',
@@ -837,7 +837,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$transaction = array(
 					'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 					'transaction_id' => '',
-					'parent_transaction_id' => $paypal_order['authorization_id'],
+					'parent_id' => $paypal_order['authorization_id'],
 					'note' => '',
 					'msgsubid' => '',
 					'receipt_id' => '',
@@ -886,12 +886,12 @@ class ControllerPaymentPPProIframe extends Controller {
 				$result = $this->model_payment_pp_pro_iframe->call($call_data);
 
 				if ($result) {
-					$parent_transaction = $this->model_payment_pp_pro_iframe->getLocalTransaction($transaction['parent_transaction_id']);
+					$parent_transaction = $this->model_payment_pp_pro_iframe->getLocalTransaction($transaction['parent_id']);
 
 					if ($parent_transaction['amount'] == abs($transaction['amount'])) {
-						$this->model_payment_pp_pro_iframe->updateRefundTransaction($transaction['parent_transaction_id'], 'Refunded');
+						$this->model_payment_pp_pro_iframe->updateRefundTransaction($transaction['parent_id'], 'Refunded');
 					} else {
-						$this->model_payment_pp_pro_iframe->updateRefundTransaction($transaction['parent_transaction_id'], 'Partially-Refunded');
+						$this->model_payment_pp_pro_iframe->updateRefundTransaction($transaction['parent_id'], 'Partially-Refunded');
 					}
 
 					if (isset($result['REFUNDTRANSACTIONID'])) {

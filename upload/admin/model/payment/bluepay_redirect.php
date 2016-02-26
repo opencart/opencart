@@ -47,7 +47,7 @@ class ModelPaymentBluepayredirect extends Model {
 	public function void($order_id) {
 		$bluepay_redirect_order = $this->getOrder($order_id);
 
-		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 0) {
+		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 1) {
 
 			$void_data = array();
 

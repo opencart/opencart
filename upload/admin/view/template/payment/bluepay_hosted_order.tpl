@@ -88,13 +88,16 @@
 						html += '<tr>';
 						html += '<td class="text-left">' + data.data.date_added + '</td>';
 						html += '<td class="text-left">void</td>';
-						html += '<td class="text-left">0.00</td>';
+						html += '<td class="text-left">' + data.data.total + '</td>';
 						html += '</tr>';
 
 						$('.void_text').text('<?php echo $text_yes; ?>');
+						$('.rebate_text').text('<?php echo $text_no; ?>');
 						$('#bluepay_hosted_transactions').append(html);
 						$('#button-release').hide();
 						$('#release_amount').hide();
+						$('#button-rebate').hide();
+						$('#rebate_amount').hide();
 
 						if (data.msg != '') {
 							$('#bluepay_hosted_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
@@ -190,7 +193,7 @@
 							$('.rebate_text').text('<?php echo $text_yes; ?>');
 						} else {
 							$('#button-rebate').show();
-							$('#rebate_amount').val(0.00).show();
+							$('#rebate_amount').show();
 						}
 
 						if (data.msg != '') {
@@ -200,6 +203,7 @@
 					if (data.error == true) {
 						alert(data.msg);
 						$('#button-rebate').show();
+						$('#rebate_amount').show();
 					}
 
 					$('#img_loading_rebate').hide();

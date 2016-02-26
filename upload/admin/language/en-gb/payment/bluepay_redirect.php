@@ -11,7 +11,7 @@ $_['text_sim']						= 'Simulator';
 $_['text_test']						= 'Test';
 $_['text_live']						= 'Live';
 $_['text_sale']					    = 'Sale';
-$_['text_authenticate']				= 'Authenticate';
+$_['text_authenticate']				= 'Authorization/Authorize';
 $_['text_release_ok']				= 'Release was successful';
 $_['text_release_ok_order']			= 'Release was successful';
 $_['text_rebate_ok']				= 'Rebate was successful';
@@ -35,7 +35,7 @@ $_['text_confirm_rebate']			= 'Are you sure you want to rebate the payment?';
 // Entry
 $_['entry_vendor']					= 'Account ID';
 $_['entry_secret_key']				= 'Secret Key';
-$_['entry_test']					= 'Test Mode';
+$_['entry_test']					= 'Transaction Mode';
 $_['entry_transaction']				= 'Transaction Method';
 $_['entry_total']					= 'Total';
 $_['entry_order_status']			= 'Order Status';
@@ -48,7 +48,7 @@ $_['entry_card']					= 'Store Cards';
 // Help
 $_['help_total']					= 'The checkout total the order must reach before this payment method becomes active.';
 $_['help_debug']					= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
-$_['help_transaction']				= 'Transaction method MUST be set to Payment to allow subscription payments';
+$_['help_transaction']				= 'Sale will charge customer immediately. Authorization will put funds on hold for future capture.';
 $_['help_cron_job_token']			= 'Make this long and hard to guess';
 $_['help_cron_job_url']				= 'Set a cron job to call this URL';
 

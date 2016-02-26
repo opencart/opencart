@@ -29,7 +29,7 @@
     <td><?php echo $text_void_status; ?></td>
     <td id="void_status"><?php if ($bluepay_redirect_order['void_status'] == 1) { ?>
       <span class="void_text"><?php echo $text_yes; ?></span>
-      <?php } elseif ($bluepay_redirect_order['void_status'] == 0 && $bluepay_redirect_order['release_status'] != 1 && $bluepay_redirect_order['rebate_status'] != 1) { ?>
+      <?php } elseif ($bluepay_redirect_order['void_status'] == 0 && $bluepay_redirect_order['release_status'] == 1 && $bluepay_redirect_order['rebate_status'] != 1) { ?>
       <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } else { ?>
       <span class="void_text"><?php echo $text_no; ?></span>
@@ -88,13 +88,16 @@
 						html += '<tr>';
 						html += '<td class="text-left">' + data.data.date_added + '</td>';
 						html += '<td class="text-left">void</td>';
-						html += '<td class="text-left">0.00</td>';
+						html += '<td class="text-left">' + data.data.total + '</td>';
 						html += '</tr>';
 
 						$('.void_text').text('<?php echo $text_yes; ?>');
+						$('.rebate_text').text('<?php echo $text_no; ?>');
 						$('#bluepay_redirect_transactions').append(html);
 						$('#button-release').hide();
 						$('#release_amount').hide();
+						$('#button-rebate').hide();
+						$('#rebate_amount').hide();
 
 						if (data.msg != '') {
 							$('#bluepay_redirect_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
@@ -191,7 +194,7 @@
 							$('.rebate_text').text('<?php echo $text_yes; ?>');
 						} else {
 							$('#button-rebate').show();
-							$('#rebate_amount').val(0.00).show();
+							$('#rebate_amount').show();
 						}
 
 						if (data.msg != '') {
@@ -201,6 +204,7 @@
 					if (data.error == true) {
 						alert(data.msg);
 						$('#button-rebate').show();
+						$('#rebate_amount').show();
 					}
 
 					$('#img_loading_rebate').hide();

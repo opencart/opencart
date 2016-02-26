@@ -299,6 +299,8 @@ class ControllerPaymentBluePayHosted extends Controller {
 			if ($release_response['Result'] == 'APPROVED') {
 				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'payment', $this->request->post['amount']);
 
+				$this->model_payment_bluepay_hosted->updateTransactionId($bluepay_hosted_order['bluepay_hosted_order_id'], $release_response['RRNO']);
+
 				$total_released = $this->model_payment_bluepay_hosted->getTotalReleased($bluepay_hosted_order['bluepay_hosted_order_id']);
 
 				if ($total_released >= $bluepay_hosted_order['total']) {

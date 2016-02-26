@@ -70,7 +70,7 @@
   </tr>
 </table>
 <script type="text/javascript"><!--
-  $("#button-void").click(function() {
+  $(document).on('click', '#button-void', function(){
 		if (confirm('<?php echo $text_confirm_void; ?>')) {
 			$.ajax({
 				type: 'POST',
@@ -113,7 +113,7 @@
 			});
 		}
 	});
-	$("#button-release").click(function() {
+	$(document).on('click', '#button-release', function(){
 		if (confirm('<?php echo $text_confirm_release; ?>')) {
 			$.ajax({
 				type: 'POST',
@@ -139,8 +139,10 @@
 						$('#bluepay_hosted_total_released').text(data.data.total);
 
 						if (data.data.release_status == 1) {
-							$('#button-void').hide();
+							$('.void_text').after('<a style="margin-left: 10px;" id="button-void" class="button btn btn-primary">Void</a>');
+							$('.rebate_text').after('<input style="margin-left: 10px;" width="10" type="text" id="rebate_amount"><a style="margin-left: 5px;" id="button-rebate" class="button btn btn-primary">Rebate / refund</a>');
 							$('.release_text').text('<?php echo $text_yes; ?>');
+							$('#rebate_amount').val(0.00).show();
 						} else {
 							$('#button-release').show();
 							$('#release_amount').val(0.00);
@@ -164,7 +166,7 @@
 			});
 		}
 	});
-	$("#button-rebate").click(function() {
+	$(document).on('click', '#button-rebate', function(){
 		if (confirm('<?php echo $text_confirm_rebate ?>')) {
 			$.ajax({
 				type: 'POST',
@@ -181,7 +183,7 @@
 					if (data.error == false) {
 						html = '';
 						html += '<tr>';
-						html += '<td class="text-left">' + data.data.dat_added + '</td>';
+						html += '<td class="text-left">' + data.data.date_added + '</td>';
 						html += '<td class="text-left">rebate</td>';
 						html += '<td class="text-left">' + data.data.amount + '</td>';
 						html += '</tr>';
@@ -191,6 +193,7 @@
 
 						if (data.data.rebate_status == 1) {
 							$('.rebate_text').text('<?php echo $text_yes; ?>');
+							$('#button-void').hide();
 						} else {
 							$('#button-rebate').show();
 							$('#rebate_amount').show();

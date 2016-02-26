@@ -92,7 +92,7 @@ class ModelPaymentBluePayHosted extends Model {
 			$release_data = array();
 
 			$release_data['MERCHANT'] = $this->config->get('bluepay_hosted_account_id');
-			$release_data["TRANSACTION_TYPE"] = 'VOID';
+			$release_data["TRANSACTION_TYPE"] = 'CAPTURE';
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_hosted_test'));
 			$release_data["RRNO"] = $bluepay_hosted_order['transaction_id'];
 
@@ -153,6 +153,10 @@ class ModelPaymentBluePayHosted extends Model {
 
 	public function updateRebateStatus($bluepay_hosted_order_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "bluepay_hosted_order` SET `rebate_status` = '" . (int)$status . "' WHERE `bluepay_hosted_order_id` = '" . (int)$bluepay_hosted_order_id . "'");
+	}
+
+	public function updateTransactionId($bluepay_hosted_order_id, $transaction_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "bluepay_hosted_order` SET `transaction_id` = '" . (int)$transaction_id . "' WHERE `bluepay_hosted_order_id` = '" . (int)$bluepay_hosted_order_id . "'");
 	}
 
 	public function getOrder($order_id) {

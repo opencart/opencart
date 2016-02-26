@@ -276,6 +276,8 @@ class ControllerPaymentBluepayredirect extends Controller {
 			if ($release_response['Result'] == 'APPROVED') {
 				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order['bluepay_redirect_order_id'], 'payment', $this->request->post['amount']);
 
+				$this->model_payment_bluepay_redirect->updateTransactionId($bluepay_redirect_order['bluepay_redirect_order_id'], $release_response['RRNO']);
+
 				$total_released = $this->model_payment_bluepay_redirect->getTotalReleased($bluepay_redirect_order['bluepay_redirect_order_id']);
 
 				if ($total_released >= $bluepay_redirect_order['total']) {

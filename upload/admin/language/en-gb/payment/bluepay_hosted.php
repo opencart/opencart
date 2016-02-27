@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']            = 'BluePay Hosted Form';
+$_['heading_title']					= 'BluePay Hosted Form';
 
 // Text
 $_['text_payment']					= 'Payment';
@@ -10,7 +10,7 @@ $_['text_bluepay_hosted']			= '<a href="http://www.bluepay.com/preferred-partner
 $_['text_test']						= 'Test';
 $_['text_live']						= 'Live';
 $_['text_sale']						= 'Sale';
-$_['text_authenticate']				= 'Authorization/Authorize';
+$_['text_authenticate']				= 'Authorize';
 $_['text_release_ok']				= 'Release was successful';
 $_['text_release_ok_order']			= 'Release was successful';
 $_['text_rebate_ok']				= 'Rebate was successful';

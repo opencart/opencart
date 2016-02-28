@@ -294,7 +294,8 @@ class ModelPaymentPPExpress extends Model {
 			CURLOPT_TIMEOUT => 0,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
+			CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1,
+			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&"),
 		);
 
 		$ch = curl_init();
@@ -346,7 +347,7 @@ class ModelPaymentPPExpress extends Model {
 
 		foreach ($data as $k=>$v) {
 			$tmp = explode('=', $v);
-			$arr[$tmp[0]] = urldecode($tmp[1]);
+			$arr[$tmp[0]] = isset($tmp[1]) ? urldecode($tmp[1]) : '';
 		}
 
 		return $arr;

@@ -70,12 +70,6 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "paypal_order_transaction SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ", transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "', parent_id = '" . $this->db->escape($transaction['parent_id']) . "', date_added = '" . $this->db->escape($transaction['date_added']) . "', note = '" . $this->db->escape($transaction['note']) . "', msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "', receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "', payment_type = '" . $this->db->escape($transaction['payment_type']) . "', payment_status = '" . $this->db->escape($transaction['payment_status']) . "', pending_reason = '" . $this->db->escape($transaction['pending_reason']) . "', transaction_entity = '" . $this->db->escape($transaction['transaction_entity']) . "', amount = '" . $this->db->escape($transaction['amount']) . "', debug_data = '" . $this->db->escape($transaction['debug_data']) . "', call_data = '" . $this->db->escape($transaction['call_data']) . "' WHERE paypal_order_transaction_id = '" . (int)$transaction['paypal_order_transaction_id'] . "'");
 	}
 
-	public function getTransactions($paypal_order_id) {
-		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
-
-		return $query->rows;
-	}
-
 	public function getPaypalOrderByTransactionId($transaction_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'");
 
@@ -87,7 +81,17 @@ class ModelPaymentPPExpress extends Model {
 
 		return $query->row;
 	}
-	
+
+	public function getLocalTransaction($transaction_id) {
+		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE transaction_id = '" . $this->db->escape($transaction_id) . "'")->row;
+
+		if ($result) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+
 	public function getTransaction($transaction_id) {
 		$call_data = array(
 			'METHOD' => 'GetTransactionDetails',
@@ -139,7 +143,7 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function getRefundedTotal($paypal_order_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `payment_status` = 'Refunded'");
+		$query = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `payment_status` = 'Refunded' AND `parent_id` != ''");
 
 		return $query->row['amount'];
 	}
@@ -167,6 +171,31 @@ class ModelPaymentPPExpress extends Model {
 		if ($this->config->get('pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
+	}
+
+	public function getOrder($order_id) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+
+		if ($qry->num_rows) {
+			$order = $qry->row;
+			$order['transactions'] = $this->getTransactions($order['paypal_order_id']);
+			$order['captured'] = $this->totalCaptured($order['paypal_order_id']);
+			return $order;
+		} else {
+			return false;
+		}
+	}
+
+	public function totalCaptured($paypal_order_id) {
+		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `pending_reason` != 'authorization' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
+
+		return $qry->row['amount'];
+	}
+
+	public function getTransactions($paypal_order_id) {
+		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
+
+		return $query->rows;
 	}
 
 
@@ -271,6 +300,7 @@ class ModelPaymentPPExpress extends Model {
 			CURLOPT_TIMEOUT => 0,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1,
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
 		);
 
@@ -279,7 +309,6 @@ class ModelPaymentPPExpress extends Model {
 		curl_setopt_array($ch, $defaults);
 
 		if (!$result = curl_exec($ch)) {
-
 			$log_data = array(
 				'curl_error' => curl_error($ch),
 				'curl_errno' => curl_errno($ch)

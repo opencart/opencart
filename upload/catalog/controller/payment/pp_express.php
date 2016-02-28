@@ -3,56 +3,11 @@ class ControllerPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('payment/pp_express');
 		
-		$request = array(
-			// sale / authorize / order
-			
-			'intent' => 'sale'
-			"payer": {
-					"payment_method": "paypal",
-					"payer_info": {
-					"email": "npurayil-uspr-60@paypal.com",
-					"first_name": "Brian",
-					"last_name": "Robinson",
-					"payer_id": "JMKDKJ4D7DG7G",
-					"shipping_address": {
-					"line1": "4thFloor",
-					"line2": "unit#34",
-					"city": "SAn Jose",
-					"state": "CA",
-					"postal_code": "95131",
-					"country_code": "US",
-					"phone": "011862212345678",
-					"recipient_name": "HelloWorld"
-				}
-				}
-			},
-		);
-		
-	
-		if (!$this->config->get('pp_standard_test')) {
-			$curl = curl_init('https://www.paypal.com/v1/payments/payment');
-		} else {
-			$curl = curl_init('https://api.sandbox.paypal.com/v1/payments/payment');
-		}
-
-
-
-
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-
 		$data['button_continue'] = $this->language->get('button_continue');
-		
+		$data['text_loading'] = $this->language->get('text_loading');
+
 		$data['continue'] = $this->url->link('payment/pp_express/checkout', '', true);
 
-		/**
-		 * if there is any other paypal session data, clear it
-		 */
 		unset($this->session->data['paypal']);
 
 		return $this->load->view('payment/pp_express', $data);
@@ -1645,6 +1600,7 @@ class ControllerPaymentPPExpress extends Controller {
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
 
 		$response = trim(curl_exec($curl));
 

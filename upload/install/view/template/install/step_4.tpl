@@ -75,7 +75,7 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=install/step_4/extension',
+		url: '<?php echo $extension; ?>',
 		type: 'post',
 		dataType: 'json',
 		success: function(json) {

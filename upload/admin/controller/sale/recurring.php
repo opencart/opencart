@@ -178,7 +178,7 @@ class ControllerSaleRecurring extends Controller {
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
 
 		$data['button_filter'] = $this->language->get('button_filter');
-		$data['button_view'] = $this->language->get('button_view');
+		$data['button_order_recurring'] = $this->language->get('button_order_recurring');
 		$data['button_order'] = $this->language->get('button_order');
 
 		$data['token'] = $this->session->data['token'];

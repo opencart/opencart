@@ -801,7 +801,9 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->model_payment_pp_express->addTransaction($transaction);
 				
 				$this->model_payment_pp_express->editPayPalOrderStatus($order_id, 'Complete');
-				
+
+				$json['capture_status'] = 'Complete';
+
 				$json['success'] = $this->language->get('text_success');
 			} else {
 				$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));

@@ -193,7 +193,7 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function getTransactions($paypal_order_id) {
-		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "'");
+		$query = $this->db->query("SELECT `ot`.*, (SELECT COUNT(`ot2`.`paypal_order_id`) FROM `" . DB_PREFIX . "paypal_order_transaction` `ot2` WHERE `ot2`.`parent_id` = `ot`.`transaction_id`) AS `children` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' ORDER BY `date_added` ASC");
 
 		return $query->rows;
 	}

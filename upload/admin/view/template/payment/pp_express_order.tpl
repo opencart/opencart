@@ -29,35 +29,28 @@
   </table>
 </fieldset>
 
-<form id="paypal-capture" class="form-horizontal">
-  <ul class="nav nav-tabs">
-    <?php if ($capture_status != 'Complete') { ?>
-    	<li class="tab-capture"><a href="#tab-capture" data-toggle="tab"><?php echo $tab_capture; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="tab-content">
-    <?php if ($capture_status != 'Complete') { ?>
-			<div class="tab-pane tab-capture" id="tab-capture">
-				<div class="form-group">
-					<label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
-					<div class="col-sm-10">
-						<input type="text" name="amount" value="<?php echo $capture_remaining; ?>" id="input-capture-amount" class="form-control" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label" for="input-capture-complete"><?php echo $entry_capture_complete; ?></label>
-					<div class="col-sm-10">
-						<input type="checkbox" name="complete" value="1" id="input-capture-complete" class="form-control" />
-					</div>
-				</div>
-				<div class="pull-right">
-					<button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
-				</div>
-			</div>
-    <?php } ?>
-  </div>
-</form>
-<br />
+<?php if ($capture_status != 'Complete') { ?>
+	<fieldset id="capture-form">
+		<legend><?php echo $tab_capture; ?></legend>
+		<form id="paypal-capture" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="input-capture-amount"><?php echo $entry_capture_amount; ?></label>
+							<div class="col-sm-10">
+								<input type="text" name="amount" value="<?php echo $capture_remaining; ?>" id="input-capture-amount" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="input-capture-complete"><?php echo $entry_capture_complete; ?></label>
+							<div class="col-sm-10">
+								<input type="checkbox" name="complete" value="1" id="input-capture-complete" class="form-control" />
+							</div>
+						</div>
+						<div class="pull-right">
+							<button type="button" id="button-capture" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_capture; ?></button>
+						</div>
+		</form>
+	</fieldset>
+<?php } ?>
 <script type="text/javascript"><!--
 	$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
@@ -91,7 +84,7 @@
 
 						$('#button-void').remove();
 
-						$('#tab-capture').remove();
+						$('#capture-form').remove();
 					}
 				}
 
@@ -122,6 +115,8 @@
 						$('#capture-status').text(json['capture_status']);
 
 						$('#button-void').remove();
+
+						$('#capture-form').remove();
 					}
 
 					$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');

@@ -31,7 +31,6 @@
 
 <form id="paypal-capture" class="form-horizontal">
   <ul class="nav nav-tabs">
-		<li class="active tab-refund"><a href="#tab-refund" data-toggle="tab"><?php echo $tab_refund; ?></a></li>
     <?php if ($capture_status != 'Complete') { ?>
     	<li class="tab-capture"><a href="#tab-capture" data-toggle="tab"><?php echo $tab_capture; ?></a></li>
     <?php } ?>

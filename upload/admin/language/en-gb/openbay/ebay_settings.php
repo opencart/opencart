@@ -26,6 +26,7 @@ $_['text_payment_card']				= 'Cards accepted';
 $_['text_payment_desc']				= 'See description (e.g. bank transfer)';
 $_['text_tax_use_listing'] 			= 'Use tax rate set in eBay listing';
 $_['text_tax_use_value']			= 'Use a set value for everything';
+$_['text_tax_use_product']			= 'Calculate tax based on buyer country and product tax group';
 $_['text_notifications']			= 'Control when customers receive notifications from the application. Enabling update emails can improve your DSR ratings as the user will get updates about their order.';
 $_['text_listing_1day']             = '1 day';
 $_['text_listing_3day']             = '3 days';

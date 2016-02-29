@@ -312,6 +312,16 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 				$tax = number_format((double)$txn->item->tax->item, 4, '.', '');
 				$this->openbay->ebay->log('create() - Tax: ' . $tax);
+			} elseif ($this->tax_type == 2) {
+				/**
+				 *
+				 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
+				 *
+				 *
+				 */
+
+
+
 			} else {
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('create() - Using tax rates from store');
@@ -508,6 +518,16 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 				$total_tax   += (double)$txn->item->tax->total;
 				$total_net   += $price * $qty;
+			} elseif ($this->tax_type == 2) {
+				/**
+				 *
+				 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
+				 *
+				 *
+				 */
+
+
+
 			} else {
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from store');
@@ -527,6 +547,16 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$shipping_net    = (double)$order->shipping->cost;
 
 			$tax = number_format($total_tax, 4, '.', '');
+		} elseif ($this->tax_type == 2) {
+			/**
+			 *
+			 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
+			 *
+			 *
+			 */
+
+
+
 		} else {
 			$discount_net    = (double)$order->order->discount / $this->tax;
 			$discount_tax    = (double)$order->order->discount - $discount_net;

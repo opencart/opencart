@@ -452,13 +452,9 @@
                 <label class="col-sm-2 control-label" for="entry-tax-listing"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_listing_tax; ?>"><?php echo $entry_tax_listing; ?></span></label>
                 <div class="col-sm-10">
                   <select name="ebay_tax_listing" id="entry-tax-listing" class="form-control">
-                    <?php if ($ebay_tax_listing) { ?>
-                    <option value="1" selected="selected"><?php echo $text_tax_use_listing; ?></option>
-                    <option value="0"><?php echo $text_tax_use_value; ?></option>
-                    <?php } else { ?>
-                    <option value="1"><?php echo $text_tax_use_listing; ?></option>
-                    <option value="0" selected="selected"><?php echo $text_tax_use_value; ?></option>
-                    <?php } ?>
+                    <option value="0" <?php echo ($ebay_tax_listing == 0 ? 'selected="selected"' : '' ); ?>><?php echo $text_tax_use_value; ?></option>
+                    <option value="1" <?php echo ($ebay_tax_listing == 1 ? 'selected="selected"' : '' ); ?>><?php echo $text_tax_use_listing; ?></option>
+                    <option value="2" <?php echo ($ebay_tax_listing == 2 ? 'selected="selected"' : '' ); ?>><?php echo $text_tax_use_product; ?></option>
                   </select>
                 </div>
               </div>

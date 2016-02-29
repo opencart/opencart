@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="editSearch();" id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
+      <div class="pull-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -165,6 +165,8 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-search').on('click', function() {
+  var html = '';
+
 	$.ajax({
 		url: 'index.php?route=payment/pp_express/doSearch&token=<?php echo $token; ?>',
 		type: 'POST',
@@ -196,44 +198,44 @@ $('#button-search').on('click', function() {
 					html += '<td class="center"><?php echo $column_action; ?></td>';
 					html += '</tr></thead>';
 				
-			$.each(data.result, function (k, v) {
-			if ("L_LONGMESSAGE" in v) {
-			$('#error').text(v.L_LONGMESSAGE).fadeIn();
-			} else {
-			if (!("L_EMAIL" in v)) {
-			v.L_EMAIL = '';
-			}
-			
-			html += '<tr>';
-			html += '<td class="left">' + v.L_TIMESTAMP + '</td>';
-			html += '<td class="left">' + v.L_TYPE + '</td>';
-			html += '<td class="left">' + v.L_EMAIL + '</td>';
-			html += '<td class="left">' + v.L_NAME + '</td>';
-			html += '<td class="left">' + v.L_TRANSACTIONID + '</td>';
-			html += '<td class="left">' + v.L_STATUS + '</td>';
-			html += '<td class="left">' + v.L_CURRENCYCODE + '</td>';
-			html += '<td class="right">' + v.L_AMT + '</td>';
-			html += '<td class="right">' + v.L_FEEAMT + '</td>';
-			html += '<td class="right">' + v.L_NETAMT + '</td>';
-			html += '<td class="center">';
-			html += '<a href="<?php echo $view_link; ?>&transaction_id=' + v.L_TRANSACTIONID + '"><?php echo $text_view; ?></a>';
-			html += '</td>';
-			html += '</tr>';
-		}
-	});
-	
-	$('#searching').hide();
-	$('#search_results').append(html).fadeIn();
-	} else {
-	$('#searching').hide();
-	$('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
-	}
-	}
-	}
-	});
-}
+          $.each(data.result, function (k, v) {
+            if ("L_LONGMESSAGE" in v) {
+              $('#error').text(v.L_LONGMESSAGE).fadeIn();
+            } else {
+              if (!("L_EMAIL" in v)) {
+                v.L_EMAIL = '';
+              }
 
-function editSearch() {
+              html += '<tr>';
+              html += '<td class="left">' + v.L_TIMESTAMP + '</td>';
+              html += '<td class="left">' + v.L_TYPE + '</td>';
+              html += '<td class="left">' + v.L_EMAIL + '</td>';
+              html += '<td class="left">' + v.L_NAME + '</td>';
+              html += '<td class="left">' + v.L_TRANSACTIONID + '</td>';
+              html += '<td class="left">' + v.L_STATUS + '</td>';
+              html += '<td class="left">' + v.L_CURRENCYCODE + '</td>';
+              html += '<td class="right">' + v.L_AMT + '</td>';
+              html += '<td class="right">' + v.L_FEEAMT + '</td>';
+              html += '<td class="right">' + v.L_NETAMT + '</td>';
+              html += '<td class="center">';
+              html += '<a href="<?php echo $view_link; ?>&transaction_id=' + v.L_TRANSACTIONID + '"><?php echo $text_view; ?></a>';
+              html += '</td>';
+              html += '</tr>';
+            }
+          });
+	
+          $('#searching').hide();
+          $('#search_results').append(html).fadeIn();
+	      } else {
+	        $('#searching').hide();
+	        $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
+	      }
+	    }
+	  }
+	});
+});
+
+$('#button-edit').on('click', function() {
   $('#search-box').hide();
   $('#search-input').show();
   $('#button-edit').hide();
@@ -241,9 +243,8 @@ function editSearch() {
   $('#searching').show();
   $('#search_results').empty().hide();
   $('#error').empty().hide();
-}
-//--></script> 
-  <script type="text/javascript"><!--
+});
+
 $('.date').datetimepicker({
 	pickTime: false
 });

@@ -869,7 +869,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 	}
 
-	public function capture($order_id) {
+	public function capture($route, $output, $order_id, $order_status_id) {
 		$this->load->model('payment/amazon_login_pay');
 		$this->load->model('checkout/order');
 

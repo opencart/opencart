@@ -153,7 +153,6 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
 		$payment_data['Apply3DSecure'] = '0';
-		$payment_data['ClientIPAddress'] = $this->request->server['REMOTE_ADDR'];
 
 		if (isset($this->request->post['CreateToken'])) {
 			$payment_data['CreateToken'] = $this->request->post['CreateToken'];

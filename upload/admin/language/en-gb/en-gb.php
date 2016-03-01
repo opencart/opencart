@@ -96,6 +96,7 @@ $_['button_currency']               = 'Refresh Currency Values';
 $_['button_apply']                  = 'Apply';
 $_['button_category_add']           = 'Add Category';
 $_['button_order']                  = 'View Order';
+$_['button_order_recurring']        = 'View Recurring Order';
 
 // Tab
 $_['tab_address']                   = 'Address';

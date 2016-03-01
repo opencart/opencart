@@ -47,7 +47,7 @@ class ModelPaymentBluepayredirect extends Model {
 	public function void($order_id) {
 		$bluepay_redirect_order = $this->getOrder($order_id);
 
-		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 0) {
+		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 1) {
 
 			$void_data = array();
 
@@ -149,6 +149,10 @@ class ModelPaymentBluepayredirect extends Model {
 
 	public function updateRebateStatus($bluepay_redirect_order_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "bluepay_redirect_order` SET `rebate_status` = '" . (int)$status . "' WHERE `bluepay_redirect_order_id` = '" . (int)$bluepay_redirect_order_id . "'");
+	}
+
+	public function updateTransactionId($bluepay_redirect_order_id, $transaction_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "bluepay_redirect_order` SET `transaction_id` = '" . (int)$transaction_id . "' WHERE `bluepay_redirect_order_id` = '" . (int)$bluepay_redirect_order_id . "'");
 	}
 
 	public function getOrder($order_id) {

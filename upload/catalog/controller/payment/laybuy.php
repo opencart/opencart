@@ -143,7 +143,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 			$this->model_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
 
-			if (hash_equals(md5($this->config->get('laybuy_token'), $token))) {
+			if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
 				$this->model_payment_laybuy->log('Order ID: ' . $order_id);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -212,7 +212,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 				$this->model_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
 
-				if ($token == md5($this->config->get('laybuy_token'))) {
+				if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
 					$this->model_payment_laybuy->log('Order ID: ' . $order_id);
 
 					$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -355,7 +355,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$this->model_payment_laybuy->log('Running cron');
 
-		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('laybuy_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('laybuy_token'), $this->request->get['token'])) {
 			$paypal_profile_id_array = $this->model_payment_laybuy->getPayPalProfileIds();
 
 			if ($paypal_profile_id_array) {

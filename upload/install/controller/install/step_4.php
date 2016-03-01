@@ -46,33 +46,11 @@ class ControllerInstallStep4 extends Controller {
 
 		$data['maxmind'] = $this->url->link('3rd_party/maxmind');
 		$data['openbay'] = $this->url->link('3rd_party/openbay');
+		$data['extension'] = $this->url->link('3rd_party/extension');
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('install/step_4', $data));
-	}
-
-	public function extension() {
-		$curl = curl_init();
-		
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_URL, 'http://www.opencart.com/index.php?route=extension/json/extensions');
-		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1');
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, array());
-		
-		$response = curl_exec($curl);
-		
-		curl_close($curl);
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($response);
 	}
 }

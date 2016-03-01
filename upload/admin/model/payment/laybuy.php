@@ -9,7 +9,11 @@ class ModelPaymentLaybuy extends Model {
 	public function getCustomerIdByOrderId($order_id) {
 		$query = $this->db->query("SELECT `customer_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		return $query->row['customer_id'];
+		if ($query->num_rows) {
+			return $query->row['customer_id'];
+		} else {
+			return 0;
+		}
 	}
 
 	public function getInitialPayments() {
@@ -315,7 +319,7 @@ class ModelPaymentLaybuy extends Model {
 
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('laybuy', 'post.order.delete', 'payment/laybuy/deleteOrder');
+		$this->model_extension_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'payment/laybuy/deleteOrder');
 	}
 
 	public function log($data, $step = 6) {

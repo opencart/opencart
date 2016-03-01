@@ -57,10 +57,10 @@ class ModelPaymentPPExpress extends Model {
 			$serialized_data = json_encode($request_data);
 
 			$this->db->query("UPDATE " . DB_PREFIX . "paypal_order_transaction SET call_data = '" . $this->db->escape($serialized_data) . "' WHERE paypal_order_transaction_id = " . (int)$paypal_order_transaction_id . " LIMIT 1");
-		}		
-		
-		
-		
+		}
+
+
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "', `date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
 
 		return $this->db->getLastId();
@@ -75,7 +75,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $query->rows;
 	}
-	
+
 	public function getFailedTransaction($paypal_order_transaction_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_order_transaction WHERE paypal_order_transaction_id = '" . (int)$paypal_order_transaction_id . "'");
 
@@ -129,7 +129,7 @@ class ModelPaymentPPExpress extends Model {
 			'USD',
 		);
 	}
-	
+
 	public function getOrderId($transaction_id) {
 		$query = $this->db->query("SELECT `o`.`order_id` FROM `" . DB_PREFIX . "paypal_order_transaction` `ot` LEFT JOIN `" . DB_PREFIX . "paypal_order` `o`  ON `o`.`paypal_order_id` = `ot`.`paypal_order_id`  WHERE `ot`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
 
@@ -153,7 +153,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $query->row['amount'];
 	}
-		
+
 	public function cleanReturn($data) {
 		$data = explode('&', $data);
 
@@ -166,7 +166,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $arr;
 	}
-	
+
 	public function log($data, $title = null) {
 		if ($this->config->get('pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
@@ -300,7 +300,6 @@ class ModelPaymentPPExpress extends Model {
 			CURLOPT_TIMEOUT => 0,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1,
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
 		);
 

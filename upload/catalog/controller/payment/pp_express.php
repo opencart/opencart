@@ -2,7 +2,7 @@
 class ControllerPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('payment/pp_express');
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['text_loading'] = $this->language->get('text_loading');
 
@@ -626,7 +626,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'taxes'  => &$taxes,
 			'total'  => &$total
 		);
-			
+
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -817,7 +817,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -1596,7 +1596,6 @@ class ControllerPaymentPPExpress extends Controller {
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
 
 		$response = trim(curl_exec($curl));
 

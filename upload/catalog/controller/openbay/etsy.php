@@ -18,7 +18,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$incoming_token = isset($body['auth']['token']) ? $body['auth']['token'] : '';
 		$incoming_secret = isset($body['auth']['secret']) ? $body['auth']['secret'] : '';
 
-		if ($incoming_token !== $this->config->get('etsy_token') || $incoming_secret !== $this->config->get('etsy_enc1')) {
+		if (!hash_equals($this->config->get('etsy_token'), $incoming_token) || !hash_equals($this->config->get('etsy_enc1'), $incoming_secret)) {
 			$this->openbay->etsy->log('etsy/inbound - Auth failed (401): ' . $incoming_token . '/' . $incoming_secret);
 			http_response_code(401);
 			exit();

@@ -11,7 +11,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$this->default_part_refunded_id = $this->default_paid_id;
 		}
 
-		$this->tax                        = ($this->config->get('ebay_tax') == '') ? '1' : (($this->config->get('ebay_tax') / 100) + 1);
+		$this->tax_rate                   = ($this->config->get('ebay_tax') == '') ? '1' : (($this->config->get('ebay_tax') / 100) + 1);
 		$this->tax_type                   = $this->config->get('ebay_tax_listing');
 		$data                             = unserialize($data);
 
@@ -314,19 +314,54 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->openbay->ebay->log('create() - Tax: ' . $tax);
 			} elseif ($this->tax_type == 2) {
 				/**
-				 *
+				 * @todo
 				 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
 				 *
-				 *
+				 * cant use getproduct as the product could be disabled
 				 */
 
+				$tax_data = array();
+				$tax_amount = 0;
+				$price_net = $price;
 
+				if ($product_id != false) {
+					$product = $this->model_catalog_product->getProduct($product_id);
 
+					$this->openbay->ebay->log(json_encode($product));
+
+					/**
+					if ($product['tax_class_id']) {
+						$tax_rates = $tax_class->getRates($price, $product['tax_class_id']);
+						$this->openbay->ebay->log(json_encode($tax_rates));
+
+						foreach ($tax_rates as $tax_rate) {
+							if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
+								$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $qty);
+							} else {
+								$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $qty);
+							}
+
+							$price_net = $price_net - $tax_rate['amount'];
+							$tax_amount += ($tax_rate['amount'] * $qty);
+						}
+					}
+					 * **/
+				}
+
+				$this->openbay->ebay->log('create() - Using tax rates from product and buyer country');
+
+				$this->openbay->ebay->log('create() - Net price: ' . $price_net);
+
+				$total_net = $price_net * $qty;
+				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
+
+				$tax = number_format(($tax_amount), 4, '.', '');
+				$this->openbay->ebay->log('create() - Tax: ' . $tax);
 			} else {
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('create() - Using tax rates from store');
 
-				$price_net = $price / $this->tax;
+				$price_net = $price / $this->tax_rate;
 				$this->openbay->ebay->log('create() - Net price: ' . $price_net);
 
 				$total_net = $price_net * $qty;
@@ -440,6 +475,21 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$user['country_id']   = '';
 		}
 
+		$this->openbay->ebay->log('COUNTRY ID IS ' . $user['country_id']);
+		$this->openbay->ebay->log('SMP ID IS ' . $order->smpId);
+		
+		$tax_class = new \Cart\Tax($this);
+
+		if ($order->smpId == 214) {
+			$this->openbay->ebay->log('SET DEBUG!!!!!!');
+			$tax_class->setShippingAddress(1, 0);
+			$tax_class->setPaymentAddress(1, 0);
+			$tax_class->setStoreAddress(1, 0);
+		} else {
+			$tax_class->setShippingAddress($user['country_id'], 0);
+			$tax_class->setPaymentAddress($user['country_id'], 0);
+		}
+
 		$user['email']  = (string)$order->user->email;
 		$user['id']     = $this->openbay->getUserByEmail($user['email']);
 
@@ -509,6 +559,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		}
 
 		foreach ($order->txn as $txn) {
+			$product_id = $this->openbay->ebay->getProductId($txn->item->id);
 			$qty        = (int)$txn->item->qty;
 			$price      = (double)$txn->item->price;
 
@@ -520,19 +571,58 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$total_net   += $price * $qty;
 			} elseif ($this->tax_type == 2) {
 				/**
-				 *
+				 * @todo
 				 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
 				 *
 				 *
 				 */
 
+				$tax_data = array();
+				$item_line_tax_amount = 0;
+				$item_tax_amount = 0;
+				$item_price_net = $price;
 
+				if ($product_id != false) {
+					$product = $this->model_catalog_product->getProduct($product_id);
 
+					$this->openbay->ebay->log(json_encode($product));
+
+					if ($product['tax_class_id']) {
+						$tax_rates = $tax_class->getRates($price, $product['tax_class_id']);
+						$this->openbay->ebay->log(json_encode($tax_rates));
+						$this->openbay->ebay->log($product['tax_class_id']);
+
+						foreach ($tax_rates as $tax_rate) {
+							if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
+								$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $qty);
+							} else {
+								$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $qty);
+							}
+
+							$item_price_net -= $tax_rate['amount'];
+							$item_tax_amount += $tax_rate['amount'];
+							$item_line_tax_amount += ($tax_rate['amount'] * $qty);
+						}
+					}
+				}
+
+				$this->openbay->ebay->log('create() - Using tax rates from product and buyer country');
+
+				$this->openbay->ebay->log('create() - Net price: ' . $item_price_net);
+
+				$item_line_total_net = $item_price_net * $qty;
+				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
+
+				$item_net     = $item_price_net;
+				$item_tax     = $item_tax_amount;
+
+				$total_tax   += number_format($item_line_tax_amount, 4, '.', '');
+				$total_net   += $item_line_total_net;
 			} else {
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from store');
 
-				$item_net     = $price / $this->tax;
+				$item_net     = $price / $this->tax_rate;
 				$item_tax     = $price - $item_net;
 				$line_net     = $item_net * $qty;
 				$line_tax     = $item_tax * $qty;
@@ -548,6 +638,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 			$tax = number_format($total_tax, 4, '.', '');
 		} elseif ($this->tax_type == 2) {
+			$discount_net    = (double)$order->order->discount;
+			$shipping_net    = (double)$order->shipping->cost;
 			/**
 			 *
 			 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
@@ -556,11 +648,11 @@ class ModelOpenbayEbayOpenbay extends Model{
 			 */
 
 
-
+			$tax = number_format($total_tax, 4, '.', '');
 		} else {
-			$discount_net    = (double)$order->order->discount / $this->tax;
+			$discount_net    = (double)$order->order->discount / $this->tax_rate;
 			$discount_tax    = (double)$order->order->discount - $discount_net;
-			$shipping_net    = (double)$order->shipping->cost / $this->tax;
+			$shipping_net    = (double)$order->shipping->cost / $this->tax_rate;
 			$shipping_tax    = (double)$order->shipping->cost - $shipping_net;
 
 			$tax = number_format($shipping_tax + $total_tax + $discount_tax, 4, '.', '');

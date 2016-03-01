@@ -336,7 +336,7 @@ class ControllerPaymentLaybuy extends Controller {
 		$this->response->redirect($this->url->link('checkout/checkout', '', true));
 	}
 
-	public function deleteOrder($order_id = 0) {
+	public function deleteOrder($route = '', $output = '', $order_id = 0, $order_status_id = 0) {
 		$this->load->model('payment/laybuy');
 
 		if (isset($this->session->data['api_id'])) {

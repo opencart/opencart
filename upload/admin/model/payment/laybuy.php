@@ -315,7 +315,7 @@ class ModelPaymentLaybuy extends Model {
 
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('laybuy', 'post.order.delete', 'payment/laybuy/deleteOrder');
+		$this->model_extension_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'payment/laybuy/deleteOrder');
 	}
 
 	public function log($data, $step = 6) {

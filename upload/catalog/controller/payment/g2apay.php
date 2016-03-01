@@ -152,7 +152,7 @@ class ControllerPaymentG2APay extends Controller {
 		$this->load->model('payment/g2apay');
 		$this->model_payment_g2apay->logger('ipn');
 
-		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('g2apay_secret_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('g2apay_secret_token'), $this->request->get['token'])) {
 			$this->model_payment_g2apay->logger('token success');
 
 			if (isset($this->request->post['userOrderId'])) {

@@ -488,7 +488,7 @@ class ControllerPaymentSagepayServer extends Controller {
 	}
 
 	public function cron() {
-		if ($this->request->get['token'] == $this->config->get('sagepay_server_cron_job_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('sagepay_server_cron_job_token'), $this->request->get['token'])) {
 			$this->load->model('payment/sagepay_server');
 
 			$orders = $this->model_payment_sagepay_server->cronPayment();

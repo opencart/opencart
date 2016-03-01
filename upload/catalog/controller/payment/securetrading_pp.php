@@ -98,7 +98,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 		$string_to_hash .= $this->config->get('securetrading_pp_notification_password');
 
-		if (hash('sha256', $string_to_hash) == $this->request->post['responsesitesecurity'] && $this->request->post['sitereference'] == $this->config->get('securetrading_pp_site_reference')) {
+		if (hash_equals(hash('sha256', $string_to_hash), $this->request->post['responsesitesecurity']) && $this->request->post['sitereference'] == $this->config->get('securetrading_pp_site_reference')) {
 			$order_info = $this->model_checkout_order->getOrder($this->request->post['orderreference']);
 
 			if ($order_info) {

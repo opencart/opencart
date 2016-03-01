@@ -95,7 +95,6 @@ class ControllerCreditCardSagepayServer extends Controller {
 	}
 
 	public function delete() {
-
 		$this->load->language('credit_card/sagepay_server');
 
 		$this->load->model('payment/sagepay_server');
@@ -283,5 +282,4 @@ class ControllerCreditCardSagepayServer extends Controller {
 		$this->session->data['error_warning'] = 'Failure';
 		$this->response->redirect($this->url->link('credit_card/sagepay_server', '', true));
 	}
-
 }

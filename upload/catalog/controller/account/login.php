@@ -125,7 +125,11 @@ class ControllerAccountLogin extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_login'] = $this->language->get('button_login');
 
-		if (isset($this->error['warning'])) {
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
+		} elseif (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';

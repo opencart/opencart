@@ -21,7 +21,7 @@ $(document).delegate('#button-cancel', 'click', function() {
             $('.alert').remove();
 			
 			if (json['success']) {
-				$('#content').prepend('<div class="alert alert-danger">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['error']) {

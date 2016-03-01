@@ -1113,6 +1113,7 @@ CREATE TABLE `oc_customer` (
   `approved` tinyint(1) NOT NULL,
   `safe` tinyint(1) NOT NULL,
   `token` text NOT NULL,
+  `code` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

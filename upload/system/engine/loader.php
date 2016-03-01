@@ -36,7 +36,7 @@ final class Loader {
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
-
+		
 		if (is_file($file)) {
 			include_once($file);
 			//echo $class;

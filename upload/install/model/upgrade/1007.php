@@ -51,5 +51,12 @@ class ModelUpgrade1007 extends Model {
 		
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_compare_width' WHERE `code` = 'config' AND `key` = 'config_image_compare_width'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_compare_height' WHERE `code` = 'config' AND `key` = 'config_image_compare_height'");
+	
+		// Paypal Express
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "paypal_order_transaction' AND COLUMN_NAME = 'parent_transaction_id'");
+		
+		if ($query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order_transaction` CHANGE `parent_transaction_id` `parent_id` CHAR(20) NOT NULL");	
+		}
 	}
 }

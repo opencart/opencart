@@ -149,8 +149,10 @@ class ControllerPaymentBluePayHosted extends Controller {
 
 		if (isset($this->request->post['bluepay_hosted_order_status_id'])) {
 			$data['bluepay_hosted_order_status_id'] = $this->request->post['bluepay_hosted_order_status_id'];
-		} else {
+		} elseif ($this->config->get('bluepay_hosted_order_status_id')) {
 			$data['bluepay_hosted_order_status_id'] = $this->config->get('bluepay_hosted_order_status_id');
+		} else {
+			$data['bluepay_hosted_order_status_id'] = 2;
 		}
 
 		$this->load->model('localisation/order_status');

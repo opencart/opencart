@@ -845,7 +845,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	public function ipn() {
 		$this->load->model('payment/amazon_login_pay');
 		$this->model_payment_amazon_login_pay->logger('IPN received');
-		if (isset($this->request->get['token']) && hash_equals($this->request->get['token'], $this->config->get('amazon_login_pay_ipn_token'))) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('amazon_login_pay_ipn_token'), $this->request->get['token'])) {
 			$body = file_get_contents('php://input');
 			if ($body) {
 				$ipn_details_xml = $this->model_payment_amazon_login_pay->parseRawMessage($body);

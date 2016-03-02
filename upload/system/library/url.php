@@ -33,7 +33,7 @@ class Url {
 		return $url;
 	}
 	
-	public function link($route, $args = '', $secure = false) {
+	public function path($route, $args = '', $secure = false) {
 		$url = 'index.php?route=' . $route;
 		
 		if ($args) {

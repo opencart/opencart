@@ -642,6 +642,6 @@ $(document).ready(function() {
 $('select[name="order_status_id"]').change(function(){
 	changeStatus();
 });
-//--></script>
+//--></script> 
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

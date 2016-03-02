@@ -39,7 +39,7 @@
             <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane" id="tab-general">
+            <div class="tab-pane active" id="tab-general">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_url); ?>"><?php echo $entry_url; ?></span></label>
                 <div class="col-sm-10">
@@ -81,7 +81,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     <?php foreach ($themes as $theme) { ?>
-                    <?php if ($theme == $config_theme) { ?>
+                    <?php if ($theme['value'] == $config_theme) { ?>
                     <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
@@ -89,7 +89,7 @@
                     <?php } ?>
                   </select>
                   <br />
-                  <img src="" alt="" class="img-thumbnail" /></div>
+                  <img src="" alt="" id="theme" class="img-thumbnail" /></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -106,7 +106,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane active" id="tab-store">
+            <div class="tab-pane" id="tab-store">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
                 <div class="col-sm-10">
@@ -566,13 +566,27 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('select[name=\'config_template\']').on('change', function() {
-	$('#theme').attr('src', $('input[name=\'config_url\']') + '/catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
+$('select[name=\'config_theme\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=setting/setting/theme&token=<?php echo $token; ?>&theme=' + this.value,
+		dataType: 'html',
+		beforeSend: function() {
+			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(html) {
+			$('#theme').attr('src', html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('select[name=\'config_theme\']').trigger('change');
-//--></script> 
-  <script type="text/javascript"><!--
+//--></script>   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,

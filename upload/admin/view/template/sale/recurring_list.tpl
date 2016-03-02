@@ -30,26 +30,8 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
-                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-reference"><?php echo $entry_reference; ?></label>
-                <input type="text" name="filter_reference" value="<?php echo $filter_reference; ?>" placeholder="<?php echo $entry_reference; ?>" id="input-reference" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label class="control-label" for="input-filter-status"><?php echo $entry_status; ?></label>
-                <select name="filter_status" id="input-filter-status" class="form-control">
-                  <?php foreach($statuses as $status => $text) { ?>
-                  <?php if ($filter_status == $status) { ?>
-                  <option value="<?php echo $status ?>" selected="selected"><?php echo $text ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $status ?>"><?php echo $text ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
+                <label class="control-label" for="input-order-recurring-id"><?php echo $entry_order_recurring_id; ?></label>
+                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_recurring_id; ?>" id="input-order-recurring-id" class="form-control" />
               </div>
               <div class="form-group">
                 <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
@@ -58,6 +40,28 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
+                <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
+                <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <select name="filter_status" id="input-status" class="form-control">
+                  <?php foreach ($recurring_statuses as $recurring_status) { ?>
+                  <?php if ($filter_status == $recurring_status['value']) { ?>
+                  <option value="<?php echo $recurring_status['value']; ?>" selected="selected"><?php echo $recurring_status['text'] ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $recurring_status['value']; ?>"><?php echo $recurring_status['text'] ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-reference"><?php echo $entry_reference; ?></label>
+                <input type="text" name="filter_reference" value="<?php echo $filter_reference; ?>" placeholder="<?php echo $entry_reference; ?>" id="input-reference" class="form-control" />
+              </div>
+              <div class="form-group">
                 <label class="control-label" for="input-date-date_added"><?php echo $entry_date_added; ?></label>
                 <div class="input-group date">
                   <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
@@ -65,10 +69,6 @@
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter ?></button>
             </div>
           </div>
@@ -78,55 +78,58 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td width="10" class="text-left"><?php if ($sort == 'or.order_recurring_id') { ?>
-                    <a href="<?php echo $sort_order_recurring; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_order_recurring; ?></a>
+                  <td class="text-right"><?php if ($sort == 'or.order_recurring_id') { ?>
+                    <a href="<?php echo $sort_order_recurring; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_recurring_id; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_order_recurring; ?>"><?php echo $entry_order_recurring; ?></a>
+                    <a href="<?php echo $sort_order_recurring; ?>"><?php echo $column_order_recurring_id; ?></a>
                     <?php }  ?></td>
-                  <td width="80" class="text-center"><?php if ($sort == 'or.order_id') { ?>
-                    <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_order_id; ?></a>
+                  <td class="text-right"><?php if ($sort == 'or.order_id') { ?>
+                    <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_order; ?>"><?php echo $entry_order_id; ?></a>
+                    <a href="<?php echo $sort_order; ?>"><?php echo $column_order_id; ?></a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.reference') { ?>
-                    <a href="<?php echo $sort_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_reference; ?></a>
+                    <a href="<?php echo $sort_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_reference; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_reference; ?>"><?php echo $entry_reference; ?></a>
+                    <a href="<?php echo $sort_reference; ?>"><?php echo $column_reference; ?></a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'customer') { ?>
-                    <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_customer ?></a>
+                    <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_customer; ?>"><?php echo $entry_customer ?></a>
+                    <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer ?></a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.status') { ?>
-                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_status; ?></a>
+                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_status; ?>"><?php echo $entry_status; ?></a>
+                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
-                    <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_added ?></a>
+                    <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_date_added; ?>"><?php echo $entry_date_added ?></a>
+                    <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added ?></a>
                     <?php }  ?></td>
-                  <td class="text-right"><?php echo $entry_action; ?></td>
+                  <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
               <tbody>
                 <?php if ($recurrings) { ?>
-                <?php foreach ($recurrings as $recurring) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $recurring['order_recurring_id'] ?></td>
-                  <td class="text-left"><a href="<?php echo $recurring['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $recurring['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-                  <td class="text-left"><?php echo $recurring['reference'] ?></td>
-                  <td class="text-left"><?php echo $recurring['customer'] ?></td>
-                  <td class="text-left"><?php echo $recurring['status'] ?></td>
-                  <td class="text-left"><?php echo $recurring['date_added'] ?></td>
-                  <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-                </tr>
-                <?php } ?>
+                  <?php foreach ($recurrings as $recurring) { ?>
+                  <tr>
+                    <td class="text-right"><?php echo $recurring['order_recurring_id'] ?></td>
+                    <td class="text-right"><?php echo $recurring['order_id'] ?></td>
+                    <td class="text-left"><?php echo $recurring['reference'] ?></td>
+                    <td class="text-left"><?php echo $recurring['customer'] ?></td>
+                    <td class="text-left"><?php echo $recurring['status'] ?></td>
+                    <td class="text-left"><?php echo $recurring['date_added'] ?></td>
+                    <td class="text-right">
+                      <a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_order_recurring; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                      <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
+                    </td>
+                  </tr>
+                  <?php } ?>
                 <?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                  <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -192,5 +195,5 @@ $('#form input').keydown(function(e) {
 $('.date').datetimepicker({ 
 	pickTime: false 
 });
-//--></script> </div>
+//--></script></div>
 <?php echo $footer; ?>

@@ -9,7 +9,7 @@ class ControllerEventTheme extends Controller {
 		if (substr($view, -4) == '.tpl') {
 			$view = substr($view, 0, -4);
 		}
-			
+		
 		if ($this->config->get('config_theme') == 'theme_default') {
 			$directory = $this->config->get('theme_default_directory');
 		} else {

@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <table class="list table table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" colspan="2"><?php echo $text_return_detail; ?></td>
@@ -30,8 +30,8 @@
           </tr>
         </tbody>
       </table>
-      <h2><?php echo $text_product; ?></h2>
-      <table class="list table table-bordered table-hover">
+      <h3><?php echo $text_product; ?></h3>
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" style="width: 33.3%;"><?php echo $column_product; ?></td>
@@ -47,6 +47,7 @@
           </tr>
         </tbody>
       </table>
+      <h3><?php echo $text_reason; ?></h3>
       <table class="list table table-bordered table-hover">
         <thead>
           <tr>
@@ -64,7 +65,7 @@
         </tbody>
       </table>
       <?php if ($comment) { ?>
-      <table class="list table table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $text_comment; ?></td>
@@ -77,9 +78,8 @@
         </tbody>
       </table>
       <?php } ?>
-      <?php if ($histories) { ?>
-      <h2><?php echo $text_history; ?></h2>
-      <table class="list table table-bordered table-hover">
+      <h3><?php echo $text_history; ?></h3>
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-left" style="width: 33.3%;"><?php echo $column_date_added; ?></td>
@@ -88,6 +88,7 @@
           </tr>
         </thead>
         <tbody>
+          <?php if ($histories) { ?>
           <?php foreach ($histories as $history) { ?>
           <tr>
             <td class="text-left"><?php echo $history['date_added']; ?></td>
@@ -95,9 +96,13 @@
             <td class="text-left"><?php echo $history['comment']; ?></td>
           </tr>
           <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
         </tbody>
       </table>
-      <?php } ?>
       <div class="buttons clearfix">
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>

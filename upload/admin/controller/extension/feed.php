@@ -32,7 +32,7 @@ class ControllerExtensionFeed extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/feed', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -53,7 +53,7 @@ class ControllerExtensionFeed extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/feed', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], true));
 		}
 	}
 
@@ -62,12 +62,12 @@ class ControllerExtensionFeed extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('extension/feed', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -121,10 +121,10 @@ class ControllerExtensionFeed extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->ssl('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->ssl('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('feed/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

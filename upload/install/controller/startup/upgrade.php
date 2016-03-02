@@ -8,7 +8,7 @@ class ControllerStartupUpgrade extends Controller {
 		}
 		
 		if (isset($this->request->get['route'])) {
-			if (($this->request->get['route'] == 'install/step_4') || (substr($this->request->get['route'], 0, 8) == 'upgrade/')) {
+			if (($this->request->get['route'] == 'install/step_4') || (substr($this->request->get['route'], 0, 8) == 'upgrade/') || (substr($this->request->get['route'], 0, 10) == '3rd_party/')) {
 				$upgrade = false;
 			}
 		}

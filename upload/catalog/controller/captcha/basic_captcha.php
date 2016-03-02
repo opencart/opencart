@@ -56,5 +56,6 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 		imagejpeg($image);
 
 		imagedestroy($image);
+		exit();
 	}
 }

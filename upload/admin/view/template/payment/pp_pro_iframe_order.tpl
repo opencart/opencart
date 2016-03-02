@@ -45,7 +45,7 @@
             <td class="text-left"><strong><?php echo $column_amount; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_type; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_status; ?></strong></td>
-            <td class="text-left"><strong><?php echo $column_pend_reason; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_pending_reason; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_date_added; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_action; ?></strong></td>
           </tr>
@@ -78,7 +78,7 @@
         var amt = $('#paypal_capture_amount').val();
 
         if (amt == '' || amt == 0) {
-            alert('<?php echo $error_capture_amt; ?>');
+            alert('<?php echo $error_capture; ?>');
             return false;
         } else {
             var captureComplete;

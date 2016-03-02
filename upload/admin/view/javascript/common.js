@@ -100,30 +100,70 @@ $(document).ready(function() {
 		}
 	});
 
+	// Tooltip remove fixed
+	$(document).delegate('[data-toggle=\'tooltip\']', 'click', function(e) {
+		$('body > .tooltip').remove();
+	});
+
 	// Override summernotes image manager
-	$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
+	$('.summernote').each(function() {
+		var element = this;
+		
+		$(element).summernote({
+			disableDragAndDrop: true,
+			height: 300,
+			toolbar: [
+				['style', ['style']],
+				['font', ['bold', 'underline', 'clear']],
+				['fontname', ['fontname']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['table', ['table']],
+				['insert', ['link', 'image', 'video']],
+				['view', ['fullscreen', 'codeview', 'help']]
+			],
+			buttons: {
+    			image: function() {
+					var ui = $.summernote.ui;
 
-	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
-		$('#modal-image').remove();
-
-		$(this).parents('.note-editor').find('.note-editable').focus();
-
-		$.ajax({
-			url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-			dataType: 'html',
-			beforeSend: function() {
-				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$('#button-image').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-image').prop('disabled', false);
-			},
-			success: function(html) {
-				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-
-				$('#modal-image').modal('show');
-			}
+					// create button
+					var button = ui.button({
+						contents: '<i class="fa fa-image" />',
+						tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+						click: function () {
+							$('#modal-image').remove();
+						
+							$.ajax({
+								url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+								dataType: 'html',
+								beforeSend: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+									$('#button-image').prop('disabled', true);
+								},
+								complete: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+									$('#button-image').prop('disabled', false);
+								},
+								success: function(html) {
+									$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+									
+									$('#modal-image').modal('show');
+									
+									$('#modal-image a.thumbnail').on('click', function(e) {
+										e.preventDefault();
+										
+										$(element).summernote('insertImage', $(this).attr('href'));
+																	
+										$('#modal-image').modal('hide');
+									});
+								}
+							});						
+						}
+					});
+				
+					return button.render();
+				}
+  			}
 		});
 	});
 

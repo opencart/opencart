@@ -81,7 +81,7 @@ class ControllerPaymentWorldpay extends Controller {
 		$order = array(
 			"token" => $this->request->post['token'],
 			"orderType" => $order_type,
-			"amount" => (int)($order_info['total'] * 100),
+			"amount" => round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100),
 			"currencyCode" => $order_info['currency_code'],
 			"name" => $order_info['firstname'] . ' ' . $order_info['lastname'],
 			"orderDescription" => $order_info['store_name'] . ' - ' . date('Y-m-d H:i:s'),
@@ -156,7 +156,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function webhook() {
-		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('worldpay_secret_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('worldpay_secret_token'), $this->request->get['token'])) {
 			$this->load->model('payment/worldpay');
 			$message = json_decode(file_get_contents('php://input'), true);
 

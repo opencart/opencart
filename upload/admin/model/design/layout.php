@@ -96,7 +96,7 @@ class ModelDesignLayout extends Model {
 	}
 
 	public function getLayoutModules($layout_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "' ORDER BY position ASC, sort_order ASC");
 
 		return $query->rows;
 	}

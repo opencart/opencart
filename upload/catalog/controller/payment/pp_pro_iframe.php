@@ -161,7 +161,7 @@ class ControllerPaymentPPProIframe extends Controller {
 						$paypal_transaction_data = array(
 							'paypal_iframe_order_id' => $paypal_iframe_order_id,
 							'transaction_id'         => $this->request->post['txn_id'],
-							'parent_transaction_id'  => '',
+							'parent_id'  => '',
 							'note'                   => '',
 							'msgsubid'               => '',
 							'receipt_id'             => $this->request->post['receipt_id'],
@@ -286,7 +286,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		
 		if ($this->config->get('pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
-			$log->write(print_r(serialize($response_data), 1));
+			$log->write(print_r(json_encode($response_data), 1));
 		}
 		
 		curl_close($curl);

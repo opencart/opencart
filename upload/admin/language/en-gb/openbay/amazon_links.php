@@ -19,7 +19,6 @@ $_['text_model']                    = 'Model';
 $_['text_combination']              = 'Variant Combination';
 $_['text_sku']                      = 'Product SKU';
 $_['text_sku_variant']              = 'Variant SKU';
-$_['text_amazon_sku']               = 'Amazon item SKU';
 
 // Button
 $_['button_load']                 	= 'Load';

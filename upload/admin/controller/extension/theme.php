@@ -13,7 +13,7 @@ class ControllerExtensionTheme extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/feed');
+		$this->load->language('extension/theme');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -32,7 +32,7 @@ class ControllerExtensionTheme extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/theme', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -53,7 +53,7 @@ class ControllerExtensionTheme extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/theme', 'token=' . $this->session->data['token'], true));
 		}
 	}
 
@@ -62,12 +62,12 @@ class ControllerExtensionTheme extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -108,6 +108,7 @@ class ControllerExtensionTheme extends Controller {
 			}
 		}
 
+		$this->load->model('setting/setting');
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -126,22 +127,22 @@ class ControllerExtensionTheme extends Controller {
 				
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
+					'edit'   => $this->url->link('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
 									
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
-						'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+						'edit'   => $this->url->link('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
+						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
 				
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->ssl('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->ssl('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'store'     => $store_data
 				);

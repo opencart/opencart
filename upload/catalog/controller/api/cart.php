@@ -217,7 +217,8 @@ class ControllerApiCart extends Controller {
 						'to_email'         => $voucher['to_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message'          => $voucher['message'],
-						'amount'           => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+						'price'            => $this->currency->format($voucher['amount'], $this->session->data['currency']),			
+						'amount'           => $voucher['amount']
 					);
 				}
 			}

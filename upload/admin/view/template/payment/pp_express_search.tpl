@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="editSearch();" id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
+      <div class="pull-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -21,17 +21,17 @@
           <form id="form" class="form-horizontal">
             <h3><?php echo $text_date_search; ?></h3>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
+              <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
+                  <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_date_end; ?></label>
+              <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
                   <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
@@ -164,40 +164,40 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-function doSearch() {
-  var html;
+$('#button-search').on('click', function() {
+  var html = '';
 
-  $.ajax({
-    type: 'POST',
-    dataType: 'json',
-    data: $('#form').serialize(),
-    url: 'index.php?route=payment/pp_express/doSearch&token=<?php echo $token; ?>',
-    beforeSend: function () {
-      $('#search-input').hide();
-      $('#search-box').show();
-      $('#button-search').hide();
-      $('#button-edit').show();
-    },
-    success: function (data) {
-      if (data.error == true) {
-        $('#searching').hide();
-        $('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
-      } else {
-        if (data.result != '') {
-          html += '<thead><tr>';
-          html += '<td class="left"><?php echo $tbl_column_date; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_type; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_email; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_name; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_transid; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_status; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_currency; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_amount; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_fee; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_netamt; ?></td>';
-          html += '<td class="center"><?php echo $tbl_column_action; ?></td>';
-          html += '</tr></thead>';
-
+	$.ajax({
+		url: 'index.php?route=payment/pp_express/doSearch&token=<?php echo $token; ?>',
+		type: 'POST',
+		dataType: 'json',
+		data: $('#form').serialize(),
+		beforeSend: function () {
+			$('#search-input').hide();
+			$('#search-box').show();
+			$('#button-search').hide();
+			$('#button-edit').show();
+		},
+		success: function (data) {
+			if (data.error == true) {
+				$('#searching').hide();
+				$('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
+			} else {
+				if (data.result != '') {
+					html += '<thead><tr>';
+					html += '<td class="left"><?php echo $column_date; ?></td>';
+					html += '<td class="left"><?php echo $column_type; ?></td>';
+					html += '<td class="left"><?php echo $column_email; ?></td>';
+					html += '<td class="left"><?php echo $column_name; ?></td>';
+					html += '<td class="left"><?php echo $column_transid; ?></td>';
+					html += '<td class="left"><?php echo $column_status; ?></td>';
+					html += '<td class="left"><?php echo $column_currency; ?></td>';
+					html += '<td class="right"><?php echo $column_amount; ?></td>';
+					html += '<td class="right"><?php echo $column_fee; ?></td>';
+					html += '<td class="right"><?php echo $column_netamt; ?></td>';
+					html += '<td class="center"><?php echo $column_action; ?></td>';
+					html += '</tr></thead>';
+				
           $.each(data.result, function (k, v) {
             if ("L_LONGMESSAGE" in v) {
               $('#error').text(v.L_LONGMESSAGE).fadeIn();
@@ -223,19 +223,19 @@ function doSearch() {
               html += '</tr>';
             }
           });
-
+	
           $('#searching').hide();
           $('#search_results').append(html).fadeIn();
-        } else {
-          $('#searching').hide();
-          $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
-        }
-      }
-    }
-  });
-}
+	      } else {
+	        $('#searching').hide();
+	        $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
+	      }
+	    }
+	  }
+	});
+});
 
-function editSearch() {
+$('#button-edit').on('click', function() {
   $('#search-box').hide();
   $('#search-input').show();
   $('#button-edit').hide();
@@ -243,9 +243,8 @@ function editSearch() {
   $('#searching').show();
   $('#search_results').empty().hide();
   $('#error').empty().hide();
-}
-//--></script> 
-  <script type="text/javascript"><!--
+});
+
 $('.date').datetimepicker({
 	pickTime: false
 });

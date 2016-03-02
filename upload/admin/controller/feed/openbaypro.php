@@ -11,20 +11,20 @@ class ControllerFeedOpenbaypro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->ssl('extension/feed', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->ssl('feed/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('feed/openbay', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['cancel'] = $this->url->ssl('extension/feed', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -47,6 +47,7 @@ class ControllerFeedOpenbaypro extends Controller {
 
 	public function install() {
 		$this->load->model('setting/setting');
+		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay');
@@ -56,35 +57,19 @@ class ControllerFeedOpenbaypro extends Controller {
 		$settings['openbaypro_status'] = 1;
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
-		// register the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-			$this->model_extension_event->addEvent('openbay', 'post.admin.product.delete', 'extension/openbay/eventDeleteProduct');
-			$this->model_extension_event->addEvent('openbay', 'post.admin.product.edit', 'extension/openbay/eventEditProduct');
-		} else {
-			$this->load->model('tool/event');
-			$this->model_tool_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
-			$this->model_tool_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
-		}
+		$this->model_extension_event->addEvent('openbay', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
+		$this->model_extension_event->addEvent('openbay', 'admin/model/catalog/product/editProduct/after', 'extension/openbay/eventEditProduct');
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/setting');
+		$this->load->model('extension/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 0;
 		$settings['openbaypro_status'] = 0;
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
-		// delete the event triggers
-		if (version_compare(VERSION, '2.0.1', '>=')) {
-			$this->load->model('extension/event');
-
-			$this->model_extension_event->deleteEvent('openbay');
-		} else {
-			$this->load->model('tool/event');
-
-			$this->model_tool_event->deleteEvent('openbay');
-		}
+		$this->model_extension_event->deleteEvent('openbay');
 	}
 }

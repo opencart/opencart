@@ -2,19 +2,6 @@
 // Heading
 $_['heading_title']					= 'Search Transactions';
 
-// Column
-$_['tbl_column_date']				= 'Date';
-$_['tbl_column_type']				= 'Type';
-$_['tbl_column_email']				= 'Email';
-$_['tbl_column_name']				= 'Name';
-$_['tbl_column_transid']			= 'Transaction ID';
-$_['tbl_column_status']				= 'Status';
-$_['tbl_column_currency']			= 'Currency';
-$_['tbl_column_amount']				= 'Amount';
-$_['tbl_column_fee']				= 'Fee';
-$_['tbl_column_netamt']				= 'Net Amount';
-$_['tbl_column_action']				= 'Action';
-
 // Text
 $_['text_pp_express']				= 'PayPal Express Checkout';
 $_['text_date_search']				= 'Search by date';
@@ -23,6 +10,19 @@ $_['text_name']						= 'Name';
 $_['text_buyer_info']				= 'Buyer information';
 $_['text_view']						= 'View';
 $_['text_format']					= 'Format';
+
+// Column
+$_['column_date']				= 'Date';
+$_['column_type']				= 'Type';
+$_['column_email']				= 'Email';
+$_['column_name']				= 'Name';
+$_['column_transid']			    = 'Transaction ID';
+$_['column_status']				    = 'Status';
+$_['column_currency']			    = 'Currency';
+$_['column_amount']			    	= 'Amount';
+$_['column_fee']				    = 'Fee';
+$_['column_netamt']		     		= 'Net Amount';
+$_['column_action']		    		= 'Action';
 
 // Entry
 $_['entry_trans_all']				= 'All';
@@ -34,11 +34,11 @@ $_['entry_trans_funds_add']			= 'Funds Added';
 $_['entry_trans_funds_with']		= 'Funds Withdrawn';
 $_['entry_trans_referral']			= 'Referral';
 $_['entry_trans_fee']				= 'Fee';
-$_['entry_trans_subscription']		= 'Subscription';
-$_['entry_trans_dividend']			= 'Dividend';
-$_['entry_trans_billpay']			= 'Bill Pay';
-$_['entry_trans_refund']			= 'Refund';
-$_['entry_trans_conv']				= 'Currency Conversion';
+$_['entry_trans_subscription'] = 'Subscription';
+$_['entry_trans_dividend']     = 'Dividend';
+$_['entry_trans_billpay']      = 'Bill Pay';
+$_['entry_trans_refund']       = 'Refund';
+$_['entry_trans_conv']         = 'Currency Conversion';
 $_['entry_trans_bal_trans']			= 'Balance Transfer';
 $_['entry_trans_reversal']			= 'Reversal';
 $_['entry_trans_shipping']			= 'Shipping';

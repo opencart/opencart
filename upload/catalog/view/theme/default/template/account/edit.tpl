@@ -238,6 +238,10 @@ $('.form-group[data-sort]').detach().each(function() {
 		$('.form-group:last').after(this);
 	}
 
+	if ($(this).attr('data-sort') == $('.form-group').length) {
+		$('.form-group:last').after(this);
+	}
+
 	if ($(this).attr('data-sort') < -$('.form-group').length) {
 		$('.form-group:first').before(this);
 	}

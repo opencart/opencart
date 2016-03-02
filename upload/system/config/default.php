@@ -43,7 +43,7 @@ $_['template_type']        = 'basic';
 // Error
 $_['error_display']        = true;
 $_['error_log']            = true;
-$_['error_filename']       = 'error.txt';
+$_['error_filename']       = 'error.log';
 
 // Reponse
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');

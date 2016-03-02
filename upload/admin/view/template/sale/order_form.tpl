@@ -1144,8 +1144,8 @@ $('#button-refresh').on('click', function() {
 					html += '  </td>';
 					html += '  <td class="text-left"></td>';
 					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['price'] + '</td>';
+					html += '  <td class="text-right">' + voucher['price'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 				}

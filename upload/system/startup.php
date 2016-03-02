@@ -84,6 +84,10 @@ function modification($filename) {
 }
 
 // Autoloader
+if (file_exists(DIR_SYSTEM . '../../vendor/autoload.php')) {
+	require_once(DIR_SYSTEM . '../../vendor/autoload.php');
+}
+
 function library($class) {
 	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
@@ -96,20 +100,7 @@ function library($class) {
 	}
 }
 
-function vendor($class) {
-	$file = DIR_SYSTEM . 'vendor/' . str_replace('\\', '/', strtolower($class)) . '.php';
-
-	if (is_file($file)) {
-		include_once(modification($file));
-
-		return true;
-	} else {
-		return false;
-	}
-}
-
 spl_autoload_register('library');
-spl_autoload_register('vendor');
 spl_autoload_extensions('.php');
 
 // Engine
@@ -126,3 +117,4 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
+require_once(DIR_SYSTEM . 'helper/hash_equals.php');

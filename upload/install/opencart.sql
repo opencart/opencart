@@ -386,7 +386,7 @@ INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `ba
 
 DROP TABLE IF EXISTS `oc_cart`;
 CREATE TABLE `oc_cart` (
-  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cart_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1113,6 +1113,7 @@ CREATE TABLE `oc_customer` (
   `approved` tinyint(1) NOT NULL,
   `safe` tinyint(1) NOT NULL,
   `token` text NOT NULL,
+  `code` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1782,7 +1783,7 @@ INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_length_class_description`;
 CREATE TABLE `oc_length_class_description` (
-  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `length_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
@@ -1902,7 +1903,7 @@ CREATE TABLE `oc_modification` (
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,
   `link` varchar(255) NOT NULL,
-  `xml` text NOT NULL,
+  `xml` mediumtext NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`modification_id`)
@@ -3235,8 +3236,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (299, 0, 'theme_default', 'theme_default_image_product_height', '228', 0),
 (300, 0, 'theme_default', 'theme_default_image_additional_width', '74', 0),
 (301, 0, 'theme_default', 'theme_default_image_additional_height', '74', 0),
-(302, 0, 'theme_default', 'theme_default_image_related_width', '80', 0),
-(303, 0, 'theme_default', 'theme_default_image_related_height', '80', 0),
+(302, 0, 'theme_default', 'theme_default_image_related_width', '200', 0),
+(303, 0, 'theme_default', 'theme_default_image_related_height', '200', 0),
 (304, 0, 'theme_default', 'theme_default_image_compare_width', '90', 0),
 (305, 0, 'theme_default', 'theme_default_image_compare_height', '90', 0),
 (306, 0, 'theme_default', 'theme_default_image_wishlist_width', '47', 0),
@@ -3650,7 +3651,7 @@ INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_weight_class_description`;
 CREATE TABLE `oc_weight_class_description` (
-  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weight_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,

@@ -27,7 +27,7 @@ class ControllerDashboardOnline extends Controller {
 			$data['total'] = $online_total;
 		}
 
-		$data['online'] = $this->url->ssl('report/customer_online', 'token=' . $this->session->data['token'], true);
+		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
 
 		return $this->load->view('dashboard/online', $data);
 	}

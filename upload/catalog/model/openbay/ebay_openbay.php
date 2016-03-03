@@ -475,30 +475,23 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$user['country_id']   = '';
 		}
 
+		//try to get zone id - this will only work if the zone name and country id exist in the DB.
+		$zone_id = $this->openbay->getZoneId($order->address->state, $user['country_id']);
+
 		$this->openbay->ebay->log('COUNTRY ID IS ' . $user['country_id']);
 		$this->openbay->ebay->log('SMP ID IS ' . $order->smpId);
 		
-		$tax_class = new \Cart\Tax($this);
+		$tax_class = new \Cart\Tax($this->registry);
 
-		if ($order->smpId == 214) {
-			$this->openbay->ebay->log('SET DEBUG!!!!!!');
-			$tax_class->setShippingAddress(1, 0);
-			$tax_class->setPaymentAddress(1, 0);
-			$tax_class->setStoreAddress(1, 0);
-		} else {
-			$tax_class->setShippingAddress($user['country_id'], 0);
-			$tax_class->setPaymentAddress($user['country_id'], 0);
-		}
+		$tax_class->setShippingAddress($user['country_id'], $zone_id);
+		$tax_class->setPaymentAddress($user['country_id'], $zone_id);
 
 		$user['email']  = (string)$order->user->email;
 		$user['id']     = $this->openbay->getUserByEmail($user['email']);
 
 		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
 		$address_format     = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
-
-		//try to get zone id - this will only work if the zone name and country id exist in the DB.
-		$zone_id = $this->openbay->getZoneId($order->address->state, $user['country_id']);
-
+		
 		if (empty($address_format)) {
 			$address_format = (string)$this->config->get('ebay_default_addressformat');
 		}

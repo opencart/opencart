@@ -275,7 +275,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 		   `ip`                       = '',
 		   `date_added`               = '" . $this->db->escape($created_date) . "',
 		   `date_modified`            = NOW(),
-		   `customer_id`              = 0
+		   `customer_id`              = 0,
+		   `customer_group_id`        = '" . (int)$this->config->get('config_customer_group_id') . "'
 		");
 
 		$order_id = $this->db->getLastId();
@@ -453,7 +454,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 	}
 
 	private function updateOrderWithConfirmedData($order_id, $order) {
-		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
 		$totals_language = $this->load->language('openbay/ebay_order');
 
@@ -477,9 +477,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		//try to get zone id - this will only work if the zone name and country id exist in the DB.
 		$zone_id = $this->openbay->getZoneId($order->address->state, $user['country_id']);
-
-		$this->openbay->ebay->log('COUNTRY ID IS ' . $user['country_id']);
-		$this->openbay->ebay->log('SMP ID IS ' . $order->smpId);
 		
 		$tax_class = new \Cart\Tax($this->registry);
 
@@ -489,9 +486,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$user['email']  = (string)$order->user->email;
 		$user['id']     = $this->openbay->getUserByEmail($user['email']);
 
-		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
 		$address_format     = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
-		
+
 		if (empty($address_format)) {
 			$address_format = (string)$this->config->get('ebay_default_addressformat');
 		}

@@ -5,12 +5,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->default_paid_id            = $this->config->get('ebay_status_paid_id');
 		$this->default_refunded_id        = $this->config->get('ebay_status_refunded_id');
 		$this->default_pending_id         = $this->config->get('ebay_status_import_id');
-
-		$this->default_part_refunded_id   = $this->config->get('ebay_status_partial_refund_id');
-		if ($this->default_part_refunded_id == null) {
-			$this->default_part_refunded_id = $this->default_paid_id;
-		}
-
+		$this->default_part_refunded_id   = ($this->default_part_refunded_id == null ? $this->default_paid_id : $this->config->get('ebay_status_partial_refund_id'));
 		$this->tax_rate                   = ($this->config->get('ebay_tax') == '') ? '1' : (($this->config->get('ebay_tax') / 100) + 1);
 		$this->tax_type                   = $this->config->get('ebay_tax_listing');
 		$data                             = unserialize($data);
@@ -28,8 +23,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 						$this->orderHandle($data->ordersV2);
 					}
 				}
-			} else {
-				$this->openbay->ebay->log('Order object empty - no orders');
 			}
 		} else {
 			$this->openbay->ebay->log('Data failed to unserialize');
@@ -135,7 +128,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 				$this->openbay->ebay->log('Creating new order');
 
-				/* need to create the order without creating customer etc */
 				$order_id = $this->create($order);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Created . ');
 
@@ -227,10 +219,9 @@ class ModelOpenbayEbayOpenbay extends Model{
 	}
 
 	private function create($order) {
+		$openstock = false;
 		if ($this->openbay->addonLoad('openstock')) {
 			$openstock = true;
-		} else {
-			$openstock = false;
 		}
 
 		$this->load->model('localisation/currency');
@@ -457,36 +448,31 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->load->model('catalog/product');
 		$totals_language = $this->load->language('openbay/ebay_order');
 
-		$name_parts     = $this->openbay->splitName((string)$order->address->name);
-		$user           = array();
-		$user['fname']  = $name_parts['firstname'];
-		$user['lname']  = $name_parts['surname'];
+		$name_parts     	= $this->openbay->splitName((string)$order->address->name);
+		$user           	= array();
+		$user['id']     	= $this->openbay->getUserByEmail($user['email']);
+		$user['fname']  	= $name_parts['firstname'];
+		$user['lname']  	= $name_parts['surname'];
+		$user['country']    = (string)$order->address->iso2;
+		$user['country_id'] = '';
+		$user['zone_id'] 	= $this->openbay->getZoneId($order->address->state, $user['country_id']);
+		$user['email']  	= (string)$order->user->email;
 
 		/** get the iso2 code from the data and pull out the correct country for the details. */
 		if (!empty($order->address->iso2)) {
 			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($order->address->iso2) . "'");
+
+			if ($country_qry->num_rows > 0) {
+				$user['country']      = $country_qry->row['name'];
+				$user['country_id']   = $country_qry->row['country_id'];
+			}
 		}
 
-		if (!empty($country_qry->num_rows)) {
-			$user['country']      = $country_qry->row['name'];
-			$user['country_id']   = $country_qry->row['country_id'];
-		} else {
-			$user['country']      = (string)$order->address->iso2;
-			$user['country_id']   = '';
-		}
-
-		//try to get zone id - this will only work if the zone name and country id exist in the DB.
-		$zone_id = $this->openbay->getZoneId($order->address->state, $user['country_id']);
-		
 		$tax_class = new \Cart\Tax($this->registry);
+		$tax_class->setShippingAddress($user['country_id'], $user['zone_id']);
+		$tax_class->setPaymentAddress($user['country_id'], $user['zone_id']);
 
-		$tax_class->setShippingAddress($user['country_id'], $zone_id);
-		$tax_class->setPaymentAddress($user['country_id'], $zone_id);
-
-		$user['email']  = (string)$order->user->email;
-		$user['id']     = $this->openbay->getUserByEmail($user['email']);
-
-		$address_format     = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
+		$address_format = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
 
 		if (empty($address_format)) {
 			$address_format = (string)$this->config->get('ebay_default_addressformat');
@@ -518,7 +504,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			   `shipping_country`         = '" . $this->db->escape($user['country']) . "',
 			   `shipping_country_id`      = '" . (int)$user['country_id'] . "',
 			   `shipping_zone`            = '" . $this->db->escape($order->address->state) . "',
-			   `shipping_zone_id`         = '" . (int)$zone_id . "',
+			   `shipping_zone_id`         = '" . (int)$user['zone_id'] . "',
 			   `shipping_method`          = '" . $this->db->escape($shipping_service_name) . "',
 			   `shipping_address_format`  = '" . $this->db->escape($address_format) . "',
 			   `payment_firstname`        = '" . $this->db->escape($user['fname']) . "',
@@ -530,7 +516,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			   `payment_country`          = '" . $this->db->escape($user['country']) . "',
 			   `payment_country_id`       = '" . (int)$user['country_id'] . "',
 			   `payment_zone`             = '" . $this->db->escape($order->address->state) . "',
-			   `payment_zone_id`          = '" . (int)$zone_id . "',
+			   `payment_zone_id`          = '" . (int)$user['zone_id'] . "',
 			   `comment`                  = '" . $this->db->escape($order->order->message) . "',
 			   `payment_method`           = '" . $this->db->escape($order->payment->method) . "',
 			   `payment_address_format`   = '" . $address_format . "',
@@ -553,23 +539,17 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$price      = (double)$txn->item->price;
 
 			if ($this->tax_type == 1) {
-				//calculate taxes that come in from eBay
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from eBay');
 
 				$total_tax   += (double)$txn->item->tax->total;
 				$total_net   += $price * $qty;
 			} elseif ($this->tax_type == 2) {
-				/**
-				 * @todo
-				 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
-				 *
-				 *
-				 */
+				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from product and buyer country');
 
-				$tax_data = array();
-				$item_line_tax_amount = 0;
-				$item_tax_amount = 0;
-				$item_price_net = $price;
+				$tax_data 				= array();
+				$item_line_tax_amount 	= 0;
+				$item_tax_amount 		= 0;
+				$item_price_net 		= $price;
 
 				if ($product_id != false) {
 					$product = $this->model_catalog_product->getProduct($product_id);
@@ -588,14 +568,12 @@ class ModelOpenbayEbayOpenbay extends Model{
 								$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $qty);
 							}
 
-							$item_price_net -= $tax_rate['amount'];
-							$item_tax_amount += $tax_rate['amount'];
-							$item_line_tax_amount += ($tax_rate['amount'] * $qty);
+							$item_price_net 		-= $tax_rate['amount'];
+							$item_tax_amount 		+= $tax_rate['amount'];
+							$item_line_tax_amount 	+= ($tax_rate['amount'] * $qty);
 						}
 					}
 				}
-
-				$this->openbay->ebay->log('create() - Using tax rates from product and buyer country');
 
 				$this->openbay->ebay->log('create() - Net price: ' . $item_price_net);
 
@@ -608,7 +586,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$total_tax   += number_format($item_line_tax_amount, 4, '.', '');
 				$total_net   += $item_line_total_net;
 			} else {
-				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from store');
 
 				$item_net     = $price / $this->tax_rate;
@@ -624,27 +601,17 @@ class ModelOpenbayEbayOpenbay extends Model{
 		if ($this->tax_type == 1) {
 			$discount_net    = (double)$order->order->discount;
 			$shipping_net    = (double)$order->shipping->cost;
-
-			$tax = number_format($total_tax, 4, '.', '');
+			$tax 			 = number_format($total_tax, 4, '.', '');
 		} elseif ($this->tax_type == 2) {
 			$discount_net    = (double)$order->order->discount;
 			$shipping_net    = (double)$order->shipping->cost;
-			/**
-			 *
-			 * Look up the product link to obtain the tax rate for the item based on the buyer country and product tax settings
-			 *
-			 *
-			 */
-
-
-			$tax = number_format($total_tax, 4, '.', '');
+			$tax 			 = number_format($total_tax, 4, '.', '');
 		} else {
 			$discount_net    = (double)$order->order->discount / $this->tax_rate;
 			$discount_tax    = (double)$order->order->discount - $discount_net;
 			$shipping_net    = (double)$order->shipping->cost / $this->tax_rate;
 			$shipping_tax    = (double)$order->shipping->cost - $shipping_net;
-
-			$tax = number_format($shipping_tax + $total_tax + $discount_tax, 4, '.', '');
+			$tax 			 = number_format($shipping_tax + $total_tax + $discount_tax, 4, '.', '');
 		}
 
 		$totals = number_format((double)$total_net + (double)$shipping_net + (double)$tax + (double)$discount_net, 4, '.', '');

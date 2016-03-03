@@ -33,7 +33,7 @@ class ModelToolImage extends Model {
 				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
 			}
 		}
-
+		$new_image = str_replace(' ', '%20', $new_image);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
 		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {

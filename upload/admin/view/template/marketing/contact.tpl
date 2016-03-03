@@ -141,7 +141,7 @@ $('input[name=\'affiliates\']').autocomplete({
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['customer_id']
+						value: item['affiliate_id']
 					}
 				}));
 			}

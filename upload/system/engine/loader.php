@@ -53,6 +53,8 @@ final class Loader {
 			}
 
 			$this->registry->set($registry_model_name, $proxy);
+			
+			return $proxy;
 		} else {
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}

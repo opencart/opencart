@@ -33,10 +33,10 @@ final class Loader {
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-		$registry_model_name = 'model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route);
+		$model_name = 'model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route);
 
-		if ($this->registry->get($registry_model_name) !== null) {
-			return $this->registry->get($registry_model_name);
+		if ($this->registry->get($model_name) !== null) {
+			return $this->registry->get($model_name);
 		}
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
@@ -52,7 +52,7 @@ final class Loader {
 				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method, $model);
 			}
 
-			$this->registry->set($registry_model_name, $proxy);
+			$this->registry->set($model_name, $proxy);
 			
 			return $proxy;
 		} else {
@@ -133,8 +133,8 @@ final class Loader {
 		return $output;
 	}
 	
-	protected function callback($registry, $route, $class_instance) {
-		return function($args) use($registry, &$route, $class_instance) {			
+	protected function callback($registry, $route, $model) {
+		return function($args) use($registry, &$route, $model) {			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
 			
@@ -144,8 +144,8 @@ final class Loader {
 			
 			$method = substr($route, strrpos($route, '/') + 1);
 			
-			if (method_exists($class_instance, $method)) {
-				$output = call_user_func_array(array($class_instance, $method), $args);
+			if (method_exists($model, $method)) {
+				$output = call_user_func_array(array($model, $method), $args);
 			} else {
 				throw new \Exception('Error: Could not call model/' . $route . '!');
 			}

@@ -33,20 +33,27 @@ final class Loader {
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		$registry_model_name = 'model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route);
+
+		if ($this->registry->get($registry_model_name) !== null) {
+			return $this->registry->get($registry_model_name);
+		}		
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 		
 		if (is_file($file)) {
 			include_once($file);
-			//echo $class;
+
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
 				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
 			}
 
-			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+			$this->registry->set($registry_model_name, $proxy);
+			
+			return $proxy;
 		} else {
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}

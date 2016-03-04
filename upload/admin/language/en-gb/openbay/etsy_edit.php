@@ -23,5 +23,4 @@ $_['error_price_missing']  		= 'Price is missing or empty';
 $_['error_title_length']  		= 'Title is too long';
 $_['error_title_missing']  		= 'Title is missing';
 $_['error_desc_missing']  		= 'Description is missing or empty';
-$_['error_price_missing']  		= 'Price is missing or empty';
 $_['error_state_missing']  		= 'State is missing or empty';

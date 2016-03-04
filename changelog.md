@@ -1,5 +1,7 @@
 # OpenCart 2.0 change log
 
+## v2.2.0.0 (02.03.2016)
+
 ## v2.1.0.1 (06.10.2015)
 #### Bugs fixed
 * Use the ip address from data in Fraudlanbs module and update language strings

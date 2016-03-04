@@ -26,7 +26,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-group required">
+				<div class="form-group">
 					<label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
 					<div class="col-sm-10">
 						<input type="text" name="CVCCVV2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />
@@ -60,7 +60,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group required">
+                <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
                     <div class="col-sm-10">
                         <input type="text" name="CVCCVV2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />

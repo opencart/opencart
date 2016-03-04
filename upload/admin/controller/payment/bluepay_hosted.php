@@ -149,8 +149,10 @@ class ControllerPaymentBluePayHosted extends Controller {
 
 		if (isset($this->request->post['bluepay_hosted_order_status_id'])) {
 			$data['bluepay_hosted_order_status_id'] = $this->request->post['bluepay_hosted_order_status_id'];
-		} else {
+		} elseif ($this->config->get('bluepay_hosted_order_status_id')) {
 			$data['bluepay_hosted_order_status_id'] = $this->config->get('bluepay_hosted_order_status_id');
+		} else {
+			$data['bluepay_hosted_order_status_id'] = 2;
 		}
 
 		$this->load->model('localisation/order_status');
@@ -262,12 +264,13 @@ class ControllerPaymentBluePayHosted extends Controller {
 			$this->model_payment_bluepay_hosted->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if ($void_response['Result'] == 'APPROVED') {
-				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'void', 0.00);
+				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'void', $bluepay_hosted_order['total']);
 				$this->model_payment_bluepay_hosted->updateVoidStatus($bluepay_hosted_order['bluepay_hosted_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
+				$json['data']['total'] = $bluepay_hosted_order['total'];
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
@@ -298,6 +301,8 @@ class ControllerPaymentBluePayHosted extends Controller {
 			if ($release_response['Result'] == 'APPROVED') {
 				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'payment', $this->request->post['amount']);
 
+				$this->model_payment_bluepay_hosted->updateTransactionId($bluepay_hosted_order['bluepay_hosted_order_id'], $release_response['RRNO']);
+
 				$total_released = $this->model_payment_bluepay_hosted->getTotalReleased($bluepay_hosted_order['bluepay_hosted_order_id']);
 
 				if ($total_released >= $bluepay_hosted_order['total']) {
@@ -310,7 +315,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'];
 				$json['data']['release_status'] = $release_status;
 				$json['data']['total'] = (float)$total_released;
@@ -357,7 +362,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'] * -1;
 				$json['data']['total_released'] = (float)$total_released;
 				$json['data']['total_rebated'] = (float)$total_rebated;

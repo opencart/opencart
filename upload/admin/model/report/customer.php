@@ -30,7 +30,7 @@ class ModelReportCustomer extends Model {
 		for ($i = 0; $i < 7; $i++) {
 			$date = date('Y-m-d', $date_start + ($i * 86400));
 
-			$order_data[date('w', strtotime($date))] = array(
+			$customer_data[date('w', strtotime($date))] = array(
 				'day'   => date('D', strtotime($date)),
 				'total' => 0
 			);

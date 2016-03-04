@@ -148,7 +148,7 @@ class ControllerPaymentCardinity extends Controller {
 
 		$hash = $this->encryption->encrypt(json_encode($encryption_data));
 
-		if ($hash == $this->request->post['hash']) {
+		if (hash_equals($hash, $this->request->post['hash'])) {
 			$success = true;
 
 			$data['url'] = $this->request->post['url'];
@@ -183,7 +183,7 @@ class ControllerPaymentCardinity extends Controller {
 
 		$hash = $this->encryption->encrypt(json_encode($encryption_data));
 
-		if ($hash == $this->request->post['MD']) {
+		if (hash_equals($hash, $this->request->post['MD'])) {
 			$order = $this->model_payment_cardinity->getOrder($encryption_data['order_id']);
 
 			if ($order && $order['payment_id']) {

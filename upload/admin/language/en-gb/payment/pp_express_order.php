@@ -12,6 +12,8 @@ $_['text_view']				 = 'View';
 $_['text_refund']			 = 'Refund';
 $_['text_resend']			 = 'Resend';
 $_['text_success']           = 'Transaction was successfully sent';
+$_['text_full_refund']		 = 'Full refund';
+$_['text_partial_refund']	 = 'Partial refund';
 
 $_['text_current_refunds']   = 'Refunds have already been done for this transaction. The max refund is';
 
@@ -32,7 +34,7 @@ $_['entry_amount']			 = 'Amount';
 $_['entry_note']             = 'Note';
 
 // Help
-$_['help_capture_complete']  = 'If this is athe last capture.';
+$_['help_capture_complete']  = 'If this is a the last capture.';
 
 // Tab
 $_['tab_capture']		     = 'Capture';

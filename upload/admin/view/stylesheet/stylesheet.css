@@ -631,3 +631,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     visibility: unset;
 }
 /* Menu Fix For System -> Layout -> Banner */
+
+/* Fix form-group margin inside the modal */
+.modal-body  .form-group {
+    margin: 0;
+}

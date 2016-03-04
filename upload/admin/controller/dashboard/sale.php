@@ -17,7 +17,7 @@ class ControllerDashboardSale extends Controller {
 
 		$difference = $today - $yesterday;
 
-		if ($difference && (int)$today) {
+		if ($difference && (int)$today && (int)$today > 0) {
 			$data['percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['percentage'] = 0;

@@ -33,20 +33,28 @@ final class Loader {
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		$model_name = 'model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route);
+
+		if ($this->registry->get($model_name) !== null) {
+			return $this->registry->get($model_name);
+		}
 		
 		$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 		
 		if (is_file($file)) {
 			include_once($file);
-			//echo $class;
-			$proxy = new Proxy();
 
-			foreach (get_class_methods($class) as $method) {
-				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
+			$proxy = new Proxy();
+			$model = new $class($this->registry);
+
+			foreach (get_class_methods($model) as $method) {
+				$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method, $model);
 			}
 
-			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+			$this->registry->set($model_name, $proxy);
+			
+			return $proxy;
 		} else {
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
@@ -125,8 +133,8 @@ final class Loader {
 		return $output;
 	}
 	
-	protected function callback($registry, $route) {
-		return function($args) use($registry, &$route) {			
+	protected function callback($registry, $route, $model) {
+		return function($args) use($registry, &$route, $model) {			
 			// Trigger the pre events
 			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
 			
@@ -134,17 +142,7 @@ final class Loader {
 				return $result;
 			}
 			
-			$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
-			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
 			$method = substr($route, strrpos($route, '/') + 1);
-	
-			if (is_file($file)) {
-				include_once($file);
-			
-				$model = new $class($registry);
-			} else {
-				throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
-			}
 			
 			if (method_exists($model, $method)) {
 				$output = call_user_func_array(array($model, $method), $args);

@@ -340,13 +340,13 @@ class Amazon {
 		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_product` as `op` LEFT JOIN `" . DB_PREFIX . "product` as `p` ON `p`.`product_id` = `op`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'")->rows;
 	}
 
-	public function validate(){
+	public function validate() {
 		if($this->config->get('openbay_amazon_status') != 0 &&
 			$this->config->get('openbay_amazon_token') != '' &&
 			$this->config->get('openbay_amazon_enc_string1') != '' &&
 			$this->config->get('openbay_amazon_enc_string2') != ''){
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -364,9 +364,9 @@ class Amazon {
 	public function getOrder($order_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if($qry->num_rows > 0){
+		if($qry->num_rows > 0) {
 			return $qry->row;
-		}else{
+		} else {
 			return false;
 		}
 	}

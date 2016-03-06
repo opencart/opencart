@@ -46,13 +46,13 @@ class ModelOpenbayEbayProfile extends Model{
 	public function getAll($type = '') {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "ebay_profile`";
 
-		if($type !== '') {
+		if ($type !== '') {
 			$sql .= " WHERE `type` = '" . (int)$type . "'";
 		}
 
 		$qry = $this->db->query($sql);
 
-		if($qry->num_rows) {
+		if ($qry->num_rows) {
 			$profiles = array();
 			foreach ($qry->rows as $row) {
 				$row['link_edit']   = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
@@ -62,7 +62,7 @@ class ModelOpenbayEbayProfile extends Model{
 			}
 
 			return $profiles;
-		}else{
+		} else {
 			return false;
 		}
 	}

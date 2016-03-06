@@ -525,7 +525,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if ($this->config->get('ebay_status') == 1 && $this->openbay->ebay->getOrder($this->request->get['order_id']) !== false) {
 			if ($this->config->get('ebay_status_shipped_id') == $this->request->get['status_id']) {
 				$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id'], array('tracking_no' => $this->request->post['tracking_no'], 'carrier_id' => $this->request->post['carrier_id']));
-			}else{
+			} else {
 				$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
 			}
 		}
@@ -933,15 +933,15 @@ class ControllerExtensionOpenbay extends Controller {
 			if (empty($orders)) {
 				$this->session->data['error'] = $data['text_no_orders'];
 				$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], true));
-			}else{
+			} else {
 				$data['orders'] = $orders;
 			}
 
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
-				'text'      => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+				'text' => $this->language->get('text_home'),
 			);
 
 			$data['breadcrumbs'][] = array(

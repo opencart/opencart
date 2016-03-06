@@ -145,7 +145,7 @@ final class Openbay {
 		$res = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . $table . "` LIKE '" . $column . "'");
 		if($res->num_rows != 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -161,7 +161,7 @@ final class Openbay {
 
 		if(in_array($table, $tables)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -229,7 +229,7 @@ final class Openbay {
 
 		if($query->num_rows > 0) {
 			return $query->row['zone_id'];
-		}else{
+		} else {
 			return 0;
 		}
 	}
@@ -340,15 +340,15 @@ final class Openbay {
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];
-			}else{
+			} else {
 				return false;
 			}
-		}else{
+		} else {
 			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['model'];
-			}else{
+			} else {
 				return false;
 			}
 		}
@@ -375,7 +375,7 @@ final class Openbay {
 
 		if($qry->num_rows){
 			return $qry->row['customer_id'];
-		}else{
+		} else {
 			return false;
 		}
 	}

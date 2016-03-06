@@ -78,7 +78,7 @@ final class Etsy {
 
 				if(!empty($result)) {
 					$response['data'] = $result;
-				}else{
+				} else {
 					$response['data'] = '';
 				}
 			}
@@ -86,7 +86,7 @@ final class Etsy {
 			curl_close($ch);
 
 			return $response;
-		}else{
+		} else {
 			$this->log('call() - OpenBay Pro / Etsy not active');
 
 			return false;
@@ -94,8 +94,8 @@ final class Etsy {
 	}
 
 	private function setLogger() {
-		if(file_exists(DIR_LOGS . 'etsylog.log')) {
-			if(filesize(DIR_LOGS . 'etsylog.log') > ($this->max_log_size * 1000000)) {
+		if (file_exists(DIR_LOGS . 'etsylog.log')) {
+			if (filesize(DIR_LOGS . 'etsylog.log') > ($this->max_log_size * 1000000)) {
 				rename(DIR_LOGS . 'etsylog.log', DIR_LOGS . '_etsylog_' . date('Y-m-d_H-i-s') . '.log');
 			}
 		}
@@ -162,7 +162,7 @@ final class Etsy {
 
 		if($qry->num_rows > 0) {
 			return unserialize($qry->row['data']);
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -195,7 +195,7 @@ final class Etsy {
 
 		if($qry->num_rows) {
 			return $qry->row;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -284,7 +284,7 @@ final class Etsy {
 			if($query->num_rows > 0) {
 				$this->log('Found');
 				return $query->row;
-			}else{
+			} else {
 				$this->log('Not found');
 				return false;
 			}
@@ -295,7 +295,7 @@ final class Etsy {
 			if($query->num_rows > 0) {
 				$this->log('Found');
 				return $query->row;
-			}else{
+			} else {
 				$this->log('Not found');
 				return false;
 			}

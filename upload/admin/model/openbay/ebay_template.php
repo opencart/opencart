@@ -14,7 +14,7 @@ class ModelOpenbayEbayTemplate extends Model {
 
 		if ($qry->countAffected() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -28,7 +28,7 @@ class ModelOpenbayEbayTemplate extends Model {
 			$row['link_delete'] = $this->url->link('openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
 
 			return $row;
-		}else{
+		} else {
 			return false;
 		}
 	}

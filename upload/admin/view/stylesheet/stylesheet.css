@@ -636,3 +636,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .modal-body  .form-group {
     margin: 0;
 }
+/* Fixed Sumernote Button Height */
+.note-toolbar.panel-heading i {
+	font-size: 14px;
+}
+/* Filemanager Folder Size */
+#filemanager .fa-folder.fa-5x {
+	font-size: 10.8em;
+}

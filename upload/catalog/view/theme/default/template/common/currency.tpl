@@ -1,6 +1,6 @@
 <?php if (count($currencies) > 1) { ?>
 <div class="pull-left">
-<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="currency">
+<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-currency">
   <div class="btn-group">
     <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
     <?php foreach ($currencies as $currency) { ?>

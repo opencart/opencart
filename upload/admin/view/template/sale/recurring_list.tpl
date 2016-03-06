@@ -113,17 +113,20 @@
               </thead>
               <tbody>
                 <?php if ($recurrings) { ?>
-                <?php foreach ($recurrings as $recurring) { ?>
-                <tr>
-                  <td class="text-right"><?php echo $recurring['order_recurring_id'] ?></td>
-                  <td class="text-right"><?php echo $recurring['order_id'] ?></td>
-                  <td class="text-left"><?php echo $recurring['reference'] ?></td>
-                  <td class="text-left"><?php echo $recurring['customer'] ?></td>
-                  <td class="text-left"><?php echo $recurring['status'] ?></td>
-                  <td class="text-left"><?php echo $recurring['date_added'] ?></td>
-                  <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a></td>
-                </tr>
-                <?php } ?>
+                  <?php foreach ($recurrings as $recurring) { ?>
+                  <tr>
+                    <td class="text-right"><?php echo $recurring['order_recurring_id'] ?></td>
+                    <td class="text-right"><?php echo $recurring['order_id'] ?></td>
+                    <td class="text-left"><?php echo $recurring['reference'] ?></td>
+                    <td class="text-left"><?php echo $recurring['customer'] ?></td>
+                    <td class="text-left"><?php echo $recurring['status'] ?></td>
+                    <td class="text-left"><?php echo $recurring['date_added'] ?></td>
+                    <td class="text-right">
+                      <a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_order_recurring; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                      <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
+                    </td>
+                  </tr>
+                  <?php } ?>
                 <?php } else { ?>
                 <tr>
                   <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>

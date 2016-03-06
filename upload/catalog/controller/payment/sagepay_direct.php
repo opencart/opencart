@@ -251,7 +251,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
 		$payment_data['Apply3DSecure'] = '0';
-		$payment_data['ClientIPAddress'] = $this->request->server['REMOTE_ADDR'];
 
 		$response_data = $this->model_payment_sagepay_direct->sendCurl($url, $payment_data);
 

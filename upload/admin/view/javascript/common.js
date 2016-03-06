@@ -110,6 +110,7 @@ $(document).ready(function() {
 		var element = this;
 		
 		$(element).summernote({
+			disableDragAndDrop: true,
 			height: 300,
 			toolbar: [
 				['style', ['style']],

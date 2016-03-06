@@ -16,6 +16,7 @@
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($downloads) { ?>
+      <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -38,6 +39,7 @@
           <?php } ?>
         </tbody>
       </table>
+      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

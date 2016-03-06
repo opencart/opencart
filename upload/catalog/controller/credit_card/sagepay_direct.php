@@ -290,5 +290,4 @@ class ControllerCreditCardSagepayDirect extends Controller {
 
 		$this->response->redirect($this->url->link('credit_card/sagepay_direct', '', true));
 	}
-
 }

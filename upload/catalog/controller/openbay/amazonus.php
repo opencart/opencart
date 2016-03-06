@@ -304,8 +304,6 @@ class ControllerOpenbayAmazonus extends Controller {
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
 
-		$this->event->trigger('post.order.history.add', $order_id);
-
 		$logger->write("Ok");
 		$this->response->setOutput('Ok');
 	}
@@ -321,11 +319,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$logger = new Log('amazonus_listing.log');
 		$logger->write('amazonus/listing - started');
 
-		$token = $this->config->get('openbay_amazonus_token');
-
 		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incoming_token !== $token) {
+		if (!hash_equals($this->config->get('openbay_amazonus_token'), $incoming_token)) {
 			$logger->write('amazonus/listing - Incorrect token: ' . $incoming_token);
 			return;
 		}
@@ -363,11 +359,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/listing_reports - started');
 
-		$token = $this->config->get('openbay_amazonus_token');
-
 		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incoming_token !== $token) {
+		if (!hash_equals($this->config->get('openbay_amazonus_token'), $incoming_token)) {
 			$logger->write('amazonus/listing_reports - Incorrect token: ' . $incoming_token);
 			return;
 		}
@@ -488,11 +482,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/search - started');
 
-		$token = $this->config->get('openbay_amazonus_token');
-
 		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incoming_token !== $token) {
+		if (!hash_equals($this->config->get('openbay_amazonus_token'), $incoming_token)) {
 			$logger->write('amazonus/search - Incorrect token: ' . $incoming_token);
 			return;
 		}
@@ -544,25 +536,24 @@ class ControllerOpenbayAmazonus extends Controller {
 				$this->response->setOutput("error 005");
 				return;
 			}
+
 			$product_id = trim((string)$data_xml->product_id);
+
 			if ($product_id === "all") {
-				$all_rows = $this->db->query("
-					SELECT * FROM `" . DB_PREFIX . "amazonus_product`
-				")->rows;
+				$all_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product`")->rows;
 
 				$response = array();
+
 				foreach ($all_rows as $row) {
 					unset($row['data']);
 					$response[] = $row;
 				}
 
 				$this->response->setOutput(print_r($response, true));
+				
 				return;
 			} else {
-				$response = $this->db->query("
-					SELECT * FROM `" . DB_PREFIX . "amazonus_product`
-					WHERE `product_id` = '" . (int)$product_id . "'
-				")->rows;
+				$response = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product` WHERE `product_id` = '" . (int)$product_id . "'")->rows;
 
 				$this->response->setOutput(print_r($response, true));
 				return;

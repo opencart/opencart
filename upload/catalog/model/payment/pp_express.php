@@ -54,7 +54,7 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET
 			`paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "',
 			`transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "',
-			`parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "',
+			`parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "',
 			`date_added` = NOW(),
 			`note` = '" . $this->db->escape($transaction_data['note']) . "',
 			`msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "',
@@ -152,7 +152,7 @@ class ModelPaymentPPExpress extends Model {
 			'taxes'  => &$taxes,
 			'total'  => &$total
 		);
-			
+
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -233,7 +233,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $data;
 	}
-	
+
 	public function getTotalCaptured($paypal_order_id) {
 		$qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `pending_reason` != 'authorization' AND `pending_reason` != 'paymentreview' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
 
@@ -245,7 +245,7 @@ class ModelPaymentPPExpress extends Model {
 
 		return $qry->row['amount'];
 	}
-	
+
 	public function getTransactionRow($transaction_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
 
@@ -255,7 +255,7 @@ class ModelPaymentPPExpress extends Model {
 			return false;
 		}
 	}
-		
+
 	public function updateOrder($capture_status, $order_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
@@ -294,7 +294,7 @@ class ModelPaymentPPExpress extends Model {
 			CURLOPT_TIMEOUT => 0,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
+			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&"),
 		);
 
 		$ch = curl_init();
@@ -337,8 +337,8 @@ class ModelPaymentPPExpress extends Model {
 		if ($this->config->get('pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
-	}	
-	
+	}
+
 	public function cleanReturn($data) {
 		$data = explode('&', $data);
 
@@ -346,7 +346,7 @@ class ModelPaymentPPExpress extends Model {
 
 		foreach ($data as $k=>$v) {
 			$tmp = explode('=', $v);
-			$arr[$tmp[0]] = urldecode($tmp[1]);
+			$arr[$tmp[0]] = isset($tmp[1]) ? urldecode($tmp[1]) : '';
 		}
 
 		return $arr;

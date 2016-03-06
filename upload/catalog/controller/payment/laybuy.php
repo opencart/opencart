@@ -143,7 +143,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 			$this->model_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
 
-			if ($token == md5($this->config->get('laybuy_token'))) {
+			if (hash_equals(md5($this->config->get('laybuy_token'), $token))) {
 				$this->model_payment_laybuy->log('Order ID: ' . $order_id);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -336,7 +336,7 @@ class ControllerPaymentLaybuy extends Controller {
 		$this->response->redirect($this->url->link('checkout/checkout', '', true));
 	}
 
-	public function deleteOrder($order_id = 0) {
+	public function deleteOrder($route = '', $output = '', $order_id = 0, $order_status_id = 0) {
 		$this->load->model('payment/laybuy');
 
 		if (isset($this->session->data['api_id'])) {

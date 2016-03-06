@@ -252,7 +252,6 @@ class ModelOpenbayEtsyOrder extends Model {
 		}
 
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
-		$this->event->trigger('post.order.history.add', $order_id);
 
 		return $order_id;
 	}

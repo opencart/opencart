@@ -161,7 +161,7 @@ class ControllerPaymentPPProIframe extends Controller {
 						$paypal_transaction_data = array(
 							'paypal_iframe_order_id' => $paypal_iframe_order_id,
 							'transaction_id'         => $this->request->post['txn_id'],
-							'parent_transaction_id'  => '',
+							'parent_id'  => '',
 							'note'                   => '',
 							'msgsubid'               => '',
 							'receipt_id'             => $this->request->post['receipt_id'],

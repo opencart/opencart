@@ -225,7 +225,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		}
 
 		$this->load->model('localisation/currency');
-		$this->load->model('catalog/product');
 
 		if (isset($order->order->currency_id) && !empty($order->order->currency_id)) {
 			$currency = $this->model_localisation_currency->getCurrencyByCode($order->order->currency_id);
@@ -401,7 +400,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 	}
 
 	private function updateOrderWithConfirmedData($order_id, $order) {
-		$this->load->model('catalog/product');
 		$totals_language = $this->load->language('openbay/ebay_order');
 
 		$name_parts     	= $this->openbay->splitName((string)$order->address->name);
@@ -506,10 +504,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$item_net 				= $price;
 
 				if ($product_id != false) {
-					/**
-					 * @todo cannot use getProduct on inactive items - need to craete custom method
-					 */
-					$product = $this->model_catalog_product->getProduct($product_id);
+					$product = $this->openbay->getProductTaxClassId($product_id);
 
 					if ($product['tax_class_id']) {
 						$tax_rates = $tax_class->getRates($price, $product['tax_class_id']);

@@ -528,10 +528,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$total_tax   			+= number_format($item_line_tax_amount, 4, '.', '');
 				$total_net   			+= $item_line_total_net;
 
-				$sql = "UPDATE `" . DB_PREFIX . "order_product` SET `price` = '" . (double)$item_net . "', `total` = '" . (double)$item_line_total_net . "', `tax` = '" . (double)$item_tax . "' WHERE `order_id` = '" . (int)$order_id . "' AND `product_id` = '" . (int)$product_id . "' AND `quantity` = '" . (int)$qty . "'";
-
 				// Now that the customer country is defined, update the item row to correct tax and item amounts
-				$this->db->query($sql);
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_product` SET `price` = '" . (double)$item_net . "', `total` = '" . (double)$item_line_total_net . "', `tax` = '" . (double)$item_tax . "' WHERE `order_id` = '" . (int)$order_id . "' AND `product_id` = '" . (int)$product_id . "' AND `quantity` = '" . (int)$qty . "'");
 			} else {
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from store');
 

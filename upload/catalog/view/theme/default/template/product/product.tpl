@@ -340,11 +340,11 @@
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
         <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
+        <?php $class = 'col-xs-8 col-sm-6'; ?>
         <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
+        <?php $class = 'col-xs-6 col-md-4'; ?>
         <?php } else { ?>
-        <?php $class = 'col-lg-3 col-md-3 col-sm-6 col-xs-12'; ?>
+        <?php $class = 'col-xs-6 col-sm-3'; ?>
         <?php } ?>
         <div class="<?php echo $class; ?>">
           <div class="product-thumb transition">

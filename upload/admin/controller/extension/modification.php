@@ -51,7 +51,7 @@ class ControllerExtensionModification extends Controller {
 		$this->getList();
 	}
 
-	public function refresh() {
+	public function refresh($data = array()) {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -421,7 +421,10 @@ class ControllerExtensionModification extends Controller {
 			// Maintance mode back to original settings
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			// Do not return success message if refresh() was called with $data
+			if (!data['redirect']) {
+				$this->session->data['success'] = $this->language->get('text_success');
+			}
 
 			$url = '';
 
@@ -437,7 +440,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link($data['redirect'] ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();

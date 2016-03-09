@@ -296,7 +296,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
-		if (!$json) {
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			// Sanitize the folder name
 			$folder = str_replace(array('../', '..\\', '..'), '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
@@ -311,9 +311,11 @@ class ControllerCommonFileManager extends Controller {
 			}
 		}
 
-		if (!$json) {
+		if (!isset($json['error'])) {
 			mkdir($directory . '/' . $folder, 0777);
 			chmod($directory . '/' . $folder, 0777);
+
+			@touch($directory . '/' . $folder . '/' . 'index.html');
 
 			$json['success'] = $this->language->get('text_directory');
 		}

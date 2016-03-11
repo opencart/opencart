@@ -73,8 +73,29 @@ class ModelUpgrade1007 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `code` varchar(40) NOT NULL AFTER `token`");
 		}		
 		
-		//ALTER TABLE `oc_banner_image` ADD `title` VARCHAR(64) NOT NULL AFTER `banner_id`;
-		//ALTER TABLE `oc_banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`;
+		// Banner	
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'language_id'");
 		
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_DATABASE . "banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`");
+		}
+
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'title'");
+		
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_DATABASE . "banner_image` ADD `title` VARCHAR(64) NOT NULL AFTER `language_id`");
+		}
+					
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image_description'");
+
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description`");
+
+			foreach ($query->rows as $result) {
+				
+				
+				$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET WHERE banner_id = '" . (int)$result['banner_id'] . "'");
+			}
+		}
 	}
 }

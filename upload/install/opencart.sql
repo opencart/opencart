@@ -2532,6 +2532,7 @@ CREATE TABLE `oc_product_image` (
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_image_id`),
+  UNIQUE KEY `product_id_image` (`product_id`,`image`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

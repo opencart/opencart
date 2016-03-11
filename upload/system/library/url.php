@@ -1,9 +1,11 @@
 <?php
 class Url {
+	private $server;
 	private $ssl;
 	private $rewrite = array();
 
-	public function __construct($ssl = false) {
+	public function __construct($server, $ssl = '') {
+		$this->base = $server;
 		$this->ssl = $ssl;
 	}
 	

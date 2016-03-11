@@ -48,7 +48,7 @@ $(document).ready(function() {
 		$('#form-language input[name=\'code\']').attr('value', $(this).attr('name'));
 
 		$('#form-language').submit();
-	})
+	});
 
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {

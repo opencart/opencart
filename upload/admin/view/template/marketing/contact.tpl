@@ -190,9 +190,6 @@ $('#input-product').parent().find('.well').delegate('.fa-minus-circle', 'click',
 });
 
 function send(url) {
-	// Summer not fix
-	$('textarea[name=\'message\']').val($('#input-message').code());
-
 	$.ajax({
 		url: url,
 		type: 'post',
@@ -221,18 +218,17 @@ function send(url) {
 				}
 			}
 
-			if (json['next']) {
-				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
-
-					send(json['next']);
-				}
-			} else {
-				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				}
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
 			}
-		}
+				
+			if (json['next']) {
+				send(json['next']);
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 }
 //--></script></div>

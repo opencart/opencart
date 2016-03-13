@@ -5,7 +5,7 @@ class Url {
 	private $rewrite = array();
 
 	public function __construct($server, $ssl = '') {
-		$this->base = $server;
+		$this->server = $server;
 		$this->ssl = $ssl;
 	}
 	
@@ -15,9 +15,9 @@ class Url {
 
 	public function link($route, $args = '', $secure = false) {
 		if ($this->ssl && $secure) {
-			$url = 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/index.php?route=' . $route;
+			$url = $this->ssl . 'index.php?route=' . $route;
 		} else {
-			$url = 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/index.php?route=' . $route;
+			$url = $this->server . 'index.php?route=' . $route;
 		}
 		
 		if ($args) {

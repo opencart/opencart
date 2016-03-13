@@ -2,7 +2,14 @@
 class ControllerCommonFileManager extends Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
-
+		
+		// Find which protocol to use to pass the full image link back
+		if ($this->request->server['HTTPS']) {
+			$server = HTTPS_CATALOG;
+		} else {
+			$server = HTTP_CATALOG;
+		}
+		
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $this->request->get['filter_name']), '/');
 		} else {
@@ -71,13 +78,6 @@ class ControllerCommonFileManager extends Controller {
 					'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
 				);
 			} elseif (is_file($image)) {
-				// Find which protocol to use to pass the full image link back
-				if ($this->request->server['HTTPS']) {
-					$server = HTTPS_CATALOG;
-				} else {
-					$server = HTTP_CATALOG;
-				}
-
 				$data['images'][] = array(
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
 					'name'  => implode(' ', $name),

@@ -41,7 +41,7 @@ class ModelUpgrade1007 extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_popup_height' WHERE `code` = 'config' AND `key` = 'config_image_popup_height'");
 		
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_product_width' WHERE `code` = 'config' AND `key` = 'config_image_product_width'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default__image_product_height' WHERE `code` = 'config' AND `key` = 'config_image_product_height'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_product_height' WHERE `code` = 'config' AND `key` = 'config_image_product_height'");
 		
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_additional_width' WHERE `code` = 'config' AND `key` = 'config_image_additional_width'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_image_additional_height' WHERE `code` = 'config' AND `key` = 'config_image_additional_height'");
@@ -89,13 +89,19 @@ class ModelUpgrade1007 extends Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image_description'");
 
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description`");
+			$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image`");
 
-			foreach ($query->rows as $result) {
+			foreach ($banner_image_query->rows as $banner_image) {
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE banner_image_id = '" . $banner_image['banner_image_id'] . "'");
 				
+				$banner_image_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description` WHERE banner_image_id = '" . $banner_image['banner_image_id'] . "'");
 				
-				$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET WHERE banner_id = '" . (int)$result['banner_id'] . "'");
+				foreach ($banner_image_description_query->rows as $banner_image_description) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$banner_image_description['language_id'] . "', title = '" . $this->db->escape($banner_image_description['title']) . "', link = '" . $this->db->escape($banner_image['link']) . "', image = '" . $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "'");
+				}
 			}
+			
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
 		}
 	}
 }

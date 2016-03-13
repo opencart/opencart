@@ -1,11 +1,11 @@
 <?php
 class Url {
-	private $server;
+	private $url;
 	private $ssl;
 	private $rewrite = array();
 
-	public function __construct($server, $ssl = '') {
-		$this->server = $server;
+	public function __construct($url, $ssl = '') {
+		$this->url = $url;
 		$this->ssl = $ssl;
 	}
 	
@@ -17,7 +17,7 @@ class Url {
 		if ($this->ssl && $secure) {
 			$url = $this->ssl . 'index.php?route=' . $route;
 		} else {
-			$url = $this->server . 'index.php?route=' . $route;
+			$url = $this->url . 'index.php?route=' . $route;
 		}
 		
 		if ($args) {

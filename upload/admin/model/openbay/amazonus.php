@@ -490,12 +490,7 @@ class ModelOpenbayAmazonus extends Model {
 	}
 
 	public function updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, $tracking_no) {
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "amazonus_order`
-			SET `courier_id` = '" . $courier_id . "',
-				`courier_other` = " . (int)!$courier_from_list . ",
-				`tracking_no` = '" . $tracking_no . "'
-			WHERE `order_id` = " . (int)$order_id . "");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_order` SET `courier_id` = '" . $this->db->escape($courier_id) . "', `courier_other` = " . (int)!$courier_from_list . ", `tracking_no` = '" . $this->db->escape($tracking_no) . "' WHERE `order_id` = " . (int)$order_id . "");
 	}
 
 	public function getAmazonusOrderId($order_id) {

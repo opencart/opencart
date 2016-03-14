@@ -4,7 +4,7 @@ $_['site_base']            = '';
 $_['site_ssl']             = false;
 
 //Url
-$_['url_autostart']        = false;
+$_['url_autostart']        = true;
 
 // Language
 $_['language_default']     = 'en-gb';

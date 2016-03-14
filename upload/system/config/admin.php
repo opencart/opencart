@@ -3,9 +3,6 @@
 $_['site_base']         = HTTP_SERVER;
 $_['site_ssl']          = HTTPS_SERVER;
 
-//Url
-$_['url_autostart']     = true;
-
 // Database
 $_['db_autostart']      = true;
 $_['db_type']           = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre

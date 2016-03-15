@@ -49,11 +49,11 @@
 var step = 0;
 
 $('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%');
+	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
 	$('#progress-text').html('');
 
-	$('#button-continue').prop('disabled', true);
-	
+	$('#button-continue').prop('disabled', true).before('<i class="fa fa-spinner fa-spin"></i> ');
+
 	start('index.php?route=upgrade/upgrade/next');
 });
 
@@ -67,21 +67,23 @@ function start(url) {
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					
+
 					$('#button-continue').prop('disabled', false);
+					$('.fa-spinner').remove();
 				}
-	
+
 				if (json['success']) {
 					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 					$('#progress-bar').css('width', ((step / <?php echo $total; ?>) * 100) + '%');
 				}
-				
+
 				if (json['next']) {
 					start(json['next']);
 				} else if (!json['error']) {
 					$('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
+					$('.fa-spinner').remove();
 				}
-				
+
 				step++;
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

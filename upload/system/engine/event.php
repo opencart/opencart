@@ -6,19 +6,29 @@
 */
 class Event {
 	protected $registry;
-	public $data = array();
+	protected $data = array();
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 
-	public function register($trigger, $action) {
+	public function register($trigger, Action $action) {
 		$this->data[$trigger][] = $action;
 	}
 	
-	public function unregister($trigger, $action) {
-		if (isset($this->data[$trigger])) {
+	public function unregister($trigger, Action $action = null) {
+		if (!isset($this->data[$trigger])) {
+			return;
+		}
+
+		if (null === $action) {
 			unset($this->data[$trigger]);
+		} else {
+			foreach ($this->data[$trigger] as $data_key => $data_action) {
+				if ($data_action->getRoute() == $action->getRoute()) {
+					unset($this->data[$trigger][$data_key]);
+				}
+			}
 		}
 	}
 
@@ -35,4 +45,8 @@ class Event {
 			}
 		}
 	}
+	
+	public function getData() {
+		return $this->data;
+	}	
 }

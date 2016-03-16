@@ -24,9 +24,9 @@ class Event {
 		if (null === $action) {
 			unset($this->data[$trigger]);
 		} else {
-			foreach ($this->data[$trigger] as $data_key => $data_action) {
-				if ($data_action->getRoute() == $action->getRoute()) {
-					unset($this->data[$trigger][$data_key]);
+			foreach ($this->data[$trigger] as $trigger_key => $trigger_action) {
+				if ($trigger_action->getRoute() == $action->getRoute()) {
+					unset($this->data[$trigger][$trigger_key]);
 				}
 			}
 		}

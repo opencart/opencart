@@ -12,7 +12,7 @@ class ControllerStartupRouter extends Controller {
 		$route = str_replace('../', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->event->trigger('controller/' . $route . '/before', array(&$route, &$data));
+		$result = $this->event->trigger('controller/' . $route . '/before', array(&$route));
 		
 		if (!is_null($result)) {
 			return $result;
@@ -25,7 +25,7 @@ class ControllerStartupRouter extends Controller {
 		$output = $action->execute($this->registry); 
 		
 		// Trigger the post events
-		$result = $this->event->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
+		$result = $this->event->trigger('controller/' . $route . '/after', array(&$route, &$output));
 		
 		if (!is_null($result)) {
 			return $result;

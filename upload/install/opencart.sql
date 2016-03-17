@@ -7762,7 +7762,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4228, 118, 'Nabatieh', 'LB-NB', 1),
 (4229, 118, 'North', 'LB-NR', 1),
 (4230, 118, 'South', 'LB-ST', 1),
-(4231, 99, 'Telangana', 'TS', 1);
+(4231, 99, 'Telangana', 'TS', 1),
+(4232, 44, 'Qinghai', 'QH', 1);
 
 -- --------------------------------------------------------
 

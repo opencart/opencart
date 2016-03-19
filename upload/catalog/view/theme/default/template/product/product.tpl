@@ -354,8 +354,8 @@
               <p><?php echo $product['description']; ?></p>
               <?php if ($product['rating']) { ?>
               <div class="rating">
-                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                <?php if ($product['rating'] < $i) { ?>
+                <?php for ($j = 1; $j <= 5; $j++) { ?>
+                <?php if ($product['rating'] < $j) { ?>
                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                 <?php } else { ?>
                 <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -383,11 +383,11 @@
             </div>
           </div>
         </div>
-        <?php if (($column_left && $column_right) && ($i % 2 == 0)) { ?>
+        <?php if (($column_left && $column_right) && (($i+1) % 2 == 0)) { ?>
         <div class="clearfix visible-md visible-sm"></div>
-        <?php } elseif (($column_left || $column_right) && ($i % 3 == 0)) { ?>
+        <?php } elseif (($column_left || $column_right) && (($i+1) % 3 == 0)) { ?>
         <div class="clearfix visible-md"></div>
-        <?php } elseif ($i % 4 == 0) { ?>
+        <?php } elseif (($i+1) % 4 == 0) { ?>
         <div class="clearfix visible-md"></div>
         <?php } ?>
         <?php $i++; ?>

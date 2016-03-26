@@ -422,7 +422,7 @@ class ControllerExtensionModification extends Controller {
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
 			// Do not return success message if refresh() was called with $data
-			if (!$data['redirect']) {
+			if (!empty($data['redirect'])) {
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
@@ -440,7 +440,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link($data['redirect'] ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();

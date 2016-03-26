@@ -70,10 +70,10 @@ class ControllerDesignTranslation extends Controller {
 			$code = substr($file, strlen(DIR_CATALOG . '/language/' . $this->config->get('config_language') . '/'));
 			
 			$data['files'][] = array(
-				'filename' => $code,
-				'path'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'] . '&path=' . urlencode($code), true),
-				//'total' => $this->model_design_language->getTranslationTotalByCode($code),
-				'edit'     => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&path=' . urlencode($code), true)
+				'code'  => $code,
+				'path'  => $this->url->link('design/translation', 'token=' . $this->session->data['token'] . '&path=' . urlencode($code), true),
+				'total' => '', //$this->model_design_language->getTranslationTotalByCode($code),
+				'edit'  => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&path=' . urlencode($code), true)
 			);
 		}
 		

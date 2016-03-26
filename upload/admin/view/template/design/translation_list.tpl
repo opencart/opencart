@@ -42,20 +42,23 @@
               <tbody>
                 <?php if ($directories || $files) { ?>
                 
+                <?php if ($directories) { ?>
                 <?php foreach ($directories as $directory) { ?>
                 <tr>
                   <td class="text-left" colspan="3"><a href="<?php echo $directory['path']; ?>"><?php echo $directory['path']; ?></a></td>
                 </tr>
                 <?php } ?>
+                <?php } ?>
                 
+                <?php if ($files) { ?>
                 <?php foreach ($files as $file) { ?>
                 <tr>
                   <td class="text-left"><?php echo $file['path']; ?></td>
-                  <td class="text-left"><?php echo $file['status']; ?></td>
+                  <td class="text-left"><?php echo $file['total']; ?></td>
                   <td class="text-right"><a href="<?php echo $banner['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                
+                <?php } ?>
                                 
                 <?php } else { ?>
                 <tr>

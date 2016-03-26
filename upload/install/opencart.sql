@@ -3368,6 +3368,8 @@ CREATE TABLE `oc_translation` (
   PRIMARY KEY (`tax_rule_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `oc_upload`
 --

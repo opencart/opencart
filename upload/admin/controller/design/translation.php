@@ -1,26 +1,26 @@
 <?php
-class ControllerDesignLanguage extends Controller {
+class ControllerDesignTranslation extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('design/language');
+		$this->load->language('design/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/language');
+		$this->load->model('design/translation');
 
 		$this->getList();
 	}
 
 	public function add() {
-		$this->load->language('design/language');
+		$this->load->language('design/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/language');
+		$this->load->model('design/translation');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_language->addLanguage($this->request->post);
+			$this->model_design_translation->addTranslation($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -38,21 +38,21 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function edit() {
-		$this->load->language('design/language');
+		$this->load->language('design/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/language');
+		$this->load->model('design/translation');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_language->editLanguage($this->request->get['language_id'], $this->request->post);
+			$this->model_design_language->editTranslation($this->request->get['language_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -70,18 +70,18 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->load->language('design/language');
+		$this->load->language('design/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/language');
+		$this->load->model('design/translation');
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $language_id) {
@@ -104,25 +104,13 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -152,31 +140,21 @@ class ControllerDesignLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('design/language/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['files'] = array();
 
-		$data['languages'] = array();
+		$files = glob(DIR_LANGUAGE . '/*');
 
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+		$language_total = count($files);
 
-		$language_total = $this->model_design_language->getTotalLanguages();
-
-		$results = $this->model_design_language->getLanguages($filter_data);
-
-		foreach ($results as $result) {
-			$data['languages'][] = array(
-				'language_id' => $result['language_id'],
-				'name'        => $result['name'],
-				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'        => $this->url->link('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, true)
+		foreach ($files as $file) {
+			$filename = substr($file, strlen(DIR_LANGUAGE));
+			
+			$data['files'][] = array(
+				'filename' => $filename,
+				'edit'     => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&filename=' . urlencode($filename) . $url, true)
 			);
 		}
 
@@ -186,11 +164,9 @@ class ControllerDesignLanguage extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
+		$data['column_filename'] = $this->language->get('column_filename');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -216,21 +192,6 @@ class ControllerDesignLanguage extends Controller {
 
 		$url = '';
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['sort_name'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_status'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-
-		$url = '';
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -243,7 +204,7 @@ class ControllerDesignLanguage extends Controller {
 		$pagination->total = $language_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -256,27 +217,19 @@ class ControllerDesignLanguage extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/language_list', $data));
+		$this->response->setOutput($this->load->view('design/translation_list', $data));
 	}
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_default'] = $this->language->get('text_default');
 
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_title'] = $this->language->get('entry_title');
-		$data['entry_link'] = $this->language->get('entry_link');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_key'] = $this->language->get('entry_key');
+		$data['entry_value'] = $this->language->get('entry_value');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_language_add'] = $this->language->get('button_language_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
@@ -320,16 +273,16 @@ class ControllerDesignLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['language_id'])) {
-			$data['action'] = $this->url->link('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->link('design/translation/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, true);
+			$data['action'] = $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_design_language->getLanguage($this->request->get['language_id']);
@@ -337,8 +290,8 @@ class ControllerDesignLanguage extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
+		if (isset($this->request->post['key'])) {
+			$data['key'] = $this->request->post['key'];
 		} elseif (!empty($language_info)) {
 			$data['name'] = $language_info['name'];
 		} else {
@@ -353,51 +306,15 @@ class ControllerDesignLanguage extends Controller {
 			$data['status'] = true;
 		}
 
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
-		$this->load->model('tool/image');
-
-		if (isset($this->request->post['language_image'])) {
-			$language_images = $this->request->post['language_image'];
-		} elseif (isset($this->request->get['language_id'])) {
-			$language_images = $this->model_design_language->getLanguageImages($this->request->get['language_id']);
-		} else {
-			$language_images = array();
-		}
-
-		$data['language_images'] = array();
-
-		foreach ($language_images as $language_image) {
-			if (is_file(DIR_IMAGE . $language_image['image'])) {
-				$image = $language_image['image'];
-				$thumb = $language_image['image'];
-			} else {
-				$image = '';
-				$thumb = 'no_image.png';
-			}
-
-			$data['language_images'][] = array(
-				'language_image_description' => $language_image['language_image_description'],
-				'link'                       => $language_image['link'],
-				'image'                      => $image,
-				'thumb'                      => $this->model_tool_image->resize($thumb, 100, 100),
-				'sort_order'                 => $language_image['sort_order']
-			);
-		}
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/language_form', $data));
+		$this->response->setOutput($this->load->view('design/translation_form', $data));
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'design/language')) {
+		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -419,7 +336,7 @@ class ControllerDesignLanguage extends Controller {
 	}
 
 	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'design/language')) {
+		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

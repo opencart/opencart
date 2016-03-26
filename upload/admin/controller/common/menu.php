@@ -171,7 +171,7 @@ class ControllerCommonMenu extends Controller {
 		$data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
 		$data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
 		$data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], true);
-		$data['translation'] = $this->url->link('localisation/translate', 'token=' . $this->session->data['token'], true);
+		$data['translation'] = $this->url->link('design/translation', 'token=' . $this->session->data['token'], true);
 		$data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], true);
 		$data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], true);
 		$data['theme'] = $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true);

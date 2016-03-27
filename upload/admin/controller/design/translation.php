@@ -154,6 +154,7 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_translation_add'] = $this->language->get('button_translation_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {

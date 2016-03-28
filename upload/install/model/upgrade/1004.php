@@ -118,17 +118,11 @@ class ModelUpgrade1004 extends Model {
 		}
 
 		// Convert 1.5.x core module format to 2.x (core modules only)
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE serialized = '1'");
 
-		$serialized = false;
 		foreach ($query->rows as $result) {
 			if ($result['serialized']) {
-				if (preg_match('/^(a:)/', $result['value'])) { // Serialized
-					$value = unserialize($result['value']);
-					$serialized = true;
-				} else { // json_encoded
-					$value = json_decode($result['value'], true);
-				}
+				$value = json_decode($result['value'], true);
 
 				$module_data = array();
 				if (in_array($result['code'], array('latest', 'bestseller', 'special', 'featured'))) {
@@ -156,12 +150,7 @@ class ModelUpgrade1004 extends Model {
 								}
 							}
 
-							if (preg_match('/^(a:)/', $result['value'])) { // Serialized
-								$encdata = serialize($module_data);
-							} else {
-								$encdata = json_encode($module_data);
-							}
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape($encdata) . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
 							$module_id = $this->db->getLastId();
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . $result['store_id'] . "' AND `code` = '" . $result['code'] . "'");
@@ -188,12 +177,7 @@ class ModelUpgrade1004 extends Model {
 							if (isset($v['width'])) {	$module_data['width'] = $v['width']; }
 							if (isset($v['height'])) {	$module_data['height'] = $v['height']; }
 
-							if (preg_match('/^(a:)/', $result['value'])) { // Serialized
-								$encdata = serialize($module_data);
-							} else {
-								$encdata = json_encode($module_data);
-							}
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape($encdata) . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
 							$module_id = $this->db->getLastId();
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . $result['store_id'] . "' AND `code` = '" . $result['code'] . "'");
@@ -216,15 +200,11 @@ class ModelUpgrade1004 extends Model {
 								$module_data['module_description'][$language_id]['title'] = '';
 								$module_data['module_description'][$language_id]['description'] = $description;
 							}
-							if (preg_match('/^(a:)/', $result['value'])) { // Serialized
-								$encdata = serialize($module_data);
-							} else {
-								$encdata = json_encode($module_data);
-							}
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape($encdata) . "')");
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
 							$module_id = $this->db->getLastId();
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . $result['store_id'] . "' AND `code` = '" . $result['code'] . "'");
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . $result['store_id'] . "' AND `code` = 'welcome'");
 						}
 					} else {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
@@ -238,12 +218,8 @@ class ModelUpgrade1004 extends Model {
 								$module_data = $v;
 								$module_data['name'] = ($result['key'] . '_' . $k);
 								$module_data['status'] = '0'; // Disable non-core modules
-								if (preg_match('/^(a:)/', $result['value'])) { // Serialized
-									$encdata = serialize($module_data);
-								} else {
-									$encdata = json_encode($module_data);
-								}
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape($encdata) . "')");
+
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
 								//$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 								//$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 								//$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($result['code']) . "'");

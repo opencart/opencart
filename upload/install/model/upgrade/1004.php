@@ -113,7 +113,7 @@ class ModelUpgrade1004 extends Model {
 		}
 		if (empty($settings['config_meta_title']) && !empty($settings['config_title'])) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $settings['config_title'] . "', `key` = 'config_meta_title', `code` = 'config', `store_id` = 0");
-		} elseif (empty($settings['config_meta_title'])) {
+		} elseif (empty($settings['config_meta_title']) && !empty($settings['config_name'])) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $settings['config_name'] . "', `key` = 'config_meta_title', `code` = 'config', `store_id` = 0");
 		}
 

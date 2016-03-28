@@ -107,7 +107,7 @@ class ModelUpgrade1006 extends Model {
 
 		// Merge system/upload to system/storage/upload
 		if (file_exists(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_UPLOAD);
+			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
 		}
 
 		// Convert image/data to image/catalog
@@ -141,9 +141,9 @@ class ModelUpgrade1006 extends Model {
 	    // Open the source directory to read in files
 	    $i = new DirectoryIterator($src);
 	    foreach($i as $f) {
-	        if($f->isFile()) {
+	        if($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 	            @rename($f->getRealPath(), "$dest/" . $f->getFilename());
-	        } else if(!$f->isDot() && $f->isDir()) {
+	        } elseif(!$f->isDot() && $f->isDir()) {
 	            $this->recursive_move($f->getRealPath(), "$dest/$f");
 	            @unlink($f->getRealPath());
 	        }

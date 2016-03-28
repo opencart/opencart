@@ -1,7 +1,7 @@
 <?php
 // Site
-$_['config_url']        = HTTP_SERVER;
-$_['config_ssl']         = HTTPS_SERVER;
+$_['config_url']       = HTTP_SERVER;
+$_['config_ssl']       = HTTPS_SERVER;
 
 //Url
 $_['url_autostart']    = false;

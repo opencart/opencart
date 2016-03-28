@@ -1365,10 +1365,7 @@ function addImage() {
 var recurring_row = <?php echo $recurring_row; ?>;
 
 function addRecurring() {
-	recurring_row++;
-
-	html  = '';
-	html += '<tr id="recurring-row' + recurring_row + '">';
+	html  = '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">>';
 	<?php foreach ($recurrings as $recurring) { ?>
@@ -1389,6 +1386,8 @@ function addRecurring() {
 	html += '</tr>';
 
 	$('#tab-recurring table tbody').append(html);
+	
+	recurring_row++;
 }
 //--></script>
   <script type="text/javascript"><!--

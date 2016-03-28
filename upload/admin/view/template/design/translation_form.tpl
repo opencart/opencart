@@ -30,8 +30,8 @@
               <tr>
                 <td class="text-left"><?php echo $entry_store; ?></td>
                 <td class="text-left"><?php echo $entry_language; ?></td>
-                <td class="text-center"><?php echo $entry_key; ?></td>
-                <td class="text-right"><?php echo $entry_value; ?></td>
+                <td class="text-left"><?php echo $entry_key; ?></td>
+                <td class="text-left"><?php echo $entry_value; ?></td>
                 <td></td>
               </tr>
             </thead>
@@ -41,6 +41,7 @@
               <tr id="translation-row<?php echo $translation_row; ?>">
                 <td class="text-left"><select name="translation[<?php echo $translation_row; ?>][store_id]" class="form-control">
                     <?php foreach ($stores as $store) { ?>
+                    <option value="0"><?php echo $text_default; ?></option>
                     <?php if ($store['store_id'] == $translation['store_id']) { ?>
                     <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
                     <?php } else { ?>
@@ -89,6 +90,7 @@ var translation_row = <?php echo $translation_row; ?>;
 function addTranslation() {
 	html  = '<tr id="translation-row' + translation_row + '">';
     html += '  <td class="text-left"><select name="translation[' + translation_row + '][store_id]" class="form-control">';
+	html += '    <option value="0"><?php echo $text_default; ?></option>';	
     <?php foreach ($stores as $store) { ?>
     html += '    <option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
     <?php } ?>
@@ -98,13 +100,11 @@ function addTranslation() {
     html += '    <option value="<?php echo $language['language_id']; ?>"><?php echo addslashes($language['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';	
-    
-	html += '  <td class="text-left"><select name="translation[' + translation_row + '][language_id]" class="form-control">';
-    <?php foreach ($languages as $language) { ?>
-    html += '    <option value="<?php echo $language['language_id']; ?>"><?php echo addslashes($language['name']); ?></option>';
+	html += '  <td class="text-left"><select name="translation[' + translation_row + '][key]" class="form-control">';
+    <?php foreach ($keys as $key) { ?>
+    html += '    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>';
     <?php } ?>
-    html += '  </select></td>';	
-		
+    html += '  </select></td>';			
 	html += '  <td class="text-left"><input type="text" name="translation[' + translation_row + '][value]" value="" placeholder="<?php echo $entry_value; ?>" class="form-control" /></td>';	
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#translation-row' + translation_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';

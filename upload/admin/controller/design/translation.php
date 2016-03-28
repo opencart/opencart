@@ -20,7 +20,7 @@ class ControllerDesignTranslation extends Controller {
 		$this->load->model('design/translation');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_translation->editTranslation($this->request->post);
+			$this->model_design_translation->editTranslation($this->request->post['translation']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		
@@ -146,6 +146,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = $this->language->get('text_edit');
+		$data['text_default'] = $this->language->get('text_default');
 		
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_language'] = $this->language->get('entry_language');
@@ -204,7 +205,7 @@ class ControllerDesignTranslation extends Controller {
 		if (isset($this->request->post['translations'])) {
 			$data['translations'] = $this->request->post['translations'];
 		} elseif (isset($this->request->get['file'])) {
-			$data['translations'] = $this->model_design_translation->getTranslationsByCode($this->request->get['file']);
+			$data['translations'] = $this->model_design_translation->getTranslationsByRoute($this->request->get['file']);
 		} else {
 			$data['translations'] = array();
 		}

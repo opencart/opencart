@@ -1,7 +1,7 @@
 <?php
 // Site
-$_['site_base']         = HTTP_SERVER;
-$_['site_ssl']          = HTTPS_SERVER;
+$_['config_url']         = HTTP_SERVER;
+$_['config_ssl']          = HTTPS_SERVER;
 
 // Database
 $_['db_autostart']      = true;

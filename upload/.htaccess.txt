@@ -19,6 +19,10 @@ Options -Indexes
 RewriteEngine On
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
+# Enable always-on SSL
+# RewriteCond %{SERVER_PORT} 80 
+# RewriteRule ^(.*)$ https://www.yourdomain.com/$1 [R,L]
+
 RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]

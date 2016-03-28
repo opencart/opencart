@@ -3363,7 +3363,7 @@ CREATE TABLE `oc_translation` (
   `translation_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `file` varchar(255) NOT NULL,
+  `route` varchar(255) NOT NULL,
   `key` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`translation_id`)

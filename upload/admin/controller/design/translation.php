@@ -149,6 +149,10 @@ class ControllerDesignTranslation extends Controller {
 			$path = 0;
 		}		
 		
+		while (strpos($path, '../') !== false) {
+			$path = str_replace(array('../'), '', $path);
+		}
+		
 		$file = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/' . $path . '.php';	
 			
 		if (is_file($file)) {

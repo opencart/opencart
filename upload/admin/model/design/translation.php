@@ -1,7 +1,7 @@
 <?php
 class ModelDesignTranslation extends Model {
 	public function editTranslation($route, $data) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "translation  WHERE route = '" . $this->db->escape($route) . "'");
 
 		if (isset($data['layout_route'])) {
 			foreach ($data['layout_route'] as $layout_route) {

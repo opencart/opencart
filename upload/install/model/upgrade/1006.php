@@ -40,6 +40,11 @@ class ModelUpgrade1006 extends Model {
 						}
 					}
 
+					//if(!is_dir(DIR_SYSTEM . 'modification/'){
+					//	$output = str_replace('system/modification','system/storage/modification',$output);
+					//	$output = str_replace('system/upload','system/storage/upload',$output);
+					//}
+
 					$output = str_replace('system/modification','system/storage/modification',$output);
 					$output = str_replace('system/upload','system/storage/upload',$output);
 					$output = str_replace('system/logs','system/storage/logs',$output);

@@ -1,6 +1,6 @@
 <?php
 namespace Template;
-final class Basic {
+final class PHP {
 	private $data = array();
 	
 	public function set($key, $value) {

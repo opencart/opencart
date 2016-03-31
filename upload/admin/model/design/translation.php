@@ -3,17 +3,11 @@ class ModelDesignTranslation extends Model {
 	public function editTranslation($route, $data) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "translation  WHERE route = '" . $this->db->escape($route) . "'");
 
-		if (isset($data['layout_route'])) {
-			foreach ($data['layout_route'] as $layout_route) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
+		if (isset($data['translation'])) {
+			foreach ($data['translation'] as $translation) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "translation SET store_id = '" . (int)$translation['store_id'] . "', language_id = '" . (int)$translation['language_id'] . "', route = '" . $this->db->escape($route) . "', `key` = '" . $this->db->escape($translation['key']) . "', value = '" . $this->db->escape($translation['value']) . "'");
 			}
 		}
-	}
-
-	public function getTranslation($layout_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
-
-		return $query->row;
 	}
 
 	public function getTranslations($data = array()) {
@@ -50,8 +44,8 @@ class ModelDesignTranslation extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalTranslationsByFile($file) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "translation WHERE file = '" . $this->db->escape($file) . "'");
+	public function getTotalTranslationsByRoute($route) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "translation WHERE route = '" . $this->db->escape($route) . "'");
 
 		return $query->row['total'];
 	}

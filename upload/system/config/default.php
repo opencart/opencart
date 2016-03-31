@@ -41,7 +41,7 @@ $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 
 // Template
-$_['template_type']        = 'basic';
+$_['template_type']        = 'php';
 
 // Error
 $_['config_error_display'] = true;

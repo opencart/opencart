@@ -375,7 +375,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.sql';
 
-		if (!file_exists($file)) {
+		if (!file_exists($file) && ) {
 			$json['error'] = $this->language->get('error_file');
 		}
 

@@ -62,7 +62,7 @@ final class Loader {
 
 	public function view($route, $data = array()) {
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
@@ -71,7 +71,7 @@ final class Loader {
 			return $result;
 		}
 		
-		$template = new Template('basic');
+		$template = new Template($this->registry->get('config')->get('template_type'));
 		
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
@@ -106,7 +106,7 @@ final class Loader {
 	}
 	
 	public function helper($route) {
-		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$route) . '.php';
+		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
 		if (is_file($file)) {
 			include_once($file);

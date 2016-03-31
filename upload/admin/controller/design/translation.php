@@ -20,7 +20,7 @@ class ControllerDesignTranslation extends Controller {
 		$this->load->model('design/translation');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_translation->editTranslation($this->request->get['path'], $this->request->post['translation']);
+			$this->model_design_translation->editTranslation($this->request->get['path'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		
@@ -95,7 +95,7 @@ class ControllerDesignTranslation extends Controller {
 			
 			$data['files'][] = array(
 				'path'  => $path,
-				'total' => $this->model_design_translation->getTotalTranslationsByFile($path),
+				'total' => $this->model_design_translation->getTotalTranslationsByRoute($path),
 				'edit'  => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&path=' . $path . $url, true)
 			);
 		}
@@ -146,16 +146,12 @@ class ControllerDesignTranslation extends Controller {
 		if (isset($this->request->get['path'])) {
 			$path = $this->request->get['path'];
 		} else {
-			$path = 0;
+			$path = '';
 		}		
 		
-		while (strpos($path, '../') !== false) {
-			$path = str_replace(array('../'), '', $path);
-		}
+		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
 		
-		$file = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/' . $path . '.php';	
-			
-		if (is_file($file)) {
+		if (is_file($directory . $path) && substr(realpath($directory . $path . '.php'), 0, strlen($directory)) == $directory) {
 			$data['heading_title'] = $this->language->get('heading_title');
 	
 			$data['text_form'] = $this->language->get('text_edit');
@@ -207,6 +203,8 @@ class ControllerDesignTranslation extends Controller {
 	
 			$data['token'] = $this->session->data['token'];
 			
+			$data['path'] = $this->request->get['path'];
+			
 			if (isset($this->request->post['translations'])) {
 				$data['translations'] = $this->request->post['translations'];
 			} elseif (isset($this->request->get['file'])) {
@@ -257,12 +255,17 @@ class ControllerDesignTranslation extends Controller {
 	
 	public function translation() {
 		$json = array();
-			
-			$_ = array();
-					
-			include($file);	
 		
-			$data['keys'] = array_keys($_);
+		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
+		
+		//if (is_file($directory . $path) && substr(realpath($directory . $path . '.php'), 0, strlen($directory)) == $directory) {
+			
+			
+		$_ = array();
+				
+		include($file);	
+	
+		$data['keys'] = array_keys($_);
 			
 		$this->load->model('design/translation');
 

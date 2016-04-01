@@ -56,14 +56,14 @@ class ModelUpgrade1007 extends Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "paypal_order' AND COLUMN_NAME = 'created'");
 
 		if ($query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order_transaction` CHANGE `created` `date_added` datetime NOT NULL");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order` CHANGE `created` `date_added` datetime NOT NULL");
 		}
 
 		// Paypal Express
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "paypal_order' AND COLUMN_NAME = 'modified'");
 
 		if ($query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order_transaction` CHANGE `modified` `date_modified` datetime NOT NULL");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order` CHANGE `modified` `date_modified` datetime NOT NULL");
 		}
 
 		// Paypal Express

@@ -541,9 +541,9 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']);
-
-		if (!is_dir($directory)) {
+		$directory = DIR_UPLOAD . $this->request->post['path'];
+		
+		if (!is_dir($directory) || substr(realpath(DIR_UPLOAD . $directory), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 

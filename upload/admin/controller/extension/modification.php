@@ -134,9 +134,10 @@ class ControllerExtensionModification extends Controller {
 			$modification = array();
 
 			foreach ($xml as $xml) {
-				if(empty($xml)){
+				if (empty($xml)){
 					continue;
 				}
+				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
@@ -163,16 +164,16 @@ class ControllerExtensionModification extends Controller {
 						$path = '';
 
 						// Get the full path of the files that are going to be used for modification
-						if (substr($file, 0, 7) == 'catalog') {
-							$path = DIR_CATALOG . str_replace('../', '', substr($file, 8));
+						if ((substr(realpath($file), 0, 7) == 'catalog') && (substr(realpath(DIR_CATALOG . substr($file, 8)), 0, strlen(DIR_CATALOG)) == DIR_CATALOG)) {
+							$path = DIR_CATALOG . substr($file, 8);
 						}
 
-						if (substr($file, 0, 5) == 'admin') {
-							$path = DIR_APPLICATION . str_replace('../', '', substr($file, 6));
+						if ((substr($file, 0, 5) == 'admin') && (substr(realpath(DIR_APPLICATION . substr($file, 8)), 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION)) {
+							$path = DIR_APPLICATION . substr($file, 6);
 						}
 
-						if (substr($file, 0, 6) == 'system') {
-							$path = DIR_SYSTEM . str_replace('../', '', substr($file, 7));
+						if ((substr($file, 0, 6) == 'system') && (substr(realpath(DIR_SYSTEM . substr($file, 8)), 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM)) {
+							$path = DIR_SYSTEM . substr($file, 7);
 						}
 
 						if ($path) {

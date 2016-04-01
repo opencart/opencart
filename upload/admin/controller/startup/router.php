@@ -11,7 +11,7 @@ class ControllerStartupRouter extends Controller {
 		$data = array();
 		
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
 		$result = $this->event->trigger('controller/' . $route . '/before', array(&$route, &$data));

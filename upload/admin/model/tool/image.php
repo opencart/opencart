@@ -1,7 +1,7 @@
 <?php
 class ModelToolImage extends Model {
 	public function resize($filename, $width, $height) {
-		if (!is_file(DIR_IMAGE . $filename)) {
+		if (!is_file(DIR_IMAGE . $filename) && substr(realpath(DIR_IMAGE . $filename), 0, strlen(DIR_IMAGE)) !== DIR_IMAGE) {
 			return;
 		}
 
@@ -13,7 +13,7 @@ class ModelToolImage extends Model {
 		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			$path = '';
 
-			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
+			$directories = explode('/', dirname($new_image));
 
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;

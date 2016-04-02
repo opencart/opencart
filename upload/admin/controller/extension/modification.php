@@ -164,15 +164,15 @@ class ControllerExtensionModification extends Controller {
 						$path = '';
 
 						// Get the full path of the files that are going to be used for modification
-						if ((substr(realpath($file), 0, 7) == 'catalog') && (substr(realpath(DIR_CATALOG . substr($file, 7)), 0, strlen(DIR_CATALOG)) == DIR_CATALOG)) {
+						if ((substr($file, 0, 7) == 'catalog') && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . substr($file, 7))), 0, strlen(DIR_CATALOG)) == DIR_CATALOG)) {
 							$path = DIR_CATALOG . substr($file, 8);
 						}
 
-						if ((substr($file, 0, 5) == 'admin') && (substr(realpath(DIR_APPLICATION . substr($file, 5)), 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION)) {
+						if ((substr($file, 0, 5) == 'admin') && (substr(str_replace('\\', '/', realpath(DIR_APPLICATION . substr($file, 5))), 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION)) {
 							$path = DIR_APPLICATION . substr($file, 6);
 						}
 
-						if ((substr($file, 0, 6) == 'system') && (substr(realpath(DIR_SYSTEM . substr($file, 6)), 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM)) {
+						if ((substr($file, 0, 6) == 'system') && (substr(str_replace('\\', '/', realpath(DIR_SYSTEM . substr($file, 6))), 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM)) {
 							$path = DIR_SYSTEM . substr($file, 7);
 						}
 

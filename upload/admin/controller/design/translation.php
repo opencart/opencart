@@ -151,7 +151,7 @@ class ControllerDesignTranslation extends Controller {
 		
 		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
 		
-		if (is_file($directory . $path) && substr(realpath($directory . $path . '.php'), 0, strlen($directory)) == $directory) {
+		if (is_file($directory . $path) && substr(str_replace('\\', '/', realpath($directory . $path . '.php')), 0, strlen($directory)) == $directory) {
 			$data['heading_title'] = $this->language->get('heading_title');
 	
 			$data['text_form'] = $this->language->get('text_edit');
@@ -258,7 +258,7 @@ class ControllerDesignTranslation extends Controller {
 		
 		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
 		
-		//if (is_file($directory . $path) && substr(realpath($directory . $path . '.php'), 0, strlen($directory)) == $directory) {
+		//if (is_file($directory . $path) && substr(str_replace('\\', '/', realpath($directory . $path . '.php')), 0, strlen($directory)) == $directory) {
 			
 			
 		$_ = array();

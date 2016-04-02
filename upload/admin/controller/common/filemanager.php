@@ -11,42 +11,47 @@ class ControllerCommonFileManager extends Controller {
 		}
 		
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $this->request->get['filter_name']), '/');
+			$filter_name = rtrim(str_replace('*', '', $this->request->get['filter_name']), '/');
 		} else {
 			$filter_name = null;
 		}
 		
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory']) && substr(realpath(DIR_IMAGE . 'catalog/' . $this->request->get['directory']), 0, strlen(DIR_IMAGE . 'catalog/')) == DIR_IMAGE . 'catalog/') {
-			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+		if (isset($this->request->get['directory'])) {
+			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace('*', '', $this->request->get['directory']), '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
-
+		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
+		
+		$directories = array();
+		$files = array();
 
 		$data['images'] = array();
 
 		$this->load->model('tool/image');
 
-		// Get directories
-		$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
-
-		if (!$directories) {
-			$directories = array();
+		if (substr(realpath($directory . $filter_name), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+			// Get directories
+			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+	
+			if (!$directories) {
+				$directories = array();
+			}
+	
+			// Get files
+			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+	
+			if (!$files) {
+				$files = array();
+			}
 		}
-
-		// Get files
-		$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
-
-		if (!$files) {
-			$files = array();
-		}
-
+		
 		// Merge directories and files
 		$images = array_merge($directories, $files);
 
@@ -209,14 +214,14 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory']) && substr($this->request->get['directory'], 0, strlen(DIR_IMAGE)) == DIR_IMAGE) {
+		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
 
 		// Check its a directory
-		if (!is_dir($directory)) {
+		if (!is_dir($directory) || substr($directory, 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -285,14 +290,14 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory']) && substr(realpath($this->request->get['directory']), 0, strlen(DIR_IMAGE)) == DIR_IMAGE) {
+		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
 
 		// Check its a directory
-		if (!is_dir($directory)) {
+		if (!is_dir($directory) || substr(realpath($directory), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -343,7 +348,7 @@ class ControllerCommonFileManager extends Controller {
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
 			// Check path exsists
-			if ($path == DIR_IMAGE . 'catalog' || substr(realpath(DIR_IMAGE . $path), 0, strlen(DIR_IMAGE . '/catalog')) != DIR_IMAGE . '/catalog') {
+			if ($path == DIR_IMAGE . 'catalog' || substr(realpath(DIR_IMAGE . $path), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;

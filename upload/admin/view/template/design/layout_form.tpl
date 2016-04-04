@@ -69,6 +69,78 @@
               </tr>
             </tfoot>
           </table>
+          
+          
+          
+          
+          
+          <div class="panel panel-default">
+            <div class="panel-heading text-center">
+              <h3 class="panel-title"><?php echo $text_header; ?></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div id="layout-column-left" class="col-lg-3 col-md-3 col-sm-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading text-center"><?php echo $text_column_left; ?></div>
+                    <ul class="list-group">
+                                    <?php $module_row = 0; ?>
+              <?php foreach ($layout_modules as $layout_module) { ?>
+              
+                      <li class="list-group-item">Cras justo odio
+                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                      </li>
+                                <?php $module_row++; ?>
+              <?php } ?>    
+                      
+                    </ul>
+                  </div>
+                </div>
+                <div id="layout-content" class="col-lg-6 col-md-6 col-sm-12">
+                  <div id="layout-content-top" class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading text-center"><?php echo $text_content_top; ?></div>
+                      <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div id="layout-content-bottom" class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading text-center"><?php echo $text_content_bottom; ?></div>
+                      <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div id="layout-column-right" class="col-lg-3 col-md-3 col-sm-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading text-center"><?php echo $text_column_right; ?></div>
+                    <ul class="list-group">
+                      <li class="list-group-item">Cras justo odio</li>
+                      <li class="list-group-item">Dapibus ac facilisis in</li>
+                      <li class="list-group-item">Morbi leo risus</li>
+                      <li class="list-group-item">Porta ac consectetur ac</li>
+                      <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer text-center">
+              <h3 class="panel-title"><?php echo $text_footer; ?></h3>
+            </div>
+          </div>
+          <br />
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>

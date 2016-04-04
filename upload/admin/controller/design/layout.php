@@ -263,6 +263,8 @@ class ControllerDesignLayout extends Controller {
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_header'] = $this->language->get('text_header');
+		$data['text_footer'] = $this->language->get('text_footer');
 		$data['text_content_top'] = $this->language->get('text_content_top');
 		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');

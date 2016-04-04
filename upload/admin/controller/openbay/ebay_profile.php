@@ -171,7 +171,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		if (!array_key_exists($type, $data['types'])) {
 			$this->session->data['error'] = $data['error_no_template'];
 
-			$this->response->redirect($this->url->link('openbay/ebay_profile/profileall&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('openbay/ebay_profile/profileall', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

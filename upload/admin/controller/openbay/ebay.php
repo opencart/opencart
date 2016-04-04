@@ -1334,12 +1334,12 @@ class ControllerOpenbayEbay extends Controller {
 
 				if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');
-					$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], true));
+					$this->response->redirect($this->url->link('openbay/ebay/syncronise', 'token=' . $this->session->data['token'], true));
 				}
 
 				if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');
-					$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], true));
+					$this->response->redirect($this->url->link('openbay/ebay/syncronise', 'token=' . $this->session->data['token'], true));
 				}
 
 				$data['setting'] = $setting;
@@ -1588,7 +1588,7 @@ class ControllerOpenbayEbay extends Controller {
 
 							if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
 								$this->session->data['warning'] = $this->language->get('error_missing_settings');
-								$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], true));
+								$this->response->redirect($this->url->link('openbay/ebay/syncronise', 'token=' . $this->session->data['token'], true));
 							}
 
 							$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
@@ -1605,7 +1605,7 @@ class ControllerOpenbayEbay extends Controller {
 
 							if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 								$this->session->data['warning'] = $this->language->get('error_missing_settings');
-								$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], true));
+								$this->response->redirect($this->url->link('openbay/ebay/syncronise', 'token=' . $this->session->data['token'], true));
 							}
 
 							$data['setting'] = $setting;

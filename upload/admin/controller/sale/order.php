@@ -847,7 +847,7 @@ class ControllerSaleOrder extends Controller {
 			$data['order_id'] = $this->request->get['order_id'];
 
 			$data['store_name'] = $order_info['store_name'];
-			$data['store_url'] = $this->request->server['HTTPS'] ? str_replace("http", "https", $order_info['store_url']) : $order_info['store_url'];
+			$data['store_url'] = $this->request->server['HTTPS'] ? preg_replace("/^http:\/\//", "https://", $order_info['store_url']) : $order_info['store_url'];
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];

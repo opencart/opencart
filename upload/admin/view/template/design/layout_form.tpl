@@ -19,12 +19,12 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
-      </div>
-      <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+        </div>
+        <div class="panel-body">
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
             <div class="col-sm-10">
@@ -69,150 +69,190 @@
               </tr>
             </tfoot>
           </table>
-          
-          
-          
-          
-          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
           <div class="panel panel-default">
-            <div class="panel-heading text-center">
-              <h3 class="panel-title"><?php echo $text_header; ?></h3>
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_module; ?></h3>
+            </div>
+            <ul class="list-group">
+              <?php foreach ($extensions as $extension) { ?>
+              <?php if (!$extension['module']) { ?>
+              <li class="list-group-item"><?php echo $extension['name']; ?>
+                <div class="pull-right"><a href="<?php echo $module['edit']; ?>" class="btn btn-primary btn-xs disabled" target="_blank"><i class="fa fa-pencil fa-fw"></i></a>
+                  <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash fa-fw"></i></button>
+                </div>
+              </li>
+              <?php } else { ?>
+              <li class="list-group-item disabled"><?php echo $extension['name']; ?></li>
+              <?php foreach ($extension['module'] as $module) { ?>
+              <li class="list-group-item"><?php echo $module['name']; ?>
+                <div class="pull-right"><a href="<?php echo $module['edit']; ?>" class="btn btn-primary btn-xs disabled" target="_blank"><i class="fa fa-pencil fa-fw"></i></a>
+                  <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash fa-fw"></i></button>
+                  <input type="hidden" name="" value="" />
+                </div>
+              </li>
+              <?php } ?>
+              <?php } ?>
+              <?php } ?>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_layout; ?></h3>
             </div>
             <div class="panel-body">
               <div class="row">
                 <div id="layout-column-left" class="col-lg-3 col-md-3 col-sm-6">
                   <div class="panel panel-default">
-                    <div class="panel-heading text-center"><?php echo $text_column_left; ?></div>
+                    <div class="panel-heading"><?php echo $text_column_left; ?></div>
                     <ul class="list-group">
-                                    <?php $module_row = 0; ?>
-              <?php foreach ($layout_modules as $layout_module) { ?>
-              
-                      <li class="list-group-item">Cras justo odio
+                      <?php $module_row = 0; ?>
+                      <?php foreach ($layout_modules as $layout_module) { ?>
+                      <?php if ($layout_module['position'] == 'column_right') { ?>
+                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
                         <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
                       </li>
-                                <?php $module_row++; ?>
-              <?php } ?>    
-                      
+                      <?php } ?>
+                      <?php $module_row++; ?>
+                      <?php } ?>
                     </ul>
                   </div>
                 </div>
                 <div id="layout-content" class="col-lg-6 col-md-6 col-sm-12">
                   <div id="layout-content-top" class="col-xs-12">
                     <div class="panel panel-default">
-                      <div class="panel-heading text-center"><?php echo $text_content_top; ?></div>
+                      <div class="panel-heading"><?php echo $text_content_top; ?></div>
                       <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                      <?php $module_row = 0; ?>
+                      <?php foreach ($layout_modules as $layout_module) { ?>
+                      <?php if ($layout_module['position'] == 'content_top') { ?>
+                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
+                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                      </li>
+                      <?php } ?>
+                      <?php $module_row++; ?>
+                      <?php } ?>
                       </ul>
                     </div>
                   </div>
                   <div id="layout-content-bottom" class="col-xs-12">
                     <div class="panel panel-default">
-                      <div class="panel-heading text-center"><?php echo $text_content_bottom; ?></div>
+                      <div class="panel-heading"><?php echo $text_content_bottom; ?></div>
                       <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                      <?php $module_row = 0; ?>
+                      <?php foreach ($layout_modules as $layout_module) { ?>
+                      <?php if ($layout_module['position'] == 'content_bottom') { ?>
+                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
+                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                        
+                        <input type="hidden" name="code" value="" />
+                        <input type="hidden" name="position" value="" />
+                        <input type="hidden" name="sort_order" value="" />
+                      </li>
+                      <?php } ?>
+                      <?php $module_row++; ?>
+                      <?php } ?>
                       </ul>
                     </div>
                   </div>
                 </div>
                 <div id="layout-column-right" class="col-lg-3 col-md-3 col-sm-6">
                   <div class="panel panel-default">
-                    <div class="panel-heading text-center"><?php echo $text_column_right; ?></div>
+                    <div class="panel-heading"><?php echo $text_column_right; ?></div>
                     <ul class="list-group">
-                      <li class="list-group-item">Cras justo odio</li>
-                      <li class="list-group-item">Dapibus ac facilisis in</li>
-                      <li class="list-group-item">Morbi leo risus</li>
-                      <li class="list-group-item">Porta ac consectetur ac</li>
-                      <li class="list-group-item">Vestibulum at eros</li>
+                      <?php $module_row = 0; ?>
+                      <?php foreach ($layout_modules as $layout_module) { ?>
+                      <?php if ($layout_module['position'] == 'column_right') { ?>
+                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
+                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                      </li>
+                      <?php } ?>
+                      <?php $module_row++; ?>
+                      <?php } ?>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="panel-footer text-center">
-              <h3 class="panel-title"><?php echo $text_footer; ?></h3>
-            </div>
           </div>
-          <br />
-          <table id="module" class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td class="text-left"><?php echo $entry_module; ?></td>
-                <td class="text-left"><?php echo $entry_position; ?></td>
-                <td class="text-right"><?php echo $entry_sort_order; ?></td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $module_row = 0; ?>
-              <?php foreach ($layout_modules as $layout_module) { ?>
-              <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
-                    <?php foreach ($extensions as $extension) { ?>
-                    <?php if (!$extension['module']) { ?>
-                    <?php if ($extension['code'] == $layout_module['code']) { ?>
-                    <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                    <?php } ?>
-                    <?php } else { ?>
-                    <optgroup label="<?php echo $extension['name']; ?>">
-                    <?php foreach ($extension['module'] as $module) { ?>
-                    <?php if ($module['code'] == $layout_module['code']) { ?>
-                    <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                    </optgroup>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
-                    <?php if ($layout_module['position'] == 'content_top') { ?>
-                    <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
-                    <?php } else { ?>
-                    <option value="content_top"><?php echo $text_content_top; ?></option>
-                    <?php } ?>
-                    <?php if ($layout_module['position'] == 'content_bottom') { ?>
-                    <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
-                    <?php } else { ?>
-                    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
-                    <?php } ?>
-                    <?php if ($layout_module['position'] == 'column_left') { ?>
-                    <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
-                    <?php } else { ?>
-                    <option value="column_left"><?php echo $text_column_left; ?></option>
-                    <?php } ?>
-                    <?php if ($layout_module['position'] == 'column_right') { ?>
-                    <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
-                    <?php } else { ?>
-                    <option value="column_right"><?php echo $text_column_right; ?></option>
-                    <?php } ?>
-                  </select></td>
-                <td class="text-right"><input type="text" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-              </tr>
-              <?php $module_row++; ?>
-              <?php } ?>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3"></td>
-                <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
+        </div>
       </div>
-    </div>
+      <br />
+      <table id="module" class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $entry_module; ?></td>
+            <td class="text-left"><?php echo $entry_position; ?></td>
+            <td class="text-right"><?php echo $entry_sort_order; ?></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $module_row = 0; ?>
+          <?php foreach ($layout_modules as $layout_module) { ?>
+          <tr id="module-row<?php echo $module_row; ?>">
+            <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
+                <?php foreach ($extensions as $extension) { ?>
+                <?php if (!$extension['module']) { ?>
+                <?php if ($extension['code'] == $layout_module['code']) { ?>
+                <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                <?php } ?>
+                <?php } else { ?>
+                <optgroup label="<?php echo $extension['name']; ?>">
+                <?php foreach ($extension['module'] as $module) { ?>
+                <?php if ($module['code'] == $layout_module['code']) { ?>
+                <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+                </optgroup>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+            <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
+                <?php if ($layout_module['position'] == 'content_top') { ?>
+                <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
+                <?php } else { ?>
+                <option value="content_top"><?php echo $text_content_top; ?></option>
+                <?php } ?>
+                <?php if ($layout_module['position'] == 'content_bottom') { ?>
+                <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
+                <?php } else { ?>
+                <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
+                <?php } ?>
+                <?php if ($layout_module['position'] == 'column_left') { ?>
+                <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
+                <?php } else { ?>
+                <option value="column_left"><?php echo $text_column_left; ?></option>
+                <?php } ?>
+                <?php if ($layout_module['position'] == 'column_right') { ?>
+                <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
+                <?php } else { ?>
+                <option value="column_right"><?php echo $text_column_right; ?></option>
+                <?php } ?>
+              </select></td>
+            <td class="text-right"><input type="text" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
+            <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+          </tr>
+          <?php $module_row++; ?>
+          <?php } ?>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"></td>
+            <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
   </div>
   <script type="text/javascript"><!--
 var route_row = <?php echo $route_row; ?>;

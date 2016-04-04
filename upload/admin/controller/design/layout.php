@@ -6,7 +6,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		
 		$this->load->model('design/layout');
 
 		$this->getList();
@@ -16,6 +16,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
 
 		$this->load->model('design/layout');
 
@@ -48,6 +49,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
 
 		$this->load->model('design/layout');
 
@@ -260,11 +262,11 @@ class ControllerDesignLayout extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_module'] = $this->language->get('text_module');
+		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_header'] = $this->language->get('text_header');
-		$data['text_footer'] = $this->language->get('text_footer');
 		$data['text_content_top'] = $this->language->get('text_content_top');
 		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');
@@ -353,14 +355,6 @@ class ControllerDesignLayout extends Controller {
 			$data['layout_routes'] = array();
 		}
 
-		if (isset($this->request->post['layout_module'])) {
-			$data['layout_modules'] = $this->request->post['layout_module'];
-		} elseif (isset($this->request->get['layout_id'])) {
-			$data['layout_modules'] = $this->model_design_layout->getLayoutModules($this->request->get['layout_id']);
-		} else {
-			$data['layout_modules'] = array();
-		}
-
 		$this->load->model('extension/extension');
 
 		$this->load->model('extension/module');
@@ -393,6 +387,46 @@ class ControllerDesignLayout extends Controller {
 				);
 			}
 		}
+
+		// Modules layout
+		if (isset($this->request->post['layout_module'])) {
+			$layout_modules = $this->request->post['layout_module'];
+		} elseif (isset($this->request->get['layout_id'])) {
+			$layout_modules = $this->model_design_layout->getLayoutModules($this->request->get['layout_id']);
+		} else {
+			$layout_modules = array();
+		}
+
+		$data['layout_modules'] = array();
+		
+		// Add all the modules which have multiple settings for each module
+		foreach ($layout_modules as $layout_module) {
+			$this->load->language('module/' . $layout_module['code']);
+
+			$part = explode('.', $layout_module['code']);
+
+			if (!isset($part[1])) {
+				$data['layout_modules'][] = array(
+					'name'       => $this->language->get('heading_title'),
+					'code'       => $layout_module['code'],
+					'position'   => $layout_module['position'],
+					'sort_order' => $layout_module['sort_order'],
+					'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'], true)
+				);
+			} else {
+				$module_info = $this->model_extension_module->getModule($part[1]);
+				
+				if ($module_info) {
+					$data['layout_modules'][] = array(
+						'name'       => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module_info['name']),
+						'code'       => $layout_module['code'],
+						'position'   => $layout_module['position'],
+						'sort_order' => $layout_module['sort_order'],
+						'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'] . '&module_id=' . $part[1], true)
+					);
+				}				
+			}
+		}		
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

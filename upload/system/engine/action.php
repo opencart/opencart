@@ -20,8 +20,8 @@ class Action {
 		}
 	}
 	
-	function getRoute() {
-		return $route;
+	public function getRoute() {
+		return $this->route;
 	}
 	
 	public function execute($registry, array $args = array()) {

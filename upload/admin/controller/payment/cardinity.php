@@ -14,7 +14,7 @@ class ControllerPaymentCardinity extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,22 +63,22 @@ class ControllerPaymentCardinity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/cardinity', 'token=' . $this->session->data['token'])
+			'href' => $this->url->link('payment/cardinity', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/cardinity', 'token=' . $this->session->data['token']);
+		$data['action'] = $this->url->link('payment/cardinity', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['cardinity_key'])) {
 			$data['cardinity_key'] = $this->request->post['cardinity_key'];

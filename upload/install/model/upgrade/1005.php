@@ -159,13 +159,10 @@ class ModelUpgrade1005 extends Model {
 		}
 
 		// Set Product Meta Title default to product name if empty
-		$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
-		foreach ($language_query->rows as $language) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE language_id = '" . (int)$language['language_id'] . "' AND meta_title = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE language_id = '" . (int)$language['language_id'] . "' AND meta_title = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE language_id = '" . (int)$language['language_id'] . "' AND meta_title = ''");
-		}
-
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE meta_title = ''");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE meta_title = ''");
+		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE meta_title = ''");
+		
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_complete_status'");
 

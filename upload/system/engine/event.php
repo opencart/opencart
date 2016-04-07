@@ -16,19 +16,15 @@ class Event {
 		$this->data[$trigger][] = $action;
 	}
 	
-	public function unregister($trigger, Action $action = null) {
-		if (!isset($this->data[$trigger])) {
-			return;
-		}
-
-		if (null === $action) {
-			unset($this->data[$trigger]);
-		} else {
-			foreach ($this->data[$trigger] as $trigger_key => $trigger_action) {
-				if ($trigger_action->getRoute() == $action->getRoute()) {
-					unset($this->data[$trigger][$trigger_key]);
+	public function unregister($trigger, $route = '') {
+		if ($route) {
+			foreach ($this->data[$trigger] as $key => $action) {
+				if ($action->getRoute() == $route) {
+					unset($this->data[$trigger][$key]);
 				}
-			}
+			}			
+		} else {
+			unset($this->data[$trigger]);
 		}
 	}
 
@@ -45,8 +41,4 @@ class Event {
 			}
 		}
 	}
-	
-	public function getData() {
-		return $this->data;
-	}	
 }

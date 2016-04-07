@@ -91,7 +91,9 @@
               <li class="list-group-item"><?php echo $module['name']; ?>
                 <div class="pull-right"><a href="<?php echo $module['edit']; ?>" class="btn btn-primary btn-xs disabled" target="_blank"><i class="fa fa-pencil fa-fw"></i></a>
                   <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash fa-fw"></i></button>
-                  <input type="hidden" name="" value="" />
+                  <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
+                  <input type="hidden" name="position" value="" />
+                  <input type="hidden" name="sort_order" value="" />
                 </div>
               </li>
               <?php } ?>
@@ -128,18 +130,18 @@
                     <div class="panel panel-default">
                       <div class="panel-heading"><?php echo $text_content_top; ?></div>
                       <ul class="list-group">
-                      <?php $module_row = 0; ?>
-                      <?php foreach ($layout_modules as $layout_module) { ?>
-                      <?php if ($layout_module['position'] == 'content_top') { ?>
-                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
-                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
-                        <input type="hidden" name="code" value="<?php echo $layout_module['code']; ?>" />
-                        <input type="hidden" name="position" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />                      
-                      </li>
-                      <?php } ?>
-                      <?php $module_row++; ?>
-                      <?php } ?>
+                        <?php $module_row = 0; ?>
+                        <?php foreach ($layout_modules as $layout_module) { ?>
+                        <?php if ($layout_module['position'] == 'content_top') { ?>
+                        <li class="list-group-item"><?php echo $layout_module['name']; ?>
+                          <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                          <input type="hidden" name="code" value="<?php echo $layout_module['code']; ?>" />
+                          <input type="hidden" name="position" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />
+                        </li>
+                        <?php } ?>
+                        <?php $module_row++; ?>
+                        <?php } ?>
                       </ul>
                     </div>
                   </div>
@@ -147,18 +149,18 @@
                     <div class="panel panel-default">
                       <div class="panel-heading"><?php echo $text_content_bottom; ?></div>
                       <ul class="list-group">
-                      <?php $module_row = 0; ?>
-                      <?php foreach ($layout_modules as $layout_module) { ?>
-                      <?php if ($layout_module['position'] == 'content_bottom') { ?>
-                      <li class="list-group-item"><?php echo $layout_module['name']; ?>
-                        <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
-                        <input type="hidden" name="code" value="<?php echo $layout_module['code']; ?>" />
-                        <input type="hidden" name="position" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />
-                      </li>
-                      <?php } ?>
-                      <?php $module_row++; ?>
-                      <?php } ?>
+                        <?php $module_row = 0; ?>
+                        <?php foreach ($layout_modules as $layout_module) { ?>
+                        <?php if ($layout_module['position'] == 'content_bottom') { ?>
+                        <li class="list-group-item"><?php echo $layout_module['name']; ?>
+                          <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
+                          <input type="hidden" name="code" value="<?php echo $layout_module['code']; ?>" />
+                          <input type="hidden" name="position" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />
+                        </li>
+                        <?php } ?>
+                        <?php $module_row++; ?>
+                        <?php } ?>
                       </ul>
                     </div>
                   </div>
@@ -174,7 +176,7 @@
                         <div class="pull-right"><i class="fa fa-pencil fa-fw"></i> <i class="fa fa-arrows fa-fw"></i> <i class="fa fa-trash fa-fw"></i></div>
                         <input type="hidden" name="code" value="<?php echo $layout_module['code']; ?>" />
                         <input type="hidden" name="position" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />                       
+                        <input type="hidden" name="sort_order" value="<?php echo $layout_module['sort_order']; ?>" />
                       </li>
                       <?php } ?>
                       <?php $module_row++; ?>

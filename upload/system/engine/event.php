@@ -27,7 +27,15 @@ class Event {
 			unset($this->data[$trigger]);
 		}
 	}
-
+	
+	public function removeAction($trigger, $route) {
+		foreach ($this->data[$trigger] as $key => $action) {
+			if ($action->getRoute() == $route) {
+				unset($this->data[$trigger][$key]);
+			}
+		}
+	}
+	
 	public function trigger($trigger, $args = array()) {
 		foreach ($this->data as $key => $value) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($key, '/')) . '/', $trigger)) {

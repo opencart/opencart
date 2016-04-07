@@ -50,8 +50,4 @@ class Action {
 			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
 		}
 	}
-	
-	public function getRoute() {
-		return $this->route;
-	}	
 }

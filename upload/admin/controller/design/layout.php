@@ -16,7 +16,8 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
+		$this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
+		$this->document->addStyle('view/javascript/jquery/jquery-ui/jquery-ui.min.css');
 
 		$this->load->model('design/layout');
 
@@ -49,7 +50,8 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
+		$this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
+		$this->document->addStyle('view/javascript/jquery/jquery-ui/jquery-ui.min.css');
 
 		$this->load->model('design/layout');
 
@@ -375,16 +377,26 @@ class ControllerDesignLayout extends Controller {
 			foreach ($modules as $module) {
 				$module_data[] = array(
 					'name' => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module['name']),
-					'code' => $code . '.' .  $module['module_id']
+					'code' => $code . '.' .  $module['module_id'],
+					'edit' => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 				);
 			}
 
 			if ($this->config->has($code . '_status') || $module_data) {
-				$data['extensions'][] = array(
-					'name'   => strip_tags($this->language->get('heading_title')),
-					'code'   => $code,
-					'module' => $module_data
-				);
+				if (!$module_data) {
+					$data['extensions'][] = array(
+						'name'   => strip_tags($this->language->get('heading_title')),
+						'code'   => $code,
+						'module' => $module_data,
+						'edit'   => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'], true)
+					);
+				} else {
+					$data['extensions'][] = array(
+						'name'   => strip_tags($this->language->get('heading_title')),
+						'code'   => $code,
+						'module' => $module_data,
+					);					
+				}
 			}
 		}
 
@@ -401,9 +413,9 @@ class ControllerDesignLayout extends Controller {
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {
-			$this->load->language('module/' . $layout_module['code']);
-
 			$part = explode('.', $layout_module['code']);
+		
+			$this->load->language('module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(

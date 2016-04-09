@@ -1,9 +1,12 @@
 <?php
 class Action {
+	private $id;
 	private $route;
 	private $method = 'index';
 
 	public function __construct($route) {
+		$this->id = $route;
+		
 		$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));
 
 		// Break apart the route
@@ -21,10 +24,14 @@ class Action {
 	}
 	
 	function getRoute() {
-		return $route;
+		return $this->route;
 	}
 	
 	public function execute($registry, array $args = array()) {
+		if (null === $this->route) {
+			return new \Exception('Error: Could execute action ' . $this->id . '!');
+		}
+
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
@@ -33,15 +40,10 @@ class Action {
 		$file = DIR_APPLICATION . 'controller/' . $this->route . '.php';		
 		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
 		
-		// Initialize the class
-		if (is_file($file)) {
-			include_once($file);
+		include_once($file);
 		
-			$controller = new $class($registry);
-		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
-		}
-		
+		$controller = new $class($registry);
+
 		$reflection = new ReflectionClass($class);
 		
 		if ($reflection->hasMethod($this->method) && $reflection->getMethod($this->method)->getNumberOfRequiredParameters() <= count($args)) {

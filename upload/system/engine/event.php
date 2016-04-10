@@ -19,7 +19,7 @@ class Event {
 	public function unregister($trigger, $route = '') {
 		if ($route) {
 			foreach ($this->data[$trigger] as $key => $action) {
-				if ($action->getRoute() == $route) {
+				if ($action->getId() == $route) {
 					unset($this->data[$trigger][$key]);
 				}
 			}			
@@ -30,7 +30,7 @@ class Event {
 	
 	public function removeAction($trigger, $route) {
 		foreach ($this->data[$trigger] as $key => $action) {
-			if ($action->getRoute() == $route) {
+			if ($action->getId() == $route) {
 				unset($this->data[$trigger][$key]);
 			}
 		}

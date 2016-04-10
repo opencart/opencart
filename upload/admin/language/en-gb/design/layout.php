@@ -23,9 +23,6 @@ $_['column_action']       = 'Action';
 $_['entry_name']          = 'Layout Name';
 $_['entry_store']         = 'Store';
 $_['entry_route']         = 'Route';
-$_['entry_module']        = 'Module';
-$_['entry_position']      = 'Position';
-$_['entry_sort_order']    = 'Sort Order';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify layouts!';

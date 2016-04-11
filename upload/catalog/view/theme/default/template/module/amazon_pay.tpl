@@ -27,6 +27,7 @@
 			type: "<?php echo $amazon_pay_button_type; ?>",
 			color: "<?php echo $amazon_pay_button_colour; ?>",
 			size: "<?php echo $amazon_pay_button_size; ?>",
+                        language: "<?php echo $amazon_login_pay_language; ?>",
 			authorization: function() {
 				var loginOptions = {scope: 'profile postal_code payments:widget payments:shipping_address'};
 				authRequest = amazon.Login.authorize(loginOptions, "<?php echo $amazon_pay_return_url; ?>");

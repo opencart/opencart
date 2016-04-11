@@ -1,6 +1,6 @@
 <?php
 //Headings
-$_['heading_title']                 = 'Login and Pay with Amazon';
+$_['heading_title']                 = 'Login and Pay with Amazon DE';
 
 //Text
 $_['text_success']                  = 'Login and Pay with Amazon module has been updated';

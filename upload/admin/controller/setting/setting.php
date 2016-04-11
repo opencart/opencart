@@ -754,7 +754,7 @@ class ControllerSettingSetting extends Controller {
 			$data['config_complete_status'] = array();
 		}
 
-		if (isset($this->request->post['config_order_status_id'])) {
+		if (isset($this->request->post['config_fraud_status_id'])) {
 			$data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
 		} else {
 			$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');

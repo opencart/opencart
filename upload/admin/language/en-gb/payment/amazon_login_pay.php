@@ -67,6 +67,7 @@ $_['text_amazon_invalid']           = 'InvalidPaymentMethod';
 $_['text_amazon_rejected']          = 'AmazonRejected';
 $_['text_amazon_timeout']           = 'TransactionTimedOut';
 $_['text_amazon_no_declined']       = '--- No Automatic Declined Authorization ---';
+$_['text_amazon_signup']			= 'Sign-up to Login and Pay with Amazon';
 
 // Columns
 $_['column_status']                 = 'Status';

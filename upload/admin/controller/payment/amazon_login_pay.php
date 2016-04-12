@@ -24,14 +24,19 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+            if($this->request->post['marketplace_reload']){
+				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true));
+			} else {
+				$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			}
         }
 
+		$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect";
         //US
         $data['sp_id'] = 'A3GK1RS09H3A7D';
         //UK
         $data['sp_id'] = 'A1P8WV11EWOP9H';
-        $data['unique_id'] = 'lpa-test-id2';
+        $data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name')));
         $data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
         $data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
         $data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
@@ -95,6 +100,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
         $data['text_geo_zone'] = $this->language->get('text_geo_zone');
         $data['text_status'] = $this->language->get('text_status');
         $data['text_declined_codes'] = $this->language->get('text_declined_codes');
+		$data['text_amazon_signup'] = $this->language->get('text_amazon_signup');
 
         $data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
         $data['entry_access_key'] = $this->language->get('entry_access_key');
@@ -116,6 +122,8 @@ class ControllerPaymentAmazonLoginPay extends Controller {
         $data['help_ipn_url'] = $this->language->get('help_ipn_url');
         $data['help_ipn_token'] = $this->language->get('help_ipn_token');
         $data['help_declined_codes'] = $this->language->get('help_declined_codes');
+
+		$data['error_merchant_id'] = $this->language->get('error_merchant_id');
 
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_save'] = $this->language->get('button_save');

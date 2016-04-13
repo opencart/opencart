@@ -1036,7 +1036,7 @@ $('select[name=\'currency\']').on('change', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'currency\']').parent().parent().addClass('has-error');
+				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1873,9 +1873,9 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-payment input[name=\'postcode\']').parent().parent().addClass('required');
+				$('#tab-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-payment input[name=\'postcode\']').parent().parent().removeClass('required');
+				$('#tab-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -2059,9 +2059,9 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-shipping input[name=\'postcode\']').parent().parent().addClass('required');
+				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-shipping input[name=\'postcode\']').parent().parent().removeClass('required');
+				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -2207,7 +2207,7 @@ $('#button-shipping-method').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'shipping_method\']').parent().parent().parent().addClass('has-error');
+				$('select[name=\'shipping_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2245,7 +2245,7 @@ $('#button-payment-method').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'payment_method\']').parent().parent().parent().addClass('has-error');
+				$('select[name=\'payment_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2283,7 +2283,7 @@ $('#button-coupon').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'coupon\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'coupon\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2321,7 +2321,7 @@ $('#button-voucher').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'voucher\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'voucher\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2359,7 +2359,7 @@ $('#button-reward').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'reward\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'reward\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {

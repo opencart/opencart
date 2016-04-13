@@ -1719,12 +1719,12 @@ $('#button-voucher-add').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
-				$('input[name=\'from_name\']').attr('value', '');
-				$('input[name=\'from_email\']').attr('value', '');
-				$('input[name=\'to_name\']').attr('value', '');
-				$('input[name=\'to_email\']').attr('value', '');
-				$('textarea[name=\'message\']').attr('value', '');
-				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
+				$('input[name=\'from_name\']').val('');
+				$('input[name=\'from_email\']').val('');
+				$('input[name=\'to_name\']').val('');
+				$('input[name=\'to_email\']').val('');
+				$('textarea[name=\'message\']').val('');
+				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2489,7 +2489,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

@@ -955,7 +955,7 @@ DROP TABLE IF EXISTS `oc_coupon`;
 CREATE TABLE `oc_coupon` (
   `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `code` varchar(10) NOT NULL,
+  `code` varchar(20) NOT NULL,
   `type` char(1) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `logged` tinyint(1) NOT NULL,

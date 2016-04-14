@@ -356,6 +356,7 @@ CREATE TABLE `oc_cart` (
   `cart_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
+  `session_source` varchar(32) NOT NULL,
   `product_id` int(11) NOT NULL,
   `recurring_id` int(11) NOT NULL,
   `option` text NOT NULL,

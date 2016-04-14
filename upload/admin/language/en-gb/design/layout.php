@@ -3,6 +3,7 @@
 $_['heading_title']       = 'Layouts';
 
 // Text
+$_['text_legend']         = 'Drag and drop the modules';
 $_['text_success']        = 'Success: You have modified layouts!';
 $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';

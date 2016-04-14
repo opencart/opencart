@@ -35,7 +35,7 @@
             </div>
           </div>
           <fieldset>
-            <legend>Drag and drop the modules</legend>
+            <legend><?php echo $text_legend; ?></legend>
             <table id="route" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
@@ -73,7 +73,7 @@
             </table>
           </fieldset>
           <fieldset>
-            <legend>Drag and drop the modules</legend>
+            <legend><?php echo $text_legend; ?></legend>
             <div class="row">
               <div class="col-sm-3">
                 <div class="panel panel-default">

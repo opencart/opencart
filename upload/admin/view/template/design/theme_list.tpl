@@ -35,11 +35,18 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
-                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <td class="text-left"><?php if ($sort == 'code') { ?>
+                    <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                    <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
                     <?php } ?></td>
+                    
+                    <td class="text-left"><?php if ($sort == 'store') { ?>
+                    <a href="<?php echo $sort_store; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_store; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_store; ?>"><?php echo $column_store; ?></a>
+                    <?php } ?></td>
+                                      
                   <td class="text-left"><?php if ($sort == 'status') { ?>
                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                     <?php } else { ?>
@@ -49,22 +56,23 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($banners) { ?>
-                <?php foreach ($banners as $banner) { ?>
+                <?php if ($themes) { ?>
+                <?php foreach ($themes as $theme) { ?>
                 <tr>
-                  <td class="text-center"><?php if (in_array($banner['banner_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $banner['banner_id']; ?>" checked="checked" />
+                  <td class="text-center"><?php if (in_array($theme['theme_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $theme['theme_id']; ?>" checked="checked" />
                     <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $banner['banner_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="<?php echo $theme['theme_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $banner['name']; ?></td>
-                  <td class="text-left"><?php echo $banner['status']; ?></td>
-                  <td class="text-right"><a href="<?php echo $banner['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left"><?php echo $theme['code']; ?></td>
+                  <td class="text-left"><?php echo $theme['store']; ?></td>
+                  <td class="text-left"><?php echo $theme['status']; ?></td>
+                  <td class="text-right"><a href="<?php echo $theme['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>

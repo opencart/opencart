@@ -278,7 +278,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'customer/customer')) {
 			$customer[] = array(
-				'name'	   => $this->language->get('text_voucher'),
+				'name'	   => $this->language->get('text_customer'),
 				'href'     => $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
 			);	

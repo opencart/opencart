@@ -11,7 +11,6 @@ $_['text_choose']         = 'Choose';
 $_['text_select']         = 'Select';
 $_['text_radio']          = 'Radio';
 $_['text_checkbox']       = 'Checkbox';
-$_['text_image']          = 'Image';
 $_['text_input']          = 'Input';
 $_['text_text']           = 'Text';
 $_['text_textarea']       = 'Textarea';

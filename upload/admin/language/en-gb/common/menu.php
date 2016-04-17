@@ -63,6 +63,7 @@ $_['text_tax']                         = 'Taxes';
 $_['text_tax_class']                   = 'Tax Classes';
 $_['text_tax_rate']                    = 'Tax Rates';
 $_['text_translation']                 = 'Translations';
+$_['text_theme']                       = 'Theme Editor';
 $_['text_tools']                       = 'Tools';
 $_['text_upload']                      = 'Uploads';
 $_['text_user']                        = 'Users';

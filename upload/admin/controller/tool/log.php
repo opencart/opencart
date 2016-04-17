@@ -1,9 +1,9 @@
 <?php
-class ControllerToolErrorLog extends Controller {
+class ControllerToolLog extends Controller {
 	private $error = array();
 
 	public function index() {		
-		$this->load->language('tool/error_log');
+		$this->load->language('tool/log');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -42,11 +42,11 @@ class ControllerToolErrorLog extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('tool/log', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['download'] = $this->url->link('tool/error_log/download', 'token=' . $this->session->data['token'], true);
-		$data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], true);
+		$data['download'] = $this->url->link('tool/log/download', 'token=' . $this->session->data['token'], true);
+		$data['clear'] = $this->url->link('tool/log/clear', 'token=' . $this->session->data['token'], true);
 
 		$data['log'] = '';
 
@@ -85,7 +85,7 @@ class ControllerToolErrorLog extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('tool/error_log', $data));
+		$this->response->setOutput($this->load->view('tool/log', $data));
 	}
 
 	public function download() {
@@ -100,9 +100,9 @@ class ControllerToolErrorLog extends Controller {
 	}
 	
 	public function clear() {
-		$this->load->language('tool/error_log');
+		$this->load->language('tool/log');
 
-		if (!$this->user->hasPermission('modify', 'tool/error_log')) {
+		if (!$this->user->hasPermission('modify', 'tool/log')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
 			$file = DIR_LOGS . $this->config->get('config_error_filename');
@@ -114,6 +114,6 @@ class ControllerToolErrorLog extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->data['token'], true));
 	}
 }

@@ -117,7 +117,7 @@
                         <h4 class="panel-title"><?php echo $text_column_left; ?></h4>
                       </div>
                       <div class="panel-body">
-                        <ul id="layout-column-left" class="list-unstyled">
+                        <ul id="layout-column-left" class="list-unstyled" style="min-height: 100px;">
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_left') { ?>
                           <li>
@@ -141,7 +141,7 @@
                         <h4 class="panel-title"><?php echo $text_content_top; ?></h4>
                       </div>
                       <div class="panel-body">
-                        <ul id="layout-content-top" class="list-unstyled">
+                        <ul id="layout-content-top" class="list-unstyled" style="min-height: 100px;">
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'content_top') { ?>
                           <li>
@@ -163,7 +163,7 @@
                         <h4 class="panel-title"><?php echo $text_content_bottom; ?></h4>
                       </div>
                       <div class="panel-body">
-                        <ul id="layout-content-bottom" class="list-unstyled">
+                        <ul id="layout-content-bottom" class="list-unstyled" style="min-height: 100px;">
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'content_bottom') { ?>
                           <li>
@@ -187,7 +187,7 @@
                         <h4 class="panel-title"><?php echo $text_column_right; ?></h4>
                       </div>
                       <div class="panel-body">
-                        <ul id="layout-column-right" class="list-unstyled">
+                        <ul id="layout-column-right" class="list-unstyled" style="min-height: 100px;">
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_right') { ?>
                           <li>
@@ -233,13 +233,16 @@ function addRoute() {
 	route_row++;
 }
 
+var module_row = <?php echo $module_row; ?>;
+
 $('#modules li').draggable({
 	connectToSortable: '#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom',
+	placeholder: 'ui-state-highlight',
+	handle: '.alert',
 	helper: 'clone',
 	revert: 'invalid',
 	opacity: 0.35,
 	zIndex: 100,
-	cursor: 'arrow',
 	start: function(e, ui) {
 	
 	},
@@ -248,14 +251,15 @@ $('#modules li').draggable({
 		$(ui.helper).height($(e.target).height());	
 	},
 	stop: function(e, ui) {
-		$(ui.helper).removeClass('active');
-		$(ui.helper).removeAttr('style');
-				
 		if ($(ui.helper).parent().attr('id') == 'layout-column-left') {
-			$('').each('', function() {
-				
+			$(ui.helper).parent().find('li').each(function(i, element) {
+             	// html = '';
+				//html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="<?php echo $layout_module['position']; ?>" />
+                //html += '<input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="' + i + '" />
 			});
 		}
+		
+		$('#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom').refresh();
 		
 		if ($(ui.helper).parent().attr('id') == 'layout-column-right') {
 			
@@ -273,8 +277,12 @@ $('#modules li').draggable({
 
 $('#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom').sortable({
 	forcePlaceholderSize: true,
+	forceHelperSize: true,
+	placeholder: "ui-state-highlight",
+	handle: '.alert',
 	opacity: 0.35,
-	zIndex: 100,
+	//zIndex: 100,
+	 forceHelperSize: true,
 	start: function(e, ui) {
 		
 	},

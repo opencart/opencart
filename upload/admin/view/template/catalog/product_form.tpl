@@ -1288,7 +1288,7 @@ function addOptionValue(option_row) {
 	html += '</tr>';
 
 	$('#option-value' + option_row + ' tbody').append(html);
-        $('[rel=tooltip]').tooltip();
+	$('[rel=tooltip]').tooltip();
 
 	option_value_row++;
 }

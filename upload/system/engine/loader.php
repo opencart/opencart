@@ -23,11 +23,11 @@ final class Loader {
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if (!($output instanceof Exception)) {
-			return $output;
-		} else {
+		if ($output instanceof Exception) {
 			return false;
 		}
+
+		return $output;
 	}
 	
 	public function model($route) {

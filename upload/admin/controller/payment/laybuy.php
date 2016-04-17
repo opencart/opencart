@@ -1235,10 +1235,6 @@ class ControllerPaymentLaybuy extends Controller {
 			$this->error['laybuy_min_deposit'] = $this->language->get('error_min_deposit');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

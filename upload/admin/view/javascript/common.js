@@ -217,7 +217,7 @@ $(document).ready(function() {
 		$('#button-clear').on('click', function() {
 			$(element).find('img').attr('src', $(element).find('img').attr('data-placeholder'));
 
-			$(element).parent().find('input').attr('value', '');
+			$(element).parent().find('input').val('');
 
 			$(element).popover('hide', function() {
 				$('.popover').remove();

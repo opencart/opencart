@@ -54,7 +54,7 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
-	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
+	$('#<?php echo $target; ?>').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });

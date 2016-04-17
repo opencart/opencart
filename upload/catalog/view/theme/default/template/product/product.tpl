@@ -522,7 +522,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input').attr('value', json['code']);
+						$(node).parent().find('input').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

@@ -2,7 +2,7 @@
   <?php foreach ($menus as $menu) { ?>
   <li id="<?php echo $menu['id']; ?>">
     <?php if ($menu['href']) { ?>
-    <a href="<?php echo $menu['href']; ?>"><i class="fa <?php echo $menu['icon']; ?> fw"></i> <?php echo $menu['name']; ?></a>
+    <a href="<?php echo $menu['href']; ?>"><i class="fa <?php echo $menu['icon']; ?> fw"></i> <span><?php echo $menu['name']; ?></span></a>
     <?php } else { ?>
     <a class="parent"><i class="fa <?php echo $menu['icon']; ?> fw"></i> <?php echo $menu['name']; ?></a>
     <?php } ?>

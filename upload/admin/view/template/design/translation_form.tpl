@@ -67,7 +67,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="translation[<?php echo $translation_row; ?>][value]" value="<?php echo $translation['value']; ?>" placeholder="<?php echo $entry_value; ?>" class="form-control" /></td>
+                <td class="text-left"><textarea name="translation[<?php echo $translation_row; ?>][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"><?php echo $translation['value']; ?></textarea></td>
                 <td class="text-left"><button type="button" onclick="$('#translation-row<?php echo $translation_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $translation_row++; ?>
@@ -105,7 +105,7 @@ function addTranslation() {
     html += '    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>';
     <?php } ?>
     html += '  </select></td>';			
-	html += '  <td class="text-left"><input type="text" name="translation[' + translation_row + '][value]" value="" placeholder="<?php echo $entry_value; ?>" class="form-control" /></td>';	
+	html += '  <td class="text-left"><textarea name="translation[' + translation_row + '][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"></textarea></td>';	
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#translation-row' + translation_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
@@ -113,6 +113,36 @@ function addTranslation() {
 	
 	translation_row++;
 }
+
+$('select[name=\'translation\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=design/translation&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		type: 'post',
+		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+		dataType: 'json',
+		crossDomain: true,
+		beforeSend: function() {
+			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spin').remove();
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				// Highlight any found errors
+				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 //--></script> 
 </div>
 <?php echo $footer; ?> 

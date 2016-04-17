@@ -162,6 +162,8 @@ class ControllerDesignTranslation extends Controller {
 			$data['entry_key'] = $this->language->get('entry_key');
 			$data['entry_value'] = $this->language->get('entry_value');
 	
+			$data['help_default'] = $this->language->get('help_default');
+			
 			$data['button_save'] = $this->language->get('button_save');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_translation_add'] = $this->language->get('button_translation_add');
@@ -242,43 +244,36 @@ class ControllerDesignTranslation extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['translation'])) {
-			foreach ($this->request->post['translation'] as $key => $translation) {
-				if ((utf8_strlen($translation['value']) < 2) || (utf8_strlen($translation['value']) > 255)) {
-					$this->error['language_image'][$language_image_id][$language_id] = $this->language->get('error_value');
-				}
-			}
-		}
-
 		return !$this->error;
 	}
 	
 	public function translation() {
 		$json = array();
 		
-		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
+		if (isset($this->request->get['language'])) {
+			$language = $this->request->get['language'];
+		} else {
+			$language = $this->config->get('config_language');
+		}		
 		
-		//if (is_file($directory . $path) && substr(str_replace('\\', '/', realpath($directory . $path . '.php')), 0, strlen($directory)) == $directory) {
-			
-			
-		$_ = array();
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}		
 				
-		include($file);	
-	
-		$data['keys'] = array_keys($_);
+		$directory = DIR_CATALOG . 'language/';
+		
+		if (is_file($directory . $language . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
+			$_ = array();
+					
+			include($file);	
 			
-		$this->load->model('design/translation');
-
-		$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
-
-		if ($translation_info) {
-			$json = array(
-				'translation_id' => $translation_info['translation_id'],
-				'name'           => $country_info['name'],
-				'zone'           => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id'])
-			);
+			if (isset($_[$key])) {
+				$json = $_[$key];
+			}
 		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	

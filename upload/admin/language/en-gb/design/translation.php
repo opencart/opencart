@@ -21,4 +21,3 @@ $_['entry_value']      = 'Value';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify translations!';
-$_['error_value']      = 'Value must be between 1 and 255 characters!';

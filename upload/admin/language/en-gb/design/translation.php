@@ -9,7 +9,7 @@ $_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
 
 // Column
-$_['column_path']      = 'Route';
+$_['column_route']     = 'Route';
 $_['column_total']     = 'Total';
 $_['column_action']    = 'Action';
 

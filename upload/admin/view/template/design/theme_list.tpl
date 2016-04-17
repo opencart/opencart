@@ -34,23 +34,37 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $column_route; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left"><?php if ($sort == 'name') { ?>
+                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'status') { ?>
+                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                    <?php } ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
               <tbody>
-                <?php if ($files) { ?>
-                <?php foreach ($files as $file) { ?>
+                <?php if ($banners) { ?>
+                <?php foreach ($banners as $banner) { ?>
                 <tr>
-                  <td class="text-left"><?php echo $file['route']; ?></td>
-                  <td class="text-right"><?php echo $file['total']; ?></td>
-                  <td class="text-right"><a href="<?php echo $file['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-center"><?php if (in_array($banner['banner_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $banner['banner_id']; ?>" checked="checked" />
+                    <?php } else { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $banner['banner_id']; ?>" />
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $banner['name']; ?></td>
+                  <td class="text-left"><?php echo $banner['status']; ?></td>
+                  <td class="text-right"><a href="<?php echo $banner['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+                  <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>

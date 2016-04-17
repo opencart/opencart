@@ -172,10 +172,12 @@ class ControllerDesignTheme extends Controller {
 		$results = $this->model_design_theme->getThemes($filter_data);
 
 		foreach ($results as $result) {
-			$data['layouts'][] = array(
-				'layout_id' => $result['layout_id'],
-				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/theme/edit', 'token=' . $this->session->data['token'] . '&layout_id=' . $result['layout_id'] . $url, true)
+			$data['themes'][] = array(
+				'theme_id' => $result['theme_id'],
+				'code'     => $result['name'],
+				'store'    => $result['name'],
+				'status'   => $result['status'],
+				'edit'     => $this->url->link('design/theme/edit', 'token=' . $this->session->data['token'] . '&layout_id=' . $result['layout_id'] . $url, true)
 			);
 		}
 

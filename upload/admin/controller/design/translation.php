@@ -20,7 +20,7 @@ class ControllerDesignTranslation extends Controller {
 		$this->load->model('design/translation');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_translation->editTranslation($this->request->get['path'], $this->request->post);
+			$this->model_design_translation->editTranslation($this->request->get['code'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		
@@ -91,12 +91,12 @@ class ControllerDesignTranslation extends Controller {
 		$files = array_splice($files, ($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));	
 		
 		foreach ($files as $file) {
-			$path = substr($file, strlen(DIR_CATALOG . '/language/' . $this->config->get('config_language')));
+			$code = substr($file, strlen(DIR_CATALOG . '/language/' . $this->config->get('config_language')));
 			
 			$data['files'][] = array(
-				'path'  => $path,
-				'total' => $this->model_design_translation->getTotalTranslationsByRoute($path),
-				'edit'  => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&path=' . $path . $url, true)
+				'route' => $code,
+				'total' => $this->model_design_translation->getTotalTranslationsByRoute($code),
+				'edit'  => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&code=' . $code . $url, true)
 			);
 		}
 		
@@ -105,7 +105,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
-		$data['column_path'] = $this->language->get('column_path');
+		$data['column_route'] = $this->language->get('column_route');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_action'] = $this->language->get('column_action');
 
@@ -143,15 +143,15 @@ class ControllerDesignTranslation extends Controller {
 	}
 
 	protected function getForm() {
-		if (isset($this->request->get['path'])) {
-			$path = $this->request->get['path'];
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
 		} else {
-			$path = '';
+			$code = '';
 		}		
 		
 		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
 		
-		if (is_file($directory . $path) && substr(str_replace('\\', '/', realpath($directory . $path . '.php')), 0, strlen(DIR_CATALOG . 'language/')) == DIR_CATALOG . 'language/') {
+		if (is_file($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code . '.php')), 0, strlen(DIR_CATALOG . 'language/')) == DIR_CATALOG . 'language/') {
 			$data['heading_title'] = $this->language->get('heading_title');
 	
 			$data['text_form'] = $this->language->get('text_edit');
@@ -203,7 +203,7 @@ class ControllerDesignTranslation extends Controller {
 	
 			$data['token'] = $this->session->data['token'];
 			
-			$data['path'] = $this->request->get['path'];
+			$data['code'] = $this->request->get['code'];
 			
 			if (isset($this->request->post['translations'])) {
 				$data['translations'] = $this->request->post['translations'];

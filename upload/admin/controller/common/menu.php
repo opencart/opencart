@@ -607,7 +607,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'report/sale_order')) {
 			$report_sale[] = array(
-				'name'	   => $this->language->get('text_report_sale'),
+				'name'	   => $this->language->get('text_report_sale_order'),
 				'href'     => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], true),
 				'children' => array()
 			);
@@ -615,7 +615,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'report/sale_tax')) {
 			$report_sale[] = array(
-				'name'	   => $this->language->get('text_report_tax'),
+				'name'	   => $this->language->get('text_report_sale_tax'),
 				'href'     => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], true),
 				'children' => array()	
 			);
@@ -623,7 +623,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'report/sale_shipping')) {
 			$report_sale[] = array(
-				'name'	   => $this->language->get('text_report_shipping'),
+				'name'	   => $this->language->get('text_report_sale_shipping'),
 				'href'     => $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], true),
 				'children' => array()	
 			);
@@ -631,7 +631,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'report/sale_return')) {	
 			$report_sale[] = array(
-				'name'	   => $this->language->get('text_report_return'),
+				'name'	   => $this->language->get('text_report_sale_return'),
 				'href'     => $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], true),
 				'children' => array()
 			);	
@@ -639,7 +639,7 @@ class ControllerCommonMenu extends Controller {
 		
 		if ($this->user->hasPermission('access', 'report/sale_coupon')) {		
 			$report_sale[] = array(
-				'name'	   => $this->language->get('text_report_coupon'),
+				'name'	   => $this->language->get('text_report_sale_coupon'),
 				'href'     => $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], true),
 				'children' => array()
 			);

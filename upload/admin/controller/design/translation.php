@@ -151,7 +151,7 @@ class ControllerDesignTranslation extends Controller {
 		
 		$directory = DIR_CATALOG . 'language/' . $this->config->get('config_language') . '/';
 		
-		if (is_file($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code . '.php')), 0, strlen(DIR_CATALOG . 'language/')) == DIR_CATALOG . 'language/') {
+		if (is_file($directory . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $code . '.php')), 0, strlen(DIR_CATALOG . 'language/')) == DIR_CATALOG . 'language/') {
 			$data['heading_title'] = $this->language->get('heading_title');
 	
 			$data['text_form'] = $this->language->get('text_edit');
@@ -197,7 +197,7 @@ class ControllerDesignTranslation extends Controller {
 				'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true)
 			);
 	
-			$data['action'] = $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&path=' . $this->request->get['path'] . $url, true);
+			$data['action'] = $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'] . '&code=' . $this->request->get['code'] . $url, true);
 	
 			$data['cancel'] = $this->url->link('design/translation', 'token=' . $this->session->data['token'] . $url, true);
 	
@@ -223,7 +223,7 @@ class ControllerDesignTranslation extends Controller {
 			
 			$_ = array();
 					
-			include($file);	
+			include($directory . $code . '.php');	
 		
 			$data['keys'] = array_keys($_);
 		
@@ -244,8 +244,8 @@ class ControllerDesignTranslation extends Controller {
 
 		if (isset($this->request->post['translation'])) {
 			foreach ($this->request->post['translation'] as $key => $translation) {
-				if ((utf8_strlen($language_image_description['title']) < 2) || (utf8_strlen($language_image_description['title']) > 64)) {
-					$this->error['language_image'][$language_image_id][$language_id] = $this->language->get('error_title');
+				if ((utf8_strlen($translation['value']) < 2) || (utf8_strlen($translation['value']) > 255)) {
+					$this->error['language_image'][$language_image_id][$language_id] = $this->language->get('error_value');
 				}
 			}
 		}

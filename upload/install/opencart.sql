@@ -3365,7 +3365,7 @@ CREATE TABLE `oc_translation` (
   `language_id` int(11) NOT NULL,
   `route` varchar(255) NOT NULL,
   `key` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
+  `value` text NOT NULL,
   PRIMARY KEY (`translation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

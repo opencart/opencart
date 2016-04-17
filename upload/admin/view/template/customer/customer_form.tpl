@@ -1116,7 +1116,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

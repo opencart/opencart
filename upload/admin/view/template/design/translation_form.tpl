@@ -40,8 +40,8 @@
               <?php foreach ($translations as $translation) { ?>
               <tr id="translation-row<?php echo $translation_row; ?>">
                 <td class="text-left"><select name="translation[<?php echo $translation_row; ?>][store_id]" class="form-control">
-                    <?php foreach ($stores as $store) { ?>
                     <option value="0"><?php echo $text_default; ?></option>
+                    <?php foreach ($stores as $store) { ?>
                     <?php if ($store['store_id'] == $translation['store_id']) { ?>
                     <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
                     <?php } else { ?>
@@ -58,15 +58,19 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><select name="translation[<?php echo $translation_row; ?>][key]" class="form-control">
-                    <?php foreach ($keys as $key) { ?>
-                    <?php if ($key == $translation['key']) { ?>
-                    <option value="<?php echo $key; ?>" selected="selected"><?php echo $key; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
+                <td class="text-left" style="width: 25%;"><div class="input-group">
+                    <select name="translation[<?php echo $translation_row; ?>][key]" class="form-control">
+                      <?php foreach ($keys as $key) { ?>
+                      <?php if ($key == $translation['key']) { ?>
+                      <option value="<?php echo $key; ?>" selected="selected"><?php echo $key; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                    <span class="input-group-btn">
+                    <button type="button" id="button-translation<?php echo $translation_row; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_translation; ?>" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button>
+                    </span></div></td>
                 <td class="text-left"><textarea name="translation[<?php echo $translation_row; ?>][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"><?php echo $translation['value']; ?></textarea></td>
                 <td class="text-left"><button type="button" onclick="$('#translation-row<?php echo $translation_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
@@ -100,11 +104,11 @@ function addTranslation() {
     html += '    <option value="<?php echo $language['language_id']; ?>"><?php echo addslashes($language['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';	
-	html += '  <td class="text-left"><select name="translation[' + translation_row + '][key]" class="form-control">';
+	html += '  <td class="text-left" style="width: 25%;"><div class="input-group"><select name="translation[' + translation_row + '][key]" class="form-control">';
     <?php foreach ($keys as $key) { ?>
     html += '    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>';
     <?php } ?>
-    html += '  </select></td>';			
+    html += '  </select><span class="input-group-btn"><button type="button" id="button-translation' + translation_row  + '" data-toggle="tooltip" title="<?php echo $button_translation; ?>" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button></span></div></td>';			
 	html += '  <td class="text-left"><textarea name="translation[' + translation_row + '][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"></textarea></td>';	
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#translation-row' + translation_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
@@ -114,29 +118,21 @@ function addTranslation() {
 	translation_row++;
 }
 
-$('select[name=\'translation\']').on('change', function() {
+$('#translation').delegate('button[id^=\'button-translation\']', 'click', function() {
+	var node = this;
+	
 	$.ajax({
-		url: 'index.php?route=design/translation&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&code=<?php echo $code; ?>&language_id=' + $(node).parent().parent().parent().parent().find('select[name$=\'[language_id]\'] option:selected').val() + '&key=' + $(node).parent().parent().parent().parent().find('select[name$=\'[key]\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$(node).button('loading');
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			 $(node).button('reset');
 		},
 		success: function(json) {
-			$('.alert, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
-
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				// Highlight any found errors
-				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
-			}
+			$(node).parent().parent().parent().parent().find('textarea[name$=\'[value]\']').val(json);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

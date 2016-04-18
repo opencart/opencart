@@ -116,19 +116,19 @@ final class Loader {
 	}
 	
 	public function config($route) {
-		$this->registry->get('event')->trigger('config/' . $route . '/before', $route);
+		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
 		
 		$this->registry->get('config')->load($route);
 		
-		$this->registry->get('event')->trigger('config/' . $route . '/after', $route);
+		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
 	}
 
 	public function language($route) {
-		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
+		$this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route));
 		
 		$output = $this->registry->get('language')->load($route);
 		
-		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
+		$this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
 		
 		return $output;
 	}

@@ -156,29 +156,23 @@ class ControllerDesignTranslation extends Controller {
 	
 			$data['text_form'] = $this->language->get('text_edit');
 			$data['text_default'] = $this->language->get('text_default');
+			$data['text_loading'] = $this->language->get('text_loading');
 			
 			$data['entry_store'] = $this->language->get('entry_store');
 			$data['entry_language'] = $this->language->get('entry_language');
 			$data['entry_key'] = $this->language->get('entry_key');
 			$data['entry_value'] = $this->language->get('entry_value');
-	
-			$data['help_default'] = $this->language->get('help_default');
 			
 			$data['button_save'] = $this->language->get('button_save');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_translation_add'] = $this->language->get('button_translation_add');
 			$data['button_remove'] = $this->language->get('button_remove');
+			$data['button_translation'] = $this->language->get('button_translation');
 	
 			if (isset($this->error['warning'])) {
 				$data['error_warning'] = $this->error['warning'];
 			} else {
 				$data['error_warning'] = '';
-			}
-			
-			if (isset($this->error['value'])) {
-				$data['error_value'] = $this->error['value'];
-			} else {
-				$data['error_value'] = '';
 			}
 			
 			$url = '';
@@ -209,8 +203,8 @@ class ControllerDesignTranslation extends Controller {
 			
 			if (isset($this->request->post['translations'])) {
 				$data['translations'] = $this->request->post['translations'];
-			} elseif (isset($this->request->get['file'])) {
-				$data['translations'] = $this->model_design_translation->getTranslationsByRoute($this->request->get['file']);
+			} elseif (isset($this->request->get['code'])) {
+				$data['translations'] = $this->model_design_translation->getTranslationsByRoute($this->request->get['code']);
 			} else {
 				$data['translations'] = array();
 			}
@@ -225,7 +219,7 @@ class ControllerDesignTranslation extends Controller {
 			
 			$_ = array();
 					
-			include($directory . $code . '.php');	
+			include($directory . $code . '.php');
 		
 			$data['keys'] = array_keys($_);
 		
@@ -249,31 +243,43 @@ class ControllerDesignTranslation extends Controller {
 	
 	public function translation() {
 		$json = array();
-		
-		if (isset($this->request->get['language'])) {
-			$language = $this->request->get['language'];
-		} else {
-			$language = $this->config->get('config_language');
-		}		
-		
+			
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
 			$code = '';
-		}		
-				
-		$directory = DIR_CATALOG . 'language/';
-		
-		if (is_file($directory . $language . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
-			$_ = array();
+		}
 					
-			include($file);	
+		if (isset($this->request->get['language_id'])) {
+			$language_id = $this->request->get['language_id'];
+		} else {
+			$language_id = 0;
+		}	
+		
+		if (isset($this->request->get['key'])) {
+			$key = $this->request->get['key'];
+		} else {
+			$key = '';
+		}	
+					
+		$this->load->model('localisation/language');
+		
+		$language_info = $this->model_localisation_language->getLanguage($language_id);
+		
+		if ($language_info) {
+			$directory = DIR_CATALOG . 'language/';
 			
-			if (isset($_[$key])) {
-				$json = $_[$key];
+			if (is_file($directory . $language_info['code'] . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
+				$_ = array();
+						
+				include($directory . $language_info['code'] . '/' . $code . '.php');	
+				
+				if (isset($_[$key])) {
+					$json = $_[$key];
+				}
 			}
 		}
-		
+			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	

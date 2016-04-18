@@ -75,26 +75,26 @@
           <fieldset>
             <legend><?php echo $text_legend; ?></legend>
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-md-3">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title"><?php echo $text_module; ?></h4>
                   </div>
                   <div class="panel-body">
-                    <ul id="modules" class="list-unstyled">
+                    <ul id="modules" class="list-unstyled" style="min-height: 100px;">
                       <?php foreach ($extensions as $extension) { ?>
                       <li>
                         <h4><?php echo $extension['name']; ?></h4>
                       </li>
                       <?php if (!$extension['module']) { ?>
                       <li>
-                        <div class="alert alert-info"><?php echo $extension['name']; ?><br />
+                        <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $extension['name']; ?><br />
                           <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><small>Edit</small></a> | <a href="#" class="alert-link"><small>Remove</small></a></div>
                       </li>
                       <?php } else { ?>
                       <?php foreach ($extension['module'] as $module) { ?>
                       <li>
-                        <div class="alert alert-info"><?php echo $module['name']; ?><br />
+                        <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $module['name']; ?><br />
                           <a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
                           <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
                           <input type="hidden" name="position" value="" />
@@ -108,7 +108,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-9">
+              <div class="col-md-9">
                 <?php $module_row = 0; ?>
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-6">
@@ -121,15 +121,15 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_left') { ?>
                           <li>
-                            <div class="alert alert-info"><?php echo $layout_module['name']; ?><br />
+                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
                               <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                             </div>
                           </li>
-                          <?php } ?>
                           <?php $module_row++; ?>
+                          <?php } ?>
                           <?php } ?>
                         </ul>
                       </div>
@@ -145,15 +145,15 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'content_top') { ?>
                           <li>
-                            <div class="alert alert-info"><?php echo $layout_module['name']; ?><br />
+                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
                               <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                             </div>
                           </li>
-                          <?php } ?>
                           <?php $module_row++; ?>
+                          <?php } ?>
                           <?php } ?>
                         </ul>
                       </div>
@@ -174,8 +174,8 @@
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                             </div>
                           </li>
-                          <?php } ?>
                           <?php $module_row++; ?>
+                          <?php } ?>
                           <?php } ?>
                         </ul>
                       </div>
@@ -191,15 +191,15 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_right') { ?>
                           <li>
-                            <div class="alert alert-info"><?php echo $layout_module['name']; ?><br />
+                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
                               <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                             </div>
                           </li>
-                          <?php } ?>
                           <?php $module_row++; ?>
+                          <?php } ?>
                           <?php } ?>
                         </ul>
                       </div>
@@ -243,49 +243,37 @@ $('#modules li').draggable({
 	revert: 'invalid',
 	opacity: 0.35,
 	zIndex: 100,
-	start: function(e, ui) {
-	
-	},
 	drag: function(e, ui) {
 		$(ui.helper).width($(e.target).width());
-		$(ui.helper).height($(e.target).height());	
 	},
+	start: function(e, ui) {
+		module_row++;
+	},	
 	stop: function(e, ui) {
-		if ($(ui.helper).parent().attr('id') == 'layout-column-left') {
-			$(ui.helper).parent().find('li').each(function(i, element) {
-             	// html = '';
-				//html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="<?php echo $layout_module['position']; ?>" />
-                //html += '<input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="' + i + '" />
-			});
-		}
+		$(ui.helper).removeAttr('style');
 		
-		$('#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom').refresh();
-		
-		if ($(ui.helper).parent().attr('id') == 'layout-column-right') {
+		alert(module_row);
 			
-		}	
+		$(ui.helper).parent().find('li').each(function(i, element) {
+			// html = '';
+			//html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="' + $(ui.helper).parent().attr('id').substr(7).replace('-', '_') ' +" />
+			//html += '<input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="' + i + '" />
 		
-		if ($(ui.helper).parent().attr('id') == 'layout-content-top') {
-			
-		}
-		
-		if ($(ui.helper).parent().attr('id') == 'layout-content-bottom') {
-			
-		}	
+			module_row++;
+		});
 	}	
 });
 
 $('#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom').sortable({
+	connectWith: '#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom',
+	placeholder: 'ui-state-highlight',
 	forcePlaceholderSize: true,
-	forceHelperSize: true,
-	placeholder: "ui-state-highlight",
 	handle: '.alert',
 	opacity: 0.35,
-	//zIndex: 100,
-	 forceHelperSize: true,
+	zIndex: 100,
 	start: function(e, ui) {
-		
-	},
+		module_row++;
+	},	
 	stop: function(e, ui) {
 		
 	}		

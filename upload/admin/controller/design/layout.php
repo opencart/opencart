@@ -274,7 +274,9 @@ class ControllerDesignLayout extends Controller {
 		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');
 		$data['text_column_right'] = $this->language->get('text_column_right');
-
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_remove'] = $this->language->get('text_remove');
+		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_route'] = $this->language->get('entry_route');
@@ -391,7 +393,7 @@ class ControllerDesignLayout extends Controller {
 					$data['extensions'][] = array(
 						'name'   => strip_tags($this->language->get('heading_title')),
 						'code'   => $code,
-						'module' => $module_data,
+						'module' => $module_data
 					);					
 				}
 			}

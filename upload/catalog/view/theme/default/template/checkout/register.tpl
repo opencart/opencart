@@ -418,7 +418,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
+						$(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

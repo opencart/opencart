@@ -201,8 +201,8 @@ class ControllerDesignTranslation extends Controller {
 			
 			$data['code'] = $this->request->get['code'];
 			
-			if (isset($this->request->post['translations'])) {
-				$data['translations'] = $this->request->post['translations'];
+			if (isset($this->request->post['translation'])) {
+				$data['translations'] = $this->request->post['translation'];
 			} elseif (isset($this->request->get['code'])) {
 				$data['translations'] = $this->model_design_translation->getTranslationsByRoute($this->request->get['code']);
 			} else {

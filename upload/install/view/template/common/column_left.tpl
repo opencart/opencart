@@ -49,7 +49,7 @@
 $('#language a').on('click', function(e) {
 	e.preventDefault();
 
-	$('#language input[name=\'code\']').attr('value', $(this).attr('href'));
+	$('#language input[name=\'code\']').val($(this).attr('href'));
 
 	$('#language').submit();
 });

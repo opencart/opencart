@@ -13,7 +13,7 @@ class ModelToolImage extends Model {
 		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $old_image);
 				 
-			if (!in_array($image_type, array(IMG_PNG, IMG_JPEG, IMG_GIF))) { 
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
 				return DIR_IMAGE . $old_image;
 			}
 						

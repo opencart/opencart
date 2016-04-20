@@ -25,17 +25,17 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
-              <div class="text-danger"><?php echo $error_name; ?></div>
-              <?php } ?>
-            </div>
-          </div>
           <fieldset>
             <legend><?php echo $text_legend; ?></legend>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+                <?php if ($error_name) { ?>
+                <div class="text-danger"><?php echo $error_name; ?></div>
+                <?php } ?>
+              </div>
+            </div>
             <table id="route" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
@@ -72,6 +72,44 @@
               </tfoot>
             </table>
           </fieldset>
+          
+                    <fieldset>
+            <legend><?php echo $text_legend; ?></legend>
+          
+              <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+              <div class="col-sm-10">
+                <select id="input-name" class="form-control">
+                       <?php foreach ($extensions as $extension) { ?>
+                       
+                       
+                      <?php if (!$extension['module']) { ?>
+                      <li>
+                        <div class="alert alert-info"><i class="fa fa-bars fw"></i> <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><?php echo $extension['name']; ?></a></div>
+                      </li>
+                      
+                      
+                      <?php } else { ?>
+                      <?php foreach ($extension['module'] as $module) { ?>
+                      <li>
+                        <div class="alert alert-info"><a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $module['name']; ?></a>
+                          <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
+                          <input type="hidden" name="position" value="" />
+                          <input type="hidden" name="sort_order" value="" />
+                        </div>
+                      </li>
+                      <?php } ?>
+                      <?php } ?>
+                      <?php } ?>               
+                
+                </select>
+              </div>        
+          </div>
+          
+          
+          </fieldset>
+          
+          
           <fieldset>
             <legend><?php echo $text_legend; ?></legend>
             <div class="row">
@@ -83,19 +121,14 @@
                   <div class="panel-body">
                     <ul id="modules" class="list-unstyled" style="min-height: 100px;">
                       <?php foreach ($extensions as $extension) { ?>
-                      <li>
-                        <h4><?php echo $extension['name']; ?></h4>
-                      </li>
                       <?php if (!$extension['module']) { ?>
                       <li>
-                        <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $extension['name']; ?><br />
-                          <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><small>Edit</small></a> | <a href="#" class="alert-link"><small>Remove</small></a></div>
+                        <div class="alert alert-info"><i class="fa fa-bars fw"></i> <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><?php echo $extension['name']; ?></a></div>
                       </li>
                       <?php } else { ?>
                       <?php foreach ($extension['module'] as $module) { ?>
                       <li>
-                        <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $module['name']; ?><br />
-                          <a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
+                        <div class="alert alert-info"><a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $module['name']; ?></a>
                           <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
                           <input type="hidden" name="position" value="" />
                           <input type="hidden" name="sort_order" value="" />
@@ -121,8 +154,7 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_left') { ?>
                           <li>
-                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
-                              <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
+                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
@@ -145,8 +177,7 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'content_top') { ?>
                           <li>
-                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
-                              <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
+                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
@@ -167,8 +198,7 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'content_bottom') { ?>
                           <li>
-                            <div class="alert alert-info"><?php echo $layout_module['name']; ?><br />
-                              <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
+                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
@@ -191,8 +221,7 @@
                           <?php foreach ($layout_modules as $layout_module) { ?>
                           <?php if ($layout_module['position'] == 'column_right') { ?>
                           <li>
-                            <div class="alert alert-info"><i class="fa fa-arrows fa-3x fw fa-pull-left"></i> <?php echo $layout_module['name']; ?><br />
-                              <a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link">Edit</a> | <a href="#" class="alert-link">Remove</a>
+                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                               <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
@@ -252,8 +281,14 @@ $('#modules li').draggable({
 	stop: function(e, ui) {
 		$(ui.helper).removeAttr('style');
 		
-		alert(module_row);
-			
+		var target = $(e.target);
+		
+		if (!target.is('li')) {
+		
+
+		}
+		/*
+		
 		$(ui.helper).parent().find('li').each(function(i, element) {
 			// html = '';
 			//html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="' + $(ui.helper).parent().attr('id').substr(7).replace('-', '_') ' +" />
@@ -261,6 +296,7 @@ $('#modules li').draggable({
 		
 			module_row++;
 		});
+		*/
 	}	
 });
 
@@ -269,6 +305,7 @@ $('#layout-column-left, #layout-column-right, #layout-content-top, #layout-conte
 	placeholder: 'ui-state-highlight',
 	forcePlaceholderSize: true,
 	handle: '.alert',
+	revert: false,
 	opacity: 0.35,
 	zIndex: 100,
 	start: function(e, ui) {

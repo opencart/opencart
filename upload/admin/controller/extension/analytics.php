@@ -101,7 +101,7 @@ class ControllerExtensionAnalytics extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);

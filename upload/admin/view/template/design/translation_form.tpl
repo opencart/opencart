@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-banner" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-translation" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -93,36 +93,36 @@ var translation_row = <?php echo $translation_row; ?>;
 
 function addTranslation() {
 	html  = '<tr id="translation-row' + translation_row + '">';
-    html += '  <td class="text-left"><select name="translation[' + translation_row + '][store_id]" class="form-control">';
-	html += '    <option value="0"><?php echo $text_default; ?></option>';	
-    <?php foreach ($stores as $store) { ?>
-    html += '    <option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
-    <?php } ?>
-    html += '  </select></td>';	
-    html += '  <td class="text-left"><select name="translation[' + translation_row + '][language_id]" class="form-control">';
-    <?php foreach ($languages as $language) { ?>
-    html += '    <option value="<?php echo $language['language_id']; ?>"><?php echo addslashes($language['name']); ?></option>';
-    <?php } ?>
-    html += '  </select></td>';	
+	html += '  <td class="text-left"><select name="translation[' + translation_row + '][store_id]" class="form-control">';
+	html += '    <option value="0"><?php echo $text_default; ?></option>';
+	<?php foreach ($stores as $store) { ?>
+	html += '    <option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+	<?php } ?>
+	html += '  </select></td>';
+	html += '  <td class="text-left"><select name="translation[' + translation_row + '][language_id]" class="form-control">';
+	<?php foreach ($languages as $language) { ?>
+	html += '    <option value="<?php echo $language['language_id']; ?>"><?php echo addslashes($language['name']); ?></option>';
+	<?php } ?>
+	html += '    </select></td>';
 	html += '  <td class="text-left" style="width: 25%;"><div class="input-group"><select name="translation[' + translation_row + '][key]" class="form-control">';
-    <?php foreach ($keys as $key) { ?>
-    html += '    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>';
-    <?php } ?>
-    html += '  </select><span class="input-group-btn"><button type="button" id="button-translation' + translation_row  + '" data-toggle="tooltip" title="<?php echo $button_translation; ?>" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button></span></div></td>';			
-	html += '  <td class="text-left"><textarea name="translation[' + translation_row + '][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"></textarea></td>';	
+	<?php foreach ($keys as $key) { ?>
+	html += '    <option value="<?php echo $key; ?>"><?php echo $key; ?></option>';
+	<?php } ?>
+	html += '    </select><span class="input-group-btn"><button type="button" id="button-translation' + translation_row  + '" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_translation; ?>" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button></span></div></td>';
+	html += '  <td class="text-left"><textarea name="translation[' + translation_row + '][value]" placeholder="<?php echo $entry_value; ?>" class="form-control"></textarea></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#translation-row' + translation_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
-	
+
 	$('#translation tbody').append(html);
-	
+
 	translation_row++;
 }
 
 $('#translation').delegate('button[id^=\'button-translation\']', 'click', function() {
 	var node = this;
-	
+
 	$.ajax({
-		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&code=<?php echo $code; ?>&language_id=' + $(node).parent().parent().parent().parent().find('select[name$=\'[language_id]\'] option:selected').val() + '&key=' + $(node).parent().parent().parent().parent().find('select[name$=\'[key]\'] option:selected').val(),
+		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&code=<?php echo $code; ?>&language_id=' + $(node).closest('tr').find('select[name$=\'[language_id]\'] option:selected').val() + '&key=' + $(node).closest('tr').find('select[name$=\'[key]\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -132,7 +132,7 @@ $('#translation').delegate('button[id^=\'button-translation\']', 'click', functi
 			 $(node).button('reset');
 		},
 		success: function(json) {
-			$(node).parent().parent().parent().parent().find('textarea[name$=\'[value]\']').val(json);
+			$(node).closest('tr').find('textarea[name$=\'[value]\']').val(json);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

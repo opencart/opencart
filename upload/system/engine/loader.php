@@ -138,7 +138,7 @@ final class Loader {
 				return $result;
 			}
 			
-			if (!isset($data[$route])) {
+			if (!isset($model[$route])) {
 				$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
 				$method = substr($route, strrpos($route, '/') + 1);

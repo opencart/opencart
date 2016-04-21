@@ -152,9 +152,11 @@ final class Loader {
 			}
 
 			$method = substr($route, strrpos($route, '/') + 1);
+			
+			$callable = array($model[$route], $method);
 
-			if (method_exists($model[$route], $method)) {
-				$output = call_user_func_array(array($model[$route], $method), $args);
+			if (is_callable($callable)) {
+				$output = call_user_func_array($callable, $args);
 			} else {
 				throw new \Exception('Error: Could not call model/' . $route . '!');
 			}

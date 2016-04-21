@@ -72,168 +72,215 @@
               </tfoot>
             </table>
           </fieldset>
-          
-                    <fieldset>
+          <fieldset style="overflow: hidden;">
             <legend><?php echo $text_legend; ?></legend>
-          
-              <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-module"><?php echo $entry_module; ?></label>
               <div class="col-sm-10">
-                <select id="input-name" class="form-control">
-                       <?php foreach ($extensions as $extension) { ?>
-                       
-                       
-                      <?php if (!$extension['module']) { ?>
-                      <li>
-                        <div class="alert alert-info"><i class="fa fa-bars fw"></i> <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><?php echo $extension['name']; ?></a></div>
-                      </li>
-                      
-                      
-                      <?php } else { ?>
-                      <?php foreach ($extension['module'] as $module) { ?>
-                      <li>
-                        <div class="alert alert-info"><a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $module['name']; ?></a>
-                          <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
-                          <input type="hidden" name="position" value="" />
-                          <input type="hidden" name="sort_order" value="" />
-                        </div>
-                      </li>
-                      <?php } ?>
-                      <?php } ?>
-                      <?php } ?>               
-                
-                </select>
-              </div>        
-          </div>
-          
-          
-          </fieldset>
-          
-          
-          <fieldset>
-            <legend><?php echo $text_legend; ?></legend>
+                <ul id="modules" class="list-unstyled">
+                  <li>
+                    <div class="input-group">
+                      <div class="input-group-btn"><a class="btn btn-default"><i class="fa fa-arrows"></i></a></div>
+                      <select id="input-module" class="form-control">
+                        <?php foreach ($extensions as $extension) { ?>
+                        <optgroup label="<?php echo $extension['name']; ?>">
+                        <?php if (!$extension['module']) { ?>
+                        <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                        <?php } else { ?>
+                        <?php foreach ($extension['module'] as $module) { ?>
+                        <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                        </optgroup>
+                        <?php } ?>
+                      </select>
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger" disabled="disabled"><i class="fa fa fa-minus-circle"></i></button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <?php $module_row = 0; ?>
             <div class="row">
-              <div class="col-md-3">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h4 class="panel-title"><?php echo $text_module; ?></h4>
-                  </div>
-                  <div class="panel-body">
-                    <ul id="modules" class="list-unstyled" style="min-height: 100px;">
-                      <?php foreach ($extensions as $extension) { ?>
-                      <?php if (!$extension['module']) { ?>
-                      <li>
-                        <div class="alert alert-info"><i class="fa fa-bars fw"></i> <a href="<?php echo $extension['edit']; ?>" target="_blank" class="alert-link"><?php echo $extension['name']; ?></a></div>
-                      </li>
-                      <?php } else { ?>
-                      <?php foreach ($extension['module'] as $module) { ?>
-                      <li>
-                        <div class="alert alert-info"><a href="<?php echo $module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $module['name']; ?></a>
-                          <input type="hidden" name="code" value="<?php echo $module['code']; ?>" />
-                          <input type="hidden" name="position" value="" />
-                          <input type="hidden" name="sort_order" value="" />
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="well well-sm">
+                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_column_left; ?></h5>
+                  <br />
+                  <ul id="layout-column-left" class="list-unstyled" style="min-height: 100px;">
+                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    <?php if ($layout_module['position'] == 'column_left') { ?>
+                    <li>
+                      <div class="input-group">
+                        <div class="input-group-btn"><a class="btn btn-default btn-sm"><i class="fa fa-arrows"></i></a></div>
+                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <?php foreach ($extensions as $extension) { ?>
+                          <optgroup label="<?php echo $extension['name']; ?>">
+                          <?php if (!$extension['module']) { ?>
+                          <?php if ($extension['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                          <?php } ?>
+                          <?php } else { ?>
+                          <?php foreach ($extension['module'] as $module) { ?>
+                          <?php if ($module['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                          <?php } ?>
+                          <?php } ?>
+                          <?php } ?>
+                          </optgroup>
+                          <?php } ?>
+                        </select>
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                         </div>
-                      </li>
-                      <?php } ?>
-                      <?php } ?>
-                      <?php } ?>
-                    </ul>
-                  </div>
+                      </div>
+                    </li>
+                    <?php $module_row++; ?>
+                    <?php } ?>
+                    <?php } ?>
+                  </ul>
                 </div>
               </div>
-              <div class="col-md-9">
-                <?php $module_row = 0; ?>
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title"><?php echo $text_column_left; ?></h4>
-                      </div>
-                      <div class="panel-body">
-                        <ul id="layout-column-left" class="list-unstyled" style="min-height: 100px;">
-                          <?php foreach ($layout_modules as $layout_module) { ?>
-                          <?php if ($layout_module['position'] == 'column_left') { ?>
-                          <li>
-                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                            </div>
-                          </li>
-                          <?php $module_row++; ?>
+              <div class="col-lg-6 col-md-4 col-sm-12">
+                <div class="well well-sm">
+                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_content_top; ?></h5>
+                  <br />
+                  <ul id="layout-content-top" class="list-unstyled" style="min-height: 100px;">
+                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    <?php if ($layout_module['position'] == 'content_top') { ?>
+                    <li>
+                      <div class="input-group">
+                        <div class="input-group-btn"><a class="btn btn-default btn-sm"><i class="fa fa-arrows"></i></a></div>
+                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <?php foreach ($extensions as $extension) { ?>
+                          <optgroup label="<?php echo $extension['name']; ?>">
+                          <?php if (!$extension['module']) { ?>
+                          <?php if ($extension['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                          <?php } ?>
+                          <?php } else { ?>
+                          <?php foreach ($extension['module'] as $module) { ?>
+                          <?php if ($module['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                           <?php } ?>
                           <?php } ?>
-                        </ul>
+                          <?php } ?>
+                          </optgroup>
+                          <?php } ?>
+                        </select>
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title"><?php echo $text_content_top; ?></h4>
-                      </div>
-                      <div class="panel-body">
-                        <ul id="layout-content-top" class="list-unstyled" style="min-height: 100px;">
-                          <?php foreach ($layout_modules as $layout_module) { ?>
-                          <?php if ($layout_module['position'] == 'content_top') { ?>
-                          <li>
-                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                            </div>
-                          </li>
-                          <?php $module_row++; ?>
+                    </li>
+                    <?php $module_row++; ?>
+                    <?php } ?>
+                    <?php } ?>
+                  </ul>
+                </div>
+                <div class="well well-sm">
+                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_content_bottom; ?></h5>
+                  <br />
+                  <ul id="layout-content-bottom" class="list-unstyled" style="min-height: 100px;">
+                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    <?php if ($layout_module['position'] == 'content_bottom') { ?>
+                    <li>
+                      <div class="input-group">
+                        <div class="input-group-btn"><a class="btn btn-default btn-sm"><i class="fa fa-arrows"></i></a></div>
+                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <?php foreach ($extensions as $extension) { ?>
+                          <optgroup label="<?php echo $extension['name']; ?>">
+                          <?php if (!$extension['module']) { ?>
+                          <?php if ($extension['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                          <?php } ?>
+                          <?php } else { ?>
+                          <?php foreach ($extension['module'] as $module) { ?>
+                          <?php if ($module['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                           <?php } ?>
                           <?php } ?>
-                        </ul>
+                          <?php } ?>
+                          </optgroup>
+                          <?php } ?>
+                        </select>
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title"><?php echo $text_content_bottom; ?></h4>
-                      </div>
-                      <div class="panel-body">
-                        <ul id="layout-content-bottom" class="list-unstyled" style="min-height: 100px;">
-                          <?php foreach ($layout_modules as $layout_module) { ?>
-                          <?php if ($layout_module['position'] == 'content_bottom') { ?>
-                          <li>
-                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                            </div>
-                          </li>
-                          <?php $module_row++; ?>
+                    </li>
+                    <?php $module_row++; ?>
+                    <?php } ?>
+                    <?php } ?>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="well well-sm">
+                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_column_right; ?></h5>
+                  <br />
+                  <ul id="layout-column-right" class="list-unstyled" style="min-height: 100px;">
+                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    <?php if ($layout_module['position'] == 'column_right') { ?>
+                    <li>
+                      <div class="input-group">
+                        <div class="input-group-btn"><a class="btn btn-default btn-sm"><i class="fa fa-arrows"></i></a></div>
+                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <?php foreach ($extensions as $extension) { ?>
+                          <optgroup label="<?php echo $extension['name']; ?>">
+                          <?php if (!$extension['module']) { ?>
+                          <?php if ($extension['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                          <?php } ?>
+                          <?php } else { ?>
+                          <?php foreach ($extension['module'] as $module) { ?>
+                          <?php if ($module['code'] == $layout_module['code']) { ?>
+                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                           <?php } ?>
                           <?php } ?>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title"><?php echo $text_column_right; ?></h4>
-                      </div>
-                      <div class="panel-body">
-                        <ul id="layout-column-right" class="list-unstyled" style="min-height: 100px;">
-                          <?php foreach ($layout_modules as $layout_module) { ?>
-                          <?php if ($layout_module['position'] == 'column_right') { ?>
-                          <li>
-                            <div class="alert alert-info"><a href="<?php echo $layout_module['edit']; ?>" target="_blank" class="alert-link"><i class="fa fa-bars fw"></i> <?php echo $layout_module['name']; ?></a>
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][code]" value="<?php echo $layout_module['code']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                              <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                            </div>
-                          </li>
-                          <?php $module_row++; ?>
                           <?php } ?>
+                          </optgroup>
                           <?php } ?>
-                        </ul>
+                        </select>
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    </li>
+                    <?php $module_row++; ?>
+                    <?php } ?>
+                    <?php } ?>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -267,26 +314,27 @@ var module_row = <?php echo $module_row; ?>;
 $('#modules li').draggable({
 	connectToSortable: '#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom',
 	placeholder: 'ui-state-highlight',
-	handle: '.alert',
+	handle: '.fa-arrows',
+	//cursor: '-webkit-grab',
 	helper: 'clone',
 	revert: 'invalid',
 	opacity: 0.35,
 	zIndex: 100,
 	drag: function(e, ui) {
-		$(ui.helper).width($(e.target).width());
+		//$(ui.helper).width($(e.target).width());
 	},
 	start: function(e, ui) {
-		module_row++;
+		
 	},	
 	stop: function(e, ui) {
 		$(ui.helper).removeAttr('style');
 		
-		var target = $(e.target);
+		//var target = $(e.target);
 		
-		if (!target.is('li')) {
+		//if (!target.is('li')) {
 		
 
-		}
+		//}
 		/*
 		
 		$(ui.helper).parent().find('li').each(function(i, element) {
@@ -304,12 +352,12 @@ $('#layout-column-left, #layout-column-right, #layout-content-top, #layout-conte
 	connectWith: '#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom',
 	placeholder: 'ui-state-highlight',
 	forcePlaceholderSize: true,
-	handle: '.alert',
+	handle: '.fa-arrows',
 	revert: false,
 	opacity: 0.35,
 	zIndex: 100,
 	start: function(e, ui) {
-		module_row++;
+		
 	},	
 	stop: function(e, ui) {
 		

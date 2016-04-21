@@ -405,7 +405,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-localStorage.setItem('display', 'list');
+localStorage.setItem('extension-tab', 'list');
 
 $('#tab-analytics').load('index.php?route=extension/module&token=<?php echo $token; ?>');
 

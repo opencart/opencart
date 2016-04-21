@@ -141,8 +141,7 @@ final class Loader {
 			if (!isset($model[$route])) {
 				$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
-				$method = substr($route, strrpos($route, '/') + 1);
-		
+
 				if (is_file($file)) {
 					include_once($file);
 				
@@ -151,7 +150,9 @@ final class Loader {
 					throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
 				}
 			}
-			
+
+			$method = substr($route, strrpos($route, '/') + 1);
+
 			if (method_exists($model[$route], $method)) {
 				$output = call_user_func_array(array($model[$route], $method), $args);
 			} else {

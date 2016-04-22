@@ -6,12 +6,18 @@ $_['heading_title']                 = 'Login and Pay with Amazon';
 $_['text_success']                  = 'Login and Pay with Amazon module has been updated';
 $_['text_ipn_url']					= 'Cron Job\'s URL';
 $_['text_ipn_token']				= 'Secret Token';
-$_['text_us']						= 'US';
-$_['text_germany']                  = 'Germany';
-$_['text_uk']                       = 'United Kingdom';
-$_['text_fr']                       = 'France';
-$_['text_it']                       = 'Italy';
-$_['text_es']                       = 'Spain';
+$_['text_us']						= 'American';
+$_['text_germany']                  = 'German';
+$_['text_uk']                       = 'English';
+$_['text_fr']                       = 'French';
+$_['text_it']                       = 'Italian';
+$_['text_es']                       = 'Spainish';
+
+$_['text_us_region']				= 'United States';
+$_['text_eu_region']                = 'Euro region';
+$_['text_uk_region']                = 'United Kingdom';
+
+
 $_['text_live']                     = 'Live';
 $_['text_sandbox']                  = 'Sandbox';
 $_['text_auth']						= 'Authorization';
@@ -78,7 +84,8 @@ $_['entry_access_key']              = 'Access Key';
 $_['entry_access_secret']           = 'Secret Key';
 $_['entry_client_id']               = 'Client ID';
 $_['entry_client_secret']           = 'Client Secret';
-$_['entry_marketplace']             = 'Marketplace';
+$_['entry_language']				= 'Language';
+$_['entry_payment_region']			= 'Payment Region';
 $_['entry_capture_status']          = 'Automatic capture status';
 $_['entry_pending_status']          = 'Pending Order Status';
 $_['entry_ipn_url']					= 'IPN\'s URL';

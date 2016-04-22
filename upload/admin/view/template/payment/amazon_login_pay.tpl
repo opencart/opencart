@@ -20,7 +20,7 @@
 		</div>
 	<?php } ?>
 	<div class="alert alert-info">
-	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>">
+	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" id="registration-form">
 		<input type="hidden" value="<?php echo $amazon_login_pay_marketplace; ?>" name="locale">
 		<input type="hidden" value="<?php echo $amazon_login_pay_merchant_id; ?>" name="spId">
 		<input type="hidden" value="<?php echo $unique_id; ?>" name="uniqueId">
@@ -43,56 +43,34 @@
 	  <div class="panel-body">
 		<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-login-pay" class="form-horizontal">
 		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="amazon-login-pay-marketplace"><?php echo $entry_marketplace; ?></label>
+			<label class="col-sm-2 control-label" for="amazon-login-pay-language"><?php echo $entry_language; ?></label>
 			<div class="col-sm-10">
-			  <select name="amazon_login_pay_marketplace" id="amazon-login-pay-marketplace" class="form-control">
-				<?php if ($amazon_login_pay_marketplace == 'uk') { ?>
-					<option value="de"><?php echo $text_germany; ?></option>
-					<option value="es"><?php echo $text_es; ?></option>
-					<option value="fr"><?php echo $text_fr; ?></option>
-					<option value="it"><?php echo $text_it; ?></option>
-					<option value="uk" selected="selected"><?php echo $text_uk; ?></option>
-					<option value="us"><?php echo $text_us; ?></option>
-				<?php } elseif ($amazon_login_pay_marketplace == 'de') { ?>
-					<option value="de" selected="selected"><?php echo $text_germany; ?></option>
-					<option value="es"><?php echo $text_es; ?></option>
-					<option value="fr"><?php echo $text_fr; ?></option>
-					<option value="it"><?php echo $text_it; ?></option>
-					<option value="uk"><?php echo $text_uk; ?></option>
-					<option value="us"><?php echo $text_us; ?></option>
-				<?php } elseif ($amazon_login_pay_marketplace == 'fr') { ?>
-					<option value="de"><?php echo $text_germany; ?></option>
-					<option value="es"><?php echo $text_es; ?></option>
-					<option value="fr" selected="selected"><?php echo $text_fr; ?></option>
-					<option value="it"><?php echo $text_it; ?></option>
-					<option value="uk"><?php echo $text_uk; ?></option>
-					<option value="us"><?php echo $text_us; ?></option>
-				<?php } elseif ($amazon_login_pay_marketplace == 'it') { ?>
-					<option value="de"><?php echo $text_germany; ?></option>
-					<option value="es"><?php echo $text_es; ?></option>
-					<option value="fr"><?php echo $text_fr; ?></option>
-					<option value="it" selected="selected"><?php echo $text_it; ?></option>
-					<option value="uk"><?php echo $text_uk; ?></option>
-					<option value="us"><?php echo $text_us; ?></option>
-				<?php } elseif ($amazon_login_pay_marketplace == 'es') { ?>
-					<option value="de"><?php echo $text_germany; ?></option>
-					<option value="es" selected="selected"><?php echo $text_es; ?></option>
-					<option value="fr"><?php echo $text_fr; ?></option>
-					<option value="it"><?php echo $text_it; ?></option>
-					<option value="uk"><?php echo $text_uk; ?></option>
-					<option value="us"><?php echo $text_us; ?></option>
-				<?php } else { ?>
-					<option value="de"><?php echo $text_germany; ?></option>
-					<option value="es"><?php echo $text_es; ?></option>
-					<option value="fr"><?php echo $text_fr; ?></option>
-					<option value="it"><?php echo $text_it; ?></option>
-					<option value="uk"><?php echo $text_uk; ?></option>
-					<option value="us" selected="selected"><?php echo $text_us; ?></option>
+			  <select name="amazon_login_pay_language" id="amazon-login-pay-language" class="form-control">
+				<?php foreach ($languages as $language_code => $language_name) { ?>
+					<?php if ($language_code == $amazon_login_pay_language) { ?>
+						<option value="<?php echo $language_name; ?>" selected="selected"><?php echo $language_name; ?></option>
+					<?php } else { ?>
+						<option value="<?php echo $language_name; ?>"><?php echo $language_name; ?></option>
+					<?php } ?>
 				<?php } ?>
 			  </select>
 			  <?php if ($error_curreny) { ?>
 				  <div class="text-danger"><?php echo $error_curreny; ?></div>
 			  <?php } ?>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="amazon-login-pay-payment-region"><?php echo $entry_payment_region; ?></label>
+			<div class="col-sm-10">
+			  <select name="amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
+				<?php foreach ($payment_regions as $payment_region_code => $payment_region_name) { ?>
+					<?php if ($payment_region_code == $amazon_login_pay_payment_region) { ?>
+						<option value="<?php echo $payment_region_name; ?>" selected="selected"><?php echo $payment_region_name; ?></option>
+					<?php } else { ?>
+						<option value="<?php echo $payment_region_name; ?>"><?php echo $payment_region_name; ?></option>
+					<?php } ?>
+				<?php } ?>
+			  </select>
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -320,8 +298,8 @@
       $('#sign-up').on('click', function () {
         if ($('input[name=\'amazon_login_pay_merchant_id\']').val() === '') {
           $('input[name=\'amazon_login_pay_merchant_id\']').parent().addClass('has-error');
-		  $(".form-group").removeClass('has-error');
-		  $('.text-danger').remove();
+          $(".form-group").removeClass('has-error');
+          $('.text-danger').remove();
           $('input[name=\'amazon_login_pay_merchant_id\']').after('<div class="text-danger"><?php echo $error_merchant_id; ?></div>');
         } else {
           var amazon_login_pay_marketplace = $('select[name=\'amazon_login_pay_marketplace\']').val();
@@ -344,7 +322,7 @@
             $('input[name=\'locale\']').val('USD');
             $('input[name=\'language\']').val('en-GB');
           }
-//                $("#registration-form").submit();
+          $("#registration-form").submit();
         }
 
       });

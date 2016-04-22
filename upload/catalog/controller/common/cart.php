@@ -94,8 +94,8 @@ class ControllerCommonCart extends Controller {
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
 				
-				$price = $this->currency->format($unit_price);
-				$total = $this->currency->format($unit_price * $product['quantity']);
+				$price = $this->currency->format($unit_price, $this->session->data['currency']);
+				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 			} else {
 				$price = false;
 				$total = false;

@@ -10,5 +10,8 @@
         "braintree/braintree_php" : "3.2.0",
         "leafo/scssphp": "0.0.12",
         "php": ">=5.4.0"
+    },
+    "suggest": {
+        "predis/predis": "Allows use of the Redis cache driver"
     }
 }

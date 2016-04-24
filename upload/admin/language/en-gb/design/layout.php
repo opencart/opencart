@@ -3,13 +3,15 @@
 $_['heading_title']       = 'Layouts';
 
 // Text
-$_['text_legend']         = 'Drag and drop the modules';
 $_['text_success']        = 'Success: You have modified layouts!';
 $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
 $_['text_remove']         = 'Remove';
 $_['text_module']         = 'Modules';
+
+$_['text_legend']         = 'Choose the position of the modules';
+
 $_['text_layout']         = 'Layout';
 $_['text_default']        = 'Default';
 $_['text_content_top']    = 'Content Top';

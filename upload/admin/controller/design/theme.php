@@ -6,74 +6,17 @@ class ControllerDesignTheme extends Controller {
 		$this->load->language('design/theme');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		// Codemirror
+		$this->document->addStyle('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css');
+		$this->document->addStyle('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css');
+		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js');
+		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js');
+		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js');
 		
 		$this->load->model('design/theme');
 
 		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('design/theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/theme');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_theme->addTheme($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/theme', 'token=' . $this->session->data['token'] . $url, true));
-		}
-
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('design/theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/theme');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_theme->editTheme($this->request->get['theme_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/theme', 'token=' . $this->session->data['token'] . $url, true));
-		}
-
-		$this->getForm();
 	}
 
 	public function delete() {
@@ -111,24 +54,6 @@ class ControllerDesignTheme extends Controller {
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'code';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -160,30 +85,9 @@ class ControllerDesignTheme extends Controller {
 
 		$data['themes'] = array();
 
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
-
-		$theme_total = $this->model_design_theme->getTotalThemes();
-
-		$results = $this->model_design_theme->getThemes($filter_data);
-
-		foreach ($results as $result) {
-			$data['themes'][] = array(
-				'theme_id' => $result['theme_id'],
-				'code'     => $result['code'],
-				'store'    => $result['store'],
-				'status'   => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'edit'     => $this->url->link('design/theme/edit', 'token=' . $this->session->data['token'] . '&theme_id=' . $result['theme_id'] . $url, true)
-			);
-		}
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_list'] = $this->language->get('text_list');
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -210,60 +114,17 @@ class ControllerDesignTheme extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = array();
-		}
-
-		$url = '';
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['sort_name'] = $this->url->link('design/theme', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$pagination = new Pagination();
-		$pagination->total = $theme_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/theme', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($theme_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($theme_total - $this->config->get('config_limit_admin'))) ? $theme_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $theme_total, ceil($theme_total / $this->config->get('config_limit_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/theme_list', $data));
+		$this->response->setOutput($this->load->view('design/theme', $data));
 	}
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_form'] = !isset($this->request->get['theme_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_module'] = $this->language->get('text_module');
 
 		$data['text_default'] = $this->language->get('text_default');
@@ -343,54 +204,27 @@ class ControllerDesignTheme extends Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		$this->load->model('extension/extension');
 
-		$this->load->model('extension/module');
-
-		$data['extensions'] = array();
-
-		// Get a list of installed modules
-		$extensions = $this->model_extension_extension->getInstalled('module');
-
-		// Add all the modules which have multiple settings for each module
-		foreach ($extensions as $code) {
-			$this->load->language('module/' . $code);
-
-			$module_data = array();
-
-			$modules = $this->model_extension_module->getModulesByCode($code);
-
-			foreach ($modules as $module) {
-				$module_data[] = array(
-					'name' => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module['name']),
-					'code' => $code . '.' .  $module['module_id'],
-					'edit' => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
-				);
-			}
-
-			if ($this->config->has($code . '_status') || $module_data) {
-				if (!$module_data) {
-					$data['extensions'][] = array(
-						'name'   => strip_tags($this->language->get('heading_title')),
-						'code'   => $code,
-						'module' => $module_data,
-						'edit'   => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'], true)
-					);
-				} else {
-					$data['extensions'][] = array(
-						'name'   => strip_tags($this->language->get('heading_title')),
-						'code'   => $code,
-						'module' => $module_data,
-					);					
-				}
-			}
-		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('design/theme_form', $data));
+	}
+
+	public function directory() {
+		$directory = DIR_CATALOG . 'view/theme/';
+		
+		if (is_file($directory . $language_info['code'] . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
+			$_ = array();
+					
+			include($directory . $language_info['code'] . '/' . $code . '.php');	
+			
+			if (isset($_[$key])) {
+				$json = $_[$key];
+			}
+		}	
 	}
 
 	protected function validateForm() {

@@ -16,8 +16,6 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
-		$this->document->addStyle('view/javascript/jquery/jquery-ui/jquery-ui.min.css');
 
 		$this->load->model('design/layout');
 
@@ -50,8 +48,6 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
-		$this->document->addStyle('view/javascript/jquery/jquery-ui/jquery-ui.min.css');
 
 		$this->load->model('design/layout');
 
@@ -283,6 +279,7 @@ class ControllerDesignLayout extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_route_add'] = $this->language->get('button_route_add');
+		$data['button_module_add'] = $this->language->get('button_module_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -375,7 +372,7 @@ class ControllerDesignLayout extends Controller {
 
 			foreach ($modules as $module) {
 				$module_data[] = array(
-					'name' => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module['name']),
+					'name' => strip_tags($module['name']),
 					'code' => $code . '.' .  $module['module_id'],
 					'edit' => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 				);
@@ -419,7 +416,7 @@ class ControllerDesignLayout extends Controller {
 				
 				if ($module_info) {
 					$data['layout_modules'][] = array(
-						'name'       => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module_info['name']),
+						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
 						'position'   => $layout_module['position'],
 						'sort_order' => $layout_module['sort_order']

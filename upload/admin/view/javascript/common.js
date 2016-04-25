@@ -324,7 +324,10 @@ $(document).ready(function() {
 
 			// Response
 			this.response = function(json) {
-				html = '';
+				var html = '';
+				var category = {};
+				var name;
+				var i = 0, j = 0;
 
 				if (json.length) {
 					for (i = 0; i < json.length; i++) {
@@ -337,27 +340,22 @@ $(document).ready(function() {
 						}
 					}
 
-					// Get all the ones with a categories
-					var category = [];
-
 					for (i = 0; i < json.length; i++) {
 						if (json[i]['category']) {
-							if (!category[json[i]['category']]) {
-								category[json[i]['category']] = {
-									name: json[i]['category'],
-									item: []
-								};
+							name = json[i]['category'];
+							if (!category[name]) {
+								category[name] = [];
 							}
 
-							category[json[i]['category']]['item'].push(json[i]);
+							category[name].push(json[i]);
 						}
 					}
 
-					for (i in category) {
-						html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
+					for (name in category) {
+						html += '<li class="dropdown-header">' + name + '</li>';
 
-						for (j = 0; j < category[i]['item'].length; j++) {
-							html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';
+						for (j = 0; j < category[name].length; j++) {
+							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
 						}
 					}
 				}

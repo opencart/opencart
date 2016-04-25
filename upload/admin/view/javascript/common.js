@@ -251,27 +251,30 @@ $(document).ready(function() {
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
+			var $this = $(this);
+			var $dropdown = $('<ul class="dropdown-menu" />');
+			
 			this.timer = null;
-			this.items = new Array();
+			this.items = [];
 
 			$.extend(this, option);
 
-			$(this).attr('autocomplete', 'off');
+			$this.attr('autocomplete', 'off');
 
 			// Focus
-			$(this).on('focus', function() {
+			$this.on('focus', function() {
 				this.request();
 			});
 
 			// Blur
-			$(this).on('blur', function() {
+			$this.on('blur', function() {
 				setTimeout(function(object) {
 					object.hide();
 				}, 200, this);
 			});
 
 			// Keydown
-			$(this).on('keydown', function(event) {
+			$this.on('keydown', function(event) {
 				switch(event.keyCode) {
 					case 27: // escape
 						this.hide();
@@ -295,19 +298,19 @@ $(document).ready(function() {
 
 			// Show
 			this.show = function() {
-				var pos = $(this).position();
+				var pos = $this.position();
 
-				$(this).siblings('ul.dropdown-menu').css({
-					top: pos.top + $(this).outerHeight(),
+				$dropdown.css({
+					top: pos.top + $this.outerHeight(),
 					left: pos.left
 				});
 
-				$(this).siblings('ul.dropdown-menu').show();
+				$dropdown.show();
 			}
 
 			// Hide
 			this.hide = function() {
-				$(this).siblings('ul.dropdown-menu').hide();
+				$dropdown.hide();
 			}
 
 			// Request
@@ -335,14 +338,15 @@ $(document).ready(function() {
 					}
 
 					// Get all the ones with a categories
-					var category = new Array();
+					var category = [];
 
 					for (i = 0; i < json.length; i++) {
 						if (json[i]['category']) {
 							if (!category[json[i]['category']]) {
-								category[json[i]['category']] = new Array();
-								category[json[i]['category']]['name'] = json[i]['category'];
-								category[json[i]['category']]['item'] = new Array();
+								category[json[i]['category']] = {
+									name: json[i]['category'],
+									item: []
+								};
 							}
 
 							category[json[i]['category']]['item'].push(json[i]);
@@ -364,12 +368,11 @@ $(document).ready(function() {
 					this.hide();
 				}
 
-				$(this).siblings('ul.dropdown-menu').html(html);
+				$dropdown.html(html);
 			}
 
-			$(this).after('<ul class="dropdown-menu"></ul>');
-			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
-
+			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
+			$dropdown.appendTo($this);
 		});
 	}
 })(window.jQuery);

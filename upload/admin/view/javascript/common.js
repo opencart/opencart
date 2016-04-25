@@ -331,17 +331,14 @@ $(document).ready(function() {
 
 				if (json.length) {
 					for (i = 0; i < json.length; i++) {
+						// update element items
 						this.items[json[i]['value']] = json[i];
-					}
 
-					for (i = 0; i < json.length; i++) {
 						if (!json[i]['category']) {
+							// ungrouped items
 							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
-						}
-					}
-
-					for (i = 0; i < json.length; i++) {
-						if (json[i]['category']) {
+						} else {
+							// grouped items
 							name = json[i]['category'];
 							if (!category[name]) {
 								category[name] = [];

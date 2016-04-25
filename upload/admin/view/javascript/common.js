@@ -289,7 +289,7 @@ $(document).ready(function() {
 			this.click = function(event) {
 				event.preventDefault();
 
-				value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).parent().attr('data-value');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);

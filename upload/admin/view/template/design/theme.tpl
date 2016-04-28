@@ -2,9 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-banner').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,98 +11,190 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php } ?>
-    <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-banner">
           <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-12">
-              <div class="table-responsive">
-                <div class="list-group"> <a href="" class="list-group-item">Cras justo odio</a> <a href="" class="list-group-item">Dapibus ac facilisis in</a> <a href="" class="list-group-item">Morbi leo risus</a> <a href="" class="list-group-item">Porta ac consectetur ac</a> <a href="" class="list-group-item"><i class="fa fa-arrow-left"></i> Back</a> </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div id="directory" class="list-group"></div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12">
+             <div class="panel panel-default">
+              <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
               </div>
             </div>
-            <div class="col-lg-9 col-md-8 col-sm-12">
-              <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
-            </div>
           </div>
-        </form>
+          <br />
+          <div class="pull-right"><button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
+            <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
+          </div>
       </div>
     </div>
   </div>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css" rel="stylesheet" />
+  <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css" rel="stylesheet" />
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script> 
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script> 
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script> 
   <script type="text/javascript"><!--
-$(document).ready(function() {	
-	$('#input-code').summernote({
-		disableDragAndDrop: false,
-		height: 300,
-		codemirror: { // codemirror options
-			theme: 'monokai'
-		},	
-		toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'underline', 'clear']],
-			['fontname', ['fontname']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['table', ['table']],
-			['insert', ['link', 'image', 'video']],
-			['view', ['fullscreen', 'codeview', 'help']]
-		],
-		buttons: {
-			image: function() {
-				var ui = $.summernote.ui;
+var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
+	mode: 'text/html',
+	height: '500px',
+	lineNumbers: true,
+    autofocus: true
+});
 
-				// create button
-				var button = ui.button({
-					contents: '<i class="fa fa-image" />',
-					tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
-					click: function () {
-						$('#modal-image').remove();
-					
-						$.ajax({
-							url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-							dataType: 'html',
-							beforeSend: function() {
-								$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-								$('#button-image').prop('disabled', true);
-							},
-							complete: function() {
-								$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-								$('#button-image').prop('disabled', false);
-							},
-							success: function(html) {
-								$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-								
-								$('#modal-image').modal('show');
-								
-								$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
-									e.preventDefault();
-									
-									$(element).summernote('insertImage', $(this).attr('href'));
-																
-									$('#modal-image').modal('hide');
-								});
-							}
-						});						
-					}
-				});
-			
-				return button.render();
+$.ajax({
+	url: 'index.php?route=design/theme/directory&token=<?php echo $token; ?>',
+	dataType: 'json',
+	success: function(json) {
+		html = '';
+		
+		if (json['directory']) {	
+			for (i = 0; i < json['directory'].length; i++) {
+				html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 			}
+		}
+		
+		if (json['file']) {
+			for (i = 0; i < json['file'].length; i++) {
+				html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+			}
+		}
+		
+		if (json['back']) {
+			html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + '</a>';
+		}
+					
+		$('#directory').html(html);
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+	  
+$('#directory').delegate('a.directory', 'click', function(e) {  
+	e.preventDefault();
+	
+	var node = this; 
+
+	$.ajax({
+		url: $(node).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			//$(node).find('i').replace('<i class="fa fa-spin"></i>');
+		},
+		complete: function() {
+			//$(node).button('reset');
+		},
+		success: function(json) {
+			console.log(json);
+			
+			html = '';
+			
+			if (json['directory']) {	
+				for (i = 0; i < json['directory'].length; i++) {
+					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
+			}
+			
+			if (json['file']) {
+				for (i = 0; i < json['file'].length; i++) {
+					html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
+			}
+			
+			if (json['back']) {
+				html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + ' </a>';
+			}
+										
+			$('#directory').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+})
+
+$('#directory').delegate('a.file', 'click', function(e) {
+	e.preventDefault();
+	 
+	var node = this; 
+	
+	$.ajax({
+		url: $(this).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+		//	$(node).find('i').replace('<i class="fa fa-spin"></i>');
+		},
+		complete: function() {
+			//$('#directory').button('reset');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+ 			if (json['code']) {
+				editor.set(json['code']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
+
+$('#button-save').on('click', function(e) { 
+	var node = this; 
+	
+	$.ajax({
+		url: $(this).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(node).button('reset');
+		},
+		complete: function() {
+			$(node).button('reset');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#button-reset').on('click', function(e) {
+	if (confirm('<?php echo $text_confirm; ?>')) { 
+		var node = this; 
+		
+		$.ajax({
+			url: $(this).attr('href'),
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).button('reset');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				if (json['error']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+
 //--></script> 
 </div>
 <?php echo $footer; ?>

@@ -77,266 +77,281 @@
             <?php $module_row = 0; ?>
             <div class="row">
               <div class="col-lg-3 col-md-4 col-sm-12">
-                <div class="well well-sm">
-                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_column_left; ?></h5>
-                  <br />
-                  <ul id="layout-column-left" class="list-unstyled">
+                <table id="module-column-left" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center"><?php echo $text_column_left; ?></td>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php foreach ($layout_modules as $layout_module) { ?>
                     <?php if ($layout_module['position'] == 'column_left') { ?>
-                    <li class="list-group-item">
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <?php if ($extension['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } ?>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <?php if ($module['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa fa-minus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
+                    <tr id="module-row<?php echo $module_row; ?>">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } ?>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                          <div class="input-group-btn">
+                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
                     <?php $module_row++; ?>
                     <?php } ?>
                     <?php } ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('layout-column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
               <div class="col-lg-6 col-md-4 col-sm-12">
-                <div class="well well-sm">
-                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_content_top; ?></h5>
-                  <br />
-                  <ul id="layout-content-top" class="list-unstyled">
+                <table id="module-content-top" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center"><?php echo $text_content_top; ?></td>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php foreach ($layout_modules as $layout_module) { ?>
                     <?php if ($layout_module['position'] == 'content_top') { ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <?php if ($extension['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } ?>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <?php if ($module['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
+                    <tr id="module-row<?php echo $module_row; ?>">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } ?>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                          <div class="input-group-btn">
+                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
                     <?php $module_row++; ?>
                     <?php } ?>
                     <?php } ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="well well-sm">
-                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_content_bottom; ?></h5>
-                  <br />
-                  <ul id="layout-content-bottom" class="list-unstyled">
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+
+                          <div class="input-group-btn">
+                            <button type="button" onclick="addModule('layout-column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
+                <table id="module-content-bottom" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center"><?php echo $text_content_bottom; ?></td>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php foreach ($layout_modules as $layout_module) { ?>
                     <?php if ($layout_module['position'] == 'content_bottom') { ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <?php if ($extension['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } ?>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <?php if ($module['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
+                    <tr id="module-row<?php echo $module_row; ?>">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } ?>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                          <div class="input-group-btn">
+                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
                     <?php $module_row++; ?>
                     <?php } ?>
                     <?php } ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
               <div class="col-lg-3 col-md-4 col-sm-12">
-                <div class="well well-sm">
-                  <h5 class="text-muted text-uppercase text-center"><?php echo $text_column_right; ?></h5>
-                  <br />
-                  <ul id="layout-column-right" class="list-unstyled">
+                <table id="module-column-right" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-center"><?php echo $text_column_right; ?></td>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php foreach ($layout_modules as $layout_module) { ?>
                     <?php if ($layout_module['position'] == 'column_right') { ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <?php if ($extension['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } ?>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <?php if ($module['code'] == $layout_module['code']) { ?>
-                          <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
+                    <tr id="module-row<?php echo $module_row; ?>">
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } ?>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                            <?php } else { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
+                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
+                          <div class="input-group-btn">
+                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
                     <?php $module_row++; ?>
                     <?php } ?>
                     <?php } ?>
-                    <li>
-                      <div class="input-group">
-                        <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
-                          <?php foreach ($extensions as $extension) { ?>
-                          <optgroup label="<?php echo $extension['name']; ?>">
-                          <?php if (!$extension['module']) { ?>
-                          <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                          <?php } else { ?>
-                          <?php foreach ($extension['module'] as $module) { ?>
-                          <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                          </optgroup>
-                          <?php } ?>
-                        </select>
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                        <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                        <div class="input-group-btn">
-                          <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="text-left"><div class="input-group">
+                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                            <?php foreach ($extensions as $extension) { ?>
+                            <optgroup label="<?php echo $extension['name']; ?>">
+                            <?php if (!$extension['module']) { ?>
+                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <?php } else { ?>
+                            <?php foreach ($extension['module'] as $module) { ?>
+                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                            </optgroup>
+                            <?php } ?>
+                          </select>
+                          <div class="input-group-btn">
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                          </div>
+                        </div></td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </fieldset>
@@ -366,9 +381,33 @@ function addRoute() {
 
 var module_row = <?php echo $module_row; ?>;
 
+function addModule(type) {
+	html  = '<tr id="module-row<?php echo $module_row; ?>">
+    html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
+	<?php foreach ($extensions as $extension) { ?>
+	html += '  <optgroup label="<?php echo addslashes($extension['name']); ?>">';
+	<?php if (!$extension['module']) { ?>
+	html += '  <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>';
+	<?php } else { ?>
+	<?php foreach ($extension['module'] as $module) { ?>
+	html += '  <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
+	<?php } ?>
+	<?php } ?>
+	html += '  </optgroup>';
+	<?php } ?>
+	html += '  </select>';
+    html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="<?php echo $layout_module['position']; ?>" />';
+    html += '<input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />';
+	html += '<div class="input-group-btn"><a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a> <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
+	html += '</tr>';
+	
+	$('#module tbody').append(html);
+	
+	module_row++;
+}
 
-$('#layout-column-left, #layout-column-right, #layout-content-top, #layout-content-bottom').delegate('li button', 'click', function() {
-	$(this).parent().parent().remove();
+$('#layout-column-left tbody, #layout-column-right tbody, #layout-content-top tbody, #layout-content-bottom tbody').delegate('button', 'click', function() {
+	$(this).parent().parent().parent().parent().remove();
 });
 //--></script> 
 </div>

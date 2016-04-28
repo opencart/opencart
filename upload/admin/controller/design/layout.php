@@ -406,7 +406,7 @@ class ControllerDesignLayout extends Controller {
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => $this->language->get('heading_title'),
+					'name'       => strip_tags($this->language->get('heading_title')),
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order']

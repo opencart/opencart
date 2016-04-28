@@ -2,9 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+      <div class="pull-right"> <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -26,7 +24,6 @@
           <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
           <input type="hidden" name="auction_type" value="FixedPriceItem" />
           <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
-
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $tab_feature; ?></a></li>
@@ -42,90 +39,89 @@
           <div class="tab-content">
             <div id="tab-listing-general" class="tab-pane active">
               <?php if ($product['store_cats'] != false) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">
-                    <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_shop_category; ?>"><?php echo $entry_shop_category; ?></span>
-                  </label>
-                  <div class="col-sm-10">
-                    <div class="row form-group">
-                      <div class="col-sm-12">
-                        <div class="input-group category-select-group">
-                          <span class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                          <select name="eBayStoreCatId" class="form-control">
-                            <option disabled selected><?php echo $text_select; ?></option>
-                            <?php foreach ($product['store_cats'] as $key => $cat) { ?>
-                              <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
-                            <?php } ?>
-                          </select>
-                        </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_shop_category; ?>"><?php echo $entry_shop_category; ?></span> </label>
+                <div class="col-sm-10">
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <div class="input-group category-select-group"> <span class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select name="eBayStoreCatId" class="form-control">
+                          <option disabled selected><?php echo $text_select; ?></option>
+                          <?php foreach ($product['store_cats'] as $key => $cat) { ?>
+                          <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
               <?php } ?>
               <?php if (!empty($product['popular_cats'])) { ?>
-                <div class="form-group" id="category-popular-row">
-                <label class="col-sm-2 control-label">
-                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_popular; ?>"><?php echo $entry_category_popular; ?></span>
-                </label>
+              <div class="form-group" id="category-popular-row">
+                <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_popular; ?>"><?php echo $entry_category_popular; ?></span> </label>
                 <div class="col-sm-10">
-                  <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
+                  <p>
+                    <input type="radio" name="popular" value="" id="popular_default" checked />
+                    <strong><?php echo $text_none; ?></strong></p>
                   <?php foreach ($product['popular_cats'] as $cat) { ?>
-                  <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" /> <?php echo $cat['breadcrumb']; ?></p>
+                  <p>
+                    <input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" />
+                    <?php echo $cat['breadcrumb']; ?></p>
                   <?php } ?>
                 </div>
               </div>
               <?php } else { ?>
-                <input type="hidden" name="popular" value="" />
+              <input type="hidden" name="popular" value="" />
               <?php } ?>
               <div class="form-group" id="category-selections-row">
                 <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-1-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-1" class="form-control" onchange="loadCategories(2);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-1-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-1" class="form-control" onchange="loadCategories(2);">
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-group" id="category-select-2-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-2-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-2" class="form-control" onchange="loadCategories(3);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-2-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-2" class="form-control" onchange="loadCategories(3);">
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-group" id="category-select-3-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-3-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-3" class="form-control" onchange="loadCategories(4);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-3-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-3" class="form-control" onchange="loadCategories(4);">
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-group" id="category-select-4-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-4-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-4" class="form-control" onchange="loadCategories(5);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-4-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-4" class="form-control" onchange="loadCategories(5);">
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-group" id="category-select-5-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-5-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-5" class="form-control" onchange="loadCategories(6);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-5-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-5" class="form-control" onchange="loadCategories(6);">
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-group" id="category-select-6-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group">
-                        <span id="category-select-6-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select id="category-select-6" class="form-control" onchange="loadCategories(7);"></select>
+                      <div class="input-group category-select-group"> <span id="category-select-6-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-6" class="form-control" onchange="loadCategories(7);">
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -133,9 +129,7 @@
                 </div>
               </div>
               <div class="form-group" id="category-suggested-row" style="display: none;">
-                <label class="col-sm-2 control-label">
-                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_suggested; ?>"><?php echo $entry_category_suggested; ?></span>
-                </label>
+                <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_suggested; ?>"><?php echo $entry_category_suggested; ?></span> </label>
                 <div class="col-sm-10">
                   <div id="suggested-cats"></div>
                 </div>
@@ -145,9 +139,9 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group condition-select-group">
-                        <span id="condition-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select name="condition" id="condition-input" class="form-control"></select>
+                      <div class="input-group condition-select-group"> <span id="condition-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select name="condition" id="condition-input" class="form-control">
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -158,16 +152,15 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group condition-select-group">
-                        <span id="duration-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
-                        <select name="auction_duration" id="duration-input" class="form-control"></select>
+                      <div class="input-group condition-select-group"> <span id="duration-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select name="auction_duration" id="duration-input" class="form-control">
+                        </select>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
             <div id="tab-listing-feature" class="tab-pane">
               <div class="well" style="display: none;" id="product_identifier_container">
                 <h3><?php echo $text_product_identifiers; ?></h3>
@@ -204,38 +197,35 @@
               </div>
               <div class="alert alert-info"><?php echo $text_features_help; ?></div>
               <div class="form-group">
-                <div class="col-sm-12">
-                  <span id="feature-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                <div class="col-sm-12"> <span id="feature-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span>
                   <div id="feature-content"></div>
                 </div>
               </div>
             </div>
-
             <div id="tab-listing-compatibility" class="tab-pane">
-                <div class="form-group">
-                  <div class="col-sm-12">
-                    <div class="alert alert-info" id="compatibility-loading" style="display:none;"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_compatibility; ?></div>
-                    <div id="compatibility-content"></div>
-                    <div id="compatibility-content-add" style="display: none;">
-                      <div class="form-group">
-                        <div class="col-sm-10 text-right">
-                          <button class="btn btn-primary" id="compatibility-button-add" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></button>
-                        </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <div class="alert alert-info" id="compatibility-loading" style="display:none;"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_compatibility; ?></div>
+                  <div id="compatibility-content"></div>
+                  <div id="compatibility-content-add" style="display: none;">
+                    <div class="form-group">
+                      <div class="col-sm-10 text-right">
+                        <button class="btn btn-primary" id="compatibility-button-add" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></button>
                       </div>
                     </div>
-
-                    <div id="compatibility-options" class="form-group" style="display:none;">
-                      <label class="col-sm-2 control-label"><?php echo $text_compatible; ?></label>
-                      <div class="col-sm-8">
-                        <div class="table-responsive">
-                          <table id="compatibility-table" class="table table-striped table-bordered table-hover"></table>
-                        </div>
+                  </div>
+                  <div id="compatibility-options" class="form-group" style="display:none;">
+                    <label class="col-sm-2 control-label"><?php echo $text_compatible; ?></label>
+                    <div class="col-sm-8">
+                      <div class="table-responsive">
+                        <table id="compatibility-table" class="table table-striped table-bordered table-hover">
+                        </table>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
-
             <div id="tab-listing-catalog" class="tab-pane">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_search_catalog; ?></label>
@@ -244,25 +234,19 @@
                     <div class="col-sm-3">
                       <input type="text" name="catalog_search" id="catalog-search" class="form-control" value="" />
                     </div>
-                    <div class="col-sm-1">
-                      <a class="btn btn-primary" id="button-catalog-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
-                    </div>
+                    <div class="col-sm-1"> <a class="btn btn-primary" id="button-catalog-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_catalog; ?></label>
-                <div class="col-sm-10">
-                  <span class="help-block">
-                    <input type="hidden" value="0" name="catalog_image">
-                    <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
-                     - <?php echo $text_catalog_help; ?>
-                  </span>
-                </div>
+                <div class="col-sm-10"> <span class="help-block">
+                  <input type="hidden" value="0" name="catalog_image">
+                  <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
+                  - <?php echo $text_catalog_help; ?> </span> </div>
               </div>
               <div class="row" id="product-catalog-container"></div>
             </div>
-
             <div id="tab-listing-description" class="tab-pane">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_title; ?></label>
@@ -283,20 +267,18 @@
                 </div>
               </div>
             </div>
-
             <div id="tab-listing-images" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
                   <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?></label>
                   <div class="col-sm-10">
-                    <div class="input-group">
-                      <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_theme'])) { ?>
-                          <?php foreach ($product['profiles_theme'] as $profile) { ?>
-                            <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                          <?php } ?>
+                        <?php foreach ($product['profiles_theme'] as $profile) { ?>
+                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                        <?php } ?>
                         <?php } ?>
                       </select>
                     </div>
@@ -321,18 +303,14 @@
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
-                      <div class="input-group">
-                        <span class="input-group-addon"><?php echo $text_height; ?></span>
+                      <div class="input-group"> <span class="input-group-addon"><?php echo $text_height; ?></span>
                         <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" maxlength="4" class="form-control" id="gallery_height" />
-                        <span class="input-group-addon"><?php echo $text_px; ?></span>
-                      </div>
+                        <span class="input-group-addon"><?php echo $text_px; ?></span> </div>
                     </div>
                     <div class="col-sm-3">
-                      <div class="input-group">
-                        <span class="input-group-addon"><?php echo $text_width; ?></span>
+                      <div class="input-group"> <span class="input-group-addon"><?php echo $text_width; ?></span>
                         <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" maxlength="4" class="form-control" id="gallery_width" />
-                        <span class="input-group-addon"><?php echo $text_px; ?></span>
-                      </div>
+                        <span class="input-group-addon"><?php echo $text_px; ?></span> </div>
                     </div>
                   </div>
                 </div>
@@ -342,18 +320,14 @@
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-3">
-                      <div class="input-group">
-                        <span class="input-group-addon"><?php echo $text_height; ?></span>
+                      <div class="input-group"> <span class="input-group-addon"><?php echo $text_height; ?></span>
                         <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" maxlength="4" class="form-control" id="thumb_height" />
-                        <span class="input-group-addon"><?php echo $text_px; ?></span>
-                      </div>
+                        <span class="input-group-addon"><?php echo $text_px; ?></span> </div>
                     </div>
                     <div class="col-sm-3">
-                      <div class="input-group">
-                        <span class="input-group-addon"><?php echo $text_width; ?></span>
+                      <div class="input-group"> <span class="input-group-addon"><?php echo $text_width; ?></span>
                         <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" maxlength="4" class="form-control" id="thumb_width" />
-                        <span class="input-group-addon"><?php echo $text_px; ?></span>
-                      </div>
+                        <span class="input-group-addon"><?php echo $text_px; ?></span> </div>
                     </div>
                   </div>
                 </div>
@@ -378,60 +352,55 @@
               </div>
               <div class="row">
                 <?php if (!empty($product['product_images'])) { ?>
-                  <div class="table-responsive">
-                    <table id="images" class="table table-striped table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <td class="text-center"><?php echo $column_thumb; ?></td>
-                          <td class="text-center"><?php echo $column_img_size; ?></td>
-                          <td class="text-center"><?php echo $column_template_image; ?> <input type="checkbox" name="all_template_images" value="1" id="check-all-template-images" style="margin-top:2px;" /></td>
-                          <td class="text-center"><?php echo $column_ebay_image; ?> <input type="checkbox" name="all_ebay_images" value="1" id="check-all-ebay-images" style="margin-top:2px;" /></td>
-                          <td class="text-center"><?php echo $column_main_ebay_image; ?></td>
-                        </tr>
-                      </thead>
-                      <tbody>
+                <div class="table-responsive">
+                  <table id="images" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td class="text-center"><?php echo $column_thumb; ?></td>
+                        <td class="text-center"><?php echo $column_img_size; ?></td>
+                        <td class="text-center"><?php echo $column_template_image; ?>
+                          <input type="checkbox" name="all_template_images" value="1" id="check-all-template-images" style="margin-top:2px;" /></td>
+                        <td class="text-center"><?php echo $column_ebay_image; ?>
+                          <input type="checkbox" name="all_ebay_images" value="1" id="check-all-ebay-images" style="margin-top:2px;" /></td>
+                        <td class="text-center"><?php echo $column_main_ebay_image; ?></td>
+                      </tr>
+                    </thead>
+                    <tbody>
                       <?php $i = 0; $i_valid = null; ?>
                       <?php foreach ($product['product_images'] as $img) { ?>
-                        <tr>
-                          <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
-                          <td class="text-center">
-                            <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
-                              <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
-                            <?php } else { ?>
-                              <?php if ($i_valid === null) { $i_valid = $i; } ?>
-                              <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
-                            <?php } ?>
-                          </td>
-                          <td class="text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="check-template-image" /></td>
-                          <td class="text-center">
-                            <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
-                            <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                              <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
-                            <?php } else { ?>
-                              -
-                            <?php } ?>
-                          </td>
-                          <td class="text-center">
-                            <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                              <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
-                            <?php } else { ?>
-                              -
-                            <?php } ?>
-                          </td>
-                        </tr>
-                        <?php $i++; ?>
+                      <tr>
+                        <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
+                        <td class="text-center"><?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
+                          <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
+                          <?php } else { ?>
+                          <?php if ($i_valid === null) { $i_valid = $i; } ?>
+                          <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
+                          <?php } ?></td>
+                        <td class="text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="check-template-image" /></td>
+                        <td class="text-center"><input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
+                          <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
+                          <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
+                          <?php } else { ?>
+                          -
+                          <?php } ?></td>
+                        <td class="text-center"><?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
+                          <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
+                          <?php } else { ?>
+                          -
+                          <?php } ?></td>
+                      </tr>
+                      <?php $i++; ?>
                       <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
+                    </tbody>
+                  </table>
+                </div>
                 <?php } else { ?>
-                    <div class="alert alert-danger"><?php echo $text_images_none; ?></div>
+                <div class="alert alert-danger"><?php echo $text_images_none; ?></div>
                 <?php } ?>
               </div>
-
               <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
-                <h2><?php echo $text_option_images; ?></h2>
-                <p><?php echo $text_option_description; ?></p>
+              <h2><?php echo $text_option_images; ?></h2>
+              <p><?php echo $text_option_description; ?></p>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_option_images_grp; ?></label>
                 <div class="col-sm-10">
@@ -449,45 +418,38 @@
                   <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
                     <div class="table-responsive">
                       <table class="table table-striped table-bordered table-hover">
-                      <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
-                      <tr>
-                        <td><?php echo $option_group_choice['name']; ?></td>
-                        <td>
-                          <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>"/>
-                          <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="btn btn-primary"><span><?php echo $text_add; ?></span></a>
-                        </td>
-                        <td>
-                          <table class="table table-striped table-bordered table-hover" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
-                            <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
-                            <tr>
-                              <td id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
-                                <img src="<?php echo $option_group_choice['image_thumb']; ?>"/>
-                                <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>"/>
-                              </td>
-                              <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                            </tr>
-                            <?php } ?>
-                            <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>"/>
-                          </table>
-                        </td>
-                      </tr>
-                      <?php } ?>
-                    </table>
-                  </div>
+                        <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
+                        <tr>
+                          <td><?php echo $option_group_choice['name']; ?></td>
+                          <td><input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>"/>
+                            <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="btn btn-primary"><span><?php echo $text_add; ?></span></a></td>
+                          <td><table class="table table-striped table-bordered table-hover" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
+                              <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
+                              <tr>
+                                <td id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>"><img src="<?php echo $option_group_choice['image_thumb']; ?>"/>
+                                  <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>"/></td>
+                                <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                              </tr>
+                              <?php } ?>
+                              <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>"/>
+                            </table></td>
+                        </tr>
+                        <?php } ?>
+                      </table>
+                    </div>
                   </div>
                   <?php } ?>
                 </div>
               </div>
               <?php } ?>
             </div>
-
             <div id="tab-listing-price" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
+                    <span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group">
-                      <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_generic'])) { foreach ($product['profiles_generic'] as $profile) { ?>
@@ -499,26 +461,25 @@
                 </div>
               </div>
               <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_stock_matrix; ?></label>
-                  <div class="col-sm-10">
-                    <table class="table table-striped table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <td><?php echo $column_sku; ?></td>
-                          <td><?php echo $column_stock_total; ?></td>
-                          <td><?php echo $column_stock_col_qty; ?></td>
-                          <td><?php echo $column_stock_col_qty_reserve; ?></td>
-                          <td><?php echo $column_stock_col_comb; ?></td>
-                          <td><?php echo $column_price_ex_tax; ?></td>
-                          <td><?php echo $column_price_inc_tax; ?></td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <input type="hidden" name="optGroupArray" value="<?php echo $product['option_group_array']; ?>" />
-                        <input type="hidden" name="optGroupRelArray" value="<?php echo $product['option_group_relation_array']; ?>" />
-
-  <?php
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_stock_matrix; ?></label>
+                <div class="col-sm-10">
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td><?php echo $column_sku; ?></td>
+                        <td><?php echo $column_stock_total; ?></td>
+                        <td><?php echo $column_stock_col_qty; ?></td>
+                        <td><?php echo $column_stock_col_qty_reserve; ?></td>
+                        <td><?php echo $column_stock_col_comb; ?></td>
+                        <td><?php echo $column_price_ex_tax; ?></td>
+                        <td><?php echo $column_price_inc_tax; ?></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <input type="hidden" name="optGroupArray" value="<?php echo $product['option_group_array']; ?>" />
+                    <input type="hidden" name="optGroupRelArray" value="<?php echo $product['option_group_relation_array']; ?>" />
+                    <?php
                         $option_count = 0;
                         foreach ($product['options'] as $option) {
                           if ($option_count == 0) {
@@ -549,74 +510,64 @@
                           $option_count++;
                         } ?>
                       </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
-                  <div class="col-sm-10">
-                    <div class="input-group col-xs-2">
-                      <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();" />
-                      <span class="input-group-addon">%</span>
-                    </div>
-                  </div>
-                </div>
-              <?php } else { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_qty; ?></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
-                    <span class="help-block"><?php echo $help_quantity_reserve; ?></span>
-                    <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_price; ?></label>
-                  <div class="col-sm-10">
-                    <div class="input-group col-xs-4">
-                      <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
-                      <span class="input-group-addon"><?php echo $text_price_ex_tax; ?></span>
-                    </div>
-                    <span class="help-block"><?php echo $help_price_ex_tax; ?></span>
-                    <div class="input-group col-xs-4">
-                      <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
-                      <span class="input-group-addon"><?php echo $text_price_inc_tax; ?></span>
-                    </div>
-                    <span class="help-block"><?php echo $help_price_inc_tax; ?></span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
-                  <div class="col-sm-10">
-                    <div class="input-group col-xs-2">
-                      <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
-                      <span class="input-group-addon">%</span>
-                    </div>
-                  </div>
-                </div>
-              <?php } ?>
-              <?php if (empty($product['options'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_offers; ?></label>
-                  <div class="col-sm-10">
-                    <input type="hidden" name="bestoffer" value="0" />
-                    <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
-                  </div>
-                </div>
-              <?php } ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_private; ?>"><?php echo $entry_private; ?></span>
-                </label>
-                <div class="col-sm-10">
-                  <span class="help-block">
-                    <input type="hidden" name="private_listing" value="0" />
-                    <input type="checkbox" name="private_listing" value="1" id="private_listing" />
-                  </span>
+                    
+                  </table>
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
+                <div class="col-sm-10">
+                  <div class="input-group col-xs-2">
+                    <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();" />
+                    <span class="input-group-addon">%</span> </div>
+                </div>
+              </div>
+              <?php } else { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_qty; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
+                  <span class="help-block"><?php echo $help_quantity_reserve; ?></span> <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $product['quantity']; ?><br/>
+                  <span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span> </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_price; ?></label>
+                <div class="col-sm-10">
+                  <div class="input-group col-xs-4">
+                    <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
+                    <span class="input-group-addon"><?php echo $text_price_ex_tax; ?></span> </div>
+                  <span class="help-block"><?php echo $help_price_ex_tax; ?></span>
+                  <div class="input-group col-xs-4">
+                    <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
+                    <span class="input-group-addon"><?php echo $text_price_inc_tax; ?></span> </div>
+                  <span class="help-block"><?php echo $help_price_inc_tax; ?></span> </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
+                <div class="col-sm-10">
+                  <div class="input-group col-xs-2">
+                    <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
+                    <span class="input-group-addon">%</span> </div>
+                </div>
+              </div>
+              <?php } ?>
+              <?php if (empty($product['options'])) { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_offers; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="bestoffer" value="0" />
+                  <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
+                </div>
+              </div>
+              <?php } ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_private; ?>"><?php echo $entry_private; ?></span> </label>
+                <div class="col-sm-10"> <span class="help-block">
+                  <input type="hidden" name="private_listing" value="0" />
+                  <input type="checkbox" name="private_listing" value="1" id="private_listing" />
+                  </span> </div>
+              </div>
             </div>
-
             <div id="tab-listing-payment" class="tab-pane">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_imediate_payment; ?></label>
@@ -630,13 +581,14 @@
                 <div class="col-sm-10">
                   <?php $paypal = false; ?>
                   <?php foreach ($product['payments'] as $payment) { ?>
-                    <?php if ($payment['ebay_name'] == 'PayPal') { ?>
-                      <?php $paypal = true; ?>
-                    <?php } else { ?>
-                      <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1"
-                        <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/> -
-                        <?php echo $payment['local_name']; ?></p>
-                    <?php } ?>
+                  <?php if ($payment['ebay_name'] == 'PayPal') { ?>
+                  <?php $paypal = true; ?>
+                  <?php } else { ?>
+                  <p>
+                    <input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1"
+                        <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/>
+                    - <?php echo $payment['local_name']; ?></p>
+                  <?php } ?>
                   <?php } ?>
                 </div>
               </div>
@@ -644,9 +596,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">PayPal</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <input type="checkbox" name="payments[PayPal]" value="1" <?php echo ($product['defaults']['ebay_payment_types']['PayPal'] == 1 ? 'checked="checked" ' : ''); ?> />
+                  <div class="input-group"> <span class="input-group-addon">
+                    <input type="checkbox" name="payments[PayPal]" value="1" <?php echo ($product['defaults']['ebay_payment_types']['PayPal'] == 1 ? 'checked="checked" ' : ''); ?> />
                     </span>
                     <input type="text" class="form-control" name="paypal_email" value="<?php echo $product['defaults']['paypal_address']; ?>" placeholder="<?php echo $text_paypal; ?>"/>
                   </div>
@@ -660,18 +611,17 @@
                 </div>
               </div>
             </div>
-
             <div id="tab-listing-shipping" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
+                    <span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group">
-                      <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_shipping'])) { foreach ($product['profiles_shipping'] as $profile) { ?>
-                          <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } }?>
                       </select>
                     </div>
@@ -682,15 +632,13 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_item_postcode; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="postcode" id="postcode" class="form-control" />
-                  <span class="help-block"><?php echo $text_item_postcode_help; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $text_item_postcode_help; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_item_location; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="location" id="location" class="form-control" />
-                  <span class="help-block"><?php echo $text_item_location_help; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $text_item_location_help; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_despatch_country; ?></label>
@@ -700,8 +648,7 @@
                     <option value="<?php echo $country['code'];?>"><?php echo $country['name'];?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_despatch_country_help; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $text_despatch_country_help; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_despatch_time; ?></label>
@@ -748,25 +695,21 @@
               </div>
               <?php } ?>
               <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
                 </div>
+              </div>
               <?php } ?>
-
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_shipping_type_nat; ?></label>
                 <div class="col-sm-10">
                   <select name="data[national][shipping_type]" class="form-control" id="shipping-type-national">
-                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
-                    <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
-                    <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
+                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?> <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?> <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
                   </select>
                 </div>
               </div>
-
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
                 <div class="col-sm-10">
@@ -774,13 +717,14 @@
                   <input type="checkbox" name="promotional_shipping_discount" value="1" id="promotional_shipping_discount" />
                 </div>
               </div>
-
               <div id="national-container-flat" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
                   <div class="col-sm-2">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label></p>
+                        <p>
+                          <label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label>
+                        </p>
                       </div>
                     </div>
                     <div class="row">
@@ -796,7 +740,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_handling_nat; ?></label>
@@ -808,7 +751,9 @@
                   <div class="col-sm-2">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label></p>
+                        <p>
+                          <label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label>
+                        </p>
                       </div>
                     </div>
                     <div class="row">
@@ -824,7 +769,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="national-container-freight" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_in_desc; ?></label>
@@ -834,17 +778,14 @@
                   </div>
                 </div>
               </div>
-
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_shipping_type_int; ?></label>
                 <div class="col-sm-10">
                   <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
-                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
-                    <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
+                    <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?> <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                   </select>
                 </div>
               </div>
-
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
                 <div class="col-sm-10">
@@ -852,13 +793,14 @@
                   <input type="checkbox" name="promotional_shipping_discount_international" value="1" id="promotional_shipping_discount_international" />
                 </div>
               </div>
-
               <div id="international-container-flat" style="display:none;" class="shipping-international-container">
                 <div class="form-group">
                   <div class="col-sm-2">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label></p>
+                        <p>
+                          <label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label>
+                        </p>
                       </div>
                     </div>
                     <div class="row">
@@ -874,7 +816,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_handling_int; ?></label>
@@ -886,7 +827,9 @@
                   <div class="col-sm-2">
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label></p>
+                        <p>
+                          <label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label>
+                        </p>
                       </div>
                     </div>
                     <div class="row">
@@ -902,14 +845,13 @@
                   </div>
                 </div>
               </div>
-
               <div class="well">
                 <div class="row form-group">
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_unit; ?></label>
                     <select name="package[unit]" class="form-control" id="measure-unit">
                       <?php foreach ($setting['measurement_types'] as $measurement_key => $measurement_value) { ?>
-                        <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
+                      <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
                       <?php } ?>
                     </select>
                   </div>
@@ -919,27 +861,25 @@
                         <label class="control-label"><?php echo $text_weight_major; ?></label>
                         <div class="input-group col-xs-12">
                           <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $product['weight_major']; ?>">
-                          <span class="input-group-addon" id="weight-major-text"></span>
-                        </div>
+                          <span class="input-group-addon" id="weight-major-text"></span> </div>
                       </div>
                       <div class="col-sm-6">
                         <label class="control-label"><?php echo $text_weight_minor; ?></label>
                         <div class="input-group col-xs-12">
                           <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $product['weight_minor']; ?>">
-                          <span class="input-group-addon" id="weight-minor-text"></span>
-                        </div>
+                          <span class="input-group-addon" id="weight-minor-text"></span> </div>
                       </div>
                     </div>
                   </div>
                   <?php if (!empty($setting['package_type'])) { ?>
-                    <div class="col-sm-3">
-                      <label class="control-label"><?php echo $text_package; ?></label>
-                      <select name="package[package]" class="form-control">
-                        <?php foreach ($setting['package_type'] as $package) { ?>
-                          <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
-                        <?php } ?>
-                      </select>
-                    </div>
+                  <div class="col-sm-3">
+                    <label class="control-label"><?php echo $text_package; ?></label>
+                    <select name="package[package]" class="form-control">
+                      <?php foreach ($setting['package_type'] as $package) { ?>
+                      <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
+                      <?php } ?>
+                    </select>
+                  </div>
                   <?php } ?>
                 </div>
                 <div class="row form-group">
@@ -947,22 +887,19 @@
                     <label class="control-label"><?php echo $text_depth; ?></label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[depth]" class="form-control" value="<?php echo $product['height']; ?>">
-                      <span class="input-group-addon size-unit-text"></span>
-                    </div>
+                      <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_length; ?></label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[length]" class="form-control" value="<?php echo $product['length']; ?>">
-                      <span class="input-group-addon size-unit-text"></span>
-                    </div>
+                      <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_width; ?></label>
                     <div class="input-group col-xs-12">
                       <input type="text" name="package[width]" class="form-control" value="<?php echo $product['width']; ?>">
-                      <span class="input-group-addon size-unit-text"></span>
-                    </div>
+                      <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_shape; ?></label>
@@ -974,14 +911,13 @@
                 </div>
               </div>
             </div>
-
             <div id="tab-listing-returns" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
+                    <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group">
-                      <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
@@ -1061,12 +997,9 @@
               </div>
               <?php } ?>
             </div>
-
             <div class="well">
               <div class="row">
-                <div class="col-sm-12 text-right">
-                  <a class="btn btn-primary" id="button-verify"><span><?php echo $text_verify; ?></span></a>
-                </div>
+                <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-verify"><span><?php echo $text_verify; ?></span></a> </div>
               </div>
             </div>
           </div>
@@ -1076,13 +1009,8 @@
         <div class="alert alert-info" id="listing-fee-container"></div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-6 text-left">
-              <a class="btn btn-primary" target="_BLANK" id="button-preview" style="display:none;"><i class="fa fa-external-link fa-lg"></i> <?php echo $text_preview; ?></a>
-              <a class="btn btn-primary" id="button-edit"><i class="fa fa-pencil fa-lg"></i> <?php echo $text_review_edit; ?></a>
-            </div>
-            <div class="col-sm-6 text-right">
-              <a class="btn btn-primary" id="button-save"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a>
-            </div>
+            <div class="col-sm-6 text-left"> <a class="btn btn-primary" target="_BLANK" id="button-preview" style="display:none;"><i class="fa fa-external-link fa-lg"></i> <?php echo $text_preview; ?></a> <a class="btn btn-primary" id="button-edit"><i class="fa fa-pencil fa-lg"></i> <?php echo $text_review_edit; ?></a> </div>
+            <div class="col-sm-6 text-right"> <a class="btn btn-primary" id="button-save"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a> </div>
           </div>
         </div>
       </div>
@@ -1090,13 +1018,8 @@
         <div class="alert alert-success"><?php echo $text_created_msg; ?>: <span id="item-number"></span></div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-6 text-left">
-              <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $button_view; ?></a>
-              <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a>
-            </div>
-            <div class="col-sm-6 text-right">
-              <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="fa fa-reply fa-lg"></i> <?php echo $text_return; ?></a>
-            </div>
+            <div class="col-sm-6 text-left"> <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $button_view; ?></a> <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a> </div>
+            <div class="col-sm-6 text-right"> <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="fa fa-reply fa-lg"></i> <?php echo $text_return; ?></a> </div>
           </div>
         </div>
       </div>
@@ -1115,6 +1038,9 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
 <script type="text/javascript"><!--
   function updateReserveMessage(elementId, total) {
       var reserve = total - $('#qty_'+elementId).val();
@@ -2512,5 +2438,5 @@
       $('#weight-minor-text').text('Grams');
     }
   }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

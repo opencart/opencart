@@ -2,7 +2,7 @@
 class ControllerPaymentDivido extends Controller {
 	private $error = array();
 
-	public function index () {
+	public function index() {
 		$this->load->language('payment/divido');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -16,46 +16,46 @@ class ControllerPaymentDivido extends Controller {
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
-		$data['heading_title']          = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit']              = $this->language->get('text_edit');
-		$data['text_enabled']           = $this->language->get('text_enabled');
-		$data['text_disabled']          = $this->language->get('text_disabled');
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
-		$data['entry_order_status']     = $this->language->get('entry_order_status');
-		$data['entry_status']           = $this->language->get('entry_status');
-		$data['entry_sort_order']       = $this->language->get('entry_sort_order');
-		$data['entry_api_key']          = $this->language->get('entry_api_key');
-		$data['entry_title']            = $this->language->get('entry_title');
+		$data['entry_order_status'] = $this->language->get('entry_order_status');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_api_key'] = $this->language->get('entry_api_key');
+		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_productselection'] = $this->language->get('entry_productselection');
-		$data['entry_planselection']    = $this->language->get('entry_planselection');
-		$data['entry_planlist']         = $this->language->get('entry_planlist');
-		$data['entry_price_threshold']  = $this->language->get('entry_price_threshold');
-        $data['entry_threshold_list']   = $this->language->get('entry_threshold_list');
-        $data['entry_category']         = $this->language->get('entry_category');
-        $data['entry_cart_threshold']   = $this->language->get('entry_cart_threshold');
+		$data['entry_planselection'] = $this->language->get('entry_planselection');
+		$data['entry_planlist'] = $this->language->get('entry_planlist');
+		$data['entry_price_threshold'] = $this->language->get('entry_price_threshold');
+		$data['entry_threshold_list'] = $this->language->get('entry_threshold_list');
+		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_cart_threshold'] = $this->language->get('entry_cart_threshold');
 
-        $data['help_api_key']          = $this->language->get('help_api_key');
-        $data['help_status']           = $this->language->get('help_status');
-        $data['help_order_status']     = $this->language->get('help_order_status');
-        $data['help_title']            = $this->language->get('help_title');
-        $data['help_planselection']    = $this->language->get('help_planselection');
-        $data['help_productselection'] = $this->language->get('help_productselection');
-        $data['help_category']         = $this->language->get('help_category');
-        $data['help_cart_threshold']   = $this->language->get('help_cart_threshold');
+		$data['help_api_key'] = $this->language->get('help_api_key');
+		$data['help_status'] = $this->language->get('help_status');
+		$data['help_order_status'] = $this->language->get('help_order_status');
+		$data['help_title'] = $this->language->get('help_title');
+		$data['help_planselection'] = $this->language->get('help_planselection');
+		$data['help_productselection'] = $this->language->get('help_productselection');
+		$data['help_category'] = $this->language->get('help_category');
+		$data['help_cart_threshold'] = $this->language->get('help_cart_threshold');
 
-		$data['entry_plans_options']     = array(
-			'all'      => $this->language->get('entry_plans_options_all'),
-			'selected' => $this->language->get('entry_plans_options_selected'),
+		$data['entry_plans_options'] = array(
+			'all'		=> $this->language->get('entry_plans_options_all'),
+			'selected'	=> $this->language->get('entry_plans_options_selected'),
 		);
 
-		$data['entry_products_options']  = array(
-			'all'       => $this->language->get('entry_products_options_all'),
-			'selected'  => $this->language->get('entry_products_options_selected'),
-			'threshold' => $this->language->get('entry_products_options_threshold'),
+		$data['entry_products_options']= array(
+			'all'		=> $this->language->get('entry_products_options_all'),
+			'selected'	=> $this->language->get('entry_products_options_selected'),
+			'threshold'	=> $this->language->get('entry_products_options_threshold'),
 		);
 
-		$data['button_save']   = $this->language->get('button_save');
+		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->load->model('localisation/order_status');
@@ -150,13 +150,13 @@ class ControllerPaymentDivido extends Controller {
 			$data['divido_plans_selected'] = array();
 		}
 
-        if (isset($this->request->post['divido_categories'])) {
-            $data['divido_categories'] = $this->request->post['divido_categories'];
-        } elseif ($this->config->get('divido_categories')) {
-            $data['divido_categories'] = $this->config->get('divido_categories');
-        } else {
-            $data['divido_categories'] = array();
-        }
+		if (isset($this->request->post['divido_categories'])) {
+			$data['divido_categories'] = $this->request->post['divido_categories'];
+		} elseif ($this->config->get('divido_categories')) {
+			$data['divido_categories'] = $this->config->get('divido_categories');
+		} else {
+			$data['divido_categories'] = array();
+		}
 
 		$data['categories'] = array();
 
@@ -190,35 +190,34 @@ class ControllerPaymentDivido extends Controller {
 	}
 
 
-    public function order() {
-        if (!$this->config->get('divido_status')) {
-            return null;
-        }
+	public function order() {
+		if (!$this->config->get('divido_status')) {
+			return null;
+		}
 
 		$this->load->model('payment/divido');
-        $this->load->language('payment/divido');
+		$this->load->language('payment/divido');
 
-        $order_id = $this->request->get['order_id'];
+		$order_id = $this->request->get['order_id'];
 
-        $lookup = $this->model_payment_divido->getLookupByOrderId($order_id);
-        $proposal_id = null;
-        $application_id = null;
-        if ($lookup->num_rows == 1) {
-            $lookup_data = $lookup->row;
-            $proposal_id  = $lookup_data['proposal_id'];
-            $application_id = $lookup_data['application_id'];
-        }
+		$lookup = $this->model_payment_divido->getLookupByOrderId($order_id);
+		$proposal_id = null;
+		$application_id = null;
+		if ($lookup->num_rows == 1) {
+			$lookup_data = $lookup->row;
+			$proposal_id = $lookup_data['proposal_id'];
+			$application_id = $lookup_data['application_id'];
+		}
 
-        $data['text_order_info'] = $this->language->get('text_order_info');
-        $data['text_proposal_id'] = $this->language->get('text_proposal_id');
-        $data['text_application_id'] = $this->language->get('text_application_id');
+		$data['text_order_info'] = $this->language->get('text_order_info');
+		$data['text_proposal_id'] = $this->language->get('text_proposal_id');
+		$data['text_application_id'] = $this->language->get('text_application_id');
 
-        $data['proposal_id'] = $proposal_id;
-        $data['application_id'] = $application_id;
+		$data['proposal_id'] = $proposal_id;
+		$data['application_id'] = $application_id;
 
-
-        return $this->load->view('payment/divido_order', $data);
-    }
+		return $this->load->view('payment/divido_order', $data);
+	}
 
 	public function install() {
 		$this->load->model('payment/divido');

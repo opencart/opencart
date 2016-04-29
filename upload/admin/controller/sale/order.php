@@ -417,8 +417,6 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
 
-		$data['token'] = $this->session->data['token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -470,6 +468,8 @@ class ControllerSaleOrder extends Controller {
 		);
 
 		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
+
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
@@ -787,8 +787,6 @@ class ControllerSaleOrder extends Controller {
 			$data['tab_history'] = $this->language->get('tab_history');
 			$data['tab_additional'] = $this->language->get('tab_additional');
 
-			$data['token'] = $this->session->data['token'];
-
 			$url = '';
 
 			if (isset($this->request->get['filter_order_id'])) {
@@ -843,6 +841,8 @@ class ControllerSaleOrder extends Controller {
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
 			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
+
+			$data['token'] = $this->session->data['token'];
 
 			$data['order_id'] = $this->request->get['order_id'];
 

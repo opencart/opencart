@@ -329,6 +329,8 @@ class ControllerDesignLayout extends Controller {
 
 		$data['cancel'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, true);
 
+		$data['token'] = $this->session->data['token'];
+
 		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
@@ -373,8 +375,7 @@ class ControllerDesignLayout extends Controller {
 			foreach ($modules as $module) {
 				$module_data[] = array(
 					'name' => strip_tags($module['name']),
-					'code' => $code . '.' .  $module['module_id'],
-					'edit' => $this->url->link('module/' . $code, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
+					'code' => $code . '.' .  $module['module_id']
 				);
 			}
 
@@ -383,7 +384,7 @@ class ControllerDesignLayout extends Controller {
 					'name'   => strip_tags($this->language->get('heading_title')),
 					'code'   => $code,
 					'module' => $module_data
-				);					
+				);
 			}
 		}
 

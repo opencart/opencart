@@ -111,9 +111,8 @@
                           </select>
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn">
-                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          <div class="input-group-btn"><a href="" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -124,7 +123,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <select class="form-control input-sm">
                             <?php foreach ($extensions as $extension) { ?>
                             <optgroup label="<?php echo $extension['name']; ?>">
                             <?php if (!$extension['module']) { ?>
@@ -140,7 +139,7 @@
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                           <div class="input-group-btn">
-                            <button type="button" onclick="addModule('layout-column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                            <button type="button" onclick="addModule('column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -182,9 +181,8 @@
                           </select>
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn">
-                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          <div class="input-group-btn"> <a href="" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -195,7 +193,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <select class="form-control input-sm">
                             <?php foreach ($extensions as $extension) { ?>
                             <optgroup label="<?php echo $extension['name']; ?>">
                             <?php if (!$extension['module']) { ?>
@@ -208,9 +206,8 @@
                             </optgroup>
                             <?php } ?>
                           </select>
-
                           <div class="input-group-btn">
-                            <button type="button" onclick="addModule('layout-column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                            <button type="button" onclick="addModule('content-top');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -250,9 +247,8 @@
                           </select>
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn">
-                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          <div class="input-group-btn"><a href="" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -277,7 +273,7 @@
                             <?php } ?>
                           </select>
                           <div class="input-group-btn">
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                            <button type="button" onclick="addModule('content-bottom');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -319,9 +315,8 @@
                           </select>
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
                           <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn">
-                            <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
+                          <div class="input-group-btn"><a href="" data-toggle="tooltip" title="<?php echo $button_edit; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                            <button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -346,7 +341,7 @@
                             <?php } ?>
                           </select>
                           <div class="input-group-btn">
-                            <button type="button" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
+                            <button type="button" onclick="addModule('column-right');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
                           </div>
                         </div></td>
                     </tr>
@@ -382,33 +377,50 @@ function addRoute() {
 var module_row = <?php echo $module_row; ?>;
 
 function addModule(type) {
-	html  = '<tr id="module-row<?php echo $module_row; ?>">
+	html  = '<tr id="module-row' + module_row + '">';
     html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
 	<?php foreach ($extensions as $extension) { ?>
-	html += '  <optgroup label="<?php echo addslashes($extension['name']); ?>">';
+	html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
 	<?php if (!$extension['module']) { ?>
-	html += '  <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>';
+	html += '      <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
 	<?php } else { ?>
 	<?php foreach ($extension['module'] as $module) { ?>
-	html += '  <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	<?php } ?>
-	html += '  </optgroup>';
+	html += '    </optgroup>';
 	<?php } ?>
 	html += '  </select>';
-    html += '<input type="hidden" name="layout_module[' + module_row + '][position]" value="<?php echo $layout_module['position']; ?>" />';
-    html += '<input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />';
-	html += '<div class="input-group-btn"><a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a> <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
+    html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replace('-', '_') + '" />';
+    html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
+	html += '  <div class="input-group-btn"><a href="" target="_blank" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
 	html += '</tr>';
 	
-	$('#module tbody').append(html);
+	$('#module-' + type + ' tbody').append(html);
+	
+	$('#module-' + type + ' tbody select[name=\'layout_module[' + module_row + '][code]\']').val($('#module-' + type + ' tfoot select').val());
+	
+	$('#module-' + type + ' select[name*=\'code\']').trigger('change');
+		
+	$('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
+		$(element).val(i);
+	});
 	
 	module_row++;
 }
 
-$('#layout-column-left tbody, #layout-column-right tbody, #layout-content-top tbody, #layout-content-bottom tbody').delegate('button', 'click', function() {
-	$(this).parent().parent().parent().parent().remove();
+$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').delegate('select[name*=\'code\']', 'change', function() {
+	var part = this.value.split('.');
+	
+	if (!part[1]) {
+		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>');
+		
+	} else {
+		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
+	}
 });
+
+$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');
 //--></script> 
 </div>
 <?php echo $footer; ?>

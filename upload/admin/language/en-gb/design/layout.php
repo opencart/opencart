@@ -8,7 +8,6 @@ $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
 $_['text_remove']         = 'Remove';
-$_['text_module']         = 'Modules';
 
 $_['text_legend']         = 'Choose the position of the modules';
 

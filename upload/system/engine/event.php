@@ -36,7 +36,7 @@ class Event {
 		}
 	}
 	
-	public function trigger($event, $args = array()) {
+	public function trigger($event, array $args = array()) {
 		foreach ($this->data as $trigger => $actions) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
 				foreach ($actions as $action) {

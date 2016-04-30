@@ -36,11 +36,11 @@ class Event {
 		}
 	}
 	
-	public function trigger($trigger, $args = array()) {
-		foreach ($this->data as $key => $value) {
-			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($key, '/')) . '/', $trigger)) {
-				foreach ($value as $event) {
-					$result = $event->execute($this->registry, $args);
+	public function trigger($event, $args = array()) {
+		foreach ($this->data as $trigger => $actions) {
+			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
+				foreach ($actions as $action) {
+					$result = $action->execute($this->registry, $args);
 					
 					if (!is_null($result) && !($result instanceof Exception)) {
 						return $result;

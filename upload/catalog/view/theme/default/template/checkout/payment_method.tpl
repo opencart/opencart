@@ -13,7 +13,7 @@
     <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" />
     <?php } ?>
     <?php echo $payment_method['title']; ?>
-    <?php if ($payment_method['terms']) { ?>
+    <?php $payment_method['terms']) { ?>
     (<?php echo $payment_method['terms']; ?>)
     <?php } ?>
   </label>
@@ -27,11 +27,7 @@
 <?php if ($text_agree) { ?>
 <div class="buttons">
   <div class="pull-right"><?php echo $text_agree; ?>
-    <?php if ($agree) { ?>
-    <input type="checkbox" name="agree" value="1" checked="checked" />
-    <?php } else { ?>
-    <input type="checkbox" name="agree" value="1" />
-    <?php } ?>
+    <input type="checkbox" name="agree" value="1"<?php echo $agree?' checked="checked"':''; ?>>
     &nbsp;
     <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>

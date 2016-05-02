@@ -75,7 +75,6 @@ class ControllerPaymentDivido extends Controller {
 			'text_total_interest'      => $this->language->get('text_total_interest'),
 			'text_monthly_installment' => $this->language->get('text_monthly_installment'),
 			'text_redirection'         => $this->language->get('text_redirection'),
-
 			'merchant_script'          => "//cdn.divido.com/calculator/{$js_key}.js",
 			'grand_total'              => $total,
 			'plan_list'                => $plans_list,

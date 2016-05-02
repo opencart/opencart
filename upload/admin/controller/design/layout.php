@@ -260,9 +260,8 @@ class ControllerDesignLayout extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_route'] = $this->language->get('text_route');
 		$data['text_module'] = $this->language->get('text_module');
-		$data['text_legend'] = $this->language->get('text_legend');
-		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_content_top'] = $this->language->get('text_content_top');
 		$data['text_content_bottom'] = $this->language->get('text_content_bottom');

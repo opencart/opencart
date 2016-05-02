@@ -8,10 +8,8 @@ $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
 $_['text_remove']         = 'Remove';
-
-$_['text_legend']         = 'Choose the position of the modules';
-
-$_['text_layout']         = 'Layout';
+$_['text_route']          = 'Choose the store and routes to be used with this layout';
+$_['text_module']         = 'Choose the position of the modules';
 $_['text_default']        = 'Default';
 $_['text_content_top']    = 'Content Top';
 $_['text_content_bottom'] = 'Content Bottom';

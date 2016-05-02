@@ -26,7 +26,7 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
           <fieldset>
-            <legend><?php echo $text_legend; ?></legend>
+            <legend><?php echo $text_route; ?></legend>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
               <div class="col-sm-10">
@@ -73,7 +73,7 @@
             </table>
           </fieldset>
           <fieldset>
-            <legend><?php echo $text_legend; ?></legend>
+            <legend><?php echo $text_module; ?></legend>
             <?php $module_row = 0; ?>
             <div class="row">
               <div class="col-lg-3 col-md-4 col-sm-12">

@@ -47,25 +47,15 @@ var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
 });
 
 $.ajax({
-	url: 'index.php?route=design/theme/directory&token=<?php echo $token; ?>',
+	url: 'index.php?route=design/theme/store&token=<?php echo $token; ?>',
 	dataType: 'json',
 	success: function(json) {
-		html = '';
+		html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['title'] + '</h4></span>';
 		
 		if (json['directory']) {	
 			for (i = 0; i < json['directory'].length; i++) {
 				html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 			}
-		}
-		
-		if (json['file']) {
-			for (i = 0; i < json['file'].length; i++) {
-				html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
-			}
-		}
-		
-		if (json['back']) {
-			html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + '</a>';
 		}
 					
 		$('#directory').html(html);
@@ -92,8 +82,8 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 		success: function(json) {
 			console.log(json);
 			
-			html = '';
-			
+			html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['title'] + '</h4></span>';
+						
 			if (json['directory']) {	
 				for (i = 0; i < json['directory'].length; i++) {
 					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
@@ -111,6 +101,10 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 			}
 										
 			$('#directory').html(html);
+			
+ 			if (json['code']) {
+				editor.set(json['code']);
+			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -124,7 +118,7 @@ $('#directory').delegate('a.file', 'click', function(e) {
 	var node = this; 
 	
 	$.ajax({
-		url: $(this).attr('href'),
+		url: $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 		//	$(node).find('i').replace('<i class="fa fa-spin"></i>');

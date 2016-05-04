@@ -16,20 +16,28 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-          <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-12">
-              <div id="directory" class="list-group"></div>
-            </div>
-            <div class="col-lg-9 col-md-9 col-sm-12">
-             <div class="panel panel-default">
-              <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div id="directory" class="list-group"></div>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-12">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab-general" data-toggle="tab">test
+                
+                </a><button type="button" class="close" data-dismiss="alert">&times;</button></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab-general">
+                <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
               </div>
             </div>
           </div>
-          <br />
-          <div class="pull-right"><button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
-            <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
-          </div>
+        </div>
+        <br />
+        <div class="pull-right">
+          <button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
+          <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
+        </div>
       </div>
     </div>
   </div>
@@ -39,18 +47,11 @@
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script> 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script> 
   <script type="text/javascript"><!--
-var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
-	mode: 'text/html',
-	height: '500px',
-	lineNumbers: true,
-    autofocus: true
-});
-
 $.ajax({
 	url: 'index.php?route=design/theme/store&token=<?php echo $token; ?>',
 	dataType: 'json',
 	success: function(json) {
-		html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['title'] + '</h4></span>';
+		html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['heading'] + '</h4></span>';
 		
 		if (json['directory']) {	
 			for (i = 0; i < json['directory'].length; i++) {
@@ -74,15 +75,17 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 		url: $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			//$(node).find('i').replace('<i class="fa fa-spin"></i>');
+			$(node).find('i').removeClass('fa-arrow-right');
+			$(node).find('i').addClass('fa-spin');
 		},
 		complete: function() {
-			//$(node).button('reset');
+			$(node).find('i').removeClass('<i class="fa fa-arrow-right fa-fw pull-right"></i>');
+			$(node).find('i').removeClass('fa-arrow-right');
 		},
 		success: function(json) {
 			console.log(json);
 			
-			html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['title'] + '</h4></span>';
+			html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['heading'] + '</h4></span>';
 						
 			if (json['directory']) {	
 				for (i = 0; i < json['directory'].length; i++) {
@@ -100,11 +103,9 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 				html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + ' </a>';
 			}
 										
-			$('#directory').html(html);
+			//$('#directory').html(html);
 			
- 			if (json['code']) {
-				editor.set(json['code']);
-			}			
+			$("#toggle").toggle( "slide" );
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -112,27 +113,43 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 	});
 })
 
-$('#directory').delegate('a.file', 'click', function(e) {
+$('#directory').delegate('a.file', 'click', function(e) { 
 	e.preventDefault();
-	 
+ 
 	var node = this; 
 	
 	$.ajax({
-		url: $(node).attr('href'),
+		url: $(this).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-		//	$(node).find('i').replace('<i class="fa fa-spin"></i>');
+			$(node).button('reset');
 		},
 		complete: function() {
-			//$('#directory').button('reset');
+			$(node).button('reset');
 		},
 		success: function(json) {
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
  			if (json['code']) {
-				editor.set(json['code']);
+				$('.nav-tabs').append('<li class="active"><a href="#tab-general" data-toggle="tab">test<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
+				
+				html  = '<div class="tab-pane active" id="tab-general">';
+				html += '  <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>';
+				html += '  <br />';
+				html += '  <div class="pull-right">';
+				html += '    <button type="button" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
+				html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+				html += '  </div>';
+				html += '</div>';
+
+				$('.tab-content').append(html);
+				
+				var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
+					mode: 'text/html',
+					height: '500px',
+					lineNumbers: true,
+					autofocus: true
+				});		
+				
+				editor.setValue(json['code']);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -146,6 +163,8 @@ $('#button-save').on('click', function(e) {
 	
 	$.ajax({
 		url: $(this).attr('href'),
+		type: 'post',
+		data: $('input[name=\'code\']'),		
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('reset');

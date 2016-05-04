@@ -40,16 +40,6 @@ class ModelUpgrade1006 extends Model {
 						}
 					}
 
-					//if(!is_dir(DIR_SYSTEM . 'modification/'){
-					//	$output = str_replace('system/modification','system/storage/modification',$output);
-					//	$output = str_replace('system/upload','system/storage/upload',$output);
-					//}
-
-					$output = str_replace('system/modification','system/storage/modification',$output);
-					$output = str_replace('system/upload','system/storage/upload',$output);
-					$output = str_replace('system/logs','system/storage/logs',$output);
-					$output = str_replace('system/cache','system/storage/cache',$output);
-
 					$file = fopen($file, 'w');
 
 					fwrite($file, $output);
@@ -59,43 +49,87 @@ class ModelUpgrade1006 extends Model {
 			}
 		}
 
-		// Clear existing modifications
+		// Update the config.php to add /storage/ to paths
+		if (is_file(DIR_OPENCART . 'config.php')) {
+			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
+
+			foreach ($files as $file) {
+				$upgrade = true;
+
+				$lines = file($file);
+
+				$output = '';
+
+				foreach ($lines as $line_id => $line) {
+					$output .= $line;
+				}
+
+				$output = str_replace('system/modification', 'system/storage/modification', $output);
+				$output = str_replace('system/upload', 'system/storage/upload', $output);
+				$output = str_replace('system/logs', 'system/storage/logs', $output);
+				$output = str_replace('system/cache', 'system/storage/cache', $output);
+
+				// Since the download folder has had multiple locations, first set them all back to /download, then adjust to the new location
+				$output = str_replace('system/download', '/download', $output);
+				$output = str_replace('system/storage/download', '/download', $output);
+				$output = str_replace('/download', 'system/storage/download', $output);
+
+				$file = fopen($file, 'w');
+
+				fwrite($file, $output);
+
+				fclose($file);
+
+			}
+		}
+
+		// Disable any existing ocmods
 		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET status = 0");
 
-		if (defined('DIR_MODIFICATION')) {
-			$files = array();
+		// Cleanup files in old directories
+		$directories = array(
+			DIR_SYSTEM . 'modification/',
+			DIR_SYSTEM . 'storage/modification/',
+			DIR_SYSTEM . 'logs/',
+			DIR_SYSTEM . 'cache/',
+		);
 
-			// Make path into an array
-			$path = array(DIR_MODIFICATION . '*');
+        $files = array();
 
-			// While the path array is still populated keep looping through
-			while (count($path) != 0) {
-				$next = array_shift($path);
+        foreach ($directories as $dir) {
+			if (is_dir($dir)){
+				// Make path into an array
+				$path = array($dir . '*');
 
-				foreach (glob($next) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
+				// While the path array is still populated keep looping through
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					foreach (glob($next) as $file) {
+						// If directory add to path array
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+
+						// Add the file to the files to be deleted array
+						$files[] = $file;
 					}
 
-					// Add the file to the files to be deleted array
-					$files[] = $file;
-				}
-			}
+					// Reverse sort the file array
+					rsort($files);
 
-			// Reverse sort the file array
-			rsort($files);
+					// Clear all modification files
+					foreach ($files as $file) {
+						if ($file != $dir . 'index.html') {
+							// If file just delete
+							if (is_file($file)) {
+								@unlink($file);
 
-			// Clear all modification files
-			foreach ($files as $file) {
-				if ($file != DIR_MODIFICATION . 'index.html') {
-					// If file just delete
-					if (is_file($file)) {
-						@unlink($file);
-
-					// If directory use the remove directory function
-					} elseif (is_dir($file)) {
-						@rmdir($file);
+								// If directory use the remove directory function
+							} elseif (is_dir($file)) {
+								@rmdir($file);
+							}
+						}
 					}
 				}
 			}
@@ -113,6 +147,15 @@ class ModelUpgrade1006 extends Model {
 		// Merge system/upload to system/storage/upload
 		if (file_exists(DIR_SYSTEM . 'upload')) {
 			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
+		}
+
+		// Merge download or system/download to system/storage/download
+		if (file_exists(DIR_OPENCART . 'download')) {
+			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/upload');
+		}
+
+		if (file_exists(DIR_SYSTEM . 'download')) {
+			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/upload');
 		}
 
 		// Convert image/data to image/catalog
@@ -153,6 +196,8 @@ class ModelUpgrade1006 extends Model {
 	            @unlink($f->getRealPath());
 	        }
 	    }
+		
+		// Remove source folder after move
 	    @unlink($src);
 	}
 }

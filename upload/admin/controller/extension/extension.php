@@ -548,6 +548,19 @@ class ControllerExtensionExtension extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/extension')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+		
+		$allowed = array(
+			'analytics',
+			'captcha',
+			'feed',
+			'fraud',
+			'module',
+			'payment',
+			'shipping',
+			'theme',
+			'total'				
+		);
+
 
 		return !$this->error;
 	}	

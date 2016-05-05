@@ -259,7 +259,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <select class="form-control input-sm">
                             <?php foreach ($extensions as $extension) { ?>
                             <optgroup label="<?php echo $extension['name']; ?>">
                             <?php if (!$extension['module']) { ?>
@@ -327,7 +327,7 @@
                   <tfoot>
                     <tr>
                       <td class="text-left"><div class="input-group">
-                          <select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control input-sm">
+                          <select class="form-control input-sm">
                             <?php foreach ($extensions as $extension) { ?>
                             <optgroup label="<?php echo $extension['name']; ?>">
                             <?php if (!$extension['module']) { ?>

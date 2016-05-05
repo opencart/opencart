@@ -136,8 +136,6 @@
                             </optgroup>
                             <?php } ?>
                           </select>
-                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][position]" value="<?php echo $layout_module['position']; ?>" />
-                          <input type="hidden" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
                           <div class="input-group-btn">
                             <button type="button" onclick="addModule('column-left');" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button>
                           </div>
@@ -414,7 +412,6 @@ $('#module-column-left, #module-column-right, #module-content-top, #module-conte
 	
 	if (!part[1]) {
 		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>');
-		
 	} else {
 		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
 	}

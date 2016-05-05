@@ -14,7 +14,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -51,7 +51,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_analytics'),
-			'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -61,7 +61,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 
 		$data['action'] = $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 
-		$data['cancel'] = $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 		
 		$data['token'] = $this->session->data['token'];
 				

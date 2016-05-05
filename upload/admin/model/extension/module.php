@@ -19,7 +19,7 @@ class ModelExtensionModule extends Model {
 		if ($query->row) {
 			return json_decode($query->row['setting'], true);
 		} else {
-			return array();	
+			return array();
 		}
 	}
 	

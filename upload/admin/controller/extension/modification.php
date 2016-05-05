@@ -681,7 +681,7 @@ class ControllerExtensionModification extends Controller {
 				'link'            => $result['link'],
 				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
 				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
-				'enabled'         => $result['status'],
+				'enabled'         => $result['status']
 			);
 		}
 

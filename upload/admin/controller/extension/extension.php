@@ -39,7 +39,7 @@ class ControllerExtensionExtension extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/analytics');
+		$this->load->language('extension/extension');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -159,8 +159,8 @@ class ControllerExtensionExtension extends Controller {
 				
 				$data['analytics'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->link('extension/analytics/install', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/analytics/uninstall', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'store'     => $store_data
 				);
@@ -199,8 +199,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['captchas'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -239,8 +239,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['feeds'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -327,15 +327,15 @@ class ControllerExtensionExtension extends Controller {
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
 						'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
-						'delete'    => $this->url->link('extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
+						'delete'    => $this->url->link('extension/extension/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 					);
 				}
 
 				$data['modules'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -384,8 +384,8 @@ class ControllerExtensionExtension extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('payment/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -425,8 +425,8 @@ class ControllerExtensionExtension extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -480,8 +480,8 @@ class ControllerExtensionExtension extends Controller {
 				
 				$data['themes'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->link('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'store'     => $store_data
 				);
@@ -521,8 +521,8 @@ class ControllerExtensionExtension extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
 				);

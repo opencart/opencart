@@ -154,6 +154,14 @@ class ControllerCommonMenu extends Controller {
 			);
 		}
 		
+		if ($this->user->hasPermission('access', 'extension/event')) {
+			$extension[] = array(
+				'name'	   => $this->language->get('text_event'),
+				'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+				
 		if ($extension) {					
 			$data['menus'][] = array(
 				'id'       => 'menu-extension',

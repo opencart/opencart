@@ -23,6 +23,7 @@ class ControllerDesignTheme extends Controller {
 
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');

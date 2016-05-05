@@ -18,7 +18,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -30,7 +30,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -116,7 +116,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['fetch'] = $this->url->link('payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab', true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['laybuys_membership_id'])) {
 			$data['laybuys_membership_id'] = $this->request->post['laybuys_membership_id'];
@@ -714,7 +714,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function install() {
-		if ($this->user->hasPermission('modify', 'extension/payment')) {
+		if ($this->user->hasPermission('modify', 'extension/extension')) {
 			$this->load->model('payment/laybuy');
 
 			$this->model_payment_laybuy->install();
@@ -722,7 +722,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function uninstall() {
-		if ($this->user->hasPermission('modify', 'extension/payment')) {
+		if ($this->user->hasPermission('modify', 'extension/extension')) {
 			$this->load->model('payment/laybuy');
 
 			$this->model_payment_laybuy->uninstall();
@@ -755,7 +755,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(

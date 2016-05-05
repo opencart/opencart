@@ -1375,6 +1375,8 @@ CREATE TABLE `oc_event` (
   `code` varchar(32) NOT NULL,
   `trigger` text NOT NULL,
   `action` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,  
   PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

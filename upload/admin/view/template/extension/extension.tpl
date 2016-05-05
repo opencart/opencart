@@ -407,10 +407,10 @@
 <script type="text/javascript"><!--
 localStorage.setItem('extension-tab', 'list');
 
-$('#tab-analytics').load('index.php?route=extension/module&token=<?php echo $token; ?>');
+$('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
 
 $('#tab-analytics').on('click', function() {
-	$('#tab-analytics').load('index.php?route=extension/module&token=<?php echo $token; ?>');
+	$('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
 });
 
 //$('#tab-analytics').trigger();

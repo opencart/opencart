@@ -16,7 +16,4 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-$application_config = 'catalog';
-
-// Application
-require_once(DIR_SYSTEM . 'framework.php');
+start('catalog');

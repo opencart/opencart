@@ -16,7 +16,7 @@ class ControllerFeedOpenbaypro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -24,7 +24,7 @@ class ControllerFeedOpenbaypro extends Controller {
 			'href' => $this->url->link('feed/openbay', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');

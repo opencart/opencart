@@ -7,6 +7,7 @@ class ControllerPaymentDivido extends Controller {
 		STATUS_DEPOSIT_PAID = 'DEPOSIT-PAID',
 		STATUS_DECLINED = 'DECLINED',
 		STATUS_DEFERRED = 'DEFERRED',
+		STATUS_REFERRED = 'REFERRED',
 		STATUS_FULFILLED = 'FULFILLED',
 		STATUS_SIGNED = 'SIGNED';
 
@@ -16,6 +17,7 @@ class ControllerPaymentDivido extends Controller {
 		self::STATUS_COMPLETED => 1,
 		self::STATUS_DECLINED => 1,
 		self::STATUS_DEFERRED => 1,
+		self::STATUS_REFERRED => 1,
 		self::STATUS_DEPOSIT_PAID => 1,
 		self::STATUS_FULFILLED => 5,
 		self::STATUS_SIGNED => 1,
@@ -27,6 +29,7 @@ class ControllerPaymentDivido extends Controller {
 		self::STATUS_COMPLETED => 'Credit application completed',
 		self::STATUS_DECLINED => 'Credit request declined',
 		self::STATUS_DEFERRED => 'Credit request deferred',
+		self::STATUS_REFERRED => 'Credit request referred',
 		self::STATUS_DEPOSIT_PAID => 'Deposit paid',
 		self::STATUS_FULFILLED => 'Credit request fulfilled',
 		self::STATUS_SIGNED => 'Contract signed',

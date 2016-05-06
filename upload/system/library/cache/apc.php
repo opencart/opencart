@@ -2,7 +2,6 @@
 namespace Cache;
 class APC {
 	private $expire;
-	private $cache;
 
 	public function __construct($expire) {
 		$this->expire = $expire;

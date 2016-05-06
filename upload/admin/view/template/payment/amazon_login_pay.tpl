@@ -324,45 +324,9 @@
       });
       //</script>
   <script type="text/javascript">
-      $('#amazon-login-pay-language').on('change', function () {
-        $('<input>').attr({
-          type: 'hidden',
-          value: 'true',
-          name: 'language_reload'
-        }).appendTo('#form-amazon-login-pay');
-        $('.btn-primary').click();
-      });
-      //</script>
-  <script type="text/javascript">
       $('#sign-up').on('click', function () {
         $("#registration-form").submit();
         $("#container-credentials").show();
-//        if ($('input[name=\'amazon_login_pay_merchant_id\']').val() === '') {
-//          $('input[name=\'amazon_login_pay_merchant_id\']').parent().addClass('has-error');
-//          $(".form-group").removeClass('has-error');
-//          $('.text-danger').remove();
-//          $('input[name=\'amazon_login_pay_merchant_id\']').after('<div class="text-danger"><?php echo $error_merchant_id; ?></div>');
-//        } else {
-//          var amazon_login_pay_language = $('select[name=\'amazon_login_pay_language\']').val();
-//          var amazon_login_pay_payment_region = $('select[name=\'amazon_login_pay_payment_region\']').val();
-//          console.log(amazon_login_pay_language);
-//          console.log(amazon_login_pay_payment_region);
-//          if (amazon_login_pay_language === 'de') {
-//            $('input[name=\'language\']').val('de-DE');
-//          } else if (amazon_login_pay_language === 'uk') {
-//            $('input[name=\'language\']').val('en-GB');
-//          } else if (amazon_login_pay_language === 'fr') {
-//            $('input[name=\'language\']').val('fr-FR');
-//          } else if (amazon_login_pay_language === 'it') {
-//            $('input[name=\'language\']').val('it-IT');
-//          } else if (amazon_login_pay_language === 'es') {
-//            $('input[name=\'language\']').val('es-ES');
-//          } else {
-//            $('input[name=\'language\']').val('en-GB');
-//          }
-//          $('input[name=\'locale\']').val(amazon_login_pay_payment_region);
-//          $("#registration-form").submit();
-//        }
       });
       //</script>
 </div>

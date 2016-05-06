@@ -5,29 +5,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 	public function index() {
 
-		if (isset($this->request->post['amazon_login_pay_language'])) {
-			$this->load->language('payment/amazon_login_pay_' . $this->request->post['amazon_login_pay_language']);
-		} else if (isset($this->request->post['amazon_login_pay_payment_region'])) {
-			switch ($this->request->post['amazon_login_pay_payment_region']) {
-				case 'EUR':
-					$this->load->language('payment/amazon_login_pay_de');
-					$this->request->post['amazon_login_pay_language'] = 'de';
-					break;
-				case 'GBP':
-					$this->load->language('payment/amazon_login_pay_uk');
-					$this->request->post['amazon_login_pay_language'] = 'uk';
-					break;
-				case 'USD':
-					$this->load->language('payment/amazon_login_pay');
-					$this->request->post['amazon_login_pay_language'] = 'us';
-					break;
-			}
-		} else if ($this->config->get('amazon_login_pay_language')) {
-			$this->load->language('payment/amazon_login_pay_' . $this->config->get('amazon_login_pay_language'));
-		} else {
-			$this->load->language('payment/amazon_login_pay_us');
-		}
-
+		$this->load->language('payment/amazon_login_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -46,8 +24,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 			}
 		}
-
-
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -336,32 +312,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		//SIMPLE PATH
 
-		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' .  mt_rand();
+		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' . mt_rand();
 		$data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
-
-		switch ($data['amazon_login_pay_payment_region']) {
-			case 'EUR':
-				$data['languages'] = array(
-					'de' => $this->language->get('text_de'),
-					'es' => $this->language->get('text_es'),
-					'fr' => $this->language->get('text_fr'),
-					'it' => $this->language->get('text_it')
-				);
-				break;
-			case 'GBP':
-				$data['languages'] = array(
-					'uk' => $this->language->get('text_uk')
-				);
-				break;
-			case 'USD':
-				$data['languages'] = array(
-					'us' => $this->language->get('text_us')
-				);
-				break;
-		}
 
 		switch ($data['amazon_login_pay_language']) {
 			case 'de':
@@ -390,10 +345,22 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				break;
 		}
 
-		if ($data['amazon_login_pay_language'] == 'us') {
+		if ($data['amazon_login_pay_payment_region'] == 'USD') {
 			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect";
+
+			$data['languages'] = array(
+				'us' => $this->language->get('text_us')
+			);
 		} else {
 			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect?spId=" . $data['sp_id'];
+
+			$data['languages'] = array(
+				'de' => $this->language->get('text_de'),
+				'es' => $this->language->get('text_es'),
+				'fr' => $this->language->get('text_fr'),
+				'it' => $this->language->get('text_it'),
+				'uk' => $this->language->get('text_uk')
+			);
 		}
 
 		$data['payment_regions'] = array(
@@ -655,26 +622,15 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->error['error_client_secret'] = $this->language->get('error_client_secret');
 		}
 
-		switch ($this->request->post['amazon_login_pay_language']) {
-			case 'de':
-				$currency_code = 'EUR';
-				break;
-			case 'uk':
-				$currency_code = 'GBP';
-				break;
-			case 'us':
-				$currency_code = 'USD';
-				break;
-			default:
-				$currency_code = 'USD';
-				break;
-		}
-		$currency = $this->model_localisation_currency->getCurrency($this->currency->getId($currency_code));
+		if (isset($this->request->post['amazon_login_pay_region'])) {
+			$currency_code = $this->request->post['amazon_login_pay_region'];
 
-		if (empty($currency) || $currency['status'] != '1') {
-			$this->error['error_curreny'] = sprintf($this->language->get('error_curreny'), $currency_code);
-		}
+			$currency = $this->model_localisation_currency->getCurrency($this->currency->getId($currency_code));
 
+			if (empty($currency) || $currency['status'] != '1') {
+				$this->error['error_curreny'] = sprintf($this->language->get('error_curreny'), $currency_code);
+			}
+		}
 
 		if (!$this->error) {
 			return true;
@@ -682,4 +638,5 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			return false;
 		}
 	}
+
 }

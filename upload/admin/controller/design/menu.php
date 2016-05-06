@@ -20,7 +20,7 @@ class ControllerDesignMenu extends Controller {
 		$this->load->model('design/menu');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_menu->addBanner($this->request->post);
+			$this->model_design_menu->addMenu($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -52,7 +52,7 @@ class ControllerDesignMenu extends Controller {
 		$this->load->model('design/menu');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_menu->editBanner($this->request->get['banner_id'], $this->request->post);
+			$this->model_design_menu->editMenu($this->request->get['menu_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -84,8 +84,8 @@ class ControllerDesignMenu extends Controller {
 		$this->load->model('design/menu');
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $banner_id) {
-				$this->model_design_menu->deleteBanner($banner_id);
+			foreach ($this->request->post['selected'] as $menu_id) {
+				$this->model_design_menu->deleteMenu($menu_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -158,7 +158,7 @@ class ControllerDesignMenu extends Controller {
 		$data['add'] = $this->url->link('design/menu/add', 'token=' . $this->session->data['token'] . $url, true);
 		$data['delete'] = $this->url->link('design/menu/delete', 'token=' . $this->session->data['token'] . $url, true);
 
-		$data['banners'] = array();
+		$data['menus'] = array();
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -167,16 +167,16 @@ class ControllerDesignMenu extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$banner_total = $this->model_design_menu->getTotalBanners();
+		$menu_total = $this->model_design_menu->getTotalMenus();
 
-		$results = $this->model_design_menu->getBanners($filter_data);
+		$results = $this->model_design_menu->getMenus($filter_data);
 
 		foreach ($results as $result) {
-			$data['banners'][] = array(
-				'banner_id' => $result['banner_id'],
-				'name'      => $result['name'],
-				'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'      => $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&banner_id=' . $result['banner_id'] . $url, true)
+			$data['menus'][] = array(
+				'menu_id' => $result['menu_id'],
+				'name'    => $result['name'],
+				'status'  => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'edit'    => $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&menu_id=' . $result['menu_id'] . $url, true)
 			);
 		}
 
@@ -240,14 +240,14 @@ class ControllerDesignMenu extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $banner_total;
+		$pagination->total = $menu_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($banner_total - $this->config->get('config_limit_admin'))) ? $banner_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $banner_total, ceil($banner_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($menu_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($menu_total - $this->config->get('config_limit_admin'))) ? $menu_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $menu_total, ceil($menu_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -262,7 +262,7 @@ class ControllerDesignMenu extends Controller {
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_form'] = !isset($this->request->get['banner_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !isset($this->request->get['menu_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
@@ -276,7 +276,7 @@ class ControllerDesignMenu extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_banner_add'] = $this->language->get('button_banner_add');
+		$data['button_menu_add'] = $this->language->get('button_menu_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
@@ -291,10 +291,10 @@ class ControllerDesignMenu extends Controller {
 			$data['error_name'] = '';
 		}
 
-		if (isset($this->error['banner_image'])) {
-			$data['error_banner_image'] = $this->error['banner_image'];
+		if (isset($this->error['menu_image'])) {
+			$data['error_menu_image'] = $this->error['menu_image'];
 		} else {
-			$data['error_banner_image'] = array();
+			$data['error_menu_image'] = array();
 		}
 
 		$url = '';
@@ -323,32 +323,32 @@ class ControllerDesignMenu extends Controller {
 			'href' => $this->url->link('design/menu', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		if (!isset($this->request->get['banner_id'])) {
+		if (!isset($this->request->get['menu_id'])) {
 			$data['action'] = $this->url->link('design/menu/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&banner_id=' . $this->request->get['banner_id'] . $url, true);
+			$data['action'] = $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&menu_id=' . $this->request->get['menu_id'] . $url, true);
 		}
 
 		$data['cancel'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . $url, true);
 
-		if (isset($this->request->get['banner_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$banner_info = $this->model_design_menu->getBanner($this->request->get['banner_id']);
+		if (isset($this->request->get['menu_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$menu_info = $this->model_design_menu->getMenu($this->request->get['menu_id']);
 		}
 
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($banner_info)) {
-			$data['name'] = $banner_info['name'];
+		} elseif (!empty($menu_info)) {
+			$data['name'] = $menu_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($banner_info)) {
-			$data['status'] = $banner_info['status'];
+		} elseif (!empty($menu_info)) {
+			$data['status'] = $menu_info['status'];
 		} else {
 			$data['status'] = true;
 		}
@@ -359,32 +359,32 @@ class ControllerDesignMenu extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['banner_image'])) {
-			$banner_images = $this->request->post['banner_image'];
-		} elseif (isset($this->request->get['banner_id'])) {
-			$banner_images = $this->model_design_menu->getBannerImages($this->request->get['banner_id']);
+		if (isset($this->request->post['menu_image'])) {
+			$menu_images = $this->request->post['menu_image'];
+		} elseif (isset($this->request->get['menu_id'])) {
+			$menu_images = $this->model_design_menu->getMenuImages($this->request->get['menu_id']);
 		} else {
-			$banner_images = array();
+			$menu_images = array();
 		}
 
-		$data['banner_images'] = array();
+		$data['menu_images'] = array();
 
-		foreach ($banner_images as $key => $value) {
-			foreach ($value as $banner_image) {
-				if (is_file(DIR_IMAGE . $banner_image['image'])) {
-					$image = $banner_image['image'];
-					$thumb = $banner_image['image'];
+		foreach ($menu_images as $key => $value) {
+			foreach ($value as $menu_image) {
+				if (is_file(DIR_IMAGE . $menu_image['image'])) {
+					$image = $menu_image['image'];
+					$thumb = $menu_image['image'];
 				} else {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
 				
-				$data['banner_images'][$key][] = array(
-					'title'      => $banner_image['title'],
-					'link'       => $banner_image['link'],
+				$data['menu_images'][$key][] = array(
+					'title'      => $menu_image['title'],
+					'link'       => $menu_image['link'],
 					'image'      => $image,
 					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
-					'sort_order' => $banner_image['sort_order']
+					'sort_order' => $menu_image['sort_order']
 				);
 			}
 		}
@@ -407,11 +407,11 @@ class ControllerDesignMenu extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $language_id => $value) {
-				foreach ($value as $banner_image_id => $banner_image) {
-					if ((utf8_strlen($banner_image['title']) < 2) || (utf8_strlen($banner_image['title']) > 64)) {
-						$this->error['banner_image'][$language_id][$banner_image_id] = $this->language->get('error_title');
+		if (isset($this->request->post['menu_image'])) {
+			foreach ($this->request->post['menu_image'] as $language_id => $value) {
+				foreach ($value as $menu_image_id => $menu_image) {
+					if ((utf8_strlen($menu_image['title']) < 2) || (utf8_strlen($menu_image['title']) > 64)) {
+						$this->error['menu_image'][$language_id][$menu_image_id] = $this->language->get('error_title');
 					}
 				}
 			}

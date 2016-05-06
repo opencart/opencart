@@ -1,33 +1,35 @@
 <?php
 // Heading
-$_['heading_title'] = 'Login with Amazon Italy';
+$_['heading_title'] = 'Accedi con Amazon';
 
 //Text
-$_['text_module'] = 'Modules';
-$_['text_success'] = 'Success: You have modified module Login with Amazon!';
-$_['text_content_top'] = 'Content Top';
-$_['text_content_bottom'] = 'Content Bottom';
-$_['text_column_left'] = 'Column Left';
-$_['text_column_right'] = 'Column Right';
-$_['text_lwa_button'] = 'Login with Amazon';
-$_['text_login_button'] = 'Login';
+$_['text_module'] = 'Moduli';
+$_['text_success'] = 'Operazione riuscita: hai modificato il modulo Accedi con Amazon!';
+$_['text_content_top'] =  'Contenuto parte superiore';
+$_['text_content_bottom'] =  'Contenuto parte inferiore';
+$_['text_column_left'] =  'Colonna sinistra';
+$_['text_column_right'] =  'Colonna destra';
+$_['text_lwa_button'] =  'Accedi con Amazon';
+$_['text_login_button'] =  'Accedi';
 $_['text_a_button'] = 'A';
-$_['text_gold_button'] = 'Gold';
-$_['text_darkgray_button'] = 'Dark Gray';
-$_['text_lightgray_button'] = 'Light Gray';
-$_['text_small_button'] = 'Small';
-$_['text_medium_button'] = 'Medium';
-$_['text_large_button'] = 'Large';
-$_['text_x_large_button'] = 'X-Large';
+$_['text_gold_button'] =  'Oro';
+$_['text_darkgray_button'] = 'Grigio scuro';
+$_['text_lightgray_button'] = 'Grigio chiaro';
+$_['text_small_button'] = 'Piccolo';
+$_['text_medium_button'] = 'Medio';
+$_['text_large_button'] = 'Grande';
+$_['text_x_large_button'] = 'X-Grande';
 
 //Entry
-$_['entry_button_type'] = 'Button Type';
-$_['entry_button_colour'] = 'Button Colour';
-$_['entry_button_size'] = 'Button Size';
+$_['entry_button_type'] =  'Tipo pulsante';
+$_['entry_button_colour'] =  'Colore pulsante';
+$_['entry_button_size'] = 'Dimensione pulsante';
 $_['entry_layout'] = 'Layout';
-$_['entry_position'] = 'Position';
-$_['entry_status'] = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_position'] =  'Posizione';
+$_['entry_status'] =  'Stato';
+$_['entry_sort_order'] =  'Ordinamento';
 
 //Error
-$_['error_permission'] = 'Warning: You do not have permission to modify module Login with Amazon!';
+$_['error_permission'] = 'Attenzione: non disponi delle autorizzazioni necessarie per modificare il modulo Accedi con Amazon.';
+
+ 

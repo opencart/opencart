@@ -263,24 +263,24 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$access_key = $post_data['amazon_login_pay_access_key'];
 			$access_secret = $post_data['amazon_login_pay_access_secret'];
 			$test = $post_data['amazon_login_pay_test'];
-			$marketplace = $post_data['amazon_login_pay_marketplace'];
+			$payment_region = $post_data['amazon_login_pay_payment_region'];
 		} else {
 			$merchant_id = $this->config->get('amazon_login_pay_merchant_id');
 			$access_key = $this->config->get('amazon_login_pay_access_key');
 			$access_secret = $this->config->get('amazon_login_pay_access_secret');
 			$test = $this->config->get('amazon_login_pay_test');
-			$marketplace = $this->config->get('amazon_login_pay_marketplace');
+			$payment_region = $this->config->get('amazon_login_pay_payment_region');
 
 		}
 
 		if ($test == 'sandbox') {
-			if ($marketplace == 'us') {
+			if ($payment_region == 'USD') {
 				$url = 'https://mws.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
 			}
 		} else {
-			if ($marketplace == 'us') {
+			if ($payment_region == 'USD') {
 				$url = 'https://mws.amazonservices.com/OffAmazonPayments/2013-01-01/';
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments/2013-01-01/';

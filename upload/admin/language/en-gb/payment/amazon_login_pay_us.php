@@ -7,17 +7,14 @@ $_['text_success']                  = 'Login and Pay with Amazon module has been
 $_['text_ipn_url']					= 'Cron Job\'s URL';
 $_['text_ipn_token']				= 'Secret Token';
 $_['text_us']						= 'American';
-$_['text_germany']                  = 'German';
+$_['text_de']						= 'German';
 $_['text_uk']                       = 'English';
 $_['text_fr']                       = 'French';
 $_['text_it']                       = 'Italian';
 $_['text_es']                       = 'Spainish';
-
 $_['text_us_region']				= 'United States';
 $_['text_eu_region']                = 'Euro region';
 $_['text_uk_region']                = 'United Kingdom';
-
-
 $_['text_live']                     = 'Live';
 $_['text_sandbox']                  = 'Sandbox';
 $_['text_auth']						= 'Authorization';
@@ -74,6 +71,8 @@ $_['text_amazon_rejected']          = 'AmazonRejected';
 $_['text_amazon_timeout']           = 'TransactionTimedOut';
 $_['text_amazon_no_declined']       = '--- No Automatic Declined Authorization ---';
 $_['text_amazon_signup']			= 'Sign-up to Login and Pay with Amazon';
+$_['text_credentials']				= 'Credentials';
+$_['text_validate_credentials']		= 'Validate and Use Credentials';
 
 // Columns
 $_['column_status']                 = 'Status';

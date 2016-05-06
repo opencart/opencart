@@ -20,21 +20,30 @@
 		</div>
 	<?php } ?>
 	<div class="alert alert-info">
-	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" id="registration-form">
-		<input type="hidden" value="<?php echo $amazon_login_pay_marketplace; ?>" name="locale">
-		<input type="hidden" value="<?php echo $amazon_login_pay_merchant_id; ?>" name="spId">
+	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" class="form-horizontal" id="registration-form">
+		<input type="hidden" value="<?php echo $amazon_login_pay_payment_region; ?>" name="locale">
+		<input type="hidden" value="<?php echo $sp_id; ?>" name="spId">
 		<input type="hidden" value="<?php echo $unique_id; ?>" name="uniqueId">
 		<input type="hidden" value="<?php echo $allowed_login_domain; ?>" name="allowedLoginDomains[]">
 		<?php foreach ($login_redirect_urls as $login_redirect_url) { ?>
-			<input type="hidden" value="<?php echo $login_redirect_url; ?>" name="loginRedirectURLs []">
+			<input type="hidden" value="<?php echo $login_redirect_url; ?>" name="loginRedirectURLs[]">
 		<?php } ?>
 		<input type="hidden" value="<?php echo $store_name; ?>" name="storeDescription">
-		<input type="hidden" value="<?php echo $amazon_login_pay_language; ?>" name="language">
+		<input type="hidden" value="<?php echo $language; ?>" name="language">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="sandboxMerchantIPNURL">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="productionMerchantIPNURL">
+		<input type="hidden" value="POST" name="returnMethod">
 		<button type="button" class="btn btn-link" id="sign-up"><?php echo $text_amazon_signup; ?></button>
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 	  </form>
+	  <div id="container-credentials">
+		<div class="col-sm-5">
+		  <textarea class="form-control" id="input-credentials" placeholder="<?php echo $text_credentials; ?>" rows="7" name="credentials"></textarea>
+		</div>
+		<div class="col-sm-5">
+		  <button id="button-credentials" class="btn btn-primary" type="button" ><?php echo $text_validate_credentials; ?></button>
+		</div>
+	  </div>
 	</div>
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -43,34 +52,34 @@
 	  <div class="panel-body">
 		<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-login-pay" class="form-horizontal">
 		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="amazon-login-pay-payment-region"><?php echo $entry_payment_region; ?></label>
+			<div class="col-sm-10">
+			  <select name="amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
+				<?php foreach ($payment_regions as $payment_region_code => $payment_region_name) { ?>
+					<?php if ($payment_region_code == $amazon_login_pay_payment_region) { ?>
+						<option value="<?php echo $payment_region_code; ?>" selected="selected"><?php echo $payment_region_name; ?></option>
+					<?php } else { ?>
+						<option value="<?php echo $payment_region_code; ?>"><?php echo $payment_region_name; ?></option>
+					<?php } ?>
+				<?php } ?>
+			  </select>
+			</div>
+		  </div>
+		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-language"><?php echo $entry_language; ?></label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_language" id="amazon-login-pay-language" class="form-control">
 				<?php foreach ($languages as $language_code => $language_name) { ?>
 					<?php if ($language_code == $amazon_login_pay_language) { ?>
-						<option value="<?php echo $language_name; ?>" selected="selected"><?php echo $language_name; ?></option>
+						<option value="<?php echo $language_code; ?>" selected="selected"><?php echo $language_name; ?></option>
 					<?php } else { ?>
-						<option value="<?php echo $language_name; ?>"><?php echo $language_name; ?></option>
+						<option value="<?php echo $language_code; ?>"><?php echo $language_name; ?></option>
 					<?php } ?>
 				<?php } ?>
 			  </select>
 			  <?php if ($error_curreny) { ?>
 				  <div class="text-danger"><?php echo $error_curreny; ?></div>
 			  <?php } ?>
-			</div>
-		  </div>
-		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="amazon-login-pay-payment-region"><?php echo $entry_payment_region; ?></label>
-			<div class="col-sm-10">
-			  <select name="amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
-				<?php foreach ($payment_regions as $payment_region_code => $payment_region_name) { ?>
-					<?php if ($payment_region_code == $amazon_login_pay_payment_region) { ?>
-						<option value="<?php echo $payment_region_name; ?>" selected="selected"><?php echo $payment_region_name; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $payment_region_name; ?>"><?php echo $payment_region_name; ?></option>
-					<?php } ?>
-				<?php } ?>
-			  </select>
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -280,51 +289,80 @@
 	</div>
   </div>
   <script type="text/javascript">
+      $('#button-credentials').on('click', function () {
+        var json = $('#input-credentials').val()
+        if (json !== '') {
+          var credentials = $.parseJSON($('#input-credentials').val());
+          $('#amazon-login-pay-merchant-id').val(credentials['merchant_id']);
+          $('#amazon-login-pay-access-key').val(credentials['access_key']);
+          $('#amazon-login-pay-access-secret').val(credentials['secret_key']);
+          $('#amazon-login-pay-client-id').val(credentials['client_id']);
+          $('#amazon-login-pay-client-secret').val(credentials['client_secret']);
+          $('<input>').attr({
+            type: 'hidden',
+            value: 'true',
+            name: 'language_reload'
+          }).appendTo('#form-amazon-login-pay');
+          $('.pull-right > .btn-primary').click();
+        }
+      });
+      //</script>
+  <script type="text/javascript">
       $('input[name=\'amazon_login_pay_ipn_token\']').change(function () {
         $('#input-ipn-url').val('<?php echo HTTPS_CATALOG; ?>index.php?route=payment/amazon_login_pay/ipn&token=' + $(this).val());
       });
       //</script>
   <script type="text/javascript">
-      $('select[name=\'amazon_login_pay_marketplace\']').on('change', function () {
+      $('#amazon-login-pay-payment_region').on('change', function () {
+        $('#amazon-login-pay-language').prop('disabled', true);
         $('<input>').attr({
           type: 'hidden',
           value: 'true',
-          name: 'marketplace_reload'
+          name: 'language_reload'
+        }).appendTo('#form-amazon-login-pay');
+        $('.btn-primary').click();
+      });
+      //</script>
+  <script type="text/javascript">
+      $('#amazon-login-pay-language').on('change', function () {
+        $('<input>').attr({
+          type: 'hidden',
+          value: 'true',
+          name: 'language_reload'
         }).appendTo('#form-amazon-login-pay');
         $('.btn-primary').click();
       });
       //</script>
   <script type="text/javascript">
       $('#sign-up').on('click', function () {
-        if ($('input[name=\'amazon_login_pay_merchant_id\']').val() === '') {
-          $('input[name=\'amazon_login_pay_merchant_id\']').parent().addClass('has-error');
-          $(".form-group").removeClass('has-error');
-          $('.text-danger').remove();
-          $('input[name=\'amazon_login_pay_merchant_id\']').after('<div class="text-danger"><?php echo $error_merchant_id; ?></div>');
-        } else {
-          var amazon_login_pay_marketplace = $('select[name=\'amazon_login_pay_marketplace\']').val();
-          if (amazon_login_pay_marketplace === 'de') {
-            $('input[name=\'locale\']').val('EUR');
-            $('input[name=\'language\']').val('de-DE');
-          } else if (amazon_login_pay_marketplace === 'uk') {
-            $('input[name=\'locale\']').val('GBP');
-            $('input[name=\'language\']').val('en-GB');
-          } else if (amazon_login_pay_marketplace === 'fr') {
-            $('input[name=\'locale\']').val('EUR');
-            $('input[name=\'language\']').val('fr-FR');
-          } else if (amazon_login_pay_marketplace === 'it') {
-            $('input[name=\'locale\']').val('EUR');
-            $('input[name=\'language\']').val('it-IT');
-          } else if (amazon_login_pay_marketplace === 'es') {
-            $('input[name=\'locale\']').val('EUR');
-            $('input[name=\'language\']').val('es-ES');
-          } else {
-            $('input[name=\'locale\']').val('USD');
-            $('input[name=\'language\']').val('en-GB');
-          }
-          $("#registration-form").submit();
-        }
-
+        $("#registration-form").submit();
+        $("#container-credentials").show();
+//        if ($('input[name=\'amazon_login_pay_merchant_id\']').val() === '') {
+//          $('input[name=\'amazon_login_pay_merchant_id\']').parent().addClass('has-error');
+//          $(".form-group").removeClass('has-error');
+//          $('.text-danger').remove();
+//          $('input[name=\'amazon_login_pay_merchant_id\']').after('<div class="text-danger"><?php echo $error_merchant_id; ?></div>');
+//        } else {
+//          var amazon_login_pay_language = $('select[name=\'amazon_login_pay_language\']').val();
+//          var amazon_login_pay_payment_region = $('select[name=\'amazon_login_pay_payment_region\']').val();
+//          console.log(amazon_login_pay_language);
+//          console.log(amazon_login_pay_payment_region);
+//          if (amazon_login_pay_language === 'de') {
+//            $('input[name=\'language\']').val('de-DE');
+//          } else if (amazon_login_pay_language === 'uk') {
+//            $('input[name=\'language\']').val('en-GB');
+//          } else if (amazon_login_pay_language === 'fr') {
+//            $('input[name=\'language\']').val('fr-FR');
+//          } else if (amazon_login_pay_language === 'it') {
+//            $('input[name=\'language\']').val('it-IT');
+//          } else if (amazon_login_pay_language === 'es') {
+//            $('input[name=\'language\']').val('es-ES');
+//          } else {
+//            $('input[name=\'language\']').val('en-GB');
+//          }
+//          $('input[name=\'locale\']').val(amazon_login_pay_payment_region);
+//          $("#registration-form").submit();
+//        }
       });
       //</script>
 </div>

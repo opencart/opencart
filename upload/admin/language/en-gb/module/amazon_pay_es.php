@@ -1,33 +1,33 @@
 <?php
 // Heading
-$_['heading_title'] = 'Pay with Amazon Spain';
+$_['heading_title'] = 'Pagar con Amazon';
 
 //Text
-$_['text_module'] = 'Modules';
-$_['text_success'] = 'Success: You have modified module Pay with Amazon!';
-$_['text_content_top'] = 'Content Top';
-$_['text_content_bottom'] = 'Content Bottom';
-$_['text_column_left'] = 'Column Left';
-$_['text_column_right'] = 'Column Right';
-$_['text_pwa_button'] = 'Pay with Amazon';
-$_['text_pay_button'] = 'Pay';
+$_['text_module'] = 'MÃ³dulos';
+$_['text_success'] = 'Â¡Has modificado el mÃ³dulo Pagar con Amazon correctamente!';
+$_['text_content_top'] = 'Contenido superior';
+$_['text_content_bottom'] = 'Contenido inferior';
+$_['text_column_left'] =  'Columna izquierda';
+$_['text_column_right'] =  'Columna derecha';
+$_['text_pwa_button'] = 'Pagar con Amazon';
+$_['text_pay_button'] = 'Pagar';
 $_['text_a_button'] = 'A';
-$_['text_gold_button'] = 'Gold';
-$_['text_darkgray_button'] = 'Dark Gray';
-$_['text_lightgray_button'] = 'Light Gray';
-$_['text_small_button'] = 'Small';
-$_['text_medium_button'] = 'Medium';
-$_['text_large_button'] = 'Large';
-$_['text_x_large_button'] = 'X-Large';
+$_['text_gold_button'] = 'Dorado';
+$_['text_darkgray_button'] = 'Gris oscuro';
+$_['text_lightgray_button'] = 'Gris claro';
+$_['text_small_button'] = 'PequeÃ±o';
+$_['text_medium_button'] =  'Mediano';
+$_['text_large_button'] = 'Grande';
+$_['text_x_large_button'] = 'X-Grande';
 
 //Entry
-$_['entry_button_type'] = 'Button Type';
-$_['entry_button_colour'] = 'Button Colour';
-$_['entry_button_size'] = 'Button Size';
-$_['entry_layout'] = 'Layout';
-$_['entry_position'] = 'Position';
-$_['entry_status'] = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_button_type'] = 'Tipo de botÃ³n';
+$_['entry_button_colour'] =  'Color de botÃ³n';
+$_['entry_button_size'] = 'TamaÃ±o del botÃ³n';
+$_['entry_layout'] = 'DiseÃ±o';
+$_['entry_position'] = 'PosiciÃ³n';
+$_['entry_status'] = 'Estado';
+$_['entry_sort_order'] = 'Orden';
 
 //Error
-$_['error_permission'] = 'Warning: You do not have permission to modify module Pay with Amazon!';
+$_['error_permission'] =  'Advertencia: Â¡No tienes permiso para modificar el mÃ³dulo Pagar con Amazon!';

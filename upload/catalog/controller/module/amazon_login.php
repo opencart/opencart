@@ -38,7 +38,7 @@ class ControllerModuleAmazonLogin extends Controller {
                 $data['amazon_login_button_size'] = 'medium';
             }
 
-            switch ($this->config->get('amazon_login_pay_marketplace')) {
+            switch ($this->config->get('amazon_login_pay_language')) {
                 case 'de':
                     $data['amazon_login_pay_language'] = 'de-DE';
                     break;

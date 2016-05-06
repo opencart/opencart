@@ -67,7 +67,7 @@ class ModelPaymentAmazonLoginPay extends Model {
         $update_paramter_data['OrderReferenceAttributes.OrderTotal.CurrencyCode'] = $currency_code;
         $update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.SellerOrderId'] = $order_id;
         $update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.StoreName'] = $this->config->get('config_name');
-        if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
+        if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
             $update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3GK1RS09H3A7D';
         } else {
             $update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3EIRX2USI2KJV';
@@ -225,10 +225,10 @@ class ModelPaymentAmazonLoginPay extends Model {
 
     public function getUserInfo($access_token) {
         if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
                 $curl_token = curl_init('https://api.sandbox.amazon.co.uk/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
                 $curl_profile = curl_init('https://api.sandbox.amazon.co.uk/user/profile');
-            } elseif ($this->config->get('amazon_login_pay_marketplace') == 'de') {
+            } elseif ($this->config->get('amazon_login_pay_payment_region') == 'EUR') {
                 $curl_token = curl_init('https://api.sandbox.amazon.de/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
                 $curl_profile = curl_init('https://api.sandbox.amazon.de/user/profile');
             } else {
@@ -236,10 +236,10 @@ class ModelPaymentAmazonLoginPay extends Model {
                 $curl_profile = curl_init('https://api.sandbox.amazon.com/user/profile');
             }
         } else {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
                 $curl_token = curl_init('https://api.amazon.co.uk/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
                 $curl_profile = curl_init('https://api.amazon.co.uk/user/profile');
-            } elseif ($this->config->get('amazon_login_pay_marketplace') == 'de') {
+            } elseif ($this->config->get('amazon_login_pay_payment_region') == 'EUR') {
                 $curl_token = curl_init('https://api.amazon.de/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
                 $curl_profile = curl_init('https://api.amazon.de/user/profile');
             } else {
@@ -298,13 +298,13 @@ class ModelPaymentAmazonLoginPay extends Model {
 
     public function offAmazon($Action, $parameter_data = array()) {
         if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
                 $url = 'https://mws.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
             } else {
                 $url = 'https://mws-eu.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
             }
         } else {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
                 $url = 'https://mws.amazonservices.com/OffAmazonPayments/2013-01-01/';
             } else {
                 $url = 'https://mws-eu.amazonservices.com/OffAmazonPayments/2013-01-01/';
@@ -437,17 +437,17 @@ class ModelPaymentAmazonLoginPay extends Model {
 
     public function getWidgetJs() {
         if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
                 $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/uk/sandbox/lpa/js/Widgets.js';
-            } elseif ($this->config->get('amazon_login_pay_marketplace') == 'us') {
+            } elseif ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
                 $amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js';
             } else {
                 $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/de/sandbox/lpa/js/Widgets.js';
             }
         } else {
-            if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
+            if ($this->config->get('amazon_login_pay_payment_region') == 'GBP') {
                 $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/uk/lpa/js/Widgets.js';
-            } elseif ($this->config->get('amazon_login_pay_marketplace') == 'us') {
+            } elseif ($this->config->get('amazon_login_pay_payment_region') == 'USD') {
                 $amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/js/Widgets.js';
             } else {
                 $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/de/lpa/js/Widgets.js';
@@ -455,23 +455,6 @@ class ModelPaymentAmazonLoginPay extends Model {
         }
         return $amazon_payment_js . '?sellerId=' . $this->config->get('amazon_login_pay_merchant_id');
     }
-
-//    public function getWidgetJs() {
-//        if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-//            if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
-//                $amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js';
-//            } else {
-//                $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/' . $this->config->get('amazon_login_pay_marketplace') . '/sandbox/lpa/js/Widgets.js';
-//            }
-//        } else {
-//            if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
-//                $amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/js/Widgets.js';
-//            } else {
-//                $amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/' . $this->config->get('amazon_login_pay_marketplace') . '/lpa/js/Widgets.js';
-//            }
-//        }
-//        return $amazon_payment_js . '?sellerId=' . $this->config->get('amazon_login_pay_merchant_id');
-//    }
 
     public function getMethod($address, $total) {
         // Not shown in the payment method list

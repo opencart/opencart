@@ -513,19 +513,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		switch ($this->config->get('amazon_login_pay_marketplace')) {
-			case 'us':
-				$currency_code = 'USD';
-				break;
-
-			case 'uk':
-				$currency_code = 'GBP';
-				break;
-
-			case 'de':
-				$currency_code = 'EUR';
-				break;
-		}
+		$currency_code = $this->config->get('amazon_login_pay_payment_region');
 
 		$ordered_products = $this->model_account_order->getOrderProducts($order_info['order_id']);
 

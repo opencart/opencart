@@ -5,8 +5,8 @@ class ControllerModuleAmazonLogin extends Controller {
     private $error = array();
 
     public function index() {
-        if ($this->config->get('amazon_login_pay_marketplace') && $this->config->get('amazon_login_pay_marketplace') != 'us') {
-            $this->load->language('module/amazon_login_' . $this->config->get('amazon_login_pay_marketplace'));
+        if ($this->config->get('amazon_login_pay_language') && $this->config->get('amazon_login_pay_language') != 'us') {
+            $this->load->language('module/amazon_login_' . $this->config->get('amazon_login_pay_language'));
         } else {
             $this->load->language('module/amazon_login');
         }

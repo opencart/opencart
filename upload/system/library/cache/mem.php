@@ -29,9 +29,9 @@ class Mem {
 					continue;
 				}
 				$cachedump = $this->memcache->getExtendedStats('cachedump', $slab_id, self::CACHEDUMP_LIMIT);
-				foreach($cachedump as $server => $entries) {
+				foreach ($cachedump as $server => $entries) {
 					if (!empty($entries) && is_array($entries)) {
-						foreach(array_keys($entries) as $entry_key) {
+						foreach (array_keys($entries) as $entry_key) {
 							if (strpos($entry_key, CACHE_PREFIX . $key) === 0) {
 								$this->memcache->delete($entry_key);
 							}

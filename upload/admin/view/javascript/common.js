@@ -101,12 +101,12 @@ $(document).ready(function() {
 	});
 
 	// Tooltip remove fixed
-	$(document).delegate('[data-toggle=\'tooltip\']', 'click', function(e) {
+	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
 		$('body > .tooltip').remove();
 	});
 
 	// Image Manager
-	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
+	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
 		var $popover = $element.data('bs.popover'); // element has bs popover?
 		

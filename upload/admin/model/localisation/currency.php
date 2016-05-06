@@ -118,6 +118,10 @@ class ModelLocalisationCurrency extends Model {
 			foreach ($query->rows as $result) {
 				$data[] = $this->config->get('config_currency') . $result['code'] . '=X';
 			}
+			
+			if (empty($data)) {
+				return;
+			}
 
 			$curl = curl_init();
 

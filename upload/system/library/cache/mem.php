@@ -2,21 +2,23 @@
 namespace Cache;
 class Mem {
 	private $expire;
-	private $cache;
+	private $memcache;
+	
+	const CACHEDUMP_LIMIT = 1000000;
 
 	public function __construct($expire) {
 		$this->expire = $expire;
 
-		$this->cache = new \Memcache();
-		$this->cache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
+		$this->memcache = new \Memcache();
+		$this->memcache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
 	public function get($key) {
-		return $this->cache->get(CACHE_PREFIX . $key);
+		return $this->memcache->get(CACHE_PREFIX . $key);
 	}
 
 	public function set($key, $value) {
-		return $this->cache->set(CACHE_PREFIX . $key, $value, MEMCACHE_COMPRESSED, $this->expire);
+		return $this->memcache->set(CACHE_PREFIX . $key, $value, MEMCACHE_COMPRESSED, $this->expire);
 	}
 
 	public function delete($key) {
@@ -26,12 +28,12 @@ class Mem {
 				if (!is_int($slab_id)) {
 					continue;
 				}
-				$cachedump = $this->memcache->getExtendedStats('cachedump', $slab_id, 1000000);
+				$cachedump = $this->memcache->getExtendedStats('cachedump', $slab_id, self::CACHEDUMP_LIMIT);
 				foreach($cachedump as $server => $entries) {
 					if (!empty($entries) && is_array($entries)) {
 						foreach(array_keys($entries) as $entry_key) {
 							if (strpos($entry_key, CACHE_PREFIX . $key) === 0) {
-								$this->cache->delete($entry_key);
+								$this->memcache->delete($entry_key);
 							}
 						}
 					}

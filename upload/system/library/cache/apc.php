@@ -24,6 +24,12 @@ class APC {
 			return false;
 		}
 		
-		return apc_delete(CACHE_PREFIX . $key);
+		$cache_info = apc_cache_info('user');
+		$cache_list = $cache_info['cache_list'];
+		foreach ($cache_list as $entry) {
+			if (strpos($entry['info'], CACHE_PREFIX . $key) === 0) {
+				apcu_delete($entry['info']);
+			}
+		}
 	}
 }

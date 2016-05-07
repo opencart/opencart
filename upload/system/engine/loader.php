@@ -70,7 +70,8 @@ final class Loader {
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
 		}
-		
+		 
+		// && substr(str_replace('\\', '/', realpath(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')), 0, strlen(DIR_TEMPLATE)) == DIR_TEMPLATE
 		$output = $template->render($route . '.tpl');
 		
 		// Trigger the post e

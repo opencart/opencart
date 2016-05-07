@@ -102,7 +102,7 @@ class Mail {
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
-		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
+		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		if (!$this->html) {
 			$message  = '--' . $boundary . PHP_EOL;

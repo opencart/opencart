@@ -98,6 +98,7 @@ class ControllerExtensionExtension extends Controller {
 		$data['tab_payment'] = $this->language->get('tab_payment');
 		$data['tab_shipping'] = $this->language->get('tab_shipping');
 		$data['tab_theme'] = $this->language->get('tab_theme');
+		$data['tab_menu'] = $this->language->get('tab_menu');
 		$data['tab_total'] = $this->language->get('tab_total');
 
 		if (isset($this->error['warning'])) {
@@ -495,7 +496,48 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['themes']);		
-				
+	
+		// Menu
+		$extensions = $this->model_extension_extension->getInstalled('menu');
+
+		foreach ($extensions as $key => $value) {
+			if (!is_file(DIR_APPLICATION . 'controller/menu/' . $value . '.php')) {
+				$this->model_extension_extension->uninstall('menu', $value);
+
+				unset($extensions[$key]);
+			}
+		}
+
+		$data['menus'] = array();
+
+		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
+
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
+
+				$this->load->language('total/' . $extension);
+
+				$data['menus'][] = array(
+					'name'       => $this->language->get('heading_title'),
+					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get($extension . '_sort_order'),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
+				);
+			}
+		}		
+			
+		$sort_order = array();
+
+		foreach ($data['menus'] as $key => $value) {
+			$sort_order[$key] = $value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $data['menus']);
+						
 		// Total
 		$extensions = $this->model_extension_extension->getInstalled('total');
 
@@ -561,6 +603,9 @@ class ControllerExtensionExtension extends Controller {
 			'total'				
 		);
 
+		if () {
+			
+		}
 
 		return !$this->error;
 	}	

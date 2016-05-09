@@ -77,7 +77,7 @@ $(document).ready(function() {
 		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
 
 		if (i > 0) {
-			$(this).css('margin-left', '-' + (i + 5) + 'px');
+			$(this).css('margin-left', '-' + (i + 10) + 'px');
 		}
 	});
 

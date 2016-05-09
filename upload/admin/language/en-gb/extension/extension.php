@@ -13,6 +13,7 @@ $_['text_feed']         = 'Feeds';
 $_['text_fraud']        = 'Anti-Fraud';
 $_['text_shipping']     = 'Shipping';
 $_['text_theme']        = 'Themes';
+$_['text_menu']         = 'Menu Modules';
 $_['text_total']        = 'Order Totals';
 
 // Column
@@ -30,6 +31,7 @@ $_['tab_feed']          = 'Feeds';
 $_['tab_fraud']         = 'Anti-Fraud';
 $_['tab_shipping']      = 'Shipping';
 $_['tab_theme']         = 'Themes';
+$_['tab_menu']          = 'Menu Modules';
 $_['tab_total']         = 'Order Totals';
 
 // Error

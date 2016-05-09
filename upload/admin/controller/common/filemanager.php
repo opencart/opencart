@@ -213,6 +213,9 @@ class ControllerCommonFileManager extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+print_r($_FILES);
+print_r($_POST);
+
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');

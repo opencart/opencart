@@ -112,9 +112,9 @@ $('#button-search').on('click', function(e) {
 //--></script>
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {
-	//$('#form-upload').remove();
+	$('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file[]" name="file" value="" multiple="multiple" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
 	$('#form-upload input[name=\'file[]\']').trigger('click');
 
@@ -123,33 +123,14 @@ $('#button-upload').on('click', function() {
 	}
 
 	timer = setInterval(function() {
-		var files_input = new FormData($('#form-upload')[0]);
-		
-		console.log(files_input);
-		
-		/*	
-		if ($('#form-upload input[name=\'file\']').val() != '') {
+		if ($('#form-upload input[name=\'file[]\']').val() != '') {
 			clearInterval(timer);
-			
-			var form_data = new FormData();
-			
-			var files = files_input.files;
- 			
-			for (i = 0; i < files_input.length; i++) {
-				var f = files[i];
-				
-				form_data.append('file[]', f);
- 			}
-					
-			
-			console.log(form_data);
-			console.log(files_input);
 
 			$.ajax({
 				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
 				type: 'post',
 				dataType: 'json',
-				data: form_data,
+				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
 				processData: false,
@@ -169,7 +150,7 @@ $('#button-upload').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 
-						//$('#button-refresh').trigger('click');
+						$('#button-refresh').trigger('click');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -177,9 +158,7 @@ $('#button-upload').on('click', function() {
 				}
 			});
 		}
-		*/
 	}, 500);
-	
 });
 
 $('#button-folder').popover({

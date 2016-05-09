@@ -176,7 +176,7 @@
                         <td class="text-right"><?php if (!$fraud['installed']) { ?>
                           <a href="<?php echo $fraud['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
-                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $fraud['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                           <?php } ?>
                           <?php if ($fraud['installed']) { ?>
                           <a href="<?php echo $fraud['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
@@ -211,7 +211,7 @@
                         <td class="text-right"><?php if (!$module['installed']) { ?>
                           <a href="<?php echo $module['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
-                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $module['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                           <?php } ?>
                           <?php if ($module['installed']) { ?>
                           <?php if ($module['module']) { ?>
@@ -337,7 +337,7 @@
                         <td class="text-right"><?php if (!$theme['installed']) { ?>
                           <a href="<?php echo $theme['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
-                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $theme['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                           <?php } ?></td>
                       </tr>
                       <?php if ($theme['installed']) { ?>
@@ -420,7 +420,7 @@
                         <td class="text-right"><?php if (!$total['installed']) { ?>
                           <a href="<?php echo $total['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
-                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $total['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                           <?php } ?>
                           <?php if ($total['installed']) { ?>
                           <a href="<?php echo $total['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>

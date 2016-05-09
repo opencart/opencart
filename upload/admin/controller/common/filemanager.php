@@ -224,24 +224,24 @@ class ControllerCommonFileManager extends Controller {
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
-
-		// Check if multiple files are uploaded or just one
-		$files = array();
-		
-		if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
-			foreach (array_keys($this->request->files['file']['name']) as $key) {
-				$files[] = array(
-					'name'     => $this->request->files['file']['name'][$key],
-					'type'     => $this->request->files['file']['type'][$key],
-					'tmp_name' => $this->request->files['file']['tmp_name'][$key],
-					'error'    => $this->request->files['file']['error'][$key]
-				);
-			}
-		}
 		
 		if (!$json) {
+			// Check if multiple files are uploaded or just one
+			$files = array();
+			
+			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
+				foreach (array_keys($this->request->files['file']['name']) as $key) {
+					$files[] = array(
+						'name'     => $this->request->files['file']['name'][$key],
+						'type'     => $this->request->files['file']['type'][$key],
+						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
+						'error'    => $this->request->files['file']['error'][$key]
+					);
+				}
+			}
+			
 			foreach ($files as $file) {
-				if (!empty($file['name']) && is_file($file['tmp_name'])) {
+				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
 					$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
 	
@@ -282,15 +282,17 @@ class ControllerCommonFileManager extends Controller {
 				} else {
 					$json['error'] = $this->language->get('error_upload');
 				}
-			}
-
-			if (!$json) {
-				move_uploaded_file($file['tmp_name'], $directory . '/' . $filename);
-	
-				$json['success'] = $this->language->get('text_uploaded');
+				
+				if (!$json) {
+					move_uploaded_file($file['tmp_name'], $directory . '/' . $filename);
+				}
 			}
 		}
 		
+		if (!$json) {
+			$json['success'] = $this->language->get('text_uploaded');
+		}	
+						
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

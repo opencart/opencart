@@ -1012,7 +1012,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_captcha; ?>"><?php echo $entry_captcha; ?></span></label>
                   <div class="col-sm-10">
-                    <select name="config_captcha" id="input-return" class="form-control">
+                    <select name="config_captcha" id="input-captcha" class="form-control">
                       <option value=""><?php echo $text_none; ?></option>
                       <?php foreach ($captchas as $captcha) { ?>
                       <?php if ($captcha['value'] == $config_captcha) { ?>

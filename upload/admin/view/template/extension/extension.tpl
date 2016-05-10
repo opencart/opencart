@@ -69,7 +69,7 @@
                       <?php foreach ($analytic['store'] as $store) { ?>
                       <tr>
                         <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
-                        <td class="text-left"><?php echo $store['status'] ?></td>
+                        <td class="text-left"><?php echo $store['status']; ?></td>
                         <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php } ?>
@@ -98,7 +98,7 @@
                       <?php foreach ($captchas as $captcha) { ?>
                       <tr>
                         <td class="text-left"><?php echo $captcha['name']; ?></td>
-                        <td class="text-left"><?php echo $captcha['status'] ?></td>
+                        <td class="text-left"><?php echo $captcha['status']; ?></td>
                         <td class="text-right"><?php if (!$captcha['installed']) { ?>
                           <a href="<?php echo $captcha['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
@@ -135,7 +135,7 @@
                       <?php foreach ($feeds as $feed) { ?>
                       <tr>
                         <td class="text-left"><?php echo $feed['name']; ?></td>
-                        <td class="text-left"><?php echo $feed['status'] ?></td>
+                        <td class="text-left"><?php echo $feed['status']; ?></td>
                         <td class="text-right"><?php if (!$feed['installed']) { ?>
                           <a href="<?php echo $feed['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
@@ -172,7 +172,7 @@
                       <?php foreach ($frauds as $fraud) { ?>
                       <tr>
                         <td class="text-left"><?php echo $fraud['name']; ?></td>
-                        <td class="text-left"><?php echo $fraud['status'] ?></td>
+                        <td class="text-left"><?php echo $fraud['status']; ?></td>
                         <td class="text-right"><?php if (!$fraud['installed']) { ?>
                           <a href="<?php echo $fraud['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
@@ -256,8 +256,8 @@
                       <?php foreach ($payments as $payment) { ?>
                       <tr>
                         <td class="text-left"><?php echo $payment['name']; ?></td>
-                        <td class="text-center"><?php echo $payment['link'] ?></td>
-                        <td class="text-left"><?php echo $payment['status'] ?></td>
+                        <td class="text-center"><?php echo $payment['link']; ?></td>
+                        <td class="text-left"><?php echo $payment['status']; ?></td>
                         <td class="text-right"><?php echo $payment['sort_order']; ?></td>
                         <td class="text-right"><?php if (!$payment['installed']) { ?>
                           <a href="<?php echo $payment['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
@@ -296,7 +296,7 @@
                       <?php foreach ($shippings as $shipping) { ?>
                       <tr>
                         <td class="text-left"><?php echo $shipping['name']; ?></td>
-                        <td class="text-left"><?php echo $shipping['status'] ?></td>
+                        <td class="text-left"><?php echo $shipping['status']; ?></td>
                         <td class="text-right"><?php echo $shipping['sort_order']; ?></td>
                         <td class="text-right"><?php if (!$shipping['installed']) { ?>
                           <a href="<?php echo $shipping['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
@@ -344,7 +344,7 @@
                       <?php foreach ($theme['store'] as $store) { ?>
                       <tr>
                         <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
-                        <td class="text-left"><?php echo $store['status'] ?></td>
+                        <td class="text-left"><?php echo $store['status']; ?></td>
                         <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php } ?>
@@ -384,7 +384,7 @@
                       <?php foreach ($theme['store'] as $store) { ?>
                       <tr>
                         <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
-                        <td class="text-left"><?php echo $store['status'] ?></td>
+                        <td class="text-left"><?php echo $store['status']; ?></td>
                         <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php } ?>
@@ -415,7 +415,7 @@
                       <?php foreach ($totals as $total) { ?>
                       <tr>
                         <td class="text-left"><?php echo $total['name']; ?></td>
-                        <td class="text-left"><?php echo $total['status'] ?></td>
+                        <td class="text-left"><?php echo $total['status']; ?></td>
                         <td class="text-right"><?php echo $total['sort_order']; ?></td>
                         <td class="text-right"><?php if (!$total['installed']) { ?>
                           <a href="<?php echo $total['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>

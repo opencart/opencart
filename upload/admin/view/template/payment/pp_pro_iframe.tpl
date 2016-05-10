@@ -101,15 +101,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="<?php echo $help_checkout_method; ?>"><?php echo $entry_checkout_method ?></span></label>
+                <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="<?php echo $help_checkout_method; ?>"><?php echo $entry_checkout_method; ?></span></label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_checkout_method" id="input-checkout-method" class="form-control">
                     <?php if ($pp_pro_iframe_checkout_method == 'iframe') { ?>
-                    <option value="iframe" selected="selected"><?php echo $text_iframe ?></option>
-                    <option value="redirect"><?php echo $text_redirect ?></option>
+                    <option value="iframe" selected="selected"><?php echo $text_iframe; ?></option>
+                    <option value="redirect"><?php echo $text_redirect; ?></option>
                     <?php } else { ?>
-                    <option value="iframe"><?php echo $text_iframe ?></option>
-                    <option value="redirect" selected="selected"><?php echo $text_redirect ?></option>
+                    <option value="iframe"><?php echo $text_iframe; ?></option>
+                    <option value="redirect" selected="selected"><?php echo $text_redirect; ?></option>
                     <?php } ?>
                   </select>
                 </div>
@@ -118,7 +118,7 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_ipn_url; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                    <input type="text" value="<?php echo $ipn_url ?>" class="form-control" />
+                    <input type="text" value="<?php echo $ipn_url; ?>" class="form-control" />
                   </div>
                 </div>
               </div>

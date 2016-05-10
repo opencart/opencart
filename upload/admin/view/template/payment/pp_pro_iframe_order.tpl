@@ -32,8 +32,8 @@
   <?php } ?>
   <?php if ($paypal_order['capture_status'] != 'Complete') { ?>
   <tr>
-    <td><?php echo $text_reauthorise ?></td>
-    <td><a id="button-reauthorise" onclick="reauthorise()" class="btn btn-primary"><?php echo $button_reauthorise ?></a></td>
+    <td><?php echo $text_reauthorise; ?></td>
+    <td><a id="button-reauthorise" onclick="reauthorise()" class="btn btn-primary"><?php echo $button_reauthorise; ?></a></td>
   </tr>
   <?php } ?>
   <tr>
@@ -60,12 +60,12 @@
             <td class="text-left"><?php echo $transaction['pending_reason']; ?></td>
             <td class="text-left"><?php echo $transaction['date_added']; ?></td>
             <td class="text-left"><?php if ($transaction['transaction_id']) { ?>
-              <a href="<?php echo $transaction['view'] ?>"><?php echo $text_view; ?></a>
+              <a href="<?php echo $transaction['view']; ?>"><?php echo $text_view; ?></a>
               <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
-              &nbsp;<a href="<?php echo $transaction['refund'] ?>"><?php echo $text_refund; ?></a>
+              &nbsp;<a href="<?php echo $transaction['refund']; ?>"><?php echo $text_refund; ?></a>
               <?php } ?>
               <?php } else { ?>
-              <a onclick="resendTransaction(this); return false;" href="<?php echo $transaction['resend'] ?>"><?php echo $text_resend; ?></a>
+              <a onclick="resendTransaction(this); return false;" href="<?php echo $transaction['resend']; ?>"><?php echo $text_resend; ?></a>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -93,7 +93,7 @@
             $.ajax({
                 type:'POST',
                 dataType: 'json',
-                data: {'amount':amt,'order_id':<?php echo $order_id ?>,'complete':captureComplete},
+                data: {'amount':amt,'order_id':<?php echo $order_id; ?>,'complete':captureComplete},
                 url: 'index.php?route=payment/pp_pro_iframe/capture&token=<?php echo $token; ?>',
                 beforeSend: function() {
                     $('#button-capture').hide();
@@ -149,7 +149,7 @@
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left">' + data.failed_transaction.date_added + '</td>';
-                            html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_iframe_order_transaction_id=' + data.failed_transaction.paypal_iframe_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
+                            html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link; ?>&paypal_iframe_order_transaction_id=' + data.failed_transaction.paypal_iframe_order_transaction_id + '"><?php echo $text_resend; ?></a></td>';
                             html += '/<tr>';
 
                             $('#paypal_transactions').append(html);
@@ -168,8 +168,8 @@
             $.ajax({
                 type:'POST',
                 dataType: 'json',
-                data: {'order_id':<?php echo $order_id ?> },
-                url: 'index.php?route=payment/pp_pro_iframe/void&token=<?php echo $token ?>',
+                data: {'order_id':<?php echo $order_id; ?> },
+                url: 'index.php?route=payment/pp_pro_iframe/void&token=<?php echo $token; ?>',
                 beforeSend: function() {
                     $('#button-void').hide();
                     $('#img_loading_void').show();
@@ -231,7 +231,7 @@ function reauthorise() {
                 html += '</tr>';
 
                 $('#paypal_transactions').append(html);
-                alert('<?php echo $text_reauthorised ?>');
+                alert('<?php echo $text_reauthorised; ?>');
                 $('.loading').hide();
             }
 

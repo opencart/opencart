@@ -10,6 +10,6 @@
   $('#ppform').submit();
   //--></script>
   <?php } else { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_connection ?></div>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_connection; ?></div>
   <?php } ?>
 <?php } ?>

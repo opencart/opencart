@@ -153,7 +153,7 @@
   });
 
   $('#button-filter').bind('click', function() {
-    url = 'index.php?route=openbay/amazon/bulkListProducts&token=<?php echo $token ?>';
+    url = 'index.php?route=openbay/amazon/bulkListProducts&token=<?php echo $token; ?>';
     url += '&filter_marketplace=' + $("select[name='filter_marketplace']").val();
     location = url;
   });
@@ -181,7 +181,7 @@
     }
 
     $.ajax({
-      url: 'index.php?route=openbay/amazon/doBulkList&token=<?php echo $token ?>',
+      url: 'index.php?route=openbay/amazon/doBulkList&token=<?php echo $token; ?>',
       data: request_data,
       dataType: 'json',
       type: 'POST',
@@ -214,7 +214,7 @@
       request_data += '&marketplace=<?php echo $filter_marketplace; ?>';
 
       $.ajax({
-        url: 'index.php?route=openbay/amazon/doBulkSearch&token=<?php echo $token ?>',
+        url: 'index.php?route=openbay/amazon/doBulkSearch&token=<?php echo $token; ?>',
         data: request_data,
         dataType: 'json',
         type: 'POST',

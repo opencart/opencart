@@ -35,28 +35,28 @@
             <?php if (!empty($products)) { ?>
             <?php foreach ($products as $product) { ?>
             <tr>
-              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
-              <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
-              <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-              <td class="text-right"><?php echo $product['model'] ?></td>
-              <td class="text-right"><?php echo $product['search_status'] ?></td>
+              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id']; ?>"/></td>
+              <td class="text-center"><img src="<?php echo $product['image']; ?>"/></td>
+              <td class="text-left"><a href="<?php echo $product['href']; ?>" target="_blank"><?php echo $product['name']; ?></a></td>
+              <td class="text-right"><?php echo $product['model']; ?></td>
+              <td class="text-right"><?php echo $product['search_status']; ?></td>
               <td class="text-right"><?php echo ($product['matches'] !== null ? $product['matches'] : '-'); ?></td>
-              <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
+              <td class="text-left" id="result-<?php echo $product['product_id']; ?>"><?php if ($product['matches'] !== null) { ?>
                 <?php $checked = false; ?>
                 <?php if ($product['matches'] > 0) { ?>
-                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id']; ?>]" value=""/>
                 <?php echo $text_dont_list; ?><br/>
                 <?php foreach ($product['search_results'] as $search_result) { ?>
                 <?php if (!$checked) { ?>
-                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id']; ?>]" value="<?php echo $search_result['asin']; ?>"/>
                 <?php $checked = true; ?>
                 <?php } else { ?>
-                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id']; ?>]" value="<?php echo $search_result['asin']; ?>"/>
                 <?php } ?>
-                <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
+                <a target="_blank" href="<?php echo $search_result['href']; ?>"><?php echo $search_result['title']; ?></a><br/>
                 <?php } ?>
                 <?php } else { ?>
-                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id']; ?>]" value=""/>
                 <?php echo $text_dont_list; ?><br/>
                 <?php } ?>
                 <?php } ?></td>

@@ -63,11 +63,11 @@
               <?php foreach ($marketplaces as $mp) { ?>
               <label class="radio-inline">
                 <?php if ($saved_marketplaces === false) { ?>
-                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code']; ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
                 <?php } else { ?>
-                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code']; ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
                 <?php } ?>
-                <?php echo $mp['name'] ?> </label>
+                <?php echo $mp['name']; ?> </label>
               <?php } ?>
             </div>
           </div>
@@ -77,7 +77,7 @@
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
                 <?php foreach($amazon_categories as $category) {  ?>
-                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template']; ?>"><?php echo $category['friendly_name']; ?></option>
                 <?php } ?>
               </select>
             </div>

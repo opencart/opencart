@@ -68,9 +68,9 @@
                   <option value=""></option>
                   <?php foreach ($channels as $channel) { ?>
                   <?php if ($channel['module'] == $filter_channel) { ?>
-                  <option value="<?php echo $channel['module'] ?>" selected="selected"><?php echo $channel['title'] ?></option>
+                  <option value="<?php echo $channel['module']; ?>" selected="selected"><?php echo $channel['title']; ?></option>
                   <?php } else {  ?>
-                  <option value="<?php echo $channel['module'] ?>"><?php echo $channel['title'] ?></option>
+                  <option value="<?php echo $channel['module']; ?>"><?php echo $channel['title']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>

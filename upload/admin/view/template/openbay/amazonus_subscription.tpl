@@ -29,7 +29,7 @@
               <tbody>
                 <tr>
                   <td class="text-right"><b><?php echo $text_merchantid;?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['merchant_id'] ?> [ <a href="<?php echo $link_change_seller; ?>" target="_blank"><?php echo $text_change_merchantid; ?></a> ]</td>
+                  <td class="text-left"><?php echo $user_plan['merchant_id']; ?> [ <a href="<?php echo $link_change_seller; ?>" target="_blank"><?php echo $text_change_merchantid; ?></a> ]</td>
                 </tr>
                 <tr>
                   <td class="text-right"><b><?php echo $text_account_status; ?>:</b></td>
@@ -107,7 +107,7 @@
                     <?php } else { ?>
                     <?php echo $text_not_allowed; ?>
                     <?php } ?></td>
-                  <td class="text-left">&pound;<?php echo $plan['price'] ?></td>
+                  <td class="text-left">&pound;<?php echo $plan['price']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>

@@ -85,7 +85,7 @@
               <?php } else { ?>
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" />'; ?>
               <?php } ?>
-              <label for="p_code_<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></label>
+              <label for="p_code_<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
               <br />
               <?php } ?>
             </div>
@@ -111,7 +111,7 @@
             <legend><?php echo $text_order_statuses; ?></legend>
             <?php foreach ($amazon_order_statuses as $key => $amazon_order_status) { ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name'] ?></label>
+              <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name']; ?></label>
               <div class="col-sm-10">
                 <select name="openbay_amazon_order_status_<?php echo $key; ?>" class="form-control">
                   <?php foreach ($order_statuses as $order_status) { ?>
@@ -130,7 +130,7 @@
             <legend><?php echo $text_marketplaces; ?></legend>
             <?php foreach ($marketplaces as $marketplace) { ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="code-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name'] ?></label>
+              <label class="col-sm-2 control-label" for="code-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
               <div class="col-sm-10">
                 <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>

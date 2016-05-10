@@ -96,14 +96,14 @@
           <h4><?php echo $text_order_statuses; ?></h4>
           <?php foreach ($amazonus_order_statuses as $key => $amazonus_order_status) { ?>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $amazonus_order_status['name'] ?></label>
+            <label class="col-sm-2 control-label"><?php echo $amazonus_order_status['name']; ?></label>
             <div class="col-sm-10">
               <select name="openbay_amazonus_order_status_<?php echo $key; ?>" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($amazonus_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                <option value="<?php echo $order_status['order_status_id'] ?>" selected="selected"><?php echo $order_status['name'] ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id'] ?>"><?php echo $order_status['name'] ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                 <?php } ?>
                 <?php } ?>
               </select>

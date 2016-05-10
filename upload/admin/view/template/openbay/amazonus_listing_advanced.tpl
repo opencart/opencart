@@ -63,7 +63,7 @@
                             <select name="category_selector" id="category_selector" class="form-control">
                                 <option value=""></option>
                                 <?php foreach($amazonus_categories as $category) {  ?>
-                                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template']; ?>"><?php echo $category['friendly_name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

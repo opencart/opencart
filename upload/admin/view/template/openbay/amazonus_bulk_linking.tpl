@@ -59,13 +59,13 @@
             <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-market"/></td>
             <?php } ?>
 
-            <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
-            <td class="text-left"><?php echo $product['amazon_sku'] ?></td>
-            <td class="text-center"><?php echo $product['amazon_quantity'] ?></td>
-            <td class="text-right"><?php echo $product['amazon_price'] ?></td>
-            <td class="text-left"><a href="<?php echo $product['href_product'] ?>" target="_blank"><?php echo $product['name'] ?></a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
-            <td class="text-left"><?php echo $product['sku'] ?></td>
-            <td class="text-center"><?php echo $product['quantity'] ?></td>
+            <td class="text-left"><a href="<?php echo $product['href_amazon']; ?>" target="_blank"><?php echo $product['asin']; ?></a></td>
+            <td class="text-left"><?php echo $product['amazon_sku']; ?></td>
+            <td class="text-center"><?php echo $product['amazon_quantity']; ?></td>
+            <td class="text-right"><?php echo $product['amazon_price']; ?></td>
+            <td class="text-left"><a href="<?php echo $product['href_product']; ?>" target="_blank"><?php echo $product['name']; ?></a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
+            <td class="text-left"><?php echo $product['sku']; ?></td>
+            <td class="text-center"><?php echo $product['quantity']; ?></td>
             <input type="hidden" name="link[<?php echo $row; ?>][amazon_sku]" value="<?php echo $product['amazon_sku']; ?>"/>
             <input type="hidden" name="link[<?php echo $row; ?>][product_id]" value="<?php echo $product['product_id']; ?>"/>
             <input type="hidden" name="link[<?php echo $row; ?>][sku]" value="<?php echo $product['var']; ?>"/>

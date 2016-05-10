@@ -107,7 +107,7 @@
                     <?php } else { ?>
                     <?php echo $text_not_allowed; ?>
                     <?php } ?></td>
-                  <td class="text-left">&pound;<?php echo $plan['price'] ?></td>
+                  <td class="text-left">&pound;<?php echo $plan['price']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>

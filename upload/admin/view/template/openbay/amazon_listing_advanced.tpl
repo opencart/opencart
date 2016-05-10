@@ -104,7 +104,7 @@
     </form>
     <div class="well">
       <div class="row">
-        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
+        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save; ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload; ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings; ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
       </div>
     </div>
   </div>
@@ -184,7 +184,7 @@ function show_form(xml, formType) {
     $('.dynamic-tab').remove();
     $('.dynamic-page').remove();
 
-    var parserURL = '<?php echo html_entity_decode($template_parser_url) ?>';
+    var parserURL = '<?php echo html_entity_decode($template_parser_url); ?>';
     var reqUrl = parserURL + '&xml=' + xml;
 
     if ($('#openstock_selector').val() !== undefined) {
@@ -486,7 +486,7 @@ function validate(formType) {
   });
 
   if (mChecked == 0) {
-    $('#marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required ?></div>');
+    $('#marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required; ?></div>');
     warnings ++;
   } else {
     $('#marketplace-alert').remove();
@@ -516,7 +516,7 @@ function validate(formType) {
 
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
-              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>').show();
+              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required; ?>').show();
               warnings ++;
             } else if (min_length != undefined && field_value.length < min_length) {
               $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>').show();

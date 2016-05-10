@@ -54,7 +54,7 @@
           </form>
         </div>
       </div>
-    <?php }else{ ?>
+    <?php } else { ?>
       <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?> </div>
     <?php } ?>
   </div>

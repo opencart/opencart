@@ -19,7 +19,7 @@
     <div class="alert alert-danger">
       <ul>
         <?php foreach ($listing_errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error; ?></li>
         <?php } ?>
       </ul>
     </div>
@@ -43,11 +43,11 @@
               <?php foreach ($marketplaces as $id => $name) {?>
               <label class="radio-inline">
                 <?php if ($default_marketplace == $id) { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
+                <input type="radio" name="marketplace" id="marketplace_<?php echo $id; ?>" value="<?php echo $id; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
+                <input type="radio" name="marketplace" id="marketplace_<?php echo $id; ?>" value="<?php echo $id; ?>" />
                 <?php } ?>
-                <?php echo $name ?> </label>
+                <?php echo $name; ?> </label>
               <?php } ?>
             </div>
           </div>
@@ -59,11 +59,11 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center"><?php echo $column_image ?></th>
-            <th class="text-center"><?php echo $column_asin ?></th>
-            <th class="text-left"><?php echo $column_name ?></th>
-            <th class="text-center"><?php echo $column_price ?></th>
-            <th class="text-center"><?php echo $column_action ?></th>
+            <th class="text-center"><?php echo $column_image; ?></th>
+            <th class="text-center"><?php echo $column_asin; ?></th>
+            <th class="text-left"><?php echo $column_name; ?></th>
+            <th class="text-center"><?php echo $column_price; ?></th>
+            <th class="text-center"><?php echo $column_action; ?></th>
           </tr>
         </thead>
         <tbody>
@@ -74,10 +74,10 @@
       <div id="chosen-product-preview" class="well" style="display:none;"></div>
       <div class="panel">
         <div class="panel-body">
-          <form method="POST" action="<?php echo $form_action ?>" class="form-horizontal">
+          <form method="POST" action="<?php echo $form_action; ?>" class="form-horizontal">
             <input type="hidden" name="asin" value="" />
-            <input type="hidden" name="marketplace" value="<?php echo $default_marketplace ?>" />
-            <input type="hidden" name="product_id" value="<?php echo $product_id ?>" />
+            <input type="hidden" name="marketplace" value="<?php echo $default_marketplace; ?>" />
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" id="quantity" />
             <ul class="nav nav-tabs">
               <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required; ?></a></li>
@@ -184,7 +184,7 @@
       </div>
       <div class="well">
         <div class="row">
-          <div class="col-md-12 text-right"> <a class="btn btn-primary" id="button-list" onclick="validateQuickListing();"><?php echo $button_list ?></a> </div>
+          <div class="col-md-12 text-right"> <a class="btn btn-primary" id="button-list" onclick="validateQuickListing();"><?php echo $button_list; ?></a> </div>
         </div>
       </div>
     </div>
@@ -227,8 +227,8 @@
                   html += '  <td class="text-left">' + value.name + '</td>';
                   html += '  <td class="text-center">' + value.price + '</td>';
                   html += '  <td class="text-center">';
-                  html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon ?>"><i class="fa fa-eye"></i></a>';
-                  html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list ?>"><i class="fa fa-check-square"></i></a>';
+                  html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon; ?>"><i class="fa fa-eye"></i></a>';
+                  html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list; ?>"><i class="fa fa-check-square"></i></a>';
                   html += '  </td>';
                   html += '</tr>';
 

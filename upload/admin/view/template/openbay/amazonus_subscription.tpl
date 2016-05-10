@@ -14,8 +14,8 @@
   <div class="container-fluid">
     <?php if (!$user_plan) { ?>
     <div class="row">
-      <p><?php echo $text_register_invite ?></p>
-      <p><a href="<?php echo $link_register; ?>" class="btn btn-primary" target="_blank"><?php echo $button_register ?></a></p>
+      <p><?php echo $text_register_invite; ?></p>
+      <p><a href="<?php echo $link_register; ?>" class="btn btn-primary" target="_blank"><?php echo $button_register; ?></a></p>
     </div>
     <?php } else { ?>
     <div class="row">
@@ -32,40 +32,42 @@
                   <td class="text-left"><?php echo $user_plan['merchant_id'] ?> [ <a href="<?php echo $link_change_seller; ?>" target="_blank"><?php echo $text_change_merchantid; ?></a> ]</td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_account_status;?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['user_status'] ?></td>
+                  <td class="text-right"><b><?php echo $text_account_status; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['user_status']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_name ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['title'] ?></td>
+                  <td class="text-right"><b><?php echo $text_name; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['title']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_description ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['description'] ?></td>
+                  <td class="text-right"><b><?php echo $text_description; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['description']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_order_frequency ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['order_frequency'] ?></td>
+                  <td class="text-right"><b><?php echo $text_order_frequency; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['order_frequency']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_product_listings ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['product_listings'] ?></td>
+                  <td class="text-right"><b><?php echo $text_product_listings; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['product_listings']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_listings_remaining ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['listings_remain'] ?></td>
+                  <td class="text-right"><b><?php echo $text_listings_remaining; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['listings_remain']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_listings_reserved ?>:</b></td>
-                  <td class="text-left"><?php echo $user_plan['listings_reserved'] ?></td>
+                  <td class="text-right"><b><?php echo $text_listings_reserved; ?>:</b></td>
+                  <td class="text-left"><?php echo $user_plan['listings_reserved']; ?></td>
                 </tr>
                 <tr>
-                  <td class="text-right"><b><?php echo $text_bulk_listing ?>:</b></td>
-                  <td class="text-left"><?php if ($user_plan['bulk_listing']) { ?>
-                    <?php echo $text_allowed ?>
+                  <td class="text-right"><b><?php echo $text_bulk_listing; ?>:</b></td>
+                  <td class="text-left">
+                    <?php if ($user_plan['bulk_listing']) { ?>
+                    <?php echo $text_allowed; ?>
                     <?php } else { ?>
-                    <?php echo $text_not_allowed ?>
-                    <?php } ?></td>
+                    <?php echo $text_not_allowed; ?>
+                    <?php } ?>
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-right"><b><?php echo $text_price; ?>:</b></td>

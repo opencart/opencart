@@ -7,7 +7,7 @@
           <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_eu_bulk; ?></a>
         <?php } ?>
         <?php if ($link_amazon_us_bulk) { ?>
-          <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk ?></a>
+          <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk; ?></a>
         <?php } ?>
         <?php  if ($link_ebay_bulk) { ?>
           <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_ebay_bulk; ?></a>

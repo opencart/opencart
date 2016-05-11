@@ -516,7 +516,7 @@ class ControllerExtensionExtension extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('total/' . $extension);
+				$this->load->language('menu/' . $extension);
 
 				$data['menus'][] = array(
 					'name'       => $this->language->get('heading_title'),
@@ -525,7 +525,7 @@ class ControllerExtensionExtension extends Controller {
 					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'       => $this->url->link('menu/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}		
@@ -600,11 +600,12 @@ class ControllerExtensionExtension extends Controller {
 			'payment',
 			'shipping',
 			'theme',
+			'menu',
 			'total'				
 		);
 
-		if () {
-			
+		if (!in_array($this->request->get['type'], $allowed)) {
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

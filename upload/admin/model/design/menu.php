@@ -1,50 +1,54 @@
 <?php
 class ModelDesignMenu extends Model {
 	public function addMenu($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "menu SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "'");
-
-		$banner_id = $this->db->getLastId();
-
-		return $banner_id;
+		$this->db->query("INSERT INTO " . DB_PREFIX . "menu SET store_id = '" . (int)$data['store_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "'");
+	
+		$menu_id = $this->db->getLastId();
+	
+		if (isset($data['menu_description'])) {
+			foreach ($data['menu_description'] as $language_id => $value) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "', link = '" .  $this->db->escape($value['link']) . "'");
+			}
+		}	
 	}
 
-	public function editMenu($banner_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "' WHERE banner_id = '" . (int)$banner_id . "'");
+	public function editMenu($menu_id, $data) {
+		$this->db->query("UPDATE " . DB_PREFIX . "menu SET store_id = '" . (int)$data['store_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "' WHERE menu_id = '" . (int)$menu_id . "'");
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE menu_id = '" . (int)$menu_id . "'");
 
-		if (isset($data['banner_image'])) {
-			foreach ($data['banner_image'] as $language_id => $value) {
-				foreach ($value as $banner_image) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_id . "', language_id = '" . (int)$language_id . "', title = '" .  $this->db->escape($banner_image['title']) . "', link = '" .  $this->db->escape($banner_image['link']) . "', image = '" .  $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "'");
-				}
+		if (isset($data['menu_description'])) {
+			foreach ($data['menu_description'] as $language_id => $value) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" .  $this->db->escape($value['name']) . "', link = '" .  $this->db->escape($value['link']) . "'");
 			}
 		}
 	}
 
-	public function deleteMenu($banner_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "menu WHERE banner_id = '" . (int)$banner_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
+	public function deleteMenu($menu_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu WHERE menu_id = '" . (int)$menu_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE menu_id = '" . (int)$menu_id . "'");
 	}
 
-	public function getMenu($banner_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "banner WHERE banner_id = '" . (int)$banner_id . "'");
+	public function getMenu($menu_id) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "menu WHERE menu_id = '" . (int)$menu_id . "'");
 
 		return $query->row;
 	}
 
 	public function getMenus($data = array()) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "menu";
+		$sql = "SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON(m.menu_id = md.menu_id) WHERE md.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = array(
-			'name',
-			'status'
+			'md.name',
+			'store',
+			'm.sort_order',
+			'm.status'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY md.name";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

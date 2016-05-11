@@ -370,18 +370,18 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php if ($themes) { ?>
-                      <?php foreach ($themes as $theme) { ?>
+                      <?php if ($menus) { ?>
+                      <?php foreach ($menus as $menu) { ?>
                       <tr>
-                        <td class="text-left" colspan="2"><b><?php echo $theme['name']; ?></b></td>
-                        <td class="text-right"><?php if (!$theme['installed']) { ?>
-                          <a href="<?php echo $theme['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                        <td class="text-left" colspan="2"><b><?php echo $menu['name']; ?></b></td>
+                        <td class="text-right"><?php if (!$menu['installed']) { ?>
+                          <a href="<?php echo $menu['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                           <?php } else { ?>
-                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $menu['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                           <?php } ?></td>
                       </tr>
-                      <?php if ($theme['installed']) { ?>
-                      <?php foreach ($theme['store'] as $store) { ?>
+                      <?php if ($menu['installed']) { ?>
+                      <?php foreach ($menu['store'] as $store) { ?>
                       <tr>
                         <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
                         <td class="text-left"><?php echo $store['status'] ?></td>
@@ -447,13 +447,13 @@
 </div>
 <script type="text/javascript"><!--
 localStorage.setItem('extension-tab', 'list');
-
+/*
 $('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
 
 $('#tab-analytics').on('click', function() {
 	$('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
 });
-
+*/
 //$('#tab-analytics').trigger();
 //--></script> 
 <?php echo $footer; ?> 

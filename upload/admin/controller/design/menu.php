@@ -114,7 +114,7 @@ class ControllerDesignMenu extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'm.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -173,10 +173,12 @@ class ControllerDesignMenu extends Controller {
 
 		foreach ($results as $result) {
 			$data['menus'][] = array(
-				'menu_id' => $result['menu_id'],
-				'name'    => $result['name'],
-				'status'  => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'    => $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&menu_id=' . $result['menu_id'] . $url, true)
+				'menu_id'    => $result['menu_id'],
+				'name'       => $result['name'],
+				'store'      => $result['store'],
+				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'sort_order' => $result['sort_order'],
+				'edit'       => $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&menu_id=' . $result['menu_id'] . $url, true)
 			);
 		}
 
@@ -188,6 +190,7 @@ class ControllerDesignMenu extends Controller {
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_add'] = $this->language->get('button_add');
@@ -226,8 +229,10 @@ class ControllerDesignMenu extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_status'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_name'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=md.name' . $url, true);
+		$data['sort_store'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.store' . $url, true);
+		$data['sort_status'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.status' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.sort_order' . $url, true);
 
 		$url = '';
 
@@ -268,9 +273,8 @@ class ControllerDesignMenu extends Controller {
 		$data['text_default'] = $this->language->get('text_default');
 
 		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_link'] = $this->language->get('entry_link');
-		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -335,8 +339,6 @@ class ControllerDesignMenu extends Controller {
 			$menu_info = $this->model_design_menu->getMenu($this->request->get['menu_id']);
 		}
 
-		$data['token'] = $this->session->data['token'];
-
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
 		} elseif (!empty($menu_info)) {
@@ -344,6 +346,8 @@ class ControllerDesignMenu extends Controller {
 		} else {
 			$data['name'] = '';
 		}
+		
+		
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];

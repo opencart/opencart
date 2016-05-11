@@ -73,11 +73,11 @@
 								<div class="checkbox">
 									<label>
 										<?php if (in_array($key, $securetrading_ws_cards_accepted)) { ?>
-											<input type="checkbox" checked="checked" name="securetrading_ws_cards_accepted[]" value="<?php echo $key ?>" />
+											<input type="checkbox" checked="checked" name="securetrading_ws_cards_accepted[]" value="<?php echo $key; ?>" />
 										<?php } else { ?>
-											<input type="checkbox" name="securetrading_ws_cards_accepted[]" value="<?php echo $key ?>" />
+											<input type="checkbox" name="securetrading_ws_cards_accepted[]" value="<?php echo $key; ?>" />
 										<?php } ?>
-										<?php echo $value ?>
+										<?php echo $value; ?>
 									</label>
 								</div>
 							<?php } ?>
@@ -111,9 +111,9 @@
 								<?php } ?>
 								<?php for ($i = 1; $i < 8; $i++) { ?>
 									<?php if ($i == $securetrading_ws_settle_due_date) { ?>
-										<option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i) ?></option>
+										<option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
 									<?php } else { ?>
-										<option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i) ?></option>
+										<option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i); ?></option>
 									<?php } ?>
 								<?php } ?>
 							</select>
@@ -251,7 +251,7 @@
 										<div class="input-group">
 											<select name="hour_from" id="hour-from" class="form-control">
 												<?php foreach ($hours as $hour) { ?>
-													<option value="<?php echo $hour ?>"><?php echo $hour ?></option>
+													<option value="<?php echo $hour; ?>"><?php echo $hour; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -263,7 +263,7 @@
 										<div class="input-group">
 											<select name="minute_from" id="minute-from" class="form-control">
 												<?php foreach ($minutes as $minute) { ?>
-													<option value="<?php echo $minute ?>"><?php echo $minute ?></option>
+													<option value="<?php echo $minute; ?>"><?php echo $minute; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -286,7 +286,7 @@
 										<div class="input-group">
 											<select name="hour_to" id="hour-to" class="form-control">
 												<?php foreach ($hours as $hour) { ?>
-													<option value="<?php echo $hour ?>"><?php echo $hour ?></option>
+													<option value="<?php echo $hour; ?>"><?php echo $hour; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -298,7 +298,7 @@
 										<div class="input-group">
 											<select name="minute_to" id="minute-to" class="form-control">
 												<?php foreach ($minutes as $minute) { ?>
-													<option value="<?php echo $minute ?>"><?php echo $minute ?></option>
+													<option value="<?php echo $minute; ?>"><?php echo $minute; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -336,7 +336,7 @@
 										<label class="control-label" for="currency"><?php echo $entry_currency; ?></label>
 										<select name="currency[]" id="currency" multiple class="form-control" style="height: 150px">
 											<?php foreach ($currencies as $currency) { ?>
-												<option selected="selected" value="<?php echo $currency['code'] ?>"><?php echo $currency['title'] ?></option>
+												<option selected="selected" value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
 											<?php } ?>
 										</select>
 									</div>
@@ -373,20 +373,20 @@
 									<div class="form-group">
 										<label class="control-label" for="settle-status"><?php echo $entry_settle_status; ?></label>
 										<select name="settle_status[]" id="settle-status" multiple class="form-control" style="height: 150px">
-											<option selected="selected" value="0">0 - <?php echo $text_pending_settlement ?></option>
-											<option selected="selected" value="1">1 - <?php echo $text_manual_settlement ?></option>
-											<option selected="selected" value="2">2 - <?php echo $text_suspended ?></option>
-											<option selected="selected" value="3">3 - <?php echo $text_cancelled ?></option>
-											<option selected="selected" value="10">10 - <?php echo $text_settling ?></option>
-											<option selected="selected" value="100">100 - <?php echo $text_settled ?></option>
+											<option selected="selected" value="0">0 - <?php echo $text_pending_settlement; ?></option>
+											<option selected="selected" value="1">1 - <?php echo $text_manual_settlement; ?></option>
+											<option selected="selected" value="2">2 - <?php echo $text_suspended; ?></option>
+											<option selected="selected" value="3">3 - <?php echo $text_cancelled; ?></option>
+											<option selected="selected" value="10">10 - <?php echo $text_settling; ?></option>
+											<option selected="selected" value="100">100 - <?php echo $text_settled; ?></option>
 										</select>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<a class="btn btn-primary" onclick="showTransactions()"><?php echo $button_show ?></a>
-									<a class="btn btn-primary" onclick="downloadTransactions()"><?php echo $button_download ?></a>
+									<a class="btn btn-primary" onclick="showTransactions()"><?php echo $button_show; ?></a>
+									<a class="btn btn-primary" onclick="downloadTransactions()"><?php echo $button_download; ?></a>
 								</div>
 							</div>
 						</form>
@@ -403,7 +403,7 @@
 
 		$('#transaction-form').attr('method', 'POST');
 		$('#transaction-form').attr('target', 'download-iframe');
-		$('#transaction-form').attr('action', 'index.php?route=payment/securetrading_ws/downloadTransactions&token=<?php echo $token ?>');
+		$('#transaction-form').attr('action', 'index.php?route=payment/securetrading_ws/downloadTransactions&token=<?php echo $token; ?>');
 
 		$('#transaction-form').submit();
 
@@ -414,7 +414,7 @@
 
 	function showTransactions() {
 		$.ajax({
-			url: 'index.php?route=payment/securetrading_ws/showTransactions&token=<?php echo $token ?>',
+			url: 'index.php?route=payment/securetrading_ws/showTransactions&token=<?php echo $token; ?>',
 			type: 'post',
 			data: $('#transaction-form').serialize(),
 			dataType: 'html',

@@ -169,11 +169,11 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" ><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
-            <div class="col-sm-10"><span id="cron-job-url"><?php echo $sagepay_server_cron_job_url ?></span></div>
+            <div class="col-sm-10"><span id="cron-job-url"><?php echo $sagepay_server_cron_job_url; ?></span></div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" ><?php echo $entry_last_cron_job_run; ?></label>
-            <div class="col-sm-10"><span><?php echo $sagepay_server_last_cron_job_run ?></span></div>
+            <div class="col-sm-10"><span><?php echo $sagepay_server_last_cron_job_run; ?></span></div>
           </div>
         </form>
       </div>

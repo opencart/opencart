@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $back ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_back ?></a></div>
+      <div class="pull-right"><a href="<?php echo $back; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_back; ?></a></div>
       <h1><?php echo $text_transaction; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>

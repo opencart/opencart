@@ -55,7 +55,7 @@
 </table>
 <script type="text/javascript"><!--
     $("#btn_refund").click(function () {
-      if (confirm('<?php echo $text_confirm_refund ?>')) {
+      if (confirm('<?php echo $text_confirm_refund; ?>')) {
         $.ajax({
           type: 'POST',
           dataType: 'json',

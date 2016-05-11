@@ -7,7 +7,7 @@
       <div class="col-sm-10">
         <select name="type" id="input-type" class="form-control">
           <?php foreach ($cards as $key => $title) { ?>
-            <option value="<?php echo $key ?>"><?php echo $title; ?></option>
+            <option value="<?php echo $key; ?>"><?php echo $title; ?></option>
           <?php } ?>
         </select>
       </div>

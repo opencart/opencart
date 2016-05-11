@@ -14,7 +14,7 @@
   </header>
   <div class="row">
     <div class="col-sm-9">
-      <h3><?php echo $text_server ?></h3>
+      <h3><?php echo $text_server; ?></h3>
       <fieldset>
         <ol>
           <li><?php echo $text_error; ?></li>

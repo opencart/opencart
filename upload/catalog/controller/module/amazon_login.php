@@ -38,28 +38,10 @@ class ControllerModuleAmazonLogin extends Controller {
                 $data['amazon_login_button_size'] = 'medium';
             }
 
-            switch ($this->config->get('amazon_login_pay_language')) {
-                case 'de':
-                    $data['amazon_login_pay_language'] = 'de-DE';
-                    break;
-                case 'uk':
-                    $data['amazon_login_pay_language'] = 'en-GB';
-                    break;
-                case 'us':
-                    $data['amazon_login_pay_language'] = 'en-GB';
-                    break;
-                case 'fr':
-                    $data['amazon_login_pay_language'] = 'fr-FR';
-                    break;
-                case 'it':
-                    $data['amazon_login_pay_language'] = 'it-IT';
-                    break;
-                case 'es':
-                    $data['amazon_login_pay_language'] = 'es-ES';
-                    break;
-                default:
-                    $data['amazon_login_pay_language'] = 'en-GB';
-                    break;
+			if ($this->config->get('amazon_login_pay_language')) {
+                $data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+            } else {
+                $data['amazon_login_pay_language'] = 'en-US';
             }
 
             return $this->load->view('module/amazon_login', $data);

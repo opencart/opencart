@@ -318,30 +318,20 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
 
-		switch ($data['amazon_login_pay_language']) {
-			case 'de':
-				$data['language'] = 'de-DE';
+
+
+		switch ($data['amazon_login_pay_payment_region']) {
+			case 'EUR':
 				$data['sp_id'] = 'AGGDPRPDPL7SL';
 				break;
-			case 'uk':
-				$data['language'] = 'en-GB';
+			case 'GBP':
 				$data['sp_id'] = 'A1P8WV11EWOP9H';
 				break;
-			case 'us':
-				$data['language'] = 'en-GB';
+			case 'USD':
 				$data['sp_id'] = 'A3GK1RS09H3A7D';
 				break;
-			case 'fr':
-				$data['language'] = 'fr-FR';
-				$data['sp_id'] = '';
-				break;
-			case 'it':
-				$data['language'] = 'it-IT';
-				$data['sp_id'] = '';
-				break;
-			case 'es':
-				$data['language'] = 'es-ES';
-				$data['sp_id'] = '';
+			default:
+				$data['sp_id'] = 'AGGDPRPDPL7SL';
 				break;
 		}
 
@@ -349,17 +339,17 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect";
 
 			$data['languages'] = array(
-				'us' => $this->language->get('text_us')
+				'en-US' => $this->language->get('text_us')
 			);
 		} else {
 			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect?spId=" . $data['sp_id'];
 
 			$data['languages'] = array(
-				'de' => $this->language->get('text_de'),
-				'es' => $this->language->get('text_es'),
-				'fr' => $this->language->get('text_fr'),
-				'it' => $this->language->get('text_it'),
-				'uk' => $this->language->get('text_uk')
+				'de-DE' => $this->language->get('text_de'),
+				'es-ES' => $this->language->get('text_es'),
+				'fr-FR' => $this->language->get('text_fr'),
+				'it-IT' => $this->language->get('text_it'),
+				'en-GB' => $this->language->get('text_uk')
 			);
 		}
 

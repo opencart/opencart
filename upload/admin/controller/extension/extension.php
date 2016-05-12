@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionExtension extends Controller {
 	private $error = array();
-	
+
 	public function index() {
 		$this->load->language('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionExtension extends Controller {
 
 		$this->getList();
 	}
-	
+
 	public function install() {
 		$this->load->language('extension/extension');
 
@@ -20,7 +20,7 @@ class ControllerExtensionExtension extends Controller {
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('analytics', $this->request->get['extension']);
+			$this->model_extension_extension->install($this->request->get['type'], $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -46,7 +46,7 @@ class ControllerExtensionExtension extends Controller {
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('analytics', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall($this->request->get['type'], $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('analytics/' . $this->request->get['extension'] . '/uninstall');
@@ -56,7 +56,7 @@ class ControllerExtensionExtension extends Controller {
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 	}
-		
+
 	public function getList() {
 		$this->load->language('extension/extension');
 
@@ -79,12 +79,12 @@ class ControllerExtensionExtension extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
-		
+
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
-		
+
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_install'] = $this->language->get('button_install');
@@ -114,13 +114,13 @@ class ControllerExtensionExtension extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$this->load->model('setting/setting');
 		$this->load->model('setting/store');
 		$this->load->model('extension/module');
 
 		$stores = $this->model_setting_store->getStores();
-				
+
 		// Analytics
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
@@ -131,9 +131,9 @@ class ControllerExtensionExtension extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-		
+
 		$data['analytics'] = array();
-		
+
 		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
 
 		if ($files) {
@@ -143,13 +143,13 @@ class ControllerExtensionExtension extends Controller {
 				$this->load->language('analytics/' . $extension);
 
 				$store_data = array();
-				
+
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
-									
+
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
@@ -157,7 +157,7 @@ class ControllerExtensionExtension extends Controller {
 						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
-				
+
 				$data['analytics'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
@@ -167,7 +167,7 @@ class ControllerExtensionExtension extends Controller {
 				);
 			}
 		}
-		
+
 		$sort_order = array();
 
 		foreach ($data['analytics'] as $key => $value) {
@@ -175,7 +175,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['analytics']);
-				
+
 		// Captcha
 		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
@@ -200,8 +200,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['captchas'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -215,7 +215,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['captchas']);
-				
+
 		// Feed
 		$extensions = $this->model_extension_extension->getInstalled('feed');
 
@@ -226,7 +226,7 @@ class ControllerExtensionExtension extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-		
+
 		$data['feeds'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
@@ -240,8 +240,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['feeds'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=feed&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=feed&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -255,7 +255,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['feeds']);
-				
+
 		// Fraud
 		$extensions = $this->model_extension_extension->getInstalled('fraud');
 
@@ -280,8 +280,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['frauds'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('fraud/' . $extension, 'token=' . $this->session->data['token'] . '&type=fraud', true)
 				);
@@ -295,7 +295,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['frauds']);
-		
+
 		// Module
 		$extensions = $this->model_extension_extension->getInstalled('module');
 
@@ -335,8 +335,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['modules'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=module&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=module&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -350,7 +350,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['modules']);
-	
+
 		// Payment
 		$extensions = $this->model_extension_extension->getInstalled('payment');
 
@@ -385,22 +385,22 @@ class ControllerExtensionExtension extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=payment&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=payment&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('payment/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
-		}	
-		
+		}
+
 		$sort_order = array();
 
 		foreach ($data['payments'] as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['payments']);		
-		
+		array_multisort($sort_order, SORT_ASC, $data['payments']);
+
 		// Shipping
 		$extensions = $this->model_extension_extension->getInstalled('shipping');
 
@@ -426,22 +426,22 @@ class ControllerExtensionExtension extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=shipping&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=shipping&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
-		}		
-		
+		}
+
 		$sort_order = array();
 
 		foreach ($data['shippings'] as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['shippings']);		
-		
+		array_multisort($sort_order, SORT_ASC, $data['shippings']);
+
 		// Theme
 		$extensions = $this->model_extension_extension->getInstalled('theme');
 
@@ -460,17 +460,17 @@ class ControllerExtensionExtension extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-				
+
 				$this->load->language('theme/' . $extension);
-					
+
 				$store_data = array();
-				
+
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->link('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
-									
+
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
@@ -478,25 +478,25 @@ class ControllerExtensionExtension extends Controller {
 						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
-				
+
 				$data['themes'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=theme&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=theme&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'store'     => $store_data
 				);
 			}
-		}	
-		
+		}
+
 		$sort_order = array();
 
 		foreach ($data['themes'] as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['themes']);		
-	
+		array_multisort($sort_order, SORT_ASC, $data['themes']);
+
 		// Menu
 		$extensions = $this->model_extension_extension->getInstalled('menu');
 
@@ -522,14 +522,14 @@ class ControllerExtensionExtension extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=menu&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=menu&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('menu/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
-		}		
-			
+		}
+
 		$sort_order = array();
 
 		foreach ($data['menus'] as $key => $value) {
@@ -537,7 +537,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['menus']);
-						
+
 		// Total
 		$extensions = $this->model_extension_extension->getInstalled('total');
 
@@ -563,14 +563,14 @@ class ControllerExtensionExtension extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=total&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=total&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
-		}		
-			
+		}
+
 		$sort_order = array();
 
 		foreach ($data['totals'] as $key => $value) {
@@ -578,7 +578,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['totals']);
-				
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -590,7 +590,7 @@ class ControllerExtensionExtension extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/extension')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		$allowed = array(
 			'analytics',
 			'captcha',
@@ -601,7 +601,7 @@ class ControllerExtensionExtension extends Controller {
 			'shipping',
 			'theme',
 			'menu',
-			'total'				
+			'total'
 		);
 
 		if (!in_array($this->request->get['type'], $allowed)) {
@@ -609,5 +609,5 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

@@ -176,6 +176,7 @@ class ControllerDesignMenu extends Controller {
 				'menu_id'    => $result['menu_id'],
 				'name'       => $result['name'],
 				'store'      => $result['store'],
+				'type'       => $result['type'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'sort_order' => $result['sort_order'],
 				'edit'       => $this->url->link('design/menu/edit', 'token=' . $this->session->data['token'] . '&menu_id=' . $result['menu_id'] . $url, true)
@@ -189,6 +190,8 @@ class ControllerDesignMenu extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_store'] = $this->language->get('column_store');
+		$data['column_type'] = $this->language->get('column_type');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
@@ -231,9 +234,10 @@ class ControllerDesignMenu extends Controller {
 
 		$data['sort_name'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=md.name' . $url, true);
 		$data['sort_store'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.store' . $url, true);
-		$data['sort_status'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.status' . $url, true);
+		$data['sort_type'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.type' . $url, true);
 		$data['sort_sort_order'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.sort_order' . $url, true);
-
+		$data['sort_status'] = $this->url->link('design/menu', 'token=' . $this->session->data['token'] . '&sort=m.status' . $url, true);
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -271,10 +275,14 @@ class ControllerDesignMenu extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
+		$data['text_link'] = $this->language->get('text_link');
+		$data['text_module'] = $this->language->get('text_module');
 
 		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_link'] = $this->language->get('entry_link');
 		$data['entry_store'] = $this->language->get('entry_store');
+		$data['entry_type'] = $this->language->get('entry_type');	
+		$data['entry_link'] = $this->language->get('entry_link');
+		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -293,12 +301,6 @@ class ControllerDesignMenu extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['menu_image'])) {
-			$data['error_menu_image'] = $this->error['menu_image'];
-		} else {
-			$data['error_menu_image'] = array();
 		}
 
 		$url = '';
@@ -339,16 +341,44 @@ class ControllerDesignMenu extends Controller {
 			$menu_info = $this->model_design_menu->getMenu($this->request->get['menu_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($menu_info)) {
-			$data['name'] = $menu_info['name'];
+		$data['token'] = $this->session->data['token'];
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->post['menu_description'])) {
+			$data['menu_description'] = $this->request->post['menu_description'];
+		} elseif (isset($this->request->get['menu_id'])) {
+			$data['menu_description'] = $this->model_design_menu->getMenuDescriptions($this->request->get['menu_id']);
 		} else {
-			$data['name'] = '';
+			$data['menu_description'] = array();
+		}
+				
+		if (isset($this->request->post['type'])) {
+			$data['type'] = $this->request->post['type'];
+		} elseif (!empty($menu_info)) {
+			$data['type'] = $menu_info['type'];
+		} else {
+			$data['type'] = '';
+		}	
+			
+		if (isset($this->request->post['link'])) {
+			$data['link'] = $this->request->post['link'];
+		} elseif (!empty($menu_info)) {
+			$data['link'] = $menu_info['link'];
+		} else {
+			$data['link'] = '';
+		}	
+			
+		if (isset($this->request->post['sort_order'])) {
+			$data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($menu_info)) {
+			$data['sort_order'] = $menu_info['sort_order'];
+		} else {
+			$data['sort_order'] = 0;
 		}
 		
-		
-
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($menu_info)) {
@@ -356,44 +386,59 @@ class ControllerDesignMenu extends Controller {
 		} else {
 			$data['status'] = true;
 		}
+		
+		$this->load->model('extension/extension');
 
-		$this->load->model('localisation/language');
+		$data['extensions'] = array();
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+		// Get a list of installed modules
+		$extensions = $this->model_extension_extension->getInstalled('menu');
 
-		$this->load->model('tool/image');
+		// Add all the modules which have multiple settings for each module
+		foreach ($extensions as $code) {
+			$this->load->language('module/' . $code);
 
-		if (isset($this->request->post['menu_image'])) {
-			$menu_images = $this->request->post['menu_image'];
-		} elseif (isset($this->request->get['menu_id'])) {
-			$menu_images = $this->model_design_menu->getMenuImages($this->request->get['menu_id']);
-		} else {
-			$menu_images = array();
-		}
+			$module_data = array();
 
-		$data['menu_images'] = array();
+			$modules = $this->model_extension_module->getModulesByCode($code);
 
-		foreach ($menu_images as $key => $value) {
-			foreach ($value as $menu_image) {
-				if (is_file(DIR_IMAGE . $menu_image['image'])) {
-					$image = $menu_image['image'];
-					$thumb = $menu_image['image'];
-				} else {
-					$image = '';
-					$thumb = 'no_image.png';
-				}
-				
-				$data['menu_images'][$key][] = array(
-					'title'      => $menu_image['title'],
-					'link'       => $menu_image['link'],
-					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
-					'sort_order' => $menu_image['sort_order']
+			foreach ($modules as $module) {
+				$module_data[] = array(
+					'name' => strip_tags($module['name']),
+					'code' => $code . '.' .  $module['module_id']
+				);
+			}
+
+			if ($this->config->has($code . '_status') || $module_data) {
+				$data['extensions'][] = array(
+					'name'   => strip_tags($this->language->get('heading_title')),
+					'code'   => $code,
+					'module' => $module_data
 				);
 			}
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		if (isset($this->request->post['menu_module'])) {
+			$menu_modules = $this->request->post['menu_module'];
+		} elseif (isset($this->request->get['menu_id'])) {
+			$menu_modules = $this->model_design_menu->getMenuModules($this->request->get['menu_id']);
+		} else {
+			$menu_modules = array();
+		}
+
+		$data['menu_modules'] = array();
+
+		foreach ($menu_modules as $menu_module) {
+			$part = explode('.', $menu_module['code']);
+		
+			$this->load->language('menu/' . $part[0]);			
+			
+			$data['menu_modules'][$key][] = array(
+				'name'       => strip_tags($this->language->get('heading_title')),
+				'code'       => $menu_module['code'],
+				'sort_order' => $menu_module['sort_order']
+			);
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -407,17 +452,9 @@ class ControllerDesignMenu extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
-		}
-
-		if (isset($this->request->post['menu_image'])) {
-			foreach ($this->request->post['menu_image'] as $language_id => $value) {
-				foreach ($value as $menu_image_id => $menu_image) {
-					if ((utf8_strlen($menu_image['title']) < 2) || (utf8_strlen($menu_image['title']) > 64)) {
-						$this->error['menu_image'][$language_id][$menu_image_id] = $this->language->get('error_title');
-					}
-				}
+		foreach ($this->request->post['menu_description'] as $language_id => $value) {
+			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 255)) {
+				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 

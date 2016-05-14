@@ -48,4 +48,5 @@ Disallow: /*affiliates
 Allow: /catalog/view/javascript/
 Allow: /catalog/view/theme/*/
 
-Sitemap: http://www.example.com/sitemap.xml
+# Uncoment the sitemap directive and change the path to your website, once your sitemap is ready
+# Sitemap: http://www.example.com/sitemap.xml

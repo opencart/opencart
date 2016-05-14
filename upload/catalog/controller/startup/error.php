@@ -29,9 +29,12 @@ class ControllerStartupError extends Controller {
 				$error = 'Unknown';
 				break;
 		}
-	
+
 		if ($this->config->get('config_error_display')) {
-			echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+			// don't display this error if disabled with error_reporting()
+			if (error_reporting() & $code) {
+				echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+			}
 		}
 	
 		if ($this->config->get('config_error_log')) {

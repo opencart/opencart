@@ -48,4 +48,5 @@
     </div>
   </div>
 </div>
+<script>$('[name=username]').focus();</script>
 <?php echo $footer; ?>

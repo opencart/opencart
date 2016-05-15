@@ -43,6 +43,25 @@
             </div>
           </div>
           
+
+          
+                <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-store"><?php echo $entry_store; ?></label>
+            <div class="col-sm-10">
+          <select name="store_id" id="input-store" class="form-control">
+                    <option value="0"><?php echo $text_default; ?></option>
+                    <?php foreach ($stores as $store) { ?>
+                    <?php if ($store['store_id'] == $translation['store_id']) { ?>
+                    <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+            </div>
+          </div>
+          
+                 
           
              <div class="form-group">
             <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
@@ -83,21 +102,11 @@
           
           
           <br />
-          <ul class="nav nav-tabs" id="language">
-            <?php foreach ($languages as $language) { ?>
-            <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
-            <?php } ?>
-          </ul>
-          <div class="tab-content">
-            <?php $image_row = 0; ?>
-            <?php foreach ($languages as $language) { ?>
-            <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-              <table id="images<?php echo $language['language_id']; ?>" class="table table-striped table-bordered table-hover">
+
+              <table id="modules<?php echo $language['language_id']; ?>" class="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>
-                    <td class="text-left"><?php echo $entry_title; ?></td>
-                    <td class="text-left"><?php echo $entry_link; ?></td>
-                    <td class="text-center"><?php echo $entry_image; ?></td>
+                    <td class="text-left"><?php echo $entry_module; ?></td>
                     <td class="text-right"><?php echo $entry_sort_order; ?></td>
                     <td></td>
                   </tr>
@@ -122,14 +131,12 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="4"></td>
+                    <td colspan="3"></td>
                     <td class="text-left"><button type="button" onclick="addImage('<?php echo $language['language_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_banner_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
-            </div>
-            <?php } ?>
-          </div>
+
         </form>
       </div>
     </div>

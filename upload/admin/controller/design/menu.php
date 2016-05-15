@@ -277,18 +277,19 @@ class ControllerDesignMenu extends Controller {
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_link'] = $this->language->get('text_link');
 		$data['text_module'] = $this->language->get('text_module');
-
+		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_type'] = $this->language->get('entry_type');	
 		$data['entry_link'] = $this->language->get('entry_link');
+		$data['entry_module'] = $this->language->get('entry_module');
 		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_menu_add'] = $this->language->get('button_menu_add');
+		$data['button_module_add'] = $this->language->get('button_module_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
@@ -354,7 +355,19 @@ class ControllerDesignMenu extends Controller {
 		} else {
 			$data['menu_description'] = array();
 		}
+
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();				
 				
+		if (isset($this->request->post['store_id'])) {
+			$data['store_id'] = $this->request->post['store_id'];
+		} elseif (!empty($menu_info)) {
+			$data['store_id'] = $menu_info['store_id'];
+		} else {
+			$data['store_id'] = '';
+		}	
+		
 		if (isset($this->request->post['type'])) {
 			$data['type'] = $this->request->post['type'];
 		} elseif (!empty($menu_info)) {
@@ -409,7 +422,7 @@ class ControllerDesignMenu extends Controller {
 				);
 			}
 
-			if ($this->config->has($code . '_status') || $module_data) {
+			if ($module_data) {
 				$data['extensions'][] = array(
 					'name'   => strip_tags($this->language->get('heading_title')),
 					'code'   => $code,

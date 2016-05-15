@@ -23,7 +23,6 @@ $_['text_extension']                   = 'Extensions';
 $_['text_filter']                      = 'Filters';
 $_['text_geo_zone']                    = 'Geo Zones';
 $_['text_information']                 = 'Information';
-$_['text_installer']                   = 'Extension Installer';
 $_['text_language']                    = 'Languages';
 $_['text_layout']                      = 'Layouts';
 $_['text_localisation']                = 'Localisation';

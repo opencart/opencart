@@ -138,14 +138,6 @@ class ControllerCommonMenu extends Controller {
 			);
 		}
 		
-		if ($this->user->hasPermission('access', 'extension/installer')) {
-			$extension[] = array(
-				'name'	   => $this->language->get('text_installer'),
-				'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
-				'children' => array()		
-			);
-		}
-		
 		if ($this->user->hasPermission('access', 'extension/modification')) {
 			$extension[] = array(
 				'name'	   => $this->language->get('text_modification'),

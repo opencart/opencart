@@ -1232,23 +1232,25 @@ class ControllerSaleOrder extends Controller {
 			// Additional Tabs
 			$data['tabs'] = array();
 
+			if ($this->user->hasPermission('access', 'payment/' . $order_info['payment_code'])) {
+				if (is_file(DIR_CATALOG . 'controller/payment/' . $order_info['payment_code'] . '.php')) {
+					$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
+				} else {
+					$content = null;
+				}
+
+				if ($content) {
+					$this->load->language('payment/' . $order_info['payment_code']);
+
+					$data['tabs'][] = array(
+						'code'    => $order_info['payment_code'],
+						'title'   => $this->language->get('heading_title'),
+						'content' => $content
+					);
+				}
+			}
+
 			$this->load->model('extension/extension');
-
-			if (is_file(DIR_CATALOG . 'controller/payment/' . $order_info['payment_code'] . '.php')) {
-				$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
-			} else {
-				$content = null;
-			}
-
-			if ($content) {
-				$this->load->language('payment/' . $order_info['payment_code']);
-
-				$data['tabs'][] = array(
-					'code'    => $order_info['payment_code'],
-					'title'   => $this->language->get('heading_title'),
-					'content' => $content
-				);
-			}
 
 			$extensions = $this->model_extension_extension->getInstalled('fraud');
 

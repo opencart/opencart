@@ -539,15 +539,21 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-localStorage.setItem('extension-tab', 'list');
-/*
-$('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
-
-$('#tab-analytics').on('click', function() {
-	$('#tab-analytics').load('index.php?route=extension/extension&token=<?php echo $token; ?>');
+$('.nav-tabs a').on('click', function(e) {
+	e.preventDefault();
+	
+	localStorage.setItem('tab-extension', $(this).attr('href'));
+	
+	$(this).tab('show');
 });
-*/
-//$('#tab-analytics').trigger();
+
+$('.nav-tabs a[href="' + localStorage.getItem('tab-extension') + '"]').trigger('click');
+
+$('#accordion > div').on('show.bs.collapse', function(e) {
+	localStorage.setItem('accordion-extension', $(this).find('.panel-heading > .panel-title a').attr('href'));
+});
+
+$('#accordion a[href="' + localStorage.getItem('accordion-extension') + '"]').trigger('click');
 //--></script> 
   <script type="text/javascript"><!--
 var step = new Array();

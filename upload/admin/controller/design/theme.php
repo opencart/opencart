@@ -24,77 +24,33 @@ class ControllerDesignTheme extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_store'] = $this->language->get('text_store');
+		$data['text_template'] = $this->language->get('text_template');
+		$data['text_default'] = $this->language->get('text_default');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');
 		
 		$data['token'] = $this->session->data['token'];
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('design/theme', $data));
-	}
-
-	public function store() {
-		$this->load->language('design/theme');
 		
-		$json = array();	
-		
-		$json['heading'] = $this->language->get('text_store');
-		
-		$json['directory'] = array();
-		
-		$json['directory'][] = array(
-			'name' => $this->language->get('text_default'),
-			'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=0', true)
-		);		
+		$json['stores'] = array();
 		
 		$this->load->model('setting/store');
 					
 		$results = $this->model_setting_store->getStores();
 		
 		foreach ($results as $result) {
-			$json['directory'][] = array(
+			$json['stores'][] = array(
 				'name' => $result['name'],
 				'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], true)
 			);
-		}		
+		}	
 		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
-	}
-	
-	public function theme() {
-		$this->load->language('design/theme');
-		
-		$json = array();
-		
-		$json['heading'] = $this->language->get('text_theme');
-				
-		$json['directory'] = array();
-				
-		$this->load->model('extension/extension');
-					
-		$extensions = $this->model_extension_extension->getInstalled('theme');
-		
-		foreach ($extensions as $code) {
-			$this->load->language('theme/' . $code);
-			
-			$json['directory'][] = array(
-				'name' => $this->language->get('heading_title'),
-				'href' => $this->url->link('design/theme/directory', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $code, true)
-			);
-		}		
-				
-		$json['back'] = array(
-			'name' => $this->language->get('button_back'),
-			'href' => $this->url->link('design/theme/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
-		);		
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));						
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('design/theme', $data));
 	}
 	
 	public function directory() {
@@ -115,8 +71,6 @@ class ControllerDesignTheme extends Controller {
 		} else {
 			$directory = '';
 		}
-			
-		$json['heading'] = $this->language->get('text_file');
 				
 		$json['directory'] = array();
 		
@@ -144,7 +98,7 @@ class ControllerDesignTheme extends Controller {
 
 		$pos = strrpos($directory, '/');
 
-		if ($pos !== false) {
+		if ($directory) {
 			$json['back'] = array(
 				'name' => $this->language->get('button_back'),
 				'href' => $this->url->link('design/theme/directory', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $this->request->get['theme'] . '&directory=' . urlencode(substr($directory, 0, $pos)), true)

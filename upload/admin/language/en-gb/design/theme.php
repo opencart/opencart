@@ -6,8 +6,7 @@ $_['heading_title']    = 'Theme Editor';
 $_['text_success']     = 'Success: You have modified layouts!';
 $_['text_edit']        = 'Edit Theme';
 $_['text_store']       = 'Choose your store';
-$_['text_theme']       = 'Choose the theme';
-$_['text_file']        = 'Choose a file';
+$_['text_template']    = 'Choose a template file';
 $_['text_default']     = 'Default';
 
 // Error

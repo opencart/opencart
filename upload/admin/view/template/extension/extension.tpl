@@ -117,7 +117,7 @@
                           <?php } ?>
                           <?php } else { ?>
                           <tr>
-                            <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                            <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -161,7 +161,7 @@
                           <?php } ?>
                           <?php } else { ?>
                           <tr>
-                            <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                            <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -352,7 +352,7 @@
                           <?php } ?>
                           <?php } else { ?>
                           <tr>
-                            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                            <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -398,7 +398,7 @@
                           <?php } ?>
                           <?php } else { ?>
                           <tr>
-                            <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                            <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -491,7 +491,7 @@
                           <?php } ?>
                           <?php } else { ?>
                           <tr>
-                            <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                            <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -540,11 +540,7 @@
   </div>
   <script type="text/javascript"><!--
 $('.nav-tabs a').on('click', function(e) {
-	e.preventDefault();
-	
 	localStorage.setItem('tab-extension', $(this).attr('href'));
-	
-	$(this).tab('show');
 });
 
 $('.nav-tabs a[href="' + localStorage.getItem('tab-extension') + '"]').trigger('click');

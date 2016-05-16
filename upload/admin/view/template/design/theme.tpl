@@ -18,15 +18,30 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
-            <div id="directory" class="list-group">
-            <div></div>
+            <div class="list-group">
+              <div class="list-group-item">
+                <h4 class="list-group-item-heading"><?php echo $text_store; ?></h4>
+              </div>
+              <div class="list-group-item">
+                <select name="store_id" class="form-control">
+                  <option value="0"><?php echo $text_default; ?></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="list-group">
+              <div class="list-group-item">
+                <h4 class="list-group-item-heading"><?php echo $text_template; ?></h4>
+              </div>
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-general" data-toggle="tab">test
-                
-                </a><button type="button" class="close" data-dismiss="alert">&times;</button></li>
+              <li class="active"><a href="#tab-general" data-toggle="tab">test </a>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab-general">
@@ -49,25 +64,66 @@
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script> 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script> 
   <script type="text/javascript"><!--
-$.ajax({
-	url: 'index.php?route=design/theme/store&token=<?php echo $token; ?>',
-	dataType: 'json',
-	success: function(json) {
-		html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['heading'] + '</h4></span>';
-		
-		if (json['directory']) {	
-			for (i = 0; i < json['directory'].length; i++) {
-				html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+$('select[name="store_id"]').on('change', function(e) {
+	$.ajax({
+		url: $(node).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name="store_id"]').prop('disabled', true);
+		},
+		complete: function() {
+			$('select[name="store_id"]').prop('disabled', false);
+		},
+		success: function(json) {
+			if (json['directory']) {
+				for (i = 0; i < json['directory'].length; i++) {
+					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
 			}
+			
+			if (json['file']) {
+				for (i = 0; i < json['file'].length; i++) {
+					html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
+			}
+			
+			if (json['back']) {
+				html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + ' </a>';
+			}
+			
+			/*
+			var width = $('#directory').width();
+			
+			$('#directory').css({
+				overflow: 'hidden'
+			});
+						
+			$('#directory div').css({
+				width: width,
+				position: 'relative'
+			});
+						
+			$('#directory div').animate({
+				left : '-' + width
+			}, 500, function() { 
+				
+			});
+			
+			
+			$('#directory').css({
+				left: width
+			}).show().animate({
+				left: 0
+			}, 500);
+			*/			
+			$('#directory').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-					
-		$('#directory').html(html);
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
-	  
+	});
+});  
+
 $('#directory').delegate('a.directory', 'click', function(e) {  
 	e.preventDefault();
 	
@@ -85,10 +141,6 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
-			
-			
-			html = '<span class="list-group-item"><h4 class="list-group-item-heading">' + json['heading'] + '</h4></span>';
-						
 			if (json['directory']) {	
 				for (i = 0; i < json['directory'].length; i++) {
 					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
@@ -136,7 +188,7 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-})
+});
 
 $('#directory').delegate('a.file', 'click', function(e) { 
 	e.preventDefault();

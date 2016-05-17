@@ -96,8 +96,10 @@ class ControllerPaymentDivido extends Controller {
 
 		if (isset($this->request->post['divido_order_status_id'])) {
 			$data['divido_order_status_id'] = $this->request->post['divido_order_status_id'];
-		} else {
+		} elseif ($this->config->get('divido_order_status_id')) {
 			$data['divido_order_status_id'] = $this->config->get('divido_order_status_id');
+		} else {
+			$data['divido_order_status_id'] = 2;
 		}
 
 		if (isset($this->request->post['divido_status'])) {
@@ -203,18 +205,22 @@ class ControllerPaymentDivido extends Controller {
 		$lookup = $this->model_payment_divido->getLookupByOrderId($order_id);
 		$proposal_id = null;
 		$application_id = null;
+		$deposit_amount = null;
 		if ($lookup->num_rows == 1) {
 			$lookup_data = $lookup->row;
 			$proposal_id = $lookup_data['proposal_id'];
 			$application_id = $lookup_data['application_id'];
+			$deposit_amount = $lookup_data['deposit_amount'];
 		}
 
 		$data['text_order_info'] = $this->language->get('text_order_info');
 		$data['text_proposal_id'] = $this->language->get('text_proposal_id');
 		$data['text_application_id'] = $this->language->get('text_application_id');
+		$data['text_deposit_amount'] = $this->language->get('text_deposit_amount');
 
 		$data['proposal_id'] = $proposal_id;
 		$data['application_id'] = $application_id;
+		$data['deposit_amount'] = $deposit_amount;
 
 		return $this->load->view('payment/divido_order', $data);
 	}

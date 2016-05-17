@@ -10,9 +10,10 @@ $_['text_order_info']                  = 'Divido info';
 $_['text_success']                     = 'Success: You have modified the Divido module';
 $_['text_proposal_id']                 = 'Proposal ID';
 $_['text_application_id']              = 'Application ID';
+$_['text_deposit_amount']              = 'Deposit amount';
 
 // Entry
-$_['entry_order_status']               = 'Order status on completion';
+$_['entry_order_status']               = 'Order status when approved';
 $_['entry_sort_order']                 = 'Sort order';
 $_['entry_status']                     = 'Status';
 $_['entry_api_key']                    = 'API-key';
@@ -32,7 +33,7 @@ $_['entry_category']                   = 'Categories';
 
 $_['help_api_key']                     = 'Key that identifies you with Divido (obtained from Divido)';
 $_['help_status']                      = 'Status of the payment method';
-$_['help_order_status']                = 'Status of the order when fulfilled';
+$_['help_order_status']                = 'Status of the order when lender has approved';
 $_['help_title']                       = 'Title of the payment option, shown in checkout';
 $_['help_planselection']               = 'Choose whether to manually select plans or show the default set';
 $_['help_productselection']            = 'Select what products are available on finance';

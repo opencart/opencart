@@ -13,5 +13,9 @@
             <td><?php echo $text_application_id; ?></td>
             <td><?php echo $application_id; ?></td>
         </tr>
+        <tr>
+            <td><?php echo $text_deposit_amount; ?></td>
+            <td><?php echo $deposit_amount; ?></td>
+        </tr>
     </tbody>
 </table>

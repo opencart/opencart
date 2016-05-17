@@ -29,10 +29,12 @@ class ModelPaymentDivido extends Model {
 			return array();
 		}
 
-		$plans   = $this->getCartPlans($this->cart);
+		$plans = $this->getCartPlans($this->cart);
 		$has_plan = false;
+
 		foreach ($plans as $plan) {
-			if ($plan->min_amount <= $total) {
+			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+			if ($plan->min_amount <= $planMinTotal) {
 				$has_plan = true;
 				break;
 			}
@@ -48,9 +50,9 @@ class ModelPaymentDivido extends Model {
 		}
 
 		$method_data = array(
-			'code'       => 'divido',
-			'title'      => $title,
-			'terms'      => '',
+			'code' => 'divido',
+			'title' => $title,
+			'terms' => '',
 			'sort_order' => $this->config->get('divido_sort_order')
 		);
 
@@ -72,20 +74,22 @@ class ModelPaymentDivido extends Model {
 		return hash('sha256', $order_id . $salt);
 	}
 
-	public function saveLookup($order_id, $salt, $proposal_id = null, $application_id = null) {
-		$order_id       = (int)$order_id;
-		$salt           = $this->db->escape($salt);
-		$proposal_id    = $this->db->escape($proposal_id);
+	public function saveLookup($order_id, $salt, $proposal_id = null, $application_id = null, $deposit_amount = null) {
+		$order_id = (int)$order_id;
+		$salt = $this->db->escape($salt);
+		$proposal_id = $this->db->escape($proposal_id);
 		$application_id = $this->db->escape($application_id);
+		$deposit_amount = $this->db->escape($deposit_amount);
 
 		$query_get_lookup = "SELECT `application_id` from `" . DB_PREFIX . "divido_lookup` WHERE order_id = " . $order_id;
 		$result_get_lookup = $this->db->query($query_get_lookup);
 
 		if ($result_get_lookup->num_rows == 0) {
-			$proposal_id    = ($proposal_id) ? "'" . $proposal_id . "'" : 'NULL';
+			$proposal_id = ($proposal_id) ? "'" . $proposal_id . "'" : 'NULL';
 			$application_id = ($application_id) ? "'" . $application_id . "'" : 'NULL';
+			$deposit_amount = ($deposit_amount) ? $deposit_amount : 'NULL';
 
-			$query_upsert = "INSERT INTO `" . DB_PREFIX . "divido_lookup` (`order_id`, `salt`, `proposal_id`, `application_id`) VALUES (" . $order_id . ", '" . $salt . "', " . $proposal_id . ", " . $application_id . ")";
+			$query_upsert = "INSERT INTO `" . DB_PREFIX . "divido_lookup` (`order_id`, `salt`, `proposal_id`, `application_id`, `deposit_amount`) VALUES (" . $order_id . ", '" . $salt . "', " . $proposal_id . ", " . $application_id . ", " . $deposit_amount . ")";
 		} else {
 			$query_upsert = "UPDATE `" . DB_PREFIX . "divido_lookup` SET `salt` = '" . $salt . "'";
 
@@ -95,6 +99,10 @@ class ModelPaymentDivido extends Model {
 
 			if ($application_id) {
 				$query_upsert .= ", `application_id` = '" . $application_id . "'";
+			}
+
+			if ($deposit_amount) {
+				$query_upsert .= ", `deposit_amount` = " . $deposit_amount;
 			}
 
 			$query_upsert .= " WHERE `order_id` = " . $order_id;
@@ -178,7 +186,7 @@ class ModelPaymentDivido extends Model {
 	}
 
 	public function getCartPlans($cart)	{
-		$plans    = array();
+		$plans = array();
 		$products = $cart->getProducts();
 		foreach ($products as $product) {
 			$product_plans = $this->getProductPlans($product['product_id']);

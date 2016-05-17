@@ -9,6 +9,7 @@
         "cardinity/cardinity-sdk-php": "^1.0",
         "braintree/braintree_php" : "3.2.0",
         "leafo/scssphp": "0.0.12",
+        "divido/divido-php": ">=1.1.1",
         "php": ">=5.4.0"
     }
 }

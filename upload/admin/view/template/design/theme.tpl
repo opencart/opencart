@@ -35,25 +35,24 @@
               <div class="list-group-item">
                 <h4 class="list-group-item-heading"><?php echo $text_template; ?></h4>
               </div>
+              <div id="directory"></div>
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-general" data-toggle="tab">test </a>
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-              </li>
+              <li class="active"><a href="#tab-general" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab-general">
                 <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
+                <br />
+                <div class="pull-right">
+                  <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <br />
-        <div class="pull-right">
-          <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
-          <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
         </div>
       </div>
     </div>
@@ -66,7 +65,7 @@
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: $(node).attr('href'),
+		url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -75,47 +74,14 @@ $('select[name="store_id"]').on('change', function(e) {
 			$('select[name="store_id"]').prop('disabled', false);
 		},
 		success: function(json) {
+			html = '';
+			
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 				}
 			}
 			
-			if (json['file']) {
-				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
-				}
-			}
-			
-			if (json['back']) {
-				html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + ' </a>';
-			}
-			
-			/*
-			var width = $('#directory').width();
-			
-			$('#directory').css({
-				overflow: 'hidden'
-			});
-						
-			$('#directory div').css({
-				width: width,
-				position: 'relative'
-			});
-						
-			$('#directory div').animate({
-				left : '-' + width
-			}, 500, function() { 
-				
-			});
-			
-			
-			$('#directory').css({
-				left: width
-			}).show().animate({
-				left: 0
-			}, 500);
-			*/			
 			$('#directory').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -124,10 +90,14 @@ $('select[name="store_id"]').on('change', function(e) {
 	});
 });  
 
-$('#directory').delegate('a.directory', 'click', function(e) {  
+$('select[name="store_id"]').trigger('change');
+
+$('#directory').delegate('a', 'click', function(e) {  
 	e.preventDefault();
 	
 	var node = this; 
+
+	//console.log(window.btoa($(node).attr('href')));
 
 	$.ajax({
 		url: $(node).attr('href'),
@@ -141,88 +111,34 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
+			html = '';
+			
 			if (json['directory']) {	
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 				}
 			}
 			
-			if (json['file']) {
-				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['href'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
-				}
-			}
-			
-			if (json['back']) {
-				html += '<a href="' + json['back']['href'] + '" class="list-group-item directory"><i class="fa fa-arrow-left fa-fw pull-left"></i> ' + json['back']['name'] + ' </a>';
-			}
-			
-			/*
-			var width = $('#directory').width();
-			
-			$('#directory').css({
-				overflow: 'hidden'
-			});
-						
-			$('#directory div').css({
-				width: width,
-				position: 'relative'
-			});
-						
-			$('#directory div').animate({
-				left : '-' + width
-			}, 500, function() { 
-				
-			});
-			
-			
-			$('#directory').css({
-				left: width
-			}).show().animate({
-				left: 0
-			}, 500);
-			*/			
 			$('#directory').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#directory').delegate('a.file', 'click', function(e) { 
-	e.preventDefault();
- 
-	var node = this; 
-	
-	$.ajax({
-		url: $(this).attr('href'),
-		dataType: 'json',
-		beforeSend: function() {
-			$(node).button('reset');
-		},
-		complete: function() {
-			$(node).button('reset');
-		},
-		success: function(json) {
+			
  			if (json['code']) {
-				$('.nav-tabs').append('<li class=""><a href="#tab-' + $('').attr('') + '" data-toggle="tab">test<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
+				$('.nav-tabs').append('<li class=""><a href="#tab-code' + window.btoa($(node).attr('href')) + '" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
 				
-				html  = '<div class="tab-pane" id="tab-general">';
-				html += '  <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>';
-				html += '  <br />';
-				html += '  <div class="pull-right">';
-				html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-				html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
-				html += '  </div>';
-				html += '</div>';
-
-				$('.tab-content').append(html);
+				if ($('.nav-tabs').has('li')) {
+					html  = '<div class="tab-pane" id="tab-code' + window.btoa($(node).attr('href')) + '">';
+					html += '  <textarea name="code" rows="5" class="form-control"></textarea>';
+					html += '  <br />';
+					html += '  <div class="pull-right">';
+					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
+					html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+					html += '  </div>';
+					html += '</div>';
+	
+					$('.tab-content').append(html);
+				}
 				
-				
-				
-				
-				/*
+				//$('.nav-tabs').tab();
+			
 				var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
 					mode: 'text/html',
 					height: '500px',
@@ -231,7 +147,6 @@ $('#directory').delegate('a.file', 'click', function(e) {
 				});		
 				
 				editor.setValue(json['code']);
-			*/
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -255,13 +170,13 @@ $('#button-save').on('click', function(e) {
 			$(node).button('reset');
 		},
 		success: function(json) {
-			$(node).addClass('active');
-			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
-			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '</div>');
+			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -271,7 +186,7 @@ $('#button-save').on('click', function(e) {
 
 $('#button-reset').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) { 
-		var node = this; 
+		var node = this;
 		
 		$.ajax({
 			url: $(this).attr('href'),
@@ -286,6 +201,10 @@ $('#button-reset').on('click', function(e) {
 				if (json['error']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 				}
+				
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '</div>');
+				}			
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

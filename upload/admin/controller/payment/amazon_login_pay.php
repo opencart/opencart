@@ -298,8 +298,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_declined_code'] = '';
 		}
 
-
-
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -317,8 +315,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
-
-
 
 		switch ($data['amazon_login_pay_payment_region']) {
 			case 'EUR':

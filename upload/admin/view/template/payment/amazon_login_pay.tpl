@@ -29,7 +29,7 @@
 			<input type="hidden" value="<?php echo $login_redirect_url; ?>" name="loginRedirectURLs[]">
 		<?php } ?>
 		<input type="hidden" value="<?php echo $store_name; ?>" name="storeDescription">
-		<input type="hidden" value="<?php echo $language; ?>" name="language">
+		<input type="hidden" value="<?php echo $amazon_login_pay_language; ?>" name="language">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="sandboxMerchantIPNURL">
 		<input type="hidden" value="<?php echo $ipn_url; ?>" name="productionMerchantIPNURL">
 		<input type="hidden" value="POST" name="returnMethod">
@@ -314,13 +314,28 @@
       //</script>
   <script type="text/javascript">
       $('#amazon-login-pay-payment_region').on('change', function () {
-        $('#amazon-login-pay-language').prop('disabled', true);
+        switch ($(this).val()) {
+          case 'EUR':
+			$('#amazon-login-pay-language').html('<option selected value="de-DE">German</option>');
+            break;
+          case 'GBP':
+			$('#amazon-login-pay-language').html('<option selected value="en-GB">English</option>');
+            break;
+          case 'USD':
+			$('#amazon-login-pay-language').html('<option selected value="en-US">American</option>');
+            break;
+        }
         $('<input>').attr({
           type: 'hidden',
           value: 'true',
           name: 'language_reload'
         }).appendTo('#form-amazon-login-pay');
         $('.btn-primary').click();
+      });
+      //</script>
+  <script type="text/javascript">
+      $('#amazon-login-pay-language').on('change', function () {
+        $('input[name="language"]').val($(this).val());
       });
       //</script>
   <script type="text/javascript">

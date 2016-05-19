@@ -2,56 +2,56 @@
 class ControllerCommonFileManager extends Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
-		
+
 		// Find which protocol to use to pass the full image link back
 		if ($this->request->server['HTTPS']) {
 			$server = HTTPS_CATALOG;
 		} else {
 			$server = HTTP_CATALOG;
 		}
-		
+
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = rtrim(str_replace('*', '', $this->request->get['filter_name']), '/');
 		} else {
 			$filter_name = null;
 		}
-		
+
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace('*', '', $this->request->get['directory']), '/');
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
-		
+
 		$directories = array();
 		$files = array();
 
 		$data['images'] = array();
 
 		$this->load->model('tool/image');
-		
+
 		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filter_name)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 			// Get directories
 			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
-	
+
 			if (!$directories) {
 				$directories = array();
 			}
-	
+
 			// Get files
 			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
-	
+
 			if (!$files) {
 				$files = array();
 			}
 		}
-		
+
 		// Merge directories and files
 		$images = array_merge($directories, $files);
 
@@ -205,6 +205,7 @@ class ControllerCommonFileManager extends Controller {
 
 	public function upload() {
 		$this->load->language('common/filemanager');
+		$this->load->model('setting/setting');
 
 		$json = array();
 
@@ -219,62 +220,83 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$directory = DIR_IMAGE . 'catalog';
 		}
-		
+
 		// Check its a directory
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
-		
+
 		if (!$json) {
 			// Check if multiple files are uploaded or just one
 			$files = array();
-			
+
 			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
 				foreach (array_keys($this->request->files['file']['name']) as $key) {
 					$files[] = array(
 						'name'     => $this->request->files['file']['name'][$key],
 						'type'     => $this->request->files['file']['type'][$key],
 						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
-						'error'    => $this->request->files['file']['error'][$key]
+						'error'    => $this->request->files['file']['error'][$key],
+						'size'    => $this->request->files['file']['size'][$key]
 					);
 				}
 			}
-			
+
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
 					$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
-	
+
 					// Validate the filename length
 					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
-	
+
+					// Allowed file sizes
+					if(! $allowed = $this->model_setting_setting->getSettingValue('config_file_max_size'))
+					{
+						$allowed = 25600000;
+					}
+
+					if (intval($file['size']) > intval($allowed)) {
+						$json['error'] = $this->language->get('error_filesize');
+					}
+
 					// Allowed file extension types
-					$allowed = array(
-						'jpg',
-						'jpeg',
-						'gif',
-						'png'
-					);
-	
+					if($allowed = $this->model_setting_setting->getSettingValue('config_file_ext_allowed')) {
+						$allowed = explode(PHP_EOL, $allowed);
+					}
+					else {
+						$allowed = array(
+							'jpg',
+							'jpeg',
+							'gif',
+							'png'
+						);
+					}
+
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
-	
+
 					// Allowed file mime types
-					$allowed = array(
-						'image/jpeg',
-						'image/pjpeg',
-						'image/png',
-						'image/x-png',
-						'image/gif'
-					);
-	
+					if($allowed = $this->model_setting_setting->getSettingValue('config_file_mime_allowed')) {
+						$allowed = explode(PHP_EOL, $allowed);
+					}
+					else {
+						$allowed = array(
+							'image/jpeg',
+							'image/pjpeg',
+							'image/png',
+							'image/x-png',
+							'image/gif'
+						);
+					}
+
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
-	
+
 					// Return any upload error
 					if ($file['error'] != UPLOAD_ERR_OK) {
 						$json['error'] = $this->language->get('error_upload_' . $file['error']);
@@ -282,17 +304,17 @@ class ControllerCommonFileManager extends Controller {
 				} else {
 					$json['error'] = $this->language->get('error_upload');
 				}
-				
+
 				if (!$json) {
 					move_uploaded_file($file['tmp_name'], $directory . '/' . $filename);
 				}
 			}
 		}
-		
+
 		if (!$json) {
 			$json['success'] = $this->language->get('text_uploaded');
-		}	
-						
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

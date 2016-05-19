@@ -108,7 +108,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['action'] = $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], true);
@@ -370,7 +370,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 					$actions[] = array(
 						'title' => $this->language->get('text_capture'),
-						'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $result['PNREF'] . '&token=' . $this->session->data['token']),
+						'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $result['PNREF'] . '&token=' . $this->session->data['token'], true),
 					);
 
 					$json['success'] = array(
@@ -495,7 +495,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 						$actions[] = array(
 							'title' => $this->language->get('text_refund'),
-							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token']),
+							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token'], true),
 						);
 						break;
 					case 'D':
@@ -503,7 +503,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 						$actions[] = array(
 							'title' => $this->language->get('text_refund'),
-							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token']),
+							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token'], true),
 						);
 						break;
 					case 'A':

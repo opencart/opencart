@@ -2,6 +2,7 @@
 class ControllerPaymentDivido extends Controller {
 	const
 		STATUS_ACCEPTED = 'ACCEPTED',
+		STATUS_ACTION_LENDER = 'ACTION-LENDER',
 		STATUS_CANCELED = 'CANCELED',
 		STATUS_COMPLETED = 'COMPLETED',
 		STATUS_DEPOSIT_PAID = 'DEPOSIT-PAID',
@@ -13,18 +14,20 @@ class ControllerPaymentDivido extends Controller {
 
 	private $status_id = array(
 		self::STATUS_ACCEPTED => 1,
-		self::STATUS_CANCELED => 1,
-		self::STATUS_COMPLETED => 1,
-		self::STATUS_DECLINED => 1,
+		self::STATUS_ACTION_LENDER => 2,
+		self::STATUS_CANCELED => 0,
+		self::STATUS_COMPLETED => 2,
+		self::STATUS_DECLINED => 8,
 		self::STATUS_DEFERRED => 1,
 		self::STATUS_REFERRED => 1,
 		self::STATUS_DEPOSIT_PAID => 1,
-		self::STATUS_FULFILLED => 5,
-		self::STATUS_SIGNED => 1,
+		self::STATUS_FULFILLED => 1,
+		self::STATUS_SIGNED => 2,
 	);
 
 	private $history_messages = array(
 		self::STATUS_ACCEPTED => 'Credit request accepted',
+		self::STATUS_ACTION_LENDER => 'Lender notified',
 		self::STATUS_CANCELED => 'Credit request canceled',
 		self::STATUS_COMPLETED => 'Credit application completed',
 		self::STATUS_DECLINED => 'Credit request declined',
@@ -40,8 +43,6 @@ class ControllerPaymentDivido extends Controller {
 		$this->load->model('payment/divido');
 		$this->load->model('checkout/order');
 
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
 		$api_key   = $this->config->get('divido_api_key');
 		$key_parts = explode('.', $api_key);
 		$js_key    = strtolower(array_shift($key_parts));
@@ -52,7 +53,8 @@ class ControllerPaymentDivido extends Controller {
 
 		$plans = $this->model_payment_divido->getCartPlans($this->cart);
 		foreach ($plans as $key => $plan) {
-			if ($plan->min_amount > $total) {
+			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+			if ($plan->min_amount > $planMinTotal) {
 				unset($plans[$key]);
 			}
 		}
@@ -111,22 +113,31 @@ class ControllerPaymentDivido extends Controller {
 			return;
 		}
 
-		$order_id  = $data->metadata->order_id;
-		$status_id = $this->status_id[$data->status];
-		$message   = $this->history_messages[$data->status];
-		$notify    = $data->status == self::STATUS_FULFILLED;
+		$order_id = $data->metadata->order_id;
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$status_id = $order_info['order_status_id'];
+		$message = "Status: {$data->status}";
+		if (isset($this->history_messages[$data->status])) {
+			$message = $this->history_messages[$data->status];
+		}
 
-		if ($data->status == self::STATUS_FULFILLED) {
+		if ($data->status == self::STATUS_SIGNED) {
 			$status_override = $this->config->get('divido_order_status_id');
 			if (!empty($status_override)) {
-				$status =  $status_override;
+				$this->status_id[self::STATUS_SIGNED] = $status_override;
 			}
 		}
 
+		if (isset($this->status_id[$data->status]) && $this->status_id[$data->status] > $status_id) {
+			$status_id = $this->status_id[$data->status];
+		}
+
+		if ($data->status == self::STATUS_DECLINED && $order_info['order_status_id'] == 0) {
+			$status_id = 0;
+		}
+
 		$this->model_payment_divido->saveLookup($data->metadata->order_id, $lookup->row['salt'], null, $data->application);
-
-		$this->model_checkout_order->addOrderHistory($order_id, $status_id, $message, $notify);
-
+		$this->model_checkout_order->addOrderHistory($order_id, $status_id, $message, false);
 		$this->response->setOutput('ok');
 	}
 
@@ -147,7 +158,12 @@ class ControllerPaymentDivido extends Controller {
 		$deposit = $this->request->post['deposit'];
 		$finance = $this->request->post['finance'];
 
-		$country  = $this->session->data['payment_address']['iso_code_2'];
+		$address = $this->session->data['payment_address'];
+		if (isset($this->session->data['shipping_address'])) {
+			$address = $this->session->data['shipping_address'];
+		}
+
+		$country  = $address['iso_code_2'];
 		$language = strtoupper($this->language->get('code'));
 		$currency = strtoupper($this->session->data['currency']);
 		$order_id = $this->session->data['order_id'];
@@ -167,7 +183,7 @@ class ControllerPaymentDivido extends Controller {
 			$telephone = $this->session->data['guest']['telephone'];
 		}
 
-		$postcode  = $this->session->data['payment_address']['postcode'];
+		$postcode  = $address['postcode'];
 
 		$products  = array();
 		foreach ($this->cart->getProducts() as $product) {
@@ -238,7 +254,7 @@ class ControllerPaymentDivido extends Controller {
 
 		if ($response->status == 'ok') {
 
-			$this->model_payment_divido->saveLookup($order_id, $salt, $response->id);
+			$this->model_payment_divido->saveLookup($order_id, $salt, $response->id, null, $deposit_amount);
 
 			$data = array(
 				'status' => 'ok',

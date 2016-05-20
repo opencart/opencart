@@ -306,8 +306,8 @@ class ControllerExtensionExtension extends Controller {
 				$data['frauds'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('fraud/' . $extension, 'token=' . $this->session->data['token'] . '&type=fraud', true)
 				);

@@ -2413,7 +2413,7 @@ $('#button-save').on('click', function() {
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('select[name=\'payment_method\'] option:selected,  select[name=\'shipping_method\'] option:selected,  #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
+		data: $('#tab-total :input').serialize(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {

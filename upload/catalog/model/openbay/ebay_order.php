@@ -297,7 +297,7 @@ class ModelOpenbayEbayOrder extends Model{
 					$data['text_powered'] = '<a href="http://www.openbaypro.com/">OpenBay Pro - eBay and Amazon order management for OpenCart</a> . ';
 				}
 
-				$data['logo'] = HTTPS_SERVER  . 'image/' . $this->config->get('config_logo');
+				$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 				$data['store_name'] = $order_info['store_name'];
 				$data['store_url'] = $order_info['store_url'];
 				$data['customer_id'] = $order_info['customer_id'];

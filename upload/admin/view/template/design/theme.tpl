@@ -85,8 +85,6 @@ $('#directory').delegate('a', 'click', function(e) {
 	e.preventDefault();
 	
 	var node = this; 
-	//var token = window.btoa($(node).attr('href')).substr(0, 10);
-	var token = Math.random();
 	
 	$.ajax({
 		url: $(node).attr('href'),
@@ -100,6 +98,8 @@ $('#directory').delegate('a', 'click', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
+			$('#code').show();
+			
 			html = '';
 			
 			if (json['directory']) {	
@@ -111,10 +111,15 @@ $('#directory').delegate('a', 'click', function(e) {
 			$('#directory').html(html);
  			
 			if (json['code']) {
-				$('.nav-tabs').append('<li><a href="#tab-code' + token + '" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
+				var token = Math.random().toString().substr(2, 10);
+				
+				$('.nav-tabs').append('<li><a href="#tab-code' + token + '" data-toggle="tab">' + $(node).text() + '&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
 				
 				html  = '<div class="tab-pane" id="tab-code' + token + '">';
-				html += '  <textarea name="code" rows="5" class="form-control"></textarea>';
+				html += '  <fieldset>';
+				html += '    <legend>' + $('select[name="store_id"]').text() + ' / ' + $(node).text() + '</legend>';
+				html += '    <textarea name="code" rows="10" id="input-code' + token + '"></textarea>';
+				html += '  </fieldset>';
 				html += '  <br />';
 				html += '  <div class="pull-right">';
 				html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
@@ -126,16 +131,16 @@ $('#directory').delegate('a', 'click', function(e) {
 				
 				$('.nav-tabs a[href=\'#tab-code' + token + '\']').tab('show');
 				
-				/*
-				var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
+				// Initialize codemirrror
+				var editor = CodeMirror.fromTextArea(document.getElementById('input-code' + token), {
 					mode: 'text/html',
 					height: '500px',
 					lineNumbers: true,
-					autofocus: true
+					autofocus: true,
+					theme: 'monokai'
 				});		
 				
 				editor.setValue(json['code']);
-				*/
 			}
 			
 			if ($('#code > ul > li').length) {
@@ -148,6 +153,16 @@ $('#directory').delegate('a', 'click', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
+
+$('.nav-tabs a .close').on('click', function() {
+	
+	//#tab-code' + token(
+	
+	
+	//$('.nav-tabs a .close').remove();
+	
+	//$('.nav-tabs a .close').remove();
 });
 
 $('#button-save').on('click', function(e) { 

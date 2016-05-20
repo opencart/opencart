@@ -33,16 +33,16 @@ class ControllerDesignTheme extends Controller {
 		
 		$data['token'] = $this->session->data['token'];
 		
-		$json['stores'] = array();
+		$data['stores'] = array();
 		
 		$this->load->model('setting/store');
 					
 		$results = $this->model_setting_store->getStores();
 		
 		foreach ($results as $result) {
-			$json['stores'][] = array(
-				'name' => $result['name'],
-				'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], true)
+			$data['stores'][] = array(
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
 			);
 		}	
 		

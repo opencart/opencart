@@ -85,6 +85,8 @@ class ControllerDesignTheme extends Controller {
 			
 			
 			if (is_dir(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory)) {
+				
+				
 				$files = glob(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory . '/*');
 				
 				if ($files) {
@@ -95,6 +97,8 @@ class ControllerDesignTheme extends Controller {
 						);
 					}
 				}
+				
+				
 			}
 			
 			if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory)) {

@@ -38,20 +38,9 @@
               <div id="directory"></div>
             </div>
           </div>
-          <div class="col-lg-9 col-md-9 col-sm-12">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-general" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab-general">
-                <textarea name="code" rows="5" id="input-code" class="form-control"></textarea>
-                <br />
-                <div class="pull-right">
-                  <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
-                  <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>
-                </div>
-              </div>
-            </div>
+          <div id="code" style="display: none;" class="col-lg-9 col-md-9 col-sm-12">
+            <ul class="nav nav-tabs"></ul>
+            <div class="tab-content"></div>
           </div>
         </div>
       </div>
@@ -96,9 +85,9 @@ $('#directory').delegate('a', 'click', function(e) {
 	e.preventDefault();
 	
 	var node = this; 
-
-	//console.log(window.btoa($(node).attr('href')));
-
+	//var token = window.btoa($(node).attr('href')).substr(0, 10);
+	var token = Math.random();
+	
 	$.ajax({
 		url: $(node).attr('href'),
 		dataType: 'json',
@@ -120,25 +109,24 @@ $('#directory').delegate('a', 'click', function(e) {
 			}
 			
 			$('#directory').html(html);
-			
- 			if (json['code']) {
-				$('.nav-tabs').append('<li class=""><a href="#tab-code' + window.btoa($(node).attr('href')) + '" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
+ 			
+			if (json['code']) {
+				$('.nav-tabs').append('<li><a href="#tab-code' + token + '" data-toggle="tab">test&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
 				
-				if ($('.nav-tabs').has('li')) {
-					html  = '<div class="tab-pane" id="tab-code' + window.btoa($(node).attr('href')) + '">';
-					html += '  <textarea name="code" rows="5" class="form-control"></textarea>';
-					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-					html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
-					html += '  </div>';
-					html += '</div>';
-	
-					$('.tab-content').append(html);
-				}
+				html  = '<div class="tab-pane" id="tab-code' + token + '">';
+				html += '  <textarea name="code" rows="5" class="form-control"></textarea>';
+				html += '  <br />';
+				html += '  <div class="pull-right">';
+				html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
+				html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+				html += '  </div>';
+				html += '</div>';
+
+				$('.tab-content').append(html);
 				
-				//$('.nav-tabs').tab();
-			
+				$('.nav-tabs a[href=\'#tab-code' + token + '\']').tab('show');
+				
+				/*
 				var editor = CodeMirror.fromTextArea(document.getElementById('input-code'), {
 					mode: 'text/html',
 					height: '500px',
@@ -147,7 +135,14 @@ $('#directory').delegate('a', 'click', function(e) {
 				});		
 				
 				editor.setValue(json['code']);
+				*/
 			}
+			
+			if ($('#code > ul > li').length) {
+				$('#code').show();
+			} else {
+				$('#code').hide();
+			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

@@ -84,7 +84,7 @@ function modification($filename) {
 }
 
 // Autoloader
-if (file_exists(DIR_SYSTEM . '../../vendor/autoload.php')) {
+if (is_file(DIR_SYSTEM . '../../vendor/autoload.php')) {
 	require_once(DIR_SYSTEM . '../../vendor/autoload.php');
 }
 
@@ -117,4 +117,7 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_SYSTEM . 'helper/json.php');
-require_once(DIR_SYSTEM . 'helper/hash_equals.php');
+
+function start($application_config) {
+	require_once(DIR_SYSTEM . 'framework.php');	
+}

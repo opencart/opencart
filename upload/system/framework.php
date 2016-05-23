@@ -36,7 +36,9 @@ if ($config->get('session_autostart')) {
 $registry->set('cache', new Cache($config->get('cache_type'), $config->get('cache_expire')));
 
 // Url
-$registry->set('url', new Url($config->get('site_ssl')));
+if ($config->get('url_autostart')) {
+	$registry->set('url', new Url($config->get('site_base'), $config->get('site_ssl')));
+}
 
 // Language
 $language = new Language($config->get('language_default'));

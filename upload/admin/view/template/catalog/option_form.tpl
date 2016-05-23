@@ -58,11 +58,6 @@
                 <?php } else { ?>
                 <option value="checkbox"><?php echo $text_checkbox; ?></option>
                 <?php } ?>
-                <?php if ($type == 'image') { ?>
-                <option value="image" selected="selected"><?php echo $text_image; ?></option>
-                <?php } else { ?>
-                <option value="image"><?php echo $text_image; ?></option>
-                <?php } ?>
                 </optgroup>
                 <optgroup label="<?php echo $text_input; ?>">
                 <?php if ($type == 'text') { ?>

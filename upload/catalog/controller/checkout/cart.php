@@ -117,15 +117,12 @@ class ControllerCheckoutCart extends Controller {
 
 				// Display prices
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+					
+					$price = $this->currency->format($unit_price, $this->session->data['currency']);
+					$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 				} else {
 					$price = false;
-				}
-
-				// Display prices
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
-				} else {
 					$total = false;
 				}
 
@@ -415,6 +412,8 @@ class ControllerCheckoutCart extends Controller {
 			foreach ($this->request->post['quantity'] as $key => $value) {
 				$this->cart->update($key, $value);
 			}
+
+			$this->session->data['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

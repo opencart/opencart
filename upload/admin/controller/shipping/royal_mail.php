@@ -14,7 +14,7 @@ class ControllerShippingRoyalMail extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -79,7 +79,7 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -89,7 +89,7 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['action'] = $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		// Special Delivery < 500
 		if (isset($this->request->post['royal_mail_special_delivery_500_rate'])) {

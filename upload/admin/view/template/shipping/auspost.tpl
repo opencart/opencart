@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-standard"><?php echo $entry_standard ?></label>
+            <label class="col-sm-2 control-label" for="input-standard"><?php echo $entry_standard; ?></label>
             <div class="col-sm-10">
               <select name="auspost_standard" id="input-standard" class="form-control">
                 <?php if ($auspost_standard) { ?>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status ?></label>
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
               <select name="auspost_status" id="input-status" class="form-control">
                 <?php if ($auspost_status) { ?>

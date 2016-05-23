@@ -1,117 +1,262 @@
 <?php
 class ModelUpgrade1001 extends Model {
 	public function upgrade() {
-		// setting
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
+		// address
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `company` `company` VARCHAR(40) NOT NULL");
 
-		foreach ($query->rows as $result) {
-			if ($result['serialized'] && preg_match('/^(a:)/', $result['value'])) {
-				$value = unserialize($result['value']);
+		// order
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `payment_company` `payment_company` VARCHAR(40) NOT NULL");
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
+		// order
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` CHANGE `shipping_company` `shipping_company` VARCHAR(40) NOT NULL");
+
+		// affiliate
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate` CHANGE `company` `company` VARCHAR(40) NOT NULL");
+
+		// order_history
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_history` CHANGE `order_status_id` `order_status_id` int(11) NOT NULL");
+
+		// order_recurring
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `status` `status` tinyint(4) NOT NULL AFTER `trial_price`");
+
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");
+
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'date_added'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `created`");
+			} else {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `created` `date_added` datetime NOT NULL AFTER `status`");
 			}
 		}
 
-		// customer
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_id'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['cart'])) {
-				$cart = unserialize($result['cart']);
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'recurring_id'");
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `cart` = '" . $this->db->escape(json_encode($cart)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL or `recurring_id` = ''");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_id`");
+			} else {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `profile_id` `recurring_id` int(11) NOT NULL");
 			}
+		}
 
-			if (preg_match('/^(a:)/', $result['wishlist'])) {
-				$wishlist = unserialize($result['wishlist']);
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_name'");
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `wishlist` = '" . $this->db->escape(json_encode($wishlist)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'recurring_name'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_name` = `profile_name` WHERE `recurring_name` IS NULL or `recurring_name` = ''");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_name`");
+			} else {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `profile_name` `recurring_name` varchar(255) NOT NULL");
 			}
+		}
 
-			if (preg_match('/^(a:)/', $result['custom_field'])) {
-				$custom_field = unserialize($result['custom_field']);
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_description'");
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'recurring_description'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_description` = `profile_description` WHERE `recurring_description` IS NULL or `recurring_description` = ''");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_description`");
+			} else {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `profile_description` `recurring_description` varchar(255) NOT NULL");
 			}
 		}
 
 		// address
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address`");
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address' AND COLUMN_NAME = 'custom_field'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['custom_field'])) {
-				$custom_field = unserialize($result['custom_field']);
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD `custom_field` TEXT NOT NULL AFTER `zone_id`");
+		}
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
-			}
+		// customer
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'custom_field'");
+
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `custom_field` TEXT NOT NULL AFTER `address_id`");
 		}
 
 		// order
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order`");
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'custom_field'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['custom_field'])) {
-				$custom_field = unserialize($result['custom_field']);
-
-				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-			}
-
-			if (preg_match('/^(a:)/', $result['payment_custom_field'])) {
-				$custom_field = unserialize($result['payment_custom_field']);
-
-				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-			}
-
-			if (preg_match('/^(a:)/', $result['shipping_custom_field'])) {
-				$custom_field = unserialize($result['shipping_custom_field']);
-
-				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-			}
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `custom_field` TEXT NOT NULL AFTER `fax`");
 		}
 
-		// user_group
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_group`");
+		// order
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_custom_field'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['permission'])) {
-				$permission = unserialize($result['permission']);
-
-				$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($permission)) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
-			}
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `payment_custom_field` TEXT NOT NULL AFTER `payment_address_format`");
 		}
 
-		// affiliate_activity
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity`");
+		// order
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'shipping_custom_field'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['data'])) {
-				$data = unserialize($result['data']);
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `shipping_custom_field` TEXT NOT NULL AFTER `shipping_address_format`");
+		}
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode($data)) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
+		// banner
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'sort_order'");
+
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `sort_order` INT(3) NOT NULL AFTER `image`");
+		}
+
+		// setting
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "setting' AND COLUMN_NAME = 'group'");
+
+		if ($query->num_rows) {
+			// Leave code if already there and just drop group
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "setting' AND COLUMN_NAME = 'code'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = `group` WHERE `code` IS NULL or `code` = ''");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` DROP `group`");
+			} else {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` CHANGE `group` `code` varchar(32) NOT NULL");
 			}
 		}
 		
-		// customer_activity
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity`");
+		// tags
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['data'])) {
-				$data = unserialize($result['data']);
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language");
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode($data)) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
+			foreach ($query->rows as $language) {
+				// Get old tags
+				$query = $this->db->query("SELECT p.product_id, GROUP_CONCAT(DISTINCT pt.tag order by pt.tag ASC SEPARATOR ',') as tags FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_tag pt ON (p.product_id = pt.product_id) WHERE pt.language_id = '" . (int)$language['language_id'] . "' GROUP BY p.product_id");
+
+				if ($query->num_rows) {
+					foreach ($query->rows as $row) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product_description SET tag = '" . $this->db->escape(strtolower($row['tags'])) . "' WHERE product_id = '" . (int)$row['product_id'] . "' AND language_id = '" . (int)$language['language_id'] . "'");
+						$this->db->query("DELETE FROM " . DB_PREFIX . "product_tag WHERE product_id = '" . (int)$row['product_id'] . "' AND language_id = '" . (int)$language['language_id'] . "'");
+					}
+				}
 			}
-		}	
-		
-		// module
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
+		}
 
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['setting'])) {
-				$setting = unserialize($result['setting']);
+		// Update the config.php by adding a DIR_MODIFICATION
+		if (is_file(DIR_OPENCART . 'config.php')) {
+			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode($setting)) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
+			foreach ($files as $file) {
+				if (!is_writable($file)) {
+					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
+				}
+
+				$upgrade = true;
+
+				$lines = file($file);
+
+				foreach ($lines as $line) {
+					if (strpos($line, 'DIR_MODIFICATION') !== false) {
+						$upgrade = false;
+
+						break;
+					}
+				}
+
+				if ($upgrade) {
+					$output = '';
+
+					foreach ($lines as $line_id => $line) {
+						if (strpos($line, 'DIR_LOGS') !== false) {
+							$new_line = "define('DIR_MODIFICATION', '" . str_replace("\\", "/", DIR_SYSTEM) . 'modification/' . "');";
+							$output .= $new_line . "\n";
+							$output .= $line;
+						} else {
+							$output .= $line;
+						}
+					}
+
+					file_put_contents($file, $output);
+				}
 			}
-		}	
 
+			// Update the config.php by adding a DIR_UPLOAD
+			foreach ($files as $file) {
+				if (!is_writable($file)) {
+					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
+				}
+
+				$upgrade = true;
+
+				$lines = file($file);
+
+				foreach ($lines as $line) {
+					if (strpos($line, 'DIR_UPLOAD') !== false) {
+						$upgrade = false;
+
+						break;
+					}
+				}
+
+				if ($upgrade) {
+					$output = '';
+
+					foreach ($lines as $line_id => $line) {
+						if (strpos($line, 'DIR_LOGS') !== false) {
+							$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
+							$output .= $new_line . "\n";
+							$output .= $line;
+						} else {
+							$output .= $line;
+						}
+					}
+
+					file_put_contents($file, $output);
+				}
+			}
+
+			// Update the config.php to change mysql to mysqli
+			foreach ($files as $file) {
+				if (!is_writable($file)) {
+					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
+				}
+
+				$upgrade = false;
+
+				$lines = file($file);
+
+				foreach ($lines as $line) {
+					if (strpos($line, "'mysql'") !== false) {
+						$upgrade = true;
+
+						break;
+					}
+				}
+
+				if ($upgrade) {
+					$output = '';
+
+					foreach ($lines as $line_id => $line) {
+						if (strpos($line, "'mysql'") !== false) {
+							$new_line = "define('DB_DRIVER', 'mysqli');";
+							$output .= $new_line . "\n";
+						} else {
+							$output .= $line;
+						}
+					}
+
+					file_put_contents($file, $output);
+				}
+			}
+		}
 	}
 }

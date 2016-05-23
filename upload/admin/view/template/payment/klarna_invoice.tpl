@@ -32,7 +32,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-klarna-invoice" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-            <li><a href="#tab-log" data-toggle="tab"><?php echo $tab_log ?></a></li>
+            <li><a href="#tab-log" data-toggle="tab"><?php echo $tab_log; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general"> <a href="https://merchants.klarna.com/signup?locale=en&partner_id=d5c87110cebc383a826364769047042e777da5e8&utm_campaign=Platform&utm_medium=Partners&utm_source=Opencart" target="_blank" style="float: right;"><img src="view/image/payment/klarna_banner.gif" /></a>
@@ -114,9 +114,9 @@
                         <option value="0"><?php echo $text_all_zones; ?></option>
                         <?php foreach ($geo_zones as $geo_zone) { ?>
                         <?php if (isset($klarna_invoice[$country['code']]) && $geo_zone['geo_zone_id'] == $klarna_invoice[$country['code']]['geo_zone_id']) {  ?>
-                        <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+                        <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
                         <?php } else { ?>
-                        <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name']; ?></option>
+                        <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
                         <?php } ?>
                         <?php } ?>
                       </select>
@@ -137,7 +137,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order ?></label>
+                    <label class="col-sm-2 control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order; ?></label>
                     <div class="col-sm-10">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>" class="form-control" />
                     </div>
@@ -148,9 +148,9 @@
             </div>
             <div class="tab-pane" id="tab-log">
               <p>
-                <textarea wrap="off" rows="15" class="form-control"><?php echo $log ?></textarea>
+                <textarea wrap="off" rows="15" class="form-control"><?php echo $log; ?></textarea>
               </p>
-              <div class="text-right"><a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear ?></a></div>
+              <div class="text-right"><a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></a></div>
             </div>
           </div>
         </form>

@@ -172,7 +172,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="cron-job-url"><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="sagepay_direct_cron_job_url" value="<?php echo $sagepay_direct_cron_job_url ?>" placeholder="<?php echo $entry_cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
+              <input type="text" name="sagepay_direct_cron_job_url" value="<?php echo $sagepay_direct_cron_job_url; ?>" placeholder="<?php echo $entry_cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
             </div>
           </div>
           <?php if ($sagepay_direct_last_cron_job_run) { ?>

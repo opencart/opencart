@@ -324,7 +324,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" class="form-control" />
+                  <input type="text" name="manufacturer" value="<?php echo $manufacturer; ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" class="form-control" />
                   <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                 </div>
               </div>
@@ -922,6 +922,9 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
   <script type="text/javascript"><!--
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({
@@ -1288,7 +1291,7 @@ function addOptionValue(option_row) {
 	html += '</tr>';
 
 	$('#option-value' + option_row + ' tbody').append(html);
-        $('[rel=tooltip]').tooltip();
+	$('[rel=tooltip]').tooltip();
 
 	option_value_row++;
 }
@@ -1365,10 +1368,7 @@ function addImage() {
 var recurring_row = <?php echo $recurring_row; ?>;
 
 function addRecurring() {
-	recurring_row++;
-
-	html  = '';
-	html += '<tr id="recurring-row' + recurring_row + '">';
+	html  = '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">>';
 	<?php foreach ($recurrings as $recurring) { ?>
@@ -1389,6 +1389,8 @@ function addRecurring() {
 	html += '</tr>';
 
 	$('#tab-recurring table tbody').append(html);
+	
+	recurring_row++;
 }
 //--></script>
   <script type="text/javascript"><!--

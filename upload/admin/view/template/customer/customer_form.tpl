@@ -1116,7 +1116,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -1143,17 +1143,17 @@ $('.time').datetimepicker({
 // Sort the custom fields
 <?php $address_row = 1; ?>
 <?php foreach ($addresses as $address) { ?>
-$('#tab-address<?php echo $address_row ?> .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address<?php echo $address_row ?> .form-group').length) {
-		$('#tab-address<?php echo $address_row ?> .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-address<?php echo $address_row; ?> .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address<?php echo $address_row; ?> .form-group').length) {
+		$('#tab-address<?php echo $address_row; ?> .form-group').eq($(this).attr('data-sort')).before(this);
 	}
 
-	if ($(this).attr('data-sort') > $('#tab-address<?php echo $address_row ?> .form-group').length) {
-		$('#tab-address<?php echo $address_row ?> .form-group:last').after(this);
+	if ($(this).attr('data-sort') > $('#tab-address<?php echo $address_row; ?> .form-group').length) {
+		$('#tab-address<?php echo $address_row; ?> .form-group:last').after(this);
 	}
 
-	if ($(this).attr('data-sort') < -$('#tab-address<?php echo $address_row ?> .form-group').length) {
-		$('#tab-address<?php echo $address_row ?> .form-group:first').before(this);
+	if ($(this).attr('data-sort') < -$('#tab-address<?php echo $address_row; ?> .form-group').length) {
+		$('#tab-address<?php echo $address_row; ?> .form-group:first').before(this);
 	}
 });
 <?php $address_row++; ?>

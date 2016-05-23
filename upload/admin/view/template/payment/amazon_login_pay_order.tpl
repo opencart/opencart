@@ -193,7 +193,7 @@
       }
     });
     $("#button-refund").click(function () {
-      if (confirm('<?php echo $text_confirm_refund ?>')) {
+      if (confirm('<?php echo $text_confirm_refund; ?>')) {
         $.ajax({
           type: 'POST',
           dataType: 'json',

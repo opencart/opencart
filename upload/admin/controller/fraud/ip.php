@@ -14,7 +14,7 @@ class ControllerFraudIp extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -57,7 +57,7 @@ class ControllerFraudIp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_fraud'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -67,7 +67,7 @@ class ControllerFraudIp extends Controller {
 
 		$data['action'] = $this->url->link('fraud/ip', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['ip_order_status_id'])) {
 			$data['ip_order_status_id'] = $this->request->post['ip_order_status_id'];

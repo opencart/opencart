@@ -56,7 +56,7 @@ class ControllerCommonColumnLeft extends Controller {
 	}
 	
 	public function language() {
-		if (isset($this->request->post['code']) && is_dir(DIR_LANGUAGE . str_replace('../', '/', $this->request->post['code']))) {
+		if (isset($this->request->post['code']) && is_dir(DIR_LANGUAGE . basename($this->request->post['code']))) {
 			$this->session->data['language'] = $this->request->post['code'];
 		}
 

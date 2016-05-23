@@ -303,7 +303,7 @@ function update_form(element, formType) {
                 $(this).attr('display', 'yes');
                 $(this).removeAttr('style');
             } else {
-                $('.fields_' + formType + ' [field_name="' + fieldsArray[formType][index]['name']  + '"]').attr('value', '');
+                $('.fields_' + formType + ' [field_name="' + fieldsArray[formType][index]['name']  + '"]').val('');
                 $(this).attr('display', 'no');
                 $(this).attr('style', 'display: none');
             }

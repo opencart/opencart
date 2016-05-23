@@ -21,7 +21,7 @@ class ControllerStartupLanguage extends Controller {
 			}		
 		}
 		
-		if (!isset($this->session->data['language']) || !is_dir(DIR_LANGUAGE . str_replace('../', '/', $this->session->data['language']))) {
+		if (!isset($this->session->data['language']) || !is_dir(DIR_LANGUAGE . basename($this->session->data['language']))) {
 			$this->session->data['language'] = $code;
 		}
 		

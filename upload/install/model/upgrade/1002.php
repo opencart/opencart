@@ -2,33 +2,33 @@
 class ModelUpgrade1002 extends Model {
 	public function upgrade() {
 		// setting
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");
+		$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_product_limit', `value` = '20', `code` = 'config', `store_id` = 0");
 		}
-			
+
 		//  setting
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_min'");
+		$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_min'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_min', `value` = '1', `code` = 'config', `store_id` = 0");
 		}
-		
+
 		//  setting
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_max'");
+		$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_max'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_max', `value` = '1000', `code` = 'config', `store_id` = 0");
-		}	
-			
+		}
+
 		// customer
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'safe'");
-		
+
 		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `safe` tinyint(1) NOT NULL AFTER `approved`");	
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `safe` tinyint(1) NOT NULL AFTER `approved`");
 		}
-		
+
 		// customer
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
@@ -52,38 +52,38 @@ class ModelUpgrade1002 extends Model {
 		if ($query->num_rows) {
 			// Drop product option value if exsits
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_option' AND COLUMN_NAME = 'value'");
-			
+
 			if ($query->num_rows) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `value`");
 			}
-			
+
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` CHANGE `option_value` `value` TEXT NOT NULL");
 		}
-					
+
 		// category
 		$primary_data = array();
-		
+
 		$query = $this->db->query("SHOW KEYS FROM `" . DB_PREFIX . "category` WHERE Key_name = 'PRIMARY'");
-		
+
 		foreach ($query->rows as $result) {
 			$primary_data[] = $result['Column_name'];
 		}
-		
+
 		if (!in_array('category_id', $primary_data) || !in_array('parent_id', $primary_data)) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
 		}
-		
+
 		// category
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "category_description' AND COLUMN_NAME = 'meta_title'");
-		
+
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category_description` ADD `meta_title` varchar(255) NOT NULL AFTER `description`");
 		}
-		
+
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}
-	
+
 	// Function to repair any erroneous categories that are not in the category path table.
 	public function repairCategories($parent_id = 0) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
@@ -107,5 +107,5 @@ class ModelUpgrade1002 extends Model {
 
 			$this->repairCategories($category['category_id']);
 		}
-	}	
+	}
 }

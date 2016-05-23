@@ -1,7 +1,10 @@
 <?php
 // Site
-$_['site_base']        = substr(HTTP_SERVER, 7);
-$_['site_ssl']         = false;
+$_['site_base']        = HTTP_SERVER;
+$_['site_ssl']         = HTTPS_SERVER;
+
+//Url
+$_['url_autostart']    = false;
 
 // Database
 $_['db_autostart']     = true;
@@ -19,17 +22,18 @@ $_['library_autoload'] = array(
 
 // Actions
 $_['action_pre_action'] = array(
+	'startup/session',
 	'startup/startup',
 	'startup/error',
 	'startup/event',
 	'startup/maintenance',
-	'startup/seo_url',
-	'startup/session'
+	'startup/seo_url'
 );
 
 // Action Events
 $_['action_event'] = array(
 	'view/*/before' => 'event/theme',
+	'language/*/after'  => 'event/translation',
 	//'model/*/before' => 'event/debug/before'
 	//'model/*/after' => 'event/debug/after'
 );

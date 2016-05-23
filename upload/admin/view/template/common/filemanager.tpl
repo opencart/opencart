@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div id="filemanager" class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -23,7 +23,7 @@
       <?php foreach (array_chunk($images, 4) as $image) { ?>
       <div class="row">
         <?php foreach ($image as $image) { ?>
-        <div class="col-sm-3 text-center">
+        <div class="col-sm-3 col-xs-6 text-center">
           <?php if ($image['type'] == 'directory') { ?>
           <div class="text-center"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
           <label>
@@ -54,7 +54,7 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
-	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
+	$('#<?php echo $target; ?>').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -114,16 +114,16 @@ $('#button-search').on('click', function(e) {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
-	$('#form-upload input[name=\'file\']').trigger('click');
+	$('#form-upload input[name=\'file[]\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
+		if ($('#form-upload input[name=\'file[]\']').val() != '') {
 			clearInterval(timer);
 
 			$.ajax({

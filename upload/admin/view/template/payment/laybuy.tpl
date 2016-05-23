@@ -111,7 +111,7 @@
 			  <div class="form-group">
 			    <label class="col-sm-2 control-label" for="input-laybuy-xproducts"><span data-toggle="tooltip" title="<?php echo $help_product_ids; ?>"><?php echo $entry_product_ids; ?></span></label>
 			    <div class="col-sm-10">
-			      <input type="text" name="laybuy_xproducts" value="<?php echo $laybuy_xproducts ?>" placeholder="<?php echo $entry_product_ids; ?>" id="input-laybuy-xproducts" class="form-control" />
+			      <input type="text" name="laybuy_xproducts" value="<?php echo $laybuy_xproducts; ?>" placeholder="<?php echo $entry_product_ids; ?>" id="input-laybuy-xproducts" class="form-control" />
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -144,7 +144,7 @@
 			  <div class="form-group">
 			    <label class="col-sm-2 control-label" for="input-laybuy-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
 			    <div class="col-sm-10">
-			      <input type="text" name="laybuy_total" value="<?php echo $laybuy_total ?>" placeholder="<?php echo $entry_total; ?>" id="input-laybuy-total" class="form-control" />
+			      <input type="text" name="laybuy_total" value="<?php echo $laybuy_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-laybuy-total" class="form-control" />
 			    </div>
 			  </div>
 		      <div class="form-group">
@@ -208,9 +208,9 @@
 				    <option value="0"><?php echo $text_all_zones; ?></option>
 				    <?php foreach ($geo_zones as $geo_zone) { ?>
                     <?php if ($geo_zone['geo_zone_id'] == $laybuy_geo_zone) { ?>
-				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name'] ?></option>
+				        <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
 					  <?php } else { ?>
-				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name'] ?></option>
+				        <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
     			      <?php } ?>
 				    <?php } ?>
 				  </select>
@@ -233,19 +233,19 @@
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="input-laybuy-sort-order"><?php echo $entry_sort_order; ?></label>
 			    <div class="col-sm-10">
-			      <input type="text" name="laybuy_sort_order" value="<?php echo $laybuy_sort_order ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-laybuy-sort-order" class="form-control" />
+			      <input type="text" name="laybuy_sort_order" value="<?php echo $laybuy_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-laybuy-sort-order" class="form-control" />
 			    </div>
 			  </div>
 		      <div class="form-group">
               <label class="col-sm-2 control-label" for="input-laybuy-cron-url"><span data-toggle="tooltip" title="<?php echo $help_cron_url; ?>"><?php echo $entry_cron_url; ?></span></label>
 			    <div class="col-sm-10">
-				  <input type="text" name="laybuy_cron_url" value="<?php echo $laybuy_cron_url ?>" readonly placeholder="<?php echo $entry_cron_url; ?>" id="input-laybuy-cron-url" class="form-control" />
+				  <input type="text" name="laybuy_cron_url" value="<?php echo $laybuy_cron_url; ?>" readonly placeholder="<?php echo $entry_cron_url; ?>" id="input-laybuy-cron-url" class="form-control" />
 			    </div>
 			  </div>
 		      <div class="form-group">
               <label class="col-sm-2 control-label" for="input-laybuy-cron-time"><span data-toggle="tooltip" title="<?php echo $help_cron_time; ?>"><?php echo $entry_cron_time; ?></span></label>
 			    <div class="col-sm-10">
-				  <input type="text" name="laybuy_cron_time" value="<?php echo $laybuy_cron_time ?>" readonly disabled placeholder="<?php echo $entry_cron_time; ?>" id="input-laybuy-cron-time" class="form-control" />
+				  <input type="text" name="laybuy_cron_time" value="<?php echo $laybuy_cron_time; ?>" readonly disabled placeholder="<?php echo $entry_cron_time; ?>" id="input-laybuy-cron-time" class="form-control" />
 			    </div>
 			  </div>
 		    </div>

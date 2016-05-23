@@ -22,12 +22,10 @@ define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
+define('DIR_IMAGE', str_replace('\\', '/', realpath(DIR_SYSTEM . '../image')) . '/');
 define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-$application_config = 'install';
-
-// Application
-require_once(DIR_SYSTEM . 'framework.php');
+start('install');

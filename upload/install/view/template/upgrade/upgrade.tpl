@@ -14,7 +14,7 @@
   </header>
   <div class="row">
     <div class="col-sm-9">
-      <h3><?php echo $text_server ?></h3>
+      <h3><?php echo $text_server; ?></h3>
       <fieldset>
         <ol>
           <li><?php echo $text_error; ?></li>
@@ -49,11 +49,10 @@
 var step = 0;
 
 $('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%');
+	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
 	$('#progress-text').html('');
+	$('#button-continue').prop('disabled', true).before('<i class="fa fa-spinner fa-spin"></i> ');
 
-	$('#button-continue').prop('disabled', true);
-	
 	start('index.php?route=upgrade/upgrade/next');
 });
 
@@ -67,25 +66,30 @@ function start(url) {
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					
+
 					$('#button-continue').prop('disabled', false);
+					$('.fa-spinner').remove();
 				}
-	
+
 				if (json['success']) {
 					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 					$('#progress-bar').css('width', ((step / <?php echo $total; ?>) * 100) + '%');
 				}
-				
+
 				if (json['next']) {
 					start(json['next']);
 				} else if (!json['error']) {
 					$('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
+					$('.fa-spinner').remove();
 				}
-				
+
 				step++;
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
+				$('#button-continue').prop('disabled', false);
+				$('.fa-spinner').remove();
 			}
 		});
 	}, 1000);

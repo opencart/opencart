@@ -15,7 +15,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -76,7 +76,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -86,7 +86,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 		$data['action'] = $this->url->link('payment/bluepay_redirect', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['bluepay_redirect_account_id'])) {
 			$data['bluepay_redirect_account_id'] = $this->request->post['bluepay_redirect_account_id'];
@@ -126,8 +126,10 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 		if (isset($this->request->post['bluepay_redirect_order_status_id'])) {
 			$data['bluepay_redirect_order_status_id'] = $this->request->post['bluepay_redirect_order_status_id'];
-		} else {
+		} elseif ($this->config->get('bluepay_redirect_order_status_id')) {
 			$data['bluepay_redirect_order_status_id'] = $this->config->get('bluepay_redirect_order_status_id');
+		} else {
+			$data['bluepay_redirect_order_status_id'] = 2;
 		}
 
 		$this->load->model('localisation/order_status');
@@ -239,12 +241,13 @@ class ControllerPaymentBluepayredirect extends Controller {
 			$this->model_payment_bluepay_redirect->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if ($void_response['Result'] == 'APPROVED') {
-				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order['bluepay_redirect_order_id'], 'void', 0.00);
+				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order['bluepay_redirect_order_id'], 'void', $bluepay_redirect_order['total']);
 				$this->model_payment_bluepay_redirect->updateVoidStatus($bluepay_redirect_order['bluepay_redirect_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
+				$json['data']['total'] = $bluepay_redirect_order['total'];
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
@@ -275,6 +278,8 @@ class ControllerPaymentBluepayredirect extends Controller {
 			if ($release_response['Result'] == 'APPROVED') {
 				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order['bluepay_redirect_order_id'], 'payment', $this->request->post['amount']);
 
+				$this->model_payment_bluepay_redirect->updateTransactionId($bluepay_redirect_order['bluepay_redirect_order_id'], $release_response['RRNO']);
+
 				$total_released = $this->model_payment_bluepay_redirect->getTotalReleased($bluepay_redirect_order['bluepay_redirect_order_id']);
 
 				if ($total_released >= $bluepay_redirect_order['total']) {
@@ -287,7 +292,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'];
 				$json['data']['release_status'] = $release_status;
 				$json['data']['total'] = (float)$total_released;
@@ -334,7 +339,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'] * -1;
 				$json['data']['total_released'] = (float)$total_released;
 				$json['data']['total_rebated'] = (float)$total_rebated;

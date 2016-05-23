@@ -71,7 +71,7 @@
 </div>
 <script>
 	$(document).ready(function() {
-		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id ?>');
+		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id; ?>');
 		new OffAmazonPayments.Widgets.AddressBook({
 			sellerId: '<?php echo $amazon_login_pay_merchant_id; ?>',
 			amazonOrderReferenceId: '<?php echo $AmazonOrderReferenceId; ?>',

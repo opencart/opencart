@@ -15,7 +15,7 @@ class ControllerPaymentEway extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -100,7 +100,7 @@ class ControllerPaymentEway extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -109,7 +109,7 @@ class ControllerPaymentEway extends Controller {
 		);
 
 		$data['action'] = $this->url->link('payment/eway', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['eway_payment_gateway'])) {
 			$data['eway_payment_gateway'] = $this->request->post['eway_payment_gateway'];
@@ -295,14 +295,14 @@ class ControllerPaymentEway extends Controller {
 				$json['error'] = true;
 				$reason = '';
 				if ($result === false) {
-					$reason = $this->config->get('text_unknown_failure');
+					$reason = $this->language->get('text_unknown_failure');
 				} else {
 					$errors = explode(',', $result->Errors);
 					foreach ($errors as $error) {
 						$reason .= $this->language->get('text_card_message_' . $result->Errors);
 					}
 				}
-				$json['message'] = $this->config->get('text_refund_failed') . $reason;
+				$json['message'] = $this->language->get('text_refund_failed') . $reason;
 			} else {
 				$eway_order = $this->model_payment_eway->getOrder($order_id);
 				$this->model_payment_eway->addTransaction($eway_order['eway_order_id'], $result->Refund->TransactionID, 'refund', $result->Refund->TotalAmount / 100, $eway_order['currency_code']);
@@ -358,7 +358,7 @@ class ControllerPaymentEway extends Controller {
 						$reason .= $this->language->get('text_card_message_' . $result->Errors);
 					}
 				}
-				$json['message'] = $this->config->get('text_capture_failed') . $reason;
+				$json['message'] = $this->language->get('text_capture_failed') . $reason;
 			} else {
 				$this->model_payment_eway->addTransaction($eway_order['eway_order_id'], $result->TransactionID, 'payment', $capture_amount, $eway_order['currency_code']);
 

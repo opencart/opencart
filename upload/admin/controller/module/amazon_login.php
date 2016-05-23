@@ -16,7 +16,7 @@ class ControllerModuleAmazonLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -67,7 +67,7 @@ class ControllerModuleAmazonLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
@@ -79,7 +79,7 @@ class ControllerModuleAmazonLogin extends Controller {
 
 		$data['action'] = $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -125,11 +125,7 @@ class ControllerModuleAmazonLogin extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function install() {

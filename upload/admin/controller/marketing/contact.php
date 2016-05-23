@@ -211,14 +211,14 @@ class ControllerMarketingContact extends Controller {
 						break;
 				}
 
+				$json['success'] = $this->language->get('text_success');
+
 				if ($emails) {
 					$start = ($page - 1) * 10;
 					$end = $start + 10;
 
 					if ($end < $email_total) {
 						$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
-					} else {
-						$json['success'] = $this->language->get('text_success');
 					}
 
 					if ($end < $email_total) {

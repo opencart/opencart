@@ -42,19 +42,24 @@
             <ul class="nav nav-tabs"></ul>
             <div class="tab-content"></div>
           </div>
+          <div id="holding">
+          
+          <p class="text-center">Please select a template from the left column.</p>
+          
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css" rel="stylesheet" />
-  <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script> 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script> 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script> 
+  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
+  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
+		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -67,10 +72,16 @@ $('select[name="store_id"]').on('change', function(e) {
 			
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 				}
 			}
 			
+			if (json['file']) {
+				for (i = 0; i < json['file'].length; i++) {
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
+			}
+									
 			$('#directory').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -81,13 +92,13 @@ $('select[name="store_id"]').on('change', function(e) {
 
 $('select[name="store_id"]').trigger('change');
 
-$('#directory').delegate('a', 'click', function(e) {  
+$('#directory').delegate('a.directory', 'click', function(e) {  
 	e.preventDefault();
 	
 	var node = this; 
 	
 	$.ajax({
-		url: $(node).attr('href'),
+		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -98,56 +109,27 @@ $('#directory').delegate('a', 'click', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
-			$('#code').show();
+			//console.log(json);
 			
 			html = '';
 			
-			if (json['directory']) {	
+			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['href'] + '" class="list-group-item">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
 				}
 			}
 			
-			$('#directory').html(html);
- 			
-			if (json['code']) {
-				var token = Math.random().toString().substr(2, 10);
-				
-				$('.nav-tabs').append('<li><a href="#tab-code' + token + '" data-toggle="tab">' + $(node).text() + '&nbsp;&nbsp;<button type="button" class="close" data-dismiss="alert">&times;</button></a></li>');
-				
-				html  = '<div class="tab-pane" id="tab-code' + token + '">';
-				html += '  <fieldset>';
-				html += '    <legend>' + $('select[name="store_id"]').text() + ' / ' + $(node).text() + '</legend>';
-				html += '    <textarea name="code" rows="10" id="input-code' + token + '"></textarea>';
-				html += '  </fieldset>';
-				html += '  <br />';
-				html += '  <div class="pull-right">';
-				html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-				html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
-				html += '  </div>';
-				html += '</div>';
-
-				$('.tab-content').append(html);
-				
-				$('.nav-tabs a[href=\'#tab-code' + token + '\']').tab('show');
-				
-				// Initialize codemirrror
-				var editor = CodeMirror.fromTextArea(document.getElementById('input-code' + token), {
-					mode: 'text/html',
-					height: '500px',
-					lineNumbers: true,
-					autofocus: true,
-					theme: 'monokai'
-				});		
-				
-				editor.setValue(json['code']);
+			if (json['file']) {
+				for (i = 0; i < json['file'].length; i++) {
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				}
 			}
 			
-			if ($('#code > ul > li').length) {
-				$('#code').show();
-			} else {
-				$('#code').hide();
-			}			
+			if (json['back']) {
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+			}
+									
+			$('#directory').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -155,21 +137,106 @@ $('#directory').delegate('a', 'click', function(e) {
 	});
 });
 
-$('.nav-tabs a .close').on('click', function() {
+$('#directory').delegate('a.file', 'click', function(e) {
+	e.preventDefault();
+	 
+	var node = this; 
 	
-	//#tab-code' + token(
+	var token = $(node)
+	.attr('href')
+	.slice(0, -4)
+	.replace('/', '-')
+	.replace('_', '-');
 	
+	if (!$('#tab-' + token).length) {
+		$.ajax({
+			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+			type: 'post',
+			data: $('input[name=\'code\']'),		
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).find('i').removeClass('fa-arrow-right');
+				$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+			},
+			complete: function() {
+				$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
+				$(node).find('i').addClass('fa-arrow-right');
+			},
+			success: function(json) {
+				//console.log(json);
+				
+				if (json['code']) {
+					$('#code').show();
+					$('#empty').hide();
+							
+							
+														
+					//$(node).attr('href')' + $('select[name="store_id"]').text() + '
+					
+					$('.nav-tabs').append('<li><a href="#tab-' + token + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					
+					html  = '<div class="tab-pane" id="tab-' + token + '">';	
+					html += '    <textarea name="code" rows="10" id="input-' + token + '"></textarea>';
+					html += '    <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
+					html += '    <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
+					html += '  <br />';
+					html += '  <div class="pull-right">';
+					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
+					html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+					html += '  </div>';
+					html += '</div>';
 	
-	//$('.nav-tabs a .close').remove();
+					$('.tab-content').append(html);
+					
+					$('.nav-tabs a[href=\'#tab-' + token + '\']').tab('show');
+					
+					// Initialize codemirrror
+					var editor = CodeMirror.fromTextArea(document.getElementById('input-' + token), {
+						mode: 'text/html',
+						height: '500px',
+						lineNumbers: true,
+						autofocus: true,
+						theme: 'monokai'
+					});		
+					
+					editor.setValue(json['code']);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	} else {
+		$('.nav-tabs a[href=\'#tab-' + token + '\']').tab('show');
+	}
+});
+
+$('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
+	e.preventDefault();
+ 	
+	if ($(this).parent().parent().has('.active')) {
+		//$(this).find('+ prev').parent().parent().siblings('li')[0].tab('show');
+		
+		$( e.target ).closest( "li" ).toggleClass( "hilight" );
+		
+		console.log($(this).parent().parent().siblings('li'));
+	}
+		
+	$(this).parent().parent().remove();
 	
-	//$('.nav-tabs a .close').remove();
+	$($(this).parent().attr('href')).remove();
+	
+	if (!$('#code > ul > li').length) {
+		$('#code').hide();
+		$('#empty').show();
+	}	
 });
 
 $('#button-save').on('click', function(e) { 
 	var node = this; 
 	
 	$.ajax({
-		url: $(this).attr('href'),
+		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
 		type: 'post',
 		data: $('input[name=\'code\']'),		
 		dataType: 'json',
@@ -199,7 +266,7 @@ $('#button-reset').on('click', function(e) {
 		var node = this;
 		
 		$.ajax({
-			url: $(this).attr('href'),
+			url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');

@@ -214,24 +214,19 @@ $('#directory').delegate('a.file', 'click', function(e) {
 $('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
 	e.preventDefault();
 	
-	$(this).parent().parent().remove();
-	
-	$($(this).parent().attr('href')).remove();
-	
-	
-	
 	if ($(this).parent().parent().is('li.active')) {
-		//.next().find('a').not('.active')
+		index = $(this).parent().parent().index()
 		
-		console.log($(this).parent().parent().next('li').html());
-		
-		//$(this).parent().parent().parent().closest('li').find('a').tab('show');
+		if (index == 0) {
+			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
+		} else {
+			$(this).parent().parent().parent().find('li').eq(index - 1).find('a').tab('show');
+		}
 	}
 	
 	$(this).parent().parent().remove();
 	
 	$($(this).parent().attr('href')).remove();
-
 	
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();

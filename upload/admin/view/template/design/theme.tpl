@@ -213,18 +213,25 @@ $('#directory').delegate('a.file', 'click', function(e) {
 
 $('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
 	e.preventDefault();
- 	
-	if ($(this).parent().parent().has('.active')) {
-		//$(this).find('+ prev').parent().parent().siblings('li')[0].tab('show');
-		
-		$( e.target ).closest( "li" ).toggleClass( "hilight" );
-		
-		console.log($(this).parent().parent().siblings('li'));
-	}
-		
+	
 	$(this).parent().parent().remove();
 	
 	$($(this).parent().attr('href')).remove();
+	
+	
+	
+	if ($(this).parent().parent().is('li.active')) {
+		//.next().find('a').not('.active')
+		
+		console.log($(this).parent().parent().next('li').html());
+		
+		//$(this).parent().parent().parent().closest('li').find('a').tab('show');
+	}
+	
+	$(this).parent().parent().remove();
+	
+	$($(this).parent().attr('href')).remove();
+
 	
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();

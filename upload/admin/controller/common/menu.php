@@ -90,8 +90,8 @@ class ControllerCommonMenu extends Controller {
 		// Sales
 		// Voucher
 		$voucher_children = array(
-			'sale/voucher'	      => array(),
-			 'sale/voucher_theme' => array()
+			'sale/voucher'	     => array(),
+			'sale/voucher_theme' => array()
 		);
 
 		$sale_children = array(
@@ -283,16 +283,14 @@ class ControllerCommonMenu extends Controller {
 						'children' => $level_childrens
 					);
 				}
-			} else {
-				if ($this->user->hasPermission('access', $key)) {
-					$part = explode('/', $key);
+			} elseif ($this->user->hasPermission('access', $key)) {
+				$part = explode('/', $key);
 
-					$childrens[] = array(
-						'name'	   => $this->language->get('text_' . $part[1]),
-						'href'     => $this->url->link($key, 'token=' . $this->session->data['token'], true),
-						'children' => array()
-					);
-				}
+				$childrens[] = array(
+					'name'	   => $this->language->get('text_' . $part[1]),
+					'href'     => $this->url->link($key, 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);
 			}
 		}
 

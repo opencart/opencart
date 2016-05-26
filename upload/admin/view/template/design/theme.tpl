@@ -39,13 +39,12 @@
             </div>
           </div>
           <div id="code" style="display: none;" class="col-lg-9 col-md-9 col-sm-12">
-            <ul class="nav nav-tabs"></ul>
+            <ul class="nav nav-tabs">
+            </ul>
             <div class="tab-content"></div>
           </div>
-          <div id="holding">
-          
-          <p class="text-center">Please select a template from the left column.</p>
-          
+          <div id="empty">
+            <p class="text-center">Please select a template from the left column.</p>
           </div>
         </div>
       </div>
@@ -109,8 +108,6 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
-			//console.log(json);
-			
 			html = '';
 			
 			if (json['directory']) {
@@ -142,11 +139,7 @@ $('#directory').delegate('a.file', 'click', function(e) {
 	 
 	var node = this; 
 	
-	var token = $(node)
-	.attr('href')
-	.slice(0, -4)
-	.replace('/', '-')
-	.replace('_', '-');
+	var token = $(node).attr('href').slice(0, -4).replace('/', '-').replace('_', '-');
 	
 	if (!$('#tab-' + token).length) {
 		$.ajax({
@@ -163,26 +156,20 @@ $('#directory').delegate('a.file', 'click', function(e) {
 				$(node).find('i').addClass('fa-arrow-right');
 			},
 			success: function(json) {
-				//console.log(json);
-				
 				if (json['code']) {
 					$('#code').show();
 					$('#empty').hide();
-							
-							
-														
-					//$(node).attr('href')' + $('select[name="store_id"]').text() + '
 					
 					$('.nav-tabs').append('<li><a href="#tab-' + token + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 					
 					html  = '<div class="tab-pane" id="tab-' + token + '">';	
-					html += '    <textarea name="code" rows="10" id="input-' + token + '"></textarea>';
-					html += '    <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
-					html += '    <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
+					html += '  <textarea name="code" rows="10" id="input-' + token + '"></textarea>';
+					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
+					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
 					html += '  <br />';
 					html += '  <div class="pull-right">';
 					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-					html += '    <button type="button" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
 					html += '  </div>';
 					html += '</div>';
 	
@@ -215,7 +202,7 @@ $('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
 	e.preventDefault();
 	
 	if ($(this).parent().parent().is('li.active')) {
-		index = $(this).parent().parent().index()
+		index = $(this).parent().parent().index();
 		
 		if (index == 0) {
 			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
@@ -238,7 +225,7 @@ $('#button-save').on('click', function(e) {
 	var node = this; 
 	
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('li.active input[name="store_id"]').val() + '&path=' + $('li.active input[name="path"]').val(),
 		type: 'post',
 		data: $('input[name=\'code\']'),		
 		dataType: 'json',
@@ -268,7 +255,7 @@ $('#button-reset').on('click', function(e) {
 		var node = this;
 		
 		$.ajax({
-			url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -277,13 +264,18 @@ $('#button-reset').on('click', function(e) {
 				$(node).button('reset');
 			},
 			success: function(json) {
+				
+				
 				if (json['error']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 				}
 				
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '</div>');
-				}			
+				}	
+				
+				
+				editor.setValue(json['code']);		
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

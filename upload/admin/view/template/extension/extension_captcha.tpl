@@ -1,5 +1,3 @@
-<?php echo $text_captcha; ?>
-(<?php echo $captcha_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>

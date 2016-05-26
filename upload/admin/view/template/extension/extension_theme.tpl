@@ -1,5 +1,3 @@
-<?php echo $text_theme; ?>
-(<?php echo $theme_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>

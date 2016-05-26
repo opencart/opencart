@@ -31,7 +31,7 @@
           <div class="tab-pane" id="tab-installer"></div>
           <div class="tab-pane" id="tab-downloaded">
             <div class="well">
-              <select name="type" class="form-control">
+              <select name="type" class="form-control input-lg">
                 <?php foreach ($categories as $category) { ?>
                 <option value="<?php echo $category['value']; ?>"><?php echo $category['text']; ?></option>
                 <?php } ?>
@@ -52,6 +52,8 @@ $('#tab-installer').load('index.php?route=extension/installer&token=<?php echo $
 $('#tab-downloaded select[name="type"]').bind('change', function() {
 	var node = this;
 	
+	console.log($(this).val());
+	
 	$.ajax({
 		url: 'index.php?route=extension/extension/' + $(this).val() + '&token=<?php echo $token; ?>',
 		dataType: 'html',
@@ -62,15 +64,9 @@ $('#tab-downloaded select[name="type"]').bind('change', function() {
 			$(node).prop('disabled', false);
 		},
 		success: function(html) {
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+			$('#extension').html(html);
+			
 
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				$('#button-clear').prop('disabled', true);
-			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -78,7 +74,7 @@ $('#tab-downloaded select[name="type"]').bind('change', function() {
 	});
 });
 
-$('#tab-downloaded input[name="type"]').trigger('change');
+$('#tab-downloaded select[name="type"]').trigger('change');
 
 
 

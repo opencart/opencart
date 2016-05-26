@@ -1,5 +1,3 @@
-<?php echo $text_menu; ?>
-(<?php echo $menu_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
@@ -17,7 +15,7 @@
         <td class="text-right"><?php if (!$menu['installed']) { ?>
           <a href="<?php echo $menu['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
           <?php } else { ?>
-          <a onClick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $menu['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $menu['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
           <?php } ?></td>
       </tr>
       <?php if ($menu['installed']) { ?>

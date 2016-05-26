@@ -1,5 +1,3 @@
-<?php echo $text_shipping; ?>
-(<?php echo $shipping_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>

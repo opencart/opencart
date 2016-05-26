@@ -29,7 +29,7 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&tags=' . $this->request->get['tags'];
 		}		
 		
-		$curl = curl_init('https://extension.opencart.com' . $url);
+		$curl = curl_init('http://www.opencart.com' . $url);
 				
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -38,7 +38,7 @@ class ControllerExtensionStore extends Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+		//curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 				
 		$response = curl_exec($curl);
 

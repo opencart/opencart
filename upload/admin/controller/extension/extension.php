@@ -22,16 +22,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-				
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-		$data['button_upload'] = $this->language->get('button_upload');
-		$data['button_clear'] = $this->language->get('button_clear');
-		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['tab_store'] = $this->language->get('tab_store');
 		$data['tab_downloaded'] = $this->language->get('tab_downloaded');
@@ -53,7 +43,7 @@ class ControllerExtensionExtension extends Controller {
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_analytics') . ' (' . count($files) .')',
-			'href' => 'analytics'
+			'value' => 'analytics'
 		);
 		
 		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
@@ -115,7 +105,7 @@ class ControllerExtensionExtension extends Controller {
 		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
 		
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_total') . '( ' . count($files) .')',
+			'text'  => $this->language->get('text_total') . ' (' . count($files) .')',
 			'value' => 'total'
 		);
 
@@ -168,11 +158,7 @@ class ControllerExtensionExtension extends Controller {
 			$this->load->controller($this->request->get['type'] . '/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
-
-		$this->getList();
 	}
 
 	public function uninstall() {
@@ -189,20 +175,22 @@ class ControllerExtensionExtension extends Controller {
 			$this->load->controller($this->request->get['type'] . '/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
-		
-		$this->getList();
 	}
 	
 	public function analytics() {
 		$this->load->language('extension/extension');
 		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
+				
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 
 		$this->load->model('setting/store');
 		$this->load->model('extension/extension');
@@ -264,20 +252,22 @@ class ControllerExtensionExtension extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['analytics']);
 				
-		// Captcha
-		$extensions = $this->model_extension_extension->getInstalled('captcha');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('captcha', $value);
-
-				unset($extensions[$key]);
-			}
-		}
+		$this->response->setOutput($this->load->view('extension/extension_analytics', $data));			
 	}
 	
 	public function captcha() {
 		$this->load->language('extension/extension');
+
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 
@@ -294,8 +284,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['captchas'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
-
-		$data['captcha_total'] = count($files);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -321,11 +309,24 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['captchas']);
+		
+		$this->response->setOutput($this->load->view('extension/extension_captcha', $data));	
 	}
 		
 	public function feed() {
 		$this->load->language('extension/extension');
 		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
+
 		$this->load->model('extension/extension');
 		
 		$extensions = $this->model_extension_extension->getInstalled('feed');
@@ -341,8 +342,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['feeds'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
-
-		$data['feed_total'] = count($files);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -369,20 +368,22 @@ class ControllerExtensionExtension extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['feeds']);
 				
-		// Fraud
-		$extensions = $this->model_extension_extension->getInstalled('fraud');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('fraud', $value);
-
-				unset($extensions[$key]);
-			}
-		}		
+		$this->response->setOutput($this->load->view('extension/extension_feed', $data));		
 	}
 	
 	public function fraud() {
 		$this->load->language('extension/extension');
+	
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_action'] = $this->language->get('column_action');		
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 
@@ -399,8 +400,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['frauds'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/fraud/*.php');
-
-		$data['fraud_total'] = count($files);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -427,11 +426,23 @@ class ControllerExtensionExtension extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['frauds']);
 		
+		$this->response->setOutput($this->load->view('extension/extension_fraud', $data));	
 	}
-
 	
 	public function menu() {
 		$this->load->language('extension/extension');
+		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 	
@@ -449,8 +460,6 @@ class ControllerExtensionExtension extends Controller {
 
 		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
 
-		$data['menu_total'] = count($files);
-		
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
@@ -475,13 +484,27 @@ class ControllerExtensionExtension extends Controller {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['menus']);		
+		array_multisort($sort_order, SORT_ASC, $data['menus']);	
+		
+		$this->response->setOutput($this->load->view('extension/extension_menu', $data));		
 	}
 	
 	public function module() {
 		$this->load->language('extension/extension');
 		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
+		
 		$this->load->model('extension/extension');
+		$this->load->model('extension/module');
 		
 		$extensions = $this->model_extension_extension->getInstalled('module');
 
@@ -498,8 +521,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['modules'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
-
-		$data['module_total'] = count($files);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -539,10 +560,23 @@ class ControllerExtensionExtension extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['modules']);
 		
+		$this->response->setOutput($this->load->view('extension/extension_module', $data));	
 	}
 	
 	public function payment() {
 		$this->load->language('extension/extension');
+		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 		
@@ -594,10 +628,24 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['payments']);
+		
+		$this->response->setOutput($this->load->view('extension/extension_payment', $data));		
 	}
 
 	public function shipping() {
 		$this->load->language('extension/extension');
+		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 		
@@ -637,11 +685,25 @@ class ControllerExtensionExtension extends Controller {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['shippings']);				
+		array_multisort($sort_order, SORT_ASC, $data['shippings']);
+		
+		$this->response->setOutput($this->load->view('extension/extension_shipping', $data));					
 	}
 	
 	public function theme() {
 		$this->load->language('extension/extension');
+		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
 		$this->load->model('extension/extension');
 		
@@ -697,12 +759,26 @@ class ControllerExtensionExtension extends Controller {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['themes']);		
+		array_multisort($sort_order, SORT_ASC, $data['themes']);	
+		
+		$this->response->setOutput($this->load->view('extension/extension_theme', $data));	
 	}
 	
 	public function total() {
 		$this->load->language('extension/extension');
 		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
+	
 		$this->load->model('extension/extension');
 		
 		$extensions = $this->model_extension_extension->getInstalled('total');

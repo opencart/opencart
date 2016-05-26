@@ -1,5 +1,3 @@
-<?php echo $text_feed; ?>
-(<?php echo $feed_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>

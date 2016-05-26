@@ -1,5 +1,3 @@
-<?php echo $text_total; ?>
-(<?php echo $total_total; ?>)
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>

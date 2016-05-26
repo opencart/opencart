@@ -46,7 +46,12 @@
                 <button type="button" class="btn btn-primary">Search</button>
                 </span></div>
             </div>
-            Sort </div>
+            Sort 
+            
+                    <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        </div>
+            </div>
           <div class="tab-pane" id="tab-installer">
             <form class="form-horizontal">
               <div class="form-group required">

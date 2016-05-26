@@ -655,24 +655,31 @@ class ControllerExtensionExtension extends Controller {
 		$json = array();
 				
 		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
 		
 		$curl = curl_init('https://extension.opencart.com');
 		
-		$request  = 'api_key=' . $this->config->get('config_api_key'); 
-		$request .= 'api_key=' . $this->config->get('config_api_key'); 
+		$request  = '?api_key=' . $this->config->get('config_api_key'); 
 		
+		if (isset($this->request->get['sort'])) {
+			$request .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$request .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$request .= '&page=' . $this->request->get['page'];
+		}
+
+		if (isset($this->request->get['search'])) {
+			$request .= '&search=' . $this->request->get['search'];
+		}		
+		
+		if (isset($this->request->get['tags'])) {
+			$request .= '&tags=' . $this->request->get['tags'];
+		}		
+				
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -690,6 +697,7 @@ class ControllerExtensionExtension extends Controller {
 			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
 		}
 		
+		$
 		
 		
 		

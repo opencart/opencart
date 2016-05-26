@@ -28,11 +28,57 @@
       <div class="panel-body">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-available" data-toggle="tab"><?php echo $tab_available; ?></a></li>
-          <li><a href="#tab-downloaded" data-toggle="tab"><?php echo $tab_downloaded; ?></a></li>
           <li><a href="#tab-installer" data-toggle="tab"><?php echo $tab_installer; ?></a></li>
+          <li><a href="#tab-downloaded" data-toggle="tab"><?php echo $tab_downloaded; ?></a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-available"></div>
+          <div class="tab-pane active" id="tab-available">
+            <div class="well">
+              <div class="input-group">
+                <input type="text" name="" value="search" placeholder="Search" class="form-control" />
+                <span class="input-group-btn">
+                <select class="form-control">
+                  <option>test</option>
+                  <option>test</option>
+                  <option>test</option>
+                </select>
+                </span> <span class="input-group-btn">
+                <button type="button" class="btn btn-primary">Search</button>
+                </span></div>
+            </div>
+            Sort </div>
+          <div class="tab-pane" id="tab-installer">
+            <form class="form-horizontal">
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
+                <div class="col-sm-10">
+                  <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                  <?php if ($error_warning) { ?>
+                  <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+                  <?php } else { ?>
+                  <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+                <div class="col-sm-10">
+                  <div class="progress">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                  </div>
+                  <div id="progress-text"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
+                <div class="col-sm-10">
+                  <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
+                  <br />
+                  <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
+                </div>
+              </div>
+            </form>
+          </div>
           <div class="tab-pane" id="tab-downloaded">
             <div class="panel-group" id="accordion">
               <div class="panel panel-default">
@@ -501,38 +547,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="tab-pane" id="tab-installer">
-            <form class="form-horizontal">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
-                <div class="col-sm-10">
-                  <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-                  <?php if ($error_warning) { ?>
-                  <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-                  <?php } else { ?>
-                  <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
-                <div class="col-sm-10">
-                  <div class="progress">
-                    <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-                  </div>
-                  <div id="progress-text"></div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
-                <div class="col-sm-10">
-                  <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
-                  <br />
-                  <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
       </div>

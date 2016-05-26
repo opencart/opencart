@@ -23,31 +23,20 @@
   <tr>
     <td><?php echo $text_capture_payment; ?></td>
     <td>
-      <?php if ($cardconnect_order['void_status'] == 0) { ?>
-        <input type="text" style="width:80px" id="capture_amount" value="<?php echo $cardconnect_order['total']; ?>"/>
-        <a class="button btn btn-primary btn-sm" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
+      <input type="text" style="width:80px" id="capture_amount" value="<?php echo $cardconnect_order['total']; ?>"/>
+      <a class="button btn btn-primary btn-sm" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
     </td>
   </tr>
   <tr>
     <td><?php echo $text_refund_payment; ?></td>
     <td>
-      <?php if ($cardconnect_order['void_status'] == 0) { ?>
-        <input type="text" style="width:80px" id="refund_amount" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?> />
-        <a class="button btn btn-primary btn-sm" id="button-refund" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
-    </td>
+      <input type="text" style="width:80px" id="refund_amount" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?> />
+      <a class="button btn btn-primary btn-sm" id="button-refund" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+     </td>
   </tr>
   <tr>
     <td><?php echo $text_void; ?></td>
-    <td>
-      <?php if ($cardconnect_order['void_status'] == 1) { ?>
-        <span class="void_text"><?php echo $text_payment_voided; ?></span>
-      <?php } else { ?>
-        <span class="void_text" style="display:none"><?php echo $text_payment_voided; ?></span>
-		<a class="button btn btn-primary btn-xs" id="button-void-all"><?php echo $button_void_all; ?></a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
-    </td>
+    <td><a class="button btn btn-primary btn-xs" id="button-void-all"><?php echo $button_void_all; ?></a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
   </tr>
   <tr>
     <td><?php echo $text_transactions; ?></td>

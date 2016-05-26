@@ -358,7 +358,6 @@ class ControllerPaymentCardConnect extends Controller {
 				$data['text_column_void']          = $this->language->get('text_column_void');
 				$data['text_confirm_capture']      = $this->language->get('text_confirm_capture');
 				$data['text_confirm_refund']       = $this->language->get('text_confirm_refund');
-				$data['text_payment_voided']       = $this->language->get('text_payment_voided');
 
 				$data['button_inquire_all']        = $this->language->get('button_inquire_all');
 				$data['button_capture']            = $this->language->get('button_capture');
@@ -430,7 +429,9 @@ class ControllerPaymentCardConnect extends Controller {
 					if ($cardconnect_order) {
 						$capture_response = $this->model_payment_cardconnect->capture($cardconnect_order, $this->request->post['amount']);
 
-						if (isset($capture_response['respstat']) && $capture_response['respstat'] == 'C') {
+						if (!isset($capture_response['retref'])) {
+							$json['error'] = $this->language->get('error_invalid_response');
+						} else if (isset($capture_response['respstat']) && $capture_response['respstat'] == 'C') {
 							$json['error'] = $capture_response['resptext'];
 						} else {
 							$this->model_payment_cardconnect->addTransaction($cardconnect_order['cardconnect_order_id'], 'payment', $capture_response['retref'], $this->request->post['amount'], $capture_response['setlstat']);
@@ -478,7 +479,9 @@ class ControllerPaymentCardConnect extends Controller {
 					if ($cardconnect_order) {
 						$refund_response = $this->model_payment_cardconnect->refund($cardconnect_order, $this->request->post['amount']);
 
-						if (isset($refund_response['respstat']) && $refund_response['respstat'] == 'C') {
+						if (!isset($refund_response['retref'])) {
+							$json['error'] = $this->language->get('error_invalid_response');
+						} else if (isset($refund_response['respstat']) && $refund_response['respstat'] == 'C') {
 							$json['error'] = $refund_response['resptext'];
 						} else {
 							$this->model_payment_cardconnect->addTransaction($cardconnect_order['cardconnect_order_id'], 'refund', $refund_response['retref'], $this->request->post['amount'] * -1, $refund_response['resptext']);
@@ -523,21 +526,17 @@ class ControllerPaymentCardConnect extends Controller {
 				$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->post['order_id']);
 
 				if ($cardconnect_order) {
-					if (!$cardconnect_order['void_status']) {
-						$void_response = $this->model_payment_cardconnect->void($cardconnect_order, $this->request->post['retref']);
+					$void_response = $this->model_payment_cardconnect->void($cardconnect_order, $this->request->post['retref']);
 
-						if (!isset($void_response['authcode']) || $void_response['authcode'] != 'REVERS') {
-							$json['error'] = $void_response['resptext'];
-						} else {
-							$json['retref'] = $void_response['retref'];
-							$json['amount'] = $this->currency->format(0.00, $cardconnect_order['currency_code'], false, true);
-							$json['status'] = $void_response['resptext'];
-							$json['date_modified'] = date($this->language->get('datetime_format'));
-							$json['date_added'] = date($this->language->get('datetime_format'));
-							$json['success'] = $this->language->get('text_void_success');
-						}
+					if (!isset($void_response['authcode']) || $void_response['authcode'] != 'REVERS') {
+						$json['error'] = $void_response['resptext'];
 					} else {
-						$json['error'] = $this->language->get('error_already_voided');
+						$json['retref'] = $void_response['retref'];
+						$json['amount'] = $this->currency->format(0.00, $cardconnect_order['currency_code'], false, true);
+						$json['status'] = $void_response['resptext'];
+						$json['date_modified'] = date($this->language->get('datetime_format'));
+						$json['date_added'] = date($this->language->get('datetime_format'));
+						$json['success'] = $this->language->get('text_void_success');
 					}
 				} else {
 					$json['error'] = $this->language->get('error_no_order');

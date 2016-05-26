@@ -41,7 +41,6 @@ $_['text_inquire_success']          = 'Inquire was successful';
 $_['text_capture_success']          = 'Capture request was successful';
 $_['text_refund_success']           = 'Refund request was successful';
 $_['text_void_success']             = 'Void request was successful';
-$_['text_payment_voided']           = 'Voided';
 
 // Entry
 $_['entry_merchant_id']             = 'Merchant ID';
@@ -96,6 +95,6 @@ $_['error_token']                   = 'Secret Token Required!';
 $_['error_site']                    = 'Site Required!';
 $_['error_amount_zero']             = 'Amount must be higher than zero!';
 $_['error_no_order']                = 'No matching order info!';
-$_['error_already_voided']          = 'Order already voided!';
+$_['error_invalid_response']        = 'Invalid response received!';
 $_['error_data_missing']            = 'Missing data!';
 $_['error_not_enabled']             = 'Module not enabled!';

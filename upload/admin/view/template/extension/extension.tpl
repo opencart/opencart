@@ -27,11 +27,17 @@
             <div class="input-group">
               <select name="type" class="form-control input-lg">
                 <?php foreach ($categories as $category) { ?>
+                
+                <?php if ($type == $category['value']) { ?>
+                <option value="<?php echo $category['value']; ?>" selected="selected"><?php echo $category['text']; ?></option>
+                <?php } else { ?>
                 <option value="<?php echo $category['value']; ?>"><?php echo $category['text']; ?></option>
+                <?php } ?>
+                
                 <?php } ?>
               </select>
               <div class="input-group-btn">
-                <button class="btn btn-primary btn-lg" type="button">Go!</button>
+                <button type="button" id="button-filter" class="btn btn-primary btn-lg">Go!</button>
               </div>
             </div>
           </div>
@@ -41,17 +47,15 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('select[name="type"]').bind('change', function() {
-	var node = this;
-		
+$('#button-filter').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/extension/' + $(this).val() + '&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/extension/' + $('select[name="type"]').val() + '&token=<?php echo $token; ?>',
 		dataType: 'html',
 		beforeSend: function() {
-			$(node).prop('disabled', true);
+			$('#button-filter').button('loading');
 		},
 		complete: function() {
-			$(node).prop('disabled', false);
+			$('#button-filter').button('reset');
 		},
 		success: function(html) {
 			$('#extension').html(html);
@@ -62,7 +66,7 @@ $('select[name="type"]').bind('change', function() {
 	});
 });
 
-$('select[name="type"]').trigger('change');
+$('#button-filter').trigger('click');
 //--></script> 
 </div>
 <?php echo $footer; ?> 

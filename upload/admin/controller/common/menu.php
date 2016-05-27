@@ -127,19 +127,48 @@ class ControllerCommonMenu extends Controller {
 			);		
 		}
 		
+
 		// Extension
-		$extension = array();
+		$extension_1 = array();
+		
+		$extension_2 = array();
+		
+		if ($this->user->hasPermission('access', 'extension/store')) {		
+			$extension_2[] = array(
+				'name'	   => $this->language->get('text_store'),
+				'href'     => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);					
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/installer')) {		
+			$extension_2[] = array(
+				'name'	   => $this->language->get('text_installer'),
+				'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);					
+		}	
 		
 		if ($this->user->hasPermission('access', 'extension/extension')) {		
-			$extension[] = array(
+			$extension_2[] = array(
 				'name'	   => $this->language->get('text_extension'),
 				'href'     => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
-				'children' => array()		
+				'children' => array()
 			);
 		}
 		
+		if ($extension_2) {	
+			if ($this->user->hasPermission('access', 'extension/extension')) {		
+				$extension_1[] = array(
+					'name'	   => $this->language->get('text_extension'),
+					'href'     => '',
+					'children' => $extension_2		
+				);
+			}
+		}
+		
 		if ($this->user->hasPermission('access', 'extension/modification')) {
-			$extension[] = array(
+			$extension_1[] = array(
 				'name'	   => $this->language->get('text_modification'),
 				'href'     => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
@@ -147,20 +176,20 @@ class ControllerCommonMenu extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/event')) {
-			$extension[] = array(
+			$extension_1[] = array(
 				'name'	   => $this->language->get('text_event'),
 				'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
 			);
 		}
 				
-		if ($extension) {					
+		if ($extension_1) {					
 			$data['menus'][] = array(
 				'id'       => 'menu-extension',
 				'icon'	   => 'fa-puzzle-piece', 
 				'name'	   => $this->language->get('text_extension'),
 				'href'     => '',
-				'children' => $extension
+				'children' => $extension_1
 			);		
 		}
 		

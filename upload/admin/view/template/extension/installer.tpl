@@ -1,34 +1,55 @@
-<form class="form-horizontal">
-  <div class="form-group required">
-    <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
-    <div class="col-sm-10">
-      <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-      <?php if ($error_warning) { ?>
-      <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-      <?php } else { ?>
-      <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-      <?php } ?>
+<?php echo $header; ?><?php echo $column_left; ?>
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
-    <div class="col-sm-10">
-      <div class="progress">
-        <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_upload; ?></h3>
       </div>
-      <div id="progress-text"></div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
+            <div class="col-sm-10">
+              <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <?php if ($error_warning) { ?>
+              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+              <?php } else { ?>
+              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+            <div class="col-sm-10">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
+            <div class="col-sm-10">
+              <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
+              <br />
+              <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
-    <div class="col-sm-10">
-      <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
-      <br />
-      <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
-    </div>
-  </div>
-</form>
-<script type="text/javascript"><!--
+  <script type="text/javascript"><!--
 var step = new Array();
 var total = 0;
 
@@ -169,4 +190,5 @@ $('#button-clear').bind('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script></div>
+<?php echo $footer; ?> 

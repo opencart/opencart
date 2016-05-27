@@ -1,5 +1,9 @@
 <?php
+// Heading
+$_['heading_title']        = 'Extension Installer';
+
 // Text
+$_['text_upload']          = 'Upload your extensions';
 $_['text_success']         = 'Success: The extension has been installed!';
 $_['text_unzip']           = 'Extracting files!';
 $_['text_ftp']             = 'Copying files!';

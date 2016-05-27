@@ -3,6 +3,24 @@ class ControllerExtensionInstaller extends Controller {
 	public function index() {
 		$this->load->language('extension/installer');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true)
+		);
+		
+		$data['heading_title'] = $this->language->get('heading_title');
+        
+		$data['text_upload'] = $this->language->get('text_upload');
+			
 		$data['entry_upload'] = $this->language->get('entry_upload');
 		$data['entry_overwrite'] = $this->language->get('entry_overwrite');
 		$data['entry_progress'] = $this->language->get('entry_progress');
@@ -22,6 +40,10 @@ class ControllerExtensionInstaller extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('extension/installer', $data));
 	}

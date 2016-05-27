@@ -23,10 +23,6 @@ class ControllerExtensionExtension extends Controller {
 
 		$data['text_list'] = $this->language->get('text_list');
 
-		$data['tab_store'] = $this->language->get('tab_store');
-		$data['tab_downloaded'] = $this->language->get('tab_downloaded');
-		$data['tab_installer'] = $this->language->get('tab_installer');
-
 		$data['token'] = $this->session->data['token'];
 		
 		if (isset($this->session->data['success'])) {

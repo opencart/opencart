@@ -13,8 +13,7 @@
     </div>
 	<?php } ?>
     <div class="card_container">
-	  <?php if ($store_cards) { ?>
-      <div class="form-group">
+      <div class="form-group" <?php if (!$store_cards) { echo 'style="display:none"'; } ?>>
         <label class="col-sm-2 control-label"><?php echo $entry_card_new_or_old; ?></label>
           <div class="col-sm-10">
             <label class="radio-inline">
@@ -27,7 +26,6 @@
             </label>
           </div>
       </div>
-	  <?php } ?>
       <div class="card_new_container">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-card-type"><?php echo $entry_card_type; ?></label>
@@ -68,12 +66,14 @@
             <input type="text" name="card_cvv2" value="" placeholder="<?php echo $entry_card_cvv2; ?>" id="input-card-cvv2" class="form-control" />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-card-save" style="padding-top:0"><?php echo $entry_card_save; ?></label>
-          <div class="col-sm-10">
-            <input type="checkbox" name="card_save" value="1" id="input-card-save"/>
+		<?php if ($store_cards) { ?>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-card-save" style="padding-top:0"><?php echo $entry_card_save; ?></label>
+            <div class="col-sm-10">
+              <input type="checkbox" name="card_save" value="1" id="input-card-save"/>
+            </div>
           </div>
-        </div>
+		<?php } ?>
       </div>
 	  <div class="card_old_container" style="display:none">
         <div class="form-group">

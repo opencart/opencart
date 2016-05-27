@@ -82,7 +82,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 						$existing_card = false;
 
-						if ($this->request->post['method'] == 'card') {
+						if (!isset($this->request->post['method']) || $this->request->post['method'] == 'card') {
 							$this->model_payment_cardconnect->log('Method is card');
 
 							if ($this->request->post['card_new'] && isset($this->request->post['card_save']) && $this->config->get('cardconnect_store_cards') && $this->customer->isLogged()) {
@@ -334,7 +334,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 		$error = array();
 
-		if ($this->request->post['method'] == 'card') {
+		if (!isset($this->request->post['method']) || $this->request->post['method'] == 'card') {
 			if ($this->request->post['card_new']) {
 				if (!isset($this->request->post['card_number']) || utf8_strlen($this->request->post['card_number']) < 1 || utf8_strlen($this->request->post['card_number']) > 19) {
 					$error['card_number'] = $this->language->get('error_card_number');

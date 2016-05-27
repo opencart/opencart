@@ -91,7 +91,7 @@ class ModelPaymentBluepayredirect extends Model {
 			$release_data["TRANSACTION_TYPE"] = 'CAPTURE';
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$release_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
-
+			$release_data["AMOUNT"] = $amount;
 			$release_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
 			$release_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
 			$release_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
@@ -100,7 +100,7 @@ class ModelPaymentBluepayredirect extends Model {
 				$release_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
 			}
 
-			$tamper_proof_data = $this->config->get('bluepay_redirect_secret_key') . $release_data['MERCHANT'] . $release_data["TRANSACTION_TYPE"] . $release_data["RRNO"] . $release_data["MODE"];
+			$tamper_proof_data = $this->config->get('bluepay_redirect_secret_key') . $release_data['MERCHANT'] . $release_data["TRANSACTION_TYPE"] . $release_data["AMOUNT"] . $release_data["RRNO"] . $release_data["MODE"];
 
 			$release_data["TAMPER_PROOF_SEAL"] = md5($tamper_proof_data);
 

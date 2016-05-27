@@ -23,7 +23,7 @@ $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Tab
-$_['tab_available']     = 'Extension Store';
+$_['tab_store']         = 'Extension Store';
 $_['tab_downloaded']    = 'Downloaded Extensions';
 $_['tab_installer']     = 'Extension Installer';
 

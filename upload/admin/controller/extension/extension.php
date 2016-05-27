@@ -197,7 +197,6 @@ class ControllerExtensionExtension extends Controller {
 		
 		$stores = $this->model_setting_store->getStores();
 				
-		// Analytics
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
@@ -661,6 +660,8 @@ class ControllerExtensionExtension extends Controller {
 
 		$data['shippings'] = array();
 
+		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
@@ -705,7 +706,10 @@ class ControllerExtensionExtension extends Controller {
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
+		$this->load->model('setting/store');
 		$this->load->model('extension/extension');
+		
+		$stores = $this->model_setting_store->getStores();
 		
 		$extensions = $this->model_extension_extension->getInstalled('theme');
 
@@ -716,7 +720,7 @@ class ControllerExtensionExtension extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-
+		
 		$data['themes'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/theme/*.php');

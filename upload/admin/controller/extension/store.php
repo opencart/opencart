@@ -20,7 +20,26 @@ class ControllerExtensionStore extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_list'] = $this->language->get('text_list');
-	
+		$data['text_license'] = $this->language->get('text_list');
+		$data['text_free'] = $this->language->get('text_list');
+		$data['text_commercial'] = $this->language->get('text_list');
+		$data['text_category'] = $this->language->get('text_list');
+		$data['text_theme'] = $this->language->get('text_list');
+		$data['text_payment'] = $this->language->get('text_list');
+		$data['text_shipping'] = $this->language->get('text_list');
+		$data['text_module'] = $this->language->get('text_list');
+		$data['text_total'] = $this->language->get('text_list');
+		$data['text_feed'] = $this->language->get('text_list');
+		$data['text_report'] = $this->language->get('text_list');
+		$data['text_other'] = $this->language->get('text_list');
+
+
+		$data['categories'] = array();
+
+		$data['categories'] = array(
+		//	'url'
+		);
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -28,7 +47,7 @@ class ControllerExtensionStore extends Controller {
 		$this->response->setOutput($this->load->view('extension/store_list', $data));
 	}
 	
-	public function test() {
+	public function store() {
 		$this->load->language('extension/store');
 
 		$json = array();
@@ -74,8 +93,9 @@ class ControllerExtensionStore extends Controller {
 
 		if (!$response) {
 			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
-		}
-		
+		} else {
+			$json = json_decode($response);
+		}		
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));				
@@ -127,6 +147,8 @@ class ControllerExtensionStore extends Controller {
 
 		if (!$response) {
 			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
+		} else {
+			$json = json_decode($response);
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

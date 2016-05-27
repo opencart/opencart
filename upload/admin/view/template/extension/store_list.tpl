@@ -16,51 +16,48 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
+
         <div class="well">
           <div class="input-group">
             <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
             <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License <span class="caret"></span></button>
+              
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <?php foreach ($categories as $category) { ?>
-                <li><a href="#">All Categories</a></li>
-                <?php } ?>
+                <li class="dropdown-header">License</li>
+                <li><a href="">Any License</a></li>
+                <li><a href="free"><?php echo $text_free; ?></a></li>
+                <li><a href="paid"><?php echo $text_paid; ?></a></li>
               </ul>
-            
-            
-            
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Categories <span class="caret"></span></button>
+              
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <?php foreach ($categories as $category) { ?>
-                <li><a href="#">All Categories</a></li>
-                <?php } ?>
+                <li><a href="">All Categories</a></li>
+                <li><a href="theme"><?php echo $text_theme; ?></a></li>
+                <li><a href="payment"><?php echo $text_payment; ?></a></li>
+                <li><a href="shipping"><?php echo $text_shipping; ?></a></li>
+                <li><a href="module"><?php echo $text_module; ?></a></li>
+                <li><a href="total"><?php echo $text_total; ?></a></li>
+                <li><a href="feed"><?php echo $text_feed; ?></a></li>
+                <li><a href="report"><?php echo $text_report; ?></a></li>
+                <li><a href="other"><?php echo $text_other; ?></a></li>
               </ul>
-              <button type="button" class="btn btn-primary"><i class=""></i></button>
+              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              
             </div>
           </div>
         </div>
+       </fieldset>
+        
         Sort
         <div id="store"></div>
       </div>
     </div>
   </div>
-  
-  
-		$data['text_license'] = $this->language->get('text_list');
-		$data['text_free'] = $this->language->get('text_list');
-		$data['text_commercial'] = $this->language->get('text_list');
-		$data['text_category'] = $this->language->get('text_list');
-		$data['text_theme'] = $this->language->get('text_list');
-		$data['text_payment'] = $this->language->get('text_list');
-		$data['text_shipping'] = $this->language->get('text_list');
-		$data['text_module'] = $this->language->get('text_list');
-		$data['text_total'] = $this->language->get('text_list');
-		$data['text_feed'] = $this->language->get('text_list');
-		$data['text_report'] = $this->language->get('text_list');
-		$data['text_other'] = $this->language->get('text_list');
-  
   <script type="text/javascript"><!--
-$('select[name="type"]').bind('change', function() {
+$('#button-filter').bind('click', function(e) {
+	e.perventDefault();
+	
 	var node = this;
 		
 	$.ajax({
@@ -81,7 +78,7 @@ $('select[name="type"]').bind('change', function() {
 	});
 });
 
-$('select[name="type"]').trigger('change');
+$('#button-filter').trigger('click');
 //--></script> 
 </div>
 <?php echo $footer; ?> 

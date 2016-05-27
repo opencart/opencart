@@ -14,7 +14,7 @@ class ControllerShippingFlat extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -49,7 +49,7 @@ class ControllerShippingFlat extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -59,7 +59,7 @@ class ControllerShippingFlat extends Controller {
 
 		$data['action'] = $this->url->link('shipping/flat', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
 		if (isset($this->request->post['flat_cost'])) {
 			$data['flat_cost'] = $this->request->post['flat_cost'];

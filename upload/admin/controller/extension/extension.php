@@ -33,6 +33,12 @@ class ControllerExtensionExtension extends Controller {
 			$data['success'] = '';
 		}
 		
+		if (isset($this->request->get['type'])) {
+			$data['type'] = $this->request->get['type'];
+		} else {
+			$data['type'] = '';	
+		}
+		
 		$data['categories'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
@@ -70,6 +76,13 @@ class ControllerExtensionExtension extends Controller {
 			'value' => 'module'
 		);
 		
+		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_menu') . ' (' . count($files) .')',
+			'value' => 'menu'
+		);
+				
 		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
 		
 		$data['categories'][] = array(
@@ -89,13 +102,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_theme') . ' (' . count($files) .')',
 			'value' => 'theme'
-		);
-		
-		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_menu') . ' (' . count($files) .')',
-			'value' => 'menu'
 		);
 		
 		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
@@ -177,6 +183,7 @@ class ControllerExtensionExtension extends Controller {
 	public function analytics() {
 		$this->load->language('extension/extension');
 		
+		$data['text_analytics'] = $this->language->get('text_analytics');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -253,6 +260,7 @@ class ControllerExtensionExtension extends Controller {
 	public function captcha() {
 		$this->load->language('extension/extension');
 
+		$data['text_captcha'] = $this->language->get('text_captcha');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -311,6 +319,7 @@ class ControllerExtensionExtension extends Controller {
 	public function feed() {
 		$this->load->language('extension/extension');
 		
+		$data['text_feed'] = $this->language->get('text_feed');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -369,6 +378,7 @@ class ControllerExtensionExtension extends Controller {
 	public function fraud() {
 		$this->load->language('extension/extension');
 	
+		$data['text_fraud'] = $this->language->get('text_fraud');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -427,6 +437,7 @@ class ControllerExtensionExtension extends Controller {
 	public function menu() {
 		$this->load->language('extension/extension');
 		
+		$data['text_menu'] = $this->language->get('text_menu');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -487,6 +498,7 @@ class ControllerExtensionExtension extends Controller {
 	public function module() {
 		$this->load->language('extension/extension');
 		
+		$data['text_module'] = $this->language->get('text_module');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -561,6 +573,7 @@ class ControllerExtensionExtension extends Controller {
 	public function payment() {
 		$this->load->language('extension/extension');
 		
+		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -630,6 +643,7 @@ class ControllerExtensionExtension extends Controller {
 	public function shipping() {
 		$this->load->language('extension/extension');
 		
+		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -690,6 +704,7 @@ class ControllerExtensionExtension extends Controller {
 	public function theme() {
 		$this->load->language('extension/extension');
 		
+		$data['text_theme'] = $this->language->get('text_theme');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
@@ -767,6 +782,7 @@ class ControllerExtensionExtension extends Controller {
 	public function total() {
 		$this->load->language('extension/extension');
 		
+		$data['text_total'] = $this->language->get('text_total');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 

@@ -21,18 +21,21 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-        <div class="well">
-          <div class="input-group">
-            <select name="type" class="form-control input-lg">
-              <?php foreach ($categories as $category) { ?>
-              <option value="<?php echo $category['value']; ?>"><?php echo $category['text']; ?></option>
-              <?php } ?>
-            </select>
-            <div class="input-group-btn">
-              <button class="btn btn-primary btn-lg" type="button">Go!</button>
+        <fieldset>
+          <legend>Extension Filter</legend>
+          <div class="well">
+            <div class="input-group">
+              <select name="type" class="form-control input-lg">
+                <?php foreach ($categories as $category) { ?>
+                <option value="<?php echo $category['value']; ?>"><?php echo $category['text']; ?></option>
+                <?php } ?>
+              </select>
+              <div class="input-group-btn">
+                <button class="btn btn-primary btn-lg" type="button">Go!</button>
+              </div>
             </div>
           </div>
-        </div>
+        </fieldset>
         <div id="extension"></div>
       </div>
     </div>

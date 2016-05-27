@@ -20,25 +20,19 @@ class ControllerExtensionStore extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_list'] = $this->language->get('text_list');
-		$data['text_license'] = $this->language->get('text_list');
-		$data['text_free'] = $this->language->get('text_list');
-		$data['text_commercial'] = $this->language->get('text_list');
-		$data['text_category'] = $this->language->get('text_list');
-		$data['text_theme'] = $this->language->get('text_list');
-		$data['text_payment'] = $this->language->get('text_list');
-		$data['text_shipping'] = $this->language->get('text_list');
-		$data['text_module'] = $this->language->get('text_list');
-		$data['text_total'] = $this->language->get('text_list');
-		$data['text_feed'] = $this->language->get('text_list');
-		$data['text_report'] = $this->language->get('text_list');
-		$data['text_other'] = $this->language->get('text_list');
-
-
-		$data['categories'] = array();
-
-		$data['categories'] = array(
-		//	'url'
-		);
+		$data['text_all'] = $this->language->get('text_all');
+		$data['text_license'] = $this->language->get('text_license');
+		$data['text_free'] = $this->language->get('text_free');
+		$data['text_paid'] = $this->language->get('text_paid');
+		$data['text_category'] = $this->language->get('text_category');
+		$data['text_theme'] = $this->language->get('text_theme');
+		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_module'] = $this->language->get('text_module');
+		$data['text_total'] = $this->language->get('text_total');
+		$data['text_feed'] = $this->language->get('text_feed');
+		$data['text_report'] = $this->language->get('text_report');
+		$data['text_other'] = $this->language->get('text_other');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

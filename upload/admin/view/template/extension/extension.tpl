@@ -22,7 +22,7 @@
       </div>
       <div class="panel-body">
         <fieldset>
-          <legend>Extension Filter</legend>
+          <legend>Choose the extension type</legend>
           <div class="well">
             <div class="input-group">
               <select name="type" class="form-control input-lg">
@@ -37,7 +37,7 @@
                 <?php } ?>
               </select>
               <div class="input-group-btn">
-                <button type="button" id="button-filter" class="btn btn-primary btn-lg">Go!</button>
+                <button type="button" id="button-filter" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg">Go!</button>
               </div>
             </div>
           </div>

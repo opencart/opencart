@@ -120,7 +120,7 @@ class ModelPaymentCardConnect extends Model {
 	public function getSettlementStatuses($merchant_id, $date) {
 		$this->log('Getting settlement statuses from CardConnect');
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/settlestat?merchid=' . $merchant_id . '&date=' . $date;
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/settlestat?merchid=' . $merchant_id . '&date=' . $date;
 
 		$header = array();
 

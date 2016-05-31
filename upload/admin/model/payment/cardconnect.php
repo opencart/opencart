@@ -86,7 +86,7 @@ class ModelPaymentCardConnect extends Model {
 
 		$this->log('Order ID: ' . $order_info['order_id']);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('cardconnect_merchant_id');
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/inquire/' . $retref . '/' . $this->config->get('cardconnect_merchant_id');
 
 		$header = array();
 
@@ -177,7 +177,7 @@ class ModelPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/capture';
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/capture';
 
 		$header = array();
 
@@ -226,7 +226,7 @@ class ModelPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/refund';
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/refund';
 
 		$header = array();
 
@@ -275,7 +275,7 @@ class ModelPaymentCardConnect extends Model {
 
 		$data_json = json_encode($data);
 
-		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/void';
+		$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/void';
 
 		$header = array();
 

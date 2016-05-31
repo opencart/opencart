@@ -164,7 +164,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 						$data_json = json_encode($data);
 
-						$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . ($this->config->get('cardconnect_environment') == 'live' ? 8443 : 6443) . '/cardconnect/rest/auth';
+						$url = 'https://' . $this->config->get('cardconnect_site') . '.cardconnect.com:' . (($this->config->get('cardconnect_environment') == 'live') ? 8443 : 6443) . '/cardconnect/rest/auth';
 
 						$header = array();
 
@@ -199,7 +199,8 @@ class ControllerPaymentCardConnect extends Controller {
 					 	if (isset($response_data['respstat']) && $response_data['respstat'] == 'A') {
 							$this->load->model('checkout/order');
 
-							if ($bankaba) { // if a cheque
+							// if a cheque
+							if ($bankaba) {
 								$payment_method = 'echeck';
 
 								$type = 'payment';

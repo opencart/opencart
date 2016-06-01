@@ -12,11 +12,9 @@ $_['text_uk']                       = 'English';
 $_['text_fr']                       = 'French';
 $_['text_it']                       = 'Italian';
 $_['text_es']                       = 'Spainish';
-//NEED TRANSLATING
 $_['text_us_region']				= 'United States';
 $_['text_eu_region']                = 'Euro region';
 $_['text_uk_region']                = 'United Kingdom';
-//END TRANSLATION
 $_['text_live']                     = 'Live';
 $_['text_sandbox']                  = 'Sandbox';
 $_['text_auth']						= 'Authorization';
@@ -73,10 +71,9 @@ $_['text_amazon_rejected']          = 'AmazonRejected';
 $_['text_amazon_timeout']           = 'TransactionTimedOut';
 $_['text_amazon_no_declined']       = '--- No Automatic Declined Authorization ---';
 $_['text_amazon_signup']			= 'Sign-up to Login and Pay with Amazon';
-//NEED TRANSLATING
 $_['text_credentials']				= 'Credentials';
 $_['text_validate_credentials']		= 'Validate and Use Credentials';
-//END TRANSLATION
+
 // Columns
 $_['column_status']                 = 'Status';
 
@@ -86,16 +83,13 @@ $_['entry_access_key']              = 'Access Key';
 $_['entry_access_secret']           = 'Secret Key';
 $_['entry_client_id']               = 'Client ID';
 $_['entry_client_secret']           = 'Client Secret';
-//NEED TRANSLATING
 $_['entry_language']				= 'Language';
 $_['entry_payment_region']			= 'Payment Region';
-//END TRANSLATION
 $_['entry_capture_status']          = 'Automatic capture status';
 $_['entry_pending_status']          = 'Pending Order Status';
 $_['entry_ipn_url']					= 'IPN\'s URL';
 $_['entry_ipn_token']				= 'Secret Token';
 $_['entry_debug']					= 'Debug logging';
-
 
 // Help
 $_['help_pay_mode']					= 'Payment is only available for US marketplace';

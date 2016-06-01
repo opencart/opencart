@@ -14,7 +14,7 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -43,7 +43,7 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_captcha'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -53,7 +53,7 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 
 		$data['action'] = $this->url->link('captcha/basic_captcha', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true);
 
 		if (isset($this->request->post['basic_captcha_status'])) {
 			$data['basic_captcha_status'] = $this->request->post['basic_captcha_status'];

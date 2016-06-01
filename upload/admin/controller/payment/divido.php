@@ -12,8 +12,10 @@ class ControllerPaymentDivido extends Controller {
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$this->model_setting_setting->editSetting('divido', $this->request->post);
+			
 			$this->session->data['success'] = $this->language->get('text_success');
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -77,7 +79,7 @@ class ControllerPaymentDivido extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -86,7 +88,8 @@ class ControllerPaymentDivido extends Controller {
 		);
 
 		$data['action'] = $this->url->link('payment/divido', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
+		
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
 
 		if (isset($this->request->post['divido_api_key'])) {
 			$data['divido_api_key'] = $this->request->post['divido_api_key'];

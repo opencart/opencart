@@ -17,7 +17,7 @@ class ControllerModuleEbayListing extends Controller {
 
 			$this->cache->delete('ebay');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -72,7 +72,7 @@ class ControllerModuleEbayListing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -82,7 +82,7 @@ class ControllerModuleEbayListing extends Controller {
 
 		$data['action'] = $this->url->link('module/ebay_listing', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		if (isset($this->request->post['ebay_listing_username'])) {
 			$data['ebay_listing_username'] = $this->request->post['ebay_listing_username'];

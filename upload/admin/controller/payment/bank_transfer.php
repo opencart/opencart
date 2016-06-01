@@ -14,7 +14,7 @@ class ControllerPaymentBankTransfer extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,7 +63,7 @@ class ControllerPaymentBankTransfer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -73,7 +73,7 @@ class ControllerPaymentBankTransfer extends Controller {
 
 		$data['action'] = $this->url->link('payment/bank_transfer', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		$this->load->model('localisation/language');
 

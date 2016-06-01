@@ -14,7 +14,7 @@ class ControllerShippingFree extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -50,7 +50,7 @@ class ControllerShippingFree extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -60,7 +60,7 @@ class ControllerShippingFree extends Controller {
 
 		$data['action'] = $this->url->link('shipping/free', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
 		if (isset($this->request->post['free_total'])) {
 			$data['free_total'] = $this->request->post['free_total'];

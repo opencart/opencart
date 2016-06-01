@@ -18,7 +18,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -30,7 +30,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -116,7 +116,7 @@ class ControllerPaymentLaybuy extends Controller {
 
 		$data['fetch'] = $this->url->link('payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab', true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['laybuys_membership_id'])) {
 			$data['laybuys_membership_id'] = $this->request->post['laybuys_membership_id'];

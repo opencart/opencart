@@ -20,9 +20,9 @@ class ControllerStartupCompatibility extends Controller {
 					$method = substr($this->request->get['route'], strlen($route));
 					
 					if (!$method) {
-						return new Action('extension/extension');
+						$this->response->redirect($this->url->link('extension/extension', $this->request->server['HTTPS']));
 					} else {
-						return new Action('extension/extension/' . $method);
+						$this->response->redirect($this->url->link('extension/extension/' . $method, 'type=' . $method, $this->request->server['HTTPS']));
 					}
 				}
 			}

@@ -76,6 +76,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_ipn_url'] = $this->language->get('help_ipn_url');
 		$data['help_ipn_token'] = $this->language->get('help_ipn_token');
+		$data['help_minimum_total'] = $this->language->get('help_minimum_total');
 		$data['help_declined_codes'] = $this->language->get('help_declined_codes');
 
 		$data['error_merchant_id'] = $this->language->get('error_merchant_id');
@@ -123,6 +124,12 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['error_pay_mode'] = $this->error['error_pay_mode'];
 		} else {
 			$data['error_pay_mode'] = '';
+		}
+
+		if (isset($this->error['error_minimum_total'])) {
+			$data['error_minimum_total'] = $this->error['error_minimum_total'];
+		} else {
+			$data['error_minimum_total'] = '';
 		}
 
 		if (isset($this->error['error_curreny'])) {
@@ -208,20 +215,37 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_mode'] = 'payment';
 		}
 
-		if (isset($this->request->post['amazon_login_pay_language'])) {
-			$data['amazon_login_pay_language'] = $this->request->post['amazon_login_pay_language'];
-		} elseif ($this->config->get('amazon_login_pay_language')) {
-			$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
-		} else {
-			$data['amazon_login_pay_language'] = 'us';
-		}
-
 		if (isset($this->request->post['amazon_login_pay_payment_region'])) {
 			$data['amazon_login_pay_payment_region'] = $this->request->post['amazon_login_pay_payment_region'];
 		} elseif ($this->config->get('amazon_login_pay_payment_region')) {
 			$data['amazon_login_pay_payment_region'] = $this->config->get('amazon_login_pay_payment_region');
+		} elseif (in_array($this->config->get('config_currency'), array('EUR', 'GBP', 'USD'))) {
+			$data['amazon_login_pay_payment_region'] = $this->config->get('config_currency');
 		} else {
 			$data['amazon_login_pay_payment_region'] = 'USD';
+		}
+
+		if ($data['amazon_login_pay_payment_region'] == 'EUR') {
+			$data['amazon_login_pay_language'] = 'de-DE';
+			$data['sp_id'] = 'AGGDPRPDPL7SL';
+			$data['locale'] = 'EUR';
+			$data['id'] = 'SPEXDEAPA-OpencartPL';
+		} elseif ($data['amazon_login_pay_payment_region'] == 'GBP') {
+			$data['amazon_login_pay_language'] = 'en-GB';
+			$data['sp_id'] = 'A1P8WV11EWOP9H';
+			$data['locale'] = 'GBP';
+			$data['id'] = 'SPEXUKAPA-OpencartPL';
+		} else {
+			$data['amazon_login_pay_language'] = 'en-US';
+			$data['sp_id'] = 'A3GK1RS09H3A7D';
+			$data['locale'] = 'US';
+			$data['id'] = 'SPEXUSAPA-OpencartPL';
+		}
+
+		if (isset($this->request->post['amazon_login_pay_language'])) {
+			$data['amazon_login_pay_language'] = $this->request->post['amazon_login_pay_language'];
+		} elseif ($this->config->get('amazon_login_pay_language')) {
+			$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
 		}
 
 		if (isset($this->request->post['amazon_login_pay_capture_status'])) {
@@ -255,7 +279,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		} elseif ($this->config->get('amazon_login_pay_minimum_total')) {
 			$data['amazon_login_pay_minimum_total'] = $this->config->get('amazon_login_pay_minimum_total');
 		} else {
-			$data['amazon_login_pay_minimum_total'] = '0.00';
+			$data['amazon_login_pay_minimum_total'] = '0.01';
 		}
 
 		if (isset($this->request->post['amazon_login_pay_geo_zone'])) {
@@ -315,21 +339,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
-
-		switch ($data['amazon_login_pay_payment_region']) {
-			case 'EUR':
-				$data['sp_id'] = 'AGGDPRPDPL7SL';
-				break;
-			case 'GBP':
-				$data['sp_id'] = 'A1P8WV11EWOP9H';
-				break;
-			case 'USD':
-				$data['sp_id'] = 'A3GK1RS09H3A7D';
-				break;
-			default:
-				$data['sp_id'] = 'AGGDPRPDPL7SL';
-				break;
-		}
 
 		if ($data['amazon_login_pay_payment_region'] == 'USD') {
 			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect";
@@ -606,6 +615,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		if (!$this->request->post['amazon_login_pay_client_secret']) {
 			$this->error['error_client_secret'] = $this->language->get('error_client_secret');
+		}
+
+		if ($this->request->post['amazon_login_pay_minimum_total'] <= 0) {
+			$this->error['error_minimum_total'] = $this->language->get('error_minimum_total');
 		}
 
 		if (isset($this->request->post['amazon_login_pay_region'])) {

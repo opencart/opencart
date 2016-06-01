@@ -21,8 +21,9 @@
 	<?php } ?>
 	<div class="alert alert-info">
 	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" class="form-horizontal" id="registration-form">
-		<input type="hidden" value="<?php echo $amazon_login_pay_payment_region; ?>" name="locale">
+		<input type="hidden" value="<?php echo $locale; ?>" name="locale">
 		<input type="hidden" value="<?php echo $sp_id; ?>" name="spId">
+		<input type="hidden" value="<?php echo $id; ?>" name="Id">
 		<input type="hidden" value="<?php echo $unique_id; ?>" name="uniqueId">
 		<input type="hidden" value="<?php echo $allowed_login_domain; ?>" name="allowedLoginDomains[]">
 		<?php foreach ($login_redirect_urls as $login_redirect_url) { ?>
@@ -208,9 +209,12 @@
 			</div>
 		  </div>
 		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="amazon-login-pay-minimum-total"><?php echo $text_minimum_total; ?></label>
+			<label class="col-sm-2 control-label" for="amazon-login-pay-minimum-total"><span data-toggle="tooltip" title="<?php echo $help_minimum_total; ?>"><?php echo $text_minimum_total; ?></span></label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_minimum_total" value="<?php echo $amazon_login_pay_minimum_total; ?>" placeholder="<?php echo $text_minimum_total; ?>" id="amazon-login-pay-minimum-total" class="form-control" />
+			  <?php if ($error_minimum_total) { ?>
+				  <div class="text-danger"><?php echo $error_minimum_total; ?></div>
+			  <?php } ?>
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -274,11 +278,11 @@
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_declined_code" id="amazon-login-pay-declined_code" class="form-control">
 				<option value=""><?php echo $text_amazon_no_declined; ?></option>
-				<?php foreach ($declined_codes as $k => $v) { ?>
-					<?php if ($amazon_login_pay_declined_code == $v) { ?>
-						<option value="<?php echo $v; ?>" selected="selected"><?php echo $v; ?></option>
+				<?php foreach ($declined_codes as $declined_code) { ?>
+					<?php if ($amazon_login_pay_declined_code == $declined_code) { ?>
+						<option value="<?php echo $declined_code; ?>" selected="selected"><?php echo $declined_code; ?></option>
 					<?php } else { ?>
-						<option value="<?php echo $v; ?>"><?php echo $v; ?></option>
+						<option value="<?php echo $declined_code; ?>"><?php echo $declined_code; ?></option>
 					<?php } ?>
 				<?php } ?>
 			  </select>
@@ -316,13 +320,13 @@
       $('#amazon-login-pay-payment_region').on('change', function () {
         switch ($(this).val()) {
           case 'EUR':
-			$('#amazon-login-pay-language').html('<option selected value="de-DE">German</option>');
+            $('#amazon-login-pay-language').html('<option selected value="de-DE">German</option>');
             break;
           case 'GBP':
-			$('#amazon-login-pay-language').html('<option selected value="en-GB">English</option>');
+            $('#amazon-login-pay-language').html('<option selected value="en-GB">English</option>');
             break;
           case 'USD':
-			$('#amazon-login-pay-language').html('<option selected value="en-US">American</option>');
+            $('#amazon-login-pay-language').html('<option selected value="en-US">American</option>');
             break;
         }
         $('<input>').attr({

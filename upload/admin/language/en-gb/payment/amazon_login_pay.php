@@ -12,9 +12,11 @@ $_['text_uk']                       = 'English';
 $_['text_fr']                       = 'French';
 $_['text_it']                       = 'Italian';
 $_['text_es']                       = 'Spainish';
+//NEED TRANSLATING
 $_['text_us_region']				= 'United States';
 $_['text_eu_region']                = 'Euro region';
 $_['text_uk_region']                = 'United Kingdom';
+//END TRANSLATION
 $_['text_live']                     = 'Live';
 $_['text_sandbox']                  = 'Sandbox';
 $_['text_auth']						= 'Authorization';
@@ -71,9 +73,10 @@ $_['text_amazon_rejected']          = 'AmazonRejected';
 $_['text_amazon_timeout']           = 'TransactionTimedOut';
 $_['text_amazon_no_declined']       = '--- No Automatic Declined Authorization ---';
 $_['text_amazon_signup']			= 'Sign-up to Login and Pay with Amazon';
+//NEED TRANSLATING
 $_['text_credentials']				= 'Credentials';
 $_['text_validate_credentials']		= 'Validate and Use Credentials';
-
+//END TRANSLATION
 // Columns
 $_['column_status']                 = 'Status';
 
@@ -83,8 +86,10 @@ $_['entry_access_key']              = 'Access Key';
 $_['entry_access_secret']           = 'Secret Key';
 $_['entry_client_id']               = 'Client ID';
 $_['entry_client_secret']           = 'Client Secret';
+//NEED TRANSLATING
 $_['entry_language']				= 'Language';
 $_['entry_payment_region']			= 'Payment Region';
+//END TRANSLATION
 $_['entry_capture_status']          = 'Automatic capture status';
 $_['entry_pending_status']          = 'Pending Order Status';
 $_['entry_ipn_url']					= 'IPN\'s URL';
@@ -97,6 +102,7 @@ $_['help_pay_mode']					= 'Payment is only available for US marketplace';
 $_['help_capture_status']			= 'Choose order staus that will trigger automatic capture of an authorized payment';
 $_['help_ipn_url']					= 'Set this as you merhcant URL in Amazon Seller Central';
 $_['help_ipn_token']				= 'Make this long and hard to guess';
+$_['help_minimum_total']			= 'This must be above zero';
 $_['help_debug']					= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_declined_codes']			= 'This is for testing purposes only';
 
@@ -111,6 +117,7 @@ $_['error_access_secret']		    = 'Secret Key is required';
 $_['error_client_id']			    = 'Client ID is required';
 $_['error_client_secret']			= 'Client Key is required';
 $_['error_pay_mode']				= 'Payment is only available for US marketplace';
+$_['error_minimum_total']			= 'Minimum order total must be above zero';
 $_['error_curreny']                 = 'Your shop must have %s currency installed and enabled';
 $_['error_upload']                  = 'Upload failed';
 $_['error_data_missing'] 			= 'Required data is missing';

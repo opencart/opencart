@@ -79,17 +79,17 @@ $('#extension').on('click', 'a', function() {
 			$(node).button('reset');
 		},
 		success: function(json) {
-      $('.alert').remove();
-
-      if (json['error']) {
-        $('#extension').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-      }
-
-      if (json['success']) {
-        $('#extension').load('index.php?route=extension/extension/' + $('select[name="type"]').val() + '&token=<?php echo $token; ?>');
-
-        $('#extension').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-      }
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('#extension').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#extension').load('index.php?route=extension/extension/' + $('select[name="type"]').val() + '&token=<?php echo $token; ?>');
+				
+				$('#extension').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

@@ -322,8 +322,7 @@ class ControllerExtensionExtension extends Controller {
 
 				$data['analytics'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=analytics&extension=' . $extension, true),
+					'code'      => $extension,
 					'installed' => in_array($extension, $extensions),
 					'store'     => $store_data
 				);
@@ -380,6 +379,7 @@ class ControllerExtensionExtension extends Controller {
 
 				$data['captchas'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
+					'code'      => $extension,
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),

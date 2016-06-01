@@ -1,5 +1,5 @@
 <fieldset>
-  <legend><?php echo $text_analytics; ?></legend>
+  <legend><?php echo $heading_title; ?></legend>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -10,24 +10,24 @@
         </tr>
       </thead>
       <tbody>
-        <?php if ($analytics) { ?>
-        <?php foreach ($analytics as $analytic) { ?>
+        <?php if ($extensions) { ?>
+        <?php foreach ($extensions as $extension) { ?>
         <tr>
-          <td class="text-left" colspan="2"><b><?php echo $analytic['name']; ?></b></td>
-          <td class="text-right"><?php if (!$analytic['installed']) { ?>
-            <button type="button" value="<?php echo $analytic['code']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+          <td class="text-left" colspan="2"><b><?php echo $extension['name']; ?></b></td>
+          <td class="text-right"><?php if (!$extension['installed']) { ?>
+            <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             <?php } else { ?>
-            <button type="button" onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $analytic['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+            <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             <?php } ?></td>
         </tr>
-        <?php } ?>
-        <?php if ($analytic['installed']) { ?>
-        <?php foreach ($analytic['store'] as $store) { ?>
+        <?php if ($extension['installed']) { ?>
+        <?php foreach ($extension['store'] as $store) { ?>
         <tr>
           <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
           <td class="text-left"><?php echo $store['status']; ?></td>
           <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
         </tr>
+        <?php } ?>
         <?php } ?>
         <?php } ?>
         <?php } else { ?>

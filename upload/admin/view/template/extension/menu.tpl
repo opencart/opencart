@@ -1,5 +1,5 @@
 <fieldset>
-  <legend><?php echo $text_menu; ?></legend>
+  <legend><?php echo $heading_title; ?></legend>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>

@@ -22,18 +22,16 @@
       </div>
       <div class="panel-body">
         <fieldset>
-          <legend>Choose the extension type</legend>
+          <legend><?php echo $text_type; ?></legend>
           <div class="well">
             <div class="input-group">
               <select name="type" class="form-control input-lg">
                 <?php foreach ($categories as $category) { ?>
-
-                <?php if ($type == $category['value']) { ?>
-                <option value="<?php echo $category['value']; ?>" selected="selected"><?php echo $category['text']; ?></option>
+                <?php if ($type == $category['code']) { ?>
+                <option value="<?php echo $category['href']; ?>" selected="selected"><?php echo $category['text']; ?></option>
                 <?php } else { ?>
-                <option value="<?php echo $category['value']; ?>"><?php echo $category['text']; ?></option>
+                <option value="<?php echo $category['href']; ?>"><?php echo $category['text']; ?></option>
                 <?php } ?>
-
                 <?php } ?>
               </select>
               <div class="input-group-btn">
@@ -49,7 +47,7 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/extension/' + $('select[name="type"]').val() + '&token=<?php echo $token; ?>',
+		url: $('select[name="type"]').val(),
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-filter').button('loading');
@@ -68,11 +66,11 @@ $('#button-filter').on('click', function() {
 
 $('#button-filter').trigger('click');
 
-$('#extension').on('click', '#button-install', function() {
-  var node = this;
+$('#extension').on('click', 'a', function() {
+	var node = this;
 
 	$.ajax({
-		url: $(this).attr('href'),
+		url: $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
@@ -98,6 +96,6 @@ $('#extension').on('click', '#button-install', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

@@ -163,6 +163,13 @@ class ControllerExtensionExtension extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
+		
+		
+		if ($this->request->get['type']) {
+			$this->request->get['type'];
+		}
+		
+		$this->$this->request->get['type']
 	}
 
 	public function uninstall() {

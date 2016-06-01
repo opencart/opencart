@@ -15,9 +15,9 @@
         <tr>
           <td class="text-left" colspan="2"><b><?php echo $analytic['name']; ?></b></td>
           <td class="text-right"><?php if (!$analytic['installed']) { ?>
-            <a href="<?php echo $analytic['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+            <button type="button" value="<?php echo $analytic['code']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
             <?php } else { ?>
-            <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $analytic['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+            <button type="button" onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $analytic['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
             <?php } ?></td>
         </tr>
         <?php } ?>

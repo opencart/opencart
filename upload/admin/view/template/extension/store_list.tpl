@@ -21,15 +21,15 @@
           <div class="input-group">
             <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
             <div class="input-group-btn">
-              
+
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
               <ul class="dropdown-menu">
                 <li class="dropdown-header">License</li>
-                <li><a href="">Any License</a></li>
+                <li><a href="">License</a></li>
                 <li><a href="free"><?php echo $text_free; ?></a></li>
                 <li><a href="paid"><?php echo $text_paid; ?></a></li>
               </ul>
-              
+
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
               <ul class="dropdown-menu">
                 <li><a href="">All Categories</a></li>
@@ -43,12 +43,12 @@
                 <li><a href="other"><?php echo $text_other; ?></a></li>
               </ul>
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
-              
+
             </div>
           </div>
         </div>
        </fieldset>
-        
+
         Sort
         <div id="store"></div>
       </div>
@@ -57,9 +57,9 @@
   <script type="text/javascript"><!--
 $('#button-filter').bind('click', function(e) {
 	e.perventDefault();
-	
+
 	var node = this;
-		
+
 	$.ajax({
 		url: 'index.php?route=extension/extension/' + $(this).val() + '&token=<?php echo $token; ?>',
 		dataType: 'html',
@@ -79,6 +79,6 @@ $('#button-filter').bind('click', function(e) {
 });
 
 $('#button-filter').trigger('click');
-//--></script> 
+//--></script>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

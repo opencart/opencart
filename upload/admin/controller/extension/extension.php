@@ -28,14 +28,6 @@ class ControllerExtensionExtension extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
 		} else {

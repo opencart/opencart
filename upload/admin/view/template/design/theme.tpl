@@ -44,7 +44,7 @@
             <div class="tab-content"></div>
           </div>
           <div id="empty">
-            <p class="text-center">Please select a template from the left column.</p>
+            <p class="text-center"><?php echo $text_empty; ?></p>
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@ $('select[name="store_id"]').on('change', function(e) {
 
 $('select[name="store_id"]').trigger('change');
 
-$('#directory').delegate('a.directory', 'click', function(e) {
+$('#directory').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
 	var node = this;
@@ -134,18 +134,16 @@ $('#directory').delegate('a.directory', 'click', function(e) {
 	});
 });
 
-$('#directory').delegate('a.file', 'click', function(e) {
+$('#directory').on('click', 'a.file',function(e) {
 	e.preventDefault();
 
 	var node = this;
 
 	var tab_id = $('input[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, -4).replace('/', '-').replace('_', '-');
 
-	if (!$('#tab-' + token).length) {
+	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
 			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
-			type: 'post',
-			data: $('input[name=\'code\']'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).find('i').removeClass('fa-arrow-right');
@@ -198,7 +196,7 @@ $('#directory').delegate('a.file', 'click', function(e) {
 	}
 });
 
-$('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
+$('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 	e.preventDefault();
 
 	if ($(this).parent().parent().is('li.active')) {
@@ -221,13 +219,13 @@ $('.nav-tabs').delegate('i.fa-minus-circle', 'click', function(e) {
 	}
 });
 
-$('#button-save').on('click', function(e) {
+$('.tab-content').on('click', '.btn-primary', function(e) {
 	var node = this;
 
 	$.ajax({
 		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('li.active input[name="store_id"]').val() + '&path=' + $('li.active input[name="path"]').val(),
 		type: 'post',
-		data: $('input[name=\'code\']'),
+		data: $('.active textarea[name=\'code\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
@@ -236,12 +234,14 @@ $('#button-save').on('click', function(e) {
 			$(node).button('reset');
 		},
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -250,7 +250,7 @@ $('#button-save').on('click', function(e) {
 	});
 });
 
-$('#button-reset').on('click', function(e) {
+$('.tab-content').on('click', '.btn-danger', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
 
@@ -264,16 +264,15 @@ $('#button-reset').on('click', function(e) {
 				$(node).button('reset');
 			},
 			success: function(json) {
-
-
+				$('.alert').remove();
+				
 				if (json['error']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-
 
 				editor.setValue(json['code']);
 			},
@@ -283,7 +282,6 @@ $('#button-reset').on('click', function(e) {
 		});
 	}
 });
-
 //--></script>
 </div>
 <?php echo $footer; ?>

@@ -27,6 +27,7 @@ class ControllerDesignTheme extends Controller {
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_template'] = $this->language->get('text_template');
 		$data['text_default'] = $this->language->get('text_default');
+		$data['text_empty'] = $this->language->get('text_empty');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');
@@ -192,4 +193,42 @@ class ControllerDesignTheme extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function reset() {
+		$this->load->language('design/theme');
+		
+		$json = array();
+		
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
+		} else {
+			$store_id = 0;
+		}	
+		
+		$this->load->model('setting/setting');
+			
+		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
+		
+		// This is only here for compatibility with old themes.
+		if ($theme == 'theme_default') {
+			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);			
+		}
+				
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}		
+		
+		$this->load->model('design/theme');
+		
+		$theme_info = $this->model_design_theme->getTheme($store_id, $theme, $path);
+		
+		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
+		}		
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

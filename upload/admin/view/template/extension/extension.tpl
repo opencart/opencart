@@ -66,35 +66,54 @@ $('#button-filter').on('click', function() {
 
 $('#button-filter').trigger('click');
 
-$('#extension').on('click', 'a', function() {
+$('#extension').on('click', '.btn-success', function(e) {
+	e.preventDefault();
+	
 	var node = this;
 
 	$.ajax({
 		url: $(node).attr('href'),
-		dataType: 'json',
+		dataType: 'html',
 		beforeSend: function() {
 			$(node).button('loading');
 		},
 		complete: function() {
 			$(node).button('reset');
 		},
-		success: function(json) {
-			$('.alert').remove();
-			
-			if (json['error']) {
-				$('#extension').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-			
-			if (json['success']) {
-				$('#extension').load('index.php?route=extension/extension/' + $('select[name="type"]').val() + '&token=<?php echo $token; ?>');
-				
-				$('#extension').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+		success: function(html) {
+			$('#extension').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
+
+$('#extension').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	
+	if (confirm('<?php echo $text_confirm; ?>')) {
+		
+		
+		var node = this;
+	
+		$.ajax({
+			url: $(node).attr('href'),
+			dataType: 'html',
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(html) {
+				$('#extension').html(html);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 });
 //--></script> 
 </div>

@@ -24,6 +24,7 @@ class ControllerExtensionExtension extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_type'] = $this->language->get('text_type');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['token'] = $this->session->data['token'];
 

@@ -20,7 +20,7 @@
           <legend><?php echo $text_type; ?></legend>
           <div class="well">
             <div class="input-group">
-              <select name="type" class="form-control input-lg">
+              <select name="type" class="form-control">
                 <?php foreach ($categories as $category) { ?>
                 <?php if ($type == $category['code']) { ?>
                 <option value="<?php echo $category['href']; ?>" selected="selected"><?php echo $category['text']; ?></option>
@@ -30,7 +30,7 @@
                 <?php } ?>
               </select>
               <div class="input-group-btn">
-                <button type="button" id="button-filter" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg">Go!</button>
+                <button type="button" id="button-filter" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
               </div>
             </div>
           </div>
@@ -39,6 +39,7 @@
       </div>
     </div>
   </div>
+  <?php if ($categories) { ?>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	$.ajax({
@@ -88,8 +89,6 @@ $('#extension').on('click', '.btn-danger', function(e) {
 	e.preventDefault();
 	
 	if (confirm('<?php echo $text_confirm; ?>')) {
-		
-		
 		var node = this;
 	
 		$.ajax({
@@ -110,6 +109,7 @@ $('#extension').on('click', '.btn-danger', function(e) {
 		});
 	}
 });
-//--></script> 
+//--></script>
+  <?php } ?>
 </div>
 <?php echo $footer; ?> 

@@ -24,16 +24,9 @@ class ControllerExtensionExtension extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_type'] = $this->language->get('text_type');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['token'] = $this->session->data['token'];
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
 
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
@@ -42,885 +35,110 @@ class ControllerExtensionExtension extends Controller {
 		}
 
 		$data['categories'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_analytics') . ' (' . count($files) .')',
-			'value' => 'analytics'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_captcha') . ' (' . count($files) .')',
-			'value' => 'captcha'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_feed') . ' (' . count($files) .')',
-			'value' => 'feed'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/fraud/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_fraud') . ' (' . count($files) .')',
-			'value' => 'fraud'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_module') . ' (' . count($files) .')',
-			'value' => 'module'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_menu') . ' (' . count($files) .')',
-			'value' => 'menu'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_payment') . ' (' . count($files) .')',
-			'value' => 'payment'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_shipping') . ' (' . count($files) .')',
-			'value' => 'shipping'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_theme') . ' (' . count($files) .')',
-			'value' => 'theme'
-		);
-
-		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_total') . ' (' . count($files) .')',
-			'value' => 'total'
-		);
-
+		
+		if ($this->user->hasPermission('access', 'extension/analytics')) {
+			$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'analytics',
+				'text' => $this->language->get('text_analytics') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/captcha')) {
+			$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'captcha',
+				'text' => $this->language->get('text_captcha') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/captcha', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/feed')) {
+			$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'feed',
+				'text' => $this->language->get('text_feed') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/fraud')) {
+			$files = glob(DIR_APPLICATION . 'controller/fraud/*.php');
+			$data['categories'][] = array(
+				'code' => 'fraud',
+				'text' => $this->language->get('text_fraud') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/module')) {
+			$files = glob(DIR_APPLICATION . 'controller/module/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'module',
+				'text' => $this->language->get('text_module') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/menu')) {
+			$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'menu',
+				'text' => $this->language->get('text_menu') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/menu', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/payment')) {
+			$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'payment',
+				'text' => $this->language->get('text_payment') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/shipping')) {
+			$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'shipping',
+				'text' => $this->language->get('text_shipping') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/theme')) {
+			$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'theme',
+				'text' => $this->language->get('text_theme') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/total')) {
+			$files = glob(DIR_APPLICATION . 'controller/total/*.php');
+	
+			$data['categories'][] = array(
+				'code' => 'total',
+				'text' => $this->language->get('text_total') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], true)
+			);
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/extension', $data));
-	}
-
-	public function install() {
-		$this->load->language('extension/extension');
-
-		$json = array();
-
-		$allowed = array(
-			'analytics',
-			'captcha',
-			'feed',
-			'fraud',
-			'module',
-			'payment',
-			'shipping',
-			'theme',
-			'menu',
-			'total'
-		);
-
-		if ($this->user->hasPermission('modify', 'extension/extension') && in_array($this->request->get['type'], $allowed)) {
-			$this->load->model('extension/extension');
-
-			$this->model_extension_extension->install($this->request->get['type'], $this->request->get['extension']);
-
-			$this->load->model('user/user_group');
-
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', $this->request->get['type'] . '/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', $this->request->get['type'] . '/' . $this->request->get['extension']);
-
-			// Call install method if it exsits
-			$this->load->controller($this->request->get['type'] . '/' . $this->request->get['extension'] . '/install');
-
-			$json['success'] = $this->language->get('text_success');
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function uninstall() {
-		$this->load->language('extension/extension');
-
-		$json = array();
-
-		$allowed = array(
-			'analytics',
-			'captcha',
-			'feed',
-			'fraud',
-			'module',
-			'payment',
-			'shipping',
-			'theme',
-			'menu',
-			'total'
-		);
-
-		if ($this->user->hasPermission('modify', 'extension/extension') && in_array($this->request->get['type'], $allowed)) {
-			$this->load->model('extension/extension');
-
-			$this->model_extension_extension->uninstall($this->request->get['type'], $this->request->get['extension']);
-
-			// Call uninstall method if it exsits
-			$this->load->controller($this->request->get['type'] . '/' . $this->request->get['extension'] . '/uninstall');
-
-			$json['success'] = $this->language->get('text_success');
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function addModule() {
-		$this->load->language('extension/extension');
-
-		$json = array();
-
-		$this->load->language('extension/module');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/module');
-
-		if (isset($this->request->get['module_id']) && $this->validateDelete()) {
-			$this->model_extension_module->deleteModule($this->request->get['module_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
-		}
-
-		$this->getList();
-	}
-
-	public function deleteModule() {
-		$this->load->language('extension/extension');
-
-		$json = array();
-
-		$this->load->language('extension/module');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/module');
-
-		if (isset($this->request->get['module_id']) && $this->validateDelete()) {
-			$this->model_extension_module->deleteModule($this->request->get['module_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
-		}
-
-		$this->getList();
-	}
-
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/extension')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$allowed = array(
-			'analytics',
-			'captcha',
-			'feed',
-			'fraud',
-			'module',
-			'payment',
-			'shipping',
-			'theme',
-			'menu',
-			'total'
-		);
-
-		if (!in_array($this->request->get['type'], $allowed)) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-
-	public function analytics() {
-		$this->load->language('extension/extension');
-
-		$data['text_analytics'] = $this->language->get('text_analytics');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('setting/store');
-		$this->load->model('extension/extension');
-
-		$stores = $this->model_setting_store->getStores();
-
-		$extensions = $this->model_extension_extension->getInstalled('analytics');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('analytics', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['analytics'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('analytics/' . $extension);
-
-				$store_data = array();
-
-				$store_data[] = array(
-					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
-					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
-				);
-
-				foreach ($stores as $store) {
-					$store_data[] = array(
-						'name'   => $store['name'],
-						'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
-					);
-				}
-
-				$data['analytics'][] = array(
-					'name'      => $this->language->get('heading_title'),
-					'code'      => $extension,
-					'installed' => in_array($extension, $extensions),
-					'store'     => $store_data
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['analytics'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['analytics']);
-
-		$this->response->setOutput($this->load->view('extension/extension_analytics', $data));
-	}
-
-	public function captcha() {
-		$this->load->language('extension/extension');
-
-		$data['text_captcha'] = $this->language->get('text_captcha');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('captcha');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('captcha', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['captchas'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('captcha/' . $extension);
-
-				$data['captchas'][] = array(
-					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
-					'code'      => $extension,
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=captcha&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['captchas'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['captchas']);
-
-		$this->response->setOutput($this->load->view('extension/extension_captcha', $data));
-	}
-
-	public function feed() {
-		$this->load->language('extension/extension');
-
-		$data['text_feed'] = $this->language->get('text_feed');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('feed');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/feed/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('feed', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['feeds'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('feed/' . $extension);
-
-				$data['feeds'][] = array(
-					'name'      => $this->language->get('heading_title'),
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=feed&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=feed&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['feeds'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['feeds']);
-
-		$this->response->setOutput($this->load->view('extension/extension_feed', $data));
-	}
-
-	public function fraud() {
-		$this->load->language('extension/extension');
-
-		$data['text_fraud'] = $this->language->get('text_fraud');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('fraud');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('fraud', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['frauds'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/fraud/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('fraud/' . $extension);
-
-				$data['frauds'][] = array(
-					'name'      => $this->language->get('heading_title'),
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=fraud&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('fraud/' . $extension, 'token=' . $this->session->data['token'] . '&type=fraud', true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['frauds'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['frauds']);
-
-		$this->response->setOutput($this->load->view('extension/extension_fraud', $data));
-	}
-
-	public function menu() {
-		$this->load->language('extension/extension');
-
-		$data['text_menu'] = $this->language->get('text_menu');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('menu');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/menu/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('menu', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['menus'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('menu/' . $extension);
-
-				$data['menus'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=menu&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=menu&extension=' . $extension, true),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('menu/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['menus'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['menus']);
-
-		$this->response->setOutput($this->load->view('extension/extension_menu', $data));
-	}
-
-	public function module() {
-		$this->load->language('extension/extension');
-
-		$data['text_module'] = $this->language->get('text_module');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-		$this->load->model('extension/module');
-
-		$extensions = $this->model_extension_extension->getInstalled('module');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('module', $value);
-
-				unset($extensions[$key]);
-
-				$this->model_extension_module->deleteModulesByCode($value);
-			}
-		}
-
-		$data['modules'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('module/' . $extension);
-
-				$module_data = array();
-
-				$modules = $this->model_extension_module->getModulesByCode($extension);
-
-				foreach ($modules as $module) {
-					$module_data[] = array(
-						'module_id' => $module['module_id'],
-						'name'      => $module['name'],
-						'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
-						'delete'    => $this->url->link('extension/extension/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
-					);
-				}
-
-				$data['modules'][] = array(
-					'name'      => $this->language->get('heading_title'),
-					'module'    => $module_data,
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=module&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=module&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['modules'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['modules']);
-
-		$this->response->setOutput($this->load->view('extension/extension_module', $data));
-	}
-
-	public function payment() {
-		$this->load->language('extension/extension');
-
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('payment');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('payment', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['payments'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('payment/' . $extension);
-
-				$text_link = $this->language->get('text_' . $extension);
-
-				if ($text_link != 'text_' . $extension) {
-					$link = $this->language->get('text_' . $extension);
-				} else {
-					$link = '';
-				}
-
-				$data['payments'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'link'       => $link,
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=payment&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=payment&extension=' . $extension, true),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('payment/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['payments'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['payments']);
-
-		$this->response->setOutput($this->load->view('extension/extension_payment', $data));
-	}
-
-	public function shipping() {
-		$this->load->language('extension/extension');
-
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('shipping');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('shipping', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['shippings'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('shipping/' . $extension);
-
-				$data['shippings'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=shipping&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=shipping&extension=' . $extension, true),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('shipping/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['shippings'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['shippings']);
-
-		$this->response->setOutput($this->load->view('extension/extension_shipping', $data));
-	}
-
-	public function theme() {
-		$this->load->language('extension/extension');
-
-		$data['text_theme'] = $this->language->get('text_theme');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('setting/store');
-		$this->load->model('extension/extension');
-
-		$stores = $this->model_setting_store->getStores();
-
-		$extensions = $this->model_extension_extension->getInstalled('theme');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('theme', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['themes'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('theme/' . $extension);
-
-				$store_data = array();
-
-				$store_data[] = array(
-					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
-					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
-				);
-
-				foreach ($stores as $store) {
-					$store_data[] = array(
-						'name'   => $store['name'],
-						'edit'   => $this->url->link('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
-					);
-				}
-
-				$data['themes'][] = array(
-					'name'      => $this->language->get('heading_title'),
-					'install'   => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=theme&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=theme&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'store'     => $store_data
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['themes'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['themes']);
-
-		$this->response->setOutput($this->load->view('extension/extension_theme', $data));
-	}
-
-	public function total() {
-		$this->load->language('extension/extension');
-
-		$data['text_total'] = $this->language->get('text_total');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_install'] = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('total');
-
-		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('total', $value);
-
-				unset($extensions[$key]);
-			}
-		}
-
-		$data['totals'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-
-				$this->load->language('total/' . $extension);
-
-				$data['totals'][] = array(
-					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/extension/install', 'token=' . $this->session->data['token'] . '&type=total&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/extension/uninstall', 'token=' . $this->session->data['token'] . '&type=total&extension=' . $extension, true),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($data['totals'] as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $data['totals']);
-
-		$this->response->setOutput($this->load->view('extension/extension_total', $data));
 	}
 }

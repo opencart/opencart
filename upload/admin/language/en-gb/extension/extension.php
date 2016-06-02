@@ -17,17 +17,3 @@ $_['text_payment']      = 'Payments';
 $_['text_shipping']     = 'Shipping';
 $_['text_theme']        = 'Themes';
 $_['text_total']        = 'Order Totals';
-
-// Column
-$_['column_name']       = 'Extension Name';
-$_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
-
-// Tab
-$_['tab_store']         = 'Extension Store';
-$_['tab_downloaded']    = 'Downloaded Extensions';
-$_['tab_installer']     = 'Extension Installer';
-
-// Error
-$_['error_permission']  = 'Warning: You do not have permission to modify extensions!';

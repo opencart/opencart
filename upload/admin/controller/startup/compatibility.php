@@ -1,6 +1,7 @@
 <?php
 class ControllerStartupCompatibility extends Controller {
 	public function index() {
+		/*
 		// Route
 		if (isset($this->request->get['route']) && $this->user->isLogged()) {
 			$routes = array(
@@ -27,5 +28,6 @@ class ControllerStartupCompatibility extends Controller {
 				}
 			}
 		}
+		*/
 	}
 }

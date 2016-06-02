@@ -10,6 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_layout; ?></div>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>

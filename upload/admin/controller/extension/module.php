@@ -60,23 +60,19 @@ class ControllerExtensionModule extends Controller {
 	public function add() {
 		$this->load->language('extension/extension');
 
-		$json = array();
-
-		$this->load->language('extension/module');
-
 		$this->load->model('extension/extension');
 
 		$this->load->model('extension/module');
 
 		if ($this->validate()) {
-			$this->load->language($this->request->get['type'] . '/' . $extension);
+			$this->load->language('module' . '/' . $this->request->get['extension']);
 			
-			$this->model_extension_module->addModule($this->request->get['extension'], $type);
+			$this->model_extension_module->addModule($this->request->get['extension'], array('name' => $this->language->get('heading_title')));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->load->controller($this->request->get['type'] . '/' . $this->request->get['extension']);
+		$this->getList();
 	}
 
 	public function delete() {
@@ -86,12 +82,10 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('extension/module');
 
-		if (isset($this->request->get['module_id']) && $this->validateDelete()) {
+		if (isset($this->request->get['module_id']) && $this->validate()) {
 			$this->model_extension_module->deleteModule($this->request->get['module_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -102,7 +96,6 @@ class ControllerExtensionModule extends Controller {
 
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->data['token'], true));
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
@@ -186,14 +179,6 @@ class ControllerExtensionModule extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

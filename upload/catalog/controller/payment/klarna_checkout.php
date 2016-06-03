@@ -163,10 +163,10 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 						'country'     => $oc_country,
 					);
 
-                    if ($this->session->data['shipping_address']['iso_code_2'] === 'US') {
-                        $kc_address['region'] = $kc_region;
-                        $oc_address['region'] = $oc_region;
-                    }
+					if ($this->session->data['shipping_address']['iso_code_2'] === 'US') {
+						$kc_address['region'] = $kc_region;
+						$oc_address['region'] = $oc_region;
+					}
 
 					//If address has changed, dont use retrieved order, create new one instead
 					if (array_diff(array_map('strtolower', $kc_address), array_map('strtolower', $oc_address))) {
@@ -223,10 +223,10 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 		$this->load->language('checkout/checkout');
 		$this->load->language('payment/klarna_checkout');
 
-        $this->load->model('payment/klarna_checkout');
+		$this->load->model('payment/klarna_checkout');
 
-        $this->setPayment();
-        $this->setShipping();
+		$this->setPayment();
+		$this->setShipping();
 
 		// Shipping
 		$unset_shipping_method = true;
@@ -406,7 +406,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 		$json = array();
 
 		unset($this->session->data['shipping_address']);
-        unset($this->session->data['shipping_methods']);
+		unset($this->session->data['shipping_methods']);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['country'])) {
 			$country_info = $this->model_payment_klarna_checkout->getCountryByIsoCode3($this->request->post['country']);
@@ -506,11 +506,11 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 		$this->response->setOutput(json_encode($total));
 	}
 
-	public function address_update() {
+	public function addressUpdate() {
 		$this->load->language('payment/klarna_checkout');
 
 		$this->load->model('account/customer');
-        $this->load->model('checkout/order');
+		$this->load->model('checkout/order');
 		$this->load->model('payment/klarna_checkout');
 		$this->load->model('localisation/zone');
 
@@ -782,7 +782,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 
 	public function validation() {
 		$this->load->model('account/customer');
-        $this->load->model('checkout/order');
+		$this->load->model('checkout/order');
 		$this->load->model('payment/klarna_checkout');
 
 		$validate = true;
@@ -840,7 +840,6 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 				$validate = false;
 			}
 		}
-
 
 		// Spoof/simulate the customer to calculate shipping
 		if ($validate) {
@@ -937,7 +936,6 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 			if ($payment_country_info && $request->billing_address->country != 'GB') {
 				$payment_zone_info = $this->model_payment_klarna_checkout->getZoneByCode($request->billing_address->region, $payment_country_info['country_id']);
 			}
-
 
 			$shipping_zone_info = array();
 			if ($shipping_country_info && $request->shipping_address->country != 'GB') {
@@ -1147,7 +1145,6 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 								if ($payment_country_info && $order['billing_address']['country'] != 'GB') {
 									$payment_zone_info = $this->model_payment_klarna_checkout->getZoneByCode($order['billing_address']['region'], $payment_country_info['country_id']);
 								}
-
 
 								$shipping_zone_info = array();
 								if ($shipping_country_info && $order['shipping_address']['country'] != 'GB') {
@@ -1649,7 +1646,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 			'confirmation'   => html_entity_decode($this->url->link('payment/klarna_checkout/confirmation', 'klarna_order_id={checkout.order.id}', true)),
 			'push'			 => html_entity_decode($this->url->link('payment/klarna_checkout/push', 'klarna_order_id={checkout.order.id}', true)),
 			'validation'	 => html_entity_decode($this->url->link('payment/klarna_checkout/validation', 'klarna_order_id={checkout.order.id}', true)),
-			'address_update' => html_entity_decode($this->url->link('payment/klarna_checkout/address_update', 'klarna_order_id={checkout.order.id}', true)),
+			'address_update' => html_entity_decode($this->url->link('payment/klarna_checkout/addressUpdate', 'klarna_order_id={checkout.order.id}', true)),
 		);
 
 		if ($this->config->get('klarna_checkout_terms')) {

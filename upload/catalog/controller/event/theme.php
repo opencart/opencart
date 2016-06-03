@@ -5,21 +5,29 @@ class ControllerEventTheme extends Controller {
 			exit('Error: A theme has not been assigned to this store!');
 		}
 		
-		// This is only here for compatibility with old themes.
+		// This is only here for compatibility with older extensions
 		if (substr($view, -4) == '.tpl') {
 			$view = substr($view, 0, -4);
 		}
 		
 		if ($this->config->get('config_theme') == 'theme_default') {
-			$directory = $this->config->get('theme_default_directory');
+			$theme = $this->config->get('theme_default_directory');
 		} else {
-			$directory = $this->config->get('config_theme');
+			$theme = $this->config->get('config_theme');
 		}
-
-		if (is_file(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')) {
-			$view = $directory . '/template/' . $view;
-		} else {
-			$view = 'default/template/' . $view;
-		}			
+		
+		//$this->load->model('design/theme');
+		
+		//$theme_info = $this->model_design_theme->getTheme($view, $theme);
+		
+		//if ($theme_info) {
+		//	echo $theme_info['code'];
+		//} else {
+			if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
+				$view = $theme . '/template/' . $view;
+			} else {
+				$view = 'default/template/' . $view;
+			}			
+		//}
 	}
 }

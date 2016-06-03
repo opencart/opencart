@@ -1,9 +1,14 @@
 <?php
 class ControllerStartupCompatibility extends Controller {
 	public function index() {
-		/*
-		// Route
-		if (isset($this->request->get['route']) && $this->user->isLogged()) {
+		// Adding a rewrite so any link to the extension page is changed to to the new extension system  
+		$this->url->addRewrite($this);
+	}
+	
+	public function	rewrite($link) {
+		if (isset($this->request->get['route']) && substr($this->request->get['route'], 10) == 'extension/'  && ($this->request->get['route'] != 'extension/extension')) {
+			$url_info = parse_url(str_replace('&amp;', '&', $link));
+			
 			$routes = array(
 				'extension/analytics',
 				'extension/captcha',
@@ -16,18 +21,20 @@ class ControllerStartupCompatibility extends Controller {
 				'extension/total'
 			);
 			
-			foreach ($routes as $route) {
-				if (substr($this->request->get['route'], 0, strlen($route)) == $route) {
-					$method = substr($this->request->get['route'], strlen($route));
-					
-					if (!$method) {
-						$this->response->redirect($this->url->link('extension/extension', $this->request->server['HTTPS']));
-					} else {
-						$this->response->redirect($this->url->link('extension/extension/' . $method, 'type=' . $method, $this->request->server['HTTPS']));
-					}
-				}
+			$data = array();
+
+			parse_str($url_info['query'], $data);
+		
+			if (in_array($data['route'], $routes)) {
+				$data['route'] = 'extension/extension';
+				$data['type'] = substr($data['route'], 10);
+				
+				$query = http_build_query($data); 
 			}
-		}
-		*/
+		
+			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . $url_info['path'] . $query;
+		} else {
+			return $link;
+		}	
 	}
 }

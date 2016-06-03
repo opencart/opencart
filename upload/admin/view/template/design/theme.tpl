@@ -139,7 +139,7 @@ $('#directory').on('click', 'a.file',function(e) {
 
 	var node = this;
 
-	var tab_id = $('input[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, -4).replace('/', '-').replace('_', '-');
+	var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, -4).replace('/', '-').replace('_', '-');
 
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
@@ -161,7 +161,7 @@ $('#directory').on('click', 'a.file',function(e) {
 					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
 					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
-					html += '  <textarea name="code" rows="10" id="input-' + tab_id + '"></textarea>';
+					html += '  <textarea name="code" rows="10"></textarea>';
 					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
 					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
 					html += '  <br />';
@@ -174,9 +174,9 @@ $('#directory').on('click', 'a.file',function(e) {
 					$('.tab-content').append(html);
 
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-
+					
 					// Initialize codemirrror
-					var editor = CodeMirror.fromTextArea(document.getElementById('input-' + tab_id), {
+					var editor = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
 						height: '500px',
 						lineNumbers: true,
@@ -222,10 +222,12 @@ $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 $('.tab-content').on('click', '.btn-primary', function(e) {
 	var node = this;
 
+	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
+				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('li.active input[name="store_id"]').val() + '&path=' + $('li.active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
-		data: $('.active textarea[name=\'code\']'),
+		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
@@ -255,7 +257,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $('input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -273,7 +275,9 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-
+				
+				var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
+				
 				editor.setValue(json['code']);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

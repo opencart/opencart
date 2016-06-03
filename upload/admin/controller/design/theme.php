@@ -219,11 +219,7 @@ class ControllerDesignTheme extends Controller {
 		} else {
 			$path = '';
 		}		
-		
-		$this->load->model('design/theme');
-		
-		$theme_info = $this->model_design_theme->getTheme($store_id, $theme, $path);
-		
+				
 		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
 		}		

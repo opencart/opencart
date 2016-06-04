@@ -6,8 +6,25 @@ class ControllerStartupCompatibility extends Controller {
 	}
 	
 	public function	rewrite($link) {
-		if (isset($this->request->get['route']) && substr($this->request->get['route'], 10) == 'extension/'  && ($this->request->get['route'] != 'extension/extension')) {
+		$routes = array(
+			'analytics',
+			'captcha',
+			'feed',
+			'fraud',
+			'extension/module',
+			'extension/payment',
+			'extension/shipping',
+			'extension/theme',
+			'extension/total'
+		);		
+		
+		
+		
+		
+		if (isset($this->request->get['route']) && (substr($this->request->get['route'], 10) == 'extension/') && ($this->request->get['route'] != 'extension/extension')) {
 			$url_info = parse_url(str_replace('&amp;', '&', $link));
+			
+			echo 'hi';
 			
 			$routes = array(
 				'extension/analytics',

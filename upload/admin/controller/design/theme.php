@@ -45,7 +45,7 @@ class ControllerDesignTheme extends Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name']
 			);
-		}	
+		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -75,29 +75,40 @@ class ControllerDesignTheme extends Controller {
 		}
 		
 		if (isset($this->request->get['path'])) {
-			$path = $this->request->get['path'];
+			$path = $this->request->get['path'] . '/';
 		} else {
-			$path = '';
+			$path = '/';
 		}
-				
+		
+		echo DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template' . $path . '*';	
+		
 		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
-			$files = glob(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path . '/*');
+			$path_data = array();
 			
+			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
+			$files = glob(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template' . $path . '*', GLOB_BRACE);
+			
+			print_r($files);
+						
 			if ($files) {
 				foreach($files as $file) {
-					if (is_dir($file)) {
-						$json['directory'][] = array(
-							'name' => basename($file),
-							'path' => trim($path . '/' . basename($file), '/')
-						);
+					if (!in_array(basename($file), $path_data))  {
+						if (is_dir($file)) {
+							$json['directory'][] = array(
+								'name' => basename($file),
+								'path' => trim($path . '/' . basename($file), '/')
+							);
+						}
+						
+						if (is_file($file)) {
+							$json['file'][] = array(
+								'name' => basename($file),
+								'path' => trim($path . '/' . basename($file), '/')
+							);
+						}
+						
+						$path_data[] = basename($file);
 					}
-					
-					if (is_file($file)) {
-						$json['file'][] = array(
-							'name' => basename($file),
-							'path' => trim($path . '/' . basename($file), '/')
-						);
-					}					
 				}
 			}
 		}
@@ -145,6 +156,8 @@ class ControllerDesignTheme extends Controller {
 		
 		if ($theme_info) {
 			$json['code'] = html_entity_decode($theme_info['code']);
+		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
 		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
 		}		

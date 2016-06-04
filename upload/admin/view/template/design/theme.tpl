@@ -67,6 +67,8 @@ $('select[name="store_id"]').on('change', function(e) {
 			$('select[name="store_id"]').prop('disabled', false);
 		},
 		success: function(json) {
+			console.log(json);
+			
 			html = '';
 
 			if (json['directory']) {

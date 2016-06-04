@@ -7,18 +7,22 @@ final class Loader {
 	}
 	
 	public function controller($route, $data = array()) {
+		$output = null;
+		
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
 		
 		if ($result) {
 			return $result;
 		}
 		
-		$action = new Action($route);
-		$output = $action->execute($this->registry, array(&$data));
+		if (!$output) {
+			$action = new Action($route);
+			$output = $action->execute($this->registry, array(&$data));
+		}
 			
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
@@ -55,22 +59,26 @@ final class Loader {
 	}
 
 	public function view($route, $data = array()) {
+		$output = null;
+		
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
 		
 		if ($result) {
 			return $result;
 		}
 		
-		$template = new Template($this->registry->get('config')->get('template_type'));
-		
-		foreach ($data as $key => $value) {
-			$template->set($key, $value);
+		if (!$output) {
+			$template = new Template($this->registry->get('config')->get('template_type'));
+			
+			foreach ($data as $key => $value) {
+				$template->set($key, $value);
+			}
 		}
-		 
+		
 		// && substr(str_replace('\\', '/', realpath(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')), 0, strlen(DIR_TEMPLATE)) == DIR_TEMPLATE
 		$output = $template->render($route . '.tpl');
 		
@@ -132,8 +140,10 @@ final class Loader {
 		return function($args) use($registry, &$route) {
 			static $model = array(); 			
 			
+			$output = null;
+			
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route, &$output), $args));
 			
 			if ($result) {
 				return $result;

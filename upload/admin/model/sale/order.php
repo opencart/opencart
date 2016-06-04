@@ -430,6 +430,6 @@ class ModelSaleOrder extends Model {
 
 		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
 
-		return $query->row['total'];
+		return $query->row['email'];
 	}
 }

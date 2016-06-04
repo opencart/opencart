@@ -67,8 +67,6 @@ $('select[name="store_id"]').on('change', function(e) {
 			$('select[name="store_id"]').prop('disabled', false);
 		},
 		success: function(json) {
-			console.log(json);
-			
 			html = '';
 
 			if (json['directory']) {
@@ -140,9 +138,16 @@ $('#directory').on('click', 'a.file',function(e) {
 	e.preventDefault();
 
 	var node = this;
+	
+	// Check if the file has an extension
+	var pos = $(node).attr('href').lastIndexOf('.');
 
-	var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, -4).replace('/', '-').replace('_', '-');
-
+	if (pos != -1) {
+		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace('/', '-').replace('_', '-');
+	} else {
+		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace('/', '-').replace('_', '-');
+	}
+	
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
 			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),

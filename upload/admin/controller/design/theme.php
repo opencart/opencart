@@ -194,13 +194,9 @@ class ControllerDesignTheme extends Controller {
 		} else {
 			$this->load->model('design/theme');
 			
-		//	if () {
-				
-			//} else {
-				
-		//	}
+			$pos = strpos($path, '.');
 			
-			$this->model_design_theme->editTheme($store_id, $theme, substr($path, 0, strpos('.')), $this->request->post['code']);
+			$this->model_design_theme->editTheme($store_id, $theme, ($pos !== false) ? substr($path, 0, $pos) : $path, $this->request->post['code']);
 			
 			$json['success'] = $this->language->get('text_success');
 		}

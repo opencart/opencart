@@ -27,7 +27,10 @@ class ControllerDesignTheme extends Controller {
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_template'] = $this->language->get('text_template');
 		$data['text_default'] = $this->language->get('text_default');
-		$data['text_empty'] = $this->language->get('text_empty');
+		$data['text_warning'] = $this->language->get('text_warning');
+		$data['text_access'] = $this->language->get('text_access');
+		$data['text_permission'] = sprintf($this->language->get('text_permission'), $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true));
+		$data['text_begin'] = $this->language->get('text_begin');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');

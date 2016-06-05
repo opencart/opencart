@@ -1,4 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
+
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -44,12 +45,16 @@
               </ul>
               <div class="tab-content"></div>
             </div>
-            <div class="alert alert-warning" id="warning">
-              <h4><i class="fa fa-exclamation-circle"></i> Warning: Security can be compromised using the theme editor!</h4>
-              <p>Make sure that only the correct admin users are  allowed to access this page as it is can edit set the permssions to this page as</p>
-              <p>You can change the user permissions <a href="" class="alert-link">here</a>.</p>
+            <div id="warning">
+              <div class="alert alert-warning">
+                <h4><i class="fa fa-exclamation-circle"></i> <?php echo $text_warning; ?></h4>
+                <p><?php echo $text_access; ?></p>
+                <p><?php echo $text_permission; ?></p>
+              </div>
+              <div class="alert alert-info">
+                <p><i class="fa fa-info-circle"></i> <?php echo $text_begin; ?></p>
+              </div>
             </div>
-            <div class="alert alert-info"><p><i class="fa fa-info-circle"></i> <?php echo $text_empty; ?></p></div>
           </div>
         </div>
       </div>

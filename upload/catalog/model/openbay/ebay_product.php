@@ -22,16 +22,19 @@ class ModelOpenbayEbayProduct extends Model {
 			$this->openbay->ebay->log('Openstock module not found');
 		}
 
-		$categories     = array();
+		$categories = array();
 		$data['data'] = unserialize(gzuncompress(stripslashes(base64_decode(strtr($data['data'], '-_,', '+/=')))));
 		$new_data = base64_decode($data['data']);
-		$options = json_decode($data['options'], 1);
-
 		unset($data['data']);
 
+		$options = json_decode(html_entity_decode($data['options']), 1);
+		$this->openbay->ebay->log('Options data from API');
+		$this->openbay->ebay->log($data['options']);
+		$this->openbay->ebay->log('Decoded options');
+		$this->openbay->ebay->log(print_r($options, 1));
 		$this->openbay->ebay->log('Decoded data');
 
-		$new_data_1   = unserialize($new_data);
+		$new_data_1 = unserialize($new_data);
 		unset($new_data);
 
 		$this->openbay->ebay->log('Data unserialized');

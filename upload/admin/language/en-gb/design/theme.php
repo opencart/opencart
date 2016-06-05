@@ -8,6 +8,7 @@ $_['text_edit']        = 'Edit Theme';
 $_['text_store']       = 'Choose your store';
 $_['text_template']    = 'Choose a template';
 $_['text_default']     = 'Default';
+$_['text_warning']     = 'Please select a template from the left column.';
 $_['text_empty']       = 'Please select a template from the left column.';
 
 // Error

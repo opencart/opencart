@@ -77,10 +77,9 @@ final class Loader {
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
-		}
 		
-		// && substr(str_replace('\\', '/', realpath(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')), 0, strlen(DIR_TEMPLATE)) == DIR_TEMPLATE
-		$output = $template->render($route . '.tpl');
+			$output = $template->render($route . '.tpl');
+		}
 		
 		// Trigger the post e
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));

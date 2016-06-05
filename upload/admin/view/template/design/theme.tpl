@@ -38,13 +38,18 @@
               <div id="directory"></div>
             </div>
           </div>
-          <div id="code" style="display: none;" class="col-lg-9 col-md-9 col-sm-12">
-            <ul class="nav nav-tabs">
-            </ul>
-            <div class="tab-content"></div>
-          </div>
-          <div id="empty">
-            <p class="text-center"><?php echo $text_empty; ?></p>
+          <div class="col-lg-9 col-md-9 col-sm-12">
+            <div id="code" style="display: none;">
+              <ul class="nav nav-tabs">
+              </ul>
+              <div class="tab-content"></div>
+            </div>
+            <div class="alert alert-warning" id="warning">
+              <h4><i class="fa fa-exclamation-circle"></i> Warning: Security can be compromised using the theme editor!</h4>
+              <p>Make sure that only the correct admin users are  allowed to access this page as it is can edit set the permssions to this page as</p>
+              <p>You can change the user permissions <a href="" class="alert-link">here</a>.</p>
+            </div>
+            <div class="alert alert-info"><p><i class="fa fa-info-circle"></i> <?php echo $text_empty; ?></p></div>
           </div>
         </div>
       </div>
@@ -52,9 +57,9 @@
   </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
@@ -163,7 +168,7 @@ $('#directory').on('click', 'a.file',function(e) {
 			success: function(json) {
 				if (json['code']) {
 					$('#code').show();
-					$('#empty').hide();
+					$('#warning').hide();
 
 					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
@@ -222,7 +227,7 @@ $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();
-		$('#empty').show();
+		$('#warning').show();
 	}
 });
 
@@ -293,6 +298,6 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 		});
 	}
 });
-//--></script>
+//--></script> 
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

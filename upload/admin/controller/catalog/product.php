@@ -370,7 +370,7 @@ class ControllerCatalogProduct extends Controller {
 				'price'      => $result['price'],
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
-				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true)
 			);
 		}
@@ -1019,7 +1019,7 @@ class ControllerCatalogProduct extends Controller {
 			if ($category_info) {
 				$data['product_categories'][] = array(
 					'category_id' => $category_info['category_id'],
-					'name' => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
+					'name'        => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
 				);
 			}
 		}

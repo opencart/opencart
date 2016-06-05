@@ -167,7 +167,7 @@ class ControllerSettingStore extends Controller {
 		$this->response->setOutput($this->load->view('setting/store_list', $data));
 	}
 
-	public function getForm() {
+	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');

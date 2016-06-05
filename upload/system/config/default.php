@@ -3,6 +3,9 @@
 $_['site_base']            = '';
 $_['site_ssl']             = false;
 
+//Url
+$_['url_autostart']        = true;
+
 // Language
 $_['language_default']     = 'en-gb';
 $_['language_autoload']    = array('en-gb');
@@ -38,12 +41,12 @@ $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 
 // Template
-$_['template_type']        = 'basic';
+$_['template_type']        = 'php';
 
 // Error
-$_['error_display']        = true;
-$_['error_log']            = true;
-$_['error_filename']       = 'error.log';
+$_['config_error_display'] = true;
+$_['config_error_log']     = true;
+$_['config_error_filename'] = 'error.log';
 
 // Reponse
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');

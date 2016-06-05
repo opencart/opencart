@@ -92,6 +92,9 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
   <script type="text/javascript"><!--
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
@@ -141,7 +144,7 @@ $('input[name=\'affiliates\']').autocomplete({
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['customer_id']
+						value: item['affiliate_id']
 					}
 				}));
 			}
@@ -190,9 +193,6 @@ $('#input-product').parent().find('.well').delegate('.fa-minus-circle', 'click',
 });
 
 function send(url) {
-	// Summer not fix
-	$('textarea[name=\'message\']').val($('#input-message').code());
-
 	$.ajax({
 		url: url,
 		type: 'post',
@@ -221,18 +221,17 @@ function send(url) {
 				}
 			}
 
-			if (json['next']) {
-				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
-
-					send(json['next']);
-				}
-			} else {
-				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				}
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
 			}
-		}
+				
+			if (json['next']) {
+				send(json['next']);
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 }
 //--></script></div>

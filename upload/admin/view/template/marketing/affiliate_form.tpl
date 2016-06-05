@@ -154,7 +154,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
                     <?php if ($error_city) { ?>
-                    <div class="text-danger"><?php echo $error_city ?></div>
+                    <div class="text-danger"><?php echo $error_city; ?></div>
                     <?php  } ?>
                   </div>
                 </div>
@@ -163,7 +163,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
                     <?php if ($error_postcode) { ?>
-                    <div class="text-danger"><?php echo $error_postcode ?></div>
+                    <div class="text-danger"><?php echo $error_postcode; ?></div>
                     <?php  } ?>
                   </div>
                 </div>

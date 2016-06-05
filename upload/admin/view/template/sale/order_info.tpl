@@ -131,8 +131,8 @@
             <tr>
               <td style="width: 50%;" class="text-left"><?php echo $text_payment_address; ?></td>
               <?php if ($shipping_method) { ?>
-              <td style="width: 50%;" class="text-left"><?php echo $text_shipping_address; ?>
-                <?php } ?></td>
+              <td style="width: 50%;" class="text-left"><?php echo $text_shipping_address; ?></td>
+              <?php } ?>
             </tr>
           </thead>
           <tbody>

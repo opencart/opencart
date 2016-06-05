@@ -763,7 +763,7 @@ class ControllerApiOrder extends Controller {
 				$order_id = 0;
 			}
 
-			$json = $this->model_checkout_order->getOrder($order_id);
+			$order_info = $this->model_checkout_order->getOrder($order_id);
 
 			if ($order_info) {
 				$json['order'] = $order_info;

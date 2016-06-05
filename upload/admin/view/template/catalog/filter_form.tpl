@@ -47,7 +47,7 @@
           <table id="filter" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <td class="text-left required"><?php echo $entry_name ?></td>
+                <td class="text-left required"><?php echo $entry_name; ?></td>
                 <td class="text-right"><?php echo $entry_sort_order; ?></td>
                 <td></td>
               </tr>
@@ -59,7 +59,7 @@
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[<?php echo $filter_row; ?>][filter_id]" value="<?php echo $filter['filter_id']; ?>" />
                   <?php foreach ($languages as $language) { ?>
                   <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                    <input type="text" name="filter[<?php echo $filter_row; ?>][filter_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name ?>" class="form-control" />
+                    <input type="text" name="filter[<?php echo $filter_row; ?>][filter_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
                   </div>
                   <?php if (isset($error_filter[$filter_row][$language['language_id']])) { ?>
                   <div class="text-danger"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></div>
@@ -90,7 +90,7 @@ function addFilterRow() {
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '  <div class="input-group">';
-	html += '    <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span><input type="text" name="filter[' + filter_row + '][filter_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_name ?>" class="form-control" />';
+	html += '    <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span><input type="text" name="filter[' + filter_row + '][filter_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_name; ?>" class="form-control" />';
     html += '  </div>';
 	<?php } ?>
 	html += '  </td>';

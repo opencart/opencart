@@ -14,7 +14,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -46,7 +46,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -56,7 +56,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 
 		$data['action'] = $this->url->link('payment/free_checkout', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['free_checkout_order_status_id'])) {
 			$data['free_checkout_order_status_id'] = $this->request->post['free_checkout_order_status_id'];

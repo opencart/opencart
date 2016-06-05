@@ -318,6 +318,12 @@ class ControllerUserUser extends Controller {
 			$data['error_lastname'] = '';
 		}
 
+		if (isset($this->error['email'])) {
+			$data['error_email'] = $this->error['email'];
+		} else {
+			$data['error_email'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -460,11 +466,11 @@ class ControllerUserUser extends Controller {
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$this->error['warning'] = $this->language->get('error_exists_username');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$this->error['warning'] = $this->language->get('error_exists_username');
 			}
 		}
 
@@ -474,6 +480,22 @@ class ControllerUserUser extends Controller {
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
+		}
+
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+
+		if (!isset($this->request->get['user_id'])) {
+			if ($user_info) {
+				$this->error['warning'] = $this->language->get('error_exists_email');
+			}
+		} else {
+			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+				$this->error['warning'] = $this->language->get('error_exists_email');
+			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {

@@ -35,7 +35,7 @@
       <?php } ?>
       <?php if($has_shipping) { ?>
       <?php if(!isset($shipping_methods)) { ?>
-      <div class="warning"><?php echo $error_no_shipping ?></div>
+      <div class="warning"><?php echo $error_no_shipping; ?></div>
       <?php } else { ?>
       <form action="<?php echo $action_shipping; ?>" method="post" id="shipping_form">
         <div class="panel-body">

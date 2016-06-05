@@ -108,11 +108,11 @@
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_checkout_method" id="input-checkout-method" class="form-control">
                 <?php if ($pp_payflow_iframe_checkout_method == 'iframe') { ?>
-                <option value="iframe" selected="selected"><?php echo $text_iframe ?></option>
-                <option value="redirect"><?php echo $text_redirect ?></option>
+                <option value="iframe" selected="selected"><?php echo $text_iframe; ?></option>
+                <option value="redirect"><?php echo $text_redirect; ?></option>
                 <?php } else { ?>
-                <option value="iframe"><?php echo $text_iframe ?></option>
-                <option value="redirect" selected="selected"><?php echo $text_redirect ?></option>
+                <option value="iframe"><?php echo $text_iframe; ?></option>
+                <option value="redirect" selected="selected"><?php echo $text_redirect; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -176,7 +176,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_cancel_url; ?></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                <input type="text" value="<?php echo $cancel_url ?>" class="form-control" />
+                <input type="text" value="<?php echo $cancel_url; ?>" class="form-control" />
               </div>
             </div>
           </div>
@@ -184,7 +184,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_error_url; ?></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                <input type="text" value="<?php echo $error_url ?>" class="form-control" />
+                <input type="text" value="<?php echo $error_url; ?>" class="form-control" />
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_return_url; ?></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                <input type="text" value="<?php echo $return_url ?>" class="form-control" />
+                <input type="text" value="<?php echo $return_url; ?>" class="form-control" />
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@
             <label class="col-sm-2 control-label"><?php echo $entry_post_url; ?></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                <input type="text" value="<?php echo $post_url ?>" class="form-control" />
+                <input type="text" value="<?php echo $post_url; ?>" class="form-control" />
               </div>
             </div>
           </div>

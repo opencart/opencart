@@ -206,6 +206,9 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 //--></script></div>

@@ -18,6 +18,7 @@ class ControllerStartupStartup extends Controller {
 		
 		if (!$query->num_rows) {
 			$this->config->set('config_url', HTTP_SERVER);
+			$this->config->set('config_ssl', HTTPS_SERVER);
 		}
 		
 		// Settings
@@ -30,7 +31,10 @@ class ControllerStartupStartup extends Controller {
 				$this->config->set($result['key'], json_decode($result['value'], true));
 			}
 		}
-		
+
+		// Url
+		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
+
 		// Language
 		$code = '';
 		

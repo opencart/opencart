@@ -14,7 +14,7 @@ class ControllerShippingItem extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -49,7 +49,7 @@ class ControllerShippingItem extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -59,7 +59,7 @@ class ControllerShippingItem extends Controller {
 
 		$data['action'] = $this->url->link('shipping/item', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['item_cost'])) {
 			$data['item_cost'] = $this->request->post['item_cost'];

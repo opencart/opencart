@@ -947,7 +947,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$this->model_openbay_amazonus->deleteListingReports();
 
-		$request_data = array('response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazonus/listingreport');
+		$request_data = array('response_url' => $this->config->get('config_url') . 'index.php?route=openbay/amazonus/listingreport');
 
 		$response = $this->openbay->amazonus->call('report/listing', $request_data);
 

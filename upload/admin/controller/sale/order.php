@@ -417,8 +417,6 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
 
-		$data['token'] = $this->session->data['token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -470,6 +468,8 @@ class ControllerSaleOrder extends Controller {
 		);
 
 		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
+
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
@@ -787,8 +787,6 @@ class ControllerSaleOrder extends Controller {
 			$data['tab_history'] = $this->language->get('tab_history');
 			$data['tab_additional'] = $this->language->get('tab_additional');
 
-			$data['token'] = $this->session->data['token'];
-
 			$url = '';
 
 			if (isset($this->request->get['filter_order_id'])) {
@@ -844,10 +842,12 @@ class ControllerSaleOrder extends Controller {
 			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, true);
 
+			$data['token'] = $this->session->data['token'];
+
 			$data['order_id'] = $this->request->get['order_id'];
 
 			$data['store_name'] = $order_info['store_name'];
-			$data['store_url'] = $this->request->server['HTTPS'] ? str_replace("http", "https", $order_info['store_url']) : $order_info['store_url'];
+			$data['store_url'] = $this->request->server['HTTPS'] ? str_replace('http://', 'https://', $order_info['store_url']) : $order_info['store_url'];
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
@@ -1232,19 +1232,25 @@ class ControllerSaleOrder extends Controller {
 			// Additional Tabs
 			$data['tabs'] = array();
 
-			$this->load->model('extension/extension');
+			if ($this->user->hasPermission('access', 'payment/' . $order_info['payment_code'])) {
+				if (is_file(DIR_CATALOG . 'controller/payment/' . $order_info['payment_code'] . '.php')) {
+					$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
+				} else {
+					$content = null;
+				}
 
-			$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
+				if ($content) {
+					$this->load->language('payment/' . $order_info['payment_code']);
 
-			if ($content) {
-				$this->load->language('payment/' . $order_info['payment_code']);
-
-				$data['tabs'][] = array(
-					'code'    => $order_info['payment_code'],
-					'title'   => $this->language->get('heading_title'),
-					'content' => $content
-				);
+					$data['tabs'][] = array(
+						'code'    => $order_info['payment_code'],
+						'title'   => $this->language->get('heading_title'),
+						'content' => $content
+					);
+				}
 			}
+
+			$this->load->model('extension/extension');
 
 			$extensions = $this->model_extension_extension->getInstalled('fraud');
 
@@ -1753,7 +1759,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_email'] = $this->language->get('text_email');
 		$data['text_website'] = $this->language->get('text_website');
 		$data['text_contact'] = $this->language->get('text_contact');
-		$data['text_payment_address'] = $this->language->get('text_payment_address');
+		$data['text_shipping_address'] = $this->language->get('text_shipping_address');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$data['text_sku'] = $this->language->get('text_sku');
 		$data['text_upc'] = $this->language->get('text_upc');

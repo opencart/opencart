@@ -156,7 +156,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function webhook() {
-		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('worldpay_secret_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('worldpay_secret_token'), $this->request->get['token'])) {
 			$this->load->model('payment/worldpay');
 			$message = json_decode(file_get_contents('php://input'), true);
 

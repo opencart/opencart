@@ -368,6 +368,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
+			$order_total = $this->model_sale_order->getTotalOrdersByOrderStatusId($order_status_id);
+
+			if ($order_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);
+			}
+
 			$order_total = $this->model_sale_order->getTotalOrderHistoriesByOrderStatusId($order_status_id);
 
 			if ($order_total) {

@@ -1,7 +1,5 @@
 <?php
 class ControllerDesignTheme extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('design/theme');
 

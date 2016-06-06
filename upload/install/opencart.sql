@@ -1699,7 +1699,7 @@ CREATE TABLE `oc_layout_route` (
   `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
-  `route` varchar(255) NOT NULL,
+  `route` varchar(64) NOT NULL,
   PRIMARY KEY (`layout_route_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3399,6 +3399,22 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_theme`
+--
+
+DROP TABLE IF EXISTS `oc_theme`;
+CREATE TABLE `oc_theme` (
+  `theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `theme` varchar(64) NOT NULL,
+  `route` varchar(64) NOT NULL,
+  `code` text NOT NULL,
+  PRIMARY KEY (`theme_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_translation`
 --
 
@@ -3407,8 +3423,8 @@ CREATE TABLE `oc_translation` (
   `translation_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `route` varchar(255) NOT NULL,
-  `key` varchar(255) NOT NULL,
+  `route` varchar(64) NOT NULL,
+  `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`translation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

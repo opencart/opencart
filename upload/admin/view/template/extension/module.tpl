@@ -10,6 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_layout; ?></div>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -23,20 +24,27 @@
         <?php foreach ($extensions as $extension) { ?>
         <tr>
           <td><b><?php echo $extension['name']; ?></b></td>
-          <td class="text-right"><?php if ($extension['installed']) { ?>
+          <td class="text-right">
+          
+            <?php if ($extension['installed']) { ?>
+            
             <?php if ($extension['module']) { ?>
             <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
             <?php } else { ?>
             <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
             <?php } ?>
+            
             <?php } else { ?>
             <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
             <?php } ?>
+            
             <?php if (!$extension['installed']) { ?>
             <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             <?php } else { ?>
             <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-            <?php } ?></td>
+            <?php } ?>
+            
+            </td>
         </tr>
         <?php foreach ($extension['module'] as $module) { ?>
         <tr>

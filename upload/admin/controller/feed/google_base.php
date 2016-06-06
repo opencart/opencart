@@ -168,10 +168,15 @@ class ControllerFeedGoogleBase extends Controller {
 		}
 
 		$data['google_base_categories'] = array();
+		
+		$filter_data = array(
+			'start' => ($page - 1) * 10,
+			'limit' => 10
+		);
 
 		$this->load->model('feed/google_base');
 
-		$results = $this->model_feed_google_base->getCategories(($page - 1) * 10, 10);
+		$results = $this->model_feed_google_base->getCategories($filter_data);
 
 		foreach ($results as $result) {
 			$data['google_base_categories'][] = array(

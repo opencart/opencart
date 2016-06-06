@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_display ?></label>
+            <label class="col-sm-2 control-label"><?php echo $entry_display; ?></label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 <?php if ($twocheckout_display) { ?>

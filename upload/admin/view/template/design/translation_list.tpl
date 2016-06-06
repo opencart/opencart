@@ -34,7 +34,7 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $column_path; ?></td>
+                  <td class="text-left"><?php echo $column_route; ?></td>
                   <td class="text-right"><?php echo $column_total; ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
@@ -43,7 +43,7 @@
                 <?php if ($files) { ?>
                 <?php foreach ($files as $file) { ?>
                 <tr>
-                  <td class="text-left"><?php echo $file['path']; ?></td>
+                  <td class="text-left"><?php echo $file['route']; ?></td>
                   <td class="text-right"><?php echo $file['total']; ?></td>
                   <td class="text-right"><a href="<?php echo $file['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>

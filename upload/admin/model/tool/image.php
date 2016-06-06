@@ -11,6 +11,12 @@ class ModelToolImage extends Model {
 		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
+			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $old_image);
+				 
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
+				return DIR_IMAGE . $old_image;
+			}
+ 
 			$path = '';
 
 			$directories = explode('/', dirname($new_image));
@@ -22,8 +28,6 @@ class ModelToolImage extends Model {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}
 			}
-
-			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $old_image);

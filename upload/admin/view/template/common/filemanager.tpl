@@ -54,7 +54,7 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
-	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
+	$('#<?php echo $target; ?>').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -114,16 +114,16 @@ $('#button-search').on('click', function(e) {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
-	$('#form-upload input[name=\'file\']').trigger('click');
+	$('#form-upload input[name=\'file[]\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
+		if ($('#form-upload input[name=\'file[]\']').val() != '') {
 			clearInterval(timer);
 
 			$.ajax({

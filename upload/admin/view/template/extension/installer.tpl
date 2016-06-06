@@ -11,14 +11,9 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_upload; ?></h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
@@ -196,4 +191,4 @@ $('#button-clear').bind('click', function() {
 	});
 });
 //--></script></div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

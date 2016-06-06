@@ -7,8 +7,9 @@ $_['text_success']        = 'Success: You have modified layouts!';
 $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
-$_['text_module']         = 'Modules';
-$_['text_layout']         = 'Layout';
+$_['text_remove']         = 'Remove';
+$_['text_route']          = 'Choose the store and routes to be used with this layout';
+$_['text_module']         = 'Choose the position of the modules';
 $_['text_default']        = 'Default';
 $_['text_content_top']    = 'Content Top';
 $_['text_content_bottom'] = 'Content Bottom';
@@ -24,8 +25,6 @@ $_['entry_name']          = 'Layout Name';
 $_['entry_store']         = 'Store';
 $_['entry_route']         = 'Route';
 $_['entry_module']        = 'Module';
-$_['entry_position']      = 'Position';
-$_['entry_sort_order']    = 'Sort Order';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify layouts!';

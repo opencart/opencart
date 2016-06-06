@@ -29,14 +29,14 @@
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id ?>');
+		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id; ?>');
 
 		$('#continue-button').click(function() {
 			$('div.warning').remove();
 			if ($('input[name="addressSelected"]').val() == '0') {
-				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping_address ?></div>');
+				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping_address; ?></div>');
 			} else if ($('input[name="shipping_method"]:checked').length == 0) {
-				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping ?></div>');
+				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping; ?></div>');
 			} else {
 				$.ajax({
 					url: 'index.php?route=payment/amazon_login_pay/setshipping',
@@ -62,7 +62,7 @@ $(document).ready(function() {
 				$('div.warning').remove();
 				$('div.shipping-methods').html('');
 
-				$.get('<?php echo $shipping_quotes ?>&AmazonOrderReferenceId=' + AmazonOrderReferenceId, {}, function(data) {
+				$.get('<?php echo $shipping_quotes; ?>&AmazonOrderReferenceId=' + AmazonOrderReferenceId, {}, function(data) {
 					$('.shipping-methods').html('');
 
 					if (data.error) {

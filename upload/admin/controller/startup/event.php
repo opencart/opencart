@@ -1,10 +1,15 @@
 <?php
 class ControllerStartupEvent extends Controller {
 	public function index() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%' ORDER BY `event_id` ASC");
+		// Add events from the DB
+		$this->load->model('extension/event');
 		
-		foreach ($query->rows as $result) {
-			$this->event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
-		}
+		$results = $this->model_extension_event->getEvents();
+		
+		foreach ($results as $result) {
+			if ((substr($result['trigger'], 0, 6) == 'admin/') && $result['status']) {
+				$this->event->register(substr($result['trigger'], 6), new Action($result['action']));
+			}
+		}		
 	}
 }

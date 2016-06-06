@@ -17,11 +17,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->model_setting_setting->editSetting('amazon_login_pay', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
+			
 			if (isset($this->request->post['language_reload'])) {
 				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true));
 			} else {
-				$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 			}
 		}
 
@@ -147,7 +147,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -157,7 +157,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['action'] = $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['amazon_login_pay_merchant_id'])) {
 			$data['amazon_login_pay_merchant_id'] = $this->request->post['amazon_login_pay_merchant_id'];
@@ -631,11 +631,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 }

@@ -36,7 +36,7 @@ $(document).ready(function() {
 	$('#form-currency .currency-select').on('click', function(e) {
 		e.preventDefault();
 
-		$('#form-currency input[name=\'code\']').attr('value', $(this).attr('name'));
+		$('#form-currency input[name=\'code\']').val($(this).attr('name'));
 
 		$('#form-currency').submit();
 	});
@@ -45,7 +45,7 @@ $(document).ready(function() {
 	$('#form-language .language-select').on('click', function(e) {
 		e.preventDefault();
 
-		$('#form-language input[name=\'code\']').attr('value', $(this).attr('name'));
+		$('#form-language input[name=\'code\']').val($(this).attr('name'));
 
 		$('#form-language').submit();
 	});
@@ -77,7 +77,7 @@ $(document).ready(function() {
 		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
 
 		if (i > 0) {
-			$(this).css('margin-left', '-' + (i + 5) + 'px');
+			$(this).css('margin-left', '-' + (i + 10) + 'px');
 		}
 	});
 

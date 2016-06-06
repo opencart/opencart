@@ -168,7 +168,7 @@
 		}
 	});
 	$(document).on('click', '#button-rebate', function(){
-		if (confirm('<?php echo $text_confirm_rebate ?>')) {
+		if (confirm('<?php echo $text_confirm_rebate; ?>')) {
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',

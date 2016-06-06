@@ -97,11 +97,11 @@
               <div class="checkbox">
                 <label>
                   <?php if (in_array($key, $securetrading_pp_cards_accepted)) { ?>
-                  <input type="checkbox" checked="checked" name="securetrading_pp_cards_accepted[]" value="<?php echo $key ?>" />
+                  <input type="checkbox" checked="checked" name="securetrading_pp_cards_accepted[]" value="<?php echo $key; ?>" />
                   <?php } else { ?>
-                  <input type="checkbox" name="securetrading_pp_cards_accepted[]" value="<?php echo $key ?>" />
+                  <input type="checkbox" name="securetrading_pp_cards_accepted[]" value="<?php echo $key; ?>" />
                   <?php } ?>
-                  <?php echo $value ?> </label>
+                  <?php echo $value; ?> </label>
               </div>
               <?php } ?>
               <?php if ($error_cards_accepted) { ?>
@@ -134,9 +134,9 @@
                 <?php } ?>
                 <?php for ($i = 1; $i < 8; $i++) { ?>
                 <?php if ($i == $securetrading_pp_settle_due_date) { ?>
-                <option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i) ?></option>
+                <option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 <?php } else { ?>
-                <option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i) ?></option>
+                <option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 <?php } ?>
                 <?php } ?>
               </select>

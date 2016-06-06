@@ -111,10 +111,12 @@ class ModelUpgrade1004 extends Model {
 		if (empty($settings['config_mail_smtp_timeout']) && !empty($settings['config_smtp_timeout'])) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $settings['config_smtp_timeout'] . "', `key` = 'config_mail_smtp_timeout', `code` = 'config', `store_id` = 0");
 		}
-		if (empty($settings['config_meta_title']) && !empty($settings['config_title'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $settings['config_title'] . "', `key` = 'config_meta_title', `code` = 'config', `store_id` = 0");
-		} elseif (empty($settings['config_meta_title']) && !empty($settings['config_name'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $settings['config_name'] . "', `key` = 'config_meta_title', `code` = 'config', `store_id` = 0");
+
+		// setting
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_meta_title'");
+
+		if (!$query->num_rows) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_meta_title', `value` = '" . $this->db->escape($settings['config_name']) . "', `code` = 'config', `serialized` = '0', `store_id` = 0");
 		}
 
 		// Convert 1.5.x core module format to 2.x (core modules only)
@@ -138,7 +140,7 @@ class ModelUpgrade1004 extends Model {
 							$module_data['status'] = $v['status'];
 							if (isset($v['image_width'])) {	$module_data['width'] = $v['image_width']; }
 							if (isset($v['image_height'])) { $module_data['height'] = $v['image_height']; }
-							if (isset($v['limit'])) { $module_data['limit'] = $v['limit']; }
+							if (isset($v['limit'])) { $module_data['limit'] = $v['limit']; } else { $module_data['limit'] = 4; }
 
 							if ($result['code'] == 'featured') {
 								foreach ($query->rows as $result2) {

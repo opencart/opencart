@@ -16,7 +16,6 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
 
 		$this->load->model('design/layout');
 
@@ -49,7 +48,6 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/jquery/touch-dnd.js');
 
 		$this->load->model('design/layout');
 
@@ -262,27 +260,26 @@ class ControllerDesignLayout extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_route'] = $this->language->get('text_route');
 		$data['text_module'] = $this->language->get('text_module');
-		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_default'] = $this->language->get('text_default');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_content_top'] = $this->language->get('text_content_top');
 		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');
 		$data['text_column_right'] = $this->language->get('text_column_right');
-
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_remove'] = $this->language->get('text_remove');
+		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_route'] = $this->language->get('entry_route');
 		$data['entry_module'] = $this->language->get('entry_module');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_route_add'] = $this->language->get('button_route_add');
 		$data['button_module_add'] = $this->language->get('button_module_add');
+		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
@@ -331,6 +328,8 @@ class ControllerDesignLayout extends Controller {
 
 		$data['cancel'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, true);
 
+		$data['token'] = $this->session->data['token'];
+
 		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
@@ -374,7 +373,7 @@ class ControllerDesignLayout extends Controller {
 
 			foreach ($modules as $module) {
 				$module_data[] = array(
-					'name' => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module['name']),
+					'name' => strip_tags($module['name']),
 					'code' => $code . '.' .  $module['module_id']
 				);
 			}
@@ -401,33 +400,33 @@ class ControllerDesignLayout extends Controller {
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {
-			$this->load->language('module/' . $layout_module['code']);
-
 			$part = explode('.', $layout_module['code']);
+		
+			$this->load->language('module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => $this->language->get('heading_title'),
+					'name'       => strip_tags($this->language->get('heading_title')),
 					'code'       => $layout_module['code'],
+					'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'], true),
 					'position'   => $layout_module['position'],
-					'sort_order' => $layout_module['sort_order'],
-					'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'], true)
+					'sort_order' => $layout_module['sort_order']
 				);
 			} else {
 				$module_info = $this->model_extension_module->getModule($part[1]);
 				
 				if ($module_info) {
 					$data['layout_modules'][] = array(
-						'name'       => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module_info['name']),
+						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
+						'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'] . '&module_id=' . $part[1], true),
 						'position'   => $layout_module['position'],
-						'sort_order' => $layout_module['sort_order'],
-						'edit'       => $this->url->link('module/' . $part[0], 'token=' . $this->session->data['token'] . '&module_id=' . $part[1], true)
+						'sort_order' => $layout_module['sort_order']
 					);
 				}				
 			}
 		}		
-
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

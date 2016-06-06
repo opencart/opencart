@@ -391,7 +391,7 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], true),
+			'href'      => $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], true),
 			'text'      => $this->language->get('heading_title'),
 		);
 

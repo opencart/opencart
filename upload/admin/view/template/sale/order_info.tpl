@@ -264,83 +264,91 @@
           </div>
           <div class="tab-pane" id="tab-additional">
             <?php if ($account_custom_fields) { ?>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="2"><?php echo $text_account_custom_field; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($account_custom_fields as $custom_field) { ?>
-                <tr>
-                  <td><?php echo $custom_field['name']; ?></td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td colspan="2"><?php echo $text_account_custom_field; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($account_custom_fields as $custom_field) { ?>
+                  <tr>
+                    <td><?php echo $custom_field['name']; ?></td>
+                    <td><?php echo $custom_field['value']; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <?php } ?>
             <?php if ($payment_custom_fields) { ?>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="2"><?php echo $text_payment_custom_field; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($payment_custom_fields as $custom_field) { ?>
-                <tr>
-                  <td><?php echo $custom_field['name']; ?></td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td colspan="2"><?php echo $text_payment_custom_field; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($payment_custom_fields as $custom_field) { ?>
+                  <tr>
+                    <td><?php echo $custom_field['name']; ?></td>
+                    <td><?php echo $custom_field['value']; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <?php } ?>
             <?php if ($shipping_method && $shipping_custom_fields) { ?>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="2"><?php echo $text_shipping_custom_field; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($shipping_custom_fields as $custom_field) { ?>
-                <tr>
-                  <td><?php echo $custom_field['name']; ?></td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td colspan="2"><?php echo $text_shipping_custom_field; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+                  <tr>
+                    <td><?php echo $custom_field['name']; ?></td>
+                    <td><?php echo $custom_field['value']; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <?php } ?>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="2"><?php echo $text_browser; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><?php echo $text_ip; ?></td>
-                  <td><?php echo $ip; ?></td>
-                </tr>
-                <?php if ($forwarded_ip) { ?>
-                <tr>
-                  <td><?php echo $text_forwarded_ip; ?></td>
-                  <td><?php echo $forwarded_ip; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_user_agent; ?></td>
-                  <td><?php echo $user_agent; ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_accept_language; ?></td>
-                  <td><?php echo $accept_language; ?></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td colspan="2"><?php echo $text_browser; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><?php echo $text_ip; ?></td>
+                    <td><?php echo $ip; ?></td>
+                  </tr>
+                  <?php if ($forwarded_ip) { ?>
+                  <tr>
+                    <td><?php echo $text_forwarded_ip; ?></td>
+                    <td><?php echo $forwarded_ip; ?></td>
+                  </tr>
+                  <?php } ?>
+                  <tr>
+                    <td><?php echo $text_user_agent; ?></td>
+                    <td><?php echo $user_agent; ?></td>
+                  </tr>
+                  <tr>
+                    <td><?php echo $text_accept_language; ?></td>
+                    <td><?php echo $accept_language; ?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <?php foreach ($tabs as $tab) { ?>
           <div class="tab-pane" id="tab-<?php echo $tab['code']; ?>"><?php echo $tab['content']; ?></div>

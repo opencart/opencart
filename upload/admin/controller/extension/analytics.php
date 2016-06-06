@@ -5,8 +5,6 @@ class ControllerExtensionAnalytics extends Controller {
 	public function index() {
 		$this->load->language('extension/analytics');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('extension/extension');
 
 		$this->getList();
@@ -14,8 +12,6 @@ class ControllerExtensionAnalytics extends Controller {
 
 	public function install() {
 		$this->load->language('extension/analytics');
-
-		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
 
@@ -31,8 +27,6 @@ class ControllerExtensionAnalytics extends Controller {
 			$this->load->controller('analytics/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -40,8 +34,6 @@ class ControllerExtensionAnalytics extends Controller {
 
 	public function uninstall() {
 		$this->load->language('extension/analytics');
-
-		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
 
@@ -52,29 +44,15 @@ class ControllerExtensionAnalytics extends Controller {
 			$this->load->controller('analytics/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
 		}
+		
+		$this->getList();		
 	}
 
-	public function getList() {
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true)
-		);
-
+	protected function getList() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
@@ -108,7 +86,6 @@ class ControllerExtensionAnalytics extends Controller {
 			}
 		}
 		
-		$this->load->model('setting/setting');
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -135,7 +112,7 @@ class ControllerExtensionAnalytics extends Controller {
 					$store_data[] = array(
 						'name'   => $store['name'],
 						'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
 				
@@ -148,10 +125,6 @@ class ControllerExtensionAnalytics extends Controller {
 				);
 			}
 		}
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/analytics', $data));
 	}

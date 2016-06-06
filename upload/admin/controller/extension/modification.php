@@ -164,15 +164,15 @@ class ControllerExtensionModification extends Controller {
 						$path = '';
 
 						// Get the full path of the files that are going to be used for modification
-						if ((substr($file, 0, 7) == 'catalog') && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . substr($file, 7))), 0, strlen(DIR_CATALOG)) == DIR_CATALOG)) {
+						if ((substr($file, 0, 7) == 'catalog')) {
 							$path = DIR_CATALOG . substr($file, 8);
 						}
 
-						if ((substr($file, 0, 5) == 'admin') && (substr(str_replace('\\', '/', realpath(DIR_APPLICATION . substr($file, 5))), 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION)) {
+						if ((substr($file, 0, 5) == 'admin')) {
 							$path = DIR_APPLICATION . substr($file, 6);
 						}
 
-						if ((substr($file, 0, 6) == 'system') && (substr(str_replace('\\', '/', realpath(DIR_SYSTEM . substr($file, 6))), 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM)) {
+						if ((substr($file, 0, 6) == 'system')) {
 							$path = DIR_SYSTEM . substr($file, 7);
 						}
 
@@ -364,19 +364,19 @@ class ControllerExtensionModification extends Controller {
 											if ($error == 'abort') {
 												$modification = $recovery;
 												// Log
-												$log[] = 'NOT FOUND - ABORTING !';
+												$log[] = 'NOT FOUND - ABORTING!';
 												break 5;
 											}
 											// Skip current operation or break
 											elseif ($error == 'skip') {
 												// Log
-												$log[] = 'NOT FOUND - OPERATION SKIPPED !';
+												$log[] = 'NOT FOUND - OPERATION SKIPPED!';
 												continue;
 											}
 											// Break current operations
 											else {
 												// Log
-												$log[] = 'NOT FOUND - OPERATIONS ABORTED !';
+												$log[] = 'NOT FOUND - OPERATIONS ABORTED!';
 											 	break;
 											}
 										}
@@ -441,7 +441,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+		//	$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -681,7 +681,7 @@ class ControllerExtensionModification extends Controller {
 				'link'            => $result['link'],
 				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
 				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
-				'enabled'         => $result['status'],
+				'enabled'         => $result['status']
 			);
 		}
 

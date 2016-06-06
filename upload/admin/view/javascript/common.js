@@ -101,83 +101,26 @@ $(document).ready(function() {
 	});
 
 	// Tooltip remove fixed
-	$(document).delegate('[data-toggle=\'tooltip\']', 'click', function(e) {
+	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
 		$('body > .tooltip').remove();
 	});
 
-	// Override summernotes image manager
-	$('.summernote').each(function() {
-		var element = this;
-		
-		$(element).summernote({
-			disableDragAndDrop: true,
-			height: 300,
-			toolbar: [
-				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
-				['fontname', ['fontname']],
-				['color', ['color']],
-				['para', ['ul', 'ol', 'paragraph']],
-				['table', ['table']],
-				['insert', ['link', 'image', 'video']],
-				['view', ['fullscreen', 'codeview', 'help']]
-			],
-			buttons: {
-    			image: function() {
-					var ui = $.summernote.ui;
-
-					// create button
-					var button = ui.button({
-						contents: '<i class="fa fa-image" />',
-						tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
-						click: function () {
-							$('#modal-image').remove();
-						
-							$.ajax({
-								url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
-								dataType: 'html',
-								beforeSend: function() {
-									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-									$('#button-image').prop('disabled', true);
-								},
-								complete: function() {
-									$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
-									$('#button-image').prop('disabled', false);
-								},
-								success: function(html) {
-									$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-									
-									$('#modal-image').modal('show');
-									
-									$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
-										e.preventDefault();
-										
-										$(element).summernote('insertImage', $(this).attr('href'));
-																	
-										$('#modal-image').modal('hide');
-									});
-								}
-							});						
-						}
-					});
-				
-					return button.render();
-				}
-  			}
-		});
-	});
-
 	// Image Manager
-	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
+	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
+		var $element = $(this);
+		var $popover = $element.data('bs.popover'); // element has bs popover?
+		
 		e.preventDefault();
 
-		$('.popover').popover('hide', function() {
-			$('.popover').remove();
-		});
+		// destroy all image popovers
+		$('a[data-toggle="image"]').popover('destroy');
 
-		var element = this;
+		// remove flickering (do not re-add popover when clicking for removal)
+		if ($popover) {
+			return;
+		}
 
-		$(element).popover({
+		$element.popover({
 			html: true,
 			placement: 'right',
 			trigger: 'manual',
@@ -186,21 +129,28 @@ $(document).ready(function() {
 			}
 		});
 
-		$(element).popover('show');
+		$element.popover('show');
 
 		$('#button-image').on('click', function() {
+			var $button = $(this);
+			var $icon   = $button.find('> i');
+			
 			$('#modal-image').remove();
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+				url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
 				dataType: 'html',
 				beforeSend: function() {
-					$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-					$('#button-image').prop('disabled', true);
+					$button.prop('disabled', true);
+					if ($icon.length) {
+						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+					}
 				},
 				complete: function() {
-					$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
-					$('#button-image').prop('disabled', false);
+					$button.prop('disabled', false);
+					if ($icon.length) {
+						$icon.attr('class', 'fa fa-pencil');
+					}
 				},
 				success: function(html) {
 					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
@@ -209,19 +159,15 @@ $(document).ready(function() {
 				}
 			});
 
-			$(element).popover('hide', function() {
-				$('.popover').remove();
-			});
+			$element.popover('destroy');
 		});
 
 		$('#button-clear').on('click', function() {
-			$(element).find('img').attr('src', $(element).find('img').attr('data-placeholder'));
+			$element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
 
-			$(element).parent().find('input').attr('value', '');
+			$element.parent().find('input').val('');
 
-			$(element).popover('hide', function() {
-				$('.popover').remove();
-			});
+			$element.popover('destroy');
 		});
 	});
 
@@ -251,27 +197,30 @@ $(document).ready(function() {
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
+			var $this = $(this);
+			var $dropdown = $('<ul class="dropdown-menu" />');
+			
 			this.timer = null;
-			this.items = new Array();
+			this.items = [];
 
 			$.extend(this, option);
 
-			$(this).attr('autocomplete', 'off');
+			$this.attr('autocomplete', 'off');
 
 			// Focus
-			$(this).on('focus', function() {
+			$this.on('focus', function() {
 				this.request();
 			});
 
 			// Blur
-			$(this).on('blur', function() {
+			$this.on('blur', function() {
 				setTimeout(function(object) {
 					object.hide();
 				}, 200, this);
 			});
 
 			// Keydown
-			$(this).on('keydown', function(event) {
+			$this.on('keydown', function(event) {
 				switch(event.keyCode) {
 					case 27: // escape
 						this.hide();
@@ -286,7 +235,7 @@ $(document).ready(function() {
 			this.click = function(event) {
 				event.preventDefault();
 
-				value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).parent().attr('data-value');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
@@ -295,19 +244,19 @@ $(document).ready(function() {
 
 			// Show
 			this.show = function() {
-				var pos = $(this).position();
+				var pos = $this.position();
 
-				$(this).siblings('ul.dropdown-menu').css({
-					top: pos.top + $(this).outerHeight(),
+				$dropdown.css({
+					top: pos.top + $this.outerHeight(),
 					left: pos.left
 				});
 
-				$(this).siblings('ul.dropdown-menu').show();
+				$dropdown.show();
 			}
 
 			// Hide
 			this.hide = function() {
-				$(this).siblings('ul.dropdown-menu').hide();
+				$dropdown.hide();
 			}
 
 			// Request
@@ -321,39 +270,35 @@ $(document).ready(function() {
 
 			// Response
 			this.response = function(json) {
-				html = '';
+				var html = '';
+				var category = {};
+				var name;
+				var i = 0, j = 0;
 
 				if (json.length) {
 					for (i = 0; i < json.length; i++) {
+						// update element items
 						this.items[json[i]['value']] = json[i];
-					}
 
-					for (i = 0; i < json.length; i++) {
 						if (!json[i]['category']) {
+							// ungrouped items
 							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
-						}
-					}
-
-					// Get all the ones with a categories
-					var category = new Array();
-
-					for (i = 0; i < json.length; i++) {
-						if (json[i]['category']) {
-							if (!category[json[i]['category']]) {
-								category[json[i]['category']] = new Array();
-								category[json[i]['category']]['name'] = json[i]['category'];
-								category[json[i]['category']]['item'] = new Array();
+						} else {
+							// grouped items
+							name = json[i]['category'];
+							if (!category[name]) {
+								category[name] = [];
 							}
 
-							category[json[i]['category']]['item'].push(json[i]);
+							category[name].push(json[i]);
 						}
 					}
 
-					for (i in category) {
-						html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
+					for (name in category) {
+						html += '<li class="dropdown-header">' + name + '</li>';
 
-						for (j = 0; j < category[i]['item'].length; j++) {
-							html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';
+						for (j = 0; j < category[name].length; j++) {
+							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
 						}
 					}
 				}
@@ -364,12 +309,11 @@ $(document).ready(function() {
 					this.hide();
 				}
 
-				$(this).siblings('ul.dropdown-menu').html(html);
+				$dropdown.html(html);
 			}
 
-			$(this).after('<ul class="dropdown-menu"></ul>');
-			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
-
+			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
+			$this.after($dropdown);
 		});
 	}
 })(window.jQuery);

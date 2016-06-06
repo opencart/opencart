@@ -5,8 +5,6 @@ class ControllerExtensionModule extends Controller {
 	public function index() {
 		$this->load->language('extension/module');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('extension/extension');
 
 		$this->load->model('extension/module');
@@ -16,8 +14,6 @@ class ControllerExtensionModule extends Controller {
 
 	public function install() {
 		$this->load->language('extension/module');
-
-		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
 
@@ -35,8 +31,6 @@ class ControllerExtensionModule extends Controller {
 			$this->load->controller('module/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -44,8 +38,6 @@ class ControllerExtensionModule extends Controller {
 
 	public function uninstall() {
 		$this->load->language('extension/module');
-
-		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
 
@@ -60,8 +52,24 @@ class ControllerExtensionModule extends Controller {
 			$this->load->controller('module/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
+		}
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+		$this->getList();
+	}
+	
+	public function add() {
+		$this->load->language('extension/extension');
+
+		$this->load->model('extension/extension');
+
+		$this->load->model('extension/module');
+
+		if ($this->validate()) {
+			$this->load->language('module' . '/' . $this->request->get['extension']);
+			
+			$this->model_extension_module->addModule($this->request->get['extension'], $this->language->get('heading_title'));
+
+			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
 		$this->getList();
@@ -70,42 +78,24 @@ class ControllerExtensionModule extends Controller {
 	public function delete() {
 		$this->load->language('extension/module');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('extension/extension');
 
 		$this->load->model('extension/module');
 
-		if (isset($this->request->get['module_id']) && $this->validateDelete()) {
+		if (isset($this->request->get['module_id']) && $this->validate()) {
 			$this->model_extension_module->deleteModule($this->request->get['module_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
 	}
 
-	public function getList() {
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
-		);
-
+	protected function getList() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->data['token'], true));
-		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
@@ -128,8 +118,6 @@ class ControllerExtensionModule extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-
-		$data['delete'] = $this->url->link('extension/module/delete', 'token=' . $this->session->data['token'], true);
 
 		$extensions = $this->model_extension_extension->getInstalled('module');
 
@@ -185,22 +173,10 @@ class ControllerExtensionModule extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $data['extensions']);
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
 		$this->response->setOutput($this->load->view('extension/module', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

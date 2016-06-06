@@ -102,8 +102,8 @@ $('#button-upload').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 						
-						$('input[name=\'filename\']').attr('value', json['filename']);
-						$('input[name=\'mask\']').attr('value', json['mask']);
+						$('input[name=\'filename\']').val(json['filename']);
+						$('input[name=\'mask\']').val(json['mask']);
 					}
 				},			
 				error: function(xhr, ajaxOptions, thrownError) {

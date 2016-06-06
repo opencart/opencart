@@ -255,10 +255,10 @@ $('input[name=\'customer\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'customer\']').val(item['label']);
 		$('input[name=\'customer_id\']').val(item['value']);
-		$('input[name=\'firstname\']').attr('value', item['firstname']);
-		$('input[name=\'lastname\']').attr('value', item['lastname']);
-		$('input[name=\'email\']').attr('value', item['email']);
-		$('input[name=\'telephone\']').attr('value', item['telephone']);
+		$('input[name=\'firstname\']').val(item['firstname']);
+		$('input[name=\'lastname\']').val(item['lastname']);
+		$('input[name=\'email\']').val(item['email']);
+		$('input[name=\'telephone\']').val(item['telephone']);
 	}
 });
 //--></script> 

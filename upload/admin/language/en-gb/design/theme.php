@@ -1,10 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php
+// Heading
+$_['heading_title']    = 'Theme Editor';
 
-<body>
-</body>
-</html>
+// Text
+$_['text_success']     = 'Success: You have modified themes!';
+$_['text_edit']        = 'Edit Theme';
+$_['text_store']       = 'Choose your store';
+$_['text_template']    = 'Choose a template';
+$_['text_default']     = 'Default';
+$_['text_warning']     = 'Warning: Security can be compromised using the theme editor!';
+$_['text_access']      = 'Make sure that only the correct admin users are allowed to access this page as you can directly access your stores souce code.';
+$_['text_permission']  = 'You can change the user permissions <a href="%s" class="alert-link">here</a>.';
+$_['text_begin']       = 'Select a theme file from the left side to begin editing.';
+
+// Error
+$_['error_permission'] = 'Warning: You do not have permission to modify the theme editor!';

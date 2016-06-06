@@ -277,7 +277,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
+						$(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

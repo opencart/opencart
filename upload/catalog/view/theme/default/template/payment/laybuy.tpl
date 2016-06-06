@@ -67,7 +67,7 @@ $(document).ready(function() {
 	var symbol_left = "<?php echo $currency_symbol_left; ?>";
 	var symbol_right = "<?php echo $currency_symbol_right; ?>";
 	var order = <?php echo json_encode($order_info); ?>;
-	var total = parseFloat(parseFloat(<?php echo $total ?>) * parseFloat(order.currency_value)).toFixed(4);
+	var total = parseFloat(parseFloat(<?php echo $total; ?>) * parseFloat(order.currency_value)).toFixed(4);
 
 	calculate($('#input-down-payment').val(), $('#input-months').val());
 

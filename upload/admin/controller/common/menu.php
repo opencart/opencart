@@ -2,215 +2,817 @@
 class ControllerCommonMenu extends Controller {
 	public function index() {
 		$this->load->language('common/menu');
-
-		$data['text_analytics'] = $this->language->get('text_analytics');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_api'] = $this->language->get('text_api');
-		$data['text_attribute'] = $this->language->get('text_attribute');
-		$data['text_attribute_group'] = $this->language->get('text_attribute_group');
-		$data['text_backup'] = $this->language->get('text_backup');
-		$data['text_banner'] = $this->language->get('text_banner');
-		$data['text_captcha'] = $this->language->get('text_captcha');
-		$data['text_catalog'] = $this->language->get('text_catalog');
-		$data['text_category'] = $this->language->get('text_category');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_contact'] = $this->language->get('text_contact');
-		$data['text_country'] = $this->language->get('text_country');
-		$data['text_coupon'] = $this->language->get('text_coupon');
-		$data['text_currency'] = $this->language->get('text_currency');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_customer_group'] = $this->language->get('text_customer_group');
-		$data['text_customer_field'] = $this->language->get('text_customer_field');
-		$data['text_custom_field'] = $this->language->get('text_custom_field');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_paypal_search'] = $this->language->get('text_paypal_search');
-		$data['text_design'] = $this->language->get('text_design');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_error_log'] = $this->language->get('text_error_log');
-		$data['text_extension'] = $this->language->get('text_extension');
-		$data['text_feed'] = $this->language->get('text_feed');
-		$data['text_fraud'] = $this->language->get('text_fraud');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
-		$data['text_dashboard'] = $this->language->get('text_dashboard');
-		$data['text_help'] = $this->language->get('text_help');
-		$data['text_information'] = $this->language->get('text_information');
-		$data['text_installer'] = $this->language->get('text_installer');
-		$data['text_language'] = $this->language->get('text_language');
-		$data['text_layout'] = $this->language->get('text_layout');
-		$data['text_localisation'] = $this->language->get('text_localisation');
-		$data['text_location'] = $this->language->get('text_location');
-		$data['text_marketing'] = $this->language->get('text_marketing');
-		$data['text_modification'] = $this->language->get('text_modification');
-		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
-		$data['text_module'] = $this->language->get('text_module');
-		$data['text_option'] = $this->language->get('text_option');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_order_status'] = $this->language->get('text_order_status');
-		$data['text_opencart'] = $this->language->get('text_opencart');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_reports'] = $this->language->get('text_reports');
-		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
-		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
-		$data['text_report_sale_shipping'] = $this->language->get('text_report_sale_shipping');
-		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');
-		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
-		$data['text_report_product_purchased'] = $this->language->get('text_report_product_purchased');
-		$data['text_report_customer_activity'] = $this->language->get('text_report_customer_activity');
-		$data['text_report_customer_online'] = $this->language->get('text_report_customer_online');
-		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
-		$data['text_report_customer_reward'] = $this->language->get('text_report_customer_reward');
-		$data['text_report_customer_credit'] = $this->language->get('text_report_customer_credit');
-		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
-		$data['text_report_affiliate'] = $this->language->get('text_report_affiliate');
-		$data['text_report_affiliate_activity'] = $this->language->get('text_report_affiliate_activity');
-		$data['text_review'] = $this->language->get('text_review');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_return_action'] = $this->language->get('text_return_action');
-		$data['text_return_reason'] = $this->language->get('text_return_reason');
-		$data['text_return_status'] = $this->language->get('text_return_status');
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_setting'] = $this->language->get('text_setting');
-		$data['text_stock_status'] = $this->language->get('text_stock_status');
-		$data['text_system'] = $this->language->get('text_system');
-		$data['text_tax'] = $this->language->get('text_tax');
-		$data['text_tax_class'] = $this->language->get('text_tax_class');
-		$data['text_tax_rate'] = $this->language->get('text_tax_rate');
-		$data['text_theme'] = $this->language->get('text_theme');
-		$data['text_translation'] = $this->language->get('text_translation');
-		$data['text_tools'] = $this->language->get('text_tools');
-		$data['text_total'] = $this->language->get('text_total');
-		$data['text_upload'] = $this->language->get('text_upload');
-		$data['text_tracking'] = $this->language->get('text_tracking');
-		$data['text_user'] = $this->language->get('text_user');
-		$data['text_user_group'] = $this->language->get('text_user_group');
-		$data['text_users'] = $this->language->get('text_users');
-		$data['text_voucher'] = $this->language->get('text_voucher');
-		$data['text_voucher_theme'] = $this->language->get('text_voucher_theme');
-		$data['text_weight_class'] = $this->language->get('text_weight_class');
-		$data['text_length_class'] = $this->language->get('text_length_class');
-		$data['text_zone'] = $this->language->get('text_zone');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_order_recurring'] = $this->language->get('text_order_recurring');
-		$data['text_openbay_extension'] = $this->language->get('text_openbay_extension');
-		$data['text_openbay_dashboard'] = $this->language->get('text_openbay_dashboard');
-		$data['text_openbay_orders'] = $this->language->get('text_openbay_orders');
-		$data['text_openbay_items'] = $this->language->get('text_openbay_items');
-		$data['text_openbay_ebay'] = $this->language->get('text_openbay_ebay');
-		$data['text_openbay_etsy'] = $this->language->get('text_openbay_etsy');
-		$data['text_openbay_amazon'] = $this->language->get('text_openbay_amazon');
-		$data['text_openbay_amazonus'] = $this->language->get('text_openbay_amazonus');
-		$data['text_openbay_settings'] = $this->language->get('text_openbay_settings');
-		$data['text_openbay_links'] = $this->language->get('text_openbay_links');
-		$data['text_openbay_report_price'] = $this->language->get('text_openbay_report_price');
-		$data['text_openbay_order_import'] = $this->language->get('text_openbay_order_import');
-
-		$data['analytics'] = $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true);
-		$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true);
-		$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], true);
-		$data['api'] = $this->url->link('user/api', 'token=' . $this->session->data['token'], true);
-		$data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], true);
-		$data['attribute_group'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], true);
-		$data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true);
-		$data['banner'] = $this->url->link('design/banner', 'token=' . $this->session->data['token'], true);
-		$data['captcha'] = $this->url->link('extension/captcha', 'token=' . $this->session->data['token'], true);
-		$data['category'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], true);
-		$data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], true);
-		$data['contact'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true);
-		$data['coupon'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'], true);
-		$data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], true);
-		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
-		$data['customer_fields'] = $this->url->link('customer/customer_field', 'token=' . $this->session->data['token'], true);
-		$data['customer_group'] = $this->url->link('customer/customer_group', 'token=' . $this->session->data['token'], true);
-		$data['custom_field'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'], true);
-		$data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], true);
-		$data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true);
-		$data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
-		$data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], true);
-		$data['fraud'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true);
-		$data['geo_zone'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], true);
-		$data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], true);
-		$data['installer'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true);
-		$data['language'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'], true);
-		$data['layout'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], true);
-		$data['location'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'], true);
-		$data['modification'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true);
-		$data['manufacturer'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'], true);
-		$data['marketing'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], true);
-		$data['module'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
-		$data['option'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'], true);
-		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], true);
-		$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], true);
-		$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
-		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
-		$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], true);
-		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], true);
-		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], true);
-		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], true);
-		$data['report_sale_return'] = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], true);
-		$data['report_sale_coupon'] = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], true);
-		$data['report_product_viewed'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], true);
-		$data['report_product_purchased'] = $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], true);
-		$data['report_customer_activity'] = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], true);
-		$data['report_customer_online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
-		$data['report_customer_order'] = $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], true);
-		$data['report_customer_reward'] = $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'], true);
-		$data['report_customer_credit'] = $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'], true);
-		$data['report_marketing'] = $this->url->link('report/marketing', 'token=' . $this->session->data['token'], true);
-		$data['report_affiliate'] = $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], true);
-		$data['report_affiliate_activity'] = $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], true);
-		$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'], true);
-		$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], true);
-		$data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], true);
-		$data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], true);
-		$data['return_status'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], true);
-		$data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
-		$data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
-		$data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], true);
-		$data['translation'] = $this->url->link('design/translation', 'token=' . $this->session->data['token'], true);
-		$data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], true);
-		$data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], true);
-		$data['theme'] = $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true);
-		$data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], true);
-		$data['upload'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'], true);
-		$data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], true);
-		$data['user_group'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true);
-		$data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], true);
-		$data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], true);
-		$data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], true);
-		$data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], true);
-		$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], true);
-		$data['recurring'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], true);
-		$data['order_recurring'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], true);
-
-		$data['openbay_show_menu'] = $this->config->get('openbaypro_menu');
-		$data['openbay_link_extension'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_orders'] = $this->url->link('extension/openbay/orderlist', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_items'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_ebay'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_ebay_settings'] = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_ebay_links'] = $this->url->link('openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_etsy'] = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_etsy_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_etsy_links'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazon_links'] = $this->url->link('openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazonus'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazonus_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], true);
-		$data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemlinks', 'token=' . $this->session->data['token'], true);
-		$data['openbay_markets'] = array(
-			'ebay' => $this->config->get('ebay_status'),
-			'amazon' => $this->config->get('openbay_amazon_status'),
-			'amazonus' => $this->config->get('openbay_amazonus_status'),
-			'etsy' => $this->config->get('etsy_status'),
+		
+		// Create a 3 level menu array
+		// Level 2 can not have children
+		
+		// Menu
+		$data['menus'][] = array(
+			'id'       => 'menu-dashboard',
+			'icon'	   => 'fa-dashboard',
+			'name'	   => $this->language->get('text_dashboard'),
+			'href'     => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'children' => array()
 		);
+		
+		// Catalog
+		$catalog = array();
+		
+		if ($this->user->hasPermission('access', 'catalog/category')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_category'),
+				'href'     => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/product')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_product'),
+				'href'     => $this->url->link('catalog/product', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/recurring')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_recurring'),
+				'href'     => $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/filter')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_filter'),
+				'href'     => $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		// Attributes
+		$attribute = array();
+		
+		if ($this->user->hasPermission('access', 'catalog/attribute')) {
+			$attribute[] = array(
+				'name'     => $this->language->get('text_attribute'),
+				'href'     => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], true),
+				'children' => array()	
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/attribute_group')) {
+			$attribute[] = array(
+				'name'	   => $this->language->get('text_attribute_group'),
+				'href'     => $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($attribute) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_attribute'),
+				'href'     => '',
+				'children' => $attribute
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/option')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_option'),
+				'href'     => $this->url->link('catalog/option', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/manufacturer')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_manufacturer'),
+				'href'     => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/download')) {
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_download'),
+				'href'     => $this->url->link('catalog/download', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/review')) {		
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_review'),
+				'href'     => $this->url->link('catalog/review', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);		
+		}
+		
+		if ($this->user->hasPermission('access', 'catalog/information')) {		
+			$catalog[] = array(
+				'name'	   => $this->language->get('text_information'),
+				'href'     => $this->url->link('catalog/information', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);					
+		}
+		
+		if ($catalog) {
+			$data['menus'][] = array(
+				'id'       => 'menu-catalog',
+				'icon'	   => 'fa-tags', 
+				'name'	   => $this->language->get('text_catalog'),
+				'href'     => '',
+				'children' => $catalog
+			);		
+		}
+		
 
+		// Extension
+		$extension_1 = array();
+		
+		$extension_2 = array();
+		
+		if ($this->user->hasPermission('access', 'extension/store')) {		
+			$extension_2[] = array(
+				'name'	   => $this->language->get('text_store'),
+				'href'     => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);					
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/installer')) {		
+			$extension_2[] = array(
+				'name'	   => $this->language->get('text_installer'),
+				'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);					
+		}	
+		
+		if ($this->user->hasPermission('access', 'extension/extension')) {		
+			$extension_2[] = array(
+				'name'	   => $this->language->get('text_extension'),
+				'href'     => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($extension_2) {	
+			if ($this->user->hasPermission('access', 'extension/extension')) {		
+				$extension_1[] = array(
+					'name'	   => $this->language->get('text_extension'),
+					'href'     => '',
+					'children' => $extension_2		
+				);
+			}
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/modification')) {
+			$extension_1[] = array(
+				'name'	   => $this->language->get('text_modification'),
+				'href'     => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'extension/event')) {
+			$extension_1[] = array(
+				'name'	   => $this->language->get('text_event'),
+				'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+				
+		if ($extension_1) {					
+			$data['menus'][] = array(
+				'id'       => 'menu-extension',
+				'icon'	   => 'fa-puzzle-piece', 
+				'name'	   => $this->language->get('text_extension'),
+				'href'     => '',
+				'children' => $extension_1
+			);		
+		}
+		
+		// Design
+		$design = array();
+		
+		if ($this->user->hasPermission('access', 'design/layout')) {
+			$design[] = array(
+				'name'	   => $this->language->get('text_layout'),
+				'href'     => $this->url->link('design/layout', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'design/menu')) {
+			$design[] = array(
+				'name'	   => $this->language->get('text_menu'),
+				'href'     => $this->url->link('design/menu', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+				
+		if ($this->user->hasPermission('access', 'design/theme')) {	
+			$design[] = array(
+				'name'	   => $this->language->get('text_theme'),
+				'href'     => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'design/translation')) {
+			$design[] = array(
+				'name'	   => $this->language->get('text_translation'),
+				'href'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'design/banner')) {
+			$design[] = array(
+				'name'	   => $this->language->get('text_banner'),
+				'href'     => $this->url->link('design/banner', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($design) {
+			$data['menus'][] = array(
+				'id'       => 'menu-design',
+				'icon'	   => 'fa-television', 
+				'name'	   => $this->language->get('text_design'),
+				'href'     => '',
+				'children' => $design
+			);	
+		}
+		
+		// Sales
+		$sale = array();
+		
+		if ($this->user->hasPermission('access', 'sale/order')) {
+			$sale[] = array(
+				'name'	   => $this->language->get('text_order'),
+				'href'     => $this->url->link('sale/order', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'sale/recurring')) {	
+			$sale[] = array(
+				'name'	   => $this->language->get('text_recurring'),
+				'href'     => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'sale/return')) {
+			$sale[] = array(
+				'name'	   => $this->language->get('text_return'),
+				'href'     => $this->url->link('sale/return', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		// Voucher
+		$voucher = array();
+		
+		if ($this->user->hasPermission('access', 'sale/voucher')) {
+			$voucher[] = array(
+				'name'	   => $this->language->get('text_voucher'),
+				'href'     => $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'sale/voucher_theme')) {
+			$voucher[] = array(
+				'name'	   => $this->language->get('text_voucher_theme'),
+				'href'     => $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($voucher) {
+			$sale[] = array(
+				'name'	   => $this->language->get('text_voucher'),
+				'href'     => '',
+				'children' => $voucher		
+			);		
+		}
+		
+		if ($sale) {
+			$data['menus'][] = array(
+				'id'       => 'menu-sale',
+				'icon'	   => 'fa-shopping-cart', 
+				'name'	   => $this->language->get('text_sale'),
+				'href'     => '',
+				'children' => $sale
+			);
+		}
+		
+		// Customer
+		$customer = array();
+		
+		if ($this->user->hasPermission('access', 'customer/customer')) {
+			$customer[] = array(
+				'name'	   => $this->language->get('text_customer'),
+				'href'     => $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'customer/customer_group')) {
+			$customer[] = array(
+				'name'	   => $this->language->get('text_customer_group'),
+				'href'     => $this->url->link('customer/customer_group', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'customer/custom_field')) {		
+			$customer[] = array(
+				'name'	   => $this->language->get('text_custom_field'),
+				'href'     => $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($customer) {
+			$data['menus'][] = array(
+				'id'       => 'menu-customer',
+				'icon'	   => 'fa-user', 
+				'name'	   => $this->language->get('text_customer'),
+				'href'     => '',
+				'children' => $customer
+			);	
+		}
+		
+		// Marketing
+		$marketing = array();
+		
+		if ($this->user->hasPermission('access', 'marketing/marketing')) {
+			$marketing[] = array(
+				'name'	   => $this->language->get('text_marketing'),
+				'href'     => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'marketing/affiliate')) {
+			$marketing[] = array(
+				'name'	   => $this->language->get('text_affiliate'),
+				'href'     => $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'marketing/coupon')) {	
+			$marketing[] = array(
+				'name'	   => $this->language->get('text_coupon'),
+				'href'     => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'marketing/contact')) {
+			$marketing[] = array(
+				'name'	   => $this->language->get('text_contact'),
+				'href'     => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($marketing) {
+			$data['menus'][] = array(
+				'id'       => 'menu-marketing',
+				'icon'	   => 'fa-share-alt', 
+				'name'	   => $this->language->get('text_marketing'),
+				'href'     => '',
+				'children' => $marketing
+			);	
+		}
+		
+		// System
+		$system = array();
+		
+		if ($this->user->hasPermission('access', 'setting/setting')) {
+			$system[] = array(
+				'name'	   => $this->language->get('text_setting'),
+				'href'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		// Users
+		$user = array();
+		
+		if ($this->user->hasPermission('access', 'user/user')) {
+			$user[] = array(
+				'name'	   => $this->language->get('text_users'),
+				'href'     => $this->url->link('user/user', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'user/user_permission')) {	
+			$user[] = array(
+				'name'	   => $this->language->get('text_user_group'),
+				'href'     => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'user/api')) {		
+			$user[] = array(
+				'name'	   => $this->language->get('text_api'),
+				'href'     => $this->url->link('user/api', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($user) {
+			$system[] = array(
+				'name'	   => $this->language->get('text_users'),
+				'href'     => '',
+				'children' => $user		
+			);
+		}
+		
+		// Localisation
+		$localisation = array();
+		
+		if ($this->user->hasPermission('access', 'localisation/location')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_location'),
+				'href'     => $this->url->link('localisation/location', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/language')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_language'),
+				'href'     => $this->url->link('localisation/language', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/currency')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_currency'),
+				'href'     => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/stock_status')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_stock_status'),
+				'href'     => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/order_status')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_order_status'),
+				'href'     => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		// Returns
+		$return = array();
+		
+		if ($this->user->hasPermission('access', 'localisation/return_status')) {
+			$return[] = array(
+				'name'	   => $this->language->get('text_return_status'),
+				'href'     => $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/return_action')) {
+			$return[] = array(
+				'name'	   => $this->language->get('text_return_action'),
+				'href'     => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);		
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/return_reason')) {
+			$return[] = array(
+				'name'	   => $this->language->get('text_return_reason'),
+				'href'     => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($return) {	
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_return'),
+				'href'     => '',
+				'children' => $return		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/country')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_country'),
+				'href'     => $this->url->link('localisation/country', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/zone')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_zone'),
+				'href'     => $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/geo_zone')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_geo_zone'),
+				'href'     => $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		// Tax		
+		$tax = array();
+		
+		if ($this->user->hasPermission('access', 'localisation/tax_class')) {
+			$tax[] = array(
+				'name'	   => $this->language->get('text_tax_class'),
+				'href'     => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/tax_rate')) {
+			$tax[] = array(
+				'name'	   => $this->language->get('text_tax_rate'),
+				'href'     => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($tax) {	
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_tax'),
+				'href'     => '',
+				'children' => $tax		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/length_class')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_length_class'),
+				'href'     => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'localisation/weight_class')) {
+			$localisation[] = array(
+				'name'	   => $this->language->get('text_weight_class'),
+				'href'     => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($localisation) {																
+			$system[] = array(
+				'name'	   => $this->language->get('text_localisation'),
+				'href'     => '',
+				'children' => $localisation	
+			);
+		}
+		
+		// Tools	
+		$tool = array();
+		
+		if ($this->user->hasPermission('access', 'tool/upload')) {
+			$tool[] = array(
+				'name'	   => $this->language->get('text_upload'),
+				'href'     => $this->url->link('tool/upload', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'tool/backup')) {
+			$tool[] = array(
+				'name'	   => $this->language->get('text_backup'),
+				'href'     => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'tool/log')) {
+			$tool[] = array(
+				'name'	   => $this->language->get('text_log'),
+				'href'     => $this->url->link('tool/log', 'token=' . $this->session->data['token'], true),
+				'children' => array()		
+			);
+		}
+		
+		if ($tool) {
+			$system[] = array(
+				'name'	   => $this->language->get('text_tools'),
+				'href'     => '',
+				'children' => $tool	
+			);
+		}
+		
+		if ($system) {
+			$data['menus'][] = array(
+				'id'       => 'menu-system',
+				'icon'	   => 'fa-cog', 
+				'name'	   => $this->language->get('text_system'),
+				'href'     => '',
+				'children' => $system
+			);
+		}
+		
+		// Report
+		$report = array();
+		
+		// Report Sales
+		$report_sale = array();	
+		
+		if ($this->user->hasPermission('access', 'report/sale_order')) {
+			$report_sale[] = array(
+				'name'	   => $this->language->get('text_report_sale_order'),
+				'href'     => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/sale_tax')) {
+			$report_sale[] = array(
+				'name'	   => $this->language->get('text_report_sale_tax'),
+				'href'     => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], true),
+				'children' => array()	
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/sale_shipping')) {
+			$report_sale[] = array(
+				'name'	   => $this->language->get('text_report_sale_shipping'),
+				'href'     => $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], true),
+				'children' => array()	
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/sale_return')) {	
+			$report_sale[] = array(
+				'name'	   => $this->language->get('text_report_sale_return'),
+				'href'     => $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);	
+		}
+		
+		if ($this->user->hasPermission('access', 'report/sale_coupon')) {		
+			$report_sale[] = array(
+				'name'	   => $this->language->get('text_report_sale_coupon'),
+				'href'     => $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($report_sale) {
+			$report[] = array(
+				'name'	   => $this->language->get('text_report_sale'),
+				'href'     => '',
+				'children' => $report_sale
+			);			
+		}
+		
+		// Report Products			
+		$report_product = array();	
+		
+		if ($this->user->hasPermission('access', 'report/product_viewed')) {
+			$report_product[] = array(
+				'name'	   => $this->language->get('text_report_product_viewed'),
+				'href'     => $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], true),
+				'children' => array()	
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/product_purchased')) {
+			$report_product[] = array(
+				'name'	   => $this->language->get('text_report_product_purchased'),
+				'href'     => $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], true),
+				'children' => array()	
+			);
+		}
+		
+		if ($report_product) {	
+			$report[] = array(
+				'name'	   => $this->language->get('text_report_product'),
+				'href'     => '',
+				'children' => $report_product	
+			);		
+		}
+		
+		// Report Customers				
+		$report_customer = array();
+		
+		if ($this->user->hasPermission('access', 'report/customer_online')) {	
+			$report_customer[] = array(
+				'name'	   => $this->language->get('text_report_customer_online'),
+				'href'     => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/customer_activity')) {
+			$report_customer[] = array(
+				'name'	   => $this->language->get('text_report_customer_activity'),
+				'href'     => $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/customer_order')) {	
+			$report_customer[] = array(
+				'name'	   => $this->language->get('text_report_customer_order'),
+				'href'     => $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/customer_reward')) {
+			$report_customer[] = array(
+				'name'	   => $this->language->get('text_report_customer_reward'),
+				'href'     => $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/customer_credit')) {
+			$report_customer[] = array(
+				'name'	   => $this->language->get('text_report_customer_credit'),
+				'href'     => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($report_customer) {	
+			$report[] = array(
+				'name'	   => $this->language->get('text_report_customer'),
+				'href'     => '',
+				'children' => $report_customer	
+			);
+		}
+		
+		// Report Marketing			
+		$report_marketing = array();			
+		
+		if ($this->user->hasPermission('access', 'report/marketing')) {
+			$report_marketing[] = array(
+				'name'	   => $this->language->get('text_report_marketing'),
+				'href'     => $this->url->link('report/marketing', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);
+		}
+		
+		if ($this->user->hasPermission('access', 'report/affiliate')) {
+			$report_marketing[] = array(
+				'name'	   => $this->language->get('text_report_affiliate'),
+				'href'     => $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);		
+		}
+		
+		if ($this->user->hasPermission('access', 'report/affiliate_activity')) {
+			$report_marketing[] = array(
+				'name'	   => $this->language->get('text_report_affiliate_activity'),
+				'href'     => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], true),
+				'children' => array()
+			);		
+		}
+		
+		if ($report_marketing) {	
+			$report[] = array(
+				'name'	   => $this->language->get('text_report_marketing'),
+				'href'     => '',
+				'children' => $report_marketing	
+			);		
+		}
+		
+		if ($report) {	
+			$data['menus'][] = array(
+				'id'       => 'menu-report',
+				'icon'	   => 'fa-bar-chart-o', 
+				'name'	   => $this->language->get('text_reports'),
+				'href'     => '',
+				'children' => $report
+			);	
+		}
+		
 		return $this->load->view('common/menu', $data);
 	}
 }

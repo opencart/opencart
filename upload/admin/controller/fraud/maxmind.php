@@ -14,7 +14,7 @@ class ControllerFraudMaxMind extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -58,7 +58,7 @@ class ControllerFraudMaxMind extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_fraud'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -68,7 +68,7 @@ class ControllerFraudMaxMind extends Controller {
 
 		$data['action'] = $this->url->link('fraud/maxmind', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
 		if (isset($this->request->post['maxmind_key'])) {
 			$data['maxmind_key'] = $this->request->post['maxmind_key'];

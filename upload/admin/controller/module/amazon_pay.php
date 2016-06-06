@@ -17,7 +17,7 @@ class ControllerModuleAmazonPay extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -68,7 +68,7 @@ class ControllerModuleAmazonPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true),
 			'separator' => ' :: '
 		);
 
@@ -80,7 +80,7 @@ class ControllerModuleAmazonPay extends Controller {
 
 		$data['action'] = $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -126,11 +126,7 @@ class ControllerModuleAmazonPay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function install() {

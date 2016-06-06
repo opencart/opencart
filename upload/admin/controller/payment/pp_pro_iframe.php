@@ -14,7 +14,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		} else {
 			$data['error'] = @$this->error;
 		}
@@ -82,7 +82,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -92,7 +92,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['pp_pro_iframe_sig'])) {
 			$data['pp_pro_iframe_sig'] = $this->request->post['pp_pro_iframe_sig'];

@@ -23,7 +23,7 @@
 	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" class="form-horizontal" id="registration-form">
 		<input type="hidden" value="<?php echo $locale; ?>" name="locale">
 		<input type="hidden" value="<?php echo $sp_id; ?>" name="spId">
-		<input type="hidden" value="<?php echo $id; ?>" name="Id">
+		<input type="hidden" value="<?php echo $ld; ?>" name="ld">
 		<input type="hidden" value="<?php echo $unique_id; ?>" name="uniqueId">
 		<input type="hidden" value="<?php echo $allowed_login_domain; ?>" name="allowedLoginDomains[]">
 		<?php foreach ($login_redirect_urls as $login_redirect_url) { ?>
@@ -295,7 +295,7 @@
   <script type="text/javascript">
       $('#button-credentials').on('click', function () {
         var json = $('#input-credentials').val()
-        if (json !== '') {
+        try {
           var credentials = $.parseJSON($('#input-credentials').val());
           $('#amazon-login-pay-merchant-id').val(credentials['merchant_id']);
           $('#amazon-login-pay-access-key').val(credentials['access_key']);
@@ -308,6 +308,8 @@
             name: 'language_reload'
           }).appendTo('#form-amazon-login-pay');
           $('.pull-right > .btn-primary').click();
+        } catch (e) {
+          $('.container-fluid:eq(1)').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_credentials; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>')
         }
       });
       //</script>
@@ -334,7 +336,7 @@
           value: 'true',
           name: 'language_reload'
         }).appendTo('#form-amazon-login-pay');
-        $('.btn-primary').click();
+		$("#form-amazon-login-pay").submit();
       });
       //</script>
   <script type="text/javascript">

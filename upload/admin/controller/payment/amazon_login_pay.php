@@ -79,7 +79,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['help_minimum_total'] = $this->language->get('help_minimum_total');
 		$data['help_declined_codes'] = $this->language->get('help_declined_codes');
 
-		$data['error_merchant_id'] = $this->language->get('error_merchant_id');
+		$data['error_credentials'] = $this->language->get('error_credentials');
 
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_save'] = $this->language->get('button_save');
@@ -229,17 +229,17 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_language'] = 'de-DE';
 			$data['sp_id'] = 'AGGDPRPDPL7SL';
 			$data['locale'] = 'EUR';
-			$data['id'] = 'SPEXDEAPA-OpencartPL';
+			$data['ld'] = 'SPEXDEAPA-OpencartPL';
 		} elseif ($data['amazon_login_pay_payment_region'] == 'GBP') {
 			$data['amazon_login_pay_language'] = 'en-GB';
 			$data['sp_id'] = 'A1P8WV11EWOP9H';
 			$data['locale'] = 'GBP';
-			$data['id'] = 'SPEXUKAPA-OpencartPL';
+			$data['ld'] = 'SPEXUKAPA-OpencartPL';
 		} else {
 			$data['amazon_login_pay_language'] = 'en-US';
 			$data['sp_id'] = 'A3GK1RS09H3A7D';
 			$data['locale'] = 'US';
-			$data['id'] = 'SPEXUSAPA-OpencartPL';
+			$data['ld'] = 'SPEXUSAPA-OpencartPL';
 		}
 
 		if (isset($this->request->post['amazon_login_pay_language'])) {
@@ -347,7 +347,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				'en-US' => $this->language->get('text_us')
 			);
 		} else {
-			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect?spId=" . $data['sp_id'];
+			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect";
 
 			$data['languages'] = array(
 				'de-DE' => $this->language->get('text_de'),

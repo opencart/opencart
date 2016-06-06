@@ -11,7 +11,7 @@ $_['text_de']						= 'German';
 $_['text_uk']                       = 'English';
 $_['text_fr']                       = 'French';
 $_['text_it']                       = 'Italian';
-$_['text_es']                       = 'Spainish';
+$_['text_es']                       = 'Spanish';
 $_['text_us_region']				= 'United States';
 $_['text_eu_region']                = 'Euro region';
 $_['text_uk_region']                = 'United Kingdom';
@@ -71,7 +71,7 @@ $_['text_amazon_rejected']          = 'AmazonRejected';
 $_['text_amazon_timeout']           = 'TransactionTimedOut';
 $_['text_amazon_no_declined']       = '--- No Automatic Declined Authorization ---';
 $_['text_amazon_signup']			= 'Sign-up to Login and Pay with Amazon';
-$_['text_credentials']				= 'Credentials';
+$_['text_credentials']				= 'Please paste your keys here (in JSON format)';
 $_['text_validate_credentials']		= 'Validate and Use Credentials';
 
 // Columns
@@ -115,6 +115,8 @@ $_['error_minimum_total']			= 'Minimum order total must be above zero';
 $_['error_curreny']                 = 'Your shop must have %s currency installed and enabled';
 $_['error_upload']                  = 'Upload failed';
 $_['error_data_missing'] 			= 'Required data is missing';
+$_['error_credentials'] 			= 'Please enter the keys in a valid JSON format';
+
 
 // Buttons
 $_['button_capture']				= 'Capture';

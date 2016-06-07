@@ -284,19 +284,19 @@ class ControllerPaymentSecureTradingPp extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/securetrading_pp');
+		$this->load->model('extension/payment/securetrading_pp');
 		$this->model_payment_securetrading_pp->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/securetrading_pp');
+		$this->load->model('extension/payment/securetrading_pp');
 		$this->model_payment_securetrading_pp->uninstall();
 	}
 
 	public function order() {
 
 		if ($this->config->get('securetrading_pp_status')) {
-			$this->load->model('payment/securetrading_pp');
+			$this->load->model('extension/payment/securetrading_pp');
 
 			$securetrading_pp_order = $this->model_payment_securetrading_pp->getOrder($this->request->get['order_id']);
 
@@ -345,7 +345,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/securetrading_pp');
+			$this->load->model('extension/payment/securetrading_pp');
 
 			$securetrading_pp_order = $this->model_payment_securetrading_pp->getOrder($this->request->post['order_id']);
 
@@ -397,7 +397,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$amount = number_format($this->request->post['amount'], 2);
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($amount) && $amount > 0) {
-			$this->load->model('payment/securetrading_pp');
+			$this->load->model('extension/payment/securetrading_pp');
 
 			$securetrading_pp_order = $this->model_payment_securetrading_pp->getOrder($this->request->post['order_id']);
 
@@ -458,7 +458,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/securetrading_pp');
+			$this->load->model('extension/payment/securetrading_pp');
 
 			$securetrading_pp_order = $this->model_payment_securetrading_pp->getOrder($this->request->post['order_id']);
 

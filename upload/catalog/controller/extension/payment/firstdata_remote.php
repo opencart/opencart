@@ -2,7 +2,7 @@
 class ControllerPaymentFirstdataRemote extends Controller {
 	public function index() {
 		$this->load->language('payment/firstdata_remote');
-		$this->load->model('payment/firstdata_remote');
+		$this->load->model('extension/payment/firstdata_remote');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -60,7 +60,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 
 	public function send() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/firstdata_remote');
+		$this->load->model('extension/payment/firstdata_remote');
 		$this->load->language('payment/firstdata_remote');
 
 		$address_codes = array(

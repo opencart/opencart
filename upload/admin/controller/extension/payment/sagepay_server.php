@@ -185,19 +185,19 @@ class ControllerPaymentSagepayServer extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->model_payment_sagepay_server->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->model_payment_sagepay_server->uninstall();
 	}
 
 	public function order() {
 
 		if ($this->config->get('sagepay_server_status')) {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
 			$sagepay_server_order = $this->model_payment_sagepay_server->getOrder($this->request->get['order_id']);
 
@@ -246,7 +246,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
 			$sagepay_server_order = $this->model_payment_sagepay_server->getOrder($this->request->post['order_id']);
 
@@ -281,7 +281,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
 			$sagepay_server_order = $this->model_payment_sagepay_server->getOrder($this->request->post['order_id']);
 
@@ -327,7 +327,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
 			$sagepay_server_order = $this->model_payment_sagepay_server->getOrder($this->request->post['order_id']);
 

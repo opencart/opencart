@@ -115,7 +115,7 @@ class ControllerDesignTranslation extends Controller {
 						}
 						
 						if (is_file($file) && (substr($file, -4) == '.php')) {
-							$translation_total = $this->model_design_translation->getTotalTranslations($store_id, $language_id, $path . '/' . trim(basename($file, '.php'), '/'));
+							$translation_total = $this->model_design_translation->getTotalTranslations($store_id, $language_id, trim($path . '/' . basename($file, '.php'), '/'));
 							
 							$json['file'][] = array(
 								'name' => basename($file, '.php') . ' (' . $translation_total . ')',
@@ -172,7 +172,7 @@ class ControllerDesignTranslation extends Controller {
 		if ($language_info && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
 			$this->load->model('design/translation');
 						
-			$results = $this->model_design_translation->getTranslationsByRoute($store_id, $language_id, $path);
+			$results = $this->model_design_translation->getTranslations($store_id, $language_id, $path);
 	
 			foreach ($results as $result) { 
 				$data['translations'][] = $result;
@@ -222,10 +222,6 @@ class ControllerDesignTranslation extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	
-	
-	
 	
 	/*
 	protected function validate() {

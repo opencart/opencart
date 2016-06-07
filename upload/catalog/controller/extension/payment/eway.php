@@ -134,7 +134,7 @@ class ControllerPaymentEway extends Controller {
 		$request->DeviceID = 'opencart-' . VERSION . ' eway-trans-2.1.2';
 		$request->CustomerIP = $this->request->server['REMOTE_ADDR'];
 
-		$this->load->model('payment/eway');
+		$this->load->model('extension/payment/eway');
 		$template = 'eway';
 		if ($this->config->get('eway_paymode') == 'iframe') {
 			$request->CancelUrl = 'http://www.example.org';
@@ -176,7 +176,7 @@ class ControllerPaymentEway extends Controller {
 
 		if (isset($this->request->get['AccessCode']) || isset($this->request->get['amp;AccessCode'])) {
 
-			$this->load->model('payment/eway');
+			$this->load->model('extension/payment/eway');
 
 			if (isset($this->request->get['amp;AccessCode'])) {
 				$access_code = $this->request->get['amp;AccessCode'];
@@ -234,7 +234,7 @@ class ControllerPaymentEway extends Controller {
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
-				$this->load->model('payment/eway');
+				$this->load->model('extension/payment/eway');
 				$eway_order_data = array(
 					'order_id' => $order_id,
 					'transaction_id' => $result->TransactionID,

@@ -184,12 +184,12 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/sagepay_direct');
+		$this->load->model('extension/payment/sagepay_direct');
 		$this->model_payment_sagepay_direct->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/sagepay_direct');
+		$this->load->model('extension/payment/sagepay_direct');
 		$this->model_payment_sagepay_direct->uninstall();
 	}
 
@@ -197,7 +197,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 		if ($this->config->get('sagepay_direct_status')) {
 
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->get['order_id']);
 
@@ -246,7 +246,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 
@@ -281,7 +281,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 
@@ -327,7 +327,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 

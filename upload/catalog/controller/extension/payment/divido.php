@@ -40,7 +40,7 @@ class ControllerPaymentDivido extends Controller {
 
 	public function index() {
 		$this->load->language('payment/divido');
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
 		$api_key   = $this->config->get('divido_api_key');
@@ -91,7 +91,7 @@ class ControllerPaymentDivido extends Controller {
 
 	public function update() {
 		$this->load->language('payment/divido');
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
 		$data = json_decode(file_get_contents('php://input'));
@@ -144,7 +144,7 @@ class ControllerPaymentDivido extends Controller {
 	public function confirm() {
 		$this->load->language('payment/divido');
 
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
 		ini_set('html_errors', 0);
 		if (!$this->session->data['payment_method']['code'] == 'divido') {
@@ -273,7 +273,7 @@ class ControllerPaymentDivido extends Controller {
 	public function calculator($args) {
 		$this->load->language('payment/divido');
 
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
 		if (!$this->model_payment_divido->isEnabled()) {
 			return null;

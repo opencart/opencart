@@ -172,20 +172,20 @@ class ControllerPaymentBluepayredirect extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/bluepay_redirect');
+		$this->load->model('extension/payment/bluepay_redirect');
 
 		$this->model_payment_bluepay_redirect->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/bluepay_redirect');
+		$this->load->model('extension/payment/bluepay_redirect');
 
 		$this->model_payment_bluepay_redirect->uninstall();
 	}
 
 	public function order() {
 		if ($this->config->get('bluepay_redirect_status')) {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->get['order_id']);
 
@@ -232,7 +232,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->post['order_id']);
 
@@ -267,7 +267,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->post['order_id']);
 
@@ -315,7 +315,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->post['order_id']);
 

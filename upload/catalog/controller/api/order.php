@@ -264,7 +264,7 @@ class ControllerApiOrder extends Controller {
 
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {
-						$this->load->model('total/' . $result['code']);
+						$this->load->model('extension/total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
 						$this->{'model_total_' . $result['code']}->getTotal($total_data);
@@ -639,7 +639,7 @@ class ControllerApiOrder extends Controller {
 
 					foreach ($results as $result) {
 						if ($this->config->get($result['code'] . '_status')) {
-							$this->load->model('total/' . $result['code']);
+							$this->load->model('extension/total/' . $result['code']);
 							
 							// We have to put the totals in an array so that they pass by reference.
 							$this->{'model_total_' . $result['code']}->getTotal($total_data);

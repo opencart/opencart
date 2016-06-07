@@ -289,14 +289,14 @@ class ControllerPaymentGlobalpay extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/globalpay');
+		$this->load->model('extension/payment/globalpay');
 
 		$this->model_payment_globalpay->install();
 	}
 
 	public function order() {
 		if ($this->config->get('globalpay_status')) {
-			$this->load->model('payment/globalpay');
+			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_payment_globalpay->getOrder($this->request->get['order_id']);
 
@@ -345,7 +345,7 @@ class ControllerPaymentGlobalpay extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/globalpay');
+			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_payment_globalpay->getOrder($this->request->post['order_id']);
 
@@ -379,7 +379,7 @@ class ControllerPaymentGlobalpay extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/globalpay');
+			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_payment_globalpay->getOrder($this->request->post['order_id']);
 
@@ -427,7 +427,7 @@ class ControllerPaymentGlobalpay extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/globalpay');
+			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_payment_globalpay->getOrder($this->request->post['order_id']);
 

@@ -14,7 +14,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function express() {
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
@@ -115,7 +115,7 @@ class ControllerPaymentPPExpress extends Controller {
 		 *
 		 * It has no output, instead it sets the data and locates to checkout
 		 */
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 		$data = array(
 			'METHOD' => 'GetExpressCheckoutDetails',
 			'TOKEN'  => $this->session->data['paypal']['token']
@@ -562,7 +562,7 @@ class ControllerPaymentPPExpress extends Controller {
 				if (!empty($results)) {
 					foreach ($results as $result) {
 						if ($this->config->get($result['code'] . '_status')) {
-							$this->load->model('shipping/' . $result['code']);
+							$this->load->model('extension/shipping/' . $result['code']);
 
 							$quote = $this->{'model_shipping_' . $result['code']}->getQuote($shipping_address);
 
@@ -641,7 +641,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
+					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
 					$this->{'model_total_' . $result['code']}->getTotal($total_data);
@@ -684,7 +684,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
-				$this->load->model('payment/' . $result['code']);
+				$this->load->model('extension/payment/' . $result['code']);
 
 				$method = $this->{'model_payment_' . $result['code']}->getMethod($payment_address, $total);
 
@@ -832,7 +832,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
+					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
 					$this->{'model_total_' . $result['code']}->getTotal($total_data);
@@ -1082,7 +1082,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$order_id = $this->model_checkout_order->addOrder($data);
 			$this->session->data['order_id'] = $order_id;
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 
 			$paypal_data = array(
 				'TOKEN'                      => $this->session->data['paypal']['token'],
@@ -1272,7 +1272,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 		$this->load->model('tool/image');
 		$this->load->model('checkout/order');
 
@@ -1349,7 +1349,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function checkoutReturn() {
 		$this->load->language('payment/pp_express');
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 		$this->load->model('checkout/order');
 
 		$data = array(
@@ -1575,7 +1575,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function ipn() {
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 		$this->load->model('account/recurring');
 
 		$request = 'cmd=_notify-validate';
@@ -1866,7 +1866,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateCoupon() {
-		$this->load->model('total/coupon');
+		$this->load->model('extension/total/coupon');
 
 		$coupon_info = $this->model_total_coupon->getCoupon($this->request->post['coupon']);
 
@@ -1879,7 +1879,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateVoucher() {
-		$this->load->model('total/coupon');
+		$this->load->model('extension/total/coupon');
 
 		$voucher_info = $this->model_total_voucher->getVoucher($this->request->post['voucher']);
 

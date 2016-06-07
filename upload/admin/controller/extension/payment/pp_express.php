@@ -205,7 +205,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_currency'] = $this->config->get('pp_express_currency');
 		}
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$data['currencies'] = $this->model_payment_pp_express->getCurrencies();
 
@@ -385,13 +385,13 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$this->model_payment_pp_express->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$this->model_payment_pp_express->uninstall();
 	}
@@ -406,7 +406,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$order_id = 0;
 			}
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 
 			$paypal_info = $this->model_payment_pp_express->getPayPalOrder($order_id);
 
@@ -484,7 +484,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$order_id = 0;
 		}
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
 
@@ -519,7 +519,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 
 			if (isset($this->request->get['order_id'])) {
 				$order_id = $this->request->get['order_id'];
@@ -629,7 +629,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['transaction_id'] = $this->request->get['transaction_id'];
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 		$pp_transaction = $this->model_payment_pp_express->getTransaction($this->request->get['transaction_id']);
 
 		$data['amount_original'] = $pp_transaction['AMT'];
@@ -669,7 +669,7 @@ class ControllerPaymentPPExpress extends Controller {
 		 */
 		if (isset($this->request->post['transaction_id']) && isset($this->request->post['refund_full'])) {
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 			$this->load->language('payment/pp_express_refund');
 
 			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
@@ -764,7 +764,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$order_id = 0;
 		}
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$paypal_info = $this->model_payment_pp_express->getOrder($order_id);
 
@@ -901,7 +901,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$paypal_order_transaction_id = 0;
 		}
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$transaction = $this->model_payment_pp_express->getFailedTransaction($paypal_order_transaction_id);
 
@@ -1062,7 +1062,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true),
 		);
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$data['currency_codes'] = $this->model_payment_pp_express->getCurrencies();
 
@@ -1185,7 +1185,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'href' => $this->url->link('payment/pp_express/info', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->get['transaction_id'], true),
 		);
 
-		$this->load->model('payment/pp_express');
+		$this->load->model('extension/payment/pp_express');
 
 		$data['transaction'] = $this->model_payment_pp_express->getTransaction($this->request->get['transaction_id']);
 		$data['lines'] = $this->formatRows($data['transaction']);
@@ -1206,7 +1206,7 @@ class ControllerPaymentPPExpress extends Controller {
 		 */
 		if (isset($this->request->post['date_start'])) {
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 
 			$call_data = array();
 			$call_data['METHOD'] = 'TransactionSearch';
@@ -1301,7 +1301,7 @@ class ControllerPaymentPPExpress extends Controller {
 		if (isset($this->request->get['merchantId'])) {
 			$this->load->language('payment/pp_express');
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 			$this->load->model('setting/setting');
 
 			$token = $this->model_payment_pp_express->getTokens('live');
@@ -1328,7 +1328,7 @@ class ControllerPaymentPPExpress extends Controller {
 		if (isset($this->request->get['merchantId'])) {
 			$this->load->language('payment/pp_express');
 
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 			$this->load->model('setting/setting');
 
 			$token = $this->model_payment_pp_express->getTokens('sandbox');

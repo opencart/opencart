@@ -195,20 +195,20 @@ class ControllerPaymentBluePayHosted extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/bluepay_hosted');
+		$this->load->model('extension/payment/bluepay_hosted');
 
 		$this->model_payment_bluepay_hosted->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/bluepay_hosted');
+		$this->load->model('extension/payment/bluepay_hosted');
 
 		$this->model_payment_bluepay_hosted->uninstall();
 	}
 
 	public function order() {
 		if ($this->config->get('bluepay_hosted_status')) {
-			$this->load->model('payment/bluepay_hosted');
+			$this->load->model('extension/payment/bluepay_hosted');
 
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->get['order_id']);
 
@@ -255,7 +255,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/bluepay_hosted');
+			$this->load->model('extension/payment/bluepay_hosted');
 
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->post['order_id']);
 
@@ -290,7 +290,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/bluepay_hosted');
+			$this->load->model('extension/payment/bluepay_hosted');
 
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->post['order_id']);
 
@@ -338,7 +338,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/bluepay_hosted');
+			$this->load->model('extension/payment/bluepay_hosted');
 
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->post['order_id']);
 

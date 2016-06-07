@@ -240,7 +240,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 	public function getTransaction() {
 		$this->load->language('payment/klarna_checkout');
 
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');
 
 		if (!$this->config->get('klarna_checkout_status') || !isset($this->request->get['order_id'])) {
@@ -534,19 +534,19 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->model_payment_klarna_checkout->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->model_payment_klarna_checkout->uninstall();
 	}
 
 	public function transactionCommand() {
 		$this->load->language('payment/klarna_checkout');
 
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');
 
 		$json = array();
@@ -626,7 +626,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 	public function downloadSettlementFiles() {
 		$this->load->language('payment/klarna_checkout');
 
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');
 
 		$json = array();
@@ -739,7 +739,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 	}
 
 	protected function validate() {
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/geo_zone');
 
 		if (version_compare(phpversion(), '5.4.0', '<')) {

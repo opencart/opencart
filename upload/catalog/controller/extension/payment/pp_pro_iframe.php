@@ -2,7 +2,7 @@
 class ControllerPaymentPPProIframe extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/pp_pro_iframe');
+		$this->load->model('extension/payment/pp_pro_iframe');
 
 		$this->load->language('payment/pp_pro_iframe');
 
@@ -33,7 +33,7 @@ class ControllerPaymentPPProIframe extends Controller {
 	public function create() {
 		$this->load->language('payment/pp_pro_iframe');
 		$this->load->model('checkout/order');
-		$this->load->model('payment/pp_pro_iframe');
+		$this->load->model('extension/payment/pp_pro_iframe');
 
 		$data['text_secure_connection'] = $this->language->get('text_secure_connection');
 
@@ -65,7 +65,7 @@ class ControllerPaymentPPProIframe extends Controller {
 	}
 
 	public function notify() {
-		$this->load->model('payment/pp_pro_iframe');
+		$this->load->model('extension/payment/pp_pro_iframe');
 
 		if (isset($this->request->post['custom'])) {
 			$order_id = $this->encryption->decrypt($this->request->post['custom']);

@@ -27,7 +27,7 @@ class ControllerTotalVoucher extends Controller {
 
 		$json = array();
 
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
 		if (isset($this->request->post['voucher'])) {
 			$voucher = $this->request->post['voucher'];

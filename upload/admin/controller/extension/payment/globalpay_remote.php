@@ -255,13 +255,13 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/globalpay_remote');
+		$this->load->model('extension/payment/globalpay_remote');
 		$this->model_payment_globalpay_remote->install();
 	}
 
 	public function order() {
 		if ($this->config->get('globalpay_remote_status')) {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->get['order_id']);
 
@@ -310,7 +310,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 
@@ -344,7 +344,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 
@@ -393,7 +393,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 

@@ -37,7 +37,7 @@ class ControllerPaymentCardinity extends Controller {
 
 	public function send() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$this->load->language('payment/cardinity');
 
@@ -134,7 +134,7 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function threeDSecureForm() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$this->load->language('payment/cardinity');
 
@@ -168,7 +168,7 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function threeDSecureCallback() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$this->load->language('payment/cardinity');
 
@@ -241,7 +241,7 @@ class ControllerPaymentCardinity extends Controller {
 
 	private function validate() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$error = array();
 

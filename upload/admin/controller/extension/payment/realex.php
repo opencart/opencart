@@ -289,14 +289,14 @@ class ControllerPaymentRealex extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/realex');
+		$this->load->model('extension/payment/realex');
 
 		$this->model_payment_realex->install();
 	}
 
 	public function order() {
 		if ($this->config->get('realex_status')) {
-			$this->load->model('payment/realex');
+			$this->load->model('extension/payment/realex');
 
 			$realex_order = $this->model_payment_realex->getOrder($this->request->get['order_id']);
 
@@ -345,7 +345,7 @@ class ControllerPaymentRealex extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/realex');
+			$this->load->model('extension/payment/realex');
 
 			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
 
@@ -379,7 +379,7 @@ class ControllerPaymentRealex extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/realex');
+			$this->load->model('extension/payment/realex');
 
 			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
 
@@ -427,7 +427,7 @@ class ControllerPaymentRealex extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/realex');
+			$this->load->model('extension/payment/realex');
 
 			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
 

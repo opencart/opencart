@@ -80,7 +80,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 	public function ipn() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/securetrading_pp');
+		$this->load->model('extension/payment/securetrading_pp');
 		$this->load->language('payment/securetrading_pp');
 
 		$keys = array_keys($this->request->post);

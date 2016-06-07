@@ -86,7 +86,7 @@ class ControllerPaymentGlobalpay extends Controller {
 	}
 
 	public function notify() {
-		$this->load->model('payment/globalpay');
+		$this->load->model('extension/payment/globalpay');
 
 		$this->model_payment_globalpay->logger(print_r($this->request->post, 1));
 

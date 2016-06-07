@@ -254,13 +254,13 @@ class ControllerPaymentRealexRemote extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/realex_remote');
+		$this->load->model('extension/payment/realex_remote');
 		$this->model_payment_realex_remote->install();
 	}
 
 	public function order() {
 		if ($this->config->get('realex_remote_status')) {
-			$this->load->model('payment/realex_remote');
+			$this->load->model('extension/payment/realex_remote');
 
 			$realex_order = $this->model_payment_realex_remote->getOrder($this->request->get['order_id']);
 
@@ -309,7 +309,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/realex_remote');
+			$this->load->model('extension/payment/realex_remote');
 
 			$realex_order = $this->model_payment_realex_remote->getOrder($this->request->post['order_id']);
 
@@ -343,7 +343,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/realex_remote');
+			$this->load->model('extension/payment/realex_remote');
 
 			$realex_order = $this->model_payment_realex_remote->getOrder($this->request->post['order_id']);
 
@@ -392,7 +392,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/realex_remote');
+			$this->load->model('extension/payment/realex_remote');
 
 			$realex_order = $this->model_payment_realex_remote->getOrder($this->request->post['order_id']);
 

@@ -9,7 +9,7 @@ class ControllerCreditCardSagepayServer extends Controller {
 
 		$this->load->language('credit_card/sagepay_server');
 
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -97,7 +97,7 @@ class ControllerCreditCardSagepayServer extends Controller {
 	public function delete() {
 		$this->load->language('credit_card/sagepay_server');
 
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
 		$card = $this->model_payment_sagepay_server->getCard($this->request->get['card_id'], '');
 
@@ -131,7 +131,7 @@ class ControllerCreditCardSagepayServer extends Controller {
 		$this->load->language('payment/sagepay_server');
 		
 		$this->load->model('checkout/order');
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
 		$payment_data = array();
 
@@ -175,7 +175,7 @@ class ControllerCreditCardSagepayServer extends Controller {
 
 	public function callback() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
 		$this->model_payment_sagepay_server->logger('Callback data', $this->request->post);
 
@@ -270,14 +270,14 @@ class ControllerCreditCardSagepayServer extends Controller {
 	}
 
 	public function success() {
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->model_payment_sagepay_server->logger('Success', '');
 		$this->session->data['success'] = 'Success';
 		$this->response->redirect($this->url->link('credit_card/sagepay_server', '', true));
 	}
 
 	public function failure() {
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->model_payment_sagepay_server->logger('Failure', '');
 		$this->session->data['error_warning'] = 'Failure';
 		$this->response->redirect($this->url->link('credit_card/sagepay_server', '', true));

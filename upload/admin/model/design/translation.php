@@ -11,13 +11,13 @@ class ModelDesignTranslation extends Model {
 	}
 
 	public function getTranslations($store_id, $language_id, $route) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "translation WHERE route = '" . $this->db->escape($route) . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "translation WHERE store_id = '" . (int)$store_id . "' AND language_id = '" . (int)$language_id . "' AND route = '" . $this->db->escape($route) . "'");
 
 		return $query->rows;
 	}
 	
 	public function getTotalTranslations($store_id, $language_id, $route) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "translation WHERE route = '" . $this->db->escape($route) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "translation WHERE store_id = '" . (int)$store_id . "' AND language_id = '" . (int)$language_id . "' AND route = '" . $this->db->escape($route) . "'");
 
 		return $query->row['total'];
 	}

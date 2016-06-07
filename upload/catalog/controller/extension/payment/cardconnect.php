@@ -3,7 +3,7 @@ class ControllerPaymentCardConnect extends Controller {
 	public function index() {
 		$this->load->language('payment/cardconnect');
 
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
 		$data['text_title']            = $this->language->get('text_title');
 		$data['text_card_details']     = $this->language->get('text_card_details');
@@ -58,7 +58,7 @@ class ControllerPaymentCardConnect extends Controller {
 	public function send()	{
 		$this->load->language('payment/cardconnect');
 
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
 		$this->model_payment_cardconnect->log('Posting order to CardConnect');
 
@@ -258,7 +258,7 @@ class ControllerPaymentCardConnect extends Controller {
 	public function delete() {
 		$this->load->language('payment/cardconnect');
 
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
 		$this->model_payment_cardconnect->log('Deleting card');
 
@@ -303,7 +303,7 @@ class ControllerPaymentCardConnect extends Controller {
 	}
 
 	public function cron() {
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
 		$this->model_payment_cardconnect->log('Running cron');
 
@@ -331,7 +331,7 @@ class ControllerPaymentCardConnect extends Controller {
 	private function validate() {
 		$this->load->language('payment/cardconnect');
 
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
 		$error = array();
 

@@ -103,7 +103,7 @@ class ModelPaymentWorldpay extends Model {
 	public function recurringPayment($item, $order_id_rand, $token) {
 
 		$this->load->model('checkout/recurring');
-		$this->load->model('payment/worldpay');
+		$this->load->model('extension/payment/worldpay');
 		//trial information
 		if ($item['recurring']['trial'] == 1) {
 			$price = $item['recurring']['trial_price'];

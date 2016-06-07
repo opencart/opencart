@@ -1,6 +1,8 @@
 <?php
 class ModelOpenbayEtsyOrder extends Model {
 	public function inbound($orders) {
+		$this->openbay->etsy->log("Model inbound, Orders count: " . count($orders));
+
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/currency');
 
@@ -11,51 +13,70 @@ class ModelOpenbayEtsyOrder extends Model {
 				$etsy_order = $this->openbay->etsy->orderFind(null, $order->receipt_id);
 
 				if ($etsy_order != false) {
+					$this->openbay->etsy->log("Etsy order found");
+
 					$order_id = (int)$etsy_order['order_id'];
 
 					if (!$this->lockExists($order_id)) {
 						// paid status changed?
 						if ($order->paid != $etsy_order['paid']) {
+							$this->openbay->etsy->log("Order paid status changed (" . $order->paid . ")");
+
 							$this->updatePaid($order_id, $order->paid);
 						}
 
 						// shipped status changed?
 						if ($order->shipped != $etsy_order['shipped']) {
+							$this->openbay->etsy->log("Order shipped status changed (" . $order->shipped . ")");
+
 							if ($order->paid == 1) {
+								$this->openbay->etsy->log("Order is shipped and paid");
 								$this->updateShipped($order_id, $order->shipped);
 							} else {
+								$this->openbay->etsy->log("Order is not paid so setting to unshipped");
 								$this->updateShipped($order_id, 0);
 							}
 						}
 
 						$this->lockDelete($order_id);
+					} else {
+						$this->openbay->etsy->log("There is an update lock on this order");
 					}
 				} else {
+					$this->openbay->etsy->log("Etsy order not found, creating");
+
 					$order_id = $this->create($order);
 
 					// is paid?
 					if ($order->paid == 1) {
+						$this->openbay->etsy->log("Order is paid");
+
 						$this->updatePaid($order_id, $order->paid);
 
 						// is shipped?
 						if ($order->shipped == 1) {
+							$this->openbay->etsy->log("Order is shipped");
 							$this->updateShipped($order_id, $order->shipped);
 						}
 					}
 
-					$this->openbay->etsy->log('Created new order: ' . $order_id);
+					$this->openbay->etsy->log('Created Order ID: ' . $order_id);
 				}
 			}
 		}
 	}
 
 	public function updateOrderStatus($order_id, $status_id) {
+		$this->openbay->etsy->log("Model updateOrderStatus Order ID: " . $order_id . ", Status ID: " . $status_id);
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$status_id . ", 0, '', NOW())");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$status_id . " WHERE `order_id` = " . (int)$order_id);
 	}
 
 	public function updatePaid($order_id, $status) {
+		$this->openbay->etsy->log("Model updatePaid Order ID: " . $order_id . ", Status: " . $status);
+
 		if ($status == 1) {
 			$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_paid'));
 		}
@@ -64,6 +85,8 @@ class ModelOpenbayEtsyOrder extends Model {
 	}
 
 	public function updateShipped($order_id, $status) {
+		$this->openbay->etsy->log("Model updateShipped Order ID: " . $order_id . ", Status: " . $status);
+
 		if ($status == 1) {
 			$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_shipped'));
 		}
@@ -72,25 +95,30 @@ class ModelOpenbayEtsyOrder extends Model {
 	}
 
 	public function modifyStock($product_id, $qty, $symbol = '-') {
-		$this->openbay->etsy->log('modifyStock() - Updating stock. Product id: ' . $product_id . ' qty: ' . $qty . ', symbol: ' . $symbol);
+		$this->openbay->etsy->log("Model modifyStock Product ID: " . $product_id . ", Qty: " . $qty . ", Symbol: " . $symbol);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
 	}
 
 	private function lockAdd($order_id) {
+		$this->openbay->etsy->log("Model lockAdd Order ID: " . $order_id);
 		$this->db->query("INSERT INTO`" . DB_PREFIX . "etsy_order_lock` SET `order_id` = '" . (int)$order_id . "'");
 	}
 
 	private function lockDelete($order_id) {
+		$this->openbay->etsy->log("Model lockDelete Order ID: " . $order_id);
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_order_lock` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	private function lockExists($order_id) {
+		$this->openbay->etsy->log("Model lockExists Order ID: " . $order_id);
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order_lock` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if ($query->num_rows > 0) {
+			$this->openbay->etsy->log("Yes");
 			return true;
 		} else {
+			$this->openbay->etsy->log("No");
 			$this->lockAdd($order_id);
 			return false;
 		}
@@ -178,13 +206,19 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$order_id = $this->db->getLastId();
 
+		$this->openbay->etsy->log("Model create(order), New Order ID: " . $order_id);
+
 		foreach ($order->transactions as $transaction) {
+			$this->openbay->etsy->log("Listing ID: " . $transaction->etsy_listing_id);
+
 			$product = $this->openbay->etsy->getLinkedProduct($transaction->etsy_listing_id);
 
 			if ($product != false) {
+				$this->openbay->etsy->log("Linked to product ID: " . $product['product_id']);
 				$product_id = $product['product_id'];
 				$product_model = $product['model'];
 			} else {
+				$this->openbay->etsy->log("Item not linked to product");
 				$product_id = 0;
 				$product_model = '';
 			}
@@ -251,18 +285,26 @@ class ModelOpenbayEtsyOrder extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 		}
 
+		$this->openbay->etsy->log("Setting order to new order status ID: " . $this->config->get('etsy_order_status_new'));
+		
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
 
 		return $order_id;
 	}
 
 	public function addOrderHistory($order_id) {
+		$this->openbay->etsy->log("Model addOrderHistory, Order ID: " . $order_id);
+
 		if(!$this->openbay->etsy->orderFind($order_id)) {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
 			foreach ($order_products as $order_product) {
+				$this->openbay->etsy->log("Model addOrderHistory - Product ID: " . $order_product['product_id']);
+
 				$this->openbay->etsy->productUpdateListen($order_product['product_id']);
 			}
+		} else {
+			$this->openbay->etsy->log("Model addOrderHistory - Etsy order");
 		}
 	}
 }

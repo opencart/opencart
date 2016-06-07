@@ -168,6 +168,12 @@ class ControllerOpenbayEtsy extends Controller {
 		} else {
 			$data['etsy_order_status_shipped'] = $this->config->get('etsy_order_status_shipped');
 		}
+		
+		if (isset($this->request->post['etsy_logging'])) {
+			$data['etsy_logging'] = $this->request->post['etsy_logging'];
+		} else {
+			$data['etsy_logging'] = $this->config->get('etsy_logging');
+		}
 
 		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

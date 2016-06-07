@@ -27,6 +27,7 @@ $_['entry_enc1']            	= 'API Encryption 1';
 $_['entry_enc2']            	= 'API Encryption 2';
 $_['entry_token']            	= 'API token';
 $_['entry_address_format']      = 'Default address format';
+$_['entry_debug']				= 'Enable logging';
 
 // Error
 $_['error_api_connect']         = 'Failed to connect to the API';

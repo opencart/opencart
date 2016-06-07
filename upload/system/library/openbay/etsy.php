@@ -142,7 +142,7 @@ final class Etsy {
 	}
 
 	public function settingsUpdate() {
-		$this->log('Etsy loadDataTypes() start');
+		$this->log("settingsUpdate() - start");
 
 		$response = $this->call('v1/etsy/data/type/getSetup/', 'GET');
 
@@ -151,16 +151,20 @@ final class Etsy {
 
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
 
-			$this->log('Updated Etsy option: ' . $key);
+			$this->log("settingsUpdate() - updated option: " . $key);
 		}
 
-		$this->log('Etsy loadDataTypes() complete');
+		$this->log("settingsUpdate() - complete");
 	}
 
 	public function getSetting($key) {
+		$this->log("getSetting() - " . $key);
+
 		$qry = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "etsy_setting_option` WHERE `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
 		if($qry->num_rows > 0) {
+			$this->log("getSetting() - Found setting");
+
 			return unserialize($qry->row['data']);
 		} else {
 			return false;
@@ -168,7 +172,7 @@ final class Etsy {
 	}
 
 	public function getLinks($product_id, $status = 0, $limit = null) {
-		$this->log('getLinks() - Product_id: ' . $product_id . ' status: ' . $status . ' limit:' . $limit);
+		$this->log("getLinks() - Product_id: " . $product_id . " status: " . $status . " limit:" . $limit);
 
 		if ($limit != null) {
 			$sql_limit = ' LIMIT 1';
@@ -179,45 +183,44 @@ final class Etsy {
 		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '" . (int)$status . "' ORDER BY `el`.`created` DESC" . $sql_limit);
 
 		if ($qry->num_rows) {
+			$this->log("getLinks() - " . $qry->num_rows . " found");
+
 			$links = array();
+
 			foreach ($qry->rows as $row) {
 				$links[] = $row;
 			}
 
 			return $links;
 		} else {
+			$this->log("getLinks() - no links found");
+
 			return false;
 		}
 	}
 
 	public function getLinkedProduct($etsy_item_id) {
+		$this->log("getLinkedProduct() - etsy_item_id: " . $etsy_item_id);
+
 		$qry = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `p`.`model`, `el`.`etsy_listing_id`, `el`.`status` AS `link_status` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `p`.`product_id` = `el`.`product_id` WHERE `el`.`etsy_item_id` = '" . (int)$etsy_item_id . "' AND `el`.`status` = 1");
 
 		if($qry->num_rows) {
+			$this->log("getLinkedProduct() - " . $qry->num_rows . " found");
+
 			return $qry->row;
 		} else {
+			$this->log("getLinkedProduct() - no link found");
+
 			return false;
 		}
 	}
 
-	public function updateAllStock($product_id, $new_stock) {
-		/**
-		 * This will update all linked listings with the set stock amount
-		 */
-
-		/** @var loop over linked items $response
-		$response = $this->openbay->etsy->call('v1/etsy/product/listing/'.(int)$data['listing_id'].'/image/', 'POST', $data);
-
-		if (isset($response['data']['error'])) {
-			$this->response->setOutput(json_encode($response['data']));
-		} else {
-			$this->response->setOutput(json_encode($response['data']['results'][0]));
-		}
-		 * */
-	}
-
 	public function updateListingStock($etsy_item_id, $new_stock, $status) {
+		$this->log("updateListingStock() - ItemID: " . $etsy_item_id . ", new stock: " . $new_stock . ", status: " . $status);
+		
 		if ($new_stock > 0) {
+			$this->log("updateListingStock() - stock > 0 - update stock");
+			
 			if ($status == 'edit') {
 				$status = 'inactive';
 			}
@@ -230,144 +233,223 @@ final class Etsy {
 				return true;
 			}
 		} else {
+			$this->log("updateListingStock() - stock > 0 - set to inactive");
+			
 			$this->deleteLink(null, $etsy_item_id);
 
 			$response = $this->call('v1/etsy/product/listing/' . (int)$etsy_item_id . '/inactive/', 'POST');
 
 			if (isset($response['data']['error'])) {
+				$this->log("updateListingStock() - Error: " . json_encode($response));
+				
 				return $response;
 			} else {
+				$this->log("updateListingStock() - Item ended OK");
+				
 				return true;
 			}
 		}
 	}
 
 	public function deleteProduct($product_id) {
+		$this->log("deleteProduct() - Product ID: " . $product_id);
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function deleteLink($etsy_listing_id = null, $etsy_item_id = null) {
+		$this->log("deleteLink() - Listing ID: " . $etsy_listing_id . ", item ID" . $etsy_item_id);
+
 		if ($etsy_listing_id != null) {
+			$this->log("deleteLink() - Listing ID is not null");
+
 			$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$etsy_listing_id . "' LIMIT 1");
 		} elseif ($etsy_item_id != null) {
+			$this->log("deleteLink() - Item ID is not null");
+
 			$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_item_id` = '" . (int)$etsy_item_id . "' LIMIT 1");
 		}
 	}
 
 	public function productUpdateListen($product_id, $data = array()) {
-		$this->log('productUpdateListen() - ' . $product_id);
+		$this->log("productUpdateListen() - " . $product_id . ", Data: " . json_encode($data));
 
 		$links = $this->getLinks($product_id, 1);
 
 		if (!empty($links)) {
 			foreach ($links as $link) {
+				$this->log("productUpdateListen() - Item ID: " . $link['etsy_item_id']);
+
 				$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
-				$this->log('Listings update');
-
 				if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private' || $etsy_listing['state'] == 'draft' || $etsy_listing['state'] == 'edit')) {
+					$this->log("productUpdateListen() - Listing state seems valid");
+
 					if ($etsy_listing['quantity'] != $link['quantity']) {
+						$this->log("productUpdateListen() - Stock is different, do update");
+
 						$this->updateListingStock($link['etsy_item_id'], $link['quantity'], $etsy_listing['state']);
+					} else {
+						$this->log("productUpdateListen() - Stock is the same: " . $etsy_listing['quantity'] . " " . $link['quantity']);
 					}
 				} else {
+					$this->log("productUpdateListen() - Listing state seems invalid");
+					$this->log("productUpdateListen() - " . json_encode($etsy_listing));
+
 					$this->deleteLink($link['etsy_listing_id']);
 				}
 			}
+		} else {
+			$this->log("productUpdateListen() - No links");
 		}
 	}
 
 	public function orderFind($order_id = null, $receipt_id = null) {
+		$this->log("orderFind() - OrderID: " . $order_id . ", Receipt ID: " . $receipt_id);
+
 		if ($order_id != null) {
-			$this->log('Find order id: ' . $order_id);
+			$this->log("orderFind() - Order ID is not null");
+
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 			if($query->num_rows > 0) {
-				$this->log('Found');
+				$this->log('orderFind() - Found');
 				return $query->row;
 			} else {
-				$this->log('Not found');
+				$this->log('orderFind() - Not found');
 				return false;
 			}
-		} elseif($receipt_id != null) {
-			$this->log('Find receipt id: ' . $receipt_id);
+		} elseif ($receipt_id != null) {
+			$this->log("orderFind() - Receipt ID is not null");
+
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
 
 			if($query->num_rows > 0) {
-				$this->log('Found');
+				$this->log('orderFind() - Found');
 				return $query->row;
 			} else {
-				$this->log('Not found');
+				$this->log('orderFind() - Not found');
 				return false;
 			}
 		}
 	}
 
 	public function orderDelete($order_id) {
+		$this->log("orderDelete() - ID: " . $order_id);
+
 		if(!$this->orderFind($order_id)) {
 			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
+				$this->log("orderDelete() - " . $query->num_rows . " products");
+
 				foreach ($query->rows as $product) {
+					$this->log("orderDelete() - Processing ID: " . $product['product_id']);
+
 					$this->productUpdateListen((int)$product['product_id']);
 				}
+			} else {
+				$this->log("orderDelete() - No products in order");
 			}
+		} else {
+			$this->log("orderDelete() - Not an Etsy order");
 		}
 	}
 
 	public function orderUpdatePaid($receipt_id, $status) {
+		$this->log("orderUpdatePaid() - Receipt ID: " . $receipt_id . ", Status: " . $status);
+
 		$response = $this->openbay->etsy->call('v1/etsy/order/update/payment/', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
+			$this->log("orderUpdatePaid() - Error: " . json_encode($response));
+
 			return $response;
 		} else {
+			$this->log("orderUpdatePaid() - OK");
+
 			return true;
 		}
 	}
 
 	public function orderUpdateShipped($receipt_id, $status) {
+		$this->log("orderUpdateShipped() - Receipt ID: " . $receipt_id . ", Status: " . $status);
+
 		$response = $this->openbay->etsy->call('v1/etsy/order/update/shipping/', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
+			$this->log("orderUpdateShipped() - Error: " . json_encode($response));
+
 			return $response;
 		} else {
+			$this->log("orderUpdateShipped() - OK");
+
 			return true;
 		}
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive) {
+		$this->log("putStockUpdateBulk() - ok");
+		$this->log("putStockUpdateBulk() - Item count: " . count($product_id_array));
+
 		foreach($product_id_array as $product_id) {
+			$this->log("putStockUpdateBulk() - Product ID: " . $product_id);
+
 			$links = $this->getLinks($product_id, 1);
 
 			if (!empty($links)) {
+				$this->log("putStockUpdateBulk() - Links found: " . count($links));
+
 				foreach ($links as $link) {
 					$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
 					if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private' || $etsy_listing['state'] == 'draft' || $etsy_listing['state'] == 'edit')) {
+						$this->log("putStockUpdateBulk() - Listing state seems valid");
+
 						if ($etsy_listing['quantity'] != $link['quantity']) {
+							$this->log("putStockUpdateBulk() - Stock is different, do update");
+
 							$this->updateListingStock($link['etsy_item_id'], $link['quantity'], $etsy_listing['state']);
+						} else {
+							$this->log("putStockUpdateBulk() - Stock is the same: " . $etsy_listing['quantity'] . " " . $link['quantity']);
 						}
 					} else {
+						$this->log("putStockUpdateBulk() - Listing state seems invalid");
+						$this->log("putStockUpdateBulk() - " . json_encode($etsy_listing));
+
 						$this->deleteLink($link['etsy_listing_id']);
 					}
 				}
+			} else {
+				$this->log("putStockUpdateBulk() - No link found");
 			}
 		}
 	}
 
 	public function getEtsyItem($listing_id) {
+		$this->log("getEtsyItem(): " . $listing_id);
+
 		$response = $this->openbay->etsy->call('v1/etsy/product/listing/' . $listing_id . '/', 'GET');
 
 		if (isset($response['data']['error'])) {
+			$this->log("getEtsyItem() error: ". $response['data']['error']);
+
 			return $response;
 		} else {
+			$this->log("getEtsyItem() - OK : " . json_encode($response));
+
 			return $response['data']['results'][0];
 		}
 	}
 
 	public function validate() {
 		if ($this->config->get('etsy_token') && $this->config->get('etsy_enc1') && $this->config->get('etsy_enc2')) {
+			$this->log("Etsy details valid");
+
 			return true;
 		} else {
+			$this->log("Etsy details are not valid");
+
 			return false;
 		}
 	}

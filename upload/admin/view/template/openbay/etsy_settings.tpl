@@ -75,6 +75,20 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="etsy_logging"><?php echo $entry_debug; ?></label>
+            <div class="col-sm-10">
+              <select name="etsy_logging" id="etsy_logging" class="form-control">
+                <?php if ($etsy_logging) { ?>
+                <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                <option value="0"><?php echo $text_no; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_yes; ?></option>
+                <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="etsy_address_format"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_address_format; ?>"><?php echo $entry_address_format; ?></span></label>
             <div class="col-sm-10">
               <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>

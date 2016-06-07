@@ -28,7 +28,8 @@ class ControllerPaymentPilibaba extends Controller {
 		$products = array();
 
 		foreach ($this->cart->getProducts() as $product) {
-			if ($product['weight_class_id'] == '1') { // kilograms
+			// kilograms
+			if ($product['weight_class_id'] == '1') {
 				$weight = intval(round($product['weight'], 2) * 1000);
 			} else {
 				$weight = intval($product['weight']);
@@ -324,7 +325,8 @@ class ControllerPaymentPilibaba extends Controller {
 				$products = array();
 
 				foreach ($this->cart->getProducts() as $product) {
-					if ($product['weight_class_id'] == '1') { // kilograms
+					// kilograms
+					if ($product['weight_class_id'] == '1') {
 						$weight = intval(round($product['weight'], 2) * 1000);
 					} else {
 						$weight = intval($product['weight']);
@@ -376,11 +378,11 @@ class ControllerPaymentPilibaba extends Controller {
 
 		$this->model_payment_pilibaba->log('Response: ' . print_r($response_data, true));
 
-		$signMsg = strtoupper(md5($this->config->get('pilibaba_merchant_number') . $response_data['orderNo'] . $response_data['orderAmount'] . 'MD5' . $response_data['fee'] . $response_data['orderTime'] . $response_data['customerMail'] . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($this->config->get('pilibaba_merchant_number') . $response_data['orderNo'] . $response_data['orderAmount'] . 'MD5' . $response_data['fee'] . $response_data['orderTime'] . $response_data['customerMail'] . $this->config->get('pilibaba_secret_key')));
 
-		$this->model_payment_pilibaba->log('signMsg: ' . $signMsg);
+		$this->model_payment_pilibaba->log('signMsg: ' . $sign_msg);
 
-		if (hash_equals($signMsg, $response_data['signMsg'])) {
+		if (hash_equals($sign_msg, $response_data['signMsg'])) {
 			$this->model_payment_pilibaba->log('Adding Pilibaba order');
 
 			$this->model_payment_pilibaba->addPilibabaOrder($response_data);

@@ -77,11 +77,11 @@ class ModelPaymentPilibaba extends Model {
 
 		$this->log('URL: ' . $url);
 
-		$appSecret = strtoupper(md5(($warehouse ? $warehouse : $country) . '0210000574' . '0b8l3ww5' . $currency . $email . md5($password)));
+		$app_secret = strtoupper(md5((($warehouse) ? $warehouse : $country) . '0210000574' . '0b8l3ww5' . $currency . $email . md5($password)));
 
 		$data = array(
 			'platformNo'  => '0210000574',
-			'appSecret'   => $appSecret,
+			'appSecret'   => $app_secret,
 			'email'       => $email,
 			'password'    => md5($password),
 			'currency'    => $currency,
@@ -115,7 +115,7 @@ class ModelPaymentPilibaba extends Model {
 	public function updateTrackingNumber($order_id, $tracking_number, $merchant_number) {
 		$this->log('Posting tracking');
 
-		$signMsg = strtoupper(md5($order_id . $tracking_number . $merchant_number . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($order_id . $tracking_number . $merchant_number . $this->config->get('pilibaba_secret_key')));
 
 		if ($this->config->get('pilibaba_environment') == 'live') {
 			$url = 'https://www.pilibaba.com/pilipay/updateTrackNo';
@@ -123,7 +123,7 @@ class ModelPaymentPilibaba extends Model {
 			$url = 'http://pre.pilibaba.com/pilipay/updateTrackNo';
 		}
 
-		$url .= '?orderNo=' . $order_id . '&logisticsNo=' . $tracking_number . '&merchantNo=' . $merchant_number . '&signMsg=' . $signMsg;
+		$url .= '?orderNo=' . $order_id . '&logisticsNo=' . $tracking_number . '&merchantNo=' . $merchant_number . '&signMsg=' . $sign_msg;
 
 		$this->log('URL: ' . $url);
 

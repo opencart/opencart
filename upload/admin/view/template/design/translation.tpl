@@ -32,9 +32,22 @@
                 </select>
               </div>
             </div>
+            
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_template; ?></h4>
+                <h4 class="list-group-item-heading"><?php echo $text_language; ?></h4>
+              </div>
+              <div class="list-group-item">
+                <select name="language_id" class="form-control">
+                  <?php foreach ($languages as $language) { ?>
+                  <option value="<?php echo $language['language_id']; ?>"><?php echo $language['name']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="list-group">
+              <div class="list-group-item">
+                <h4 class="list-group-item-heading"><?php echo $text_translation; ?></h4>
               </div>
               <div id="path"></div>
             </div>
@@ -46,11 +59,6 @@
               <div class="tab-content"></div>
             </div>
             <div id="warning">
-              <div class="alert alert-warning">
-                <h4><i class="fa fa-exclamation-circle"></i> <?php echo $text_warning; ?></h4>
-                <p><?php echo $text_access; ?></p>
-                <p><?php echo $text_permission; ?></p>
-              </div>
               <div class="alert alert-info">
                 <p><i class="fa fa-info-circle"></i> <?php echo $text_begin; ?></p>
               </div>
@@ -97,11 +105,12 @@ $('select[name="store_id"]').on('change', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+
 });
 
 $('select[name="store_id"]').trigger('change');
 
-$('#directory').on('click', 'a.directory', function(e) {
+$('#path').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
 	var node = this;

@@ -14,7 +14,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -134,7 +134,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -143,7 +143,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 		);
 
 		$data['action'] = $this->url->link('payment/klarna_checkout', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['klarna_checkout_debug'])) {
 			$data['klarna_checkout_debug'] = $this->request->post['klarna_checkout_debug'];

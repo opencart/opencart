@@ -40,7 +40,11 @@
               <div class="list-group-item">
                 <select name="language_id" class="form-control">
                   <?php foreach ($languages as $language) { ?>
+                  <?php if ($language['language_id'] == $language_id) { ?>
+                  <option value="<?php echo $language['language_id']; ?>" selected="selected"><?php echo $language['name']; ?></option>
+                  <?php } else { ?>
                   <option value="<?php echo $language['language_id']; ?>"><?php echo $language['name']; ?></option>
+                  <?php } ?>
                   <?php } ?>
                 </select>
               </div>
@@ -68,15 +72,10 @@
       </div>
     </div>
   </div>
-  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
-  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
+		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -116,7 +115,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -159,67 +158,29 @@ $('#path').on('click', 'a.file',function(e) {
 	var node = this;
 	
 	// Check if the file has an extension
-	var pos = $(node).attr('href').lastIndexOf('.');
 
-	if (pos != -1) {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace('/', '-').replace('_', '-');
-	} else {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace('/', '-').replace('_', '-');
-	}
-	
-	if (!$('#tab-' + tab_id).length) {
-		$.ajax({
-			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
-			dataType: 'json',
-			beforeSend: function() {
-				$(node).find('i').removeClass('fa-arrow-right');
-				$(node).find('i').addClass('fa-circle-o-notch fa-spin');
-			},
-			complete: function() {
-				$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
-				$(node).find('i').addClass('fa-arrow-right');
-			},
-			success: function(json) {
-				if (json['code']) {
-					$('#code').show();
-					$('#warning').hide();
-
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
-
-					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
-					html += '  <textarea name="code" rows="10"></textarea>';
-					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
-					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
-					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
-					html += '  </div>';
-					html += '</div>';
-
-					$('.tab-content').append(html);
-
-					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-					
-					// Initialize codemirrror
-					var editor = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
-						mode: 'text/html',
-						height: '500px',
-						lineNumbers: true,
-						autofocus: true,
-						theme: 'monokai'
-					});
-
-					editor.setValue(json['code']);
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	$.ajax({
+		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(node).find('i').removeClass('fa-arrow-right');
+			$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+		},
+		complete: function() {
+			$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
+			$(node).find('i').addClass('fa-arrow-right');
+		},
+		success: function(json) {
+			console.log(json);
+			
+			if (json['code']) {
+			
 			}
-		});
-	} else {
-		$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-	}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
@@ -276,41 +237,6 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
-
-$('.tab-content').on('click', '.btn-danger', function(e) {
-	if (confirm('<?php echo $text_confirm; ?>')) {
-		var node = this;
-
-		$.ajax({
-			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
-			dataType: 'json',
-			beforeSend: function() {
-				$(node).button('loading');
-			},
-			complete: function() {
-				$(node).button('reset');
-			},
-			success: function(json) {
-				$('.alert').remove();
-				
-				if (json['error']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-
-				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
-				editor.setValue(json['code']);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
 });
 //--></script> 
 </div>

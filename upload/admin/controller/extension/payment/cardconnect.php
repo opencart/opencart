@@ -16,7 +16,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -28,7 +28,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -89,7 +89,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 		$data['action'] = $this->url->link('payment/cardconnect', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['cardconnect_merchant_id'])) {
 			$data['cardconnect_merchant_id'] = $this->request->post['cardconnect_merchant_id'];

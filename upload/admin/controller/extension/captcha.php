@@ -20,11 +20,11 @@ class ControllerExtensionCaptcha extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'captcha/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'captcha/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/captcha/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/captcha/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('captcha/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionCaptcha extends Controller {
 			$this->model_extension_extension->uninstall('captcha', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('captcha/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -79,7 +79,7 @@ class ControllerExtensionCaptcha extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
@@ -88,7 +88,7 @@ class ControllerExtensionCaptcha extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

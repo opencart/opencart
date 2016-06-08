@@ -409,7 +409,7 @@ class ControllerDesignMenu extends Controller {
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			$this->load->language('module/' . $code);
+			$this->load->language('extension/module/' . $code);
 
 			$module_data = array();
 

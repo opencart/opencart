@@ -23,7 +23,7 @@ class ControllerExtensionTotal extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'total/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'total/' . $this->request->get['extension']);
 
-			$this->load->controller('total/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -39,7 +39,7 @@ class ControllerExtensionTotal extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
 
-			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -80,7 +80,7 @@ class ControllerExtensionTotal extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('total');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('total', $value);
 
 				unset($extensions[$key]);
@@ -89,7 +89,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/total/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/total/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

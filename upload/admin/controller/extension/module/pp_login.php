@@ -3,7 +3,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/pp_login');
+		$this->load->language('extension/module/pp_login');
 
 		$this->load->model('setting/setting');
 
@@ -295,7 +295,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_login', $data));
+		$this->response->setOutput($this->load->view('extension/module/pp_login', $data));
 	}
 
 	protected function validate() {

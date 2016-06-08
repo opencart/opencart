@@ -315,7 +315,7 @@ class ControllerAccountRegister extends Controller {
 
 		// Captcha
 		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+			$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
 		} else {
 			$data['captcha'] = '';
 		}
@@ -425,7 +425,7 @@ class ControllerAccountRegister extends Controller {
 
 		// Captcha
 		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+			$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
 
 			if ($captcha) {
 				$this->error['captcha'] = $captcha;

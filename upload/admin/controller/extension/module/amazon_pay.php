@@ -5,7 +5,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/amazon_pay');
+		$this->load->language('extension/module/amazon_pay');
 
 		$this->load->model('setting/setting');
 		$this->load->model('design/layout');
@@ -118,7 +118,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/amazon_pay', $data));
+		$this->response->setOutput($this->load->view('extension/module/amazon_pay', $data));
 	}
 
 	protected function validate() {

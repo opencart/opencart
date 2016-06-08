@@ -3,7 +3,7 @@ class ControllerExtensionModuleHTML extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/html');
+		$this->load->language('extension/module/html');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -115,7 +115,7 @@ class ControllerExtensionModuleHTML extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/html', $data));
+		$this->response->setOutput($this->load->view('extension/module/html', $data));
 	}
 
 	protected function validate() {

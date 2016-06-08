@@ -11,7 +11,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 					$order_id = $this->request->get['order_id'];
 
 					if ($this->model_module_laybuy_layout->isLayBuyOrder($order_id)) {
-						$this->load->language('module/laybuy_layout');
+						$this->load->language('extension/module/laybuy_layout');
 
 						$data['heading_title'] = $this->language->get('heading_title');
 
@@ -52,7 +52,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 							'report'             => json_decode($transaction_info['report'], true)
 						);
 
-						return $this->load->view('module/laybuy_layout', $data);
+						return $this->load->view('extension/module/laybuy_layout', $data);
 					}
 				}
 			}

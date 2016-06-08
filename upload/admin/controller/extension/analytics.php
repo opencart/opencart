@@ -24,7 +24,7 @@ class ControllerExtensionAnalytics extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/analytics/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('analytics/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -79,7 +79,7 @@ class ControllerExtensionAnalytics extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -92,7 +92,7 @@ class ControllerExtensionAnalytics extends Controller {
 		
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

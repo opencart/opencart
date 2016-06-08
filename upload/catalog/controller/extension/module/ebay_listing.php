@@ -2,7 +2,7 @@
 class ControllerExtensionModuleEbayListing extends Controller {
 	public function index() {
 		if ($this->config->get('ebay_status') == 1) {
-			$this->load->language('module/ebay');
+			$this->load->language('extension/module/ebay');
 			
 			$this->load->model('tool/image');
 			$this->load->model('openbay/ebay_product');
@@ -36,7 +36,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 
 			$data['tracking_pixel'] = $products['tracking_pixel'];
 
-			return $this->load->view('module/ebay', $data);
+			return $this->load->view('extension/module/ebay', $data);
 		}
 	}
 }

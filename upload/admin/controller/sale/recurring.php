@@ -471,7 +471,7 @@ class ControllerSaleRecurring extends Controller {
 				);
 			}
 
-			$data['buttons'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/recurringButtons');
+			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurringButtons');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

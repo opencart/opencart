@@ -24,7 +24,7 @@ class ControllerExtensionFeed extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'feed/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('feed/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/feed/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionFeed extends Controller {
 			$this->model_extension_extension->uninstall('feed', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('feed/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/feed/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}

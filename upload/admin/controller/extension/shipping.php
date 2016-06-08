@@ -24,7 +24,7 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('shipping/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_extension_extension->uninstall('shipping', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('shipping/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -82,7 +82,7 @@ class ControllerExtensionShipping extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
@@ -91,7 +91,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

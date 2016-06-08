@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModuleAccount extends Controller {
 	public function index() {
-		$this->load->language('module/account');
+		$this->load->language('extension/module/account');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -40,6 +40,6 @@ class ControllerExtensionModuleAccount extends Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
 
-		return $this->load->view('module/account', $data);
+		return $this->load->view('extension/module/account', $data);
 	}
 }

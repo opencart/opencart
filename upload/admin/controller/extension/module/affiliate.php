@@ -3,7 +3,7 @@ class ControllerExtensionModuleAffiliate extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/affiliate');
+		$this->load->language('extension/module/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerExtensionModuleAffiliate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/affiliate', $data));
+		$this->response->setOutput($this->load->view('extension/module/affiliate', $data));
 	}
 
 	protected function validate() {

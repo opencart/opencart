@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModulePPButton extends Controller {
 	public function index() {
-		$this->load->language('module/pp_button');
+		$this->load->language('extension/module/pp_button');
 
 		$this->load->model('setting/setting');
 
@@ -63,7 +63,7 @@ class ControllerExtensionModulePPButton extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_button', $data));
+		$this->response->setOutput($this->load->view('extension/module/pp_button', $data));
 	}
 
 	protected function validate() {

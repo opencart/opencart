@@ -4,7 +4,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/amazon_login');
+		$this->load->language('extension/module/amazon_login');
 
 		$this->load->model('setting/setting');
 		$this->load->model('design/layout');
@@ -114,7 +114,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/amazon_login', $data));
+		$this->response->setOutput($this->load->view('extension/module/amazon_login', $data));
 	}
 
 	protected function validate() {

@@ -65,7 +65,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/laybuy_layout', $data));
+		$this->response->setOutput($this->load->view('extension/module/laybuy_layout', $data));
 	}
 
 	protected function validate() {

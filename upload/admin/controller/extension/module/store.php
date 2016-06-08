@@ -3,7 +3,7 @@ class ControllerExtensionModuleStore extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/store');
+		$this->load->language('extension/module/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -74,7 +74,7 @@ class ControllerExtensionModuleStore extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/store', $data));
+		$this->response->setOutput($this->load->view('extension/module/store', $data));
 	}
 
 	protected function validate() {

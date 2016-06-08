@@ -108,7 +108,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/shipping')) {
-			$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'shipping',
@@ -118,7 +118,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/theme')) {
-			$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'theme',
@@ -128,7 +128,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/total')) {
-			$files = glob(DIR_APPLICATION . 'controller/total/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/total/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'total',

@@ -728,9 +728,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['attention'] = '';
 		}
 
-		$data['coupon'] = $this->load->controller('total/coupon');
-		$data['voucher'] = $this->load->controller('total/voucher');
-		$data['reward'] = $this->load->controller('total/reward');
+		$data['coupon'] = $this->load->controller('extension/total/coupon');
+		$data['voucher'] = $this->load->controller('extension/total/voucher');
+		$data['reward'] = $this->load->controller('extension/total/reward');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

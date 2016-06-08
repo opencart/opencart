@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModuleDividoCalculator extends Controller {
 	public function index() {
-		$this->load->language('module/divido_calculator');
+		$this->load->language('extension/module/divido_calculator');
 		$this->load->model('extension/payment/divido');
 		$this->load->model('catalog/product');
 
@@ -60,6 +60,6 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 			'generic_credit_req_error'	=> 'Credit request could not be initiated',
 		);
 
-		return $this->load->view('module/divido_calculator', $data);
+		return $this->load->view('extension/module/divido_calculator', $data);
 	}
 }

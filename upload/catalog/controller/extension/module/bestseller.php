@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModuleBestSeller extends Controller {
 	public function index($setting) {
-		$this->load->language('module/bestseller');
+		$this->load->language('extension/module/bestseller');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -64,7 +64,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 				);
 			}
 
-			return $this->load->view('module/bestseller', $data);
+			return $this->load->view('extension/module/bestseller', $data);
 		}
 	}
 }

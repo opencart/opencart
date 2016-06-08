@@ -3,7 +3,7 @@ class ControllerExtensionModuleInformation extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/information');
+		$this->load->language('extension/module/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerExtensionModuleInformation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/information', $data));
+		$this->response->setOutput($this->load->view('extension/module/information', $data));
 	}
 
 	protected function validate() {

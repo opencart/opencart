@@ -3,7 +3,7 @@ class ControllerExtensionModuleSagepayServerCards extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/sagepay_server_cards');
+		$this->load->language('extension/module/sagepay_server_cards');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerExtensionModuleSagepayServerCards extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/sagepay_server_cards', $data));
+		$this->response->setOutput($this->load->view('extension/module/sagepay_server_cards', $data));
 	}
 
 	protected function validate() {

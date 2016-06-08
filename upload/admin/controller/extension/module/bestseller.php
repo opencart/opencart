@@ -3,7 +3,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/bestseller');
+		$this->load->language('extension/module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -142,7 +142,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/bestseller', $data));
+		$this->response->setOutput($this->load->view('extension/module/bestseller', $data));
 	}
 
 	protected function validate() {

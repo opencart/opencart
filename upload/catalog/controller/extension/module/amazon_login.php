@@ -36,7 +36,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 				$data['amazon_login_button_size'] = 'medium';
 			}
 
-			return $this->load->view('module/amazon_login', $data);
+			return $this->load->view('extension/module/amazon_login', $data);
 		}
 	}
 

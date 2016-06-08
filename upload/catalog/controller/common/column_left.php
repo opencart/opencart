@@ -49,7 +49,7 @@ class ControllerCommonColumnLeft extends Controller {
 			$part = explode('.', $module['code']);
 
 			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
-				$module_data = $this->load->controller('module/' . $part[0]);
+				$module_data = $this->load->controller('extension/module/' . $part[0]);
 
 				if ($module_data) {
 					$data['modules'][] = $module_data;
@@ -60,7 +60,7 @@ class ControllerCommonColumnLeft extends Controller {
 				$setting_info = $this->model_extension_module->getModule($part[1]);
 
 				if ($setting_info && $setting_info['status']) {
-					$module_data = $this->load->controller('module/' . $part[0], $setting_info);
+					$module_data = $this->load->controller('extension/module/' . $part[0], $setting_info);
 
 					if ($module_data) {
 						$data['modules'][] = $module_data;

@@ -28,7 +28,7 @@ class ControllerExtensionModule extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'module/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('module/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/module/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -49,7 +49,7 @@ class ControllerExtensionModule extends Controller {
 			$this->model_extension_module->deleteModulesByCode($this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('module/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/module/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -139,7 +139,7 @@ class ControllerExtensionModule extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('module/' . $extension);
+				$this->load->language('extension/module/' . $extension);
 
 				$module_data = array();
 

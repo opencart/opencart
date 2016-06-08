@@ -87,13 +87,13 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('feed/google_base');
+		$this->load->model('extension/feed/google_base');
 
 		$this->model_feed_google_base->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('feed/google_base');
+		$this->load->model('extension/feed/google_base');
 
 		$this->model_feed_google_base->uninstall();
 	}
@@ -135,7 +135,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 
-			$this->load->model('feed/google_base');
+			$this->load->model('extension/feed/google_base');
 
 			// Get the contents of the uploaded file
 			$content = file_get_contents($this->request->files['file']['tmp_name']);
@@ -169,7 +169,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$data['google_base_categories'] = array();
 
-		$this->load->model('feed/google_base');
+		$this->load->model('extension/feed/google_base');
 
 		$results = $this->model_feed_google_base->getCategories(($page - 1) * 10, 10);
 
@@ -205,7 +205,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
 		} elseif (!empty($this->request->post['google_base_category_id']) && !empty($this->request->post['category_id'])) {
-			$this->load->model('feed/google_base');
+			$this->load->model('extension/feed/google_base');
 
 			$this->model_feed_google_base->addCategory($this->request->post);
 
@@ -224,7 +224,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('feed/google_base');
+			$this->load->model('extension/feed/google_base');
 
 			$this->model_feed_google_base->deleteCategory($this->request->post['category_id']);
 
@@ -239,7 +239,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('feed/google_base');
+			$this->load->model('extension/feed/google_base');
 
 			if (isset($this->request->get['filter_name'])) {
 				$filter_name = $this->request->get['filter_name'];

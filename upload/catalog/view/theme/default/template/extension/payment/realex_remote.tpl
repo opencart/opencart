@@ -62,7 +62,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
   $.ajax({
-    url: 'index.php?route=payment/realex_remote/send',
+    url: 'index.php?route=extension/payment/realex_remote/send',
     type: 'post',
     data: $('#payment :input'),
     dataType: 'json',

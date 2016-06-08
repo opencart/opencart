@@ -15,7 +15,7 @@ class ControllerExtensionPaymentSkrill extends Controller {
 		$data['transaction_id'] = $this->session->data['order_id'];
 		$data['return_url'] = $this->url->link('checkout/success');
 		$data['cancel_url'] = $this->url->link('checkout/checkout', '', true);
-		$data['status_url'] = $this->url->link('payment/skrill/callback');
+		$data['status_url'] = $this->url->link('extension/payment/skrill/callback');
 		$data['language'] = $this->session->data['language'];
 		$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 
@@ -44,7 +44,7 @@ class ControllerExtensionPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		return $this->load->view('payment/skrill', $data);
+		return $this->load->view('extension/payment/skrill', $data);
 	}
 
 	public function callback() {

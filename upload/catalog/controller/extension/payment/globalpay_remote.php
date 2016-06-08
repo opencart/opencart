@@ -58,7 +58,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/globalpay_remote', $data);
+		return $this->load->view('extension/payment/globalpay_remote', $data);
 	}
 
 	public function send() {
@@ -109,9 +109,9 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 		if ($this->config->get('globalpay_remote_3d') == 1) {
 			if ($this->request->post['cc_type'] == 'visa' || $this->request->post['cc_type'] == 'mc' || $this->request->post['cc_type'] == 'amex') {
-				$verify_3ds = $this->model_payment_globalpay_remote->checkEnrollment($account, $amount, $currency, $order_ref);
+				$verify_3ds = $this->model_extension_payment_globalpay_remote->checkEnrollment($account, $amount, $currency, $order_ref);
 
-				$this->model_payment_globalpay_remote->logger('Verify 3DS result:\r\n' . print_r($verify_3ds, 1));
+				$this->model_extension_payment_globalpay_remote->logger('Verify 3DS result:\r\n' . print_r($verify_3ds, 1));
 
 				// Proceed to 3D secure
 				if (isset($verify_3ds->result) && $verify_3ds->result == '00') {
@@ -135,7 +135,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$json['ACSURL'] = (string)$verify_3ds->url;
 					$json['MD'] = $md;
 					$json['PaReq'] = (string)$verify_3ds->pareq;
-					$json['TermUrl'] = $this->url->link('payment/globalpay_remote/acsReturn', '', true);
+					$json['TermUrl'] = $this->url->link('extension/payment/globalpay_remote/acsReturn', '', true);
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
@@ -201,7 +201,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			}
 		}
 
-		$capture_result = $this->model_payment_globalpay_remote->capturePayment(
+		$capture_result = $this->model_extension_payment_globalpay_remote->capturePayment(
 			$account,
 			$amount,
 			$currency,
@@ -219,7 +219,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$xid
 		);
 
-		$this->model_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
+		$this->model_extension_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
 
 		if ($capture_result->result != '00') {
 			$json['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
@@ -240,9 +240,9 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 			$md = json_decode($this->encryption->decrypt($post['MD']), true);
 
-			$signature_result = $this->model_payment_globalpay_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
+			$signature_result = $this->model_extension_payment_globalpay_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
 
-			$this->model_payment_globalpay_remote->logger('Signature result:\r\n' . print_r($signature_result, 1));
+			$this->model_extension_payment_globalpay_remote->logger('Signature result:\r\n' . print_r($signature_result, 1));
 
 			if ($signature_result->result == '00' && (strtoupper($signature_result->threedsecure->status) == 'Y' || strtoupper($signature_result->threedsecure->status) == 'A')) {
 				if (strtoupper($signature_result->threedsecure->status) == 'Y') {
@@ -305,7 +305,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_name') . ':</strong> ' . (string)$md['cc_name'];
 					}
 
-					$this->model_payment_globalpay_remote->addHistory($md['order_id'], $this->config->get('globalpay_remote_order_status_decline_id'), $message);
+					$this->model_extension_payment_globalpay_remote->addHistory($md['order_id'], $this->config->get('globalpay_remote_order_status_decline_id'), $message);
 
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 
@@ -314,7 +314,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 				}
 			}
 
-			$capture_result = $this->model_payment_globalpay_remote->capturePayment(
+			$capture_result = $this->model_extension_payment_globalpay_remote->capturePayment(
 				$md['account'],
 				$md['amount'],
 				$md['currency'],
@@ -332,7 +332,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 				$xid
 			);
 
-			$this->model_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
+			$this->model_extension_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
 
 			if ($capture_result->result != '00') {
 				$this->session->data['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';

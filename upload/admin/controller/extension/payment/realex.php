@@ -86,7 +86,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 
 		$data['error_use_select_card'] = $this->language->get('error_use_select_card');
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/realex/notify';
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -132,10 +132,10 @@ class ControllerExtensionPaymentRealex extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/realex', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/realex', 'token=' . $this->session->data['token'], true);
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -285,25 +285,25 @@ class ControllerExtensionPaymentRealex extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/realex', $data));
+		$this->response->setOutput($this->load->view('extension/payment/realex', $data));
 	}
 
 	public function install() {
 		$this->load->model('extension/payment/realex');
 
-		$this->model_payment_realex->install();
+		$this->model_extension_payment_realex->install();
 	}
 
 	public function order() {
 		if ($this->config->get('realex_status')) {
 			$this->load->model('extension/payment/realex');
 
-			$realex_order = $this->model_payment_realex->getOrder($this->request->get['order_id']);
+			$realex_order = $this->model_extension_payment_realex->getOrder($this->request->get['order_id']);
 
 			if (!empty($realex_order)) {
 				$this->load->language('extension/payment/realex');
 
-				$realex_order['total_captured'] = $this->model_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
+				$realex_order['total_captured'] = $this->model_extension_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
 
 				$realex_order['total_formatted'] = $this->currency->format($realex_order['total'], $realex_order['currency_code'], 1, true);
 				$realex_order['total_captured_formatted'] = $this->currency->format($realex_order['total_captured'], $realex_order['currency_code'], 1, true);
@@ -335,7 +335,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/realex_order', $data);
+				return $this->load->view('extension/payment/realex_order', $data);
 			}
 		}
 	}
@@ -347,15 +347,15 @@ class ControllerExtensionPaymentRealex extends Controller {
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
 			$this->load->model('extension/payment/realex');
 
-			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
+			$realex_order = $this->model_extension_payment_realex->getOrder($this->request->post['order_id']);
 
-			$void_response = $this->model_payment_realex->void($this->request->post['order_id']);
+			$void_response = $this->model_extension_payment_realex->void($this->request->post['order_id']);
 
-			$this->model_payment_realex->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_extension_payment_realex->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if (isset($void_response->result) && $void_response->result == '00') {
-				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'void', 0.00);
-				$this->model_payment_realex->updateVoidStatus($realex_order['realex_order_id'], 1);
+				$this->model_extension_payment_realex->addTransaction($realex_order['realex_order_id'], 'void', 0.00);
+				$this->model_extension_payment_realex->updateVoidStatus($realex_order['realex_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
 				$json['data'] = array();
@@ -381,19 +381,19 @@ class ControllerExtensionPaymentRealex extends Controller {
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
 			$this->load->model('extension/payment/realex');
 
-			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
+			$realex_order = $this->model_extension_payment_realex->getOrder($this->request->post['order_id']);
 
-			$capture_response = $this->model_payment_realex->capture($this->request->post['order_id'], $this->request->post['amount']);
+			$capture_response = $this->model_extension_payment_realex->capture($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Settle result:\r\n' . print_r($capture_response, 1));
+			$this->model_extension_payment_realex->logger('Settle result:\r\n' . print_r($capture_response, 1));
 
 			if (isset($capture_response->result) && $capture_response->result == '00') {
-				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'payment', $this->request->post['amount']);
+				$this->model_extension_payment_realex->addTransaction($realex_order['realex_order_id'], 'payment', $this->request->post['amount']);
 
-				$total_captured = $this->model_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
+				$total_captured = $this->model_extension_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
 
 				if ($total_captured >= $realex_order['total'] || $realex_order['settle_type'] == 0) {
-					$this->model_payment_realex->updateCaptureStatus($realex_order['realex_order_id'], 1);
+					$this->model_extension_payment_realex->updateCaptureStatus($realex_order['realex_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
 				} else {
@@ -401,7 +401,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 					$json['msg'] = $this->language->get('text_capture_ok');
 				}
 
-				$this->model_payment_realex->updateForRebate($realex_order['realex_order_id'], $capture_response->pasref, $capture_response->orderid);
+				$this->model_extension_payment_realex->updateForRebate($realex_order['realex_order_id'], $capture_response->pasref, $capture_response->orderid);
 
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
@@ -429,20 +429,20 @@ class ControllerExtensionPaymentRealex extends Controller {
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
 			$this->load->model('extension/payment/realex');
 
-			$realex_order = $this->model_payment_realex->getOrder($this->request->post['order_id']);
+			$realex_order = $this->model_extension_payment_realex->getOrder($this->request->post['order_id']);
 
-			$rebate_response = $this->model_payment_realex->rebate($this->request->post['order_id'], $this->request->post['amount']);
+			$rebate_response = $this->model_extension_payment_realex->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_extension_payment_realex->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if (isset($rebate_response->result) && $rebate_response->result == '00') {
-				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'rebate', $this->request->post['amount']*-1);
+				$this->model_extension_payment_realex->addTransaction($realex_order['realex_order_id'], 'rebate', $this->request->post['amount']*-1);
 
-				$total_rebated = $this->model_payment_realex->getTotalRebated($realex_order['realex_order_id']);
-				$total_captured = $this->model_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
+				$total_rebated = $this->model_extension_payment_realex->getTotalRebated($realex_order['realex_order_id']);
+				$total_captured = $this->model_extension_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
 
 				if ($total_captured <= 0 && $realex_order['capture_status'] == 1) {
-					$this->model_payment_realex->updateRebateStatus($realex_order['realex_order_id'], 1);
+					$this->model_extension_payment_realex->updateRebateStatus($realex_order['realex_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
 				} else {
@@ -471,7 +471,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/realex')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/realex')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

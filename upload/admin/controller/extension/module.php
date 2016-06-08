@@ -24,8 +24,8 @@ class ControllerExtensionModule extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'module/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'module/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('extension/module/' . $this->request->get['extension'] . '/install');
@@ -149,7 +149,7 @@ class ControllerExtensionModule extends Controller {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
-						'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
+						'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
 						'delete'    => $this->url->link('extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 					);
 				}
@@ -160,7 +160,7 @@ class ControllerExtensionModule extends Controller {
 					'install'   => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

@@ -20,8 +20,8 @@ class ControllerExtensionShipping extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'shipping/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'shipping/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/shipping/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/shipping/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/install');
@@ -97,7 +97,7 @@ class ControllerExtensionShipping extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('shipping/' . $extension);
+				$this->load->language('extension/shipping/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
@@ -106,7 +106,7 @@ class ControllerExtensionShipping extends Controller {
 					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('shipping/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'       => $this->url->link('extension/shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

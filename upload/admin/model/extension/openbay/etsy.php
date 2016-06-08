@@ -1,9 +1,9 @@
 <?php
-class ModelOpenbayEtsy extends Model{
+class ModelExtensionOpenBayEtsy extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_etsy', 'catalog/model/checkout/order/addOrderHistory/after', 'openbay/etsy/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbaypro_etsy', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/etsy/eventAddOrderHistory');
 
 		$settings                 = array();
 		$settings["etsy_token"]   = '';

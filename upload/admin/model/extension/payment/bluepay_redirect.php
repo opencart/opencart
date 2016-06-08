@@ -56,9 +56,9 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 			$void_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$void_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
 
-			$void_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$void_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$void_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
+			$void_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$void_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$void_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$void_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -92,9 +92,9 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$release_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
 			$release_data["AMOUNT"] = $amount;
-			$release_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$release_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$release_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
+			$release_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$release_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$release_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$release_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -127,9 +127,9 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 			$rebate_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$rebate_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
 			$rebate_data["AMOUNT"] = $amount;
-			$rebate_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$rebate_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
-			$rebate_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_redirect/callback';
+			$rebate_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$rebate_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
+			$rebate_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_redirect/callback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$rebate_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];

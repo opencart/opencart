@@ -75,10 +75,10 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/web_payment_software', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/web_payment_software', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['web_payment_software_login'])) {
@@ -147,11 +147,11 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/web_payment_software', $data));
+		$this->response->setOutput($this->load->view('extension/payment/web_payment_software', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/web_payment_software')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/web_payment_software')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

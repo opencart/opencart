@@ -12,7 +12,7 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 		$xml  = '<request>';
 		$xml .= '	<version>1.2</version>';
 		$xml .= '	<result_url>' . $this->url->link('checkout/success', '', true) . '</result_url>';
-		$xml .= '	<server_url>' . $this->url->link('payment/liqpay/callback', '', true) . '</server_url>';
+		$xml .= '	<server_url>' . $this->url->link('extension/payment/liqpay/callback', '', true) . '</server_url>';
 		$xml .= '	<merchant_id>' . $this->config->get('liqpay_merchant') . '</merchant_id>';
 		$xml .= '	<order_id>' . $this->session->data['order_id'] . '</order_id>';
 		$xml .= '	<amount>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . '</amount>';
@@ -25,7 +25,7 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 		$data['xml'] = base64_encode($xml);
 		$data['signature'] = base64_encode(sha1($this->config->get('liqpay_signature') . $xml . $this->config->get('liqpay_signature'), true));
 
-		return $this->load->view('payment/liqpay', $data);
+		return $this->load->view('extension/payment/liqpay', $data);
 	}
 
 	public function callback() {

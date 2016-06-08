@@ -25,7 +25,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
 
-		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', true);
+		$data['form_submit'] = $this->url->link('extension/payment/worldpay/send', '', true);
 
 		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
 			$data['worldpay_card'] = true;
@@ -36,7 +36,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		$data['existing_cards'] = array();
 		if ($this->customer->isLogged() && $data['worldpay_card']) {
 			$this->load->model('extension/payment/worldpay');
-			$data['existing_cards'] = $this->model_payment_worldpay->getCards($this->customer->getId());
+			$data['existing_cards'] = $this->model_extension_payment_worldpay->getCards($this->customer->getId());
 		}
 
 		$recurring_products = $this->cart->getRecurringProducts();
@@ -45,7 +45,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
-		return $this->load->view('payment/worldpay', $data);
+		return $this->load->view('extension/payment/worldpay', $data);
 	}
 
 	public function send() {
@@ -87,23 +87,23 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			"billingAddress" => $billing_address
 		);
 
-		$this->model_payment_worldpay->logger($order);
+		$this->model_extension_payment_worldpay->logger($order);
 
-		$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+		$response_data = $this->model_extension_payment_worldpay->sendCurl('orders', $order);
 
-		$this->model_payment_worldpay->logger($response_data);
+		$this->model_extension_payment_worldpay->logger($response_data);
 
 		if (isset($response_data->paymentStatus) && $response_data->paymentStatus == 'SUCCESS') {
 			$this->model_checkout_order->addOrderHistory($order_info['order_id'], $this->config->get('config_order_status_id'));
 
-			$worldpay_order_id = $this->model_payment_worldpay->addOrder($order_info, $response_data->orderCode);
+			$worldpay_order_id = $this->model_extension_payment_worldpay->addOrder($order_info, $response_data->orderCode);
 
-			$this->model_payment_worldpay->addTransaction($worldpay_order_id, 'payment', $order_info);
+			$this->model_extension_payment_worldpay->addTransaction($worldpay_order_id, 'payment', $order_info);
 
 			if (isset($this->request->post['save-card'])) {
-				$response = $this->model_payment_worldpay->sendCurl('tokens/' . $this->request->post['token']);
+				$response = $this->model_extension_payment_worldpay->sendCurl('tokens/' . $this->request->post['token']);
 
-				$this->model_payment_worldpay->logger($response);
+				$this->model_extension_payment_worldpay->logger($response);
 
 				$expiry_date = mktime(0, 0, 0, 0, (string)$response->paymentMethod->expiryMonth, (string)$response->paymentMethod->expiryYear);
 
@@ -114,13 +114,13 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 					$card_data['Last4Digits'] = (string)$response->paymentMethod->maskedCardNumber;
 					$card_data['ExpiryDate'] = date("m/y", $expiry_date);
 					$card_data['CardType'] = (string)$response->paymentMethod->cardType;
-					$this->model_payment_worldpay->addCard($this->session->data['order_id'], $card_data);
+					$this->model_extension_payment_worldpay->addCard($this->session->data['order_id'], $card_data);
 				}
 			}
 
 			//loop through any products that are recurring items
 			foreach ($recurring_products as $item) {
-				$this->model_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
+				$this->model_extension_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
 			}
 
 			$this->response->redirect($this->url->link('checkout/success', '', true));
@@ -136,13 +136,13 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		$this->load->model('extension/payment/worldpay');
 
 		if (isset($this->request->post['token'])) {
-			if ($this->model_payment_worldpay->deleteCard($this->request->post['token'])) {
+			if ($this->model_extension_payment_worldpay->deleteCard($this->request->post['token'])) {
 				$json['success'] = $this->language->get('text_card_success');
 			} else {
 				$json['error'] = $this->language->get('text_card_error');
 			}
 
-			if (count($this->model_payment_worldpay->getCards($this->customer->getId()))) {
+			if (count($this->model_extension_payment_worldpay->getCards($this->customer->getId()))) {
 				$json['existing_cards'] = true;
 			}
 		} else {
@@ -159,8 +159,8 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$message = json_decode(file_get_contents('php://input'), true);
 
 			if (isset($message['orderCode'])) {
-				$order = $this->model_payment_worldpay->getWorldpayOrder($message['orderCode']);
-				$this->model_payment_worldpay->logger($order);
+				$order = $this->model_extension_payment_worldpay->getWorldpayOrder($message['orderCode']);
+				$this->model_extension_payment_worldpay->logger($order);
 				switch ($message['paymentStatus']) {
 					case 'SUCCESS':
 						$order_status_id = $this->config->get('worldpay_entry_success_status_id');
@@ -191,7 +191,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 						break;
 				}
 
-				$this->model_payment_worldpay->logger($order_status_id);
+				$this->model_extension_payment_worldpay->logger($order_status_id);
 				if (isset($order['order_id'])) {
 					$this->load->model('checkout/order');
 					$this->model_checkout_order->addOrderHistory($order['order_id'], $order_status_id);
@@ -207,11 +207,11 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		if ($this->request->get['token'] == $this->config->get('worldpay_cron_job_token')) {
 			$this->load->model('extension/payment/worldpay');
 
-			$orders = $this->model_payment_worldpay->cronPayment();
+			$orders = $this->model_extension_payment_worldpay->cronPayment();
 
-			$this->model_payment_worldpay->updateCronJobRunTime();
+			$this->model_extension_payment_worldpay->updateCronJobRunTime();
 
-			$this->model_payment_worldpay->logger($orders);
+			$this->model_extension_payment_worldpay->logger($orders);
 		}
 	}
 

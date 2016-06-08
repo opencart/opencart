@@ -422,7 +422,7 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
-			$this->load->language('theme/' . $code);
+			$this->load->language('extension/theme/' . $code);
 			
 			$data['themes'][] = array(
 				'text'  => $this->language->get('heading_title'),
@@ -866,7 +866,7 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
-			$this->load->language('captcha/' . $code);
+			$this->load->language('extension/captcha/' . $code);
 
 			if ($this->config->get($code . '_status')) {
 				$data['captchas'][] = array(

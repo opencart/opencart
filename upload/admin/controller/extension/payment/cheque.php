@@ -62,10 +62,10 @@ class ControllerExtensionPaymentCheque extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/cheque', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cheque', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/cheque', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cheque', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -117,11 +117,11 @@ class ControllerExtensionPaymentCheque extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/cheque', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cheque', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/cheque')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/cheque')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

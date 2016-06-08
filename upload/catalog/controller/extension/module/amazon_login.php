@@ -9,11 +9,11 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 			}
 
-			$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
+			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 			$this->document->addScript($amazon_payment_js);
 
 			$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
-			$data['amazon_login_return_url'] = $this->url->link('module/amazon_login/login', '', true);
+			$data['amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
 			if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
 				$data['amazon_login_pay_test'] = true;
 			}
@@ -51,18 +51,18 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		if (isset($this->request->get['access_token'])) {
 			$this->session->data['access_token'] = $this->request->get['access_token'];
-			$user = $this->model_payment_amazon_login_pay->getUserInfo($this->request->get['access_token']);
+			$user = $this->model_extension_payment_amazon_login_pay->getUserInfo($this->request->get['access_token']);
 		}
 
 		if ((array)$user) {
 			if (isset($user->error)) {
-				$this->model_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
+				$this->model_extension_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
 				$this->session->data['lpa']['error'] = $this->language->get('error_login');
-				$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', true));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 			}
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
-			$this->model_payment_amazon_login_pay->logger($user);
+			$this->model_extension_payment_amazon_login_pay->logger($user);
 
 			if ($customer_info) {
 				if ($this->validate($user->email)) {
@@ -86,11 +86,11 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					);
 
 					$this->model_account_activity->addActivity('login', $activity_data);
-					$this->model_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 				} else {
-					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', true));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 				}
 				$this->response->redirect($this->url->link('account/account', '', true));
 			} else {
@@ -120,7 +120,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 				$customer_id = $this->model_account_customer->addCustomer($data);
 
-				$this->model_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
+				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
@@ -144,19 +144,19 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 					$this->model_account_activity->addActivity('login', $activity_data);
 
-					$this->model_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
+					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
 
 					$this->response->redirect($this->url->link('account/account', '', true));
 				} else {
-					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
+					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', true));
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 				}
 			}
 		} else {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', true));
+			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 		}
 	}
 

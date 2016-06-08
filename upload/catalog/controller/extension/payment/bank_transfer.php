@@ -14,7 +14,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/bank_transfer', $data);
+		return $this->load->view('extension/payment/bank_transfer', $data);
 	}
 
 	public function confirm() {

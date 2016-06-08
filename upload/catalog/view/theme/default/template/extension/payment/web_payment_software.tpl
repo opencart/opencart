@@ -46,7 +46,7 @@
 <script type="text/javascript">
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/web_payment_software/send',
+		url: 'index.php?route=extension/payment/web_payment_software/send',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',

@@ -95,10 +95,10 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/payment/pp_payflow', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['action'] = $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/pp_payflow', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -182,11 +182,11 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_payflow', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_payflow')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/pp_payflow')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -114,7 +114,7 @@
 <script type="text/javascript">
 	$('#button-confirm').bind('click', function() {
 		$.ajax({
-			url: 'index.php?route=payment/bluepay_redirect/send',
+			url: 'index.php?route=extension/payment/bluepay_redirect/send',
 			type: 'post',
 			data: $('#card-new :input[type=\'text\']:enabled, #card-new select:enabled, #card-new :input[type=\'checkbox\']:checked:enabled, #payment select:enabled, #card-existing :input:enabled'),
 			dataType: 'json',

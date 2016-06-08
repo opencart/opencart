@@ -3,7 +3,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('analytics/google_analytics');
+		$this->load->language('extension/analytics/google_analytics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -56,10 +56,10 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
+			'href' => $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
 		);
 
-		$data['action'] = $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
+		$data['action'] = $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=analytics', true);
 		
@@ -81,11 +81,11 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('analytics/google_analytics', $data));
+		$this->response->setOutput($this->load->view('extension/analytics/google_analytics', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'analytics/google_analytics')) {
+		if (!$this->user->hasPermission('modify', 'extension/analytics/google_analytics')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

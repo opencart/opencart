@@ -75,19 +75,19 @@ class ControllerExtensionModuleBanner extends Controller {
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/banner', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('extension/module/banner', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/banner', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
+				'href' => $this->url->link('extension/module/banner', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('module/banner', 'token=' . $this->session->data['token'], true);
+			$data['action'] = $this->url->link('extension/module/banner', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('module/banner', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+			$data['action'] = $this->url->link('extension/module/banner', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
@@ -148,7 +148,7 @@ class ControllerExtensionModuleBanner extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/banner')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

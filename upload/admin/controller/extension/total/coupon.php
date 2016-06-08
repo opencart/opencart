@@ -3,7 +3,7 @@ class ControllerExtensionTotalCoupon extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/coupon');
+		$this->load->language('extension/total/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -49,10 +49,10 @@ class ControllerExtensionTotalCoupon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/coupon', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/coupon', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/coupon', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/coupon', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
@@ -72,11 +72,11 @@ class ControllerExtensionTotalCoupon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/coupon', $data));
+		$this->response->setOutput($this->load->view('extension/total/coupon', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/coupon')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/coupon')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

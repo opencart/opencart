@@ -3,7 +3,7 @@ class ControllerExtensionShippingParcelforce48 extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/parcelforce_48');
+		$this->load->language('extension/shipping/parcelforce_48');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -68,10 +68,10 @@ class ControllerExtensionShippingParcelforce48 extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/parcelforce_48', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping/parcelforce_48', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/parcelforce_48', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/shipping/parcelforce_48', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
@@ -145,11 +145,11 @@ class ControllerExtensionShippingParcelforce48 extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/parcelforce_48', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/parcelforce_48', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/parcelforce_48')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/parcelforce_48')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

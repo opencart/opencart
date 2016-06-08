@@ -135,7 +135,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
       $.ajax({
-        url: 'index.php?route=payment/sagepay_direct/send',
+        url: 'index.php?route=extension/payment/sagepay_direct/send',
         type: 'post',
         data: $('#card-new :input[type=\'text\']:enabled, #card-new select:enabled, #card-new :input[type=\'checkbox\']:checked:enabled, #payment select:enabled, #card-existing :input:enabled'),
         dataType: 'json',
@@ -176,7 +176,7 @@ $('#button-confirm').bind('click', function() {
     $('#button-delete').bind('click', function () {
       if (confirm('<?php echo $text_confirm_delete; ?>')) {
         $.ajax({
-          url: 'index.php?route=payment/sagepay_direct/delete',
+          url: 'index.php?route=extension/payment/sagepay_direct/delete',
           type: 'post',
           data: $('#card-existing :input[name=\'Token\']'),
           dataType: 'json',

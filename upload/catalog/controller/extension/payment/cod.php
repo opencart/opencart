@@ -7,7 +7,7 @@ class ControllerExtensionPaymentCod extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/cod', $data);
+		return $this->load->view('extension/payment/cod', $data);
 	}
 
 	public function confirm() {

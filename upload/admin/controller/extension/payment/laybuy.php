@@ -35,7 +35,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -112,9 +112,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$data['button_filter'] = $this->language->get('button_filter');
 		$data['button_view'] = $this->language->get('button_view');
 
-		$data['action'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'], true);
 
-		$data['fetch'] = $this->url->link('payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab', true);
+		$data['fetch'] = $this->url->link('extension/payment/laybuy/fetch', 'token=' . $this->session->data['token'] . '#reportstab', true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -278,7 +278,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$data['laybuy_sort_order'] = $this->config->get('laybuy_sort_order');
 		}
 
-		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/cron&token=' . $data['laybuy_token'];
+		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['laybuy_token'];
 
 		if ($this->config->get('laybuy_cron_time')) {
 			$data['laybuy_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('laybuy_cron_time')));
@@ -388,14 +388,14 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			'limit'				=> $this->config->get('config_limit_admin')
 		);
 
-		$report_total = $this->model_payment_laybuy->getTotalTransactions($filter_data);
+		$report_total = $this->model_extension_payment_laybuy->getTotalTransactions($filter_data);
 
-		$results = $this->model_payment_laybuy->getTransactions($filter_data);
+		$results = $this->model_extension_payment_laybuy->getTransactions($filter_data);
 
 		foreach ($results as $result) {
 			$customer_url = false;
 
-			$customer_id = $this->model_payment_laybuy->getCustomerIdByOrderId($result['order_id']);
+			$customer_id = $this->model_extension_payment_laybuy->getCustomerIdByOrderId($result['order_id']);
 
 			if ($customer_id) {
 				$customer_url = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . (int)$customer_id, true);
@@ -413,9 +413,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				'dp_amount'		=> $this->currency->format($result['downpayment_amount'], $result['currency']),
 				'first_payment'	=> date($this->language->get('date_format_short'), strtotime($result['first_payment_due'])),
 				'last_payment'	=> date($this->language->get('date_format_short'), strtotime($result['last_payment_due'])),
-				'status'		=> $this->model_payment_laybuy->getStatusLabel($result['status']),
+				'status'		=> $this->model_extension_payment_laybuy->getStatusLabel($result['status']),
 				'date_added'	=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'			=> $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . (int)$result['laybuy_transaction_id'], true)
+				'view'			=> $this->url->link('extension/payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . (int)$result['laybuy_transaction_id'], true)
 			);
 		}
 
@@ -461,16 +461,16 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order_id'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.order_id' . $url . '#reportstab', true);
-		$data['sort_customer'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=customer' . $url . '#reportstab', true);
-		$data['sort_amount'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.amount' . $url . '#reportstab', true);
-		$data['sort_dp_percent'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment' . $url . '#reportstab', true);
-		$data['sort_months'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.months' . $url . '#reportstab', true);
-		$data['sort_dp_amount'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab', true);
-		$data['sort_first_payment'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.first_payment_due' . $url . '#reportstab', true);
-		$data['sort_last_payment'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.last_payment_due' . $url . '#reportstab', true);
-		$data['sort_status'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.status' . $url . '#reportstab', true);
-		$data['sort_date_added'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.date_added' . $url . '#reportstab', true);
+		$data['sort_order_id'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.order_id' . $url . '#reportstab', true);
+		$data['sort_customer'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=customer' . $url . '#reportstab', true);
+		$data['sort_amount'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.amount' . $url . '#reportstab', true);
+		$data['sort_dp_percent'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment' . $url . '#reportstab', true);
+		$data['sort_months'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.months' . $url . '#reportstab', true);
+		$data['sort_dp_amount'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.downpayment_amount' . $url . '#reportstab', true);
+		$data['sort_first_payment'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.first_payment_due' . $url . '#reportstab', true);
+		$data['sort_last_payment'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.last_payment_due' . $url . '#reportstab', true);
+		$data['sort_status'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.status' . $url . '#reportstab', true);
+		$data['sort_date_added'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '&sort=lt.date_added' . $url . '#reportstab', true);
 
 		$url = '';
 
@@ -510,7 +510,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$pagination->total = $report_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . $url . '&page={page}#reportstab', true);
+		$pagination->url = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . $url . '&page={page}#reportstab', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -526,7 +526,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['transaction_statuses'] = $this->model_payment_laybuy->getTransactionStatuses();
+		$data['transaction_statuses'] = $this->model_extension_payment_laybuy->getTransactionStatuses();
 		/* End of Reports Tab */
 
 		$data['token'] = $this->session->data['token'];
@@ -549,22 +549,22 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/laybuy', $data));
+		$this->response->setOutput($this->load->view('extension/payment/laybuy', $data));
 	}
 
 	public function fetch() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->model_payment_laybuy->log('Fetching transactions');
+		$this->model_extension_payment_laybuy->log('Fetching transactions');
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->load->language('extension/payment/laybuy');
 
 			$json = array();
 
 			$fetched = 0;
 
-			$paypal_profile_id_array = $this->model_payment_laybuy->getPayPalProfileIds();
+			$paypal_profile_id_array = $this->model_extension_payment_laybuy->getPayPalProfileIds();
 
 			if ($paypal_profile_id_array) {
 				$paypal_profile_ids = '';
@@ -577,9 +577,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
 
-				$this->model_payment_laybuy->log('Data String: ' . $data_string);
+				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_payment_laybuy->log('API URL: ' . $this->config->get('laybuy_api_url'));
+				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('laybuy_api_url'));
 
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_api_url'));
@@ -591,13 +591,13 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$result = curl_exec($ch);
 				if (curl_errno($ch)) {
-					$this->model_payment_laybuy->log('cURL error: ' . curl_errno($ch));
+					$this->model_extension_payment_laybuy->log('cURL error: ' . curl_errno($ch));
 				}
 				curl_close($ch);
 
 				$results = json_decode($result, true);
 
-				$this->model_payment_laybuy->log('Response: ' . print_r($results, true));
+				$this->model_extension_payment_laybuy->log('Response: ' . print_r($results, true));
 
 				if ($results) {
 					foreach ($results as $laybuy_ref_id => $reports) {
@@ -607,7 +607,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 						$transaction = array();
 
-						$transaction = $this->model_payment_laybuy->getTransactionByLayBuyRefId($laybuy_ref_id);
+						$transaction = $this->model_extension_payment_laybuy->getTransactionByLayBuyRefId($laybuy_ref_id);
 
 						$order_id = $transaction['order_id'];
 
@@ -674,20 +674,20 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 						switch ($status) {
 							case -1: // Cancel
-								$this->model_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' canceled');
-								$this->model_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_canceled'), $this->language->get('text_comment'));
-								$this->model_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '7', $report_content, $start_index);
+								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' canceled');
+								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_canceled'), $this->language->get('text_comment'));
+								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '7', $report_content, $start_index);
 								$fetched++;
 								break;
 							case 0: // Pending
-								$this->model_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' still pending');
-								$this->model_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], $transaction['status'], $report_content, $start_index);
+								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' still pending');
+								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], $transaction['status'], $report_content, $start_index);
 								$fetched++;
 								break;
 							case 1: // Paid
-								$this->model_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' paid');
-								$this->model_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'));
-								$this->model_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '5', $report_content, $start_index);
+								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' paid');
+								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'));
+								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '5', $report_content, $start_index);
 								$fetched++;
 								break;
 						}
@@ -700,16 +700,16 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 					$this->session->data['success'] = $this->language->get('text_fetched_none');
 				}
 
-				$this->response->redirect($this->url->link('payment/laybuy', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'], true));
 			} else {
-				$this->model_payment_laybuy->log('No PayPal Profile IDs to update');
+				$this->model_extension_payment_laybuy->log('No PayPal Profile IDs to update');
 
 				$this->session->data['success'] = $this->language->get('text_fetched_none');
 
-				$this->response->redirect($this->url->link('payment/laybuy', 'token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'], true));
 			}
 		} else {
-			$this->model_payment_laybuy->log('User does not have permission');
+			$this->model_extension_payment_laybuy->log('User does not have permission');
 		}
 	}
 
@@ -717,7 +717,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		if ($this->user->hasPermission('modify', 'extension/extension')) {
 			$this->load->model('extension/payment/laybuy');
 
-			$this->model_payment_laybuy->install();
+			$this->model_extension_payment_laybuy->install();
 		}
 	}
 
@@ -725,7 +725,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		if ($this->user->hasPermission('modify', 'extension/extension')) {
 			$this->load->model('extension/payment/laybuy');
 
-			$this->model_payment_laybuy->uninstall();
+			$this->model_extension_payment_laybuy->uninstall();
 		}
 	}
 
@@ -760,21 +760,21 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab', true)
+			'href' => $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_transaction_title'),
-			'href' => $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true)
+			'href' => $this->url->link('extension/payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_transaction_title');
 
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['cancel'] = $this->url->link('payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab', true);
+		$data['cancel'] = $this->url->link('extension/payment/laybuy', 'token=' . $this->session->data['token'] . '#reportstab', true);
 
-		$transaction_info = $this->model_payment_laybuy->getTransaction($id);
+		$transaction_info = $this->model_extension_payment_laybuy->getTransaction($id);
 
 		if ($transaction_info) {
 			$data['tab_reference'] = $this->language->get('tab_reference');
@@ -820,9 +820,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$data['button_revise_plan'] = $this->language->get('button_revise_plan');
 			$data['button_cancel_plan'] = $this->language->get('button_cancel_plan');
 
-			$data['initial_payments'] = $this->model_payment_laybuy->getInitialPayments();
+			$data['initial_payments'] = $this->model_extension_payment_laybuy->getInitialPayments();
 
-			$data['months'] = $this->model_payment_laybuy->getMonths();
+			$data['months'] = $this->model_extension_payment_laybuy->getMonths();
 
 			$data['currency_symbol_left'] = $this->currency->getSymbolLeft($transaction_info['currency']);
 
@@ -840,7 +840,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				'currency_value' => $order['currency_value']
 			);
 
-			$data['total'] = $this->model_payment_laybuy->getRemainingAmount($transaction_info['amount'], $transaction_info['downpayment_amount'], $transaction_info['payment_amounts'], $transaction_info['transaction']);
+			$data['total'] = $this->model_extension_payment_laybuy->getRemainingAmount($transaction_info['amount'], $transaction_info['downpayment_amount'], $transaction_info['payment_amounts'], $transaction_info['transaction']);
 
 			$data['transaction'] = array(
 				'paypal_profile_id' => $transaction_info['paypal_profile_id'],
@@ -855,9 +855,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				'country' 			=> $transaction_info['country'],
 				'postcode'  		=> $transaction_info['postcode'],
 				'status_id'			=> $transaction_info['status'],
-				'status'          	=> $this->model_payment_laybuy->getStatusLabel($transaction_info['status']),
+				'status'          	=> $this->model_extension_payment_laybuy->getStatusLabel($transaction_info['status']),
 				'amount'          	=> $this->currency->format($transaction_info['amount'], $transaction_info['currency']),
-				'remaining'        	=> $this->currency->format($this->model_payment_laybuy->getRemainingAmount($transaction_info['amount'], $transaction_info['downpayment_amount'], $transaction_info['payment_amounts'], $transaction_info['transaction']), $transaction_info['currency']),
+				'remaining'        	=> $this->currency->format($this->model_extension_payment_laybuy->getRemainingAmount($transaction_info['amount'], $transaction_info['downpayment_amount'], $transaction_info['payment_amounts'], $transaction_info['transaction']), $transaction_info['currency']),
 				'downpayment'	  	=> $transaction_info['downpayment'],
 				'months'	  		=> $transaction_info['months'],
 				'downpayment_amount'=> $this->currency->format($transaction_info['downpayment_amount'], $transaction_info['currency']),
@@ -898,33 +898,33 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			return $data;
 		}
 
-		$this->response->setOutput($this->load->view('payment/laybuy_transaction', $data));
+		$this->response->setOutput($this->load->view('extension/payment/laybuy_transaction', $data));
 	}
 
 	public function cancel() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->model_payment_laybuy->log('Canceling transaction');
+		$this->model_extension_payment_laybuy->log('Canceling transaction');
 
 		if ($this->request->get['source'] == 'order') {
-			$this->model_payment_laybuy->log('Called from order page');
+			$this->model_extension_payment_laybuy->log('Called from order page');
 		} else {
-			$this->model_payment_laybuy->log('Called from extension page');
+			$this->model_extension_payment_laybuy->log('Called from extension page');
 		}
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->load->language('extension/payment/laybuy');
 
 			$json = array();
 
 			$id = (int)$this->request->get['id'];
 
-			$transaction_info = $this->model_payment_laybuy->getTransaction($id);
+			$transaction_info = $this->model_extension_payment_laybuy->getTransaction($id);
 
 			$cancel = false;
 
 			if (!$transaction_info['paypal_profile_id']) {
-				$this->model_payment_laybuy->log('Transaction has no paypal_profile_id');
+				$this->model_extension_payment_laybuy->log('Transaction has no paypal_profile_id');
 
 				$cancel = true;
 			}
@@ -932,7 +932,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			if (!$cancel) {
 				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'paypal_profile_id=' . $transaction_info['paypal_profile_id'];
 
-				$this->model_payment_laybuy->log('Data String: ' . $data_string);
+				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
 				$ch = curl_init();
 				$url = 'https://lay-buys.com/vtmob/deal5cancel.php';
@@ -945,23 +945,23 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$result = curl_exec($ch);
 				if (curl_errno($ch)) {
-					$this->model_payment_laybuy->log('cURL error: ' . curl_errno($ch));
+					$this->model_extension_payment_laybuy->log('cURL error: ' . curl_errno($ch));
 				}
 				curl_close($ch);
 
-				$this->model_payment_laybuy->log('Response: ' . $result);
+				$this->model_extension_payment_laybuy->log('Response: ' . $result);
 
 				if ($result == 'success') {
-					$this->model_payment_laybuy->log('Success');
+					$this->model_extension_payment_laybuy->log('Success');
 
 					$cancel = true;
 				} else {
-					$this->model_payment_laybuy->log('Failure');
+					$this->model_extension_payment_laybuy->log('Failure');
 				}
 			}
 
 			if ($cancel) {
-				$this->model_payment_laybuy->log('Transaction canceled');
+				$this->model_extension_payment_laybuy->log('Transaction canceled');
 
 				$report_content = json_decode($transaction_info['report'], true);
 
@@ -971,7 +971,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$report_content = json_encode($report_content);
 
-				$this->model_payment_laybuy->updateTransaction($transaction_info['laybuy_transaction_id'], '7', $report_content, $transaction_info['transaction']);
+				$this->model_extension_payment_laybuy->updateTransaction($transaction_info['laybuy_transaction_id'], '7', $report_content, $transaction_info['transaction']);
 
 				$json['success'] = $this->language->get('text_cancel_success');
 
@@ -987,27 +987,27 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			if ($this->request->get['source'] == 'order') {
 				$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token'], true);
 			} else {
-				$json['reload'] = $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true);
+				$json['reload'] = $this->url->link('extension/payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true);
 			}
 
 			$this->response->setOutput(json_encode($json));
 		} else {
-			$this->model_payment_laybuy->log('User does not have permission');
+			$this->model_extension_payment_laybuy->log('User does not have permission');
 		}
 	}
 
 	public function revise() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->model_payment_laybuy->log('Revising transaction');
+		$this->model_extension_payment_laybuy->log('Revising transaction');
 
 		if ($this->request->get['source'] == 'order') {
-			$this->model_payment_laybuy->log('Called from order page');
+			$this->model_extension_payment_laybuy->log('Called from order page');
 		} else {
-			$this->model_payment_laybuy->log('Called from extension page');
+			$this->model_extension_payment_laybuy->log('Called from extension page');
 		}
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 				$this->load->language('extension/payment/laybuy');
 
@@ -1023,7 +1023,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$id = $this->request->get['id'];
 
-				$transaction_info = $this->model_payment_laybuy->getTransaction($id);
+				$transaction_info = $this->model_extension_payment_laybuy->getTransaction($id);
 
 				$original = $new = $transaction_info;
 
@@ -1039,41 +1039,41 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$new['downpayment'] = $initial;
 				$new['months'] = $months;
 
-				$collection = $this->model_payment_laybuy->getRevisedTransactions($id);
+				$collection = $this->model_extension_payment_laybuy->getRevisedTransactions($id);
 
-				$this->model_payment_laybuy->log('Collection: ' . print_r($collection, true));
+				$this->model_extension_payment_laybuy->log('Collection: ' . print_r($collection, true));
 
 				if (count($collection) == 2) {
-					$this->model_payment_laybuy->log('Collection == 2');
+					$this->model_extension_payment_laybuy->log('Collection == 2');
 
 					foreach ($collection as $request) {
-						$this->model_payment_laybuy->log('request: ' . print_r($request, true));
+						$this->model_extension_payment_laybuy->log('request: ' . print_r($request, true));
 
 						if ($request['type'] == 'Original') {
-							$this->model_payment_laybuy->log('Original: ' . print_r($original, true));
+							$this->model_extension_payment_laybuy->log('Original: ' . print_r($original, true));
 
-							$this->model_payment_laybuy->updateRevisedTransaction($id, $original);
+							$this->model_extension_payment_laybuy->updateRevisedTransaction($id, $original);
 						} elseif ($request['type'] == 'New') {
-							$this->model_payment_laybuy->log('New: ' . print_r($new, true));
+							$this->model_extension_payment_laybuy->log('New: ' . print_r($new, true));
 
-							$this->model_payment_laybuy->updateRevisedTransaction($id, $new);
+							$this->model_extension_payment_laybuy->updateRevisedTransaction($id, $new);
 
-							$revised_transaction = $this->model_payment_laybuy->getRevisedTransaction($id);
+							$revised_transaction = $this->model_extension_payment_laybuy->getRevisedTransaction($id);
 						}
 					}
 				} else {
-					$this->model_payment_laybuy->log('Collection != 2');
+					$this->model_extension_payment_laybuy->log('Collection != 2');
 
-					$this->model_payment_laybuy->addRevisedTransaction($original);
+					$this->model_extension_payment_laybuy->addRevisedTransaction($original);
 
-					$laybuy_revise_request_id = $this->model_payment_laybuy->addRevisedTransaction($new);
+					$laybuy_revise_request_id = $this->model_extension_payment_laybuy->addRevisedTransaction($new);
 
-					$this->model_payment_laybuy->log('$laybuy_revise_request_id: ' . $laybuy_revise_request_id);
+					$this->model_extension_payment_laybuy->log('$laybuy_revise_request_id: ' . $laybuy_revise_request_id);
 
-					$revised_transaction = $this->model_payment_laybuy->getRevisedTransaction($laybuy_revise_request_id);
+					$revised_transaction = $this->model_extension_payment_laybuy->getRevisedTransaction($laybuy_revise_request_id);
 				}
 
-				$this->model_payment_laybuy->log('Revised transaction: ' . print_r($revised_transaction, true));
+				$this->model_extension_payment_laybuy->log('Revised transaction: ' . print_r($revised_transaction, true));
 
 				if ($revised_transaction['payment_type'] == '1') {
 					$pp = '1';
@@ -1095,8 +1095,8 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data['mnth']      = $months;
 				$data['convrate']  = '1';
 				$data['id']        = $revised_transaction['laybuy_revise_request_id'] . '-' . $revised_transaction['order_id'] . ':' . md5($this->config->get('laybuy_token'));
-				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/reviseCallback';
-				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/reviseCancel';
+				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCallback';
+				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCancel';
 
 				$data_string = '';
 
@@ -1106,7 +1106,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$data_string = rtrim($data_string, '&');
 
-				$this->model_payment_laybuy->log('Data String: ' . $data_string);
+				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
 				$ch = curl_init();
 				$url = 'https://lay-buys.com/vtmob/deal5.php';
@@ -1119,20 +1119,20 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$result = curl_exec($ch);
 				if (curl_errno($ch)) {
-					$this->model_payment_laybuy->log('cURL error: ' . curl_errno($ch));
+					$this->model_extension_payment_laybuy->log('cURL error: ' . curl_errno($ch));
 				}
 				curl_close($ch);
 
 				if ($result == 'success') {
-					$this->model_payment_laybuy->log('Success');
+					$this->model_extension_payment_laybuy->log('Success');
 
-					$this->model_payment_laybuy->updateTransactionStatus($id, '50');
+					$this->model_extension_payment_laybuy->updateTransactionStatus($id, '50');
 
 					$json['success'] = $this->language->get('text_revise_success');
 				} else {
-					$this->model_payment_laybuy->log('Failure');
+					$this->model_extension_payment_laybuy->log('Failure');
 
-					$this->model_payment_laybuy->log('Response: ' . print_r($result, true));
+					$this->model_extension_payment_laybuy->log('Response: ' . print_r($result, true));
 
 					$json['error'] = $this->language->get('text_revise_failure');
 				}
@@ -1140,15 +1140,15 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				if ($this->request->get['source'] == 'order') {
 					$json['reload'] = $this->url->link('sale/order/info', 'order_id=' . (int)$transaction_info['order_id'] . '&token=' . $this->session->data['token'], true);
 				} else {
-					$json['reload'] = $this->url->link('payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true);
+					$json['reload'] = $this->url->link('extension/payment/laybuy/transaction', 'token=' . $this->session->data['token'] . '&id=' . $id, true);
 				}
 
 				$this->response->setOutput(json_encode($json));
 			} else {
-				$this->model_payment_laybuy->log('No $_POST data');
+				$this->model_extension_payment_laybuy->log('No $_POST data');
 			}
 		} else {
-			$this->model_payment_laybuy->log('User does not have permission');
+			$this->model_extension_payment_laybuy->log('User does not have permission');
 		}
 	}
 
@@ -1180,7 +1180,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$order_id = $this->request->get['order_id'];
 
-			$transaction_info = $this->model_payment_laybuy->getTransactionByOrderId($order_id);
+			$transaction_info = $this->model_extension_payment_laybuy->getTransactionByOrderId($order_id);
 
 			$laybuy_transaction_id = $transaction_info['laybuy_transaction_id'];
 
@@ -1194,32 +1194,32 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$data['api_key'] = $this->getApiKey();
 
-			return $this->load->view('payment/laybuy_order', $data);
+			return $this->load->view('extension/payment/laybuy_order', $data);
 		}
 	}
 
 	private function getApiKey() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->model_payment_laybuy->log('Getting API key');
+		$this->model_extension_payment_laybuy->log('Getting API key');
 
 		$this->load->model('user/api');
 
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info) {
-			$this->model_payment_laybuy->log('API key: ' . $api_info['key']);
+			$this->model_extension_payment_laybuy->log('API key: ' . $api_info['key']);
 
 			return $api_info['key'];
 		} else {
-			$this->model_payment_laybuy->log('No API info');
+			$this->model_extension_payment_laybuy->log('No API info');
 
 			return;
 		}
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/laybuy')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

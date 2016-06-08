@@ -74,11 +74,11 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/module/amazon_pay', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
-		$data['action'] = $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/amazon_pay', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -122,7 +122,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/amazon_pay')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/amazon_pay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -131,7 +131,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 	public function install() {
 		$this->load->model('extension/event');
-		$this->model_extension_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'module/amazon_pay/logout');
+		$this->model_extension_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'extension/module/amazon_pay/logout');
 	}
 
 	public function uninstall() {

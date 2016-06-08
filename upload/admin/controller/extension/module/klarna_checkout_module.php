@@ -3,7 +3,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/klarna_checkout_module');
+		$this->language->load('extension/module/klarna_checkout_module');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('setting/setting');
@@ -50,10 +50,10 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/klarna_checkout_module', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/klarna_checkout_module', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/klarna_checkout_module', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/klarna_checkout_module', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -71,7 +71,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/klarna_checkout_module')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/klarna_checkout_module')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayOrder extends Model {
+class ModelExtensionOpenBayOrder extends Model {
 	public function getTotalOrders($data = array()) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` AS o";
 

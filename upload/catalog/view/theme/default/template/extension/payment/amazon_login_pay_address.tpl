@@ -39,7 +39,7 @@ $(document).ready(function() {
 				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping; ?></div>');
 			} else {
 				$.ajax({
-					url: 'index.php?route=payment/amazon_login_pay/setshipping',
+					url: 'index.php?route=extension/payment/amazon_login_pay/setshipping',
 					type: 'post',
 					data: $('input[name="shipping_method"]:checked'), dataType: 'json',
 					success: function(json) {

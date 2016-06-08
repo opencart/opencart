@@ -444,7 +444,7 @@ class ControllerDesignMenu extends Controller {
 		foreach ($menu_modules as $menu_module) {
 			$part = explode('.', $menu_module['code']);
 		
-			$this->load->language('menu/' . $part[0]);			
+			$this->load->language('extension/menu/' . $part[0]);			
 			
 			$data['menu_modules'][$key][] = array(
 				'name'       => strip_tags($this->language->get('heading_title')),

@@ -1232,7 +1232,7 @@ class ControllerSaleOrder extends Controller {
 			// Additional Tabs
 			$data['tabs'] = array();
 
-			if ($this->user->hasPermission('access', 'payment/' . $order_info['payment_code'])) {
+			if ($this->user->hasPermission('access', 'extension/payment/' . $order_info['payment_code'])) {
 				if (is_file(DIR_CATALOG . 'controller/extension/payment/' . $order_info['payment_code'] . '.php')) {
 					$content = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/order');
 				} else {
@@ -1256,7 +1256,7 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
-					$this->load->language('fraud/' . $extension);
+					$this->load->language('extension/fraud/' . $extension);
 
 					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 

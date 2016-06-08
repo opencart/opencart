@@ -70,10 +70,10 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/paypoint', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/paypoint', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/paypoint', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/paypoint', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -137,11 +137,11 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/paypoint', $data));
+		$this->response->setOutput($this->load->view('extension/payment/paypoint', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/paypoint')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/paypoint')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

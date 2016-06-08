@@ -13,7 +13,7 @@
       <script type="text/javascript"><!--
 $('#button-voucher').on('click', function() {
   $.ajax({
-    url: 'index.php?route=total/voucher/voucher',
+    url: 'index.php?route=extension/total/voucher/voucher',
     type: 'post',
     data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()),
     dataType: 'json',

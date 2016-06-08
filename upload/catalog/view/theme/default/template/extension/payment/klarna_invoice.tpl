@@ -105,7 +105,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/klarna_invoice/send',
+		url: 'index.php?route=extension/payment/klarna_invoice/send',
 		type: 'post',
 		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
 		dataType: 'json',

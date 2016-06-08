@@ -383,7 +383,7 @@
 
             $.ajax({
                 type     : 'post',
-                url      : 'index.php?route=payment/divido/confirm',
+                url      : 'index.php?route=extension/payment/divido/confirm',
                 data     : data,
                 dataType : 'json',
                 cache    : false,

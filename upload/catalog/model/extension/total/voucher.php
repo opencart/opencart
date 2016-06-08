@@ -72,7 +72,7 @@ class ModelExtensionTotalVoucher extends Model {
 
 	public function getTotal($total) {
 		if (isset($this->session->data['voucher'])) {
-			$this->load->language('total/voucher');
+			$this->load->language('extension/total/voucher');
 
 			$voucher_info = $this->getVoucher($this->session->data['voucher']);
 

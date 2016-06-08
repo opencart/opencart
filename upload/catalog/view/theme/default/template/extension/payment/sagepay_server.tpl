@@ -87,7 +87,7 @@
 <script type="text/javascript"><!--
     $('#button-confirm').bind('click', function() {
 		$.ajax({
-			url: 'index.php?route=payment/sagepay_server/send',
+			url: 'index.php?route=extension/payment/sagepay_server/send',
 			type: 'post',
 			data: $('#card-existing :input:checked, #card-save :input:enabled, #payment select:enabled'),
 			dataType: 'json',
@@ -124,7 +124,7 @@
     $('#button-delete').bind('click', function () {
       if (confirm('<?php echo $text_confirm_delete; ?>')) {
         $.ajax({
-          url: 'index.php?route=payment/sagepay_server/delete',
+          url: 'index.php?route=extension/payment/sagepay_server/delete',
           type: 'post',
           data: $('#card-existing :input[name=\'Token\']'),
           dataType: 'json',

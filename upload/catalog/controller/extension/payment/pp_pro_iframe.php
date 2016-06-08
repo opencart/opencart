@@ -27,7 +27,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
 
-		return $this->load->view('payment/pp_pro_iframe', $data);
+		return $this->load->view('extension/payment/pp_pro_iframe', $data);
 	}
 
 	public function create() {
@@ -61,7 +61,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
 		}
 
-		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_body', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_pro_iframe_body', $data));
 	}
 
 	public function notify() {
@@ -156,7 +156,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 							'total'            => $this->request->post['mc_gross'],
 						);
 
-						$paypal_iframe_order_id = $this->model_payment_pp_pro_iframe->addOrder($paypal_order_data);
+						$paypal_iframe_order_id = $this->model_extension_payment_pp_pro_iframe->addOrder($paypal_order_data);
 
 						$paypal_transaction_data = array(
 							'paypal_iframe_order_id' => $paypal_iframe_order_id,
@@ -173,7 +173,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 							'debug_data'             => json_encode($this->request->post),
 						);
 
-						$this->model_payment_pp_pro_iframe->addTransaction($paypal_transaction_data);
+						$this->model_extension_payment_pp_pro_iframe->addTransaction($paypal_transaction_data);
 
 						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					} else {
@@ -236,7 +236,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR18'] = 'billing_zip=' . urlencode($order_info['payment_postcode']);
 		$s_data['L_BUTTONVAR19'] = 'billing_country=' . urlencode($order_info['payment_iso_code_2']);
 
-		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('payment/pp_pro_iframe/notify', '', true);
+		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('extension/payment/pp_pro_iframe/notify', '', true);
 		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', true);
 		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('pp_pro_iframe_transaction_method');
 		$s_data['L_BUTTONVAR23'] = 'currency_code=' . urlencode($order_info['currency_code']);

@@ -40,17 +40,17 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 
 		switch ($body['action']) {
 			case 'orders':
-				$this->load->model('openbay/etsy_order');
+				$this->load->model('extension/openbay/etsy_order');
 
 				$this->openbay->etsy->log('Orders action found');
 
-				$this->model_openbay_etsy_order->inbound($data);
+				$this->model_extension_openbay_etsy_order->inbound($data);
 
 				break;
 			case 'products';
-				$this->load->model('openbay/etsy_product');
+				$this->load->model('extension/openbay/etsy_product');
 
-				$this->model_openbay_etsy_product->inbound($data);
+				$this->model_extension_openbay_etsy_product->inbound($data);
 
 				break;
 		}
@@ -58,9 +58,9 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 
 	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
-			$this->load->model('openbay/etsy_order');
+			$this->load->model('extension/openbay/etsy_order');
 
-			$this->model_openbay_etsy_order->addOrderHistory($order_id);
+			$this->model_extension_openbay_etsy_order->addOrderHistory($order_id);
 		}
 	}
 }

@@ -149,7 +149,7 @@ $('input[name="card_new"]').on('change', function() {
 $('#button-delete').bind('click', function() {
 	if (confirm('<?php echo $text_confirm_delete; ?>')) {
 		$.ajax({
-			url: 'index.php?route=payment/cardconnect/delete',
+			url: 'index.php?route=extension/payment/cardconnect/delete',
 			type: 'post',
 			data: $('#input-card-choice'),
 			dataType: 'json',
@@ -188,7 +188,7 @@ $('#button-delete').bind('click', function() {
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/cardconnect/send',
+		url: 'index.php?route=extension/payment/cardconnect/send',
 		type: 'post',
 		data: $('#cardconnect-form').serialize(),
 		dataType: 'json',

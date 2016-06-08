@@ -411,9 +411,9 @@ $('#module-column-left, #module-column-right, #module-content-top, #module-conte
 	var part = this.value.split('.');
 	
 	if (!part[1]) {
-		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>');
+		$(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>');
 	} else {
-		$(this).parent().find('a').attr('href', 'index.php?route=module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
+		$(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
 	}
 });
 

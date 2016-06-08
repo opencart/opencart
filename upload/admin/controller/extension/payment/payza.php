@@ -71,10 +71,10 @@ class ControllerExtensionPaymentPayza extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/payza', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/payza', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/payza', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/payza', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -90,7 +90,7 @@ class ControllerExtensionPaymentPayza extends Controller {
 			$data['payza_security'] = $this->config->get('payza_security');
 		}
 
-		$data['callback'] = HTTP_CATALOG . 'index.php?route=payment/payza/callback';
+		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/payza/callback';
 
 		if (isset($this->request->post['payza_total'])) {
 			$data['payza_total'] = $this->request->post['payza_total'];
@@ -134,11 +134,11 @@ class ControllerExtensionPaymentPayza extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/payza', $data));
+		$this->response->setOutput($this->load->view('extension/payment/payza', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/payza')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/payza')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

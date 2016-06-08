@@ -46,7 +46,7 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/perpetual_payments', $data);
+		return $this->load->view('extension/payment/perpetual_payments', $data);
 	}
 
 	public function send() {

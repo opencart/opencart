@@ -20,7 +20,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 		if ($this->config->get('firstdata_remote_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
-			$data['stored_cards'] = $this->model_payment_firstdata_remote->getStoredCards();
+			$data['stored_cards'] = $this->model_extension_payment_firstdata_remote->getStoredCards();
 		} else {
 			$data['card_storage'] = 0;
 			$data['stored_cards'] = array();
@@ -55,7 +55,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/firstdata_remote', $data);
+		return $this->load->view('extension/payment/firstdata_remote', $data);
 	}
 
 	public function send() {
@@ -102,7 +102,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			$order_id = $this->session->data['order_id'];
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
-			$capture_result = $this->model_payment_firstdata_remote->capturePayment($this->request->post, $order_id);
+			$capture_result = $this->model_extension_payment_firstdata_remote->capturePayment($this->request->post, $order_id);
 
 			$message = '';
 
@@ -122,14 +122,14 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 				$message .= $this->language->get('text_card_number_ref') . $capture_result['card_number_ref'] . '<br />';
 				$message .= $this->language->get('text_response_code') . $capture_result['response_code'] . '<br />';
 
-				$fd_order_id = $this->model_payment_firstdata_remote->addOrder($order_info, $capture_result);
+				$fd_order_id = $this->model_extension_payment_firstdata_remote->addOrder($order_info, $capture_result);
 
 				if ($this->config->get('firstdata_remote_auto_settle') == 1) {
-					$this->model_payment_firstdata_remote->addTransaction($fd_order_id, 'payment', $order_info);
+					$this->model_extension_payment_firstdata_remote->addTransaction($fd_order_id, 'payment', $order_info);
 
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_settled_id'), $message, false);
 				} else {
-					$this->model_payment_firstdata_remote->addTransaction($fd_order_id, 'auth');
+					$this->model_extension_payment_firstdata_remote->addTransaction($fd_order_id, 'auth');
 
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_unsettled_id'), $message, false);
 				}
@@ -149,7 +149,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 				$message .= $this->language->get('text_card_brand') . $capture_result['brand'] . '<br />';
 				$message .= $this->language->get('text_card_number_ref') . $capture_result['card_number_ref'] . '<br />';
 
-				$this->model_payment_firstdata_remote->addHistory($order_id, $this->config->get('firstdata_remote_order_status_decline_id'), $message);
+				$this->model_extension_payment_firstdata_remote->addHistory($order_id, $this->config->get('firstdata_remote_order_status_decline_id'), $message);
 			}
 		}
 

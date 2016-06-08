@@ -12,7 +12,7 @@ class ControllerExtensionTotalReward extends Controller {
 		}
 
 		if ($points && $points_total && $this->config->get('reward_status')) {
-			$this->load->language('total/reward');
+			$this->load->language('extension/total/reward');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 
@@ -28,12 +28,12 @@ class ControllerExtensionTotalReward extends Controller {
 				$data['reward'] = '';
 			}
 
-			return $this->load->view('total/reward', $data);
+			return $this->load->view('extension/total/reward', $data);
 		}
 	}
 
 	public function reward() {
-		$this->load->language('total/reward');
+		$this->load->language('extension/total/reward');
 
 		$json = array();
 

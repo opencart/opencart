@@ -3,7 +3,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('captcha/google_captcha');
+		$this->load->language('extension/captcha/google_captcha');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -63,10 +63,10 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('captcha/google_captcha', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/captcha/google_captcha', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('captcha/google_captcha', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/captcha/google_captcha', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true);
 
@@ -92,11 +92,11 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('captcha/google_captcha', $data));
+		$this->response->setOutput($this->load->view('extension/captcha/google_captcha', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'captcha/google_captcha')) {
+		if (!$this->user->hasPermission('modify', 'extension/captcha/google_captcha')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -48,10 +48,10 @@ class ControllerExtensionModulefilter extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/filter', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/filter', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/filter', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/filter', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -69,7 +69,7 @@ class ControllerExtensionModulefilter extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/filter')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/filter')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

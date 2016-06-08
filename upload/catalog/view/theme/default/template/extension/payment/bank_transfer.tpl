@@ -13,7 +13,7 @@
 $('#button-confirm').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=payment/bank_transfer/confirm',
+		url: 'index.php?route=extension/payment/bank_transfer/confirm',
 		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

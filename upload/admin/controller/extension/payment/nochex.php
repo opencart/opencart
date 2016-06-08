@@ -76,10 +76,10 @@ class ControllerExtensionPaymentNOCHEX extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/nochex', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/nochex', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/nochex', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/nochex', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -155,11 +155,11 @@ class ControllerExtensionPaymentNOCHEX extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/nochex', $data));
+		$this->response->setOutput($this->load->view('extension/payment/nochex', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/nochex')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/nochex')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

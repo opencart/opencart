@@ -6,8 +6,8 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		}
 
 		$this->load->model('checkout/order');
-		$this->load->model('openbay/amazon_order');
-		$this->load->language('openbay/amazon_order');
+		$this->load->model('extension/openbay/amazon_order');
+		$this->load->language('extension/openbay/amazon_order');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/order - started');
@@ -31,11 +31,11 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$amazon_order_status = trim(strtolower((string)$order_xml->Status));
 
 		$amazon_order_id = (string)$order_xml->AmazonOrderId;
-		$order_status = $this->model_openbay_amazon_order->getMappedStatus((string)$order_xml->Status);
+		$order_status = $this->model_extension_openbay_amazon_order->getMappedStatus((string)$order_xml->Status);
 
 		$logger->write('Received order ' . $amazon_order_id);
 
-		$order_id = $this->model_openbay_amazon_order->getOrderId($amazon_order_id);
+		$order_id = $this->model_extension_openbay_amazon_order->getOrderId($amazon_order_id);
 
 		// If the order already exists on opencart, ignore it.
 		if ($order_id) {
@@ -105,8 +105,8 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 				continue;
 			}
 
-			$product_id = $this->model_openbay_amazon_order->getProductId((string)$item->Sku);
-			$product_var = $this->model_openbay_amazon_order->getProductVar((string)$item->Sku);
+			$product_id = $this->model_extension_openbay_amazon_order->getProductId((string)$item->Sku);
+			$product_var = $this->model_extension_openbay_amazon_order->getProductVar((string)$item->Sku);
 
 			$products[] = array(
 				'product_id' => $product_id,
@@ -121,7 +121,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 				'total' => sprintf('%.4f', $total_price - $tax_total),
 				'tax' => $tax_total / (int)$item->Ordered,
 				'reward' => '0',
-				'option' => $this->model_openbay_amazon_order->getProductOptionsByVar($product_var),
+				'option' => $this->model_extension_openbay_amazon_order->getProductOptionsByVar($product_var),
 				'download' => array(),
 			);
 
@@ -197,10 +197,10 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'shipping_address_2' => $address_line_2,
 			'shipping_city' => (string)$order_xml->Shipping->City,
 			'shipping_postcode' => (string)$order_xml->Shipping->PostCode,
-			'shipping_country' => $this->model_openbay_amazon_order->getCountryName((string)$order_xml->Shipping->CountryCode),
-			'shipping_country_id' => $this->model_openbay_amazon_order->getCountryId((string)$order_xml->Shipping->CountryCode),
+			'shipping_country' => $this->model_extension_openbay_amazon_order->getCountryName((string)$order_xml->Shipping->CountryCode),
+			'shipping_country_id' => $this->model_extension_openbay_amazon_order->getCountryId((string)$order_xml->Shipping->CountryCode),
 			'shipping_zone' => (string)$order_xml->Shipping->State,
-			'shipping_zone_id' => $this->model_openbay_amazon_order->getZoneId((string)$order_xml->Shipping->State),
+			'shipping_zone_id' => $this->model_extension_openbay_amazon_order->getZoneId((string)$order_xml->Shipping->State),
 			'shipping_address_format' => '',
 			'shipping_method' => (string)$order_xml->Shipping->Type,
 			'shipping_code' => 'amazon.' . (string)$order_xml->Shipping->Type,
@@ -211,10 +211,10 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			'payment_address_2' => $address_line_2,
 			'payment_city' => (string)$order_xml->Shipping->City,
 			'payment_postcode' => (string)$order_xml->Shipping->PostCode,
-			'payment_country' => $this->model_openbay_amazon_order->getCountryName((string)$order_xml->Shipping->CountryCode),
-			'payment_country_id' => $this->model_openbay_amazon_order->getCountryId((string)$order_xml->Shipping->CountryCode),
+			'payment_country' => $this->model_extension_openbay_amazon_order->getCountryName((string)$order_xml->Shipping->CountryCode),
+			'payment_country_id' => $this->model_extension_openbay_amazon_order->getCountryId((string)$order_xml->Shipping->CountryCode),
 			'payment_zone' => (string)$order_xml->Shipping->State,
-			'payment_zone_id' => $this->model_openbay_amazon_order->getZoneId((string)$order_xml->Shipping->State),
+			'payment_zone_id' => $this->model_extension_openbay_amazon_order->getZoneId((string)$order_xml->Shipping->State),
 			'payment_address_format' => '',
 			'payment_method' => $this->language->get('text_paid_amazon'),
 			'payment_code' => 'amazon.amazon',
@@ -282,20 +282,20 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		$order_id = $this->model_checkout_order->addOrder($order);
 
-		$this->model_openbay_amazon_order->updateOrderStatus($order_id, $order_status);
-		$this->model_openbay_amazon_order->addAmazonOrder($order_id, $amazon_order_id);
-		$this->model_openbay_amazon_order->addAmazonOrderProducts($order_id, $product_mapping);
+		$this->model_extension_openbay_amazon_order->updateOrderStatus($order_id, $order_status);
+		$this->model_extension_openbay_amazon_order->addAmazonOrder($order_id, $amazon_order_id);
+		$this->model_extension_openbay_amazon_order->addAmazonOrderProducts($order_id, $product_mapping);
 
 		foreach($products as $product) {
 			if($product['product_id'] != 0) {
-				$this->model_openbay_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+				$this->model_extension_openbay_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
 			}
 		}
 
 		$logger->write('Order ' . $amazon_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
-		$this->model_openbay_amazon_order->acknowledgeOrder($order_id);
+		$this->model_extension_openbay_amazon_order->acknowledgeOrder($order_id);
 
 		if($this->config->get('openbay_amazon_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
@@ -310,8 +310,8 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->model('openbay/amazon_listing');
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('extension/openbay/amazon_listing');
+		$this->load->model('extension/openbay/amazon_product');
 
 		$logger = new Log('amazon_listing.log');
 		$logger->write('amazon/listing - started');
@@ -336,12 +336,12 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		if ($data['status']) {
 			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as successful');
-			$this->model_openbay_amazon_listing->listingSuccessful($data['product_id'], $data['marketplace']);
-			$this->model_openbay_amazon_product->linkProduct($data['sku'], $data['product_id']);
+			$this->model_extension_openbay_amazon_listing->listingSuccessful($data['product_id'], $data['marketplace']);
+			$this->model_extension_openbay_amazon_product->linkProduct($data['sku'], $data['product_id']);
 			$logger->write("Updated successfully");
 		} else {
 			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as failed');
-			$this->model_openbay_amazon_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
+			$this->model_extension_openbay_amazon_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
 			$logger->write("Updated successfully");
 		}
 	}
@@ -351,7 +351,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('extension/openbay/amazon_product');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/listing_reports - started');
@@ -387,10 +387,10 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		}
 
 		if ($data) {
-			$this->model_openbay_amazon_product->addListingReport($data);
+			$this->model_extension_openbay_amazon_product->addListingReport($data);
 		}
 
-		$this->model_openbay_amazon_product->removeListingReportLock($request['marketplace']);
+		$this->model_extension_openbay_amazon_product->removeListingReportLock($request['marketplace']);
 
 		$logger->write('amazon/listing_reports - Finished');
 	}
@@ -403,7 +403,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		ob_start();
 
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('extension/openbay/amazon_product');
 		$logger = new Log('amazon_product.log');
 
 		$logger->write("AmazonProduct/inbound: incoming data");
@@ -434,23 +434,23 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		if($status == "submit_error") {
 			$message = 'Product was not submited to amazon properly. Please try again or contact OpenBay.';
-			$this->model_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $message);
+			$this->model_extension_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $message);
 		} else {
 			$status = (array)$status;
 			if($status['successful'] == 1) {
-				$this->model_openbay_amazon_product->setStatus($decoded_data['insertion_id'], 'ok');
-				$insertion_product = $this->model_openbay_amazon_product->getProduct($decoded_data['insertion_id']);
-				$this->model_openbay_amazon_product->linkProduct($insertion_product['sku'], $insertion_product['product_id'], $insertion_product['var']);
-				$this->model_openbay_amazon_product->deleteErrors($decoded_data['insertion_id']);
+				$this->model_extension_openbay_amazon_product->setStatus($decoded_data['insertion_id'], 'ok');
+				$insertion_product = $this->model_extension_openbay_amazon_product->getProduct($decoded_data['insertion_id']);
+				$this->model_extension_openbay_amazon_product->linkProduct($insertion_product['sku'], $insertion_product['product_id'], $insertion_product['var']);
+				$this->model_extension_openbay_amazon_product->deleteErrors($decoded_data['insertion_id']);
 
 				$quantity_data = array(
-					$insertion_product['sku'] => $this->model_openbay_amazon_product->getProductQuantity($insertion_product['product_id'], $insertion_product['var'])
+					$insertion_product['sku'] => $this->model_extension_openbay_amazon_product->getProductQuantity($insertion_product['product_id'], $insertion_product['var'])
 				);
 				$logger->write('Updating quantity with data: ' . print_r($quantity_data, true));
 				$logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantity_data), true));
 			} else {
 				$msg = 'Product was not accepted by amazon. Please try again or contact OpenBay.';
-				$this->model_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $msg);
+				$this->model_extension_openbay_amazon_product->setSubmitError($decoded_data['insertion_id'], $msg);
 
 				if(isset($decoded_data['error_details'])) {
 					foreach($decoded_data['error_details'] as $error) {
@@ -461,7 +461,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 							'message' => $error['message'],
 							'insertion_id' => $decoded_data['insertion_id']
 						);
-						$this->model_openbay_amazon_product->insertError($error_data);
+						$this->model_extension_openbay_amazon_product->insertError($error_data);
 					}
 				}
 			}
@@ -477,7 +477,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 			return;
 		}
 
-		$this->load->model('openbay/amazon_product');
+		$this->load->model('extension/openbay/amazon_product');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/search - started');
@@ -500,7 +500,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 		$json = json_decode($decrypted, 1);
 
-		$this->model_openbay_amazon_product->updateSearch($json);
+		$this->model_extension_openbay_amazon_product->updateSearch($json);
 	}
 
 	public function dev() {
@@ -564,9 +564,9 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 
 	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
-			$this->load->model('openbay/amazon_order');
+			$this->load->model('extension/openbay/amazon_order');
 
-			$this->model_openbay_amazon_order->addOrderHistory($order_id);
+			$this->model_extension_openbay_amazon_order->addOrderHistory($order_id);
 		}
 	}
 }

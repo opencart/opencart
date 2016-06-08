@@ -6,9 +6,9 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
-			$this->load->model('openbay/ebay_order');
+			$this->load->model('extension/openbay/ebay_order');
 
-			$this->model_openbay_ebay_order->addOrderHistory($order_id);
+			$this->model_extension_openbay_ebay_order->addOrderHistory($order_id);
 		}
 	}
 }

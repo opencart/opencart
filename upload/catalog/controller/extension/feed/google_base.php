@@ -17,7 +17,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 			$product_data = array();
 
-			$google_base_categories = $this->model_feed_google_base->getCategories();
+			$google_base_categories = $this->model_extension_feed_google_base->getCategories();
 
 			foreach ($google_base_categories as $google_base_category) {
 				$filter_data = array(

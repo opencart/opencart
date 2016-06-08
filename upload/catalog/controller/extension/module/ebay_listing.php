@@ -5,7 +5,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 			$this->load->language('extension/module/ebay');
 			
 			$this->load->model('tool/image');
-			$this->load->model('openbay/ebay_product');
+			$this->load->model('extension/openbay/ebay_product');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -14,14 +14,14 @@ class ControllerExtensionModuleEbayListing extends Controller {
 			$products = $this->cache->get('ebay_listing.' . md5(serialize($products)));
 
 			if (!$products) {
-				$products = $this->model_openbay_ebay_product->getDisplayProducts();
+				$products = $this->model_extension_openbay_ebay_product->getDisplayProducts();
 				
 				$this->cache->set('ebay_listing.' . md5(serialize($products)), $products);
 			}
 
 			foreach($products['products'] as $product) {
 				if (isset($product['pictures'][0])) {
-					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
+					$image = $this->model_extension_openbay_ebay_product->resize($product['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				}

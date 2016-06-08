@@ -3,7 +3,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('feed/google_sitemap');
+		$this->load->language('extension/feed/google_sitemap');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -51,10 +51,10 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/feed/google_sitemap', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/feed/google_sitemap', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
 
@@ -64,17 +64,17 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			$data['google_sitemap_status'] = $this->config->get('google_sitemap_status');
 		}
 
-		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=feed/google_sitemap';
+		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/google_sitemap';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('feed/google_sitemap', $data));
+		$this->response->setOutput($this->load->view('extension/feed/google_sitemap', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'feed/google_sitemap')) {
+		if (!$this->user->hasPermission('modify', 'extension/feed/google_sitemap')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

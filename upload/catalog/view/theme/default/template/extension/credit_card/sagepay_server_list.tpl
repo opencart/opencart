@@ -63,7 +63,7 @@
 <script type="text/javascript"><!--
     $('#button-add-card').bind('click', function () {
       $.ajax({
-        url: 'index.php?route=credit_card/sagepay_server_cards/addCard',
+        url: 'index.php?route=extension/credit_card/sagepay_server_cards/addCard',
         dataType: 'json',
         cache: false,
         beforeSend: function () {

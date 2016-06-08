@@ -3,7 +3,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->load->language('extension/fraud/fraudlabspro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -71,10 +71,10 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/fraud/fraudlabspro', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
@@ -134,23 +134,23 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/fraudlabspro', $data));
+		$this->response->setOutput($this->load->view('extension/fraud/fraudlabspro', $data));
 	}
 
 	public function install() {
-		$this->load->model('fraud/fraudlabspro');
+		$this->load->model('extension/fraud/fraudlabspro');
 
-		$this->model_fraud_fraudlabspro->install();
+		$this->model_extension_fraud_fraudlabspro->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('fraud/fraudlabspro');
+		$this->load->model('extension/fraud/fraudlabspro');
 
-		$this->model_fraud_fraudlabspro->uninstall();
+		$this->model_extension_fraud_fraudlabspro->uninstall();
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'fraud/fraudlabspro')) {
+		if (!$this->user->hasPermission('modify', 'extension/fraud/fraudlabspro')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -162,9 +162,9 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->load->language('extension/fraud/fraudlabspro');
 
-		$this->load->model('fraud/fraudlabspro');
+		$this->load->model('extension/fraud/fraudlabspro');
 
 		// Action of the Approve/Reject button click
 		if (isset($_POST['flp_id'])){
@@ -191,7 +191,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 					'comment'=>'Approved using FraudLabs Pro.'
 				);
 
-				$this->model_fraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
+				$this->model_extension_fraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
 			}
 			else if (strtolower($flp_status) == "reject"){
 				$data_temp = array(
@@ -200,7 +200,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 					'comment'=>'Rejected using FraudLabs Pro.'
 				);
 
-				$this->model_fraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
+				$this->model_extension_fraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
 			}
 		}
 
@@ -210,7 +210,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$order_id = 0;
 		}
 
-		$fraud_info = $this->model_fraud_fraudlabspro->getOrder($order_id);
+		$fraud_info = $this->model_extension_fraud_fraudlabspro->getOrder($order_id);
 
 		if ($fraud_info) {
 			$data['text_loading'] = $this->language->get('text_loading');
@@ -398,7 +398,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 				$data['flp_credits'] = '';
 			}
 
-			return $this->load->view('fraud/fraudlabspro_info', $data);
+			return $this->load->view('extension/fraud/fraudlabspro_info', $data);
 		}
 	}
 

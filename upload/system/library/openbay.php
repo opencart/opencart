@@ -442,7 +442,7 @@ final class Openbay {
 	}
 
 	public function getOrderProductVariant($order_id, $product_id, $order_product_id) {
-		$this->load->model('module/openstock');
+		$this->load->model('extension/module/openstock');
 
 		$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 
@@ -453,7 +453,7 @@ final class Openbay {
 				$options[] = $option['product_option_value_id'];
 			}
 
-			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
+			return $this->model_extension_module_openstock->getVariantByOptionValues($options, $product_id);
 		}
 	}
 }

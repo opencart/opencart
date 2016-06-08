@@ -28,8 +28,8 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$key_parts = explode('.', $api_key);
 		$js_key = strtolower(array_shift($key_parts));
 
-		$this->model_payment_divido->setMerchant($api_key);
-		$plans = $this->model_payment_divido->getProductPlans($this->request->get['product_id']);
+		$this->model_extension_payment_divido->setMerchant($api_key);
+		$plans = $this->model_extension_payment_divido->getProductPlans($this->request->get['product_id']);
 
 		if (!$plans) {
 			return false;

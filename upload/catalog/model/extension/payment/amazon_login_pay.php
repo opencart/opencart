@@ -17,7 +17,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function getAddress() {
 		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
-		$address = $this->model_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
+		$address = $this->model_extension_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
 		$xml = simplexml_load_string($address['ResponseBody']);
 		if (isset($xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination)) {
 			return $xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination;

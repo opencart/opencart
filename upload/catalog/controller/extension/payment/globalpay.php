@@ -80,15 +80,15 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/globalpay/notify';
+		$data['response_url'] = HTTPS_SERVER . 'index.php?route=extension/payment/globalpay/notify';
 
-		return $this->load->view('payment/globalpay', $data);
+		return $this->load->view('extension/payment/globalpay', $data);
 	}
 
 	public function notify() {
 		$this->load->model('extension/payment/globalpay');
 
-		$this->model_payment_globalpay->logger(print_r($this->request->post, 1));
+		$this->model_extension_payment_globalpay->logger(print_r($this->request->post, 1));
 
 		$this->load->language('extension/payment/globalpay');
 
@@ -203,13 +203,13 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			}
 
 			if ($this->request->post['RESULT'] == "00") {
-				$globalpay_order_id = $this->model_payment_globalpay->addOrder($order_info, $this->request->post['PASREF'], $this->request->post['AUTHCODE'], $this->request->post['ACCOUNT'], $this->request->post['ORDER_ID']);
+				$globalpay_order_id = $this->model_extension_payment_globalpay->addOrder($order_info, $this->request->post['PASREF'], $this->request->post['AUTHCODE'], $this->request->post['ACCOUNT'], $this->request->post['ORDER_ID']);
 
 				if ($auto_settle == 1) {
-					$this->model_payment_globalpay->addTransaction($globalpay_order_id, 'payment', $order_info);
+					$this->model_extension_payment_globalpay->addTransaction($globalpay_order_id, 'payment', $order_info);
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_settled_id'), $message, false);
 				} else {
-					$this->model_payment_globalpay->addTransaction($globalpay_order_id, 'auth', 0.00);
+					$this->model_extension_payment_globalpay->addTransaction($globalpay_order_id, 'auth', 0.00);
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_unsettled_id'), $message, false);
 				}
 
@@ -217,42 +217,42 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', true));
 			} elseif ($this->request->post['RESULT'] == "101") {
 				// Decline
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "102") {
 				// Referal B
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_pending_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_pending_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "103") {
 				// Referal A
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_stolen_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_stolen_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "200") {
 				// Error Connecting to Bank
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "204") {
 				// Error Connecting to Bank
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} elseif ($this->request->post['RESULT'] == "205") {
 				// Comms Error
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			} else {
 				// Other error
-				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
+				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_generic_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
 			}
 		}
 
-		$this->response->setOutput($this->load->view('payment/globalpay_response', $data));
+		$this->response->setOutput($this->load->view('extension/payment/globalpay_response', $data));
 	}
 }

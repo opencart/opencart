@@ -51,10 +51,10 @@ class ControllerExtensionPaymentFreeCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/free_checkout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/free_checkout', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/free_checkout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/free_checkout', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -84,11 +84,11 @@ class ControllerExtensionPaymentFreeCheckout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/free_checkout', $data));
+		$this->response->setOutput($this->load->view('extension/payment/free_checkout', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/free_checkout')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/free_checkout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

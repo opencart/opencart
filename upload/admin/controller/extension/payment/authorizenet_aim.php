@@ -77,10 +77,10 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/authorizenet_aim', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/authorizenet_aim', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/authorizenet_aim', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/authorizenet_aim', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['authorizenet_aim_login'])) {
@@ -161,11 +161,11 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/authorizenet_aim', $data));
+		$this->response->setOutput($this->load->view('extension/payment/authorizenet_aim', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/authorizenet_aim')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/authorizenet_aim')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -101,7 +101,7 @@ $('select[name="store_id"]').on('change', function(e) {
 
 $('select[name="store_id"]').trigger('change');
 
-$('#directory').on('click', 'a.directory', function(e) {
+$('#path').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
 	var node = this;

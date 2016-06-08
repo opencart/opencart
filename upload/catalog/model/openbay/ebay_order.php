@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEbayOrder extends Model{
+class ModelExtensionOpenBayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$order_line = $this->getOrderLine($data['txn_id'], $data['item_id']);
 
@@ -65,7 +65,7 @@ class ModelOpenbayEbayOrder extends Model{
 		$this->openbay->ebay->log('Adding order lines');
 
 		foreach ($order->txn as $txn) {
-			$this->model_openbay_ebay_order->addOrderLine(array(
+			$this->model_extension_openbay_ebay_order->addOrderLine(array(
 				'txn_id'                => (string)$txn->item->txn,
 				'item_id'               => (string)$txn->item->id,
 				'containing_order_id'   => (string)$order->order->id,

@@ -94,7 +94,7 @@ class ControllerExtensionCaptcha extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('captcha/' . $extension);
+				$this->load->language('extension/captcha/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
@@ -102,7 +102,7 @@ class ControllerExtensionCaptcha extends Controller {
 					'install'   => $this->url->link('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

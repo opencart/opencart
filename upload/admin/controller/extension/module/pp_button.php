@@ -46,10 +46,10 @@ class ControllerExtensionModulePPButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 

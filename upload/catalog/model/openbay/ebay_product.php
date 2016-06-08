@@ -362,7 +362,7 @@ class ModelOpenbayEbayProduct extends Model {
 			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET subtract = '0', price = '0.000', quantity = '0' WHERE product_id = '" . (int)$product_id . "'");
 		}
 
-		$all_variants = $this->model_module_openstock->calculateVariants($product_id);
+		$all_variants = $this->model_extension_module_openstock->calculateVariants($product_id);
 		foreach ($all_variants as $new_variant) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_variant` SET `product_id` = '" . (int)$product_id . "', `sku` = '', `stock` = '0', `active` = '0', `subtract` = '1', `price` = '0.00', `image` = '', `weight` = '0.00'");
 
@@ -375,7 +375,7 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 
 		foreach ($data['variation']['vars'] as $variant_id => $variant) {
-			$variant_row = $this->model_module_openstock->getVariantByOptionValues($variant['product_option_values'], $product_id);
+			$variant_row = $this->model_extension_module_openstock->getVariantByOptionValues($variant['product_option_values'], $product_id);
 
 			if (!empty($variant_row)) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `product_id` = '" . (int)$product_id . "', `sku` = '" . $this->db->escape($variant['sku']) . "', `stock` = '" . (int)$variant['qty'] . "', `active` = 1, `price` = '" . (float)$variant['price'] . "' WHERE `product_option_variant_id` = '" . (int)$variant_row['product_option_variant_id'] . "'");

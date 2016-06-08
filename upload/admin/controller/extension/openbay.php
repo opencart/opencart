@@ -127,7 +127,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$data['extensions'][] = array(
 				'name' => $this->language->get('heading_title'),
-				'edit' => $this->url->link('openbay/' . $extension . '', 'token=' . $this->session->data['token'], true),
+				'edit' => $this->url->link('extension/openbay/' . $extension . '', 'token=' . $this->session->data['token'], true),
 				'status' => ($this->config->get('openbay_' . $extension . '_status') || $this->config->get($extension . '_status')) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'install' => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 				'uninstall' => $this->url->link('extension/openbay/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
@@ -1345,19 +1345,19 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		if ($this->config->get('openbay_amazon_status')) {
-			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, true);
+			$data['link_amazon_eu_bulk'] = $this->url->link('extension/openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
 			$data['link_amazon_eu_bulk'] = '';
 		}
 
 		if ($this->config->get('openbay_amazonus_status')) {
-			$data['link_amazon_us_bulk'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . $url, true);
+			$data['link_amazon_us_bulk'] = $this->url->link('extension/openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
 			$data['link_amazon_us_bulk'] = '';
 		}
 
 		if ($this->config->get('ebay_status') == '1') {
-			$data['link_ebay_bulk'] = $this->url->link('openbay/openbay/createBulk', 'token=' . $this->session->data['token'], true);
+			$data['link_ebay_bulk'] = $this->url->link('extension/openbay/openbay/createBulk', 'token=' . $this->session->data['token'], true);
 		} else {
 			$data['link_ebay_bulk'] = '';
 		}
@@ -1498,14 +1498,14 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_ebay'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 0
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_ebay'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 1
 					);
 				}
@@ -1526,21 +1526,21 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 1
 					);
 				} else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_error_fix'),
-						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 2
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 0
 					);
 				}
@@ -1561,21 +1561,21 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 1
 					);
 				} else if ($amazonus_status == 'error_quick' || $amazonus_status == 'error_advanced' || $amazonus_status == 'error_few') {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_error_fix'),
-						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 2
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 0
 					);
 				}
@@ -1590,14 +1590,14 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => $this->language->get('text_etsy'),
 						'text'      => $this->language->get('button_add'),
-						'href'      => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 0
 					);
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_etsy'),
 						'text'      => $this->language->get('button_edit'),
-						'href'      => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
+						'href'      => $this->url->link('extension/openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true),
 						'status'	=> 1
 					);
 				}
@@ -1620,8 +1620,8 @@ class ControllerExtensionOpenbay extends Controller {
 				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
 				'edit'       => $edit,
 				'has_option' => $openstock_installed ? $result['has_option'] : 0,
-				'vCount'     => $openstock_installed ? $this->model_module_openstock->countVariation($result['product_id']) : '',
-				'vsCount'    => $openstock_installed ? $this->model_module_openstock->countVariationStock($result['product_id']) : '',
+				'vCount'     => $openstock_installed ? $this->model_extension_module_openstock->countVariation($result['product_id']) : '',
+				'vsCount'    => $openstock_installed ? $this->model_extension_module_openstock->countVariationStock($result['product_id']) : '',
 			);
 		}
 

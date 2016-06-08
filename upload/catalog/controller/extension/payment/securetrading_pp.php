@@ -111,8 +111,8 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 						2 => $this->language->get('text_match'),
 						4 => $this->language->get('text_not_match'),
 					);
-					$shipping_country = $this->model_payment_securetrading_pp->getCountry($this->request->post['customercountryiso2a']);
-					$payment_country = $this->model_payment_securetrading_pp->getCountry($this->request->post['billingcountryiso2a']);
+					$shipping_country = $this->model_extension_payment_securetrading_pp->getCountry($this->request->post['customercountryiso2a']);
+					$payment_country = $this->model_extension_payment_securetrading_pp->getCountry($this->request->post['billingcountryiso2a']);
 
 					$order_info['payment_firstname'] = $this->request->post['billingfirstname'];
 					$order_info['payment_lastname'] = $this->request->post['billinglastname'];
@@ -136,7 +136,7 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 					$order_info['shipping_country_id'] = $shipping_country['country_id'];
 					$order_info['shipping_postcode'] = $this->request->post['customerpostcode'];
 
-					$this->model_payment_securetrading_pp->editOrder($order_info['order_id'], $order_info);
+					$this->model_extension_payment_securetrading_pp->editOrder($order_info['order_id'], $order_info);
 
 					$postcode_status = $this->request->post['securityresponsepostcode'];
 					$security_code_status = $this->request->post['securityresponsesecuritycode'];
@@ -151,17 +151,17 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 					} else {
 						$transactionreference = '';
 					}
-					$this->model_payment_securetrading_pp->addReference($order_info['order_id'], $transactionreference);
+					$this->model_extension_payment_securetrading_pp->addReference($order_info['order_id'], $transactionreference);
 
 					if ($this->request->post['errorcode'] == '0') {
 						$order_status_id = $this->config->get('securetrading_pp_order_status_id');
 
-						$this->model_payment_securetrading_pp->confirmOrder($order_info['order_id'], $order_status_id);
-						$this->model_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
+						$this->model_extension_payment_securetrading_pp->confirmOrder($order_info['order_id'], $order_status_id);
+						$this->model_extension_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					} elseif ($this->request->post['errorcode'] == '70000') {
 						$order_status_id = $this->config->get('securetrading_pp_declined_order_status_id');
 
-						$this->model_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
+						$this->model_extension_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					}
 				}
 			}

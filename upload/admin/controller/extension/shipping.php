@@ -106,7 +106,7 @@ class ControllerExtensionShipping extends Controller {
 					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('shipping/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'       => $this->url->link('extension/shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

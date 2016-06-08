@@ -136,11 +136,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 			"customerOrderCode" => 'orderRecurring-' . $order_recurring_id
 		);
 
-		$this->model_payment_worldpay->logger($order);
+		$this->model_extension_payment_worldpay->logger($order);
 
-		$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+		$response_data = $this->model_extension_payment_worldpay->sendCurl('orders', $order);
 
-		$this->model_payment_worldpay->logger($response_data);
+		$this->model_extension_payment_worldpay->logger($response_data);
 
 		$next_payment = new DateTime('now');
 		$trial_end = new DateTime('now');
@@ -218,11 +218,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 				"customerOrderCode" => 'orderRecurring-' . $profile['order_recurring_id'] . '-repeat-' . $i++
 			);
 
-			$this->model_payment_worldpay->logger($order);
+			$this->model_extension_payment_worldpay->logger($order);
 
-			$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+			$response_data = $this->model_extension_payment_worldpay->sendCurl('orders', $order);
 
-			$this->model_payment_worldpay->logger($response_data);
+			$this->model_extension_payment_worldpay->logger($response_data);
 
 			$cron_data[] = $response_data;
 

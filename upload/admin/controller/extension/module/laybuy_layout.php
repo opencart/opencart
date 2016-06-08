@@ -31,7 +31,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/laybuy_layout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -51,7 +51,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('module/laybuy_layout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 

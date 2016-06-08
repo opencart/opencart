@@ -139,10 +139,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/klarna_checkout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/klarna_checkout', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/klarna_checkout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/klarna_checkout', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['klarna_checkout_debug'])) {
@@ -247,7 +247,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			return;
 		}
 
-		$order_reference = $this->model_payment_klarna_checkout->getOrder($this->request->get['order_id']);
+		$order_reference = $this->model_extension_payment_klarna_checkout->getOrder($this->request->get['order_id']);
 
 		$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
@@ -255,13 +255,13 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			return;
 		}
 
-		list($klarna_account, $connector) = $this->model_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
 
 		if (!$klarna_account || !$connector) {
 			return;
 		}
 
-		$klarna_order = $this->model_payment_klarna_checkout->omRetrieve($connector, $order_reference['order_ref']);
+		$klarna_order = $this->model_extension_payment_klarna_checkout->omRetrieve($connector, $order_reference['order_ref']);
 
 		if (!$klarna_order) {
 			return;
@@ -535,12 +535,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/klarna_checkout');
-		$this->model_payment_klarna_checkout->install();
+		$this->model_extension_payment_klarna_checkout->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/klarna_checkout');
-		$this->model_payment_klarna_checkout->uninstall();
+		$this->model_extension_payment_klarna_checkout->uninstall();
 	}
 
 	public function transactionCommand() {
@@ -555,29 +555,29 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
-		list($klarna_account, $connector) = $this->model_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
 
 		if (!$klarna_account || !$connector) {
 			return;
 		}
 
 		if ($this->request->post['type'] == 'cancel') {
-			$action = $this->model_payment_klarna_checkout->omCancel($connector, $this->request->post['order_ref']);
+			$action = $this->model_extension_payment_klarna_checkout->omCancel($connector, $this->request->post['order_ref']);
 		} elseif ($this->request->post['type'] == 'capture' && $this->request->post['data']) {
-			$action = $this->model_payment_klarna_checkout->omCapture($connector, $this->request->post['order_ref'], array(
+			$action = $this->model_extension_payment_klarna_checkout->omCapture($connector, $this->request->post['order_ref'], array(
 				'captured_amount' => $this->request->post['data'] * 100
 			));
 		} elseif ($this->request->post['type'] == 'refund' && $this->request->post['data']) {
-			$action = $this->model_payment_klarna_checkout->omRefund($connector, $this->request->post['order_ref'], array(
+			$action = $this->model_extension_payment_klarna_checkout->omRefund($connector, $this->request->post['order_ref'], array(
 				'refunded_amount' => $this->request->post['data'] * 100
 			));
 		} elseif ($this->request->post['type'] == 'extend_authorization') {
-			$action = $this->model_payment_klarna_checkout->omExtendAuthorizationTime($connector, $this->request->post['order_ref']);
+			$action = $this->model_extension_payment_klarna_checkout->omExtendAuthorizationTime($connector, $this->request->post['order_ref']);
 		} elseif ($this->request->post['type'] == 'merchant_reference' && $this->request->post['data']) {
 			$data = array();
 			parse_str(html_entity_decode($this->request->post['data']), $data);
 
-			$action = $this->model_payment_klarna_checkout->omUpdateMerchantReference($connector, $this->request->post['order_ref'], array(
+			$action = $this->model_extension_payment_klarna_checkout->omUpdateMerchantReference($connector, $this->request->post['order_ref'], array(
 				'merchant_reference1' => (string)$data['merchant_reference_1']
 			));
 		} elseif (($this->request->post['type'] == 'billing_address' || $this->request->post['type'] == 'shipping_address') && $this->request->post['data']) {
@@ -589,21 +589,21 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				parse_str(html_entity_decode($this->request->post['data']), $data['shipping_address']);
 			}
 
-			$action = $this->model_payment_klarna_checkout->omUpdateAddress($connector, $this->request->post['order_ref'], $data);
+			$action = $this->model_extension_payment_klarna_checkout->omUpdateAddress($connector, $this->request->post['order_ref'], $data);
 		} elseif ($this->request->post['type'] == 'release_authorization') {
-			$action = $this->model_payment_klarna_checkout->omReleaseAuthorization($connector, $this->request->post['order_ref']);
+			$action = $this->model_extension_payment_klarna_checkout->omReleaseAuthorization($connector, $this->request->post['order_ref']);
 		} elseif ($this->request->post['type'] == 'capture_shipping_info' && isset($this->request->post['id'])) {
 			$data = array();
 			parse_str(html_entity_decode($this->request->post['data']), $data);
 
-			$action = $this->model_payment_klarna_checkout->omShippingInfo($connector, $this->request->post['order_ref'], $this->request->post['id'], $data);
+			$action = $this->model_extension_payment_klarna_checkout->omShippingInfo($connector, $this->request->post['order_ref'], $this->request->post['id'], $data);
 		} elseif ($this->request->post['type'] == 'capture_billing_address' && isset($this->request->post['id'])) {
 			$data['billing_address'] = array();
 			parse_str(html_entity_decode($this->request->post['data']), $data['billing_address']);
 
-			$action = $this->model_payment_klarna_checkout->omCustomerDetails($connector, $this->request->post['order_ref'], $this->request->post['id'], $data);
+			$action = $this->model_extension_payment_klarna_checkout->omCustomerDetails($connector, $this->request->post['order_ref'], $this->request->post['id'], $data);
 		} elseif ($this->request->post['type'] == 'trigger_send_out' && isset($this->request->post['id'])) {
-			$action = $this->model_payment_klarna_checkout->omTriggerSendOut($connector, $this->request->post['order_ref'], $this->request->post['id']);
+			$action = $this->model_extension_payment_klarna_checkout->omTriggerSendOut($connector, $this->request->post['order_ref'], $this->request->post['id']);
 		} else {
 			$error = true;
 		}
@@ -705,7 +705,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 					if ($row['type'] == 'SALE') {
 						$order_id = $this->encryption->decrypt($row['merchant_reference1']);
 
-						$klarna_order_info = $this->model_payment_klarna_checkout->getOrder($order_id);
+						$klarna_order_info = $this->model_extension_payment_klarna_checkout->getOrder($order_id);
 
 						$order_info = $this->model_sale_order->getOrder($order_id);
 

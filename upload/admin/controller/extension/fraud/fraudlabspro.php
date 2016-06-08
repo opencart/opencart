@@ -71,10 +71,10 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/fraud/fraudlabspro', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 

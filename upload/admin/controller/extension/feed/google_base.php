@@ -54,10 +54,10 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/feed/google_base', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/feed/google_base', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
 
@@ -188,7 +188,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$pagination->total = $category_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

@@ -15,7 +15,7 @@ class ControllerExtensionCaptchaBasicCaptcha extends Controller {
 
 		$data['route'] = $this->request->get['route']; 
 
-		return $this->load->view('captcha/basic_captcha', $data);
+		return $this->load->view('extension/captcha/basic_captcha', $data);
 	}
 
 	public function validate() {

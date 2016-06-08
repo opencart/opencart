@@ -124,10 +124,10 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/firstdata', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/firstdata', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true);
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -246,38 +246,38 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/firstdata');
-		$this->model_payment_firstdata->install();
+		$this->model_extension_payment_firstdata->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/firstdata');
-		$this->model_payment_firstdata->uninstall();
+		$this->model_extension_payment_firstdata->uninstall();
 	}
 
 	public function order() {
 		if ($this->config->get('firstdata_status')) {
 			$this->load->model('extension/payment/firstdata');
 
-			$firstdata_order = $this->model_payment_firstdata->getOrder($this->request->get['order_id']);
+			$firstdata_order = $this->model_extension_payment_firstdata->getOrder($this->request->get['order_id']);
 
 			if (!empty($firstdata_order)) {
 				$this->load->language('extension/payment/firstdata');
 
-				$firstdata_order['total_captured'] = $this->model_payment_firstdata->getTotalCaptured($firstdata_order['firstdata_order_id']);
+				$firstdata_order['total_captured'] = $this->model_extension_payment_firstdata->getTotalCaptured($firstdata_order['firstdata_order_id']);
 				$firstdata_order['total_formatted'] = $this->currency->format($firstdata_order['total'], $firstdata_order['currency_code'], 1, true);
 				$firstdata_order['total_captured_formatted'] = $this->currency->format($firstdata_order['total_captured'], $firstdata_order['currency_code'], 1, true);
 
 				$data['firstdata_order'] = $firstdata_order;
 				$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
-				$data['currency'] = $this->model_payment_firstdata->mapCurrency($firstdata_order['currency_code']);
+				$data['currency'] = $this->model_extension_payment_firstdata->mapCurrency($firstdata_order['currency_code']);
 				$data['amount'] = number_format($firstdata_order['total'], 2);
 
 				$data['request_timestamp'] = date("Y:m:d-H:i:s");
 
 				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret')));
 
-				$data['void_url'] = $this->url->link('payment/firstdata/void', 'token=' . $this->session->data['token'], true);
-				$data['capture_url'] = $this->url->link('payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
+				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'token=' . $this->session->data['token'], true);
+				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
 				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
 
 				if ($this->config->get('firstdata_live_demo') == 1) {

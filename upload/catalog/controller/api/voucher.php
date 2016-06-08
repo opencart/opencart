@@ -19,7 +19,7 @@ class ControllerApiVoucher extends Controller {
 				$voucher = '';
 			}
 
-			$voucher_info = $this->model_total_voucher->getVoucher($voucher);
+			$voucher_info = $this->model_extension_total_voucher->getVoucher($voucher);
 
 			if ($voucher_info) {
 				$this->session->data['voucher'] = $this->request->post['voucher'];

@@ -102,7 +102,7 @@ class ControllerExtensionFraud extends Controller {
 					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('fraud/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/fraud/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

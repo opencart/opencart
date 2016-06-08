@@ -127,9 +127,9 @@ class ModelExtensionPaymentCardConnect extends Model {
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Authorization: Basic ' . base64_encode($this->config->get('cardconnect_api_username') . ':' . $this->config->get('cardconnect_api_password'));
 
-		$this->model_payment_cardconnect->log('Header: ' . print_r($header, true));
+		$this->model_extension_payment_cardconnect->log('Header: ' . print_r($header, true));
 
-		$this->model_payment_cardconnect->log('URL: ' . $url);
+		$this->model_extension_payment_cardconnect->log('URL: ' . $url);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -140,7 +140,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response_data = curl_exec($ch);
 		if (curl_errno($ch)) {
-			$this->model_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
+			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
 		curl_close($ch);
 

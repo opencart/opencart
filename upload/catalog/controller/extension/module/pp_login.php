@@ -5,7 +5,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$data['client_id'] = $this->config->get('pp_login_client_id');
-			$data['return_url'] = $this->url->link('module/pp_login/login', '', true);
+			$data['return_url'] = $this->url->link('extension/module/pp_login/login', '', true);
 
 			if ($this->config->get('pp_login_sandbox')) {
 				$data['sandbox'] = 'sandbox';
@@ -63,16 +63,16 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 		if (!isset($this->request->get['code'])) {
 			if (isset($this->request->get['error']) && isset($this->request->get['error_description'])) {
-				$this->model_module_pp_login->log('No code returned. Error: ' . $this->request->get['error'] . ', Error Description: ' . $this->request->get['error_description']);
+				$this->model_extension_module_pp_login->log('No code returned. Error: ' . $this->request->get['error'] . ', Error Description: ' . $this->request->get['error_description']);
 			}
 
 			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
 		} else {
-			$tokens = $this->model_module_pp_login->getTokens($this->request->get['code']);
+			$tokens = $this->model_extension_module_pp_login->getTokens($this->request->get['code']);
 		}
 
 		if (isset($tokens->access_token) && !isset($tokens->error)) {
-			$user = $this->model_module_pp_login->getUserInfo($tokens->access_token);
+			$user = $this->model_extension_module_pp_login->getUserInfo($tokens->access_token);
 		}
 
 		if (isset($user)) {
@@ -82,7 +82,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 				if ($this->validate($user->email)) {
 					$this->completeLogin($customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
 				} else {
-					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+					$this->model_extension_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
 				}
 			} else {
@@ -128,12 +128,12 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 				$customer_id = $this->model_account_customer->addCustomer($data);
 
-				$this->model_module_pp_login->log('Customer ID date_added: ' . $customer_id);
+				$this->model_extension_module_pp_login->log('Customer ID date_added: ' . $customer_id);
 
 				if ($this->validate($user->email)) {
 					$this->completeLogin($customer_id, $user->email, $tokens->access_token);
 				} else {
-					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
+					$this->model_extension_module_pp_login->log('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', true) . '"; window.close();</script>';
 				}
 			}
@@ -179,7 +179,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			}
 		}
 
-		$this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $email);
+		$this->model_extension_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $email);
 		echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', true) . '"; window.close();</script>';
 	}
 

@@ -28,7 +28,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_extension_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -69,7 +69,7 @@ class ModelCheckoutOrder extends Model {
 		// Gift Voucher
 		$this->load->model('extension/total/voucher');
 
-		$this->model_total_voucher->disableVoucher($order_id);
+		$this->model_extension_total_voucher->disableVoucher($order_id);
 
 		// Vouchers
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
@@ -80,7 +80,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_extension_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -112,7 +112,7 @@ class ModelCheckoutOrder extends Model {
 		// Gift Voucher
 		$this->load->model('extension/total/voucher');
 
-		$this->model_total_voucher->disableVoucher($order_id);
+		$this->model_extension_total_voucher->disableVoucher($order_id);
 	}
 
 	public function getOrder($order_id) {

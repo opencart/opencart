@@ -75,10 +75,10 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/web_payment_software', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/web_payment_software', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['web_payment_software_login'])) {

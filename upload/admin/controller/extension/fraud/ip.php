@@ -62,10 +62,10 @@ class ControllerExtensionFraudIp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('fraud/ip', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/fraud/ip', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('fraud/ip', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/fraud/ip', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
@@ -153,7 +153,7 @@ class ControllerExtensionFraudIp extends Controller {
 		$pagination->total = $ip_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('fraud/ip/ip', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/fraud/ip/ip', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

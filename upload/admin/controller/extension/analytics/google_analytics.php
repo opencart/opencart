@@ -56,10 +56,10 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
+			'href' => $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
 		);
 
-		$data['action'] = $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
+		$data['action'] = $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=analytics', true);
 		

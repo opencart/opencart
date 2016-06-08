@@ -571,7 +571,7 @@ final class Ebay {
 		//loop through ended listings, if back in stock and not multi var - relist it
 		foreach ($linked_ended_items as $item) {
 			if ($openstock == true) {
-				$options = $this->model_module_openstock->getVariants($item['productId']);
+				$options = $this->model_extension_module_openstock->getVariants($item['productId']);
 			} else {
 				$options = array();
 			}
@@ -617,7 +617,7 @@ final class Ebay {
 				} else {
 					//get any options that are set for this product
 					if ($openstock == true) {
-						$options = $this->model_module_openstock->getVariants($item['productId']);
+						$options = $this->model_extension_module_openstock->getVariants($item['productId']);
 					} else {
 						$options = array();
 					}
@@ -711,7 +711,7 @@ final class Ebay {
 				$this->log('productUpdateListen(' . $product_id . ') - Variant');
 
 				if (!isset($data['variant'])) {
-					$variants = $this->model_module_openstock->getVariants($product_id);
+					$variants = $this->model_extension_module_openstock->getVariants($product_id);
 				} else {
 					$variants = $data['variant'];
 				}

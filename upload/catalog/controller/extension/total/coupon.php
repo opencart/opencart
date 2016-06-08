@@ -2,7 +2,7 @@
 class ControllerExtensionTotalCoupon extends Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
-			$this->load->language('total/coupon');
+			$this->load->language('extension/total/coupon');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -18,12 +18,12 @@ class ControllerExtensionTotalCoupon extends Controller {
 				$data['coupon'] = '';
 			}
 
-			return $this->load->view('total/coupon', $data);
+			return $this->load->view('extension/total/coupon', $data);
 		}
 	}
 
 	public function coupon() {
-		$this->load->language('total/coupon');
+		$this->load->language('extension/total/coupon');
 
 		$json = array();
 
@@ -35,7 +35,7 @@ class ControllerExtensionTotalCoupon extends Controller {
 			$coupon = '';
 		}
 
-		$coupon_info = $this->model_total_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_extension_total_coupon->getCoupon($coupon);
 
 		if (empty($this->request->post['coupon'])) {
 			$json['error'] = $this->language->get('error_empty');

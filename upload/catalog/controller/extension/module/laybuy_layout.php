@@ -10,7 +10,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 				if (isset($this->request->get['order_id'])) {
 					$order_id = $this->request->get['order_id'];
 
-					if ($this->model_module_laybuy_layout->isLayBuyOrder($order_id)) {
+					if ($this->model_extension_module_laybuy_layout->isLayBuyOrder($order_id)) {
 						$this->load->language('extension/module/laybuy_layout');
 
 						$data['heading_title'] = $this->language->get('heading_title');
@@ -36,12 +36,12 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 						$data['column_pp_trans_id'] = $this->language->get('column_pp_trans_id');
 						$data['column_status'] = $this->language->get('column_status');
 
-						$transaction_info = $this->model_module_laybuy_layout->getTransactionByOrderId($order_id);
+						$transaction_info = $this->model_extension_module_laybuy_layout->getTransactionByOrderId($order_id);
 
 						$data['transaction'] = array(
 							'laybuy_ref_no'      => $transaction_info['laybuy_ref_no'],
 							'paypal_profile_id'  => $transaction_info['paypal_profile_id'],
-							'status'             => $this->model_module_laybuy_layout->getStatusLabel($transaction_info['status']),
+							'status'             => $this->model_extension_module_laybuy_layout->getStatusLabel($transaction_info['status']),
 							'amount'             => $this->currency->format($transaction_info['amount'], $transaction_info['currency']),
 							'downpayment'        => $transaction_info['downpayment'],
 							'months'             => $transaction_info['months'],

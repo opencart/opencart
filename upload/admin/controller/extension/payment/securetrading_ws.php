@@ -247,7 +247,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/securetrading_ws', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -273,7 +273,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			'100' => $this->language->get('text_pending_settled'),
 		);
 
-		$data['action'] = $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/securetrading_ws', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -303,12 +303,12 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/securetrading_ws');
-		$this->model_payment_securetrading_ws->install();
+		$this->model_extension_payment_securetrading_ws->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/securetrading_ws');
-		$this->model_payment_securetrading_ws->uninstall();
+		$this->model_extension_payment_securetrading_ws->uninstall();
 	}
 
 	public function downloadTransactions() {
@@ -318,7 +318,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		$csv_data = $this->request->post;
 		$csv_data['detail'] = true;
 
-		$response = $this->model_payment_securetrading_ws->getCsv($csv_data);
+		$response = $this->model_extension_payment_securetrading_ws->getCsv($csv_data);
 
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: attachment; filename="' . $this->language->get('text_transactions') . '.csv"');
@@ -355,7 +355,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		$csv_data = $this->request->post;
 		$csv_data['detail'] = false;
 
-		$response = $this->model_payment_securetrading_ws->getCsv($csv_data);
+		$response = $this->model_extension_payment_securetrading_ws->getCsv($csv_data);
 
 		$data['transactions'] = array();
 
@@ -407,12 +407,12 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		if ($this->config->get('securetrading_ws_status')) {
 			$this->load->model('extension/payment/securetrading_ws');
 
-			$securetrading_ws_order = $this->model_payment_securetrading_ws->getOrder($this->request->get['order_id']);
+			$securetrading_ws_order = $this->model_extension_payment_securetrading_ws->getOrder($this->request->get['order_id']);
 
 			if (!empty($securetrading_ws_order)) {
 				$this->load->language('extension/payment/securetrading_ws');
 
-				$securetrading_ws_order['total_released'] = $this->model_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
+				$securetrading_ws_order['total_released'] = $this->model_extension_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
 
 				$securetrading_ws_order['total_formatted'] = $this->currency->format($securetrading_ws_order['total'], $securetrading_ws_order['currency_code'], false, false);
 				$securetrading_ws_order['total_released_formatted'] = $this->currency->format($securetrading_ws_order['total_released'], $securetrading_ws_order['currency_code'], false, false);
@@ -456,11 +456,11 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
 			$this->load->model('extension/payment/securetrading_ws');
 
-			$securetrading_ws_order = $this->model_payment_securetrading_ws->getOrder($this->request->post['order_id']);
+			$securetrading_ws_order = $this->model_extension_payment_securetrading_ws->getOrder($this->request->post['order_id']);
 
-			$void_response = $this->model_payment_securetrading_ws->void($this->request->post['order_id']);
+			$void_response = $this->model_extension_payment_securetrading_ws->void($this->request->post['order_id']);
 
-			$this->model_payment_securetrading_ws->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_extension_payment_securetrading_ws->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if ($void_response !== false) {
 				$response_xml = simplexml_load_string($void_response);
@@ -470,8 +470,8 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 					$json['error'] = true;
 				} else {
 
-					$this->model_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'reversed', 0.00);
-					$this->model_payment_securetrading_ws->updateVoidStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
+					$this->model_extension_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'reversed', 0.00);
+					$this->model_extension_payment_securetrading_ws->updateVoidStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
 
 					$this->data = array(
 						'order_status_id' => $this->config->get('securetrading_ws_authorisation_reversed_order_status_id'),
@@ -508,11 +508,11 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($amount) && $amount > 0) {
 			$this->load->model('extension/payment/securetrading_ws');
 
-			$securetrading_ws_order = $this->model_payment_securetrading_ws->getOrder($this->request->post['order_id']);
+			$securetrading_ws_order = $this->model_extension_payment_securetrading_ws->getOrder($this->request->post['order_id']);
 
-			$release_response = $this->model_payment_securetrading_ws->release($this->request->post['order_id'], $amount);
+			$release_response = $this->model_extension_payment_securetrading_ws->release($this->request->post['order_id'], $amount);
 
-			$this->model_payment_securetrading_ws->logger('Release result:\r\n' . print_r($release_response, 1));
+			$this->model_extension_payment_securetrading_ws->logger('Release result:\r\n' . print_r($release_response, 1));
 
 			if ($release_response !== false) {
 				$response_xml = simplexml_load_string($release_response);
@@ -521,12 +521,12 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 					$json['error'] = true;
 					$json['msg'] = (string)$response_xml->response->error->message;
 				} else {
-					$this->model_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'payment', $amount);
+					$this->model_extension_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'payment', $amount);
 
-					$total_released = $this->model_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
+					$total_released = $this->model_extension_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
 
 					if ($total_released >= $securetrading_ws_order['total'] || $securetrading_ws_order['settle_type'] == 100) {
-						$this->model_payment_securetrading_ws->updateReleaseStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
+						$this->model_extension_payment_securetrading_ws->updateReleaseStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
 						$release_status = 1;
 						$json['msg'] = $this->language->get('text_release_ok_order');
 
@@ -569,13 +569,13 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
 			$this->load->model('extension/payment/securetrading_ws');
 
-			$securetrading_ws_order = $this->model_payment_securetrading_ws->getOrder($this->request->post['order_id']);
+			$securetrading_ws_order = $this->model_extension_payment_securetrading_ws->getOrder($this->request->post['order_id']);
 
 			$amount = number_format($this->request->post['amount'], 2);
 
-			$rebate_response = $this->model_payment_securetrading_ws->rebate($this->request->post['order_id'], $amount);
+			$rebate_response = $this->model_extension_payment_securetrading_ws->rebate($this->request->post['order_id'], $amount);
 
-			$this->model_payment_securetrading_ws->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_extension_payment_securetrading_ws->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if ($rebate_response !== false) {
 				$response_xml = simplexml_load_string($rebate_response);
@@ -584,16 +584,16 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 				if ($error_code == '0') {
 
-					$this->model_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'rebate', $amount * -1);
+					$this->model_extension_payment_securetrading_ws->addTransaction($securetrading_ws_order['securetrading_ws_order_id'], 'rebate', $amount * -1);
 
-					$total_rebated = $this->model_payment_securetrading_ws->getTotalRebated($securetrading_ws_order['securetrading_ws_order_id']);
-					$total_released = $this->model_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
+					$total_rebated = $this->model_extension_payment_securetrading_ws->getTotalRebated($securetrading_ws_order['securetrading_ws_order_id']);
+					$total_released = $this->model_extension_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
 
 					if ($total_released <= 0 && $securetrading_ws_order['release_status'] == 1) {
 						$json['status'] = 1;
 						$json['message'] = $this->language->get('text_refund_issued');
 
-						$this->model_payment_securetrading_ws->updateRebateStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
+						$this->model_extension_payment_securetrading_ws->updateRebateStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
 						$rebate_status = 1;
 						$json['msg'] = $this->language->get('text_rebate_ok_order');
 

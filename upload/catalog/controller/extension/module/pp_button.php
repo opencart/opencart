@@ -16,7 +16,7 @@ class ControllerExtensionModulePPButton extends Controller {
 				$data['mobile'] = false;
 			}
 
-			$data['payment_url'] = $this->url->link('payment/pp_express/express', '', true);
+			$data['payment_url'] = $this->url->link('extension/payment/pp_express/express', '', true);
 
 			return $this->load->view('extension/module/pp_button', $data);
 		}

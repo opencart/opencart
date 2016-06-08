@@ -84,10 +84,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/divido', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/divido', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
 
@@ -179,7 +179,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		}
 
 		try {
-			$data['divido_plans'] = $this->model_payment_divido->getAllPlans();
+			$data['divido_plans'] = $this->model_extension_payment_divido->getAllPlans();
 		} catch (Exception $e) {
 			$this->log->write($e->getMessage());
 			$data['divido_plans'] = array();
@@ -205,7 +205,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 		$order_id = $this->request->get['order_id'];
 
-		$lookup = $this->model_payment_divido->getLookupByOrderId($order_id);
+		$lookup = $this->model_extension_payment_divido->getLookupByOrderId($order_id);
 		$proposal_id = null;
 		$application_id = null;
 		$deposit_amount = null;
@@ -230,12 +230,12 @@ class ControllerExtensionPaymentDivido extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/divido');
-		$this->model_payment_divido->install();
+		$this->model_extension_payment_divido->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/divido');
-		$this->model_payment_divido->uninstall();
+		$this->model_extension_payment_divido->uninstall();
 	}
 
 	protected function validate() {

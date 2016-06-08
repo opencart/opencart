@@ -123,7 +123,7 @@ class Amazonus {
 
 			// check if post data['variant'], if not then call db to get variants
 			if (!isset($data['variant'])) {
-				$variants = $this->model_module_openstock->getVariants($product_id);
+				$variants = $this->model_extension_module_openstock->getVariants($product_id);
 			} else {
 				$variants = $data['variant'];
 			}

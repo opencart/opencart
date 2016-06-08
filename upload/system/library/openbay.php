@@ -453,7 +453,7 @@ final class Openbay {
 				$options[] = $option['product_option_value_id'];
 			}
 
-			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
+			return $this->model_extension_module_openstock->getVariantByOptionValues($options, $product_id);
 		}
 	}
 }

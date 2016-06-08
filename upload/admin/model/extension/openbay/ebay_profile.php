@@ -33,8 +33,8 @@ class ModelOpenbayEbayProfile extends Model{
 
 		if ($qry->num_rows) {
 			$row                = $qry->row;
-			$row['link_edit']   = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
-			$row['link_delete'] = $this->url->link('openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+			$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+			$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
 			$row['data']        = unserialize($row['data']);
 
 			return $row;
@@ -55,8 +55,8 @@ class ModelOpenbayEbayProfile extends Model{
 		if($qry->num_rows) {
 			$profiles = array();
 			foreach ($qry->rows as $row) {
-				$row['link_edit']   = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
-				$row['link_delete'] = $this->url->link('openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+				$row['link_edit']   = $this->url->link('extension/openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
+				$row['link_delete'] = $this->url->link('extension/openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], true);
 				$row['data']        = !empty($row['data']) ? unserialize($row['data']) : array();
 				$profiles[]         = $row;
 			}

@@ -20,8 +20,8 @@ class ControllerExtensionTotal extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'total/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/total/' . $this->request->get['extension']);
 
 			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/install');
 
@@ -95,7 +95,7 @@ class ControllerExtensionTotal extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('total/' . $extension);
+				$this->load->language('extension/total/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
@@ -104,7 +104,7 @@ class ControllerExtensionTotal extends Controller {
 					'install'   => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('total/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/total/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

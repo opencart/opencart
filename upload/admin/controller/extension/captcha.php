@@ -102,7 +102,7 @@ class ControllerExtensionCaptcha extends Controller {
 					'install'   => $this->url->link('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('captcha/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

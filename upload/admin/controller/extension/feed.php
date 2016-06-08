@@ -102,7 +102,7 @@ class ControllerExtensionFeed extends Controller {
 					'install'   => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

@@ -386,7 +386,7 @@ class ModelOpenbayAmazonus extends Model {
 			$this->load->model('tool/image');
 
 			foreach ($product_links as $key => $product_link) {
-				$variants = $this->model_module_openstock->getVariants($product_link['product_id']);
+				$variants = $this->model_extension_module_openstock->getVariants($product_link['product_id']);
 
 				if (!empty($variants)) {
 					foreach($variants as $variant) {
@@ -418,7 +418,7 @@ class ModelOpenbayAmazonus extends Model {
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
-					$stock_opts = $this->model_module_openstock->getVariants($row['product_id']);
+					$stock_opts = $this->model_extension_module_openstock->getVariants($row['product_id']);
 					foreach($stock_opts as $opt) {
 						if ($this->productLinkExists($row['product_id'], $opt['sku'])) {
 							continue;
@@ -526,7 +526,7 @@ class ModelOpenbayAmazonus extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('module/openstock');
-			$option_stocks = $this->model_module_openstock->getVariants($product_id);
+			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
@@ -701,7 +701,7 @@ class ModelOpenbayAmazonus extends Model {
 			$combinations = array();
 
 			if (isset($row['pov_id']) && !empty($row['pov_id'])) {
-				$variants = (isset($row['pov_id']) ? $this->model_module_openstock->getVariant($row['pov_id']) : '');
+				$variants = (isset($row['pov_id']) ? $this->model_extension_module_openstock->getVariant($row['pov_id']) : '');
 
 				foreach ($variants as $variant) {
 					$combinations[] =  $variant['option_value_name'];

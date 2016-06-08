@@ -62,10 +62,10 @@ class ControllerExtensionPaymentCheque extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/cheque', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cheque', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/cheque', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cheque', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 

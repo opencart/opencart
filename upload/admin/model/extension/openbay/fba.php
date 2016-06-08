@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeFba extends Model {
+class ModelExtensionOpenBayFba extends Model {
     public function install() {
         $this->load->model('extension/event');
 

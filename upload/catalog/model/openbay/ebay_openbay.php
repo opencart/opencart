@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEbayOpenbay extends Model{
+class ModelExtensionOpenBayEbayOpenbay extends Model{
 	public function importOrders($data) {
 		$this->default_shipped_id         = $this->config->get('ebay_status_shipped_id');
 		$this->default_paid_id            = $this->config->get('ebay_status_paid_id');

@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazonus extends Model {
+class ModelExtensionOpenBayAmazonus extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 

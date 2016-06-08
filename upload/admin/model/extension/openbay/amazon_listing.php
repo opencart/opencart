@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazonListing extends Model {
+class ModelExtensionOpenBayAmazonListing extends Model {
 	private $tabs = array();
 
 	public function search($search_string, $marketplace) {

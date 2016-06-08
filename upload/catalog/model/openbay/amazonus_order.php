@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazonusOrder extends Model {
+class ModelExtensionOpenBayAmazonusOrder extends Model {
 	public function acknowledgeOrder($order_id) {
 		$amazonus_order_id = $this->getAmazonusOrderId($order_id);
 

@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEbayProduct extends Model {
+class ModelExtensionOpenBayEbayProduct extends Model {
 	public function getTaxRate($class_id) {
 		return $this->openbay->getTaxRate($class_id);
 	}

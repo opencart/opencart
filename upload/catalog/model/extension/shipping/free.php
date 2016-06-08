@@ -1,5 +1,5 @@
 <?php
-class ModelShippingFree extends Model {
+class ModelExtensionShippingFree extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/free');
 

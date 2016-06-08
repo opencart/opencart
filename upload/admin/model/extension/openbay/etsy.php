@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEtsy extends Model{
+class ModelExtensionOpenBayEtsy extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 

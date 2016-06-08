@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEtsyOrder extends Model {
+class ModelExtensionOpenBayEtsyOrder extends Model {
 	public function inbound($orders) {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/currency');

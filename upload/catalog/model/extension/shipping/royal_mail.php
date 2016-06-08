@@ -240,7 +240,7 @@ Yemen, Republic of = YE
 Zambia = ZM
 Zimbabwe = ZW
 */
-class ModelShippingRoyalMail extends Model {
+class ModelExtensionShippingRoyalMail extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/royal_mail');
 

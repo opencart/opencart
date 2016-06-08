@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazonusListing extends Model {
+class ModelExtensionOpenBayAmazonusListing extends Model {
 	private $tabs = array();
 
 	public function search($search_string) {

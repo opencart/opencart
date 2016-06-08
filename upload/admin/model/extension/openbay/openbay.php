@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeOpenbay extends Model {
+class ModelExtensionOpenBayOpenbay extends Model {
 	private $url = 'https://account.openbaypro.com/';
 	private $error;
 

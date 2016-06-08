@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEbayProduct extends Model {
+class ModelExtensionOpenBayEbayProduct extends Model {
 	public function getRelistRule($id) {
 		return $this->openbay->ebay->call('item/getAutomationRule', array('id' => $id));
 	}

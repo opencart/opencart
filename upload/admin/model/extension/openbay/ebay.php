@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeEbay extends Model{
+class ModelExtensionOpenBayEbay extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 

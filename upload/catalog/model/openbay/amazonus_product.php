@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazonusProduct extends Model {
+class ModelExtensionOpenBayAmazonusProduct extends Model {
 	public function setStatus($insertion_id, $status_string) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = '" . $status_string . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}

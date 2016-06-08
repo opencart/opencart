@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionThemeAmazon extends Model {
+class ModelExtensionOpenBayAmazon extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 

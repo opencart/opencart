@@ -79,7 +79,7 @@ class ControllerExtensionCaptcha extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
@@ -88,7 +88,7 @@ class ControllerExtensionCaptcha extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

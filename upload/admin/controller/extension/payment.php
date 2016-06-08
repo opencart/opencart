@@ -82,7 +82,7 @@ class ControllerExtensionPayment extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
@@ -91,7 +91,7 @@ class ControllerExtensionPayment extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

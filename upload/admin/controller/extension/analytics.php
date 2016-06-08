@@ -79,7 +79,7 @@ class ControllerExtensionAnalytics extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -92,7 +92,7 @@ class ControllerExtensionAnalytics extends Controller {
 		
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

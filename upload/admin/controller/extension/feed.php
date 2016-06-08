@@ -79,7 +79,7 @@ class ControllerExtensionFeed extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('feed');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/feed/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/feed/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('feed', $value);
 
 				unset($extensions[$key]);
@@ -88,7 +88,7 @@ class ControllerExtensionFeed extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/feed/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

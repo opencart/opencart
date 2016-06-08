@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentBankTransfer extends Controller {
+class ControllerExtensionPaymentBankTransfer extends Controller {
 	public function index() {
 		$this->load->language('payment/bank_transfer');
 

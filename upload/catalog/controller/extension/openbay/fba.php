@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayFba extends Controller {
+class ControllerExtensionOpenbayFba extends Controller {
 	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		if (!empty($order_id)) {
 			$this->load->model('checkout/order');

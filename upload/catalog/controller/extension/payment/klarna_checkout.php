@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentKlarnaCheckout extends Controller {
+class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	public function index() {
 		$this->load->language('payment/klarna_checkout');
 
@@ -375,7 +375,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 			}
 		}
 
@@ -487,7 +487,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
@@ -653,7 +653,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
-							$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 							if ($quote) {
 								$method_data[$result['code']] = array(
@@ -1282,7 +1282,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
 						$method_data[$result['code']] = array(
@@ -1843,7 +1843,7 @@ class ControllerPaymentKlarnaCheckout extends Controller {
 				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 			}
 		}
 

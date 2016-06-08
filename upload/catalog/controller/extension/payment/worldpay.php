@@ -1,7 +1,5 @@
 <?php
-
-class ControllerPaymentWorldpay extends Controller {
-
+class ControllerExtensionPaymentWorldpay extends Controller {
 	public function index() {
 		$this->load->language('payment/worldpay');
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAccount extends Controller {
+class ControllerExtensionModuleAccount extends Controller {
 	public function index() {
 		$this->load->language('module/account');
 

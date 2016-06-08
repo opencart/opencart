@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEtsy extends Controller {
+class ControllerExtensionOpenbayEtsy extends Controller {
 	public function inbound() {
 		if ($this->config->get('etsy_status') != '1') {
 			$this->openbay->etsy->log('etsy/inbound - module inactive (503)');

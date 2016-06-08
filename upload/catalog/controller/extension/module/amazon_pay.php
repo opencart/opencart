@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAmazonPay extends Controller {
+class ControllerExtensionModuleAmazonPay extends Controller {
 	public function index() {
 
 		$this->load->model('extension/payment/amazon_login_pay');

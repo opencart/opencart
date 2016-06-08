@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentKlarnaInvoice extends Controller {
+class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
@@ -80,7 +80,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 					$taxes = array();
 					
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_extension_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
 
 					$amount = 0;
 

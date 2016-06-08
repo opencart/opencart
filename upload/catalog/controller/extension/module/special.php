@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleSpecial extends Controller {
+class ControllerExtensionModuleSpecial extends Controller {
 	public function index($setting) {
 		$this->load->language('module/special');
 

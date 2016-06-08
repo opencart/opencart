@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentRealex extends Controller {
+class ControllerExtensionPaymentRealex extends Controller {
 	public function index() {
 		$this->load->language('payment/realex');
 

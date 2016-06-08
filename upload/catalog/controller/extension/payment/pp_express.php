@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPExpress extends Controller {
+class ControllerExtensionPaymentPPExpress extends Controller {
 	public function index() {
 		$this->load->language('payment/pp_express');
 
@@ -564,7 +564,7 @@ class ControllerPaymentPPExpress extends Controller {
 						if ($this->config->get($result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
-							$quote = $this->{'model_shipping_' . $result['code']}->getQuote($shipping_address);
+							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($shipping_address);
 
 							if ($quote) {
 								$quote_data[$result['code']] = array(
@@ -644,7 +644,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
@@ -686,7 +686,7 @@ class ControllerPaymentPPExpress extends Controller {
 			if ($this->config->get($result['code'] . '_status')) {
 				$this->load->model('extension/payment/' . $result['code']);
 
-				$method = $this->{'model_payment_' . $result['code']}->getMethod($payment_address, $total);
+				$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($payment_address, $total);
 
 				if ($method) {
 					$method_data[$result['code']] = $method;
@@ -835,7 +835,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 

@@ -33,7 +33,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 					
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
@@ -54,7 +54,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 
 					if ($method) {
 						if ($recurring) {
-							if (property_exists($this->{'model_extension_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_payment_' . $result['code']}->recurringPayments()) {
+							if (property_exists($this->{'model_extension_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_payment_' . $result['code']}->recurringPayments()) {
 								$method_data[$result['code']] = $method;
 							}
 						} else {

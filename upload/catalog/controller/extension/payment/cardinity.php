@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentCardinity extends Controller {
+class ControllerExtensionPaymentCardinity extends Controller {
 	public function index() {
 		$this->load->language('payment/cardinity');
 

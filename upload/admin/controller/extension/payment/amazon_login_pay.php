@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAmazonLoginPay extends Controller {
+class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	private $error = array();
 
 	public function index() {

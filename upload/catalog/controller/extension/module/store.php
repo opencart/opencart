@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleStore extends Controller {
+class ControllerExtensionModuleStore extends Controller {
 	public function index() {
 		$status = true;
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentSkrill extends Controller {
+class ControllerExtensionPaymentSkrill extends Controller {
 	private $error = array();
 
 	public function index() {

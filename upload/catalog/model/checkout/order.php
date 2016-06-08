@@ -281,9 +281,9 @@ class ModelCheckoutOrder extends Model {
 				foreach ($order_total_query->rows as $order_total) {
 					$this->load->model('extension/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'confirm')) {
 						// Confirm coupon, vouchers and reward points
-						$fraud_status_id = $this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
+						$fraud_status_id = $this->{'model_extension_total_' . $order_total['code']}->confirm($order_info, $order_total);
 						
 						// If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned.
 						if ($fraud_status_id) {
@@ -341,8 +341,8 @@ class ModelCheckoutOrder extends Model {
 				foreach ($order_total_query->rows as $order_total) {
 					$this->load->model('extension/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_total_' . $order_total['code']}, 'unconfirm')) {
-						$this->{'model_total_' . $order_total['code']}->unconfirm($order_id);
+					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'unconfirm')) {
+						$this->{'model_extension_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
 

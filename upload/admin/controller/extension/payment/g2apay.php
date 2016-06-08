@@ -1,6 +1,6 @@
 <?php
 
-class ControllerPaymentG2APay extends Controller {
+class ControllerExtensionPaymentG2APay extends Controller {
 
 	private $error = array();
 

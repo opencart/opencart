@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalCoupon extends Controller {
+class ControllerExtensionTotalCoupon extends Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
 			$this->load->language('total/coupon');

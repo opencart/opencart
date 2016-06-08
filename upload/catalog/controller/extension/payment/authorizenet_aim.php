@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAuthorizeNetAim extends Controller {
+class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 	public function index() {
 		$this->load->language('payment/authorizenet_aim');
 

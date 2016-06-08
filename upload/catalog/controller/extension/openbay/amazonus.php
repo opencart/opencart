@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayAmazonus extends Controller {
+class ControllerExtensionOpenbayAmazonus extends Controller {
 	public function order() {
 		if ($this->config->get('openbay_amazonus_status') != '1') {
 			return;

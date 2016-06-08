@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentWebPaymentSoftware extends Controller {
+class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 	public function index() {
 		$this->load->language('payment/web_payment_software');
 

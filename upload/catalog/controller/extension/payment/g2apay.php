@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentG2APay extends Controller {
+class ControllerExtensionPaymentG2APay extends Controller {
 	public function index() {
 		$this->load->language('payment/g2apay');
 
@@ -41,7 +41,7 @@ class ControllerPaymentG2APay extends Controller {
 				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {

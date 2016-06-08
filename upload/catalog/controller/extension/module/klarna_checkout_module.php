@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleKlarnaCheckoutModule extends Controller {
+class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	public function index() {
 		$this->load->model('extension/payment/klarna_checkout');
 
@@ -100,7 +100,7 @@ class ControllerModuleKlarnaCheckoutModule extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
 						$method_data[$result['code']] = array(

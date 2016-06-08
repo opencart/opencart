@@ -1,5 +1,5 @@
 <?php
-class ControllerCreditCardSagepayDirect extends Controller {
+class ControllerExtensionCreditCardSagepayDirect extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', true);

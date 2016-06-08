@@ -188,7 +188,7 @@ class ControllerApiPayment extends Controller {
 						$this->load->model('extension/total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal($total_data);
+						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 
@@ -205,11 +205,11 @@ class ControllerApiPayment extends Controller {
 					if ($this->config->get($result['code'] . '_status')) {
 						$this->load->model('extension/payment/' . $result['code']);
 
-						$method = $this->{'model_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+						$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 						if ($method) {
 							if ($recurring) {
-								if (property_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_payment_' . $result['code']}->recurringPayments()) {
+								if (property_exists($this->{'model_extension_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_payment_' . $result['code']}->recurringPayments()) {
 									$json['payment_methods'][$result['code']] = $method;
 								}
 							} else {

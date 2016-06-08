@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentBluePayHosted extends Controller {
+class ControllerExtensionPaymentBluePayHosted extends Controller {
 	public function index() {
 		$this->load->language('payment/bluepay_hosted');
 		$this->load->model('checkout/order');

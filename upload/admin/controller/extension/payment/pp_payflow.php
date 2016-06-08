@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPPayflow extends Controller {
+class ControllerExtensionPaymentPPPayflow extends Controller {
 	private $error = array();
 
 	public function index() {

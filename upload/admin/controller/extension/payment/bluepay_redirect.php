@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentBluepayredirect extends Controller {
+class ControllerExtensionPaymentBluepayredirect extends Controller {
 	private $error = array();
 
 	public function index() {

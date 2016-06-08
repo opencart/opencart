@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentDivido extends Controller {
+class ControllerExtensionPaymentDivido extends Controller {
 	const
 		STATUS_ACCEPTED = 'ACCEPTED',
 		STATUS_ACTION_LENDER = 'ACTION-LENDER',

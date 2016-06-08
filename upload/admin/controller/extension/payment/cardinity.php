@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentCardinity extends Controller {
+class ControllerExtensionPaymentCardinity extends Controller {
 	private $error = array();
 
 	public function index() {

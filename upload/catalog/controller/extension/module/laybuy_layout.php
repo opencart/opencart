@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleLaybuyLayout extends Controller {
+class ControllerExtensionModuleLaybuyLayout extends Controller {
 	public function index() {
 		$this->load->model('module/laybuy_layout');
 

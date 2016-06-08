@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAmazonLoginPay extends Controller {
+class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function address() {
 		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -209,7 +209,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$this->load->model('extension/total/' . $code);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $code}->getTotal($total_data);
+				$this->{'model_extension_total_' . $code}->getTotal($total_data);
 
 				if (!empty($totals[count($totals) - 1]) && !isset($totals[count($totals) - 1]['code'])) {
 					$totals[count($totals) - 1]['code'] = $code;
@@ -727,7 +727,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				if ($this->config->get($code . '_status')) {
 					$this->load->model('extension/shipping/' . $code);
 
-					$quote = $this->{'model_shipping_' . $code}->getQuote($address);
+					$quote = $this->{'model_extension_shipping_' . $code}->getQuote($address);
 
 					if ($quote && empty($quote['error'])) {
 						$quotes[$code] = array(

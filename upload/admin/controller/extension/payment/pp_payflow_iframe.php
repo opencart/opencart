@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPPayflowIframe extends Controller {
+class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 	private $error = array();
 
 	public function index() {

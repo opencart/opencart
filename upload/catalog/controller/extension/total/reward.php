@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalReward extends Controller {
+class ControllerExtensionTotalReward extends Controller {
 	public function index() {
 		$points = $this->customer->getRewardPoints();
 

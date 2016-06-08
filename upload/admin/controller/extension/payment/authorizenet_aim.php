@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAuthorizenetAim extends Controller {
+class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 	private $error = array();
 
 	public function index() {

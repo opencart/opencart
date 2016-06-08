@@ -60,13 +60,13 @@ class ControllerCheckoutConfirm extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array. 
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -107,7 +107,11 @@ class ControllerCheckoutConfirm extends Controller {
 			if ($order_data['store_id']) {
 				$order_data['store_url'] = $this->config->get('config_url');
 			} else {
-				$order_data['store_url'] = HTTP_SERVER;
+				if ($this->request->server['HTTPS']) {
+					$order_data['store_url'] = HTTPS_SERVER;
+				} else {
+					$order_data['store_url'] = HTTP_SERVER;
+				}
 			}
 
 			if ($this->customer->isLogged()) {

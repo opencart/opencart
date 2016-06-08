@@ -27,10 +27,14 @@ class ControllerDesignTranslation extends Controller {
 		$data['text_language'] = $this->language->get('text_language');
 		$data['text_translation'] = $this->language->get('text_translation');
 		$data['text_default'] = $this->language->get('text_default');
-		$data['text_begin'] = $this->language->get('text_begin');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+
+		$data['entry_key'] = $this->language->get('entry_key');
+		$data['entry_value'] = $this->language->get('entry_value');
 
 		$data['button_save'] = $this->language->get('button_save');
-		$data['button_reset'] = $this->language->get('button_reset');
+		$data['button_translation_add'] = $this->language->get('button_translation_add');
+		$data['button_remove'] = $this->language->get('button_remove');
 		
 		$data['token'] = $this->session->data['token'];
 		
@@ -102,7 +106,7 @@ class ControllerDesignTranslation extends Controller {
 			$path_data = array();
 			
 			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
-			$files = glob(rtrim(DIR_CATALOG . 'language/{default,' . $language_info['code'] . '}/' . $path, '/') . '/*', GLOB_BRACE);
+			$files = glob(rtrim(DIR_CATALOG . 'language/{en-gb,' . $language_info['code'] . '}/' . $path, '/') . '/*', GLOB_BRACE);
 			
 			if ($files) {
 				foreach($files as $file) {
@@ -162,20 +166,36 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$path = '';
 		}	
-		
-		$json['translations'] = array();
+					
+		$json['translation'] = array();
 		
 		$this->load->model('localisation/language');
 					
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 		
+		//echo realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php');
+		
 		if ($language_info && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
-			$this->load->model('design/translation');
+			/*
+			$directory = DIR_CATALOG . 'language/';
+			
+			if (is_file($directory . $language_info['code'] . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
+				$_ = array();
 						
+				include($directory . $language_info['code'] . '/' . $code . '.php');	
+				
+				if (isset($_[$key])) {
+					$json = $_[$key];
+				}
+			}			
+			*/
+					
+			$this->load->model('design/translation');
+				
 			$results = $this->model_design_translation->getTranslations($store_id, $language_id, $path);
 	
 			foreach ($results as $result) { 
-				$data['translations'][] = $result;
+				$json['translation'][] = $result;
 			}
 		}
 
@@ -207,14 +227,12 @@ class ControllerDesignTranslation extends Controller {
 		}		
 			
 		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'design/theme')) {
+		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('design/theme');
+			$this->load->model('design/translation');
 			
-			$pos = strpos($path, '.');
-			
-			$this->model_design_theme->editTheme($store_id, $theme, ($pos !== false) ? substr($path, 0, $pos) : $path, $this->request->post['code']);
+			$this->model_design_translation->editTranslation($store_id, $theme, $path, $this->request->post);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -224,14 +242,6 @@ class ControllerDesignTranslation extends Controller {
 	}
 	
 	/*
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-	
 	public function translation() {
 		$json = array();
 			

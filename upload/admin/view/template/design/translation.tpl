@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -32,7 +31,6 @@
                 </select>
               </div>
             </div>
-            
             <div class="list-group">
               <div class="list-group-item">
                 <h4 class="list-group-item-heading"><?php echo $text_language; ?></h4>
@@ -57,16 +55,28 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <div id="code" style="display: none;">
-              <ul class="nav nav-tabs">
-              </ul>
-              <div class="tab-content"></div>
+          <fieldset>
+          <legend>Translation Overrides</legend>
+            <div class="table-responsive">
+              <table id="translation" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td><?php echo $entry_key; ?></td>
+                    <td><?php echo $entry_value; ?></td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td class="text-left"><button type="button" onclick="addImage('<?php echo $language['language_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_translation_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-            <div id="warning">
-              <div class="alert alert-info">
-                <p><i class="fa fa-info-circle"></i> <?php echo $text_begin; ?></p>
-              </div>
-            </div>
+            </fieldset>
           </div>
         </div>
       </div>
@@ -75,7 +85,7 @@
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
+		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"] option:selected').val() + '&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -104,7 +114,6 @@ $('select[name="store_id"]').on('change', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-
 });
 
 $('select[name="store_id"]').trigger('change');
@@ -158,9 +167,8 @@ $('#path').on('click', 'a.file',function(e) {
 	var node = this;
 	
 	// Check if the file has an extension
-
 	$.ajax({
-		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -173,8 +181,21 @@ $('#path').on('click', 'a.file',function(e) {
 		success: function(json) {
 			console.log(json);
 			
-			if (json['code']) {
-			
+			if (json['translation']) {
+				html = '';
+				
+				for (i = 0; i < json['translation'].length; i++) {
+					html += '<tr>';
+					html += '  <td>' + json['translation'][i]['key'] + '</td>';
+					html += '  <td>' + json['translation'][i]['value'] + '</td>';
+					html += '  <td><button type="button" onclick="$(this).parent().parent().remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '</tr>';
+				}
+				
+				$('#translation').html(html);
+				
+				$('#code').show();
+				$('#warning').hide();				
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -212,7 +233,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',

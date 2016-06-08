@@ -173,10 +173,11 @@ class ControllerDesignTranslation extends Controller {
 					
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 		
-		//echo realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php');
+		
+		
 		
 		if ($language_info && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
-			/*
+
 			$directory = DIR_CATALOG . 'language/';
 			
 			if (is_file($directory . $language_info['code'] . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
@@ -185,10 +186,10 @@ class ControllerDesignTranslation extends Controller {
 				include($directory . $language_info['code'] . '/' . $code . '.php');	
 				
 				if (isset($_[$key])) {
-					$json = $_[$key];
+					$json['key'] = $_[$key];
 				}
 			}			
-			*/
+
 					
 			$this->load->model('design/translation');
 				

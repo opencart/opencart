@@ -55,27 +55,27 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-          <fieldset>
-          <legend>Translation Overrides</legend>
-            <div class="table-responsive">
-              <table id="translation" class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <td><?php echo $entry_key; ?></td>
-                    <td><?php echo $entry_value; ?></td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addImage('<?php echo $language['language_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_translation_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
+            <fieldset>
+              <legend>Translation Overrides</legend>
+              <div class="table-responsive">
+                <table id="translation" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td><?php echo $entry_key; ?></td>
+                      <td><?php echo $entry_value; ?></td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td class="text-left"><button type="button" onclick="addTranslation();" data-toggle="tooltip" title="<?php echo $button_translation_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </fieldset>
           </div>
         </div>
@@ -187,12 +187,12 @@ $('#path').on('click', 'a.file',function(e) {
 				for (i = 0; i < json['translation'].length; i++) {
 					html += '<tr>';
 					html += '  <td>' + json['translation'][i]['key'] + '</td>';
-					html += '  <td>' + json['translation'][i]['value'] + '</td>';
+					html += '  <td><textarea name="" rows="5" placeholder="<?php echo $entry_value; ?>" class="form-control">' + json['translation'][i]['value'] + '</textarea></td>';
 					html += '  <td><button type="button" onclick="$(this).parent().parent().remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 				}
 				
-				$('#translation').html(html);
+				$('#translation tbody').html(html);
 				
 				$('#code').show();
 				$('#warning').hide();				

@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentLaybuy extends Controller {
 	public function index() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$this->load->model('extension/payment/laybuy');
 
@@ -192,7 +192,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 	public function reviseCallback() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Receiving callback');
 
@@ -351,7 +351,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 	public function cron() {
 		$this->load->model('extension/payment/laybuy');
 
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Running cron');
 

@@ -1,5 +1,5 @@
 <?php
-class ModelTotalReward extends Model {
+class ModelExtensionTotalReward extends Model {
 	public function getTotal($total) {
 		if (isset($this->session->data['reward'])) {
 			$this->load->language('total/reward');

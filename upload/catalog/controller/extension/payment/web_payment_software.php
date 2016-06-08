@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 	public function index() {
-		$this->load->language('payment/web_payment_software');
+		$this->load->language('extension/payment/web_payment_software');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');

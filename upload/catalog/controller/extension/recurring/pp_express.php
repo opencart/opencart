@@ -1,5 +1,5 @@
 <?php
-class ControllerRecurringPPExpress extends Controller {
+class ControllerExtensionRecurringPPExpress extends Controller {
 	public function index() {
 		$this->load->language('recurring/pp_express');
 		

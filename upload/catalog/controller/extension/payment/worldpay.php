@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentWorldpay extends Controller {
 	public function index() {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -49,7 +49,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('extension/payment/worldpay');
@@ -132,7 +132,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function deleteCard() {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 		$this->load->model('extension/payment/worldpay');
 
 		if (isset($this->request->post['token'])) {

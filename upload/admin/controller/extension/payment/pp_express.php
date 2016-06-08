@@ -3,7 +3,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -398,7 +398,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function order() {
 		if ($this->config->get('pp_express_status')) {
-			$this->load->language('payment/pp_express_order');
+			$this->load->language('extension/payment/pp_express_order');
 
 			if (isset($this->request->get['order_id'])) {
 				$order_id = $this->request->get['order_id'];
@@ -460,7 +460,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function transaction() {
-		$this->load->language('payment/pp_express_order');
+		$this->load->language('extension/payment/pp_express_order');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -512,7 +512,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function capture() {
 		$json = array();
 
-		$this->load->language('payment/pp_express_order');
+		$this->load->language('extension/payment/pp_express_order');
 
 		if (!isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
 			$json['error'] = $this->language->get('error_capture');
@@ -593,7 +593,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/pp_express_refund');
+		$this->load->language('extension/payment/pp_express_refund');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -670,7 +670,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		if (isset($this->request->post['transaction_id']) && isset($this->request->post['refund_full'])) {
 
 			$this->load->model('extension/payment/pp_express');
-			$this->load->language('payment/pp_express_refund');
+			$this->load->language('extension/payment/pp_express_refund');
 
 			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
 				$this->session->data['error'] = $this->language->get('error_partial_amt');
@@ -756,7 +756,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function void() {
 		$json = array();
 
-		$this->load->language('payment/pp_express_order');
+		$this->load->language('extension/payment/pp_express_order');
 
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];
@@ -893,7 +893,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function resend() {
 		$json = array();
 
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		if (isset($this->request->get['paypal_order_transaction_id'])) {
 			$paypal_order_transaction_id = $this->request->get['paypal_order_transaction_id'];
@@ -963,7 +963,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 
 	public function search() {
-		$this->load->language('payment/pp_express_search');
+		$this->load->language('extension/payment/pp_express_search');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1080,7 +1080,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function info() {
-		$this->load->language('payment/pp_express_view');
+		$this->load->language('extension/payment/pp_express_view');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1299,7 +1299,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function live() {
 		if (isset($this->request->get['merchantId'])) {
-			$this->load->language('payment/pp_express');
+			$this->load->language('extension/payment/pp_express');
 
 			$this->load->model('extension/payment/pp_express');
 			$this->load->model('setting/setting');
@@ -1326,7 +1326,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function sandbox() {
 		if (isset($this->request->get['merchantId'])) {
-			$this->load->language('payment/pp_express');
+			$this->load->language('extension/payment/pp_express');
 
 			$this->load->model('extension/payment/pp_express');
 			$this->load->model('setting/setting');

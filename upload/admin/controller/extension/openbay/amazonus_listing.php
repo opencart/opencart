@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayAmazonusListing extends Controller{
+class ControllerExtensionOpenbayAmazonusListing extends Controller{
 	public function create() {
 		$this->load->language('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus_listing');

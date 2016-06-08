@@ -3,7 +3,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -144,7 +144,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['token'] = $this->session->data['token'];
@@ -154,7 +154,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	}
 
 	public function getPayment() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->load->model('extension/payment/cardinity');
 
@@ -238,7 +238,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->load->model('extension/payment/cardinity');
 

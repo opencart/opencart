@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEtsyProduct extends Controller {
+class ControllerExtensionOpenbayEtsyProduct extends Controller {
 	private $error;
 
 	public function create() {

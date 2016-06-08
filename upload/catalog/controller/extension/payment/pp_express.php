@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentPPExpress extends Controller {
 	public function index() {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -347,7 +347,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function expressConfirm() {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 		$this->load->language('checkout/cart');
 
 		$this->load->model('tool/image');
@@ -742,7 +742,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function expressComplete() {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 		$redirect = '';
 
 		if ($this->cart->hasShipping()) {
@@ -1166,7 +1166,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				//loop through any products that are recurring items
 				if ($recurring_products) {
-					$this->load->language('payment/pp_express');
+					$this->load->language('extension/payment/pp_express');
 
 					$this->load->model('checkout/recurring');
 
@@ -1347,7 +1347,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 
 	public function checkoutReturn() {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('checkout/order');
@@ -1537,7 +1537,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 			}
 
-			$this->load->language('payment/pp_express');
+			$this->load->language('extension/payment/pp_express');
 
 			$data['breadcrumbs'] = array();
 
@@ -1846,7 +1846,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	protected function shippingValidate($code) {
 		$this->load->language('checkout/cart');
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		if (empty($code)) {
 			$this->session->data['error_warning'] = $this->language->get('error_shipping');

@@ -1,6 +1,6 @@
 <?php
 
-class ControllerModuleAmazonPay extends Controller {
+class ControllerExtensionModuleAmazonPay extends Controller {
 
 	private $error = array();
 

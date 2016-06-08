@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentWorldpay extends Model {
+class ModelExtensionPaymentWorldpay extends Model {
 
 	public function install() {
 		$this->db->query("

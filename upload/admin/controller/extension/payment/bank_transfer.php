@@ -3,7 +3,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/bank_transfer');
+		$this->load->language('extension/payment/bank_transfer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -270,7 +270,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 	public function order() {
 		$this->load->model('extension/payment/pp_pro_iframe');
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 
 		$paypal_order = $this->model_payment_pp_pro_iframe->getOrder($this->request->get['order_id']);
 
@@ -351,7 +351,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 		$this->load->model('extension/payment/pp_pro_iframe');
 
 		$this->document->setTitle($this->language->get('text_refund'));
@@ -436,7 +436,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		if (isset($this->request->post['transaction_id']) && isset($this->request->post['refund_full'])) {
 
 			$this->load->model('extension/payment/pp_pro_iframe');
-			$this->load->language('payment/pp_pro_iframe');
+			$this->load->language('extension/payment/pp_pro_iframe');
 
 			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
 				$this->session->data['error'] = $this->language->get('error_capture');
@@ -521,7 +521,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	}
 
 	public function reauthorise() {
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 		$this->load->model('extension/payment/pp_pro_iframe');
 
 		$json = array();
@@ -577,7 +577,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 	public function info() {
 		$this->load->model('extension/payment/pp_pro_iframe');
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_product_lines'] = $this->language->get('text_product_lines');
@@ -701,7 +701,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 		/*
 		 * used to capture authorised payments
 		 * capture can be full or partial amounts
@@ -820,7 +820,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
 			$this->load->model('extension/payment/pp_pro_iframe');
@@ -873,7 +873,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 	public function resend() {
 		$this->load->model('extension/payment/pp_pro_iframe');
-		$this->load->language('payment/pp_pro_iframe');
+		$this->load->language('extension/payment/pp_pro_iframe');
 
 		$json = array();
 

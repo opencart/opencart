@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleSagepayServerCards extends Controller {
+class ControllerExtensionModuleSagepayServerCards extends Controller {
 	private $error = array();
 
 	public function index() {

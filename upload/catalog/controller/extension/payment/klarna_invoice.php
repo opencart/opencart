@@ -6,7 +6,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			$this->load->language('payment/klarna_invoice');
+			$this->load->language('extension/payment/klarna_invoice');
 
 			$data['text_additional'] = $this->language->get('text_additional');
 			$data['text_payment_option'] = $this->language->get('text_payment_option');
@@ -154,7 +154,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/klarna_invoice');
+		$this->load->language('extension/payment/klarna_invoice');
 
 		$json = array();
 

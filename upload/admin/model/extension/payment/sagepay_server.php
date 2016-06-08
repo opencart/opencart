@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentSagepayServer extends Model {
+class ModelExtensionPaymentSagepayServer extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "sagepay_server_order` (

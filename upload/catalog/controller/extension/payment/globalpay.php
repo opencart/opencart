@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentGlobalpay extends Controller {
 	public function index() {
-		$this->load->language('payment/globalpay');
+		$this->load->language('extension/payment/globalpay');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 
@@ -90,7 +90,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 		$this->model_payment_globalpay->logger(print_r($this->request->post, 1));
 
-		$this->load->language('payment/globalpay');
+		$this->load->language('extension/payment/globalpay');
 
 		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('globalpay_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
 		$tmp = $hash . '.' . $this->config->get('globalpay_secret');

@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentBluePayHosted extends Model {
+class ModelExtensionPaymentBluePayHosted extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_hosted_order` (

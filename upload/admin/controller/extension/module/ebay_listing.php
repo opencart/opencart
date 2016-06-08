@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleEbayListing extends Controller {
+class ControllerExtensionModuleEbayListing extends Controller {
 	private $error = array();
 
 	public function index() {

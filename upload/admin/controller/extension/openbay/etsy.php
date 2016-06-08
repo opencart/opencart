@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEtsy extends Controller {
+class ControllerExtensionOpenbayEtsy extends Controller {
 	public function install() {
 		$this->load->language('openbay/etsy');
 		$this->load->model('openbay/etsy');

@@ -3,7 +3,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/realex');
+		$this->load->language('extension/payment/realex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -301,7 +301,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 			$realex_order = $this->model_payment_realex->getOrder($this->request->get['order_id']);
 
 			if (!empty($realex_order)) {
-				$this->load->language('payment/realex');
+				$this->load->language('extension/payment/realex');
 
 				$realex_order['total_captured'] = $this->model_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
 
@@ -341,7 +341,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/realex');
+		$this->load->language('extension/payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -375,7 +375,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/realex');
+		$this->load->language('extension/payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -423,7 +423,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/realex');
+		$this->load->language('extension/payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

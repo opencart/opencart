@@ -1,5 +1,5 @@
 <?php
-class ModelFeedGoogleBase extends Model {
+class ModelExtensionFeedGoogleBase extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE `" . DB_PREFIX . "google_base_category` (

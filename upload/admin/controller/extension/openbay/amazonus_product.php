@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayAmazonusProduct extends Controller{
+class ControllerExtensionOpenbayAmazonusProduct extends Controller{
 	public function index() {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');

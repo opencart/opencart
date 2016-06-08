@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAmazonLogin extends Controller {
+class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	private $error = array();
 

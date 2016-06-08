@@ -3,7 +3,7 @@ class ControllerExtensionPaymentCod extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/cod');
+		$this->load->language('extension/payment/cod');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

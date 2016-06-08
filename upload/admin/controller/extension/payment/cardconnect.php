@@ -7,7 +7,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$this->load->model('extension/payment/cardconnect');
 
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -289,7 +289,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->get['order_id']);
 
 			if ($cardconnect_order) {
-				$this->load->language('payment/cardconnect');
+				$this->load->language('extension/payment/cardconnect');
 
 				if ($cardconnect_order['payment_method'] == 'card') {
 					$cardconnect_order['payment_method'] = $this->language->get('text_card');
@@ -376,7 +376,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function inquire() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
@@ -415,7 +415,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
@@ -465,7 +465,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
@@ -515,7 +515,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 

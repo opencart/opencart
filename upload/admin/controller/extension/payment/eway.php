@@ -4,7 +4,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -235,7 +235,7 @@ class ControllerExtensionPaymentEway extends Controller {
 			$eway_order = $this->model_payment_eway->getOrder($this->request->get['order_id']);
 
 			if (!empty($eway_order)) {
-				$this->load->language('payment/eway');
+				$this->load->language('extension/payment/eway');
 
 				$eway_order['total'] = $eway_order['amount'];
 				$eway_order['total_formatted'] = $this->currency->format($eway_order['amount'], $eway_order['currency_code'], 1, true);
@@ -281,7 +281,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
 		$refund_amount = (double)$this->request->post['refund_amount'];
@@ -336,7 +336,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
 		$capture_amount = (double)$this->request->post['capture_amount'];

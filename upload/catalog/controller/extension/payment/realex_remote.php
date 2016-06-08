@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentRealexRemote extends Controller {
 	public function index() {
-		$this->load->language('payment/realex_remote');
+		$this->load->language('extension/payment/realex_remote');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -65,7 +65,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/realex_remote');
 
-		$this->load->language('payment/realex_remote');
+		$this->load->language('extension/payment/realex_remote');
 
 		if ($this->request->post['cc_number'] == '') {
 			$json['error'] = $this->language->get('error_card_number');
@@ -158,7 +158,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 				// Unable to Verify Enrollment. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result) && $verify_3ds->result == '110' && isset($verify_3ds->enrolled) && $verify_3ds->enrolled == 'U') {
 					if ($this->config->get('realex_remote_liability') != 1) {
-						$this->load->language('payment/realex_remote');
+						$this->load->language('extension/payment/realex_remote');
 
 						$json['error'] = $this->language->get('error_3d_unable');
 
@@ -181,7 +181,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 				// Invalid response from Enrollment Server. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result)  && $verify_3ds->result >= 500 && $verify_3ds->result < 600) {
 					if ($this->config->get('realex_remote_liability') != 1) {
-						$this->load->language('payment/realex_remote');
+						$this->load->language('extension/payment/realex_remote');
 
 						$json['error'] = (string)$verify_3ds->message;
 
@@ -291,7 +291,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 
 				if ($this->config->get('realex_remote_liability') != 1) {
 					// this is the check for liability shift - if the merchant does not want to accept, redirect to checkout with message
-					$this->load->language('payment/realex_remote');
+					$this->load->language('extension/payment/realex_remote');
 
 					$message = $this->language->get('error_3d_unsuccessful');
 					$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $this->language->get('text_3d_s' . (int)$eci_ref);

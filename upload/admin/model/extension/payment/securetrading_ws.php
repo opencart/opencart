@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentSecureTradingWs extends Model {
+class ModelExtensionPaymentSecureTradingWs extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order` (

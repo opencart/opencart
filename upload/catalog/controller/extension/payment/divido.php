@@ -39,7 +39,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	);
 
 	public function index() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
@@ -90,7 +90,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
@@ -142,7 +142,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	}
 
 	public function confirm() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$this->load->model('extension/payment/divido');
 
@@ -271,7 +271,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	}
 
 	public function calculator($args) {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$this->load->model('extension/payment/divido');
 

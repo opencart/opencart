@@ -3,7 +3,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -266,7 +266,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->get['order_id']);
 
 			if (!empty($globalpay_order)) {
-				$this->load->language('payment/globalpay_remote');
+				$this->load->language('extension/payment/globalpay_remote');
 
 				$globalpay_order['total_captured'] = $this->model_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
 
@@ -306,7 +306,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -340,7 +340,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/globalpay');
+		$this->load->language('extension/payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -389,7 +389,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {

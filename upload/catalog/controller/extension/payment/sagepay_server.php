@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentSagepayServer extends Controller {
 	public function index() {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_card_name'] = $this->language->get('text_card_name');
 		$data['text_card_type'] = $this->language->get('text_card_type');
@@ -448,7 +448,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 	}
 
 	public function failure() {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 
 		$this->session->data['error'] = $this->language->get('text_generic_error');
 

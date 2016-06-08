@@ -1,5 +1,5 @@
 <?php
-class ModelFraudIp extends Model {
+class ModelExtensionFraudIp extends Model {
     public function check($order_info) {
         $this->load->model('account/customer');
 

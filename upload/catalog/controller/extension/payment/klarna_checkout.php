@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	public function index() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/country');
@@ -19,7 +19,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function main() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/country');
@@ -221,7 +221,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 	public function sidebar() {
 		$this->load->language('checkout/checkout');
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 
@@ -507,7 +507,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function addressUpdate() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('account/customer');
 		$this->load->model('checkout/order');
@@ -985,7 +985,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function confirmation() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
@@ -1557,7 +1557,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	private function klarnaOrderData($klarna_account) {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/country');

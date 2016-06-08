@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 	public function index() {
-		$this->load->language('payment/authorizenet_aim');
+		$this->load->language('extension/payment/authorizenet_aim');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_wait'] = $this->language->get('text_wait');

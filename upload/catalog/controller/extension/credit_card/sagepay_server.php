@@ -128,7 +128,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 	}
 
 	public function addCard() {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 		
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/sagepay_server');

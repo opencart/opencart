@@ -3,7 +3,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -228,7 +228,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['token'] = $this->session->data['token'];
@@ -238,7 +238,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function getTransaction() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');
@@ -544,7 +544,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function transactionCommand() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');
@@ -624,7 +624,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	}
 
 	public function downloadSettlementFiles() {
-		$this->load->language('payment/klarna_checkout');
+		$this->load->language('extension/payment/klarna_checkout');
 
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('sale/order');

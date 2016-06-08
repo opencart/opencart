@@ -1,5 +1,5 @@
 <?php
-class ControllerFraudFraudLabsPro extends Controller {
+class ControllerExtensionFraudFraudLabsPro extends Controller {
 	private $error = array();
 
 	public function index() {

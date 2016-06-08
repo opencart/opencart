@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEbayTemplate extends Controller {
+class ControllerExtensionOpenbayEbayTemplate extends Controller {
 	private $error = array();
 
 	public function listAll() {

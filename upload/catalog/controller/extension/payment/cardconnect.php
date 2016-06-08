@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentCardConnect extends Controller {
 	public function index() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->load->model('extension/payment/cardconnect');
 
@@ -56,7 +56,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function send()	{
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->load->model('extension/payment/cardconnect');
 
@@ -256,7 +256,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->load->model('extension/payment/cardconnect');
 
@@ -329,7 +329,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	private function validate() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->load->model('extension/payment/cardconnect');
 

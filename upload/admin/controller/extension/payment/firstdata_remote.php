@@ -3,7 +3,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/firstdata_remote');
+		$this->load->language('extension/payment/firstdata_remote');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -332,7 +332,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			$firstdata_order = $this->model_payment_firstdata_remote->getOrder($this->request->get['order_id']);
 
 			if (!empty($firstdata_order)) {
-				$this->load->language('payment/firstdata_remote');
+				$this->load->language('extension/payment/firstdata_remote');
 
 				$firstdata_order['total_captured'] = $this->model_payment_firstdata_remote->getTotalCaptured($firstdata_order['firstdata_remote_order_id']);
 
@@ -371,7 +371,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/firstdata_remote');
+		$this->load->language('extension/payment/firstdata_remote');
 
 		$json = array();
 
@@ -407,7 +407,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -448,7 +448,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/firstdata_remote');
+		$this->load->language('extension/payment/firstdata_remote');
 
 		$json = array();
 

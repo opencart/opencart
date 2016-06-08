@@ -1,5 +1,5 @@
 <?php
-class ControllerFeedOpenbaypro extends Controller {
+class ControllerExtensionFeedOpenbaypro extends Controller {
 	private $error = array();
 
 	public function index() {

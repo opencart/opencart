@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleKlarnaCheckoutModule extends Controller {
+class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	private $error = array();
 
 	public function index() {

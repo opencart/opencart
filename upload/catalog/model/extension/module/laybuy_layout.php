@@ -1,5 +1,5 @@
 <?php
-class ModelModuleLaybuyLayout extends Model {
+class ModelExtensionModuleLaybuyLayout extends Model {
 	public function getStatusLabel($id) {
 		$statuses = $this->getTransactionStatuses();
 
@@ -21,7 +21,7 @@ class ModelModuleLaybuyLayout extends Model {
 	}
 
 	public function getTransactionStatuses() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$transaction_statuses = array(
 			array(

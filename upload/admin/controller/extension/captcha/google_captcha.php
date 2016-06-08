@@ -1,5 +1,5 @@
 <?php
-class ControllerCaptchaGoogleCaptcha extends Controller {
+class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {

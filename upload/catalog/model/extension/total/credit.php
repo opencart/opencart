@@ -1,5 +1,5 @@
 <?php
-class ModelTotalCredit extends Model {
+class ModelExtensionTotalCredit extends Model {
 	public function getTotal($total) {
 		$this->load->language('total/credit');
 

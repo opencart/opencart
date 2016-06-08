@@ -3,7 +3,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -201,7 +201,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		}
 
 		$this->load->model('extension/payment/divido');
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$order_id = $this->request->get['order_id'];
 

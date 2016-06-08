@@ -1,5 +1,5 @@
 <?php
-class ModelTotalKlarnaFee extends Model {
+class ModelExtensionTotalKlarnaFee extends Model {
 	public function getTotal($totals) {
 		extract($totals);
 		

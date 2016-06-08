@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentFirstdata extends Controller {
 	public function index() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_new_card'] = $this->language->get('text_new_card');
@@ -90,7 +90,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		$message = '';
 
@@ -234,7 +234,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 	}
 
 	public function fail() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		if (isset($this->request->post['fail_reason']) && !empty($this->request->post['fail_reason'])) {
 			$this->session->data['error'] = $this->request->post['fail_reason'];

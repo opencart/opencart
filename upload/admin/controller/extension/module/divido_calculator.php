@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleDividoCalculator extends Controller {
+class ControllerExtensionModuleDividoCalculator extends Controller {
 	private $error = array();
 
 	public function index() {

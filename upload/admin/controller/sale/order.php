@@ -1240,7 +1240,7 @@ class ControllerSaleOrder extends Controller {
 				}
 
 				if ($content) {
-					$this->load->language('payment/' . $order_info['payment_code']);
+					$this->load->language('extension/payment/' . $order_info['payment_code']);
 
 					$data['tabs'][] = array(
 						'code'    => $order_info['payment_code'],

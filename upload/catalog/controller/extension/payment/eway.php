@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentEway extends Controller {
 	public function index() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['button_pay'] = $this->language->get('button_pay');
@@ -172,7 +172,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function callback() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		if (isset($this->request->get['AccessCode']) || isset($this->request->get['amp;AccessCode'])) {
 

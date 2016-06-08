@@ -3,7 +3,7 @@ use Klarna\Rest\Transport\Connector as KCConnector;
 use Klarna\Rest\Transport\ConnectorInterface as KCConnectorInterface;
 use Klarna\Rest\Checkout\Order as KCOrder;
 
-class ModelPaymentKlarnaCheckout extends Model {
+class ModelExtensionPaymentKlarnaCheckout extends Model {
 	public function orderCreate(KCConnector $connector, $order_data) {
 		try {
 			$checkout = new KCOrder($connector);

@@ -1,5 +1,5 @@
 <?php
-class ModelFraudIp extends Model {
+class ModelExtensionFraudIp extends Model {
 	public function install() {
 		$this->db->query("
 		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fraud_ip` (

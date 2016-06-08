@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionPaymentBluePayHosted extends Controller {
 	public function index() {
-		$this->load->language('payment/bluepay_hosted');
+		$this->load->language('extension/payment/bluepay_hosted');
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/bluepay_hosted');
 
@@ -55,7 +55,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 	}
 
 	public function callback() {
-		$this->load->language('payment/bluepay_hosted');
+		$this->load->language('extension/payment/bluepay_hosted');
 
 		$this->load->model('checkout/order');
 

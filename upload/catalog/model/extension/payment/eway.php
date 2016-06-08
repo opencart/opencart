@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentEway extends Model {
+class ModelExtensionPaymentEway extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		if ($this->config->get('eway_status')) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");

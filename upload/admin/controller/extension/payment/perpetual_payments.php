@@ -3,7 +3,7 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/perpetual_payments');
+		$this->load->language('extension/payment/perpetual_payments');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

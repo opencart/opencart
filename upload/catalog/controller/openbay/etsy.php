@@ -58,7 +58,7 @@ class ControllerOpenbayEtsy extends Controller {
 		}
 	}
 
-	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
+	public function eventAddOrderHistory($route, $output, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$this->openbay->etsy->log("eventAddOrderHistory event triggered (" . $route . ")");
 		$this->openbay->etsy->log("Order ID (" . $order_id . ")");
 		$this->openbay->etsy->log("Order status ID (" . $order_status_id . ")");

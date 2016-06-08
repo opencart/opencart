@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentPilibaba extends Model {
+class ModelExtensionPaymentPilibaba extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/pilibaba');
+		$this->load->language('extension/payment/pilibaba');
 
 		$status = true;
 

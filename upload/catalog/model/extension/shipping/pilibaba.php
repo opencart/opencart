@@ -1,7 +1,7 @@
 <?php
-class ModelShippingPilibaba extends Model {
+class ModelExtensionShippingPilibaba extends Model {
 	function getQuote($address) {
-		$this->load->language('shipping/pilibaba');
+		$this->load->language('extension/shipping/pilibaba');
 
 		$status = true;
 

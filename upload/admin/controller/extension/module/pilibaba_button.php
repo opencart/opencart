@@ -1,7 +1,7 @@
 <?php
-class ControllerModulePilibabaButton extends Controller {
+class ControllerExtensionModulePilibabaButton extends Controller {
 	public function index() {
-		$this->load->language('module/pilibaba_button');
+		$this->load->language('extension/module/pilibaba_button');
 
 		$this->load->model('setting/setting');
 
@@ -46,10 +46,10 @@ class ControllerModulePilibabaButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pilibaba_button', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pilibaba_button', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pilibaba_button', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pilibaba_button', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -63,11 +63,11 @@ class ControllerModulePilibabaButton extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pilibaba_button', $data));
+		$this->response->setOutput($this->load->view('extension/module/pilibaba_button', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pilibaba_button')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pilibaba_button')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

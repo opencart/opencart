@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPilibaba extends Model {
+class ModelExtensionPaymentPilibaba extends Model {
 	public function install() {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "pilibaba_order` (
 			`pilibaba_order_id` int(11) NOT NULL AUTO_INCREMENT,

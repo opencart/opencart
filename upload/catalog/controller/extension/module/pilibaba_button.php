@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePilibabaButton extends Controller {
+class ControllerExtensionModulePilibabaButton extends Controller {
 	public function index() {
 		$status = true;
 
@@ -8,9 +8,9 @@ class ControllerModulePilibabaButton extends Controller {
 		}
 
 		if ($status) {
-			$data['payment_url'] = $this->url->link('payment/pilibaba/express', '', true);
+			$data['payment_url'] = $this->url->link('extension/payment/pilibaba/express', '', true);
 
-			return $this->load->view('module/pilibaba_button', $data);
+			return $this->load->view('extension/module/pilibaba_button', $data);
 		}
 	}
 }

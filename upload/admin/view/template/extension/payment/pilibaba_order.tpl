@@ -38,7 +38,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>, 'tracking': $('#tracking').val()},
-				url: 'index.php?route=payment/pilibaba/tracking&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/pilibaba/tracking&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-tracking').hide();
 					$('#img_loading_tracking').show();

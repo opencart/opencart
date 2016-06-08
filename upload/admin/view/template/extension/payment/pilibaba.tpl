@@ -219,7 +219,7 @@
 			type: 'POST',
 			dataType: 'json',
 			data: {'email_address': $('#input-pilibaba-email-address').val(), 'password': $('#input-pilibaba-password').val(), 'currency': $('#input-pilibaba-currency').val(), 'warehouse': $('#input-pilibaba-warehouse').val(), 'country': $('#input-pilibaba-country').val(), 'environment': $('#input-pilibaba-environment').val()},
-			url: 'index.php?route=payment/pilibaba/register&token=<?php echo $token; ?>',
+			url: 'index.php?route=extension/payment/pilibaba/register&token=<?php echo $token; ?>',
 			beforeSend: function() {
 				$('#button-register').hide();
 				$('#img_loading_register').show();

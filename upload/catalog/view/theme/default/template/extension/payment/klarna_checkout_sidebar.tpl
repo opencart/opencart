@@ -111,15 +111,15 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
             } else if (json['error']) {
                 console.log(json['error']);
             } else {
-				$.post('index.php?route=payment/klarna_checkout/main', {response: 'json'}, function() {
-					$('.klarna-checkout-sidebar').load('index.php?route=payment/klarna_checkout/sidebar', function() {
+				$.post('index.php?route=extension/payment/klarna_checkout/main', {response: 'json'}, function() {
+					$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar', function() {
 						window._klarnaCheckout(function(api) {
 							api.resume();
 							removeSidebarOverlay();
 						});
 					});
 
-					$.get('index.php?route=payment/klarna_checkout/cartTotal', function(total) {
+					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal', function(total) {
 						setTimeout(function() {
 							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
 						}, 100);
@@ -154,11 +154,11 @@ var kc = {
 				});
 			},
 			success: function(json) {
-				$.post('index.php?route=payment/klarna_checkout/main', {response: 'json'}, function(data) {
+				$.post('index.php?route=extension/payment/klarna_checkout/main', {response: 'json'}, function(data) {
 					if (data['redirect']) {
 						location = data['redirect'];
 					} else {
-						$('.klarna-checkout-sidebar').load('index.php?route=payment/klarna_checkout/sidebar', function() {
+						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar', function() {
 							window._klarnaCheckout(function(api) {
 								api.resume();
 								removeSidebarOverlay();
@@ -197,11 +197,11 @@ var kc = {
 				});
 			},
 			success: function(json) {
-				$.post('index.php?route=payment/klarna_checkout/main', {response: 'json'}, function() {
+				$.post('index.php?route=extension/payment/klarna_checkout/main', {response: 'json'}, function() {
 					if (data['redirect']) {
 						location = data['redirect'];
 					} else {
-						$('.klarna-checkout-sidebar').load('index.php?route=payment/klarna_checkout/sidebar', function() {
+						$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar', function() {
 							window._klarnaCheckout(function(api) {
 								api.resume();
 								removeSidebarOverlay();

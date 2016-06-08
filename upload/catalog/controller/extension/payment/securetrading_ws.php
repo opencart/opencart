@@ -54,7 +54,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
-			return $this->load->view('payment/securetrading_ws', $data);
+			return $this->load->view('extension/payment/securetrading_ws', $data);
 		}
 	}
 

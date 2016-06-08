@@ -179,7 +179,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$data['cardconnect_sort_order'] = $this->config->get('cardconnect_sort_order');
 		}
 
-		$data['cardconnect_cron_url'] = HTTPS_CATALOG . 'index.php?route=payment/cardconnect/cron&token=' . $data['cardconnect_token'];
+		$data['cardconnect_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/cardconnect/cron&token=' . $data['cardconnect_token'];
 
 		if ($this->config->get('cardconnect_cron_time')) {
 			$data['cardconnect_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('cardconnect_cron_time')));
@@ -261,7 +261,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/cardconnect', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cardconnect', $data));
 	}
 
 	public function install() {
@@ -370,7 +370,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/cardconnect_order', $data);
+				return $this->load->view('extension/payment/cardconnect_order', $data);
 			}
 		}
 	}
@@ -553,7 +553,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/cardconnect')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/cardconnect')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

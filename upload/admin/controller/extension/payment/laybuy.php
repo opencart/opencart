@@ -278,7 +278,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$data['laybuy_sort_order'] = $this->config->get('laybuy_sort_order');
 		}
 
-		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/cron&token=' . $data['laybuy_token'];
+		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['laybuy_token'];
 
 		if ($this->config->get('laybuy_cron_time')) {
 			$data['laybuy_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('laybuy_cron_time')));
@@ -549,7 +549,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/laybuy', $data));
+		$this->response->setOutput($this->load->view('extension/payment/laybuy', $data));
 	}
 
 	public function fetch() {
@@ -557,7 +557,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Fetching transactions');
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->load->language('extension/payment/laybuy');
 
 			$json = array();
@@ -898,7 +898,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			return $data;
 		}
 
-		$this->response->setOutput($this->load->view('payment/laybuy_transaction', $data));
+		$this->response->setOutput($this->load->view('extension/payment/laybuy_transaction', $data));
 	}
 
 	public function cancel() {
@@ -912,7 +912,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$this->model_extension_payment_laybuy->log('Called from extension page');
 		}
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->load->language('extension/payment/laybuy');
 
 			$json = array();
@@ -1007,7 +1007,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$this->model_extension_payment_laybuy->log('Called from extension page');
 		}
 
-		if ($this->user->hasPermission('modify', 'payment/laybuy')) {
+		if ($this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 				$this->load->language('extension/payment/laybuy');
 
@@ -1095,8 +1095,8 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data['mnth']      = $months;
 				$data['convrate']  = '1';
 				$data['id']        = $revised_transaction['laybuy_revise_request_id'] . '-' . $revised_transaction['order_id'] . ':' . md5($this->config->get('laybuy_token'));
-				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/reviseCallback';
-				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=payment/laybuy/reviseCancel';
+				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCallback';
+				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCancel';
 
 				$data_string = '';
 
@@ -1194,7 +1194,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$data['api_key'] = $this->getApiKey();
 
-			return $this->load->view('payment/laybuy_order', $data);
+			return $this->load->view('extension/payment/laybuy_order', $data);
 		}
 	}
 
@@ -1219,7 +1219,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/laybuy')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/laybuy')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

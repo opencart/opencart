@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayAmazonusProduct extends Model {
+class ModelExtensionThemeAmazonusProduct extends Model {
 	public function setStatus($insertion_id, $status_string) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = '" . $status_string . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}
@@ -56,7 +56,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
 			$option = null;

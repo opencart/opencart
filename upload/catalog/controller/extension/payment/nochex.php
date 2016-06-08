@@ -66,7 +66,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline', true);
 		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
 
-		return $this->load->view('payment/nochex', $data);
+		return $this->load->view('extension/payment/nochex', $data);
 	}
 
 	public function callback() {

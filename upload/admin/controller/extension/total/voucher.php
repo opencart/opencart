@@ -76,7 +76,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/voucher')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/voucher')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -87,7 +87,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 		// Register the event triggers
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'total/voucher/send');
+		$this->model_extension_event->addEvent('voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send');
 	}
 
 	public function uninstall() {

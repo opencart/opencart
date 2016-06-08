@@ -74,7 +74,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': <?php echo $order_id; ?> },
-        url: 'index.php?route=payment/globalpay_remote/void&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/payment/globalpay_remote/void&token=<?php echo $token; ?>',
         beforeSend: function() {
           $('#button-void').hide();
           $('#img_loading_void').show();
@@ -114,7 +114,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': <?php echo $order_id; ?>, 'amount' : $('#capture_amount').val() },
-        url: 'index.php?route=payment/globalpay_remote/capture&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/payment/globalpay_remote/capture&token=<?php echo $token; ?>',
         beforeSend: function() {
           $('#button_capture').hide();
           $('#capture_amount').hide();
@@ -169,7 +169,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': <?php echo $order_id; ?>, 'amount' : $('#rebate_amount').val() },
-        url: 'index.php?route=payment/globalpay_remote/rebate&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/payment/globalpay_remote/rebate&token=<?php echo $token; ?>',
         beforeSend: function() {
           $('#button-rebate').hide();
           $('#rebate_amount').hide();

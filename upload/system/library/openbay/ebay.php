@@ -536,7 +536,7 @@ final class Ebay {
 
 		$openstock = false;
 		if ($this->openbay->addonLoad('openstock') == true) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$openstock = true;
 		}
 
@@ -704,7 +704,7 @@ final class Ebay {
 			$this->log('productUpdateListen(' . $product_id . ') - listing found (' . $item_id . ')');
 
 			if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
-				$this->load->model('module/openstock');
+				$this->load->model('extension/module/openstock');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/product');
 

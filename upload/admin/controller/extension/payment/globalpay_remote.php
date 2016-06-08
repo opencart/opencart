@@ -251,7 +251,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/globalpay_remote', $data));
+		$this->response->setOutput($this->load->view('extension/payment/globalpay_remote', $data));
 	}
 
 	public function install() {
@@ -300,7 +300,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/globalpay_remote_order', $data);
+				return $this->load->view('extension/payment/globalpay_remote_order', $data);
 			}
 		}
 	}
@@ -437,7 +437,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/globalpay_remote')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/globalpay_remote')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

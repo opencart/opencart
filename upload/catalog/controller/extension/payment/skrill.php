@@ -44,7 +44,7 @@ class ControllerExtensionPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		return $this->load->view('payment/skrill', $data);
+		return $this->load->view('extension/payment/skrill', $data);
 	}
 
 	public function callback() {

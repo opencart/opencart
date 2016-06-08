@@ -3,7 +3,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('captcha/google_captcha');
+		$this->load->language('extension/captcha/google_captcha');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -96,7 +96,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'captcha/google_captcha')) {
+		if (!$this->user->hasPermission('modify', 'extension/captcha/google_captcha')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

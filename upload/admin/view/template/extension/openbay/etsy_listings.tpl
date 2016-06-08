@@ -131,7 +131,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>&page=<?php echo $filter["page"]; ?>';
+var url = 'index.php?route=extension/openbay/etsy_product/listings&token=<?php echo $token; ?>&page=<?php echo $filter["page"]; ?>';
 
 var filter_keywords = $('input[name=\'keywords\']').val();
 
@@ -146,7 +146,7 @@ if (filter_status) {
 }
 
 $('#button-filter').on('click', function() {
-  var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
+  var url = 'index.php?route=extension/openbay/etsy_product/listings&token=<?php echo $token; ?>';
 
   var status = $('select[name=\'status\']').val();
 
@@ -181,7 +181,7 @@ function addLink() {
   }
 
   $.ajax({
-    url: 'index.php?route=openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+    url: 'index.php?route=extension/openbay/etsy_product/addLink&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
     data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
@@ -207,7 +207,7 @@ function addLink() {
 
 function deleteLink(etsy_link_id) {
   $.ajax({
-    url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+    url: 'index.php?route=extension/openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
     data: { 'etsy_link_id' : etsy_link_id },
@@ -234,7 +234,7 @@ function endListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/endlisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/endlisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -262,7 +262,7 @@ function deactivateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/deactivatelisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/deactivatelisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
@@ -290,7 +290,7 @@ function activateListing(etsy_item_id) {
 
   if (pass == true) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/activatelisting&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/activatelisting&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },

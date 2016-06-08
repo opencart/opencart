@@ -98,7 +98,7 @@ class ControllerExtensionAnalytics extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('analytics/' . $extension);
+				$this->load->language('extension/analytics/' . $extension);
 
 				$store_data = array();
 				

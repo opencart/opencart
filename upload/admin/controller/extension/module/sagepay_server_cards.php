@@ -69,7 +69,7 @@ class ControllerExtensionModuleSagepayServerCards extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/sagepay_server_cards')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/sagepay_server_cards')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

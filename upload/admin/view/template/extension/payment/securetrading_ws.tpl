@@ -403,7 +403,7 @@
 
 		$('#transaction-form').attr('method', 'POST');
 		$('#transaction-form').attr('target', 'download-iframe');
-		$('#transaction-form').attr('action', 'index.php?route=payment/securetrading_ws/downloadTransactions&token=<?php echo $token; ?>');
+		$('#transaction-form').attr('action', 'index.php?route=extension/payment/securetrading_ws/downloadTransactions&token=<?php echo $token; ?>');
 
 		$('#transaction-form').submit();
 
@@ -414,7 +414,7 @@
 
 	function showTransactions() {
 		$.ajax({
-			url: 'index.php?route=payment/securetrading_ws/showTransactions&token=<?php echo $token; ?>',
+			url: 'index.php?route=extension/payment/securetrading_ws/showTransactions&token=<?php echo $token; ?>',
 			type: 'post',
 			data: $('#transaction-form').serialize(),
 			dataType: 'html',

@@ -283,7 +283,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/pp_login/login';
 
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
@@ -299,7 +299,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pp_login')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pp_login')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -317,7 +317,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'module/pp_login/logout');
+		$this->model_extension_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'extension/module/pp_login/logout');
 	}
 
 	public function uninstall() {

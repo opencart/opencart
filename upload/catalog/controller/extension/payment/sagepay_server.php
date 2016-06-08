@@ -35,7 +35,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
 		}
 
-		return $this->load->view('payment/sagepay_server', $data);
+		return $this->load->view('extension/payment/sagepay_server', $data);
 	}
 
 	public function send() {

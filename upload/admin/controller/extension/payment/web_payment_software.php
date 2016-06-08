@@ -147,11 +147,11 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/web_payment_software', $data));
+		$this->response->setOutput($this->load->view('extension/payment/web_payment_software', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/web_payment_software')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/web_payment_software')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

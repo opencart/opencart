@@ -191,7 +191,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/divido', $data));
+		$this->response->setOutput($this->load->view('extension/payment/divido', $data));
 	}
 
 
@@ -225,7 +225,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$data['application_id'] = $application_id;
 		$data['deposit_amount'] = $deposit_amount;
 
-		return $this->load->view('payment/divido_order', $data);
+		return $this->load->view('extension/payment/divido_order', $data);
 	}
 
 	public function install() {
@@ -239,7 +239,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/divido')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/divido')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

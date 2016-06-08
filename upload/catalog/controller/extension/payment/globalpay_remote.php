@@ -58,7 +58,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/globalpay_remote', $data);
+		return $this->load->view('extension/payment/globalpay_remote', $data);
 	}
 
 	public function send() {

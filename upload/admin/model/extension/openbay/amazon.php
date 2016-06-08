@@ -1,9 +1,9 @@
 <?php
-class ModelOpenbayAmazon extends Model {
+class ModelExtensionThemeAmazon extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_amazon', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/amazon/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbaypro_amazon', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazon/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
@@ -115,7 +115,7 @@ class ModelOpenbayAmazon extends Model {
 		$log = new Log('amazon.log');
 
 		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazon/order</ResponseURL>
+  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/order</ResponseURL>
   <MarketplaceIDs>';
 
 		foreach ($data['openbay_amazon_orders_marketplace_ids'] as $marketplace_id) {
@@ -384,7 +384,7 @@ class ModelOpenbayAmazon extends Model {
 		$product_links = $this->db->query($query)->rows;
 
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$this->load->model('tool/image');
 
 			foreach ($product_links as $key => $product_link) {
@@ -416,7 +416,7 @@ class ModelOpenbayAmazon extends Model {
 				AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'")->rows;
 
 			$result = array();
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
@@ -526,7 +526,7 @@ class ModelOpenbayAmazon extends Model {
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
 			$option = null;
@@ -665,7 +665,7 @@ class ModelOpenbayAmazon extends Model {
 		$start = $limit * ($page - 1);
 
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$rows = $this->db->query("
 				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, oc_sku.pov_id
 				FROM " . DB_PREFIX . "amazon_listing_report alr

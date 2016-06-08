@@ -185,7 +185,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['pp_express_sandbox_signature'] = $this->config->get('pp_express_sandbox_signature');
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_express/ipn';
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_express/ipn';
 
 		if (isset($this->request->post['pp_express_test'])) {
 			$data['pp_express_test'] = $this->request->post['pp_express_test'];
@@ -347,11 +347,11 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_express')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/pp_express')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -454,7 +454,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				$data['refunded'] = $refunded;
 
-				return $this->load->view('payment/pp_express_order', $data);
+				return $this->load->view('extension/payment/pp_express_order', $data);
 			}
 		}
 	}
@@ -506,7 +506,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('payment/pp_express_transaction', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express_transaction', $data));
 	}
 
 	public function capture() {
@@ -658,7 +658,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_refund', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express_refund', $data));
 	}
 
 	public function doRefund() {
@@ -1076,7 +1076,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_search', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express_search', $data));
 	}
 
 	public function info() {
@@ -1197,7 +1197,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_view', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express_view', $data));
 	}
 
 	public function doSearch() {

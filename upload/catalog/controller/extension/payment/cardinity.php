@@ -32,7 +32,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/cardinity', $data);
+		return $this->load->view('extension/payment/cardinity', $data);
 	}
 
 	public function send() {
@@ -164,7 +164,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$data['success'] = $success;
 		$data['redirect'] = $redirect;
 
-		$this->response->setOutput($this->load->view('payment/cardinity_3ds', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cardinity_3ds', $data));
 	}
 
 	public function threeDSecureCallback() {

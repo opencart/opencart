@@ -144,7 +144,7 @@
 <script type="text/javascript"><!--
   function checkLinkedItems() {
       $.ajax({
-          url: 'index.php?route=openbay/ebay/loadLinkedStatus&token=<?php echo $token; ?>',
+          url: 'index.php?route=extension/openbay/ebay/loadLinkedStatus&token=<?php echo $token; ?>',
           data: $('.item-id').serialize(),
           type: 'POST',
           dataType: 'json',
@@ -218,7 +218,7 @@
   function removeLink(product_id, id) {
       $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=' + product_id,
+          url: 'index.php?route=extension/openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=' + product_id,
           dataType: 'json',
           success: function(json) {
               $('#row-' + id).fadeOut('slow');
@@ -238,7 +238,7 @@
       if (r == true) {
           $.ajax({
               type: 'GET',
-              url: 'index.php?route=openbay/ebay/setProductStock&token=<?php echo $token; ?>&product_id=' + product_id,
+              url: 'index.php?route=extension/openbay/ebay/setProductStock&token=<?php echo $token; ?>&product_id=' + product_id,
               dataType: 'json',
               success: function(json) {
                   if (json.error == false) {
@@ -287,7 +287,7 @@
       }
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid=' + product_id + '&itemId=' + id + '&qty=' + qty + '&ebayqty=' + ebayqty + '&variants=' + variants,
+          url: 'index.php?route=extension/openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid=' + product_id + '&itemId=' + id + '&qty=' + qty + '&ebayqty=' + ebayqty + '&variants=' + variants,
           type: 'post',
           dataType: 'json',
           beforeSend: function() {
@@ -307,7 +307,7 @@
       $.ajax({
           type:'GET',
           dataType: 'json',
-          url: 'index.php?route=openbay/ebay/getProductStock&token=<?php echo $token; ?>&pid=' + id,
+          url: 'index.php?route=extension/openbay/ebay/getProductStock&token=<?php echo $token; ?>&pid=' + id,
           success: function(data) {
               if (data.variant == 0) {
                   $('#' + element_id + '-qty').text(data.qty);
@@ -332,7 +332,7 @@
     var unlinked_page = $('#unlinked-page').val();
 
     $.ajax({
-      url: 'index.php?route=openbay/ebay/loadUnlinked&token=<?php echo $token; ?>&page=' + unlinked_page,
+      url: 'index.php?route=extension/openbay/ebay/loadUnlinked&token=<?php echo $token; ?>&page=' + unlinked_page,
       type: 'POST',
       data: { 'filter_title' : $('#filter_title').val(), 'filter_qty_min' : $('#filter-qty-min').val(), 'filter_qty_max' : $('#filter-qty-max').val(), 'filter_variant' : $('#filter-variant').val() },
       dataType: 'json',

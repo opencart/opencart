@@ -210,11 +210,11 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_standard', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_standard', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_standard')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/pp_standard')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

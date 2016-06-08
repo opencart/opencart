@@ -1,10 +1,10 @@
 <?php
-class ModelOpenbayEtsyOrder extends Model {
+class ModelExtensionThemeEtsyOrder extends Model {
 	public function inbound($orders) {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/currency');
 
-		$this->load->language('openbay/etsy_order');
+		$this->load->language('extension/openbay/etsy_order');
 
 		if (!empty($orders)) {
 			foreach ($orders as $order) {

@@ -52,11 +52,11 @@
 	</fieldset>
 <?php } ?>
 <script type="text/javascript"><!--
-	$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+	$('#paypal-transaction').load('index.php?route=extension/payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
 	$('#button-capture').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=payment/pp_express/capture&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+			url: 'index.php?route=extension/payment/pp_express/capture&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 			type: 'post',
 			dataType: 'json',
 			data: 'amount=' + $('#input-capture-amount').val() + '&complete=' + ($('#paypal-capture-complete').prop('checked') == true ? 1 : 0),
@@ -88,7 +88,7 @@
 					}
 				}
 
-				$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+				$('#paypal-transaction').load('index.php?route=extension/payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 			}
 		});
 	});
@@ -96,7 +96,7 @@
 	$('#button-void').on('click', function() {
 		if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
 			$.ajax({
-				url: 'index.php?route=payment/pp_express/void&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+				url: 'index.php?route=extension/payment/pp_express/void&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 				dataType: 'json',
 				beforeSend: function() {
 					$('#button-void').button('loading');
@@ -119,7 +119,7 @@
 						$('#capture-form').remove();
 					}
 
-					$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+					$('#paypal-transaction').load('index.php?route=extension/payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 				}
 			});
 		}
@@ -145,7 +145,7 @@
 				}
 
 				if (json['success']) {
-					$('#paypal-transaction').load('index.php?route=payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+					$('#paypal-transaction').load('index.php?route=extension/payment/pp_express/transaction&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 				}
 			}
 		});

@@ -75,7 +75,7 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/pp_payflow', $data);
+		return $this->load->view('extension/payment/pp_payflow', $data);
 	}
 
 	public function send() {

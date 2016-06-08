@@ -344,7 +344,7 @@
     var request_data = $('input[name="selected[]"]:checked').serialize();
 
     if (request_data != '') {
-      $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
+      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
     } else {
       alert('<?php echo $error_select_items; ?>');
     }

@@ -168,7 +168,7 @@ $('#button-search').on('click', function() {
   var html = '';
 
 	$.ajax({
-		url: 'index.php?route=payment/pp_express/doSearch&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/payment/pp_express/doSearch&token=<?php echo $token; ?>',
 		type: 'POST',
 		dataType: 'json',
 		data: $('#form').serialize(),

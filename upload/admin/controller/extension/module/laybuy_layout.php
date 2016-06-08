@@ -5,7 +5,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 	public function index() {
 		$this->load->model('setting/setting');
 
-		$this->language->load('module/laybuy_layout');
+		$this->language->load('extension/module/laybuy_layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -69,7 +69,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/laybuy_layout')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/laybuy_layout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

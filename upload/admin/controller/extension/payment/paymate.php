@@ -142,11 +142,11 @@ class ControllerExtensionPaymentPayMate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/paymate', $data));
+		$this->response->setOutput($this->load->view('extension/payment/paymate', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/paymate')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/paymate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

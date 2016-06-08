@@ -48,7 +48,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/cardinity/send',
+		url: 'index.php?route=extension/payment/cardinity/send',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',
@@ -91,7 +91,7 @@ $('#button-confirm').on('click', function() {
 
 			if (json['3ds']) {
 				$.ajax({
-					url: 'index.php?route=payment/cardinity/threeDSecureForm',
+					url: 'index.php?route=extension/payment/cardinity/threeDSecureForm',
 					type: 'post',
 					data: json['3ds'],
 					dataType: 'html',

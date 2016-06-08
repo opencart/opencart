@@ -280,7 +280,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				);
 			}
 
-			return $this->load->view('payment/klarna_account', $data);
+			return $this->load->view('extension/payment/klarna_account', $data);
 		}
 	}
 

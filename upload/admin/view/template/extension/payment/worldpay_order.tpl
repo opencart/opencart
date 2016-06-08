@@ -60,7 +60,7 @@
           type: 'POST',
           dataType: 'json',
           data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#refund_amount').val()},
-          url: 'index.php?route=payment/worldpay/refund&token=<?php echo $token; ?>',
+          url: 'index.php?route=extension/payment/worldpay/refund&token=<?php echo $token; ?>',
           beforeSend: function () {
             $('#btn_refund').hide();
             $('#refund_amount').hide();

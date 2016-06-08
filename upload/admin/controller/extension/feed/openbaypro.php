@@ -3,7 +3,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('feed/openbaypro');
+		$this->load->language('extension/feed/openbaypro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -34,11 +34,11 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('feed/openbaypro', $data));
+		$this->response->setOutput($this->load->view('extension/feed/openbaypro', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/openbaypro')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/openbaypro')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

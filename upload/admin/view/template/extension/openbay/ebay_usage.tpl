@@ -30,7 +30,7 @@
 <script type="text/javascript"><!--
   function loadUsage(){
 	    $.ajax({
-        url: 'index.php?route=openbay/ebay/getusage&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/openbay/ebay/getusage&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function(){

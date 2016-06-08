@@ -67,7 +67,7 @@ class ControllerExtensionModulePPButton extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pp_button')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pp_button')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

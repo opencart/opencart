@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayAmazonListing extends Model {
+class ModelExtensionThemeAmazonListing extends Model {
 	private $tabs = array();
 
 	public function search($search_string, $marketplace) {
@@ -100,7 +100,7 @@ class ModelOpenbayAmazonListing extends Model {
 			'start_selling' => $data['start_selling'],
 			'restock_date' => $data['restock_date'],
 			'marketplace' => $data['marketplace'],
-			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/listing',
+			'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
 			'product_id' => $data['product_id'],
 		);
 
@@ -145,7 +145,7 @@ class ModelOpenbayAmazonListing extends Model {
 
 		$request_data = array(
 			'search' => $search_data,
-			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/search'
+			'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/search'
 		);
 
 		$this->openbay->amazon->call('productv3/bulkSearch', $request_data);
@@ -199,7 +199,7 @@ class ModelOpenbayAmazonListing extends Model {
 					'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
 					'restock_date' => '',
 					'marketplace' => $data['marketplace'],
-					'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/listing',
+					'response_url' => HTTPS_CATALOG . 'index.php?route=extension/openbay/amazon/listing',
 					'product_id' => $product['product_id'],
 				);
 			}

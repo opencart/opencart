@@ -250,7 +250,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/realex_remote', $data));
+		$this->response->setOutput($this->load->view('extension/payment/realex_remote', $data));
 	}
 
 	public function install() {
@@ -299,7 +299,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/realex_remote_order', $data);
+				return $this->load->view('extension/payment/realex_remote_order', $data);
 			}
 		}
 	}
@@ -436,7 +436,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/realex_remote')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/realex_remote')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

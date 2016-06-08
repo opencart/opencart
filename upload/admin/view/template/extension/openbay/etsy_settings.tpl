@@ -143,7 +143,7 @@
 
   $('#button-import').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy/getorders&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy/getorders&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-import').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -167,7 +167,7 @@
 
   $('#button-settings').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy/settingsupdate&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy/settingsupdate&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-settings').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

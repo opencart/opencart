@@ -66,7 +66,7 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/divido_calculator')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/divido_calculator')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

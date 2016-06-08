@@ -86,7 +86,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 		$data['error_use_select_card'] = $this->language->get('error_use_select_card');
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/globalpay/notify';
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/globalpay/notify';
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -285,7 +285,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/globalpay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/globalpay', $data));
 	}
 
 	public function install() {
@@ -335,7 +335,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/globalpay_order', $data);
+				return $this->load->view('extension/payment/globalpay_order', $data);
 			}
 		}
 	}
@@ -471,7 +471,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/globalpay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/globalpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

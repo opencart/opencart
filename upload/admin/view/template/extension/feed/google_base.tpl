@@ -71,7 +71,7 @@
 $('input[name=\'google_base_category\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+            url: 'index.php?route=extension/feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -123,11 +123,11 @@ $('#category').delegate('.pagination a', 'click', function(e) {
 	$('#category').load(this.href);
 });
 
-$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
+$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
 
 $('#button-category-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=feed/google_base/addcategory&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/feed/google_base/addcategory&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'google_base_category_id=' + $('input[name=\'google_base_category_id\']').val() + '&category_id=' + $('input[name=\'category_id\']').val(),
@@ -145,7 +145,7 @@ $('#button-category-add').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
+				$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
 
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
@@ -165,7 +165,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=feed/google_base/removecategory&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/feed/google_base/removecategory&token=<?php echo $token; ?>',
 		type: 'post',
 		data: 'category_id=' + encodeURIComponent(this.value),
 		dataType: 'json',
@@ -185,7 +185,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 			}
 
             if (json['success']) {
-				$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
+				$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
 
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -212,7 +212,7 @@ $('#button-import').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=feed/google_base/import&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/feed/google_base/import&token=<?php echo $token; ?>',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

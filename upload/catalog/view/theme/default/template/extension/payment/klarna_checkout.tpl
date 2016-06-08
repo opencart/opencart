@@ -56,12 +56,12 @@
 </style>
 
 <script type="text/javascript"><!--
-$('.klarna-checkout-main').load('index.php?route=payment/klarna_checkout/main', {response: 'template'}, function(data) {
+$('.klarna-checkout-main').load('index.php?route=extension/payment/klarna_checkout/main', {response: 'template'}, function(data) {
 	window._klarnaCheckout(function(api) {
 		addSidebarOverlay();
 		api.suspend();
 
-		$('.klarna-checkout-sidebar').load('index.php?route=payment/klarna_checkout/sidebar', function() {
+		$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar', function() {
 			api.resume();
 			removeSidebarOverlay();
 		});
@@ -71,10 +71,10 @@ $('.klarna-checkout-main').load('index.php?route=payment/klarna_checkout/main', 
 				addSidebarOverlay();
 				api.suspend();
 
-				$.post('index.php?route=payment/klarna_checkout/shippingAddress', data, function(data) {
-					$('.klarna-checkout-sidebar').load('index.php?route=payment/klarna_checkout/sidebar');
+				$.post('index.php?route=extension/payment/klarna_checkout/shippingAddress', data, function(data) {
+					$('.klarna-checkout-sidebar').load('index.php?route=extension/payment/klarna_checkout/sidebar');
 
-					$.get('index.php?route=payment/klarna_checkout/cartTotal', function(total) {
+					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal', function(total) {
 						setTimeout(function() {
 							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
 						}, 100);
@@ -91,7 +91,7 @@ $('.klarna-checkout-main').load('index.php?route=payment/klarna_checkout/main', 
 
 
 
-	$.get('index.php?route=payment/klarna_checkout/cartTotal', function(total) {
+	$.get('index.php?route=extension/payment/klarna_checkout/cartTotal', function(total) {
 		setTimeout(function() {
 			$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
 		}, 100);

@@ -82,7 +82,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$data['stored_cards'] = array();
 		}
 
-		return $this->load->view('payment/firstdata', $data);
+		return $this->load->view('extension/payment/firstdata', $data);
 	}
 
 	public function notify() {

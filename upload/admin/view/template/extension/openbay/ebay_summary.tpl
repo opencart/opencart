@@ -79,7 +79,7 @@
 <script type="text/javascript"><!--
   function loadSummary(){
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getSellerSummary&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/getSellerSummary&token=<?php echo $token; ?>',
       type: 'post',
       dataType: 'json',
       beforeSend: function(){

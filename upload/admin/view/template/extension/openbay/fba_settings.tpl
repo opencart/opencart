@@ -147,7 +147,7 @@
 <script type="text/javascript"><!--
 $('#button-verify').click(function() {
   $.ajax({
-    url: 'index.php?route=openbay/fba/verifycredentials&token=<?php echo $token; ?>',
+    url: 'index.php?route=extension/openbay/fba/verifycredentials&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
     data: { 'openbay_fba_api_key' : $('#openbay_fba_api_key').val(), 'openbay_fba_api_account_id' : $('#openbay_fba_api_account_id').val() },

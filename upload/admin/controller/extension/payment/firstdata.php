@@ -70,7 +70,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');
 
@@ -241,7 +241,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/firstdata', $data));
+		$this->response->setOutput($this->load->view('extension/payment/firstdata', $data));
 	}
 
 	public function install() {
@@ -278,7 +278,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'token=' . $this->session->data['token'], true);
 				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
-				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
+				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 				if ($this->config->get('firstdata_live_demo') == 1) {
 					$data['action_url'] = $this->config->get('firstdata_live_url');
@@ -338,7 +338,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/firstdata_order', $data);
+				return $this->load->view('extension/payment/firstdata_order', $data);
 			}
 		}
 	}
@@ -380,7 +380,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/firstdata')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/firstdata')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -140,7 +140,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/cardinity', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cardinity', $data));
 	}
 
 	public function order() {
@@ -150,7 +150,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$data['token'] = $this->session->data['token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
-		return $this->load->view('payment/cardinity_order', $data);
+		return $this->load->view('extension/payment/cardinity_order', $data);
 	}
 
 	public function getPayment() {
@@ -234,7 +234,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$data['max_refund_amount'] = $this->currency->format($max_refund_amount, $payment->getCurrency(), '1.00000000', false);
 		}
 
-		$this->response->setOutput($this->load->view('payment/cardinity_order_ajax', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cardinity_order_ajax', $data));
 	}
 
 	public function refund() {
@@ -275,7 +275,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 
-		if (!$this->user->hasPermission('modify', 'payment/cardinity')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/cardinity')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 
 			$check_credentials = false;

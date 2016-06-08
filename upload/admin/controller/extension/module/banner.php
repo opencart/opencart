@@ -148,7 +148,7 @@ class ControllerExtensionModuleBanner extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/banner')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

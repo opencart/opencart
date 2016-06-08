@@ -63,7 +63,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 		$data['options'] = 'test_status=' . $status . ',dups=false,cb_post=false';
 
-		return $this->load->view('payment/paypoint', $data);
+		return $this->load->view('extension/payment/paypoint', $data);
 	}
 
 	public function callback() {
@@ -146,7 +146,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				$this->response->setOutput($this->load->view('payment/paypoint_success', $data));
+				$this->response->setOutput($this->load->view('extension/payment/paypoint_success', $data));
 			} else {
 				$data['continue'] = $this->url->link('checkout/cart');
 
@@ -157,7 +157,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				$this->response->setOutput($this->load->view('payment/paypoint_failure', $data));
+				$this->response->setOutput($this->load->view('extension/payment/paypoint_failure', $data));
 			}
 		}
 	}

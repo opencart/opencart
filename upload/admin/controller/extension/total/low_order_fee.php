@@ -104,7 +104,7 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/low_order_fee')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/low_order_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

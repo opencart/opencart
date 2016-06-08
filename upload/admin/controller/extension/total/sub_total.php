@@ -76,7 +76,7 @@ class ControllerExtensionTotalSubTotal extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/sub_total')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/sub_total')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

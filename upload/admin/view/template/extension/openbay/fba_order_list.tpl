@@ -103,7 +103,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-  var url = 'index.php?route=openbay/fba/orderlist&token=<?php echo $token; ?>';
+  var url = 'index.php?route=extension/openbay/fba/orderlist&token=<?php echo $token; ?>';
 
   var filter_start = $('input[name=\'filter_start\']').val();
 

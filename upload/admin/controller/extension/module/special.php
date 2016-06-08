@@ -147,7 +147,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/special')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/special')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

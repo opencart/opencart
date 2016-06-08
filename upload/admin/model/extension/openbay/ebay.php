@@ -1,9 +1,9 @@
 <?php
-class ModelOpenbayEbay extends Model{
+class ModelExtensionThemeEbay extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/ebay/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/ebay/eventAddOrderHistory');
 
 		$value                                  = array();
 		$value["ebay_token"]              = '';
@@ -265,7 +265,7 @@ class ModelOpenbayEbay extends Model{
 
 		$has_option = '';
 		if ($this->openbay->addonLoad('openstock') ) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$has_option = '`p`.`has_option`, ';
 		}
 
@@ -447,7 +447,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay_new');
+		$this->load->language('extension/openbay/ebay_new');
 
 		$json = array();
 
@@ -652,7 +652,7 @@ class ModelOpenbayEbay extends Model{
 
 		if (isset($res->row['has_option']) && $res->row['has_option'] == 1) {
 			if ($this->openbay->addonLoad('openstock')) {
-				$this->load->model('module/openstock');
+				$this->load->model('extension/module/openstock');
 				$this->load->model('tool/image');
 				$variant = $this->model_extension_module_openstock->getVariants((int)$id);
 			} else {
@@ -740,7 +740,7 @@ class ModelOpenbayEbay extends Model{
 			$variant_data = array();
 			$this->load->model('tool/image');
 			$this->load->model('catalog/product');
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 
 			//get the options list for this product
 			$options = $this->model_extension_module_openstock->getVariants($product_id);

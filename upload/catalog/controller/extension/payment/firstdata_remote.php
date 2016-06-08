@@ -55,7 +55,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/firstdata_remote', $data);
+		return $this->load->view('extension/payment/firstdata_remote', $data);
 	}
 
 	public function send() {

@@ -96,7 +96,7 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 
 			$data['custom'] = $this->session->data['order_id'];
 
-			return $this->load->view('payment/pp_standard', $data);
+			return $this->load->view('extension/payment/pp_standard', $data);
 		}
 	}
 

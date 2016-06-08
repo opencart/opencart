@@ -76,7 +76,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>},
-				url: 'index.php?route=payment/bluepay_hosted/void&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/bluepay_hosted/void&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-void').hide();
 					$('#img_loading_void').show();
@@ -119,7 +119,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#release_amount').val()},
-				url: 'index.php?route=payment/bluepay_hosted/release&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/bluepay_hosted/release&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-release').hide();
 					$('#release_amount').hide();
@@ -172,7 +172,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#rebate_amount').val()},
-				url: 'index.php?route=payment/bluepay_hosted/rebate&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/bluepay_hosted/rebate&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-rebate').hide();
 					$('#rebate_amount').hide();

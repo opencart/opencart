@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayAmazonProduct extends Model {
+class ModelExtensionThemeAmazonProduct extends Model {
 	public function setStatus($insertion_id, $status_string) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product` SET `status` = '" . $this->db->escape($status_string) . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}
@@ -56,7 +56,7 @@ class ModelOpenbayAmazonProduct extends Model {
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
 			$option = null;

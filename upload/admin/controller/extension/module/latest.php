@@ -146,7 +146,7 @@ class ControllerExtensionModuleLatest extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/latest')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/latest')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

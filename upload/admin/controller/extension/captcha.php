@@ -94,7 +94,7 @@ class ControllerExtensionCaptcha extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('captcha/' . $extension);
+				$this->load->language('extension/captcha/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),

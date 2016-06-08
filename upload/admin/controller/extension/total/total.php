@@ -76,7 +76,7 @@ class ControllerExtensionTotalTotal extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/total')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/total')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

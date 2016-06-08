@@ -80,9 +80,9 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/globalpay/notify';
+		$data['response_url'] = HTTPS_SERVER . 'index.php?route=extension/payment/globalpay/notify';
 
-		return $this->load->view('payment/globalpay', $data);
+		return $this->load->view('extension/payment/globalpay', $data);
 	}
 
 	public function notify() {
@@ -253,6 +253,6 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('payment/globalpay_response', $data));
+		$this->response->setOutput($this->load->view('extension/payment/globalpay_response', $data));
 	}
 }

@@ -146,7 +146,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/bestseller')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/bestseller')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -33,7 +33,7 @@ class ControllerExtensionPaymentPaymate extends Controller {
 
 		$data['return'] = $this->url->link('extension/payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
 
-		return $this->load->view('payment/paymate', $data);
+		return $this->load->view('extension/payment/paymate', $data);
 	}
 
 	public function callback() {

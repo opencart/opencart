@@ -172,7 +172,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/featured')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/featured')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

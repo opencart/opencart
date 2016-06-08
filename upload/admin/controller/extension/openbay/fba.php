@@ -1,22 +1,22 @@
 <?php
 class ControllerExtensionOpenbayFba extends Controller {
     public function install() {
-        $this->load->model('openbay/fba');
+        $this->load->model('extension/openbay/fba');
         $this->load->model('setting/setting');
         $this->load->model('extension/extension');
 
-        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/fba');
-        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/fba');
+        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/fba');
+        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/fba');
 
-        $this->model_openbay_fba->install();
+        $this->model_extension_openbay_fba->install();
     }
 
     public function uninstall() {
-        $this->load->model('openbay/fba');
+        $this->load->model('extension/openbay/fba');
         $this->load->model('setting/setting');
         $this->load->model('extension/extension');
 
-        $this->model_openbay_fba->uninstall();
+        $this->model_extension_openbay_fba->uninstall();
         $this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
         $this->model_setting_setting->deleteSetting($this->request->get['extension']);
     }
@@ -24,9 +24,9 @@ class ControllerExtensionOpenbayFba extends Controller {
     public function index() {
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
-        $this->load->model('openbay/fba');
+        $this->load->model('extension/openbay/fba');
 
-        $this->load->language('openbay/fba');
+        $this->load->language('extension/openbay/fba');
 
         $data = $this->language->all();
 
@@ -65,11 +65,11 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba', $data));
     }
 
     public function settings() {
-        $this->load->language('openbay/fba_settings');
+        $this->load->language('extension/openbay/fba_settings');
 
         $data = $this->language->all();
 
@@ -77,7 +77,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         $this->load->model('setting/setting');
-        $this->load->model('openbay/fba');
+        $this->load->model('extension/openbay/fba');
         $this->load->model('localisation/order_status');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
@@ -149,7 +149,7 @@ class ControllerExtensionOpenbayFba extends Controller {
             $data['openbay_fba_debug_log'] = $this->config->get('openbay_fba_debug_log');
         }
 
-        $order_total = $this->model_openbay_fba->countFbaOrders();
+        $order_total = $this->model_extension_openbay_fba->countFbaOrders();
 
         if ($order_total > 0) {
             $data['prefix_can_edit'] = false;
@@ -206,11 +206,11 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_settings', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba_settings', $data));
     }
 
     public function verifyCredentials() {
-        $this->load->language('openbay/fba_settings');
+        $this->load->language('extension/openbay/fba_settings');
 
         $errors = array();
 
@@ -240,7 +240,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     protected function validate() {
-        if (!$this->user->hasPermission('modify', 'openbay/fba')) {
+        if (!$this->user->hasPermission('modify', 'extension/openbay/fba')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
@@ -256,7 +256,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function fulfillment() {
-        $this->load->language('openbay/fba_fulfillment');
+        $this->load->language('extension/openbay/fba_fulfillment');
 
         $data = $this->language->all();
 
@@ -319,11 +319,11 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_form', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba_fulfillment_form', $data));
     }
 
     public function fulfillmentList() {
-        $this->load->language('openbay/fba_fulfillment_list');
+        $this->load->language('extension/openbay/fba_fulfillment_list');
 
         $data = $this->language->all();
 
@@ -399,11 +399,11 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_list', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba_fulfillment_list', $data));
     }
 
     public function shipFulfillment() {
-        $this->load->language('openbay/fba_fulfillment');
+        $this->load->language('extension/openbay/fba_fulfillment');
 
         $errors = array();
 
@@ -447,7 +447,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function cancelFulfillment() {
-        $this->load->language('openbay/fba_fulfillment');
+        $this->load->language('extension/openbay/fba_fulfillment');
 
         $errors = array();
 
@@ -487,7 +487,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function resendFulfillment() {
-        $this->load->language('openbay/fba_fulfillment');
+        $this->load->language('extension/openbay/fba_fulfillment');
 
         $errors = array();
 
@@ -597,7 +597,7 @@ class ControllerExtensionOpenbayFba extends Controller {
     }
 
     public function orderList() {
-        $this->load->language('openbay/fba_order');
+        $this->load->language('extension/openbay/fba_order');
 
         $data = $this->language->all();
 
@@ -703,11 +703,11 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_order_list', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba_order_list', $data));
     }
 
     public function order() {
-        $this->load->language('openbay/fba_order');
+        $this->load->language('extension/openbay/fba_order');
 
         $data = $this->language->all();
 
@@ -891,6 +891,6 @@ class ControllerExtensionOpenbayFba extends Controller {
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('openbay/fba_order_info', $data));
+        $this->response->setOutput($this->load->view('extension/openbay/fba_order_info', $data));
     }
 }

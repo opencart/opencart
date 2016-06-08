@@ -76,7 +76,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>},
-				url: 'index.php?route=payment/sagepay_server/void&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/sagepay_server/void&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-void').hide();
 					$('#img_loading_void').show();
@@ -116,7 +116,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#release_amount').val()},
-				url: 'index.php?route=payment/sagepay_server/release&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/sagepay_server/release&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-release').hide();
 					$('#release_amount').hide();
@@ -171,7 +171,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': <?php echo $order_id; ?>, 'amount': $('#rebate_amount').val()},
-				url: 'index.php?route=payment/sagepay_server/rebate&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/sagepay_server/rebate&token=<?php echo $token; ?>',
 				beforeSend: function() {
 					$('#button-rebate').hide();
 					$('#rebate_amount').hide();

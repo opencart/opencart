@@ -227,13 +227,13 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$data['pp_pro_iframe_debug'] = $this->config->get('pp_pro_iframe_debug');
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_pro_iframe/notify';
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_pro_iframe/notify';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_pro_iframe', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_pro_iframe', $data));
 	}
 
 	public function install() {
@@ -249,7 +249,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_pro_iframe')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/pp_pro_iframe')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -346,7 +346,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 			$data['reauthorise_link'] = $this->url->link('extension/payment/pp_pro_iframe/reauthorise', 'token=' . $this->session->data['token'], true);
 
-			return $this->load->view('payment/pp_pro_iframe_order', $data);
+			return $this->load->view('extension/payment/pp_pro_iframe_order', $data);
 		}
 	}
 
@@ -424,7 +424,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_refund', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_pro_iframe_refund', $data));
 	}
 
 	public function doRefund() {
@@ -697,7 +697,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_transaction', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_pro_iframe_transaction', $data));
 	}
 
 	public function capture() {

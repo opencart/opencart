@@ -205,7 +205,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/eway', $data));
+		$this->response->setOutput($this->load->view('extension/payment/eway', $data));
 	}
 
 	public function install() {
@@ -275,7 +275,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$data['token'] = $this->request->get['token'];
 				$data['order_id'] = $this->request->get['order_id'];
 
-				return $this->load->view('payment/eway_order', $data);
+				return $this->load->view('extension/payment/eway_order', $data);
 			}
 		}
 	}
@@ -393,7 +393,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/eway')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/eway')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		if (!$this->request->post['eway_username']) {

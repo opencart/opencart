@@ -201,16 +201,16 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 			$data['pp_payflow_iframe_debug'] = $this->config->get('pp_payflow_iframe_debug');
 		}
 
-		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentipn';
-		$data['cancel_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentcancel';
-		$data['error_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymenterror';
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentreturn';
+		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentipn';
+		$data['cancel_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentcancel';
+		$data['error_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymenterror';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_payflow_iframe/paymentreturn';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe', $data));
 	}
 
 	public function install() {
@@ -276,7 +276,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
-			$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_refund', $data));
+			$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_refund', $data));
 		} else {
 			return $this->forward('error/not_found');
 		}
@@ -528,12 +528,12 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 				);
 			}
 
-			return $this->load->view('payment/pp_payflow_iframe_order', $data);
+			return $this->load->view('extension/payment/pp_payflow_iframe_order', $data);
 		}
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/pp_payflow_iframe')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/pp_payflow_iframe')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

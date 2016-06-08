@@ -74,7 +74,7 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 			$data['text_payment_details'] = $this->language->get('text_payment_details');
 			$data['entry_card_type'] = $this->language->get('entry_card_type');
 
-			return $this->load->view('payment/securetrading_pp', $data);
+			return $this->load->view('extension/payment/securetrading_pp', $data);
 		}
 	}
 

@@ -130,11 +130,11 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_us', $data));
+		$this->response->setOutput($this->load->view('extension/payment/sagepay_us', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/sagepay_us')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/sagepay_us')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

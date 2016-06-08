@@ -41,7 +41,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['months'] = $this->model_extension_payment_laybuy->getMonths();
 
-		return $this->load->view('payment/laybuy', $data);
+		return $this->load->view('extension/payment/laybuy', $data);
 	}
 
 	public function postToLaybuy()	{

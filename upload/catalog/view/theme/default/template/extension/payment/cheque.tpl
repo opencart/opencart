@@ -15,7 +15,7 @@
 $('#button-confirm').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=payment/cheque/confirm',
+		url: 'index.php?route=extension/payment/cheque/confirm',
 		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

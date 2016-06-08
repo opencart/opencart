@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayVersion extends Model {
+class ModelExtensionThemeVersion extends Model {
 	public function version() {
 		return (int)3001;
 	}

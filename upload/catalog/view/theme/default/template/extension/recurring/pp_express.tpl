@@ -9,7 +9,7 @@
 <script type="text/javascript"><!--
 $(document).delegate('#button-cancel', 'click', function() { 
     $.ajax({
-        url: 'index.php?route=recurring/pp_express/cancel',
+        url: 'index.php?route=extension/recurring/pp_express/cancel',
 		dataType: 'json',
         beforeSend: function() {
          	$('#button-cancel').button('loading');

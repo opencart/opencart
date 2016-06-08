@@ -1050,7 +1050,7 @@
   function getSuggestedCategories() {
         var qry = $('#name').val();
         $.ajax({
-            url: 'index.php?route=openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
+            url: 'index.php?route=extension/openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -1173,7 +1173,7 @@
         $('#category-select-' + level + '-container').show();
 
         $.ajax({
-            url: 'index.php?route=openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
+            url: 'index.php?route=extension/openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
             type: 'POST',
             dataType: 'json',
             success: function(data) {
@@ -1238,7 +1238,7 @@
         $('.product_identifier_required').val('0');
 
         $.ajax({
-            url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
+            url: 'index.php?route=extension/openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -1347,7 +1347,7 @@
 
   function getCompatibilityNames(category_id) {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getPartsCompatibilityOptions&token=<?php echo $token; ?>&category_id='+category_id,
+      url: 'index.php?route=extension/openbay/ebay/getPartsCompatibilityOptions&token=<?php echo $token; ?>&category_id='+category_id,
       type: 'GET',
       dataType: 'json',
       success: function(data) {
@@ -1407,7 +1407,7 @@
     $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
 
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
+      url: 'index.php?route=extension/openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
       type: 'POST',
       data: { "filters" : property_filter },
       dataType: "json",
@@ -1529,7 +1529,7 @@
         var html = '';
 
         $.ajax({
-            url: 'index.php?route=openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
+            url: 'index.php?route=extension/openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
             data: { category_id: cat, page: 1,  search: qry },
@@ -1615,7 +1615,7 @@
 
   function itemFeatures(category_id) {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category_id=' + category_id + '&product_id=<?php echo $product["product_id"]; ?>',
+      url: 'index.php?route=extension/openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category_id=' + category_id + '&product_id=<?php echo $product["product_id"]; ?>',
       type: 'GET',
       dataType: 'json',
       beforeSend: function() {
@@ -1770,7 +1770,7 @@
       $.ajax({
         type:'GET',
         dataType: 'json',
-        url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-shipping-input').val(),
+        url: 'index.php?route=extension/openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-shipping-input').val(),
         success: function(data) {
           setTimeout(function() {
             $('#location').val(data.data.location);
@@ -1835,7 +1835,7 @@
     count = parseInt(count);
 
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc + '&type=' + type,
+      url: 'index.php?route=extension/openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc + '&type=' + type,
       beforeSend: function(){
         $('#add-' + id + '-' + type).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -1995,7 +1995,7 @@
         $.ajax({
             type:'POST',
             dataType: 'json',
-            url: 'index.php?route=openbay/ebay/verify&token=<?php echo $token; ?>&options='+hasOptions,
+            url: 'index.php?route=extension/openbay/ebay/verify&token=<?php echo $token; ?>&options='+hasOptions,
             data: $("#form").serialize(),
             beforeSend: function() {
               $('#button-save').hide();
@@ -2057,7 +2057,7 @@
       $.ajax({
         type:'POST',
         dataType: 'json',
-        url: 'index.php?route=openbay/ebay/listItem&token=<?php echo $token; ?>&options='+hasOptions,
+        url: 'index.php?route=extension/openbay/ebay/listItem&token=<?php echo $token; ?>&options='+hasOptions,
         data: $("#form").serialize(),
         beforeSend: function() {
           $('#button-save').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
@@ -2227,7 +2227,7 @@
           $.ajax({
               type:'GET',
               dataType: 'json',
-              url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-return-input').val(),
+              url: 'index.php?route=extension/openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-return-input').val(),
               success: function(data) {
                   setTimeout(function() {
                       if ($('#returns_accepted').length) {
@@ -2268,7 +2268,7 @@
       $.ajax({
           type:'GET',
           dataType: 'json',
-          url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-theme-input').val(),
+          url: 'index.php?route=extension/openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-theme-input').val(),
           success: function(data) {
               setTimeout(function() {
                   $('#gallery_height').val(data.data.ebay_gallery_height);
@@ -2321,7 +2321,7 @@
           $.ajax({
               type:'GET',
               dataType: 'json',
-              url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-generic-input').val(),
+              url: 'index.php?route=extension/openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile-generic-input').val(),
               success: function(data) {
                   setTimeout(function() {
                       if (data.data.private_listing == 1) {

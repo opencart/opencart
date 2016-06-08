@@ -163,11 +163,11 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/klarna_invoice', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_invoice', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/klarna_invoice')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/klarna_invoice')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

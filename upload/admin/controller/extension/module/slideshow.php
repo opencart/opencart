@@ -148,7 +148,7 @@ class ControllerExtensionModuleSlideshow extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/slideshow')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/slideshow')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

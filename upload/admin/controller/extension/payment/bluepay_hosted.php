@@ -191,7 +191,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/bluepay_hosted', $data));
+		$this->response->setOutput($this->load->view('extension/payment/bluepay_hosted', $data));
 	}
 
 	public function install() {
@@ -245,7 +245,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/bluepay_hosted_order', $data);
+				return $this->load->view('extension/payment/bluepay_hosted_order', $data);
 			}
 		}
 	}
@@ -382,7 +382,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/bluepay_hosted')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/bluepay_hosted')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

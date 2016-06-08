@@ -94,7 +94,7 @@
                 type:'POST',
                 dataType: 'json',
                 data: {'amount':amt,'order_id':<?php echo $order_id; ?>,'complete':captureComplete},
-                url: 'index.php?route=payment/pp_pro_iframe/capture&token=<?php echo $token; ?>',
+                url: 'index.php?route=extension/payment/pp_pro_iframe/capture&token=<?php echo $token; ?>',
                 beforeSend: function() {
                     $('#button-capture').hide();
                     $('#img_loading_capture').show();
@@ -169,7 +169,7 @@
                 type:'POST',
                 dataType: 'json',
                 data: {'order_id':<?php echo $order_id; ?> },
-                url: 'index.php?route=payment/pp_pro_iframe/void&token=<?php echo $token; ?>',
+                url: 'index.php?route=extension/payment/pp_pro_iframe/void&token=<?php echo $token; ?>',
                 beforeSend: function() {
                     $('#button-void').hide();
                     $('#img_loading_void').show();
@@ -208,7 +208,7 @@ function reauthorise() {
         type:'POST',
         dataType: 'json',
         data: {'order_id':<?php echo $order_id; ?> },
-        url: 'index.php?route=payment/pp_pro_iframe/reauthorise&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/payment/pp_pro_iframe/reauthorise&token=<?php echo $token; ?>',
         beforeSend: function() {
             $('#button-reauthorise').hide();
             $('.loading').remove();

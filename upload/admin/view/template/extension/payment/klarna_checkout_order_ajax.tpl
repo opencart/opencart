@@ -616,7 +616,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 
 	if (confirm(confirm_text)) {
 		$.ajax({
-			url: 'index.php?route=payment/klarna_checkout/transactionCommand&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+			url: 'index.php?route=extension/payment/klarna_checkout/transactionCommand&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 			type: 'post',
 			data: {
 				type: type,

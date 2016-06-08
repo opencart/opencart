@@ -621,7 +621,7 @@ function loadBrowseNode(field) {
     nodeStringSimple = '';
 
     $.ajax({
-        url: 'index.php?route=openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
         data: { marketplaceId: market},
         dataType: 'json',
@@ -665,7 +665,7 @@ function nodeSelect(field, original_field) {
     nodeStringSimple += parentNodeName+' > ';
 
     $.ajax({
-        url: 'index.php?route=openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
         data: { marketplaceId: market, node: node},
         dataType: 'json',

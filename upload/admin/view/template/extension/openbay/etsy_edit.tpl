@@ -88,7 +88,7 @@
 
   $('#button-save').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/editsubmit&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/editsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

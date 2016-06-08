@@ -164,11 +164,11 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/klarna_account', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_account', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/klarna_account')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/klarna_account')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

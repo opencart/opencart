@@ -242,7 +242,7 @@ $('.klarna-checkout-api').on('change', function() {
 $(document).on('click', '#button-process-settlement', function() {
 	if (confirm('<?php echo $text_confirm_settlement; ?>')) {
 		$.ajax({
-			url: 'index.php?route=payment/klarna_checkout/downloadSettlementFiles&token=<?php echo $token; ?>',
+			url: 'index.php?route=extension/payment/klarna_checkout/downloadSettlementFiles&token=<?php echo $token; ?>',
 			type: 'post',
 			data: {
 				username: $('input[name=klarna_checkout_sftp_username]').val(),

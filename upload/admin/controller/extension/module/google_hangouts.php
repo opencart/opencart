@@ -84,7 +84,7 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/google_hangouts')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/google_hangouts')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

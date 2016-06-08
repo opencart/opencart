@@ -1,33 +1,33 @@
 <?php
 class ControllerExtensionOpenbayEtsy extends Controller {
 	public function install() {
-		$this->load->language('openbay/etsy');
-		$this->load->model('openbay/etsy');
+		$this->load->language('extension/openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
 
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shipping');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_shipping');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shop');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_shop');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_shop');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_shop');
 
-		$this->model_openbay_etsy->install();
+		$this->model_extension_openbay_etsy->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
 
-		$this->model_openbay_etsy->uninstall();
+		$this->model_extension_openbay_etsy->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
 	public function index() {
-		$this->load->language('openbay/etsy');
+		$this->load->language('extension/openbay/etsy');
 
 		$data = $this->language->all();
 
@@ -67,15 +67,15 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy', $data));
+		$this->response->setOutput($this->load->view('extension/openbay/etsy', $data));
 	}
 
 	public function settings() {
 		$this->load->model('setting/setting');
-		$this->load->model('openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('localisation/order_status');
 
-		$this->load->language('openbay/etsy_settings');
+		$this->load->language('extension/openbay/etsy_settings');
 
 		$data = $this->language->all();
 
@@ -171,13 +171,13 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 
 		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		$data['account_info'] = $this->model_openbay_etsy->verifyAccount();
+		$data['account_info'] = $this->model_extension_openbay_etsy->verifyAccount();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_settings', $data));
+		$this->response->setOutput($this->load->view('extension/openbay/etsy_settings', $data));
 	}
 
 	public function settingsUpdate() {
@@ -197,7 +197,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'openbay/etsy')) {
+		if (!$this->user->hasPermission('modify', 'extension/openbay/etsy')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

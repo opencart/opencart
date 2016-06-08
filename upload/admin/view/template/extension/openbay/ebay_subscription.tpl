@@ -52,7 +52,7 @@
 <script type="text/javascript"><!--
   function loadAccount() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getMyPlan&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/getMyPlan&token=<?php echo $token; ?>',
       type: 'post',
       dataType: 'json',
       beforeSend: function(){
@@ -99,7 +99,7 @@
 
   function loadPlans() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getPlans&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/getPlans&token=<?php echo $token; ?>',
       type: 'post',
       dataType: 'json',
       beforeSend: function(){

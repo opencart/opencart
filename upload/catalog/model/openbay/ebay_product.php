@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEbayProduct extends Model {
+class ModelExtensionThemeEbayProduct extends Model {
 	public function getRelistRule($id) {
 		return $this->openbay->ebay->call('item/getAutomationRule', array('id' => $id));
 	}
@@ -16,7 +16,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$openstock = true;
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 		} else {
 			$openstock = false;
 			$this->openbay->ebay->log('Openstock module not found');

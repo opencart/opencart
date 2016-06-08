@@ -7,7 +7,7 @@
 $('#button-confirm').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=payment/free_checkout/confirm',
+		url: 'index.php?route=extension/payment/free_checkout/confirm',
 		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

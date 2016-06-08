@@ -86,7 +86,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 			'generic_credit_req_error' => 'Credit request could not be initiated',
 		);
 
-		return $this->load->view('payment/divido', $data);
+		return $this->load->view('extension/payment/divido', $data);
 	}
 
 	public function update() {
@@ -319,7 +319,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 			'text_monthly_installment' => $this->language->get('text_monthly_installment'),
 		);
 
-		$filename = ($type == 'full') ? 'payment/divido_calculator' : 'payment/divido_widget';
+		$filename = ($type == 'full') ? 'extension/payment/divido_calculator' : 'extension/payment/divido_widget';
 
 		return $this->load->view($filename, $data);
 	}

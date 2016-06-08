@@ -168,7 +168,7 @@ class ControllerExtensionPaymentEway extends Controller {
 			$data['AccessCode'] = $result->AccessCode;
 		}
 
-		return $this->load->view('payment/' . $template, $data);
+		return $this->load->view('extension/payment/' . $template, $data);
 	}
 
 	public function callback() {

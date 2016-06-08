@@ -64,7 +64,7 @@
 					'order_id': <?php echo $order_id; ?>,
 					'refund_amount': $("#eway-refund-amount").val()
 				},
-				url: 'index.php?route=payment/eway/refund&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/eway/refund&token=<?php echo $token; ?>',
 				beforeSend: function(xhr, opts) {
 					$('#btn-refund').hide();
 					$('#img-loading-refund').show();
@@ -118,7 +118,7 @@
 					'order_id': <?php echo $order_id; ?>,
 					'capture_amount': $("#eway-capture-amount").val()
 				},
-				url: 'index.php?route=payment/eway/capture&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/payment/eway/capture&token=<?php echo $token; ?>',
 				beforeSend: function(xhr, opts) {
 					$('#btn-capture').hide();
 					$('#img-loading-capture').show();

@@ -69,7 +69,7 @@ class ControllerExtensionModulefilter extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/filter')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/filter')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

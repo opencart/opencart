@@ -99,7 +99,7 @@
           type: 'POST',
           dataType: 'json',
           data: {'order_id': '<?php echo $order_id; ?>'},
-          url: 'index.php?route=payment/amazon_login_pay/cancel&token=<?php echo $token; ?>',
+          url: 'index.php?route=extension/payment/amazon_login_pay/cancel&token=<?php echo $token; ?>',
           beforeSend: function () {
             $('#button-cancel').hide();
             $('#loading-cancel').show();
@@ -143,7 +143,7 @@
           type: 'POST',
           dataType: 'json',
           data: {'order_id': '<?php echo $order_id; ?>', 'amount': $('#capture-amount').val()},
-          url: 'index.php?route=payment/amazon_login_pay/capture&token=<?php echo $token; ?>',
+          url: 'index.php?route=extension/payment/amazon_login_pay/capture&token=<?php echo $token; ?>',
           beforeSend: function () {
             $('#button-capture').hide();
             $('#capture-amount').hide();
@@ -198,7 +198,7 @@
           type: 'POST',
           dataType: 'json',
           data: {'order_id': '<?php echo $order_id; ?>', 'amount': $('#refund-amount').val()},
-          url: 'index.php?route=payment/amazon_login_pay/refund&token=<?php echo $token; ?>',
+          url: 'index.php?route=extension/payment/amazon_login_pay/refund&token=<?php echo $token; ?>',
           beforeSend: function () {
             $('#button-refund').hide();
             $('#refund-amount').hide();

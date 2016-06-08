@@ -137,11 +137,11 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/paypoint', $data));
+		$this->response->setOutput($this->load->view('extension/payment/paypoint', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/paypoint')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/paypoint')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

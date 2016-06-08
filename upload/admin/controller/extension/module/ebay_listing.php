@@ -216,7 +216,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/ebay_listing')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/ebay_listing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

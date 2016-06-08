@@ -225,7 +225,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_ipn_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login_pay/ipn&token=' . $data['amazon_login_pay_ipn_token'];
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['amazon_login_pay_ipn_token'];
 
 		if (isset($this->request->post['amazon_login_pay_minimum_total'])) {
 			$data['amazon_login_pay_minimum_total'] = $this->request->post['amazon_login_pay_minimum_total'];
@@ -291,15 +291,15 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/amazon_login_pay', $data));
 	}
 
 	public function install() {
 		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('extension/event');
 		$this->model_extension_payment_amazon_login_pay->install();
-		$this->model_extension_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'payment/amazon_login_pay/capture');
-		$this->model_extension_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'payment/amazon_login_pay/capture');
+		$this->model_extension_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'extension/payment/amazon_login_pay/capture');
+		$this->model_extension_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/payment/amazon_login_pay/capture');
 	}
 
 	public function uninstall() {
@@ -357,7 +357,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/amazon_login_pay_order', $data);
+				return $this->load->view('extension/payment/amazon_login_pay_order', $data);
 			}
 		}
 	}
@@ -506,7 +506,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	protected function validate() {
 		$this->load->model('localisation/currency');
 
-		if (!$this->user->hasPermission('modify', 'payment/amazon_login_pay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/amazon_login_pay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

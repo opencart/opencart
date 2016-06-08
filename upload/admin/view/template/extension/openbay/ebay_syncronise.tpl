@@ -57,7 +57,7 @@
 <script type="text/javascript"><!--
   $('#update-categories').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/updatecategories&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/updatecategories&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#update-categories').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         alert('<?php echo $text_ebay_categories; ?>');
@@ -77,7 +77,7 @@
 
   $('#update-settings').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/updatesettings&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/updatesettings&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#update-settings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -101,7 +101,7 @@
 
   $('#update-store').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/updatestore&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/updatestore&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#update-store').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

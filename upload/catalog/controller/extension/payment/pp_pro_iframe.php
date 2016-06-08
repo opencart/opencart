@@ -27,7 +27,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
 
-		return $this->load->view('payment/pp_pro_iframe', $data);
+		return $this->load->view('extension/payment/pp_pro_iframe', $data);
 	}
 
 	public function create() {
@@ -61,7 +61,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
 		}
 
-		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_body', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_pro_iframe_body', $data));
 	}
 
 	public function notify() {

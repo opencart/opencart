@@ -313,7 +313,7 @@ $('#cancel-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=payment/laybuy/cancel&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
+		url: 'index.php?route=extension/payment/laybuy/cancel&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
 		type: 'post',
 		dataType: 'json',
 		cache: false,
@@ -366,7 +366,7 @@ $('#revise-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=payment/laybuy/revise&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
+		url: 'index.php?route=extension/payment/laybuy/revise&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=extension',
 		type: 'post',
 		data: $('#payment-type, #amount, #down-payment, #months'),
 		dataType: 'json',

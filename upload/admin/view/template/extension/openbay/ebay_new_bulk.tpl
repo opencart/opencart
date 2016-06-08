@@ -391,7 +391,7 @@
       var modify_percent = '';
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
+          url: 'index.php?route=extension/openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
           type: 'GET',
           async: true,
           dataType: 'json',
@@ -471,7 +471,7 @@
       var qry = $('#title_'+id).val();
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
+          url: 'index.php?route=extension/openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
           type: 'GET',
           async: true,
           dataType: 'json',
@@ -545,7 +545,7 @@
       }
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
+          url: 'index.php?route=extension/openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
           type: 'GET',
           dataType: 'json',
           beforeSend: function() {
@@ -593,7 +593,7 @@
     $('.product_identifier_required_'+id).val('0');
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
+          url: 'index.php?route=extension/openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
           type: 'GET',
           dataType: 'json',
           beforeSend: function() { addCount(); },
@@ -665,7 +665,7 @@
     var product_id = $('#product-id-' + id).val();
 
       $.ajax({
-          url: 'index.php?route=openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category_id=' + category_id + '&product_id=' + product_id,
+          url: 'index.php?route=extension/openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category_id=' + category_id + '&product_id=' + product_id,
           type: 'GET',
           dataType: 'json',
           beforeSend: function() { addCount(); },
@@ -801,7 +801,7 @@
         $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="fa fa-exclamation-circle"></i> <?php echo $text_search_text; ?></div>');
       } else {
         $.ajax({
-            url: 'index.php?route=openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
+            url: 'index.php?route=extension/openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
             data: { category_id: cat, page: 1, search: qry },
@@ -911,7 +911,7 @@
           processedData = $(".openbay_data_"+id).serialize();
 
           $.ajax({
-              url: 'index.php?route=openbay/ebay/verifyBulk&token=<?php echo $token; ?>&i='+id,
+              url: 'index.php?route=extension/openbay/ebay/verifyBulk&token=<?php echo $token; ?>&i='+id,
               type: 'POST',
               dataType: 'json',
               data: processedData,
@@ -999,7 +999,7 @@
               $('#product_title_'+$(this).val()).text(name).show();
 
               $.ajax({
-                url: 'index.php?route=openbay/ebay/listItemBulk&token=<?php echo $token; ?>&i='+id,
+                url: 'index.php?route=extension/openbay/ebay/listItemBulk&token=<?php echo $token; ?>&i='+id,
                 type: 'POST',
                 dataType: 'json',
                 data: $(".openbay_data_"+id).serialize(),

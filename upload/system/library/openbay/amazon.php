@@ -116,7 +116,7 @@ class Amazon {
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$logger->write('Variant item');
 
 			$quantity_data = array();
@@ -154,7 +154,7 @@ class Amazon {
 		if ($this->config->get('openbay_amazon_status') != 1 || !defined('HTTPS_CATALOG')) {
 			return;
 		}
-		$this->load->model('openbay/amazon');
+		$this->load->model('extension/openbay/amazon');
 
 		$log = new \Log('amazon.log');
 		$log->write('Called bulkUpdateOrders method');
@@ -165,7 +165,7 @@ class Amazon {
 
 		foreach ($orders as $order) {
 			$amazon_order = $this->getOrder($order['order_id']);
-			$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order['order_id']);
+			$amazon_order_products = $this->model_extension_openbay_amazon->getAmazonOrderedProducts($order['order_id']);
 
 			$products = array();
 
@@ -224,8 +224,8 @@ class Amazon {
 		$log = new \Log('amazon.log');
 		$log->write("Order's $amazon_order_id status changed to $order_status_string");
 
-		$this->load->model('openbay/amazon');
-		$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
+		$this->load->model('extension/openbay/amazon');
+		$amazon_order_products = $this->model_extension_openbay_amazon->getAmazonOrderedProducts($order_id);
 
 		$request_node = new \SimpleXMLElement('<Request/>');
 
@@ -254,7 +254,7 @@ class Amazon {
 		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
+		$this->model_extension_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->call('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");

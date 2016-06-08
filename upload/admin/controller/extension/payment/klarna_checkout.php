@@ -224,7 +224,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/klarna_checkout', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout', $data));
 	}
 
 	public function order() {
@@ -234,7 +234,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['token'] = $this->session->data['token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
-		return $this->load->view('payment/klarna_checkout_order', $data);
+		return $this->load->view('extension/payment/klarna_checkout_order', $data);
 	}
 
 	public function getTransaction() {
@@ -530,7 +530,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['symbol_left'] = $this->currency->getSymbolLeft($order_info['currency_code']);
 		$data['symbol_right'] = $this->currency->getSymbolRight($order_info['currency_code']);
 
-		$this->response->setOutput($this->load->view('payment/klarna_checkout_order_ajax', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_order_ajax', $data));
 	}
 
 	public function install() {
@@ -746,7 +746,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 
-		if (!$this->user->hasPermission('modify', 'payment/klarna_checkout')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/klarna_checkout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

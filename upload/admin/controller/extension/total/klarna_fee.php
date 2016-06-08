@@ -120,7 +120,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'total/klarna_fee')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/klarna_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

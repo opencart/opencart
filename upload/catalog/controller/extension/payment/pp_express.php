@@ -10,7 +10,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		unset($this->session->data['paypal']);
 
-		return $this->load->view('payment/pp_express', $data);
+		return $this->load->view('extension/payment/pp_express', $data);
 	}
 
 	public function express() {
@@ -738,7 +738,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/pp_express_confirm', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_express_confirm', $data));
 	}
 
 	public function expressComplete() {

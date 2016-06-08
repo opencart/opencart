@@ -15,7 +15,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/klarna_checkout', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout', $data));
 	}
 
 	public function main() {
@@ -210,7 +210,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		if (isset($this->request->post['response']) && $this->request->post['response'] == 'template') {
 			$data['klarna_checkout'] = $html_snippet;
 
-			$this->response->setOutput($this->load->view('payment/klarna_checkout_main', $data));
+			$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_main', $data));
 		} elseif (isset($this->request->post['response']) && $this->request->post['response'] == 'json') {
 			$json['redirect'] = $redirect;
 
@@ -396,7 +396,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			);
 		}
 
-		$this->response->setOutput($this->load->view('payment/klarna_checkout_sidebar', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_sidebar', $data));
 	}
 
 	public function shippingAddress() {
@@ -1112,7 +1112,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['klarna_checkout'] = $html_snippet;
 
-		$this->response->setOutput($this->load->view('payment/klarna_checkout_success', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_success', $data));
 	}
 
 	public function push() {

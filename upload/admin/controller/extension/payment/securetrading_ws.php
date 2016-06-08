@@ -298,7 +298,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/securetrading_ws', $data));
+		$this->response->setOutput($this->load->view('extension/payment/securetrading_ws', $data));
 	}
 
 	public function install() {
@@ -399,7 +399,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			}
 		}
 
-		return $this->load->view('payment/securetrading_ws_transactions', $data);
+		return $this->load->view('extension/payment/securetrading_ws_transactions', $data);
 	}
 
 	public function order() {
@@ -444,7 +444,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 				
-				return $this->load->view('payment/securetrading_ws_order', $data);
+				return $this->load->view('extension/payment/securetrading_ws_order', $data);
 			}
 		}
 	}
@@ -634,7 +634,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/securetrading_pp')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/securetrading_pp')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

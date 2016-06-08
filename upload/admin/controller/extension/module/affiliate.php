@@ -69,7 +69,7 @@ class ControllerExtensionModuleAffiliate extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/affiliate')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/affiliate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

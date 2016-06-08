@@ -25,7 +25,7 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 		$data['xml'] = base64_encode($xml);
 		$data['signature'] = base64_encode(sha1($this->config->get('liqpay_signature') . $xml . $this->config->get('liqpay_signature'), true));
 
-		return $this->load->view('payment/liqpay', $data);
+		return $this->load->view('extension/payment/liqpay', $data);
 	}
 
 	public function callback() {

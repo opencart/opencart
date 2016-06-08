@@ -18,7 +18,7 @@ class ControllerExtensionPaymentPayza extends Controller {
 		$data['ap_returnurl'] = $this->url->link('checkout/success');
 		$data['ap_cancelurl'] = $this->url->link('checkout/checkout', '', true);
 
-		return $this->load->view('payment/payza', $data);
+		return $this->load->view('extension/payment/payza', $data);
 	}
 
 	public function callback() {

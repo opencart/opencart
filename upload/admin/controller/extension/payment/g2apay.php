@@ -189,7 +189,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$data['g2apay_secret_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['g2apay_ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/g2apay/ipn&token=' . $data['g2apay_secret_token'];
+		$data['g2apay_ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/g2apay/ipn&token=' . $data['g2apay_secret_token'];
 
 		if (isset($this->request->post['g2apay_ipn_uri'])) {
 			$data['g2apay_ipn_uri'] = $this->request->post['g2apay_ipn_uri'];
@@ -239,7 +239,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/g2apay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/g2apay', $data));
 	}
 
 	public function order() {
@@ -277,7 +277,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/g2apay_order', $data);
+				return $this->load->view('extension/payment/g2apay_order', $data);
 			}
 		}
 	}
@@ -341,7 +341,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/g2apay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/g2apay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

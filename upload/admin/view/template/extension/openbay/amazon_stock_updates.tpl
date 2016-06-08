@@ -68,7 +68,7 @@
 </div>
 <script type="text/javascript"><!--
   $('#button-filter').on('click', function() {
-    url = 'index.php?route=openbay/amazon/stockUpdates&token=<?php echo $token; ?>';
+    url = 'index.php?route=extension/openbay/amazon/stockUpdates&token=<?php echo $token; ?>';
 
     var filter_date_start = $('#input-date-start').val();
 

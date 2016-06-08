@@ -167,9 +167,9 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['worldpay_secret_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=payment/worldpay/webhook&token=' . $data['worldpay_secret_token'];
+		$data['worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['worldpay_secret_token'];
 
-		$data['worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/worldpay/cron&token=' . $data['worldpay_secret_token'];
+		$data['worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['worldpay_secret_token'];
 
 		if ($this->config->get('worldpay_last_cron_job_run')) {
 			$data['worldpay_last_cron_job_run'] = $this->config->get('worldpay_last_cron_job_run');
@@ -243,7 +243,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/worldpay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/worldpay', $data));
 	}
 
 	public function install() {
@@ -297,7 +297,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/worldpay_order', $data);
+				return $this->load->view('extension/payment/worldpay_order', $data);
 			}
 		}
 	}
@@ -344,7 +344,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

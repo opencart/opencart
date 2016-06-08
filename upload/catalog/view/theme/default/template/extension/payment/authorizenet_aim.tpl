@@ -46,7 +46,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=payment/authorizenet_aim/send',
+		url: 'index.php?route=extension/payment/authorizenet_aim/send',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',

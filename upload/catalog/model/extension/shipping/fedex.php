@@ -1,7 +1,7 @@
 <?php
 class ModelShippingFedex extends Model {
 	function getQuote($address) {
-		$this->load->language('shipping/fedex');
+		$this->load->language('extension/shipping/fedex');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('fedex_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 

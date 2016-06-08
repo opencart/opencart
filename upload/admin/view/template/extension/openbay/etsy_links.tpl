@@ -103,7 +103,7 @@
     }
 
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/addLink&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
@@ -132,7 +132,7 @@
 
   function deleteLink(etsy_link_id) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_link_id' : etsy_link_id },

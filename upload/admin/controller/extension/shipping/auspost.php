@@ -3,7 +3,7 @@ class ControllerExtensionShippingAusPost extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/auspost');
+		$this->load->language('extension/shipping/auspost');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -144,11 +144,11 @@ class ControllerExtensionShippingAusPost extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/auspost', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/auspost', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/auspost')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/auspost')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

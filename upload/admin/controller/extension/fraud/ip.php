@@ -3,7 +3,7 @@ class ControllerExtensionFraudIp extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('fraud/ip');
+		$this->load->language('extension/fraud/ip');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -89,23 +89,23 @@ class ControllerExtensionFraudIp extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/ip', $data));
+		$this->response->setOutput($this->load->view('extension/fraud/ip', $data));
 	}
 
 	public function install() {
-		$this->load->model('fraud/ip');
+		$this->load->model('extension/fraud/ip');
 
-		$this->model_fraud_ip->install();
+		$this->model_extension_fraud_ip->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('fraud/ip');
+		$this->load->model('extension/fraud/ip');
 
-		$this->model_fraud_ip->uninstall();
+		$this->model_extension_fraud_ip->uninstall();
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'fraud/ip')) {
+		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -113,9 +113,9 @@ class ControllerExtensionFraudIp extends Controller {
 	}
 
     public function ip() {
-		$this->load->language('fraud/ip');
+		$this->load->language('extension/fraud/ip');
 
-		$this->load->model('fraud/ip');
+		$this->load->model('extension/fraud/ip');
         $this->load->model('customer/customer');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
@@ -136,7 +136,7 @@ class ControllerExtensionFraudIp extends Controller {
 
 		$data['ips'] = array();
 
-		$results = $this->model_fraud_ip->getIps(($page - 1) * 10, 10);
+		$results = $this->model_extension_fraud_ip->getIps(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['ips'][] = array(
@@ -147,7 +147,7 @@ class ControllerExtensionFraudIp extends Controller {
 			);
 		}
 
-		$ip_total = $this->model_fraud_ip->getTotalIps();
+		$ip_total = $this->model_extension_fraud_ip->getTotalIps();
 
 		$pagination = new Pagination();
 		$pagination->total = $ip_total;
@@ -159,21 +159,21 @@ class ControllerExtensionFraudIp extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
-		$this->response->setOutput($this->load->view('fraud/ip_ip', $data));
+		$this->response->setOutput($this->load->view('extension/fraud/ip_ip', $data));
 	}
 
 	public function addIp() {
-		$this->load->language('fraud/ip');
+		$this->load->language('extension/fraud/ip');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'fraud/ip')) {
+		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('fraud/ip');
+			$this->load->model('extension/fraud/ip');
 
-			if (!$this->model_fraud_ip->getTotalIpsByIp($this->request->post['ip'])) {
-				$this->model_fraud_ip->addIp($this->request->post['ip']);
+			if (!$this->model_extension_fraud_ip->getTotalIpsByIp($this->request->post['ip'])) {
+				$this->model_extension_fraud_ip->addIp($this->request->post['ip']);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -184,16 +184,16 @@ class ControllerExtensionFraudIp extends Controller {
 	}
 
 	public function removeIp() {
-		$this->load->language('fraud/ip');
+		$this->load->language('extension/fraud/ip');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'fraud/ip')) {
+		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('fraud/ip');
+			$this->load->model('extension/fraud/ip');
 
-			$this->model_fraud_ip->removeIp($this->request->post['ip']);
+			$this->model_extension_fraud_ip->removeIp($this->request->post['ip']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

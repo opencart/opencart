@@ -3,7 +3,7 @@ class ControllerExtensionShippingUPS extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/ups');
+		$this->load->language('extension/shipping/ups');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -781,11 +781,11 @@ class ControllerExtensionShippingUPS extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/ups', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/ups', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/ups')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/ups')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -53,7 +53,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 	}
 
 	public function login() {
-		$this->load->model('module/pp_login');
+		$this->load->model('extension/module/pp_login');
 		$this->load->model('account/customer');
 		$this->load->model('account/customer_group');
 

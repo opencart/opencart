@@ -443,7 +443,7 @@
 	$('input[name="customer_group"]').autocomplete({
 		source: function(request, response) {
 			$.ajax({
-				url: 'index.php?route=payment/laybuy/autocomplete&token=<?php echo $token; ?>&filter_customer_group=' +  encodeURIComponent(request),
+				url: 'index.php?route=extension/payment/laybuy/autocomplete&token=<?php echo $token; ?>&filter_customer_group=' +  encodeURIComponent(request),
 				dataType: 'json',
 				success: function(json) {
 					response($.map(json, function(item) {
@@ -493,7 +493,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=payment/laybuy&token=<?php echo $token; ?>';
+	url = 'index.php?route=extension/payment/laybuy&token=<?php echo $token; ?>';
 
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 

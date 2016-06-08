@@ -69,7 +69,7 @@ class ControllerExtensionModuleAccount extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/account')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/account')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -137,7 +137,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$data['sagepay_server_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['sagepay_server_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/sagepay_server/cron&token=' . $data['sagepay_server_cron_job_token'];
+		$data['sagepay_server_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_server/cron&token=' . $data['sagepay_server_cron_job_token'];
 
 		if ($this->config->get('sagepay_server_last_cron_job_run')) {
 			$data['sagepay_server_last_cron_job_run'] = $this->config->get('sagepay_server_last_cron_job_run');
@@ -181,7 +181,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_server', $data));
+		$this->response->setOutput($this->load->view('extension/payment/sagepay_server', $data));
 	}
 
 	public function install() {
@@ -236,7 +236,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/sagepay_server_order', $data);
+				return $this->load->view('extension/payment/sagepay_server_order', $data);
 			}
 		}
 	}
@@ -371,7 +371,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/sagepay_server')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/sagepay_server')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

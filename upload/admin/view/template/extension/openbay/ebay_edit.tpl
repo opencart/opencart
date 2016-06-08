@@ -149,7 +149,7 @@
 
   function load(){
         $.ajax({
-            url: 'index.php?route=openbay/ebay/editLoad&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+            url: 'index.php?route=extension/openbay/ebay/editLoad&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){
@@ -278,7 +278,7 @@
     var item_id = $('#item-id').val();
 
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getItemRecommendations&token=<?php echo $token; ?>&item_id=' + item_id,
+      url: 'index.php?route=extension/openbay/ebay/getItemRecommendations&token=<?php echo $token; ?>&item_id=' + item_id,
       type: 'GET',
       dataType: 'json',
       success: function(data) {
@@ -309,7 +309,7 @@
   $('#button-save').bind('click', function() {
     $.ajax({
       type: 'POST',
-      url: 'index.php?route=openbay/ebay/editSave&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/ebay/editSave&token=<?php echo $token; ?>',
       dataType: 'json',
       data: $("#form").serialize(),
       beforeSend: function(){
@@ -359,7 +359,7 @@
     if (pass == true) {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+        url: 'index.php?route=extension/openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
         dataType: 'json',
         beforeSend: function(){
           $('#button-remove-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
@@ -386,7 +386,7 @@
       if (item_id !== '') {
         $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&item_id=' + item_id,
+          url: 'index.php?route=extension/openbay/ebay/endItem&token=<?php echo $token; ?>&item_id=' + item_id,
           dataType: 'json',
           beforeSend: function(){
             $('#button-end-item').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');

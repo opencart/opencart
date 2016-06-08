@@ -118,7 +118,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/amazon_login')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/amazon_login')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -127,7 +127,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	public function install() {
 			$this->load->model('extension/event');
-			$this->model_extension_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'module/amazon_login/logout');
+			$this->model_extension_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 
 	public function uninstall() {

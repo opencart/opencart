@@ -58,7 +58,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/realex_remote', $data);
+		return $this->load->view('extension/payment/realex_remote', $data);
 	}
 
 	public function send() {

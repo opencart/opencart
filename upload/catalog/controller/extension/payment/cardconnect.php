@@ -52,7 +52,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/cardconnect/send', '', true);
 
-		return $this->load->view('payment/cardconnect', $data);
+		return $this->load->view('extension/payment/cardconnect', $data);
 	}
 
 	public function send()	{

@@ -152,7 +152,7 @@ class ControllerExtensionModuleCarousel extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/carousel')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/carousel')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

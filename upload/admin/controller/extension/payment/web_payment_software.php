@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentWebPaymentSoftware extends Controller {
+class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/web_payment_software');
+		$this->load->language('extension/payment/web_payment_software');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

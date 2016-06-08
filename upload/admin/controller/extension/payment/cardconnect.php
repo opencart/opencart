@@ -1,13 +1,13 @@
 <?php
-class ControllerPaymentCardConnect extends Controller {
+class ControllerExtensionPaymentCardConnect extends Controller {
 	private $error = array();
 
 	public function index() {
 		$this->load->model('setting/setting');
 
-		$this->load->model('payment/cardconnect');
+		$this->load->model('extension/payment/cardconnect');
 
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -266,7 +266,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 	public function install() {
 		if ($this->user->hasPermission('modify', 'extension/extension')) {
-			$this->load->model('payment/cardconnect');
+			$this->load->model('extension/payment/cardconnect');
 
 			$this->model_payment_cardconnect->install();
 		}
@@ -274,7 +274,7 @@ class ControllerPaymentCardConnect extends Controller {
 
 	public function uninstall() {
 		if ($this->user->hasPermission('modify', 'extension/extension')) {
-			$this->load->model('payment/cardconnect');
+			$this->load->model('extension/payment/cardconnect');
 
 			$this->model_payment_cardconnect->uninstall();
 		}
@@ -282,14 +282,14 @@ class ControllerPaymentCardConnect extends Controller {
 
 	public function order() {
 		if ($this->config->get('cardconnect_status')) {
-			$this->load->model('payment/cardconnect');
+			$this->load->model('extension/payment/cardconnect');
 
 			$order_id = $this->request->get['order_id'];
 
 			$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->get['order_id']);
 
 			if ($cardconnect_order) {
-				$this->load->language('payment/cardconnect');
+				$this->load->language('extension/payment/cardconnect');
 
 				if ($cardconnect_order['payment_method'] == 'card') {
 					$cardconnect_order['payment_method'] = $this->language->get('text_card');
@@ -376,13 +376,13 @@ class ControllerPaymentCardConnect extends Controller {
 	}
 
 	public function inquire() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
 		if ($this->config->get('cardconnect_status')) {
 			if (isset($this->request->post['order_id']) && isset($this->request->post['retref'])) {
-				$this->load->model('payment/cardconnect');
+				$this->load->model('extension/payment/cardconnect');
 
 				$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->post['order_id']);
 
@@ -415,14 +415,14 @@ class ControllerPaymentCardConnect extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
 		if ($this->config->get('cardconnect_status')) {
 			if (isset($this->request->post['order_id']) && isset($this->request->post['amount'])) {
 				if ($this->request->post['amount'] > 0) {
-					$this->load->model('payment/cardconnect');
+					$this->load->model('extension/payment/cardconnect');
 
 					$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->post['order_id']);
 
@@ -465,14 +465,14 @@ class ControllerPaymentCardConnect extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
 		if ($this->config->get('cardconnect_status')) {
 			if (isset($this->request->post['order_id']) && isset($this->request->post['amount'])) {
 				if ($this->request->post['amount'] > 0) {
-					$this->load->model('payment/cardconnect');
+					$this->load->model('extension/payment/cardconnect');
 
 					$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->post['order_id']);
 
@@ -515,13 +515,13 @@ class ControllerPaymentCardConnect extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/cardconnect');
+		$this->load->language('extension/payment/cardconnect');
 
 		$json = array();
 
 		if ($this->config->get('cardconnect_status')) {
 			if (isset($this->request->post['order_id']) && isset($this->request->post['retref'])) {
-				$this->load->model('payment/cardconnect');
+				$this->load->model('extension/payment/cardconnect');
 
 				$cardconnect_order = $this->model_payment_cardconnect->getOrder($this->request->post['order_id']);
 

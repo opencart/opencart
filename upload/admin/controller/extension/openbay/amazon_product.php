@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayAmazonProduct extends Controller {
+class ControllerExtensionOpenbayAmazonProduct extends Controller {
 	public function index() {
 		$this->load->language('catalog/product');
 		$this->load->language('openbay/amazon_listing');

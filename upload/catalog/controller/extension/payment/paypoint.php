@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaypoint extends Controller {
+class ControllerExtensionPaymentPaypoint extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -89,7 +89,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		if ($order_info) {
-			$this->load->language('payment/paypoint');
+			$this->load->language('extension/payment/paypoint');
 
 			$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 

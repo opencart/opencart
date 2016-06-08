@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEbayProfile extends Controller {
+class ControllerExtensionOpenbayEbayProfile extends Controller {
 	private $error = array();
 
 	public function profileAll() {

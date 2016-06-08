@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentCardinity extends Controller {
+class ControllerExtensionPaymentCardinity extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -144,7 +144,7 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
 		$data['token'] = $this->session->data['token'];
@@ -154,9 +154,9 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function getPayment() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
 		$data['text_no_refund'] = $this->language->get('text_no_refund');
@@ -238,9 +238,9 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$json = array();
 
@@ -267,7 +267,7 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	protected function validate() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$check_credentials = true;
 
@@ -320,13 +320,13 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$this->model_payment_cardinity->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$this->model_payment_cardinity->uninstall();
 	}

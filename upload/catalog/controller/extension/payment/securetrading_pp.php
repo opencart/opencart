@@ -1,10 +1,10 @@
 <?php
-class ControllerPaymentSecureTradingPp extends Controller {
+class ControllerExtensionPaymentSecureTradingPp extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('localisation/zone');
-		$this->load->language('payment/securetrading_pp');
+		$this->load->language('extension/payment/securetrading_pp');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -80,8 +80,8 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 	public function ipn() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/securetrading_pp');
-		$this->load->language('payment/securetrading_pp');
+		$this->load->model('extension/payment/securetrading_pp');
+		$this->load->language('extension/payment/securetrading_pp');
 
 		$keys = array_keys($this->request->post);
 		sort($keys);

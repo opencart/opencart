@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEbay extends Controller {
+class ControllerExtensionOpenbayEbay extends Controller {
 	public function install() {
 		$this->load->language('openbay/ebay');
 		$this->load->model('openbay/ebay');

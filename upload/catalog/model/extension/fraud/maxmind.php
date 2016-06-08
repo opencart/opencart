@@ -1,5 +1,5 @@
 <?php
-class ModelFraudMaxMind extends Model {
+class ModelExtensionFraudMaxMind extends Model {
 	public function check($order_info) {
 		$risk_score = 0;
 

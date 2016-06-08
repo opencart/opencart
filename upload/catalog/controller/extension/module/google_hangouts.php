@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleGoogleHangouts extends Controller {
+class ControllerExtensionModuleGoogleHangouts extends Controller {
 	public function index() {
 		$this->load->language('module/google_hangouts');
 

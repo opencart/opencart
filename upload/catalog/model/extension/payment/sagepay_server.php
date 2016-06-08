@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentSagePayServer extends Model {
+class ModelExtensionPaymentSagePayServer extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE geo_zone_id = '" . (int)$this->config->get('sagepay_server_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -117,7 +117,7 @@ class ModelPaymentSagePayServer extends Model {
 	public function addRecurringPayment($item, $vendor_tx_code) {
 
 		$this->load->model('checkout/recurring');
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 
 		//trial information
 		if ($item['recurring_trial'] == 1) {

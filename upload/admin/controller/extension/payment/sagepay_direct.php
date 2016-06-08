@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentSagepayDirect extends Controller {
+class ControllerExtensionPaymentSagepayDirect extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/sagepay_direct');
+		$this->load->language('extension/payment/sagepay_direct');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -184,12 +184,12 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/sagepay_direct');
+		$this->load->model('extension/payment/sagepay_direct');
 		$this->model_payment_sagepay_direct->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/sagepay_direct');
+		$this->load->model('extension/payment/sagepay_direct');
 		$this->model_payment_sagepay_direct->uninstall();
 	}
 
@@ -197,12 +197,12 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 		if ($this->config->get('sagepay_direct_status')) {
 
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->get['order_id']);
 
 			if (!empty($sagepay_direct_order)) {
-				$this->load->language('payment/sagepay_direct');
+				$this->load->language('extension/payment/sagepay_direct');
 
 				$sagepay_direct_order['total_released'] = $this->model_payment_sagepay_direct->getTotalReleased($sagepay_direct_order['sagepay_direct_order_id']);
 
@@ -242,11 +242,11 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/sagepay_direct');
+		$this->load->language('extension/payment/sagepay_direct');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 
@@ -277,11 +277,11 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function release() {
-		$this->load->language('payment/sagepay_direct');
+		$this->load->language('extension/payment/sagepay_direct');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 
@@ -323,11 +323,11 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/sagepay_direct');
+		$this->load->language('extension/payment/sagepay_direct');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/sagepay_direct');
+			$this->load->model('extension/payment/sagepay_direct');
 
 			$sagepay_direct_order = $this->model_payment_sagepay_direct->getOrder($this->request->post['order_id']);
 

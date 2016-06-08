@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentFirstdata extends Controller {
+class ControllerExtensionPaymentFirstdata extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -245,23 +245,23 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/firstdata');
+		$this->load->model('extension/payment/firstdata');
 		$this->model_payment_firstdata->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/firstdata');
+		$this->load->model('extension/payment/firstdata');
 		$this->model_payment_firstdata->uninstall();
 	}
 
 	public function order() {
 		if ($this->config->get('firstdata_status')) {
-			$this->load->model('payment/firstdata');
+			$this->load->model('extension/payment/firstdata');
 
 			$firstdata_order = $this->model_payment_firstdata->getOrder($this->request->get['order_id']);
 
 			if (!empty($firstdata_order)) {
-				$this->load->language('payment/firstdata');
+				$this->load->language('extension/payment/firstdata');
 
 				$firstdata_order['total_captured'] = $this->model_payment_firstdata->getTotalCaptured($firstdata_order['firstdata_order_id']);
 				$firstdata_order['total_formatted'] = $this->currency->format($firstdata_order['total'], $firstdata_order['currency_code'], 1, true);
@@ -344,7 +344,7 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		if ($this->request->post['status'] == 'FAILED') {
 			if (isset($this->request->post['fail_reason'])) {
@@ -362,7 +362,7 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		if ($this->request->post['status'] == 'FAILED') {
 			if (isset($this->request->post['fail_reason'])) {

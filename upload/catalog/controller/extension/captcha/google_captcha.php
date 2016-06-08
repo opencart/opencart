@@ -1,5 +1,5 @@
 <?php
-class ControllerCaptchaGoogleCaptcha extends Controller {
+class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
     public function index($error = array()) {
         $this->load->language('captcha/google_captcha');
 

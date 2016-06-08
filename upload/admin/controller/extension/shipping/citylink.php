@@ -1,5 +1,5 @@
 <?php
-class ControllerShippingCitylink extends Controller {
+class ControllerExtensionShippingCitylink extends Controller {
 	private $error = array();
 
 	public function index() {

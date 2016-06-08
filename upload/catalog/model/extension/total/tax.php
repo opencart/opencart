@@ -1,5 +1,5 @@
 <?php
-class ModelTotalTax extends Model {
+class ModelExtensionTotalTax extends Model {
 	public function getTotal($total) {
 		foreach ($total['taxes'] as $key => $value) {
 			if ($value > 0) {

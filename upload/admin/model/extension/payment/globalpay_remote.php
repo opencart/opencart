@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentGlobalpayRemote extends Model {
+class ModelExtensionPaymentGlobalpayRemote extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "globalpay_remote_order` (

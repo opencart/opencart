@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentKlarnaInvoice extends Model {
+class ModelExtensionPaymentKlarnaInvoice extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/klarna_invoice');
+		$this->load->language('extension/payment/klarna_invoice');
 
 		$status = true;
 

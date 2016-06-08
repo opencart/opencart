@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPLogin extends Controller {
+class ControllerExtensionModulePPLogin extends Controller {
 	private $error = array();
 
 	public function index() {

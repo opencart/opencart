@@ -97,7 +97,7 @@ class ControllerExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('payment/' . $extension);
+				$this->load->language('extension/payment/' . $extension);
 
 				$text_link = $this->language->get('text_' . $extension);
 

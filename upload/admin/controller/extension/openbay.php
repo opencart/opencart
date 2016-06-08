@@ -23,7 +23,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
-			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
+			$class = 'ControllerExtensionOpenbay' . str_replace('_', '', $this->request->get['extension']);
 			$class = new $class($this->registry);
 
 			if (method_exists($class, 'install')) {
@@ -55,7 +55,7 @@ class ControllerExtensionOpenbay extends Controller {
 			
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
-			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
+			$class = 'ControllerExtensionOpenbay' . str_replace('_', '', $this->request->get['extension']);
 			$class = new $class($this->registry);
 
 			if (method_exists($class, 'uninstall')) {

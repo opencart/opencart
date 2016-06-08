@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEbay extends Controller {
+class ControllerExtensionOpenbayEbay extends Controller {
 	public function eventAddOrder($route, $data) {
 
 	}

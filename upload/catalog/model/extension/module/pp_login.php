@@ -1,5 +1,5 @@
 <?php
-class ModelModulePPLogin extends Model {
+class ModelExtensionModulePPLogin extends Model {
 	public function getTokens($code) {
 		if ($this->config->get('pp_login_sandbox')) {
 			$endpoint = 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice';

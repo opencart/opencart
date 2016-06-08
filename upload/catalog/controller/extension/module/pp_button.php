@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPButton extends Controller {
+class ControllerExtensionModulePPButton extends Controller {
 	public function index() {
 		$status = true;
 
@@ -8,7 +8,7 @@ class ControllerModulePPButton extends Controller {
 		}
 
 		if ($status) {
-			$this->load->model('payment/pp_express');
+			$this->load->model('extension/payment/pp_express');
 
 			if (preg_match('/Mobile|Android|BlackBerry|iPhone|Windows Phone/', $this->request->server['HTTP_USER_AGENT'])) {
 				$data['mobile'] = true;

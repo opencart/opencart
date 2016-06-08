@@ -1,14 +1,14 @@
 <?php
-class ControllerPaymentDivido extends Controller {
+class ControllerExtensionPaymentDivido extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$this->model_setting_setting->editSetting('divido', $this->request->post);
@@ -200,8 +200,8 @@ class ControllerPaymentDivido extends Controller {
 			return null;
 		}
 
-		$this->load->model('payment/divido');
-		$this->load->language('payment/divido');
+		$this->load->model('extension/payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$order_id = $this->request->get['order_id'];
 
@@ -229,12 +229,12 @@ class ControllerPaymentDivido extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->model_payment_divido->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->model_payment_divido->uninstall();
 	}
 

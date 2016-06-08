@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentPayPoint extends Controller {
+class ControllerExtensionPaymentPayPoint extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/paypoint');
+		$this->load->language('extension/payment/paypoint');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

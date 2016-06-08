@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentEway extends Model {
+class ModelExtensionPaymentEway extends Model {
 
 	public function install() {
 		$this->db->query("

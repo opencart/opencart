@@ -1,5 +1,5 @@
 <?php
-class ControllerAnalyticsGoogleAnalytics extends Controller {
+class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 	private $error = array();
 
 	public function index() {

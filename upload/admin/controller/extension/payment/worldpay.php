@@ -1,10 +1,10 @@
 <?php
-class ControllerPaymentWorldpay extends Controller {
+class ControllerExtensionPaymentWorldpay extends Controller {
 	private $error = array();
 
 	public function index() {
 
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -247,12 +247,12 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/worldpay');
+		$this->load->model('extension/payment/worldpay');
 		$this->model_payment_worldpay->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/worldpay');
+		$this->load->model('extension/payment/worldpay');
 		$this->model_payment_worldpay->uninstall();
 	}
 
@@ -260,12 +260,12 @@ class ControllerPaymentWorldpay extends Controller {
 
 		if ($this->config->get('worldpay_status')) {
 
-			$this->load->model('payment/worldpay');
+			$this->load->model('extension/payment/worldpay');
 
 			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->get['order_id']);
 
 			if (!empty($worldpay_order)) {
-				$this->load->language('payment/worldpay');
+				$this->load->language('extension/payment/worldpay');
 
 				$worldpay_order['total_released'] = $this->model_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
 
@@ -303,11 +303,11 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/worldpay');
+			$this->load->model('extension/payment/worldpay');
 
 			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->post['order_id']);
 

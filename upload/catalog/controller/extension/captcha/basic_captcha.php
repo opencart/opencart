@@ -1,5 +1,5 @@
 <?php
-class ControllerCaptchaBasicCaptcha extends Controller {
+class ControllerExtensionCaptchaBasicCaptcha extends Controller {
 	public function index($error = array()) {
 		$this->load->language('captcha/basic_captcha');
 

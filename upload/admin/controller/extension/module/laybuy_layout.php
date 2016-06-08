@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleLaybuyLayout extends Controller {
+class ControllerExtensionModuleLaybuyLayout extends Controller {
 	private $error = array();
 
 	public function index() {

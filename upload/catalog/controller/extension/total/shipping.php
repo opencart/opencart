@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalShipping extends Controller {
+class ControllerExtensionTotalShipping extends Controller {
 	public function index() {
 		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('total/shipping');
@@ -134,9 +134,9 @@ class ControllerTotalShipping extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('shipping/' . $result['code']);
+					$this->load->model('extension/shipping/' . $result['code']);
 
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
 						$quote_data[$result['code']] = array(

@@ -1,8 +1,8 @@
 <?php
-class ControllerPaymentSecureTradingWs extends Controller {
+class ControllerExtensionPaymentSecureTradingWs extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
-		$this->load->language('payment/securetrading_ws');
+		$this->load->language('extension/payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -61,8 +61,8 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	public function process() {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
-		$this->load->model('payment/securetrading_ws');
-		$this->load->language('payment/securetrading_ws');
+		$this->load->model('extension/payment/securetrading_ws');
+		$this->load->language('extension/payment/securetrading_ws');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -218,8 +218,8 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 	public function threedreturn() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/securetrading_ws');
-		$this->load->language('payment/securetrading_ws');
+		$this->load->model('extension/payment/securetrading_ws');
+		$this->load->language('extension/payment/securetrading_ws');
 
 		// Using unmodified $_POST to access values as per Secure Trading's requirements
 		if (isset($_POST['PaRes']) && !empty($_POST['PaRes']) && isset($_POST['MD']) && !empty($_POST['MD'])) {

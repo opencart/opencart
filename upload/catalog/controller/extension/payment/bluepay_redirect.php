@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentBluePayRedirect extends Controller {
+class ControllerExtensionPaymentBluePayRedirect extends Controller {
 	public function index() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->load->language('extension/payment/bluepay_redirect');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -56,7 +56,7 @@ class ControllerPaymentBluePayRedirect extends Controller {
 
 		$data['existing_cards'] = array();
 		if ($this->customer->isLogged() && $data['bluepay_redirect_card']) {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
 			$cards = $this->model_payment_bluepay_redirect->getCards($this->customer->getId());
 
@@ -67,11 +67,11 @@ class ControllerPaymentBluePayRedirect extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->load->language('extension/payment/bluepay_redirect');
 
 		$this->load->model('checkout/order');
 
-		$this->load->model('payment/bluepay_redirect');
+		$this->load->model('extension/payment/bluepay_redirect');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$post_data = $this->request->post;

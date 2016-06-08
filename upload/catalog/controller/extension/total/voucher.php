@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalVoucher extends Controller {
+class ControllerExtensionTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
 			$this->load->language('total/voucher');
@@ -27,7 +27,7 @@ class ControllerTotalVoucher extends Controller {
 
 		$json = array();
 
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
 		if (isset($this->request->post['voucher'])) {
 			$voucher = $this->request->post['voucher'];

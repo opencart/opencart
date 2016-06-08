@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentPPExpress extends Model {
+class ModelExtensionPaymentPPExpress extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/pp_express');
+		$this->load->language('extension/payment/pp_express');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('pp_express_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
@@ -167,10 +167,10 @@ class ModelPaymentPPExpress extends Model {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
+					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 
 				$sort_order = array();
@@ -207,7 +207,7 @@ class ModelPaymentPPExpress extends Model {
 		$recurring_products = $this->cart->getRecurringProducts();
 
 		if ($recurring_products) {
-			$this->load->language('payment/pp_express');
+			$this->load->language('extension/payment/pp_express');
 
 			foreach ($recurring_products as $item) {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';

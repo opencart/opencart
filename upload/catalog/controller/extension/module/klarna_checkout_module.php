@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleKlarnaCheckoutModule extends Controller {
+class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	public function index() {
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 
 		// If Payment Method or Module is disabled
 		if (!$this->config->get('klarna_checkout_module_status') || !$this->config->get('klarna_checkout_status')) {
@@ -98,9 +98,9 @@ class ControllerModuleKlarnaCheckoutModule extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('shipping/' . $result['code']);
+					$this->load->model('extension/shipping/' . $result['code']);
 
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
 						$method_data[$result['code']] = array(

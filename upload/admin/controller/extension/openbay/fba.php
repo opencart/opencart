@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayFba extends Controller {
+class ControllerExtensionOpenbayFba extends Controller {
     public function install() {
         $this->load->model('openbay/fba');
         $this->load->model('setting/setting');

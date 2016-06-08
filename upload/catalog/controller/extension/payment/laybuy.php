@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentLaybuy extends Controller {
+class ControllerExtensionPaymentLaybuy extends Controller {
 	public function index() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		$this->load->model('checkout/order');
 
@@ -45,7 +45,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function postToLaybuy()	{
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Posting to Laybuy');
 
@@ -124,7 +124,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function callback() {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Receiving callback');
 
@@ -182,7 +182,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function cancel() {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Transaction canceled by user. Redirecting to checkout/checkout.');
 
@@ -190,9 +190,9 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function reviseCallback() {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Receiving callback');
 
@@ -329,7 +329,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function reviseCancel() {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Revise canceled. Redirecting to checkout/checkout.');
 
@@ -337,7 +337,7 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function deleteOrder($route = '', $output = '', $order_id = 0, $order_status_id = 0) {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
 		if (isset($this->session->data['api_id'])) {
 			$this->model_payment_laybuy->log('Deleting order #' . $order_id);
@@ -349,9 +349,9 @@ class ControllerPaymentLaybuy extends Controller {
 	}
 
 	public function cron() {
-		$this->load->model('payment/laybuy');
+		$this->load->model('extension/payment/laybuy');
 
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$this->model_payment_laybuy->log('Running cron');
 

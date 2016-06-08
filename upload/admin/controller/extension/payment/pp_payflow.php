@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentPPPayflow extends Controller {
+class ControllerExtensionPaymentPPPayflow extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/pp_payflow');
+		$this->load->language('extension/payment/pp_payflow');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

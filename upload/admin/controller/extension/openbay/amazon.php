@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayAmazon extends Controller {
+class ControllerExtensionOpenbayAmazon extends Controller {
 	public function install() {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');

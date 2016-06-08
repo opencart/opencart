@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaymate extends Controller {
+class ControllerExtensionPaymentPaymate extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -37,7 +37,7 @@ class ControllerPaymentPaymate extends Controller {
 	}
 
 	public function callback() {
-		$this->load->language('payment/paymate');
+		$this->load->language('extension/payment/paymate');
 
 		if (isset($this->request->post['ref'])) {
 			$order_id = $this->request->post['ref'];

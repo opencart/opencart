@@ -1,11 +1,11 @@
 <?php
-class ControllerModuleKlarnaCheckoutModule extends Controller {
+class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 	private $error = array();
 
 	public function index() {
 		$this->language->load('module/klarna_checkout_module');
 
-		$this->load->model('payment/klarna_checkout');
+		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));

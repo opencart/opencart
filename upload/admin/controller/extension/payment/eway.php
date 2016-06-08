@@ -1,10 +1,10 @@
 <?php
-class ControllerPaymentEway extends Controller {
+class ControllerExtensionPaymentEway extends Controller {
 
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -209,12 +209,12 @@ class ControllerPaymentEway extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('payment/eway');
+		$this->load->model('extension/payment/eway');
 		$this->model_payment_eway->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/eway');
+		$this->load->model('extension/payment/eway');
 		$this->model_payment_eway->uninstall();
 	}
 
@@ -230,12 +230,12 @@ class ControllerPaymentEway extends Controller {
 
 	public function order() {
 		if ($this->config->get('eway_status')) {
-			$this->load->model('payment/eway');
+			$this->load->model('extension/payment/eway');
 
 			$eway_order = $this->model_payment_eway->getOrder($this->request->get['order_id']);
 
 			if (!empty($eway_order)) {
-				$this->load->language('payment/eway');
+				$this->load->language('extension/payment/eway');
 
 				$eway_order['total'] = $eway_order['amount'];
 				$eway_order['total_formatted'] = $this->currency->format($eway_order['amount'], $eway_order['currency_code'], 1, true);
@@ -281,13 +281,13 @@ class ControllerPaymentEway extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
 		$refund_amount = (double)$this->request->post['refund_amount'];
 
 		if ($order_id && $refund_amount > 0) {
-			$this->load->model('payment/eway');
+			$this->load->model('extension/payment/eway');
 			$result = $this->model_payment_eway->refund($order_id, $refund_amount);
 
 			// Check if any error returns
@@ -336,13 +336,13 @@ class ControllerPaymentEway extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/eway');
+		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
 		$capture_amount = (double)$this->request->post['capture_amount'];
 
 		if ($order_id && $capture_amount > 0) {
-			$this->load->model('payment/eway');
+			$this->load->model('extension/payment/eway');
 			$eway_order = $this->model_payment_eway->getOrder($order_id);
 			$result = $this->model_payment_eway->capture($order_id, $capture_amount, $eway_order['currency_code']);
 

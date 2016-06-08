@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentCardinity extends Controller {
+class ControllerExtensionPaymentCardinity extends Controller {
 	public function index() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$data['entry_holder'] = $this->language->get('entry_holder');
 		$data['entry_pan'] = $this->language->get('entry_pan');
@@ -37,9 +37,9 @@ class ControllerPaymentCardinity extends Controller {
 
 	public function send() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$json = array();
 
@@ -134,9 +134,9 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function threeDSecureForm() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$success = false;
 		$redirect = false;
@@ -168,9 +168,9 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function threeDSecureCallback() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$success = false;
 
@@ -215,7 +215,7 @@ class ControllerPaymentCardinity extends Controller {
 	private function finalizeOrder($payment) {
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cardinity_order_status_id'));
 
@@ -224,7 +224,7 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	private function failedOrder($log = null, $alert = null) {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->model_payment_cardinity->log($this->language->get('text_payment_failed'));
 
@@ -241,7 +241,7 @@ class ControllerPaymentCardinity extends Controller {
 
 	private function validate() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$error = array();
 

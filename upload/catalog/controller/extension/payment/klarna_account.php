@@ -1,12 +1,12 @@
 <?php
-class ControllerPaymentKlarnaAccount extends Controller {
+class ControllerExtensionPaymentKlarnaAccount extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			$this->load->language('payment/klarna_account');
+			$this->load->language('extension/payment/klarna_account');
 
 			$data['text_information'] = $this->language->get('text_information');
 			$data['text_additional'] = $this->language->get('text_additional');
@@ -84,12 +84,12 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
+					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
 					
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 
 					$amount = 0;
 
@@ -285,7 +285,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/klarna_account');
+		$this->load->language('extension/payment/klarna_account');
 
 		$json = array();
 

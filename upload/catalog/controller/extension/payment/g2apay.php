@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentG2APay extends Controller {
+class ControllerExtensionPaymentG2APay extends Controller {
 	public function index() {
-		$this->load->language('payment/g2apay');
+		$this->load->language('extension/payment/g2apay');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -13,7 +13,7 @@ class ControllerPaymentG2APay extends Controller {
 	public function checkout() {
 		$this->load->model('checkout/order');
 		$this->load->model('account/order');
-		$this->load->model('payment/g2apay');
+		$this->load->model('extension/payment/g2apay');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -38,10 +38,10 @@ class ControllerPaymentG2APay extends Controller {
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
-				$this->load->model('total/' . $result['code']);
+				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
@@ -136,7 +136,7 @@ class ControllerPaymentG2APay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->load->model('payment/g2apay');
+			$this->load->model('extension/payment/g2apay');
 
 			$g2apay_order_info = $this->model_payment_g2apay->getG2aOrder($order_id);
 
@@ -149,7 +149,7 @@ class ControllerPaymentG2APay extends Controller {
 	}
 
 	public function ipn() {
-		$this->load->model('payment/g2apay');
+		$this->load->model('extension/payment/g2apay');
 		$this->model_payment_g2apay->logger('ipn');
 
 		if (isset($this->request->get['token']) && hash_equals($this->config->get('g2apay_secret_token'), $this->request->get['token'])) {

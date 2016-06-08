@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentSagepayUS extends Controller {
+class ControllerExtensionPaymentSagepayUS extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/sagepay_us');
+		$this->load->language('extension/payment/sagepay_us');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

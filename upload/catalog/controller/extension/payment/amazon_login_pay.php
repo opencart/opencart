@@ -1,10 +1,10 @@
 <?php
-class ControllerPaymentAmazonLoginPay extends Controller {
+class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function address() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
@@ -56,10 +56,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function paymentMethod() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
@@ -103,12 +103,12 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function confirm() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$this->load->language('checkout/checkout');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/extension');
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
@@ -206,10 +206,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 
 			if ($this->config->get($code . '_status')) {
-				$this->load->model('total/' . $code);
+				$this->load->model('extension/total/' . $code);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $code}->getTotal($total_data);
+				$this->{'model_extension_total_' . $code}->getTotal($total_data);
 
 				if (!empty($totals[count($totals) - 1]) && !isset($totals[count($totals) - 1]['code'])) {
 					$totals[count($totals) - 1]['code'] = $code;
@@ -270,7 +270,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$order_data['fax'] = '';
 
 		if (isset($this->session->data['coupon'])) {
-			$this->load->model('total/coupon');
+			$this->load->model('extension/total/coupon');
 
 			$coupon = $this->model_total_coupon->getCoupon($this->session->data['coupon']);
 
@@ -495,11 +495,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function processOrder() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$this->load->model('checkout/order');
-		$this->load->model('total/coupon');
+		$this->load->model('extension/total/coupon');
 		$this->load->model('account/order');
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		if (!isset($this->session->data['order_id'])) {
 			$this->response->redirect($this->url->link('common/home'));
@@ -597,7 +597,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function loginFailure() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -620,10 +620,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function shippingQuotes() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 
 		$this->load->model('extension/extension');
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		$json = array();
 
@@ -725,9 +725,9 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				}
 
 				if ($this->config->get($code . '_status')) {
-					$this->load->model('shipping/' . $code);
+					$this->load->model('extension/shipping/' . $code);
 
-					$quote = $this->{'model_shipping_' . $code}->getQuote($address);
+					$quote = $this->{'model_extension_shipping_' . $code}->getQuote($address);
 
 					if ($quote && empty($quote['error'])) {
 						$quotes[$code] = array(
@@ -796,7 +796,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function setBillingAddress($order_info, $billing_address) {
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		$full_name = explode(' ', $billing_address->Name);
 		$last_name = array_pop($full_name);
@@ -843,7 +843,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function ipn() {
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 		$this->model_payment_amazon_login_pay->logger('IPN received');
 		if (isset($this->request->get['token']) && hash_equals($this->config->get('amazon_login_pay_ipn_token'), $this->request->get['token'])) {
 			$body = file_get_contents('php://input');
@@ -870,7 +870,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function capture($route, $output, $order_id, $order_status_id) {
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);

@@ -34,6 +34,8 @@ class ControllerExtensionStore extends Controller {
 		$data['text_report'] = $this->language->get('text_report');
 		$data['text_other'] = $this->language->get('text_other');
 
+		$data['token'] = $this->session->data['token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

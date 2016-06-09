@@ -20,6 +20,7 @@ class ControllerExtensionInstaller extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_loading'] = $this->language->get('text_loading');
 			
 		$data['entry_upload'] = $this->language->get('entry_upload');
 		$data['entry_overwrite'] = $this->language->get('entry_overwrite');

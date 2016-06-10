@@ -6,17 +6,11 @@ $_['heading_title']    = 'Translations';
 $_['text_success']     = 'Success: You have modified translations!';
 $_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
-
-
-
-// Column
-$_['column_route']     = 'Route';
-$_['column_total']     = 'Total';
-$_['column_action']    = 'Action';
+$_['text_store']       = 'Store';
+$_['text_language']    = 'Language';
+$_['text_translation'] = 'Choose a translation';
 
 // Entry
-$_['entry_store']      = 'Store';
-$_['entry_language']   = 'Language';
 $_['entry_key']        = 'Key';
 $_['entry_value']      = 'Value';
 

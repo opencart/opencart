@@ -151,11 +151,11 @@ class ModelUpgrade1006 extends Model {
 
 		// Merge download or system/download to system/storage/download
 		if (file_exists(DIR_OPENCART . 'download')) {
-			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/upload');
+			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
 		}
 
 		if (file_exists(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/upload');
+			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
 		}
 
 		// Convert image/data to image/catalog

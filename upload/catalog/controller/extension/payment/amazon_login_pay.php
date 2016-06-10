@@ -2,7 +2,6 @@
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function address() {
 		$this->load->language('extension/payment/amazon_login_pay');
-		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('extension/payment/amazon_login_pay');

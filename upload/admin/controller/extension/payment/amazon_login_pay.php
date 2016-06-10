@@ -17,7 +17,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->model_setting_setting->editSetting('amazon_login_pay', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			if (isset($this->request->post['language_reload'])) {
 				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true));
 			} else {
@@ -229,17 +229,17 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_language'] = 'de-DE';
 			$data['sp_id'] = 'AGGDPRPDPL7SL';
 			$data['locale'] = 'EUR';
-			$data['ld'] = 'SPEXDEAPA-OpencartPL';
+			$ld = 'SPEXDEAPA-OpencartPL';
 		} elseif ($data['amazon_login_pay_payment_region'] == 'GBP') {
 			$data['amazon_login_pay_language'] = 'en-GB';
 			$data['sp_id'] = 'A1P8WV11EWOP9H';
 			$data['locale'] = 'GBP';
-			$data['ld'] = 'SPEXUKAPA-OpencartPL';
+			$ld = 'SPEXUKAPA-OpencartPL';
 		} else {
 			$data['amazon_login_pay_language'] = 'en-US';
 			$data['sp_id'] = 'A3GK1RS09H3A7D';
 			$data['locale'] = 'US';
-			$data['ld'] = 'SPEXUSAPA-OpencartPL';
+			$ld = 'SPEXUSAPA-OpencartPL';
 		}
 
 		if (isset($this->request->post['amazon_login_pay_language'])) {
@@ -341,13 +341,13 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['store_name'] = $this->config->get('config_name');
 
 		if ($data['amazon_login_pay_payment_region'] == 'USD') {
-			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect";
+			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect?ld=" . $ld;
 
 			$data['languages'] = array(
 				'en-US' => $this->language->get('text_us')
 			);
 		} else {
-			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect";
+			$data['registration_url'] = "https://sellercentral-europe.amazon.com/hz/me/sp/redirect?ld=" . $ld;
 
 			$data['languages'] = array(
 				'de-DE' => $this->language->get('text_de'),

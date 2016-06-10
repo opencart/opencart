@@ -23,7 +23,6 @@
 	  <form method="POST" target="_blank" action="<?php echo $registration_url; ?>" class="form-horizontal" id="registration-form">
 		<input type="hidden" value="<?php echo $locale; ?>" name="locale">
 		<input type="hidden" value="<?php echo $sp_id; ?>" name="spId">
-		<input type="hidden" value="<?php echo $ld; ?>" name="ld">
 		<input type="hidden" value="<?php echo $unique_id; ?>" name="uniqueId">
 		<input type="hidden" value="<?php echo $allowed_login_domain; ?>" name="allowedLoginDomains[]">
 		<?php foreach ($login_redirect_urls as $login_redirect_url) { ?>

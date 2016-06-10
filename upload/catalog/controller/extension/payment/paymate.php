@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaymate extends Controller {
+class ControllerExtensionPaymentPaymate extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -31,13 +31,13 @@ class ControllerPaymentPaymate extends Controller {
 		$data['regindi_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
 		$data['regindi_pcode'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 
-		$data['return'] = $this->url->link('payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
+		$data['return'] = $this->url->link('extension/payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
 
-		return $this->load->view('payment/paymate', $data);
+		return $this->load->view('extension/payment/paymate', $data);
 	}
 
 	public function callback() {
-		$this->load->language('payment/paymate');
+		$this->load->language('extension/payment/paymate');
 
 		if (isset($this->request->post['ref'])) {
 			$order_id = $this->request->post['ref'];

@@ -1,7 +1,7 @@
 <?php
-class ControllerModulePPButton extends Controller {
+class ControllerExtensionModulePPButton extends Controller {
 	public function index() {
-		$this->load->language('module/pp_button');
+		$this->load->language('extension/module/pp_button');
 
 		$this->load->model('setting/setting');
 
@@ -46,10 +46,10 @@ class ControllerModulePPButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pp_button', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -63,11 +63,11 @@ class ControllerModulePPButton extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_button', $data));
+		$this->response->setOutput($this->load->view('extension/module/pp_button', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pp_button')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pp_button')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

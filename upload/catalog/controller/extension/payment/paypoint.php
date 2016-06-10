@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaypoint extends Controller {
+class ControllerExtensionPaymentPaypoint extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -46,7 +46,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		$data['currency'] = $this->session->data['currency'];
-		$data['callback'] = $this->url->link('payment/paypoint/callback', '', true);
+		$data['callback'] = $this->url->link('extension/payment/paypoint/callback', '', true);
 
 		switch ($this->config->get('paypoint_test')) {
 			case 'live':
@@ -63,7 +63,7 @@ class ControllerPaymentPaypoint extends Controller {
 
 		$data['options'] = 'test_status=' . $status . ',dups=false,cb_post=false';
 
-		return $this->load->view('payment/paypoint', $data);
+		return $this->load->view('extension/payment/paypoint', $data);
 	}
 
 	public function callback() {
@@ -89,7 +89,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		if ($order_info) {
-			$this->load->language('payment/paypoint');
+			$this->load->language('extension/payment/paypoint');
 
 			$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
@@ -146,7 +146,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				$this->response->setOutput($this->load->view('payment/paypoint_success', $data));
+				$this->response->setOutput($this->load->view('extension/payment/paypoint_success', $data));
 			} else {
 				$data['continue'] = $this->url->link('checkout/cart');
 
@@ -157,7 +157,7 @@ class ControllerPaymentPaypoint extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 				$data['header'] = $this->load->controller('common/header');
 
-				$this->response->setOutput($this->load->view('payment/paypoint_failure', $data));
+				$this->response->setOutput($this->load->view('extension/payment/paypoint_failure', $data));
 			}
 		}
 	}

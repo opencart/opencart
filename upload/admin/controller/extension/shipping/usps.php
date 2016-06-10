@@ -1,9 +1,9 @@
 <?php
-class ControllerShippingUsps extends Controller {
+class ControllerExtensionShippingUsps extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/usps');
+		$this->load->language('extension/shipping/usps');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -134,10 +134,10 @@ class ControllerShippingUsps extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping/usps', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/shipping/usps', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
@@ -516,11 +516,11 @@ class ControllerShippingUsps extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/usps', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/usps', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/usps')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/usps')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

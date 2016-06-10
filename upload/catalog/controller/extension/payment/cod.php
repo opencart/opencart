@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentCod extends Controller {
+class ControllerExtensionPaymentCod extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -7,7 +7,7 @@ class ControllerPaymentCod extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/cod', $data);
+		return $this->load->view('extension/payment/cod', $data);
 	}
 
 	public function confirm() {

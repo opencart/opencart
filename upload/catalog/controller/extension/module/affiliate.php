@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleAffiliate extends Controller {
+class ControllerExtensionModuleAffiliate extends Controller {
 	public function index() {
-		$this->load->language('module/affiliate');
+		$this->load->language('extension/module/affiliate');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -28,6 +28,6 @@ class ControllerModuleAffiliate extends Controller {
 		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
 		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
-		return $this->load->view('module/affiliate', $data);
+		return $this->load->view('extension/module/affiliate', $data);
 	}
 }

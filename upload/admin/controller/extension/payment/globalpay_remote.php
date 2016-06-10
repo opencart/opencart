@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentGlobalpayRemote extends Controller {
+class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -112,10 +112,10 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/globalpay_remote', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/globalpay_remote', 'token=' . $this->session->data['token'], true);
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -251,24 +251,24 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/globalpay_remote', $data));
+		$this->response->setOutput($this->load->view('extension/payment/globalpay_remote', $data));
 	}
 
 	public function install() {
-		$this->load->model('payment/globalpay_remote');
-		$this->model_payment_globalpay_remote->install();
+		$this->load->model('extension/payment/globalpay_remote');
+		$this->model_extension_payment_globalpay_remote->install();
 	}
 
 	public function order() {
 		if ($this->config->get('globalpay_remote_status')) {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
-			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->get['order_id']);
+			$globalpay_order = $this->model_extension_payment_globalpay_remote->getOrder($this->request->get['order_id']);
 
 			if (!empty($globalpay_order)) {
-				$this->load->language('payment/globalpay_remote');
+				$this->load->language('extension/payment/globalpay_remote');
 
-				$globalpay_order['total_captured'] = $this->model_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
+				$globalpay_order['total_captured'] = $this->model_extension_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
 
 				$globalpay_order['total_formatted'] = $this->currency->format($globalpay_order['total'], $globalpay_order['currency_code'], 1, true);
 				$globalpay_order['total_captured_formatted'] = $this->currency->format($globalpay_order['total_captured'], $globalpay_order['currency_code'], 1, true);
@@ -300,27 +300,27 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/globalpay_remote_order', $data);
+				return $this->load->view('extension/payment/globalpay_remote_order', $data);
 			}
 		}
 	}
 
 	public function void() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
-			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
+			$globalpay_order = $this->model_extension_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 
-			$void_response = $this->model_payment_globalpay_remote->void($this->request->post['order_id']);
+			$void_response = $this->model_extension_payment_globalpay_remote->void($this->request->post['order_id']);
 
-			$this->model_payment_globalpay_remote->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_extension_payment_globalpay_remote->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if (isset($void_response->result) && $void_response->result == '00') {
-				$this->model_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'void', 0.00);
-				$this->model_payment_globalpay_remote->updateVoidStatus($globalpay_order['globalpay_remote_order_id'], 1);
+				$this->model_extension_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'void', 0.00);
+				$this->model_extension_payment_globalpay_remote->updateVoidStatus($globalpay_order['globalpay_remote_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
 				$json['data'] = array();
@@ -340,24 +340,24 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/globalpay');
+		$this->load->language('extension/payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
-			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
+			$globalpay_order = $this->model_extension_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 
-			$capture_response = $this->model_payment_globalpay_remote->capture($this->request->post['order_id'], $this->request->post['amount']);
+			$capture_response = $this->model_extension_payment_globalpay_remote->capture($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_globalpay_remote->logger('Settle result:\r\n' . print_r($capture_response, 1));
+			$this->model_extension_payment_globalpay_remote->logger('Settle result:\r\n' . print_r($capture_response, 1));
 
 			if (isset($capture_response->result) && $capture_response->result == '00') {
-				$this->model_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'payment', $this->request->post['amount']);
-				$total_captured = $this->model_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
+				$this->model_extension_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'payment', $this->request->post['amount']);
+				$total_captured = $this->model_extension_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
 
 				if ($total_captured >= $globalpay_order['total'] || $globalpay_order['settle_type'] == 0) {
-					$this->model_payment_globalpay_remote->updateCaptureStatus($globalpay_order['globalpay_remote_order_id'], 1);
+					$this->model_extension_payment_globalpay_remote->updateCaptureStatus($globalpay_order['globalpay_remote_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
 				} else {
@@ -365,7 +365,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 					$json['msg'] = $this->language->get('text_capture_ok');
 				}
 
-				$this->model_payment_globalpay_remote->updateForRebate($globalpay_order['globalpay_remote_order_id'], $capture_response->pasref, $capture_response->orderid);
+				$this->model_extension_payment_globalpay_remote->updateForRebate($globalpay_order['globalpay_remote_order_id'], $capture_response->pasref, $capture_response->orderid);
 
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
@@ -389,26 +389,26 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/globalpay_remote');
+		$this->load->language('extension/payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/globalpay_remote');
+			$this->load->model('extension/payment/globalpay_remote');
 
-			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->post['order_id']);
+			$globalpay_order = $this->model_extension_payment_globalpay_remote->getOrder($this->request->post['order_id']);
 
-			$rebate_response = $this->model_payment_globalpay_remote->rebate($this->request->post['order_id'], $this->request->post['amount']);
+			$rebate_response = $this->model_extension_payment_globalpay_remote->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_globalpay_remote->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_extension_payment_globalpay_remote->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if (isset($rebate_response->result) && $rebate_response->result == '00') {
-				$this->model_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'rebate', $this->request->post['amount']*-1);
+				$this->model_extension_payment_globalpay_remote->addTransaction($globalpay_order['globalpay_remote_order_id'], 'rebate', $this->request->post['amount']*-1);
 
-				$total_rebated = $this->model_payment_globalpay_remote->getTotalRebated($globalpay_order['globalpay_remote_order_id']);
-				$total_captured = $this->model_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
+				$total_rebated = $this->model_extension_payment_globalpay_remote->getTotalRebated($globalpay_order['globalpay_remote_order_id']);
+				$total_captured = $this->model_extension_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
 
 				if ($total_captured <= 0 && $globalpay_order['capture_status'] == 1) {
-					$this->model_payment_globalpay_remote->updateRebateStatus($globalpay_order['globalpay_remote_order_id'], 1);
+					$this->model_extension_payment_globalpay_remote->updateRebateStatus($globalpay_order['globalpay_remote_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
 				} else {
@@ -437,7 +437,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/globalpay_remote')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/globalpay_remote')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

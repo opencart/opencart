@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEtsyShop extends Controller {
+class ControllerExtensionOpenbayEtsyShop extends Controller {
 	public function getSections() {
 		$response = $this->openbay->etsy->call('v1/etsy/shop/getSections/', 'GET');
 

@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentFirstdata extends Controller {
+class ControllerExtensionPaymentFirstdata extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -70,7 +70,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');
 
@@ -124,10 +124,10 @@ class ControllerPaymentFirstdata extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/firstdata', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/firstdata', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true);
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -241,44 +241,44 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/firstdata', $data));
+		$this->response->setOutput($this->load->view('extension/payment/firstdata', $data));
 	}
 
 	public function install() {
-		$this->load->model('payment/firstdata');
-		$this->model_payment_firstdata->install();
+		$this->load->model('extension/payment/firstdata');
+		$this->model_extension_payment_firstdata->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/firstdata');
-		$this->model_payment_firstdata->uninstall();
+		$this->load->model('extension/payment/firstdata');
+		$this->model_extension_payment_firstdata->uninstall();
 	}
 
 	public function order() {
 		if ($this->config->get('firstdata_status')) {
-			$this->load->model('payment/firstdata');
+			$this->load->model('extension/payment/firstdata');
 
-			$firstdata_order = $this->model_payment_firstdata->getOrder($this->request->get['order_id']);
+			$firstdata_order = $this->model_extension_payment_firstdata->getOrder($this->request->get['order_id']);
 
 			if (!empty($firstdata_order)) {
-				$this->load->language('payment/firstdata');
+				$this->load->language('extension/payment/firstdata');
 
-				$firstdata_order['total_captured'] = $this->model_payment_firstdata->getTotalCaptured($firstdata_order['firstdata_order_id']);
+				$firstdata_order['total_captured'] = $this->model_extension_payment_firstdata->getTotalCaptured($firstdata_order['firstdata_order_id']);
 				$firstdata_order['total_formatted'] = $this->currency->format($firstdata_order['total'], $firstdata_order['currency_code'], 1, true);
 				$firstdata_order['total_captured_formatted'] = $this->currency->format($firstdata_order['total_captured'], $firstdata_order['currency_code'], 1, true);
 
 				$data['firstdata_order'] = $firstdata_order;
 				$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
-				$data['currency'] = $this->model_payment_firstdata->mapCurrency($firstdata_order['currency_code']);
+				$data['currency'] = $this->model_extension_payment_firstdata->mapCurrency($firstdata_order['currency_code']);
 				$data['amount'] = number_format($firstdata_order['total'], 2);
 
 				$data['request_timestamp'] = date("Y:m:d-H:i:s");
 
 				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret')));
 
-				$data['void_url'] = $this->url->link('payment/firstdata/void', 'token=' . $this->session->data['token'], true);
-				$data['capture_url'] = $this->url->link('payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
-				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
+				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'token=' . $this->session->data['token'], true);
+				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
+				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 				if ($this->config->get('firstdata_live_demo') == 1) {
 					$data['action_url'] = $this->config->get('firstdata_live_url');
@@ -338,13 +338,13 @@ class ControllerPaymentFirstdata extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/firstdata_order', $data);
+				return $this->load->view('extension/payment/firstdata_order', $data);
 			}
 		}
 	}
 
 	public function void() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		if ($this->request->post['status'] == 'FAILED') {
 			if (isset($this->request->post['fail_reason'])) {
@@ -362,7 +362,7 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		if ($this->request->post['status'] == 'FAILED') {
 			if (isset($this->request->post['fail_reason'])) {
@@ -380,7 +380,7 @@ class ControllerPaymentFirstdata extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/firstdata')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/firstdata')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

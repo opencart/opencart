@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentBankTransfer extends Controller {
+class ControllerExtensionPaymentBankTransfer extends Controller {
 	public function index() {
-		$this->load->language('payment/bank_transfer');
+		$this->load->language('extension/payment/bank_transfer');
 
 		$data['text_instruction'] = $this->language->get('text_instruction');
 		$data['text_description'] = $this->language->get('text_description');
@@ -14,12 +14,12 @@ class ControllerPaymentBankTransfer extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/bank_transfer', $data);
+		return $this->load->view('extension/payment/bank_transfer', $data);
 	}
 
 	public function confirm() {
 		if ($this->session->data['payment_method']['code'] == 'bank_transfer') {
-			$this->load->language('payment/bank_transfer');
+			$this->load->language('extension/payment/bank_transfer');
 
 			$this->load->model('checkout/order');
 

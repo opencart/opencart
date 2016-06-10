@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentLaybuy extends Model {
+class ModelExtensionPaymentLaybuy extends Model {
 	public function addRevisedTransaction($data = array()) {
 		$query = $this->db->query("INSERT INTO `" . DB_PREFIX . "laybuy_revise_request` SET `laybuy_transaction_id` = '" . (int)$data['transaction_id'] . "', `type` = '" . $this->db->escape($data['type']) . "', `order_id` = '" . (int)$data['order_id'] . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `address` = '" . $this->db->escape($data['address']) . "', `suburb` = '" . $this->db->escape($data['suburb']) . "', `state` = '" . $this->db->escape($data['state']) . "', `country` = '" . $this->db->escape($data['country']) . "', `postcode` = '" . $this->db->escape($data['postcode']) . "', `email` = '" . $this->db->escape($data['email']) . "', `amount` = '" . (float)$data['amount'] . "', `currency` = '" . $this->db->escape($data['currency']) . "', `downpayment` = '" . $this->db->escape($data['downpayment']) . "', `months` = '" . (int)$data['months'] . "', `downpayment_amount` = '" . (float)$data['downpayment_amount'] . "', `payment_amounts` = '" . (float)$data['payment_amounts'] . "', `first_payment_due` = '" . $this->db->escape($data['first_payment_due']) . "', `last_payment_due` = '" . $this->db->escape($data['last_payment_due']) . "', `store_id` = '" . (int)$data['store_id'] . "', `status` = '" . (int)$data['status'] . "', `report` = '" . $this->db->escape($data['report']) . "', `transaction` = '" . (int)$data['transaction'] . "', `paypal_profile_id` = '" . $this->db->escape($data['paypal_profile_id']) . "', `laybuy_ref_no` = '" . (int)$data['laybuy_ref_no'] . "', `payment_type` = '" . (int)$data['payment_type'] . "', `date_added` = NOW()");
 
@@ -31,7 +31,7 @@ class ModelPaymentLaybuy extends Model {
 	}
 
 	public function getMonths() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$max_months = $this->config->get('laybuy_max_months');
 
@@ -227,7 +227,7 @@ class ModelPaymentLaybuy extends Model {
 	}
 
 	public function getTransactionStatuses() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$transaction_statuses = array(
 			array(
@@ -319,7 +319,7 @@ class ModelPaymentLaybuy extends Model {
 
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'payment/laybuy/deleteOrder');
+		$this->model_extension_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'extension/payment/laybuy/deleteOrder');
 	}
 
 	public function log($data, $step = 6) {

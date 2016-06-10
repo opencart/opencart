@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentSkrill extends Controller {
+class ControllerExtensionPaymentSkrill extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/skrill');
+		$this->load->language('extension/payment/skrill');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -15,7 +15,7 @@ class ControllerPaymentSkrill extends Controller {
 		$data['transaction_id'] = $this->session->data['order_id'];
 		$data['return_url'] = $this->url->link('checkout/success');
 		$data['cancel_url'] = $this->url->link('checkout/checkout', '', true);
-		$data['status_url'] = $this->url->link('payment/skrill/callback');
+		$data['status_url'] = $this->url->link('extension/payment/skrill/callback');
 		$data['language'] = $this->session->data['language'];
 		$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 
@@ -44,7 +44,7 @@ class ControllerPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		return $this->load->view('payment/skrill', $data);
+		return $this->load->view('extension/payment/skrill', $data);
 	}
 
 	public function callback() {

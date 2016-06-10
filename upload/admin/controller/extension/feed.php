@@ -20,11 +20,11 @@ class ControllerExtensionFeed extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'feed/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'feed/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/feed/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/feed/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('feed/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/feed/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionFeed extends Controller {
 			$this->model_extension_extension->uninstall('feed', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('feed/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/feed/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -79,7 +79,7 @@ class ControllerExtensionFeed extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('feed');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/feed/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/feed/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('feed', $value);
 
 				unset($extensions[$key]);
@@ -88,13 +88,13 @@ class ControllerExtensionFeed extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/feed/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('feed/' . $extension);
+				$this->load->language('extension/feed/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
@@ -102,7 +102,7 @@ class ControllerExtensionFeed extends Controller {
 					'install'   => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('feed/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

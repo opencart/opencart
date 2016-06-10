@@ -1,8 +1,8 @@
 <?php
-class ControllerPaymentPPPayflowIframe extends Controller {
+class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/pp_payflow_iframe');
+		$this->load->model('extension/payment/pp_payflow_iframe');
 		$this->load->model('localisation/country');
 		$this->load->model('localisation/zone');
 
@@ -24,7 +24,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 		$secure_token_id = md5($this->session->data['order_id'] . mt_rand() . microtime());
 
-		$this->model_payment_pp_payflow_iframe->addOrder($order_info['order_id'], $secure_token_id);
+		$this->model_extension_payment_pp_payflow_iframe->addOrder($order_info['order_id'], $secure_token_id);
 
 		$shipping_country = $this->model_localisation_country->getCountry($order_info['shipping_country_id']);
 		$shipping_zone = $this->model_localisation_zone->getZone($order_info['shipping_zone_id']);
@@ -58,7 +58,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$url_params['SHIPTOCOUNTRY'] = $shipping_country['iso_code_2'];
 		}
 
-		$response_params = $this->model_payment_pp_payflow_iframe->call($url_params);
+		$response_params = $this->model_extension_payment_pp_payflow_iframe->call($url_params);
 
 		if (isset($response_params['SECURETOKEN'])) {
 			$secure_token = $response_params['SECURETOKEN'];
@@ -76,29 +76,29 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$data['checkout_method'] = $this->config->get('pp_payflow_iframe_checkout_method');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		return $this->load->view('payment/pp_payflow_iframe', $data);
+		return $this->load->view('extension/payment/pp_payflow_iframe', $data);
 	}
 
 	public function paymentReturn() {
 		$data['url'] = $this->url->link('checkout/success');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_return', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}
 
 	public function paymentCancel() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_return', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}
 
 	public function paymentError() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_return', $data));
+		$this->response->setOutput($this->load->view('extension/payment/pp_payflow_iframe_return', $data));
 	}
 
 	public function paymentIpn() {
-		$this->load->model('payment/pp_payflow_iframe');
+		$this->load->model('extension/payment/pp_payflow_iframe');
 		$this->load->model('checkout/order');
 
 		if ($this->config->get('pp_pro_iframe_debug')) {
@@ -106,7 +106,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$log->write('POST: ' . print_r($this->request->post, 1));
 		}
 						
-		$order_id = $this->model_payment_pp_payflow_iframe->getOrderId($this->request->post['SECURETOKENID']);
+		$order_id = $this->model_extension_payment_pp_payflow_iframe->getOrderId($this->request->post['SECURETOKENID']);
 
 		if ($order_id) {
 			$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -117,7 +117,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				'ORIGID'  => $this->request->post['PNREF'],
 			);
 
-			$response_params = $this->model_payment_pp_payflow_iframe->call($url_params);
+			$response_params = $this->model_extension_payment_pp_payflow_iframe->call($url_params);
 
 			if ($order_info['order_status_id'] == 0 && $response_params['RESULT'] == '0' && $this->request->post['RESULT'] == 0) {
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('pp_payflow_iframe_order_status_id'));
@@ -135,7 +135,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 					'complete'              => $complete,
 				);
 
-				$this->model_payment_pp_payflow_iframe->updateOrder($data);
+				$this->model_extension_payment_pp_payflow_iframe->updateOrder($data);
 
 				$data = array(
 					'order_id'              => $order_id,
@@ -144,7 +144,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 					'amount'                => $this->request->post['AMT'],
 				);
 
-				$this->model_payment_pp_payflow_iframe->addTransaction($data);
+				$this->model_extension_payment_pp_payflow_iframe->addTransaction($data);
 			}
 		}
 

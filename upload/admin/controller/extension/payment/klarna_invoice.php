@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentKlarnaInvoice extends Controller {
+class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/klarna_invoice');
+		$this->load->language('extension/payment/klarna_invoice');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -96,10 +96,10 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -157,17 +157,17 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			$data['log'] = '';
 		}
 
-		$data['clear'] = $this->url->link('payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], true);
+		$data['clear'] = $this->url->link('extension/payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/klarna_invoice', $data));
+		$this->response->setOutput($this->load->view('extension/payment/klarna_invoice', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/klarna_invoice')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/klarna_invoice')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -222,7 +222,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 	}
 
 	public function clear() {
-		$this->load->language('payment/klarna_invoice');
+		$this->load->language('extension/payment/klarna_invoice');
 
 		$file = DIR_LOGS . 'klarna_invoice.log';
 
@@ -232,6 +232,6 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 		$this->session->data['success'] = $this->language->get('text_success');
 
-		$this->response->redirect($this->url->link('payment/klarna_invoice', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true));
 	}
 }

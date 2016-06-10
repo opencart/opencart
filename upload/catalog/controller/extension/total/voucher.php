@@ -1,8 +1,8 @@
 <?php
-class ControllerTotalVoucher extends Controller {
+class ControllerExtensionTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
-			$this->load->language('total/voucher');
+			$this->load->language('extension/total/voucher');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -18,16 +18,16 @@ class ControllerTotalVoucher extends Controller {
 				$data['voucher'] = '';
 			}
 
-			return $this->load->view('total/voucher', $data);
+			return $this->load->view('extension/total/voucher', $data);
 		}
 	}
 
 	public function voucher() {
-		$this->load->language('total/voucher');
+		$this->load->language('extension/total/voucher');
 
 		$json = array();
 
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
 		if (isset($this->request->post['voucher'])) {
 			$voucher = $this->request->post['voucher'];
@@ -35,7 +35,7 @@ class ControllerTotalVoucher extends Controller {
 			$voucher = '';
 		}
 
-		$voucher_info = $this->model_total_voucher->getVoucher($voucher);
+		$voucher_info = $this->model_extension_total_voucher->getVoucher($voucher);
 
 		if (empty($this->request->post['voucher'])) {
 			$json['error'] = $this->language->get('error_empty');

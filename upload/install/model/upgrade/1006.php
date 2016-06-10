@@ -13,7 +13,7 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the config.php by adding a DB_PORT
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
+			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
 
 			foreach ($files as $file) {
 				$upgrade = true;
@@ -51,7 +51,7 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
+			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
 
 			foreach ($files as $file) {
 				$upgrade = true;
@@ -151,11 +151,11 @@ class ModelUpgrade1006 extends Model {
 
 		// Merge download or system/download to system/storage/download
 		if (file_exists(DIR_OPENCART . 'download')) {
-			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/upload');
+			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
 		}
 
 		if (file_exists(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/upload');
+			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
 		}
 
 		// Convert image/data to image/catalog
@@ -196,7 +196,7 @@ class ModelUpgrade1006 extends Model {
 	            @unlink($f->getRealPath());
 	        }
 	    }
-		
+
 		// Remove source folder after move
 	    @unlink($src);
 	}

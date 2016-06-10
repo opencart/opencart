@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleSagepayDirectCards extends Controller {
+class ControllerExtensionModuleSagepayDirectCards extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/sagepay_direct_cards');
+		$this->load->language('extension/module/sagepay_direct_cards');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -48,10 +48,10 @@ class ControllerModuleSagepayDirectCards extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/sagepay_direct_cards', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/sagepay_direct_cards', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/sagepay_direct_cards', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/sagepay_direct_cards', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -65,11 +65,11 @@ class ControllerModuleSagepayDirectCards extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/sagepay_direct_cards', $data));
+		$this->response->setOutput($this->load->view('extension/module/sagepay_direct_cards', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/sagepay_direct_cards')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/sagepay_direct_cards')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

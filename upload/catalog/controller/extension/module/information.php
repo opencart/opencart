@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleInformation extends Controller {
+class ControllerExtensionModuleInformation extends Controller {
 	public function index() {
-		$this->load->language('module/information');
+		$this->load->language('extension/module/information');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -22,6 +22,6 @@ class ControllerModuleInformation extends Controller {
 		$data['contact'] = $this->url->link('information/contact');
 		$data['sitemap'] = $this->url->link('information/sitemap');
 
-		return $this->load->view('module/information', $data);
+		return $this->load->view('extension/module/information', $data);
 	}
 }

@@ -1,33 +1,33 @@
 <?php
-class ControllerOpenbayEtsy extends Controller {
+class ControllerExtensionOpenbayEtsy extends Controller {
 	public function install() {
-		$this->load->language('openbay/etsy');
-		$this->load->model('openbay/etsy');
+		$this->load->language('extension/openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
 
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_product');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shipping');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_shipping');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_shop');
-		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_shop');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_shop');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_shop');
 
-		$this->model_openbay_etsy->install();
+		$this->model_extension_openbay_etsy->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
 
-		$this->model_openbay_etsy->uninstall();
+		$this->model_extension_openbay_etsy->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
 	public function index() {
-		$this->load->language('openbay/etsy');
+		$this->load->language('extension/openbay/etsy');
 
 		$data = $this->language->all();
 
@@ -47,7 +47,7 @@ class ControllerOpenbayEtsy extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/openbay/ebay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_dashboard'),
 		);
 
@@ -59,23 +59,23 @@ class ControllerOpenbayEtsy extends Controller {
 		}
 
 		$data['validation'] 	= $this->openbay->etsy->validate();
-		$data['links_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
-		$data['links_products'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], true);
-		$data['links_listings'] = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'], true);
+		$data['links_settings'] = $this->url->link('extension/openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
+		$data['links_products'] = $this->url->link('extension/openbay/etsy_product/links', 'token=' . $this->session->data['token'], true);
+		$data['links_listings'] = $this->url->link('extension/openbay/etsy_product/listings', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy', $data));
+		$this->response->setOutput($this->load->view('extension/openbay/etsy', $data));
 	}
 
 	public function settings() {
 		$this->load->model('setting/setting');
-		$this->load->model('openbay/etsy');
+		$this->load->model('extension/openbay/etsy');
 		$this->load->model('localisation/order_status');
 
-		$this->load->language('openbay/etsy_settings');
+		$this->load->language('extension/openbay/etsy_settings');
 
 		$data = $this->language->all();
 
@@ -83,7 +83,7 @@ class ControllerOpenbayEtsy extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('etsy', $this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
-			$this->response->redirect($this->url->link('openbay/etsy/index&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/etsy/index&token=' . $this->session->data['token']));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -101,17 +101,17 @@ class ControllerOpenbayEtsy extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_etsy'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/openbay/etsy/settings', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$data['action'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/openbay/etsy', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -171,13 +171,13 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		$data['account_info'] = $this->model_openbay_etsy->verifyAccount();
+		$data['account_info'] = $this->model_extension_openbay_etsy->verifyAccount();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_settings', $data));
+		$this->response->setOutput($this->load->view('extension/openbay/etsy_settings', $data));
 	}
 
 	public function settingsUpdate() {
@@ -197,7 +197,7 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'openbay/etsy')) {
+		if (!$this->user->hasPermission('modify', 'extension/openbay/etsy')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

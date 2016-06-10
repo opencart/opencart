@@ -39,7 +39,7 @@ class ControllerExtensionExtension extends Controller {
 		$data['categories'] = array();
 		
 		if ($this->user->hasPermission('access', 'extension/analytics')) {
-			$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'analytics',
@@ -49,7 +49,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/captcha')) {
-			$files = glob(DIR_APPLICATION . 'controller/captcha/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'captcha',
@@ -59,7 +59,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/feed')) {
-			$files = glob(DIR_APPLICATION . 'controller/feed/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/feed/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'feed',
@@ -69,7 +69,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/fraud')) {
-			$files = glob(DIR_APPLICATION . 'controller/fraud/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php');
 			$data['categories'][] = array(
 				'code' => 'fraud',
 				'text' => $this->language->get('text_fraud') . ' (' . count($files) .')',
@@ -78,7 +78,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/module')) {
-			$files = glob(DIR_APPLICATION . 'controller/module/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/module/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'module',
@@ -98,7 +98,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/payment')) {
-			$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'payment',
@@ -108,7 +108,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/shipping')) {
-			$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'shipping',
@@ -118,7 +118,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/theme')) {
-			$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'theme',
@@ -128,7 +128,7 @@ class ControllerExtensionExtension extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/total')) {
-			$files = glob(DIR_APPLICATION . 'controller/total/*.php');
+			$files = glob(DIR_APPLICATION . 'controller/extension/total/*.php');
 	
 			$data['categories'][] = array(
 				'code' => 'total',

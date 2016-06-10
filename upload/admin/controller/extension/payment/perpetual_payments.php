@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentPerpetualPayments extends Controller {
+class ControllerExtensionPaymentPerpetualPayments extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/perpetual_payments');
+		$this->load->language('extension/payment/perpetual_payments');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -73,10 +73,10 @@ class ControllerPaymentPerpetualPayments extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/perpetual_payments', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/perpetual_payments', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/perpetual_payments', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/perpetual_payments', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -140,11 +140,11 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/perpetual_payments', $data));
+		$this->response->setOutput($this->load->view('extension/payment/perpetual_payments', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/perpetual_payments')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/perpetual_payments')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

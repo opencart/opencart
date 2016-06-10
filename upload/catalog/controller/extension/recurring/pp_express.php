@@ -1,7 +1,7 @@
 <?php
-class ControllerRecurringPPExpress extends Controller {
+class ControllerExtensionRecurringPPExpress extends Controller {
 	public function index() {
-		$this->load->language('recurring/pp_express');
+		$this->load->language('extension/recurring/pp_express');
 		
 		if (isset($this->request->get['order_recurring_id'])) {
 			$order_recurring_id = $this->request->get['order_recurring_id'];
@@ -27,14 +27,14 @@ class ControllerRecurringPPExpress extends Controller {
 				$data['order_recurring_id'] = '';
 			}
 
-			return $this->load->view('recurring/pp_express', $data);
+			return $this->load->view('extension/recurring/pp_express', $data);
 		}
 	}
 	
 	public function cancel() {
 		$json = array();
 		
-		$this->load->language('recurring/pp_express');
+		$this->load->language('extension/recurring/pp_express');
 		
 		//cancel an active recurring
 		$this->load->model('account/recurring');

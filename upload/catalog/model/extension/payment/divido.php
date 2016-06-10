@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentDivido extends Model {
+class ModelExtensionPaymentDivido extends Model {
 	const CACHE_KEY_PLANS = 'divido_plans';
 
 	public function setMerchant($api_key) {
@@ -9,7 +9,7 @@ class ModelPaymentDivido extends Model {
 	}
 
 	public function getMethod($payment_address, $total) {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 		$this->load->model('localisation/currency');
 
 		if (!$this->isEnabled()) {
@@ -234,10 +234,10 @@ class ModelPaymentDivido extends Model {
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
-				$this->load->model('total/' . $result['code']);
+				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 			}
 		}
 

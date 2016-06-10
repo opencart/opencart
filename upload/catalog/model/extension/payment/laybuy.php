@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentLaybuy extends Model {
+class ModelExtensionPaymentLaybuy extends Model {
 	public function addTransaction($data = array(), $status) {
 		$this->log('Report: ' . print_r($data, true), '1');
 
@@ -33,7 +33,7 @@ class ModelPaymentLaybuy extends Model {
 	}
 
 	public function getMethod($address, $total) {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('laybuy_geo_zone') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
@@ -112,7 +112,7 @@ class ModelPaymentLaybuy extends Model {
 	}
 
 	public function getMonths() {
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$max_months = $this->config->get('laybuy_max_months');
 
@@ -173,7 +173,7 @@ class ModelPaymentLaybuy extends Model {
 	public function prepareTransactionReport($post_data) {
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/laybuy');
+		$this->load->language('extension/payment/laybuy');
 
 		$data = array_change_key_case($post_data, CASE_LOWER);
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleFilter extends Controller {
+class ControllerExtensionModuleFilter extends Controller {
 	public function index() {
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
@@ -14,7 +14,7 @@ class ControllerModuleFilter extends Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
 		if ($category_info) {
-			$this->load->language('module/filter');
+			$this->load->language('extension/module/filter');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -71,7 +71,7 @@ class ControllerModuleFilter extends Controller {
 					);
 				}
 
-				return $this->load->view('module/filter', $data);
+				return $this->load->view('extension/module/filter', $data);
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentBluePayHosted extends Model {
+class ModelExtensionPaymentBluePayHosted extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_hosted_order` (
@@ -56,9 +56,9 @@ class ModelPaymentBluePayHosted extends Model {
 			$void_data["MODE"] = strtoupper($this->config->get('bluepay_hosted_test'));
 			$void_data["RRNO"] = $bluepay_hosted_order['transaction_id'];
 
-			$void_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$void_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$void_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
+			$void_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$void_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$void_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$void_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -96,9 +96,9 @@ class ModelPaymentBluePayHosted extends Model {
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_hosted_test'));
 			$release_data["RRNO"] = $bluepay_hosted_order['transaction_id'];
 
-			$release_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$release_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$release_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
+			$release_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$release_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$release_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$release_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -131,9 +131,9 @@ class ModelPaymentBluePayHosted extends Model {
 			$rebate_data["MODE"] = strtoupper($this->config->get('bluepay_hosted_test'));
 			$rebate_data["RRNO"] = $bluepay_hosted_order['transaction_id'];
 			$rebate_data["AMOUNT"] = $amount;
-			$rebate_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$rebate_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
-			$rebate_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=payment/bluepay_hosted/adminCallback';
+			$rebate_data['APPROVED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$rebate_data['DECLINED_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
+			$rebate_data['MISSING_URL'] = HTTP_CATALOG . 'index.php?route=extension/payment/bluepay_hosted/adminCallback';
 
 			if (isset($this->request->server["REMOTE_ADDR"])) {
 				$rebate_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];

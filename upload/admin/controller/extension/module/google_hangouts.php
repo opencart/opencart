@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleGoogleHangouts extends Controller {
+class ControllerExtensionModuleGoogleHangouts extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/google_hangouts');
+		$this->load->language('extension/module/google_hangouts');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -57,10 +57,10 @@ class ControllerModuleGoogleHangouts extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/google_hangouts', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/google_hangouts', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -80,11 +80,11 @@ class ControllerModuleGoogleHangouts extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/google_hangouts', $data));
+		$this->response->setOutput($this->load->view('extension/module/google_hangouts', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/google_hangouts')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/google_hangouts')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

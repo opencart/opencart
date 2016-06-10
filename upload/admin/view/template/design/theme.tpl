@@ -101,7 +101,7 @@ $('select[name="store_id"]').on('change', function(e) {
 
 $('select[name="store_id"]').trigger('change');
 
-$('#directory').on('click', 'a.directory', function(e) {
+$('#path').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
 	var node = this;
@@ -160,7 +160,7 @@ $('#path').on('click', 'a.file',function(e) {
 	
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
-			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('input[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).find('i').removeClass('fa-arrow-right');

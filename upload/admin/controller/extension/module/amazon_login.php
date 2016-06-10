@@ -1,11 +1,11 @@
 <?php
-class ControllerModuleAmazonLogin extends Controller {
+class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	private $error = array();
 
 	public function index() {
 
-		$this->load->language('module/amazon_login');
+		$this->load->language('extension/module/amazon_login');
 
 		$this->load->model('setting/setting');
 		$this->load->model('design/layout');
@@ -72,10 +72,10 @@ class ControllerModuleAmazonLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/amazon_login', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/amazon_login', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -115,11 +115,11 @@ class ControllerModuleAmazonLogin extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/amazon_login', $data));
+		$this->response->setOutput($this->load->view('extension/module/amazon_login', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/amazon_login')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/amazon_login')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -127,8 +127,8 @@ class ControllerModuleAmazonLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('extension/event');
-		$this->model_extension_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'module/amazon_login/logout');
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 
 	public function uninstall() {

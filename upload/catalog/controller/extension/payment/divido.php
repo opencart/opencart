@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentDivido extends Controller {
+class ControllerExtensionPaymentDivido extends Controller {
 	const
 		STATUS_ACCEPTED = 'ACCEPTED',
 		STATUS_ACTION_LENDER = 'ACTION-LENDER',
@@ -39,19 +39,19 @@ class ControllerPaymentDivido extends Controller {
 	);
 
 	public function index() {
-		$this->load->language('payment/divido');
-		$this->load->model('payment/divido');
+		$this->load->language('extension/payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
 		$api_key   = $this->config->get('divido_api_key');
 		$key_parts = explode('.', $api_key);
 		$js_key    = strtolower(array_shift($key_parts));
 
-		list($total, $totals) = $this->model_payment_divido->getOrderTotals();
+		list($total, $totals) = $this->model_extension_payment_divido->getOrderTotals();
 
-		$this->model_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
 
-		$plans = $this->model_payment_divido->getCartPlans($this->cart);
+		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
 		foreach ($plans as $key => $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
 			if ($plan->min_amount > $planMinTotal) {
@@ -86,12 +86,12 @@ class ControllerPaymentDivido extends Controller {
 			'generic_credit_req_error' => 'Credit request could not be initiated',
 		);
 
-		return $this->load->view('payment/divido', $data);
+		return $this->load->view('extension/payment/divido', $data);
 	}
 
 	public function update() {
-		$this->load->language('payment/divido');
-		$this->load->model('payment/divido');
+		$this->load->language('extension/payment/divido');
+		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
 		$data = json_decode(file_get_contents('php://input'));
@@ -101,13 +101,13 @@ class ControllerPaymentDivido extends Controller {
 			return;
 		}
 
-		$lookup = $this->model_payment_divido->getLookupByOrderId($data->metadata->order_id);
+		$lookup = $this->model_extension_payment_divido->getLookupByOrderId($data->metadata->order_id);
 		if ($lookup->num_rows != 1) {
 			$this->response->setOutput('');
 			return;
 		}
 
-		$hash = $this->model_payment_divido->hashOrderId($data->metadata->order_id, $lookup->row['salt']);
+		$hash = $this->model_extension_payment_divido->hashOrderId($data->metadata->order_id, $lookup->row['salt']);
 		if ($hash !== $data->metadata->order_hash) {
 			$this->response->setOutput('');
 			return;
@@ -136,22 +136,22 @@ class ControllerPaymentDivido extends Controller {
 			$status_id = 0;
 		}
 
-		$this->model_payment_divido->saveLookup($data->metadata->order_id, $lookup->row['salt'], null, $data->application);
+		$this->model_extension_payment_divido->saveLookup($data->metadata->order_id, $lookup->row['salt'], null, $data->application);
 		$this->model_checkout_order->addOrderHistory($order_id, $status_id, $message, false);
 		$this->response->setOutput('ok');
 	}
 
 	public function confirm() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
 		ini_set('html_errors', 0);
 		if (!$this->session->data['payment_method']['code'] == 'divido') {
 			return false;
 		}
 
-		$this->model_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
 
 		$api_key   = $this->config->get('divido_api_key');
 
@@ -195,7 +195,7 @@ class ControllerPaymentDivido extends Controller {
 			);
 		}
 
-		list($total, $totals) = $this->model_payment_divido->getOrderTotals();
+		list($total, $totals) = $this->model_extension_payment_divido->getOrderTotals();
 
 		$sub_total  = $total;
 		$cart_total = $this->cart->getSubTotal();
@@ -215,12 +215,12 @@ class ControllerPaymentDivido extends Controller {
 			$shop_url = $this->config->get('config_ssl');
 		}
 
-		$callback_url = $this->url->link('payment/divido/update', '', true);
+		$callback_url = $this->url->link('extension/payment/divido/update', '', true);
 		$return_url = $this->url->link('checkout/success', '', true);
 		$checkout_url = $this->url->link('checkout/checkout', '', true);
 
 		$salt = uniqid('', true);
-		$hash = $this->model_payment_divido->hashOrderId($order_id, $salt);
+		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);
 
 		$request_data = array(
 			'merchant' => $api_key,
@@ -254,7 +254,7 @@ class ControllerPaymentDivido extends Controller {
 
 		if ($response->status == 'ok') {
 
-			$this->model_payment_divido->saveLookup($order_id, $salt, $response->id, null, $deposit_amount);
+			$this->model_extension_payment_divido->saveLookup($order_id, $salt, $response->id, null, $deposit_amount);
 
 			$data = array(
 				'status' => 'ok',
@@ -271,15 +271,15 @@ class ControllerPaymentDivido extends Controller {
 	}
 
 	public function calculator($args) {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
-		if (!$this->model_payment_divido->isEnabled()) {
+		if (!$this->model_extension_payment_divido->isEnabled()) {
 			return null;
 		}
 
-		$this->model_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
 
 		$product_selection = $this->config->get('divido_productselection');
 		$price_threshold   = $this->config->get('divido_price_threshold');
@@ -291,7 +291,7 @@ class ControllerPaymentDivido extends Controller {
 			return null;
 		}
 
-		$plans = $this->model_payment_divido->getProductPlans($product_id);
+		$plans = $this->model_extension_payment_divido->getProductPlans($product_id);
 		if (empty($plans)) {
 			return null;
 		}
@@ -319,7 +319,7 @@ class ControllerPaymentDivido extends Controller {
 			'text_monthly_installment' => $this->language->get('text_monthly_installment'),
 		);
 
-		$filename = ($type == 'full') ? 'payment/divido_calculator' : 'payment/divido_widget';
+		$filename = ($type == 'full') ? 'extension/payment/divido_calculator' : 'extension/payment/divido_widget';
 
 		return $this->load->view($filename, $data);
 	}

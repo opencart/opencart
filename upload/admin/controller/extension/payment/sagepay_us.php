@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentSagepayUS extends Controller {
+class ControllerExtensionPaymentSagepayUS extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/sagepay_us');
+		$this->load->language('extension/payment/sagepay_us');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -69,10 +69,10 @@ class ControllerPaymentSagepayUS extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/sagepay_us', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/sagepay_us', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/sagepay_us', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/sagepay_us', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -130,11 +130,11 @@ class ControllerPaymentSagepayUS extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_us', $data));
+		$this->response->setOutput($this->load->view('extension/payment/sagepay_us', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/sagepay_us')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/sagepay_us')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

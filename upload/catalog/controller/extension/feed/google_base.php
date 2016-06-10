@@ -1,5 +1,5 @@
 <?php
-class ControllerFeedGoogleBase extends Controller {
+class ControllerExtensionFeedGoogleBase extends Controller {
 	public function index() {
 		if ($this->config->get('google_base_status')) {
 			$output  = '<?xml version="1.0" encoding="UTF-8" ?>';
@@ -9,7 +9,7 @@ class ControllerFeedGoogleBase extends Controller {
 			$output .= '  <description>' . $this->config->get('config_meta_description') . '</description>';
 			$output .= '  <link>' . $this->config->get('config_url') . '</link>';
 
-			$this->load->model('feed/google_base');
+			$this->load->model('extension/feed/google_base');
 			$this->load->model('catalog/category');
 			$this->load->model('catalog/product');
 
@@ -17,7 +17,7 @@ class ControllerFeedGoogleBase extends Controller {
 
 			$product_data = array();
 
-			$google_base_categories = $this->model_feed_google_base->getCategories();
+			$google_base_categories = $this->model_extension_feed_google_base->getCategories();
 
 			foreach ($google_base_categories as $google_base_category) {
 				$filter_data = array(

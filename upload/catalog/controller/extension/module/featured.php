@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleFeatured extends Controller {
+class ControllerExtensionModuleFeatured extends Controller {
 	public function index($setting) {
-		$this->load->language('module/featured');
+		$this->load->language('extension/module/featured');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -74,7 +74,7 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if ($data['products']) {
-			return $this->load->view('module/featured', $data);
+			return $this->load->view('extension/module/featured', $data);
 		}
 	}
 }

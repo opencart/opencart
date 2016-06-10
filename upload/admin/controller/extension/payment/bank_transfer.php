@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentBankTransfer extends Controller {
+class ControllerExtensionPaymentBankTransfer extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/bank_transfer');
+		$this->load->language('extension/payment/bank_transfer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -68,10 +68,10 @@ class ControllerPaymentBankTransfer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/bank_transfer', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/bank_transfer', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/bank_transfer', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/bank_transfer', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -129,11 +129,11 @@ class ControllerPaymentBankTransfer extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/bank_transfer', $data));
+		$this->response->setOutput($this->load->view('extension/payment/bank_transfer', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/bank_transfer')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/bank_transfer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

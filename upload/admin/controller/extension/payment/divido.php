@@ -1,14 +1,14 @@
 <?php
-class ControllerPaymentDivido extends Controller {
+class ControllerExtensionPaymentDivido extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('payment/divido');
+		$this->load->model('extension/payment/divido');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$this->model_setting_setting->editSetting('divido', $this->request->post);
@@ -84,10 +84,10 @@ class ControllerPaymentDivido extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/divido', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/divido', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('extension/payment/divido', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
 
@@ -179,7 +179,7 @@ class ControllerPaymentDivido extends Controller {
 		}
 
 		try {
-			$data['divido_plans'] = $this->model_payment_divido->getAllPlans();
+			$data['divido_plans'] = $this->model_extension_payment_divido->getAllPlans();
 		} catch (Exception $e) {
 			$this->log->write($e->getMessage());
 			$data['divido_plans'] = array();
@@ -191,7 +191,7 @@ class ControllerPaymentDivido extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/divido', $data));
+		$this->response->setOutput($this->load->view('extension/payment/divido', $data));
 	}
 
 
@@ -200,12 +200,12 @@ class ControllerPaymentDivido extends Controller {
 			return null;
 		}
 
-		$this->load->model('payment/divido');
-		$this->load->language('payment/divido');
+		$this->load->model('extension/payment/divido');
+		$this->load->language('extension/payment/divido');
 
 		$order_id = $this->request->get['order_id'];
 
-		$lookup = $this->model_payment_divido->getLookupByOrderId($order_id);
+		$lookup = $this->model_extension_payment_divido->getLookupByOrderId($order_id);
 		$proposal_id = null;
 		$application_id = null;
 		$deposit_amount = null;
@@ -225,21 +225,21 @@ class ControllerPaymentDivido extends Controller {
 		$data['application_id'] = $application_id;
 		$data['deposit_amount'] = $deposit_amount;
 
-		return $this->load->view('payment/divido_order', $data);
+		return $this->load->view('extension/payment/divido_order', $data);
 	}
 
 	public function install() {
-		$this->load->model('payment/divido');
-		$this->model_payment_divido->install();
+		$this->load->model('extension/payment/divido');
+		$this->model_extension_payment_divido->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/divido');
-		$this->model_payment_divido->uninstall();
+		$this->load->model('extension/payment/divido');
+		$this->model_extension_payment_divido->uninstall();
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/divido')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/divido')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

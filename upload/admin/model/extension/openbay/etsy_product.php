@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEtsyProduct extends Model{
+class ModelExtensionOpenBayEtsyProduct extends Model{
 	public function getStatus($product_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = 1 LIMIT 1");
 

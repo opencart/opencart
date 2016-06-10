@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCarousel extends Controller {
+class ControllerExtensionModuleCarousel extends Controller {
 	public function index($setting) {
 		static $module = 0;
 
@@ -25,6 +25,6 @@ class ControllerModuleCarousel extends Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('module/carousel', $data);
+		return $this->load->view('extension/module/carousel', $data);
 	}
 }

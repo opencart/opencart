@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleSpecial extends Controller {
+class ControllerExtensionModuleSpecial extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/special');
+		$this->load->language('extension/module/special');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -78,19 +78,19 @@ class ControllerModuleSpecial extends Controller {
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('extension/module/special', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
+				'href' => $this->url->link('extension/module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'], true);
+			$data['action'] = $this->url->link('extension/module/special', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+			$data['action'] = $this->url->link('extension/module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
@@ -143,11 +143,11 @@ class ControllerModuleSpecial extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/special', $data));
+		$this->response->setOutput($this->load->view('extension/module/special', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/special')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/special')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

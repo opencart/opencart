@@ -3,7 +3,7 @@ use Cardinity\Client;
 use Cardinity\Method\Payment;
 use Cardinity\Exception as CardinityException;
 
-class ModelPaymentCardinity extends Model {
+class ModelExtensionPaymentCardinity extends Model {
 	public function addOrder($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cardinity_order` SET `order_id` = '" . (int)$data['order_id'] . "', `payment_id` = '" . $this->db->escape($data['payment_id']) . "'");
 	}
@@ -53,7 +53,7 @@ class ModelPaymentCardinity extends Model {
 	}
 
 	public function getMethod($address, $total) {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('cardinity_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 

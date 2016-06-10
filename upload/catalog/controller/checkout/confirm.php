@@ -60,13 +60,13 @@ class ControllerCheckoutConfirm extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array. 
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -81,10 +81,10 @@ class ControllerCheckoutConfirm extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
+					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal($total_data);
+					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
@@ -107,7 +107,11 @@ class ControllerCheckoutConfirm extends Controller {
 			if ($order_data['store_id']) {
 				$order_data['store_url'] = $this->config->get('config_url');
 			} else {
-				$order_data['store_url'] = HTTP_SERVER;
+				if ($this->request->server['HTTPS']) {
+					$order_data['store_url'] = HTTPS_SERVER;
+				} else {
+					$order_data['store_url'] = HTTP_SERVER;
+				}
 			}
 
 			if ($this->customer->isLogged()) {
@@ -416,7 +420,7 @@ class ControllerCheckoutConfirm extends Controller {
 				);
 			}
 
-			$data['payment'] = $this->load->controller('payment/' . $this->session->data['payment_method']['code']);
+			$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
 		} else {
 			$data['redirect'] = $redirect;
 		}

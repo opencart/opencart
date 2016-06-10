@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentAuthorizeNetSim extends Controller {
+class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/authorizenet_sim');
+		$this->load->language('extension/payment/authorizenet_sim');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -78,10 +78,10 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/authorizenet_sim', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/authorizenet_sim', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -103,7 +103,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$data['authorizenet_sim_test'] = $this->config->get('authorizenet_sim_test');
 		}
 
-		$data['callback'] = HTTP_CATALOG . 'index.php?route=payment/authorizenet_sim/callback';
+		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/authorizenet_sim/callback';
 
 		if (isset($this->request->post['authorizenet_sim_md5'])) {
 			$data['authorizenet_sim_md5'] = $this->request->post['authorizenet_sim_md5'];
@@ -153,11 +153,11 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/authorizenet_sim', $data));
+		$this->response->setOutput($this->load->view('extension/payment/authorizenet_sim', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/authorizenet_sim')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/authorizenet_sim')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

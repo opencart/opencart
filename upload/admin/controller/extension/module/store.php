@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleStore extends Controller {
+class ControllerExtensionModuleStore extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/store');
+		$this->load->language('extension/module/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -51,10 +51,10 @@ class ControllerModuleStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/store', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/store', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/store', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/store', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -74,11 +74,11 @@ class ControllerModuleStore extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/store', $data));
+		$this->response->setOutput($this->load->view('extension/module/store', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

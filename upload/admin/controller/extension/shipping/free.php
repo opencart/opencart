@@ -1,9 +1,9 @@
 <?php
-class ControllerShippingFree extends Controller {
+class ControllerExtensionShippingFree extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/free');
+		$this->load->language('extension/shipping/free');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -55,10 +55,10 @@ class ControllerShippingFree extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/free', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping/free', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/free', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/shipping/free', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
@@ -94,11 +94,11 @@ class ControllerShippingFree extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/free', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/free', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/free')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/free')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

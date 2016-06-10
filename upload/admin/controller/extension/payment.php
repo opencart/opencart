@@ -20,11 +20,11 @@ class ControllerExtensionPayment extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'payment/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'payment/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/payment/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/payment/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('payment/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/payment/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionPayment extends Controller {
 			$this->model_extension_extension->uninstall('payment', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('payment/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/payment/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -82,7 +82,7 @@ class ControllerExtensionPayment extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
@@ -91,13 +91,13 @@ class ControllerExtensionPayment extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('payment/' . $extension);
+				$this->load->language('extension/payment/' . $extension);
 
 				$text_link = $this->language->get('text_' . $extension);
 
@@ -115,7 +115,7 @@ class ControllerExtensionPayment extends Controller {
 					'install'   => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('payment/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/payment/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

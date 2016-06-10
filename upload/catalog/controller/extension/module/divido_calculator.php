@@ -1,8 +1,8 @@
 <?php
-class ControllerModuleDividoCalculator extends Controller {
+class ControllerExtensionModuleDividoCalculator extends Controller {
 	public function index() {
-		$this->load->language('module/divido_calculator');
-		$this->load->model('payment/divido');
+		$this->load->language('extension/module/divido_calculator');
+		$this->load->model('extension/payment/divido');
 		$this->load->model('catalog/product');
 
 		$product_selection = $this->config->get('divido_productselection');
@@ -28,8 +28,8 @@ class ControllerModuleDividoCalculator extends Controller {
 		$key_parts = explode('.', $api_key);
 		$js_key = strtolower(array_shift($key_parts));
 
-		$this->model_payment_divido->setMerchant($api_key);
-		$plans = $this->model_payment_divido->getProductPlans($this->request->get['product_id']);
+		$this->model_extension_payment_divido->setMerchant($api_key);
+		$plans = $this->model_extension_payment_divido->getProductPlans($this->request->get['product_id']);
 
 		if (!$plans) {
 			return false;
@@ -60,6 +60,6 @@ class ControllerModuleDividoCalculator extends Controller {
 			'generic_credit_req_error'	=> 'Credit request could not be initiated',
 		);
 
-		return $this->load->view('module/divido_calculator', $data);
+		return $this->load->view('extension/module/divido_calculator', $data);
 	}
 }

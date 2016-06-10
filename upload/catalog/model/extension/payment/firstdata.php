@@ -1,7 +1,7 @@
 <?php
-class ModelPaymentFirstdata extends Model {
+class ModelExtensionPaymentFirstdata extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/firstdata');
+		$this->load->language('extension/payment/firstdata');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('firstdata_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 

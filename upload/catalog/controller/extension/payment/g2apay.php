@@ -1,19 +1,19 @@
 <?php
-class ControllerPaymentG2APay extends Controller {
+class ControllerExtensionPaymentG2APay extends Controller {
 	public function index() {
-		$this->load->language('payment/g2apay');
+		$this->load->language('extension/payment/g2apay');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['action'] = $this->url->link('payment/g2apay/checkout', '', true);
+		$data['action'] = $this->url->link('extension/payment/g2apay/checkout', '', true);
 
-		return $this->load->view('payment/g2apay', $data);
+		return $this->load->view('extension/payment/g2apay', $data);
 	}
 
 	public function checkout() {
 		$this->load->model('checkout/order');
 		$this->load->model('account/order');
-		$this->load->model('payment/g2apay');
+		$this->load->model('extension/payment/g2apay');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -38,10 +38,10 @@ class ControllerPaymentG2APay extends Controller {
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
-				$this->load->model('total/' . $result['code']);
+				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal($total_data);
+				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
@@ -93,25 +93,25 @@ class ControllerPaymentG2APay extends Controller {
 			'currency' => $order_info['currency_code'],
 			'email' => $order_info['email'],
 			'url_failure' => $this->url->link('checkout/failure'),
-			'url_ok' => $this->url->link('payment/g2apay/success'),
+			'url_ok' => $this->url->link('extension/payment/g2apay/success'),
 			'items' => json_encode($items)
 		);
 
-		$response_data = $this->model_payment_g2apay->sendCurl($url, $fields);
+		$response_data = $this->model_extension_payment_g2apay->sendCurl($url, $fields);
 
-		$this->model_payment_g2apay->logger($order_total);
-		$this->model_payment_g2apay->logger($items);
-		$this->model_payment_g2apay->logger($fields);
+		$this->model_extension_payment_g2apay->logger($order_total);
+		$this->model_extension_payment_g2apay->logger($items);
+		$this->model_extension_payment_g2apay->logger($fields);
 
 		if ($response_data === false) {
-			$this->response->redirect($this->url->link('payment/failure', '', true));
+			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
 		}
 
 		if (strtolower($response_data->status) != 'ok') {
-			$this->response->redirect($this->url->link('payment/failure', '', true));
+			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
 		}
 
-		$this->model_payment_g2apay->addG2aOrder($order_info);
+		$this->model_extension_payment_g2apay->addG2aOrder($order_info);
 
 		if ($this->config->get('g2apay_environment') == 1) {
 			$this->response->redirect('https://checkout.pay.g2a.com/index/gateway?token=' . $response_data->token);
@@ -136,11 +136,11 @@ class ControllerPaymentG2APay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->load->model('payment/g2apay');
+			$this->load->model('extension/payment/g2apay');
 
-			$g2apay_order_info = $this->model_payment_g2apay->getG2aOrder($order_id);
+			$g2apay_order_info = $this->model_extension_payment_g2apay->getG2aOrder($order_id);
 
-			$this->model_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);
+			$this->model_extension_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);
 
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('g2apay_order_status_id'));
 		}
@@ -149,19 +149,19 @@ class ControllerPaymentG2APay extends Controller {
 	}
 
 	public function ipn() {
-		$this->load->model('payment/g2apay');
-		$this->model_payment_g2apay->logger('ipn');
+		$this->load->model('extension/payment/g2apay');
+		$this->model_extension_payment_g2apay->logger('ipn');
 
 		if (isset($this->request->get['token']) && hash_equals($this->config->get('g2apay_secret_token'), $this->request->get['token'])) {
-			$this->model_payment_g2apay->logger('token success');
+			$this->model_extension_payment_g2apay->logger('token success');
 
 			if (isset($this->request->post['userOrderId'])) {
-				$g2apay_order = $this->model_payment_g2apay->getG2aOrder($this->request->post['userOrderId']);
+				$g2apay_order = $this->model_extension_payment_g2apay->getG2aOrder($this->request->post['userOrderId']);
 
 				$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . html_entity_decode($this->config->get('g2apay_secret'));
 				$hash = hash('sha256', $string);
 				if($hash != $this->request->post['hash']){
-					$this->model_payment_g2apay->logger('Hashes do not match, possible tampering!');
+					$this->model_extension_payment_g2apay->logger('Hashes do not match, possible tampering!');
 					return;
 				}
 

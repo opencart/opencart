@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleStore extends Controller {
+class ControllerExtensionModuleStore extends Controller {
 	public function index() {
 		$status = true;
 
@@ -10,7 +10,7 @@ class ControllerModuleStore extends Controller {
 		}
 
 		if ($status) {
-			$this->load->language('module/store');
+			$this->load->language('extension/module/store');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -38,7 +38,7 @@ class ControllerModuleStore extends Controller {
 				);
 			}
 
-			return $this->load->view('module/store', $data);
+			return $this->load->view('extension/module/store', $data);
 		}
 	}
 }

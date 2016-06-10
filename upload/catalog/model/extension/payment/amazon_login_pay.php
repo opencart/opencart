@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentAmazonLoginPay extends Model {
+class ModelExtensionPaymentAmazonLoginPay extends Model {
 	public function getCountry($iso2) {
 		return $this->db->query("SELECT `country_id`, `name`, `iso_code_2`, `iso_code_3`, `address_format` FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape(strtoupper($iso2)) . "' AND `status` = 1 LIMIT 1")->row;
 	}
@@ -16,7 +16,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 
 	public function getAddress() {
 		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
-		$address = $this->model_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
+		$address = $this->model_extension_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
 		$xml = simplexml_load_string($address['ResponseBody']);
 		if (isset($xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination)) {
 			return $xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination;

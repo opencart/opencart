@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbayEtsyShipping extends Controller {
+class ControllerExtensionOpenbayEtsyShipping extends Controller {
 	public function getAll() {
 		$response = $this->openbay->etsy->call('v1/etsy/product/shipping/getAllTemplates/', 'GET');
 

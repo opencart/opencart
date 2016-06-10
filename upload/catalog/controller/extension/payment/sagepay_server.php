@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentSagepayServer extends Controller {
+class ControllerExtensionPaymentSagepayServer extends Controller {
 	public function index() {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_card_name'] = $this->language->get('text_card_name');
 		$data['text_card_type'] = $this->language->get('text_card_type');
@@ -19,7 +19,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['button_delete_card'] = $this->language->get('button_delete_card');
 
-		$data['action'] = $this->url->link('payment/sagepay_server/send', '', true);
+		$data['action'] = $this->url->link('extension/payment/sagepay_server/send', '', true);
 
 		if ($this->config->get('sagepay_server_card') == '1') {
 			$data['sagepay_server_card'] = true;
@@ -30,12 +30,12 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['cards'] = array();
 
 		if ($this->customer->isLogged() && $data['sagepay_server_card']) {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
-			$data['cards'] = $this->model_payment_sagepay_server->getCards($this->customer->getId());
+			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
 		}
 
-		return $this->load->view('payment/sagepay_server', $data);
+		return $this->load->view('extension/payment/sagepay_server', $data);
 	}
 
 	public function send() {
@@ -57,7 +57,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		}
 
 		$this->load->model('checkout/order');
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->load->model('account/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -68,7 +68,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
-		$payment_data['NotificationURL'] = $this->url->link('payment/sagepay_server/callback', '', true);
+		$payment_data['NotificationURL'] = $this->url->link('extension/payment/sagepay_server/callback', '', true);
 		$payment_data['TxType'] = $this->config->get('sagepay_server_transaction');
 
 		$payment_data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
@@ -164,7 +164,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$payment_data['StoreToken'] = 1;
 		}
 
-		$response_data = $this->model_payment_sagepay_server->sendCurl($url, $payment_data);
+		$response_data = $this->model_extension_payment_sagepay_server->sendCurl($url, $payment_data);
 
 		$json = array();
 
@@ -178,14 +178,14 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$order_info = array_merge($order_info, $response_data);
 
-			$this->model_payment_sagepay_server->addOrder($order_info);
+			$this->model_extension_payment_sagepay_server->addOrder($order_info);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
 				$recurring_products = $this->cart->getRecurringProducts();
 
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
-					$this->model_payment_sagepay_server->addRecurringPayment($item, $payment_data['VendorTxCode']);
+					$this->model_extension_payment_sagepay_server->addRecurringPayment($item, $payment_data['VendorTxCode']);
 				}
 			}
 		} else {
@@ -198,10 +198,10 @@ class ControllerPaymentSagepayServer extends Controller {
 
 	public function callback() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
-		$success_page = $this->url->link('payment/sagepay_server/success', '', true);
-		$error_page = $this->url->link('payment/sagepay_server/failure', '', true);
+		$success_page = $this->url->link('extension/payment/sagepay_server/success', '', true);
+		$error_page = $this->url->link('extension/payment/sagepay_server/failure', '', true);
 		$end_ln = chr(13) . chr(10);
 
 		if (isset($this->request->post['VendorTxCode'])) {
@@ -334,12 +334,12 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$transaction_info = $this->model_payment_sagepay_server->getOrder($order_id);
+		$transaction_info = $this->model_extension_payment_sagepay_server->getOrder($order_id);
 
-		$this->model_payment_sagepay_server->logger('$order_id', $order_id);
-		$this->model_payment_sagepay_server->logger('$order_info', $order_info);
-		$this->model_payment_sagepay_server->logger('$transaction_info', $transaction_info);
-		$this->model_payment_sagepay_server->logger('$strStatus', $str_status);
+		$this->model_extension_payment_sagepay_server->logger('$order_id', $order_id);
+		$this->model_extension_payment_sagepay_server->logger('$order_info', $order_info);
+		$this->model_extension_payment_sagepay_server->logger('$transaction_info', $transaction_info);
+		$this->model_extension_payment_sagepay_server->logger('$strStatus', $str_status);
 
 		//Check if order we have saved in database maches with callback sagepay does
 		if (!isset($transaction_info['order_id']) || $transaction_info['order_id'] != $order_id) {
@@ -347,7 +347,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			echo "StatusDetail= Order IDs could not be matched. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail', 'Order IDs could not be matched. Order might be tampered with');
+			$this->model_extension_payment_sagepay_server->logger('StatusDetail', 'Order IDs could not be matched. Order might be tampered with');
 
 			exit;
 		}
@@ -370,24 +370,24 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		/** We can now compare our MD5 Hash signature with that from Sage Pay Server * */
 		if ($str_my_signature != $str_vps_signature) {
-			$this->model_payment_sagepay_server->deleteOrder($order_id);
+			$this->model_extension_payment_sagepay_server->deleteOrder($order_id);
 
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail', 'Cannot match the MD5 Hash. Order might be tampered with');
+			$this->model_extension_payment_sagepay_server->logger('StatusDetail', 'Cannot match the MD5 Hash. Order might be tampered with');
 			exit;
 		}
 
 		if (($str_status != "OK" && $str_status != "REGISTERED" && $str_status != "AUTHENTICATED") || !$order_info) {
-			$this->model_payment_sagepay_server->deleteOrder($order_id);
+			$this->model_extension_payment_sagepay_server->deleteOrder($order_id);
 
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Either status invalid or order info was not found.";
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail', 'Either status invalid or order info was not found');
+			$this->model_extension_payment_sagepay_server->logger('StatusDetail', 'Either status invalid or order info was not found');
 			exit;
 		}
 
@@ -406,9 +406,9 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
 
-		$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
+		$this->model_extension_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
 
-		$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
+		$this->model_extension_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
 
 		if (!empty($str_token)) {
 			$data['customer_id'] = $order_info['customer_id'];
@@ -417,7 +417,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$data['CardType'] = $str_card_type;
 			$data['Last4Digits'] = $str_last_4_digits;
 
-			$this->model_payment_sagepay_server->addCard($data);
+			$this->model_extension_payment_sagepay_server->addCard($data);
 		}
 
 		echo "Status=OK" . $end_ln;
@@ -426,18 +426,18 @@ class ControllerPaymentSagepayServer extends Controller {
 
 	public function success() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 		$this->load->model('checkout/recurring');
 
 		if (isset($this->session->data['order_id'])) {
-			$order_details = $this->model_payment_sagepay_server->getOrder($this->session->data['order_id']);
+			$order_details = $this->model_extension_payment_sagepay_server->getOrder($this->session->data['order_id']);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
-				$recurring_products = $this->model_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
+				$recurring_products = $this->model_extension_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
 
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
-					$this->model_payment_sagepay_server->updateRecurringPayment($item, $order_details);
+					$this->model_extension_payment_sagepay_server->updateRecurringPayment($item, $order_details);
 				}
 			}
 
@@ -448,7 +448,7 @@ class ControllerPaymentSagepayServer extends Controller {
 	}
 
 	public function failure() {
-		$this->load->language('payment/sagepay_server');
+		$this->load->language('extension/payment/sagepay_server');
 
 		$this->session->data['error'] = $this->language->get('text_generic_error');
 
@@ -458,9 +458,9 @@ class ControllerPaymentSagepayServer extends Controller {
 	public function delete() {
 		$this->load->language('account/sagepay_server_cards');
 
-		$this->load->model('payment/sagepay_server');
+		$this->load->model('extension/payment/sagepay_server');
 
-		$card = $this->model_payment_sagepay_server->getCard(false, $this->request->post['Token']);
+		$card = $this->model_extension_payment_sagepay_server->getCard(false, $this->request->post['Token']);
 
 		if (!empty($card['token'])) {
 			if ($this->config->get('sagepay_server_test') == 'live') {
@@ -473,9 +473,9 @@ class ControllerPaymentSagepayServer extends Controller {
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 
-			$response_data = $this->model_payment_sagepay_server->sendCurl($url, $payment_data);
+			$response_data = $this->model_extension_payment_sagepay_server->sendCurl($url, $payment_data);
 			if ($response_data['Status'] == 'OK') {
-				$this->model_payment_sagepay_server->deleteCard($card['card_id']);
+				$this->model_extension_payment_sagepay_server->deleteCard($card['card_id']);
 				$this->session->data['success'] = $this->language->get('text_success_card');
 				$json['success'] = true;
 			} else {
@@ -489,13 +489,13 @@ class ControllerPaymentSagepayServer extends Controller {
 
 	public function cron() {
 		if (isset($this->request->get['token']) && hash_equals($this->config->get('sagepay_server_cron_job_token'), $this->request->get['token'])) {
-			$this->load->model('payment/sagepay_server');
+			$this->load->model('extension/payment/sagepay_server');
 
-			$orders = $this->model_payment_sagepay_server->cronPayment();
+			$orders = $this->model_extension_payment_sagepay_server->cronPayment();
 
-			$this->model_payment_sagepay_server->updateCronJobRunTime();
+			$this->model_extension_payment_sagepay_server->updateCronJobRunTime();
 
-			$this->model_payment_sagepay_server->logger('Repeat Orders', $orders);
+			$this->model_extension_payment_sagepay_server->logger('Repeat Orders', $orders);
 		}
 	}
 

@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentWebPaymentSoftware extends Controller {
+class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 	public function index() {
-		$this->load->language('payment/web_payment_software');
+		$this->load->language('extension/payment/web_payment_software');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -34,7 +34,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/web_payment_software', $data);
+		return $this->load->view('extension/payment/web_payment_software', $data);
 	}
 
 	public function send() {

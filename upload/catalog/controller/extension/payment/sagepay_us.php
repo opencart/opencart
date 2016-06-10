@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentSagepayUS extends Controller {
+class ControllerExtensionPaymentSagepayUS extends Controller {
 	public function index() {
-		$this->load->language('payment/sagepay_us');
+		$this->load->language('extension/payment/sagepay_us');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -33,7 +33,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/sagepay_us', $data);
+		return $this->load->view('extension/payment/sagepay_us', $data);
 	}
 
 	public function send() {

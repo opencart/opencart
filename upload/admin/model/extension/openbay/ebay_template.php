@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEbayTemplate extends Model {
+class ModelExtensionOpenBayEbayTemplate extends Model {
 	public function add($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_template` SET `name` = '" . $this->db->escape($data['name']) . "', `html` = '" . $this->db->escape($data['html']) . "'");
 		return $this->db->getLastId();
@@ -24,8 +24,8 @@ class ModelOpenbayEbayTemplate extends Model {
 
 		if ($qry->num_rows) {
 			$row = $qry->row;
-			$row['link_edit'] = $this->url->link('openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
-			$row['link_delete'] = $this->url->link('openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+			$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+			$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
 
 			return $row;
 		}else{
@@ -40,8 +40,8 @@ class ModelOpenbayEbayTemplate extends Model {
 
 		if($qry->num_rows) {
 			foreach($qry->rows as $row) {
-				$row['link_edit'] = $this->url->link('openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
-				$row['link_delete'] = $this->url->link('openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+				$row['link_edit'] = $this->url->link('extension/openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
+				$row['link_delete'] = $this->url->link('extension/openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], true);
 				$templates[] = $row;
 			}
 		}

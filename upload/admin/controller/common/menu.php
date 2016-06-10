@@ -129,12 +129,10 @@ class ControllerCommonMenu extends Controller {
 		
 
 		// Extension
-		$extension_1 = array();
-		
-		$extension_2 = array();
+		$extension = array();
 		
 		if ($this->user->hasPermission('access', 'extension/store')) {		
-			$extension_2[] = array(
+			$extension[] = array(
 				'name'	   => $this->language->get('text_store'),
 				'href'     => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
@@ -142,7 +140,7 @@ class ControllerCommonMenu extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/installer')) {		
-			$extension_2[] = array(
+			$extension[] = array(
 				'name'	   => $this->language->get('text_installer'),
 				'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
@@ -150,25 +148,15 @@ class ControllerCommonMenu extends Controller {
 		}	
 		
 		if ($this->user->hasPermission('access', 'extension/extension')) {		
-			$extension_2[] = array(
+			$extension[] = array(
 				'name'	   => $this->language->get('text_extension'),
 				'href'     => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
 				'children' => array()
 			);
 		}
-		
-		if ($extension_2) {	
-			if ($this->user->hasPermission('access', 'extension/extension')) {		
-				$extension_1[] = array(
-					'name'	   => $this->language->get('text_extension'),
-					'href'     => '',
-					'children' => $extension_2		
-				);
-			}
-		}
-		
+				
 		if ($this->user->hasPermission('access', 'extension/modification')) {
-			$extension_1[] = array(
+			$extension[] = array(
 				'name'	   => $this->language->get('text_modification'),
 				'href'     => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
@@ -176,20 +164,20 @@ class ControllerCommonMenu extends Controller {
 		}
 		
 		if ($this->user->hasPermission('access', 'extension/event')) {
-			$extension_1[] = array(
+			$extension[] = array(
 				'name'	   => $this->language->get('text_event'),
 				'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
 			);
 		}
 				
-		if ($extension_1) {					
+		if ($extension) {					
 			$data['menus'][] = array(
 				'id'       => 'menu-extension',
 				'icon'	   => 'fa-puzzle-piece', 
 				'name'	   => $this->language->get('text_extension'),
 				'href'     => '',
-				'children' => $extension_1
+				'children' => $extension
 			);		
 		}
 		
@@ -220,10 +208,10 @@ class ControllerCommonMenu extends Controller {
 			);	
 		}
 		
-		if ($this->user->hasPermission('access', 'design/translation')) {
+		if ($this->user->hasPermission('access', 'design/language')) {
 			$design[] = array(
 				'name'	   => $this->language->get('text_translation'),
-				'href'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true),
+				'href'     => $this->url->link('design/language', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
 			);	
 		}

@@ -1,11 +1,11 @@
 <?php
-class ControllerModuleLaybuyLayout extends Controller {
+class ControllerExtensionModuleLaybuyLayout extends Controller {
 	private $error = array();
 
 	public function index() {
 		$this->load->model('setting/setting');
 
-		$this->language->load('module/laybuy_layout');
+		$this->language->load('extension/module/laybuy_layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -31,7 +31,7 @@ class ControllerModuleLaybuyLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/laybuy_layout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -51,7 +51,7 @@ class ControllerModuleLaybuyLayout extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('module/laybuy_layout', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -65,11 +65,11 @@ class ControllerModuleLaybuyLayout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/laybuy_layout', $data));
+		$this->response->setOutput($this->load->view('extension/module/laybuy_layout', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/laybuy_layout')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/laybuy_layout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1,9 +1,9 @@
 <?php
-class ControllerTotalKlarnaFee extends Controller {
+class ControllerExtensionTotalKlarnaFee extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/klarna_fee');
+		$this->load->language('extension/total/klarna_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -63,10 +63,10 @@ class ControllerTotalKlarnaFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/klarna_fee', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/klarna_fee', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/klarna_fee', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
@@ -116,11 +116,11 @@ class ControllerTotalKlarnaFee extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/klarna_fee', $data));
+		$this->response->setOutput($this->load->view('extension/total/klarna_fee', $data));
 	}
 
 	private function validate() {
-		if (!$this->user->hasPermission('modify', 'total/klarna_fee')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/klarna_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

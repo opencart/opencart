@@ -20,11 +20,11 @@ class ControllerExtensionAnalytics extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'analytics/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'analytics/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/analytics/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/analytics/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('analytics/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -41,7 +41,7 @@ class ControllerExtensionAnalytics extends Controller {
 			$this->model_extension_extension->uninstall('analytics', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('analytics/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -79,7 +79,7 @@ class ControllerExtensionAnalytics extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -92,26 +92,26 @@ class ControllerExtensionAnalytics extends Controller {
 		
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/analytics/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('analytics/' . $extension);
+				$this->load->language('extension/analytics/' . $extension);
 
 				$store_data = array();
 				
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
+					'edit'   => $this->url->link('extension/analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
 									
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
-						'edit'   => $this->url->link('analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
+						'edit'   => $this->url->link('extension/analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
 						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}

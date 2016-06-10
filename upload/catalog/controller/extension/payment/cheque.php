@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentCheque extends Controller {
+class ControllerExtensionPaymentCheque extends Controller {
 	public function index() {
-		$this->load->language('payment/cheque');
+		$this->load->language('extension/payment/cheque');
 
 		$data['text_instruction'] = $this->language->get('text_instruction');
 		$data['text_payable'] = $this->language->get('text_payable');
@@ -16,12 +16,12 @@ class ControllerPaymentCheque extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/cheque', $data);
+		return $this->load->view('extension/payment/cheque', $data);
 	}
 
 	public function confirm() {
 		if ($this->session->data['payment_method']['code'] == 'cheque') {
-			$this->load->language('payment/cheque');
+			$this->load->language('extension/payment/cheque');
 
 			$this->load->model('checkout/order');
 

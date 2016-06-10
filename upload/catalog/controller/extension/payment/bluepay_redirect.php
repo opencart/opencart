@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentBluePayRedirect extends Controller {
+class ControllerExtensionPaymentBluePayRedirect extends Controller {
 	public function index() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->load->language('extension/payment/bluepay_redirect');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -56,22 +56,22 @@ class ControllerPaymentBluePayRedirect extends Controller {
 
 		$data['existing_cards'] = array();
 		if ($this->customer->isLogged() && $data['bluepay_redirect_card']) {
-			$this->load->model('payment/bluepay_redirect');
+			$this->load->model('extension/payment/bluepay_redirect');
 
-			$cards = $this->model_payment_bluepay_redirect->getCards($this->customer->getId());
+			$cards = $this->model_extension_payment_bluepay_redirect->getCards($this->customer->getId());
 
 			$data['existing_cards'] = $cards;
 		}
 
-		return $this->load->view('payment/bluepay_redirect', $data);
+		return $this->load->view('extension/payment/bluepay_redirect', $data);
 	}
 
 	public function send() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->load->language('extension/payment/bluepay_redirect');
 
 		$this->load->model('checkout/order');
 
-		$this->load->model('payment/bluepay_redirect');
+		$this->load->model('extension/payment/bluepay_redirect');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$post_data = $this->request->post;
@@ -96,9 +96,9 @@ class ControllerPaymentBluePayRedirect extends Controller {
 		$post_data["ORDER_ID"] = $this->session->data['order_id'];
 		$post_data['ZIPCODE'] = substr($order_info['payment_postcode'], 0, 10);
 
-		$post_data['APPROVED_URL'] = $this->url->link('payment/bluepay_redirect/callback', '', true);
-		$post_data['DECLINED_URL'] = $this->url->link('payment/bluepay_redirect/callback', '', true);
-		$post_data['MISSING_URL'] = $this->url->link('payment/bluepay_redirect/callback', '', true);
+		$post_data['APPROVED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', '', true);
+		$post_data['DECLINED_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', '', true);
+		$post_data['MISSING_URL'] = $this->url->link('extension/payment/bluepay_redirect/callback', '', true);
 
 		if (isset($this->request->server["REMOTE_ADDR"])) {
 			$post_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
@@ -108,15 +108,15 @@ class ControllerPaymentBluePayRedirect extends Controller {
 
 		$post_data["TAMPER_PROOF_SEAL"] = md5($tamper_proof_data);
 
-		$response_data = $this->model_payment_bluepay_redirect->sendCurl("https://secure.bluepay.com/interfaces/bp10emu", $post_data);
+		$response_data = $this->model_extension_payment_bluepay_redirect->sendCurl("https://secure.bluepay.com/interfaces/bp10emu", $post_data);
 
 		if ($response_data['Result'] == 'APPROVED') {
-			$bluepay_redirect_order_id = $this->model_payment_bluepay_redirect->addOrder($order_info, $response_data);
+			$bluepay_redirect_order_id = $this->model_extension_payment_bluepay_redirect->addOrder($order_info, $response_data);
 
 			if ($this->config->get('bluepay_redirect_transaction') == 'SALE') {
-				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'payment', $order_info);
+				$this->model_extension_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'payment', $order_info);
 			} else {
-				$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'auth', $order_info);
+				$this->model_extension_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'auth', $order_info);
 			}
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_redirect_order_status_id'));
@@ -133,7 +133,7 @@ class ControllerPaymentBluePayRedirect extends Controller {
 			$card_data['CardType'] = $response_data['CARD_TYPE'];
 			$card_data['Token'] = $response_data['RRNO'];
 
-			$this->model_payment_bluepay_redirect->addCard($card_data);
+			$this->model_extension_payment_bluepay_redirect->addCard($card_data);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

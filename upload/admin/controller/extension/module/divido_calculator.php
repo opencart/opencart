@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleDividoCalculator extends Controller {
+class ControllerExtensionModuleDividoCalculator extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/divido_calculator');
+		$this->load->language('extension/module/divido_calculator');
 		$this->load->model('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -45,10 +45,10 @@ class ControllerModuleDividoCalculator extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/divido_calculator', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/divido_calculator', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/divido_calculator', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/divido_calculator', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -62,11 +62,11 @@ class ControllerModuleDividoCalculator extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/divido_calculator', $data));
+		$this->response->setOutput($this->load->view('extension/module/divido_calculator', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/divido_calculator')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/divido_calculator')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

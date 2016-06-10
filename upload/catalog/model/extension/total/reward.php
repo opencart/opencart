@@ -1,8 +1,8 @@
 <?php
-class ModelTotalReward extends Model {
+class ModelExtensionTotalReward extends Model {
 	public function getTotal($total) {
 		if (isset($this->session->data['reward'])) {
-			$this->load->language('total/reward');
+			$this->load->language('extension/total/reward');
 
 			$points = $this->customer->getRewardPoints();
 
@@ -52,7 +52,7 @@ class ModelTotalReward extends Model {
 	}
 
 	public function confirm($order_info, $order_total) {
-		$this->load->language('total/reward');
+		$this->load->language('extension/total/reward');
 
 		$points = 0;
 

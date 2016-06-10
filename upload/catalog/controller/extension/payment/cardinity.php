@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentCardinity extends Controller {
+class ControllerExtensionPaymentCardinity extends Controller {
 	public function index() {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$data['entry_holder'] = $this->language->get('entry_holder');
 		$data['entry_pan'] = $this->language->get('entry_pan');
@@ -32,14 +32,14 @@ class ControllerPaymentCardinity extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/cardinity', $data);
+		return $this->load->view('extension/payment/cardinity', $data);
 	}
 
 	public function send() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$json = array();
 
@@ -74,7 +74,7 @@ class ControllerPaymentCardinity extends Controller {
 			);
 
 			try {
-				$payment = $this->model_payment_cardinity->createPayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $payment_data);
+				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $payment_data);
 			} catch (Cardinity\Exception\Declined $exception) {
 				$this->failedOrder($this->language->get('error_payment_declined'), $this->language->get('error_payment_declined'));
 
@@ -96,7 +96,7 @@ class ControllerPaymentCardinity extends Controller {
 
 					$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 				} else {
-					$this->model_payment_cardinity->addOrder(array(
+					$this->model_extension_payment_cardinity->addOrder(array(
 						'order_id'   => $this->session->data['order_id'],
 						'payment_id' => $payment->getId()
 					));
@@ -115,7 +115,7 @@ class ControllerPaymentCardinity extends Controller {
 						$json['3ds'] = array(
 							'url'     => $authorization_information->getUrl(),
 							'PaReq'   => $authorization_information->getData(),
-							'TermUrl' => $this->url->link('payment/cardinity/threeDSecureCallback', '', true),
+							'TermUrl' => $this->url->link('extension/payment/cardinity/threeDSecureCallback', '', true),
 							'hash'    => $hash
 						);
 					} elseif ($payment->getStatus() == 'approved') {
@@ -134,9 +134,9 @@ class ControllerPaymentCardinity extends Controller {
 	}
 
 	public function threeDSecureForm() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$success = false;
 		$redirect = false;
@@ -164,13 +164,13 @@ class ControllerPaymentCardinity extends Controller {
 		$data['success'] = $success;
 		$data['redirect'] = $redirect;
 
-		$this->response->setOutput($this->load->view('payment/cardinity_3ds', $data));
+		$this->response->setOutput($this->load->view('extension/payment/cardinity_3ds', $data));
 	}
 
 	public function threeDSecureCallback() {
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$success = false;
 
@@ -184,10 +184,10 @@ class ControllerPaymentCardinity extends Controller {
 		$hash = $this->encryption->encrypt(json_encode($encryption_data));
 
 		if (hash_equals($hash, $this->request->post['MD'])) {
-			$order = $this->model_payment_cardinity->getOrder($encryption_data['order_id']);
+			$order = $this->model_extension_payment_cardinity->getOrder($encryption_data['order_id']);
 
 			if ($order && $order['payment_id']) {
-				$payment = $this->model_payment_cardinity->finalizePayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
+				$payment = $this->model_extension_payment_cardinity->finalizePayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
 
 				if ($payment && $payment->getStatus() == 'approved') {
 					$success = true;
@@ -215,21 +215,21 @@ class ControllerPaymentCardinity extends Controller {
 	private function finalizeOrder($payment) {
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
 		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cardinity_order_status_id'));
 
-		$this->model_payment_cardinity->log($this->language->get('text_payment_success'));
-		$this->model_payment_cardinity->log($payment);
+		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_success'));
+		$this->model_extension_payment_cardinity->log($payment);
 	}
 
 	private function failedOrder($log = null, $alert = null) {
-		$this->load->language('payment/cardinity');
+		$this->load->language('extension/payment/cardinity');
 
-		$this->model_payment_cardinity->log($this->language->get('text_payment_failed'));
+		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_failed'));
 
 		if ($log) {
-			$this->model_payment_cardinity->log($log);
+			$this->model_extension_payment_cardinity->log($log);
 		}
 
 		if ($alert) {
@@ -241,7 +241,7 @@ class ControllerPaymentCardinity extends Controller {
 
 	private function validate() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
 
 		$error = array();
 
@@ -257,7 +257,7 @@ class ControllerPaymentCardinity extends Controller {
 			}
 		}
 
-		if (!in_array($order_info['currency_code'], $this->model_payment_cardinity->getSupportedCurrencies())) {
+		if (!in_array($order_info['currency_code'], $this->model_extension_payment_cardinity->getSupportedCurrencies())) {
 			$error['warning'] = $this->language->get('error_invalid_currency');
 		}
 

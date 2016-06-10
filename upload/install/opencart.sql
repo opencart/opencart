@@ -1385,7 +1385,7 @@ CREATE TABLE `oc_event` (
 --
 
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
-(1, 'voucher', 'catalog/model/checkout/order/addHistory/after', 'total/voucher/send');
+(1, 'voucher', 'catalog/model/checkout/order/addHistory/after', 'extension/total/voucher/send');
 
 -- --------------------------------------------------------
 
@@ -1622,7 +1622,7 @@ CREATE TABLE `oc_language` (
 --
 
 INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en-gb', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+(1, 'English', 'en-gb', 'en-US,en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2101,7 +2101,7 @@ CREATE TABLE `oc_order` (
   `custom_field` text NOT NULL,
   `payment_firstname` varchar(32) NOT NULL,
   `payment_lastname` varchar(32) NOT NULL,
-  `payment_company` varchar(40) NOT NULL,
+  `payment_company` varchar(60) NOT NULL,
   `payment_address_1` varchar(128) NOT NULL,
   `payment_address_2` varchar(128) NOT NULL,
   `payment_city` varchar(128) NOT NULL,

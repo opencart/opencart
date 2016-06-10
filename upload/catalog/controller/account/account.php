@@ -61,11 +61,11 @@ class ControllerAccountAccount extends Controller {
 			$code = basename($file, '.php');
 			
 			if ($this->config->get($code . '_status') && $this->config->get($code)) {
-				$this->load->language('credit_card/' . $code);
+				$this->load->language('extension/credit_card/' . $code);
 
 				$data['credit_cards'][] = array(
 					'name' => $this->language->get('heading_title'),
-					'href' => $this->url->link('credit_card/' . $code, '', true)
+					'href' => $this->url->link('extension/credit_card/' . $code, '', true)
 				);
 			}
 		}

@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleFeatured extends Controller {
+class ControllerExtensionModuleFeatured extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/featured');
+		$this->load->language('extension/module/featured');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -78,19 +78,19 @@ class ControllerModuleFeatured extends Controller {
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/featured', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('extension/module/featured', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/featured', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
+				'href' => $this->url->link('extension/module/featured', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('module/featured', 'token=' . $this->session->data['token'], true);
+			$data['action'] = $this->url->link('extension/module/featured', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('module/featured', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+			$data['action'] = $this->url->link('extension/module/featured', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
@@ -168,11 +168,11 @@ class ControllerModuleFeatured extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/featured', $data));
+		$this->response->setOutput($this->load->view('extension/module/featured', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/featured')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/featured')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

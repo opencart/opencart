@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentAuthorizeNetAim extends Controller {
+class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 	public function index() {
-		$this->load->language('payment/authorizenet_aim');
+		$this->load->language('extension/payment/authorizenet_aim');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_wait'] = $this->language->get('text_wait');
@@ -33,7 +33,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/authorizenet_aim', $data);
+		return $this->load->view('extension/payment/authorizenet_aim', $data);
 	}
 
 	public function send() {

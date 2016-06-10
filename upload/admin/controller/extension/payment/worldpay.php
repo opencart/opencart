@@ -1,10 +1,10 @@
 <?php
-class ControllerPaymentWorldpay extends Controller {
+class ControllerExtensionPaymentWorldpay extends Controller {
 	private $error = array();
 
 	public function index() {
 
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -90,10 +90,10 @@ class ControllerPaymentWorldpay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/worldpay', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/worldpay', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -167,9 +167,9 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['worldpay_secret_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=payment/worldpay/webhook&token=' . $data['worldpay_secret_token'];
+		$data['worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['worldpay_secret_token'];
 
-		$data['worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/worldpay/cron&token=' . $data['worldpay_secret_token'];
+		$data['worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['worldpay_secret_token'];
 
 		if ($this->config->get('worldpay_last_cron_job_run')) {
 			$data['worldpay_last_cron_job_run'] = $this->config->get('worldpay_last_cron_job_run');
@@ -243,31 +243,31 @@ class ControllerPaymentWorldpay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/worldpay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/worldpay', $data));
 	}
 
 	public function install() {
-		$this->load->model('payment/worldpay');
-		$this->model_payment_worldpay->install();
+		$this->load->model('extension/payment/worldpay');
+		$this->model_extension_payment_worldpay->install();
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/worldpay');
-		$this->model_payment_worldpay->uninstall();
+		$this->load->model('extension/payment/worldpay');
+		$this->model_extension_payment_worldpay->uninstall();
 	}
 
 	public function order() {
 
 		if ($this->config->get('worldpay_status')) {
 
-			$this->load->model('payment/worldpay');
+			$this->load->model('extension/payment/worldpay');
 
-			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->get['order_id']);
+			$worldpay_order = $this->model_extension_payment_worldpay->getOrder($this->request->get['order_id']);
 
 			if (!empty($worldpay_order)) {
-				$this->load->language('payment/worldpay');
+				$this->load->language('extension/payment/worldpay');
 
-				$worldpay_order['total_released'] = $this->model_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
+				$worldpay_order['total_released'] = $this->model_extension_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
 
 				$worldpay_order['total_formatted'] = $this->currency->format($worldpay_order['total'], $worldpay_order['currency_code'], false);
 				$worldpay_order['total_released_formatted'] = $this->currency->format($worldpay_order['total_released'], $worldpay_order['currency_code'], false);
@@ -297,31 +297,31 @@ class ControllerPaymentWorldpay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/worldpay_order', $data);
+				return $this->load->view('extension/payment/worldpay_order', $data);
 			}
 		}
 	}
 
 	public function refund() {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/worldpay');
+			$this->load->model('extension/payment/worldpay');
 
-			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->post['order_id']);
+			$worldpay_order = $this->model_extension_payment_worldpay->getOrder($this->request->post['order_id']);
 
-			$refund_response = $this->model_payment_worldpay->refund($this->request->post['order_id'], $this->request->post['amount']);
+			$refund_response = $this->model_extension_payment_worldpay->refund($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_worldpay->logger('Refund result: ' . print_r($refund_response, 1));
+			$this->model_extension_payment_worldpay->logger('Refund result: ' . print_r($refund_response, 1));
 
 			if ($refund_response['status'] == 'success') {
-				$this->model_payment_worldpay->addTransaction($worldpay_order['worldpay_order_id'], 'refund', $this->request->post['amount'] * -1);
+				$this->model_extension_payment_worldpay->addTransaction($worldpay_order['worldpay_order_id'], 'refund', $this->request->post['amount'] * -1);
 
-				$total_refunded = $this->model_payment_worldpay->getTotalRefunded($worldpay_order['worldpay_order_id']);
-				$total_released = $this->model_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
+				$total_refunded = $this->model_extension_payment_worldpay->getTotalRefunded($worldpay_order['worldpay_order_id']);
+				$total_released = $this->model_extension_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
 
-				$this->model_payment_worldpay->updateRefundStatus($worldpay_order['worldpay_order_id'], 1);
+				$this->model_extension_payment_worldpay->updateRefundStatus($worldpay_order['worldpay_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_refund_ok_order');
 				$json['data'] = array();
@@ -344,7 +344,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

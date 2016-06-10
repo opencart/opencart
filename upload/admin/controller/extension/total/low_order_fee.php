@@ -1,9 +1,9 @@
 <?php
-class ControllerTotalLowOrderFee extends Controller {
+class ControllerExtensionTotalLowOrderFee extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/low_order_fee');
+		$this->load->language('extension/total/low_order_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -55,10 +55,10 @@ class ControllerTotalLowOrderFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/low_order_fee', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/low_order_fee', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/low_order_fee', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
@@ -100,11 +100,11 @@ class ControllerTotalLowOrderFee extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/low_order_fee', $data));
+		$this->response->setOutput($this->load->view('extension/total/low_order_fee', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/low_order_fee')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/low_order_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentPayMate extends Controller {
+class ControllerExtensionPaymentPayMate extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/paymate');
+		$this->load->language('extension/payment/paymate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -73,10 +73,10 @@ class ControllerPaymentPayMate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/paymate', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/paymate', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/paymate', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/paymate', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -142,11 +142,11 @@ class ControllerPaymentPayMate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/paymate', $data));
+		$this->response->setOutput($this->load->view('extension/payment/paymate', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/paymate')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/paymate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

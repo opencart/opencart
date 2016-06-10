@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleBanner extends Controller {
+class ControllerExtensionModuleBanner extends Controller {
 	public function index($setting) {
 		static $module = 0;
 
@@ -26,6 +26,6 @@ class ControllerModuleBanner extends Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('module/banner', $data);
+		return $this->load->view('extension/module/banner', $data);
 	}
 }

@@ -1,9 +1,9 @@
 <?php
 
-class ModelPaymentWorldpay extends Model {
+class ModelExtensionPaymentWorldpay extends Model {
 
 	public function getMethod($address, $total) {
-		$this->load->language('payment/worldpay');
+		$this->load->language('extension/payment/worldpay');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('worldpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -103,7 +103,7 @@ class ModelPaymentWorldpay extends Model {
 	public function recurringPayment($item, $order_id_rand, $token) {
 
 		$this->load->model('checkout/recurring');
-		$this->load->model('payment/worldpay');
+		$this->load->model('extension/payment/worldpay');
 		//trial information
 		if ($item['recurring']['trial'] == 1) {
 			$price = $item['recurring']['trial_price'];
@@ -136,11 +136,11 @@ class ModelPaymentWorldpay extends Model {
 			"customerOrderCode" => 'orderRecurring-' . $order_recurring_id
 		);
 
-		$this->model_payment_worldpay->logger($order);
+		$this->model_extension_payment_worldpay->logger($order);
 
-		$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+		$response_data = $this->model_extension_payment_worldpay->sendCurl('orders', $order);
 
-		$this->model_payment_worldpay->logger($response_data);
+		$this->model_extension_payment_worldpay->logger($response_data);
 
 		$next_payment = new DateTime('now');
 		$trial_end = new DateTime('now');
@@ -218,11 +218,11 @@ class ModelPaymentWorldpay extends Model {
 				"customerOrderCode" => 'orderRecurring-' . $profile['order_recurring_id'] . '-repeat-' . $i++
 			);
 
-			$this->model_payment_worldpay->logger($order);
+			$this->model_extension_payment_worldpay->logger($order);
 
-			$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+			$response_data = $this->model_extension_payment_worldpay->sendCurl('orders', $order);
 
-			$this->model_payment_worldpay->logger($response_data);
+			$this->model_extension_payment_worldpay->logger($response_data);
 
 			$cron_data[] = $response_data;
 

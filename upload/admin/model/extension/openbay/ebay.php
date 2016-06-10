@@ -1,9 +1,9 @@
 <?php
-class ModelOpenbayEbay extends Model{
+class ModelExtensionOpenBayEbay extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/before', 'openbay/ebay/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/ebay/eventAddOrderHistory');
 
 		$value                                  = array();
 		$value["ebay_token"]              = '';
@@ -265,7 +265,7 @@ class ModelOpenbayEbay extends Model{
 
 		$has_option = '';
 		if ($this->openbay->addonLoad('openstock') ) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$has_option = '`p`.`has_option`, ';
 		}
 
@@ -307,7 +307,7 @@ class ModelOpenbayEbay extends Model{
 				$data[$row['ebay_item_id']]['options'] = 0;
 
 				if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock')) {
-					$data[$row['ebay_item_id']]['options'] = $this->model_module_openstock->getVariants((int)$row['product_id']);
+					$data[$row['ebay_item_id']]['options'] = $this->model_extension_module_openstock->getVariants((int)$row['product_id']);
 				}
 
 				//get the allocated stock - items that have been bought but not assigned to an order
@@ -447,7 +447,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay_new');
+		$this->load->language('extension/openbay/ebay_new');
 
 		$json = array();
 
@@ -652,9 +652,9 @@ class ModelOpenbayEbay extends Model{
 
 		if (isset($res->row['has_option']) && $res->row['has_option'] == 1) {
 			if ($this->openbay->addonLoad('openstock')) {
-				$this->load->model('module/openstock');
+				$this->load->model('extension/module/openstock');
 				$this->load->model('tool/image');
-				$variant = $this->model_module_openstock->getVariants((int)$id);
+				$variant = $this->model_extension_module_openstock->getVariants((int)$id);
 			} else {
 				$variant = 0;
 			}
@@ -740,10 +740,10 @@ class ModelOpenbayEbay extends Model{
 			$variant_data = array();
 			$this->load->model('tool/image');
 			$this->load->model('catalog/product');
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 
 			//get the options list for this product
-			$options = $this->model_module_openstock->getVariants($product_id);
+			$options = $this->model_extension_module_openstock->getVariants($product_id);
 
 			$variant_data['option_list'] = base64_encode(serialize($options[key($options)]['option_values']));
 
@@ -792,7 +792,7 @@ class ModelOpenbayEbay extends Model{
 				}
 
 
-				$variant_option_values = $this->model_module_openstock->getVariant($opt['product_option_variant_id']);
+				$variant_option_values = $this->model_extension_module_openstock->getVariant($opt['product_option_variant_id']);
 
 				foreach ($variant_option_values as $variant_option_value) {
 					$variant_data['opt'][$k]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);

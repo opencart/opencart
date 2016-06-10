@@ -200,7 +200,7 @@ class ModelUpgrade1004 extends Model {
 							$module_data['status'] = $v['status'];
 							foreach($v['description'] as $language_id => $description) {
 								$module_data['module_description'][$language_id]['title'] = '';
-								$module_data['module_description'][$language_id]['description'] = $description;
+								$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
 							}
 
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");

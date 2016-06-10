@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentPerpetualPayments extends Controller {
+class ControllerExtensionPaymentPerpetualPayments extends Controller {
 	public function index() {
-		$this->load->language('payment/perpetual_payments');
+		$this->load->language('extension/payment/perpetual_payments');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -46,11 +46,11 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/perpetual_payments', $data);
+		return $this->load->view('extension/payment/perpetual_payments', $data);
 	}
 
 	public function send() {
-		$this->load->language('payment/perpetual_payments');
+		$this->load->language('extension/payment/perpetual_payments');
 
 		$this->load->model('checkout/order');
 

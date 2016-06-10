@@ -1,9 +1,9 @@
 <?php
-class ControllerPaymentLiqPay extends Controller {
+class ControllerExtensionPaymentLiqPay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/liqpay');
+		$this->load->language('extension/payment/liqpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -78,10 +78,10 @@ class ControllerPaymentLiqPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/liqpay', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/liqpay', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/liqpay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/liqpay', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -145,11 +145,11 @@ class ControllerPaymentLiqPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/liqpay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/liqpay', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/liqpay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/liqpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

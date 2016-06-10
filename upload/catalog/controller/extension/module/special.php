@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleSpecial extends Controller {
+class ControllerExtensionModuleSpecial extends Controller {
 	public function index($setting) {
-		$this->load->language('module/special');
+		$this->load->language('extension/module/special');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -71,7 +71,7 @@ class ControllerModuleSpecial extends Controller {
 				);
 			}
 
-			return $this->load->view('module/special', $data);
+			return $this->load->view('extension/module/special', $data);
 		}
 	}
 }

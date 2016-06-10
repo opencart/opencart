@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayOpenbay extends Model {
+class ModelExtensionOpenBayOpenbay extends Model {
 	private $url = 'https://account.openbaypro.com/';
 	private $error;
 
@@ -456,14 +456,14 @@ class ModelOpenbayOpenbay extends Model {
 					 * Run the patch files
 					 */
 					$this->patch(false);
-					$this->load->model('openbay/ebay');
-					$this->model_openbay_ebay->patch();
-					$this->load->model('openbay/amazon');
-					$this->model_openbay_amazon->patch();
-					$this->load->model('openbay/amazonus');
-					$this->model_openbay_amazonus->patch();
-					$this->load->model('openbay/etsy');
-					$this->model_openbay_etsy->patch();
+					$this->load->model('extension/openbay/ebay');
+					$this->model_extension_openbay_ebay->patch();
+					$this->load->model('extension/openbay/amazon');
+					$this->model_extension_openbay_amazon->patch();
+					$this->load->model('extension/openbay/amazonus');
+					$this->model_extension_openbay_amazonus->patch();
+					$this->load->model('extension/openbay/etsy');
+					$this->model_extension_openbay_etsy->patch();
 
 					/**
 					 * File remove operation (clean up old files)

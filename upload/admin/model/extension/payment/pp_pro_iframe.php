@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPPProIframe extends Model {
+class ModelExtensionPaymentPPProIframe extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order` (

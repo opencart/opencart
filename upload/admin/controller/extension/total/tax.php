@@ -1,9 +1,9 @@
 <?php
-class ControllerTotalTax extends Controller {
+class ControllerExtensionTotalTax extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/tax');
+		$this->load->language('extension/total/tax');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -49,10 +49,10 @@ class ControllerTotalTax extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('total/tax', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/total/tax', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('total/tax', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/total/tax', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
@@ -72,11 +72,11 @@ class ControllerTotalTax extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/tax', $data));
+		$this->response->setOutput($this->load->view('extension/total/tax', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'total/tax')) {
+		if (!$this->user->hasPermission('modify', 'extension/total/tax')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

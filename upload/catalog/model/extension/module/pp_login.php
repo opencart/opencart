@@ -1,5 +1,5 @@
 <?php
-class ModelModulePPLogin extends Model {
+class ModelExtensionModulePPLogin extends Model {
 	public function getTokens($code) {
 		if ($this->config->get('pp_login_sandbox')) {
 			$endpoint = 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice';
@@ -10,7 +10,7 @@ class ModelModulePPLogin extends Model {
 		$request  = '';
 		$request .= 'grant_type=authorization_code';
 		$request .= '&code=' . $code;
-		$request .= '&redirect_uri=' . urlencode($this->url->link('module/pp_login/login', '', true));
+		$request .= '&redirect_uri=' . urlencode($this->url->link('extension/module/pp_login/login', '', true));
 
 		$additional_opts = array(
 			CURLOPT_USERPWD    => $this->config->get('pp_login_client_id') . ':' . $this->config->get('pp_login_secret'),

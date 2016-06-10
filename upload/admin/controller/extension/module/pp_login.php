@@ -1,9 +1,9 @@
 <?php
-class ControllerModulePPLogin extends Controller {
+class ControllerExtensionModulePPLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/pp_login');
+		$this->load->language('extension/module/pp_login');
 
 		$this->load->model('setting/setting');
 
@@ -82,10 +82,10 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pp_login', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pp_login', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -283,7 +283,7 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/pp_login/login';
 
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
@@ -295,11 +295,11 @@ class ControllerModulePPLogin extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_login', $data));
+		$this->response->setOutput($this->load->view('extension/module/pp_login', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pp_login')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pp_login')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -317,7 +317,7 @@ class ControllerModulePPLogin extends Controller {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'module/pp_login/logout');
+		$this->model_extension_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'extension/module/pp_login/logout');
 	}
 
 	public function uninstall() {

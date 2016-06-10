@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentAuthorizeNetSim extends Controller {
+class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 	public function index() {
-		$this->load->language('payment/authorizenet_sim');
+		$this->load->language('extension/payment/authorizenet_sim');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -43,7 +43,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 
 		$data['x_fp_hash'] = hash_hmac('md5', $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'], $this->config->get('authorizenet_sim_transaction_key'));
 
-		return $this->load->view('payment/authorizenet_sim', $data);
+		return $this->load->view('extension/payment/authorizenet_sim', $data);
 	}
 
 	public function callback() {

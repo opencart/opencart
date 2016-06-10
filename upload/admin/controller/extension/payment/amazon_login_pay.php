@@ -1,17 +1,18 @@
 <?php
-class ControllerPaymentAmazonLoginPay extends Controller {
+
+class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	private $error = array();
 
 	public function index() {
 
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('amazon_login_pay', $this->request->post);
@@ -152,10 +153,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/amazon_login_pay', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
@@ -272,7 +273,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_ipn_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login_pay/ipn&token=' . $data['amazon_login_pay_ipn_token'];
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/amazon_login_pay/ipn&token=' . $data['amazon_login_pay_ipn_token'];
 
 		if (isset($this->request->post['amazon_login_pay_minimum_total'])) {
 			$data['amazon_login_pay_minimum_total'] = $this->request->post['amazon_login_pay_minimum_total'];
@@ -368,21 +369,21 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay', $data));
+		$this->response->setOutput($this->load->view('extension/payment/amazon_login_pay', $data));
 	}
 
 	public function install() {
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('extension/event');
-		$this->model_payment_amazon_login_pay->install();
-		$this->model_extension_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'payment/amazon_login_pay/capture');
-		$this->model_extension_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'payment/amazon_login_pay/capture');
+		$this->model_extension_payment_amazon_login_pay->install();
+		$this->model_extension_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'extension/payment/amazon_login_pay/capture');
+		$this->model_extension_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/payment/amazon_login_pay/capture');
 	}
 
 	public function uninstall() {
-		$this->load->model('payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 		$this->load->model('extension/event');
-		$this->model_payment_amazon_login_pay->uninstall();
+		$this->model_extension_payment_amazon_login_pay->uninstall();
 		$this->model_extension_event->deleteEvent('amazon_edit_capture');
 		$this->model_extension_event->deleteEvent('amazon_history_capture');
 	}
@@ -391,15 +392,15 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		if ($this->config->get('amazon_login_pay_status')) {
 
-			$this->load->model('payment/amazon_login_pay');
+			$this->load->model('extension/payment/amazon_login_pay');
 
-			$amazon_login_pay_order = $this->model_payment_amazon_login_pay->getOrder($this->request->get['order_id']);
+			$amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrder($this->request->get['order_id']);
 
 			if (!empty($amazon_login_pay_order)) {
 
-				$this->load->language('payment/amazon_login_pay');
+				$this->load->language('extension/payment/amazon_login_pay');
 
-				$amazon_login_pay_order['total_captured'] = $this->model_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
+				$amazon_login_pay_order['total_captured'] = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
 
 				$amazon_login_pay_order['total_formatted'] = $this->currency->format($amazon_login_pay_order['total'], $amazon_login_pay_order['currency_code'], true, true);
 				$amazon_login_pay_order['total_captured_formatted'] = $this->currency->format($amazon_login_pay_order['total_captured'], $amazon_login_pay_order['currency_code'], true, true);
@@ -434,27 +435,27 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/amazon_login_pay_order', $data);
+				return $this->load->view('extension/payment/amazon_login_pay_order', $data);
 			}
 		}
 	}
 
 	public function cancel() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
-			$this->load->model('payment/amazon_login_pay');
+			$this->load->model('extension/payment/amazon_login_pay');
 
-			$amazon_login_pay_order = $this->model_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
+			$amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
 
-			$cancel_response = $this->model_payment_amazon_login_pay->cancel($amazon_login_pay_order);
+			$cancel_response = $this->model_extension_payment_amazon_login_pay->cancel($amazon_login_pay_order);
 
-			$this->model_payment_amazon_login_pay->logger($cancel_response);
+			$this->model_extension_payment_amazon_login_pay->logger($cancel_response);
 
 			if ($cancel_response['status'] == 'Completed') {
-				$this->model_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'cancel', $cancel_response['status'], 0.00);
-				$this->model_payment_amazon_login_pay->updateCancelStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
+				$this->model_extension_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'cancel', $cancel_response['status'], 0.00);
+				$this->model_extension_payment_amazon_login_pay->updateCancelStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
 				$json['msg'] = $this->language->get('text_cancel_ok');
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
@@ -475,25 +476,25 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
-			$this->load->model('payment/amazon_login_pay');
+			$this->load->model('extension/payment/amazon_login_pay');
 
-			$amazon_login_pay_order = $this->model_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
+			$amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
 
-			$capture_response = $this->model_payment_amazon_login_pay->capture($amazon_login_pay_order, $this->request->post['amount']);
-			$this->model_payment_amazon_login_pay->logger($capture_response);
+			$capture_response = $this->model_extension_payment_amazon_login_pay->capture($amazon_login_pay_order, $this->request->post['amount']);
+			$this->model_extension_payment_amazon_login_pay->logger($capture_response);
 
 			if ($capture_response['status'] == 'Completed' || $capture_response['status'] == 'Pending') {
-				$this->model_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'capture', $capture_response['status'], $this->request->post['amount'], $capture_response['AmazonAuthorizationId'], $capture_response['AmazonCaptureId']);
+				$this->model_extension_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'capture', $capture_response['status'], $this->request->post['amount'], $capture_response['AmazonAuthorizationId'], $capture_response['AmazonCaptureId']);
 
-				$total_captured = $this->model_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
+				$total_captured = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
 
 				if ($total_captured >= (double)$amazon_login_pay_order['total']) {
-					$this->model_payment_amazon_login_pay->closeOrderRef($amazon_login_pay_order['amazon_order_reference_id']);
-					$this->model_payment_amazon_login_pay->updateCaptureStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
+					$this->model_extension_payment_amazon_login_pay->closeOrderRef($amazon_login_pay_order['amazon_order_reference_id']);
+					$this->model_extension_payment_amazon_login_pay->updateCaptureStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
 				} else {
@@ -524,17 +525,17 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
-			$this->load->model('payment/amazon_login_pay');
+			$this->load->model('extension/payment/amazon_login_pay');
 
-			$amazon_login_pay_order = $this->model_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
+			$amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrder($this->request->post['order_id']);
 
-			$refund_response = $this->model_payment_amazon_login_pay->refund($amazon_login_pay_order, $this->request->post['amount']);
+			$refund_response = $this->model_extension_payment_amazon_login_pay->refund($amazon_login_pay_order, $this->request->post['amount']);
 
-			$this->model_payment_amazon_login_pay->logger($refund_response);
+			$this->model_extension_payment_amazon_login_pay->logger($refund_response);
 
 			$refund_status = '';
 			$total_captured = '';
@@ -542,13 +543,13 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			foreach ($refund_response as $response) {
 				if ($response['status'] == 'Pending') {
-					$this->model_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'refund', $response['status'], $response['amount'] * -1, $response['amazon_authorization_id'], $response['amazon_capture_id'], $response['AmazonRefundId']);
+					$this->model_extension_payment_amazon_login_pay->addTransaction($amazon_login_pay_order['amazon_login_pay_order_id'], 'refund', $response['status'], $response['amount'] * -1, $response['amazon_authorization_id'], $response['amazon_capture_id'], $response['AmazonRefundId']);
 
-					$total_refunded = $this->model_payment_amazon_login_pay->getTotalRefunded($amazon_login_pay_order['amazon_login_pay_order_id']);
-					$total_captured = $this->model_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
+					$total_refunded = $this->model_extension_payment_amazon_login_pay->getTotalRefunded($amazon_login_pay_order['amazon_login_pay_order_id']);
+					$total_captured = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
 
 					if ($total_captured <= 0 && $amazon_login_pay_order['capture_status'] == 1) {
-						$this->model_payment_amazon_login_pay->updateRefundStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
+						$this->model_extension_payment_amazon_login_pay->updateRefundStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
 						$refund_status = 1;
 						$json['msg'][] = $this->language->get('text_refund_ok_order') . '<br />';
 					} else {
@@ -583,7 +584,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	protected function validate() {
 		$this->load->model('localisation/currency');
 
-		if (!$this->user->hasPermission('modify', 'payment/amazon_login_pay')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/amazon_login_pay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -596,8 +597,8 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if (empty($this->error)) {
-			$this->load->model('payment/amazon_login_pay');
-			$errors = $this->model_payment_amazon_login_pay->validateDetails($this->request->post);
+			$this->load->model('extension/payment/amazon_login_pay');
+			$errors = $this->model_extension_payment_amazon_login_pay->validateDetails($this->request->post);
 			if (isset($errors['error_code']) && $errors['error_code'] == 'InvalidParameterValue') {
 				$this->error['error_merchant_id'] = $errors['status_detail'];
 			} elseif (isset($errors['error_code']) && $errors['error_code'] == 'InvalidAccessKeyId') {

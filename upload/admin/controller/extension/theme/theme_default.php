@@ -1,9 +1,9 @@
 <?php
-class ControllerThemeThemeDefault extends Controller {
+class ControllerExtensionThemeThemeDefault extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('theme/theme_default');
+		$this->load->language('extension/theme/theme_default');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -142,10 +142,10 @@ class ControllerThemeThemeDefault extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
+			'href' => $this->url->link('extension/theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
 		);
 
-		$data['action'] = $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
+		$data['action'] = $this->url->link('extension/theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=theme', true);
 
@@ -357,11 +357,11 @@ class ControllerThemeThemeDefault extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('theme/theme_default', $data));
+		$this->response->setOutput($this->load->view('extension/theme/theme_default', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'theme/theme_default')) {
+		if (!$this->user->hasPermission('modify', 'extension/theme/theme_default')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1232,15 +1232,15 @@ class ControllerSaleOrder extends Controller {
 			// Additional Tabs
 			$data['tabs'] = array();
 
-			if ($this->user->hasPermission('access', 'payment/' . $order_info['payment_code'])) {
-				if (is_file(DIR_CATALOG . 'controller/payment/' . $order_info['payment_code'] . '.php')) {
-					$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
+			if ($this->user->hasPermission('access', 'extension/payment/' . $order_info['payment_code'])) {
+				if (is_file(DIR_CATALOG . 'controller/extension/payment/' . $order_info['payment_code'] . '.php')) {
+					$content = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/order');
 				} else {
 					$content = null;
 				}
 
 				if ($content) {
-					$this->load->language('payment/' . $order_info['payment_code']);
+					$this->load->language('extension/payment/' . $order_info['payment_code']);
 
 					$data['tabs'][] = array(
 						'code'    => $order_info['payment_code'],
@@ -1256,9 +1256,9 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
-					$this->load->language('fraud/' . $extension);
+					$this->load->language('extension/fraud/' . $extension);
 
-					$content = $this->load->controller('fraud/' . $extension . '/order');
+					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 
 					if ($content) {
 						$data['tabs'][] = array(

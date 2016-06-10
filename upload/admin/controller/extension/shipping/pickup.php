@@ -1,9 +1,9 @@
 <?php
-class ControllerShippingPickup extends Controller {
+class ControllerExtensionShippingPickup extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/pickup');
+		$this->load->language('extension/shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -52,10 +52,10 @@ class ControllerShippingPickup extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping/pickup', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/shipping/pickup', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
@@ -85,11 +85,11 @@ class ControllerShippingPickup extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('shipping/pickup', $data));
+		$this->response->setOutput($this->load->view('extension/shipping/pickup', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'shipping/pickup')) {
+		if (!$this->user->hasPermission('modify', 'extension/shipping/pickup')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

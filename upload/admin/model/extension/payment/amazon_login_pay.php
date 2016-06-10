@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentAmazonLoginPay extends Model {
+class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function install() {
 		$this->db->query("

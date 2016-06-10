@@ -76,6 +76,9 @@
                   </tfoot>
                 </table>
               </div>
+              <div class="pull-right">
+                <button type="button" id="button-save" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
+              </div>
             </fieldset>
           </div>
         </div>
@@ -184,9 +187,15 @@ $('#path').on('click', 'a.file',function(e) {
 			if (json['translation']) {
 				html = '';
 				
+				html = '<option value=""></option>';
+				
+				
+				
 				for (i = 0; i < json['translation'].length; i++) {
+					
+					
 					html += '<tr>';
-					html += '  <td>' + json['translation'][i]['key'] + '</td>';
+					html += '  <td><select>' + json['translation'][i]['key'] + '</select></td>';
 					html += '  <td><textarea name="" rows="5" placeholder="<?php echo $entry_value; ?>" class="form-control">' + json['translation'][i]['value'] + '</textarea></td>';
 					html += '  <td><button type="button" onclick="$(this).parent().parent().remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';

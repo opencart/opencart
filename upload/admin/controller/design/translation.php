@@ -173,24 +173,14 @@ class ControllerDesignTranslation extends Controller {
 					
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 		
-		$path = str_replace('\\', '/', realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path . '.php'));
+		$directory = DIR_CATALOG . 'language/';
 		
-		if ($language_info && is_file($directory . $language_info['code'] . '/' . $path . '.php') && (substr($path, 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
-
-
-
-			$directory = DIR_CATALOG . 'language/';
-			
-			if ( && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
-				$_ = array();
+		if ($language_info && is_file($directory . $language_info['code'] . '/' . $path . '.php') && (substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
+			$_ = array();
 						
-				include($directory . $language_info['code'] . '/' . $path . '.php');	
-				
-				if (isset($_[$key])) {
-					$json['key'] = $_[$key];
-				}
-			}			
+			include($directory . $language_info['code'] . '/' . $path . '.php');	
 
+			$json['key'] = $_[$key];
 					
 			$this->load->model('design/translation');
 				

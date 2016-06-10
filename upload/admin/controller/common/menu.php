@@ -208,10 +208,10 @@ class ControllerCommonMenu extends Controller {
 			);	
 		}
 		
-		if ($this->user->hasPermission('access', 'design/translation')) {
+		if ($this->user->hasPermission('access', 'design/language')) {
 			$design[] = array(
 				'name'	   => $this->language->get('text_translation'),
-				'href'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true),
+				'href'     => $this->url->link('design/language', 'token=' . $this->session->data['token'], true),
 				'children' => array()		
 			);	
 		}

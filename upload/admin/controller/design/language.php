@@ -1,9 +1,9 @@
 <?php
-class ControllerDesignTranslation extends Controller {
+class ControllerDesignLanguage extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('design/translation');
+		$this->load->language('design/language');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -29,12 +29,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_value'] = $this->language->get('entry_value');
-
 		$data['button_save'] = $this->language->get('button_save');
-		$data['button_translation_add'] = $this->language->get('button_translation_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 		
 		$data['token'] = $this->session->data['token'];
 		
@@ -70,7 +65,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/translation', $data));
+		$this->response->setOutput($this->load->view('design/language', $data));
 	}
 	
 	public function path() {
@@ -96,7 +91,7 @@ class ControllerDesignTranslation extends Controller {
 			$path = '';
 		}
 
-		$this->load->model('design/translation');
+		$this->load->model('design/language');
 
 		$this->load->model('localisation/language');
 					
@@ -119,7 +114,7 @@ class ControllerDesignTranslation extends Controller {
 						}
 						
 						if (is_file($file) && (substr($file, -4) == '.php')) {
-							$translation_total = $this->model_design_translation->getTotalTranslations($store_id, $language_id, trim($path . '/' . basename($file, '.php'), '/'));
+							$translation_total = $this->model_design_language->getTotalTranslations($store_id, $language_id, trim($path . '/' . basename($file, '.php'), '/'));
 							
 							$json['file'][] = array(
 								'name' => basename($file, '.php') . ' (' . $translation_total . ')',
@@ -145,9 +140,11 @@ class ControllerDesignTranslation extends Controller {
 	}
 	
 	public function translation() {
-		$this->load->language('design/translation');
-		
-		$json = array();
+		$this->load->language('design/language');
+
+		$data['entry_key'] = $this->language->get('entry_key');
+		$data['entry_default'] = $this->language->get('entry_default');
+		$data['entry_value'] = $this->language->get('entry_value');
 		
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];			
@@ -166,8 +163,8 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$path = '';
 		}	
-					
-		$json['translation'] = array();
+		
+		$data['translations'] = array();
 		
 		$this->load->model('localisation/language');
 					
@@ -176,23 +173,34 @@ class ControllerDesignTranslation extends Controller {
 		$directory = DIR_CATALOG . 'language/';
 		
 		if ($language_info && is_file($directory . $language_info['code'] . '/' . $path . '.php') && (substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
+			$translation_data = array();
+			
+			$this->load->model('design/language');
+					
+			$results = $this->model_design_language->getTranslations($store_id, $language_id, $path);
+		
+			foreach ($results as $result) {
+				$translation_data[$result['key']] = $result['value'];
+			}			
+			
 			$_ = array();
 						
 			include($directory . $language_info['code'] . '/' . $path . '.php');	
-
-			$json['key'] = $_[$key];
-					
-			$this->load->model('design/translation');
+			
+			foreach ($_ as $key => $value) {
 				
-			$results = $this->model_design_translation->getTranslations($store_id, $language_id, $path);
-	
-			foreach ($results as $result) { 
-				$json['translation'][] = $result;
+				
+				$data['translations'][] = array(
+					'key'     => $key,
+					'default' => $value,
+					'value'   => $key
+				);
 			}
 		}
+		
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+		$this->response->setOutput($this->load->view('design/language_translation', $data));
 	}		
 	
 	public function save() {

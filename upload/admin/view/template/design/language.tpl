@@ -55,31 +55,9 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <fieldset>
-              <legend>Translation Overrides</legend>
-              <div class="table-responsive">
-                <table id="translation" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td><?php echo $entry_key; ?></td>
-                      <td><?php echo $entry_value; ?></td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addTranslation();" data-toggle="tooltip" title="<?php echo $button_translation_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <div class="pull-right">
-                <button type="button" id="button-save" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
-              </div>
-            </fieldset>
+    
+              <div id="translation"></div>
+
           </div>
         </div>
       </div>
@@ -88,7 +66,7 @@
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"] option:selected').val() + '&language_id=' + $('select[name="language_id"]').val(),
+		url: 'index.php?route=design/language/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -127,7 +105,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=design/translation/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/language/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -153,7 +131,7 @@ $('#path').on('click', 'a.directory', function(e) {
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-left fa-fw pull-right"></i></a>';
 			}
 
 			$('#path').html(html);
@@ -171,8 +149,8 @@ $('#path').on('click', 'a.file',function(e) {
 	
 	// Check if the file has an extension
 	$.ajax({
-		url: 'index.php?route=design/translation/translation&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
-		dataType: 'json',
+		url: 'index.php?route=design/language/translation&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		dataType: 'html',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
 			$(node).find('i').addClass('fa-circle-o-notch fa-spin');
@@ -181,31 +159,8 @@ $('#path').on('click', 'a.file',function(e) {
 			$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
 			$(node).find('i').addClass('fa-arrow-right');
 		},
-		success: function(json) {
-			console.log(json);
-			
-			if (json['translation']) {
-				html = '';
-				
-				html = '<option value=""></option>';
-				
-				
-				
-				for (i = 0; i < json['translation'].length; i++) {
-					
-					
-					html += '<tr>';
-					html += '  <td><select>' + json['translation'][i]['key'] + '</select></td>';
-					html += '  <td><textarea name="" rows="5" placeholder="<?php echo $entry_value; ?>" class="form-control">' + json['translation'][i]['value'] + '</textarea></td>';
-					html += '  <td><button type="button" onclick="$(this).parent().parent().remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-minus-circle"></i></button></td>';
-					html += '</tr>';
-				}
-				
-				$('#translation tbody').html(html);
-				
-				$('#code').show();
-				$('#warning').hide();				
-			}
+		success: function(html) {
+			$('#translation').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -213,38 +168,13 @@ $('#path').on('click', 'a.file',function(e) {
 	});
 });
 
-$('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
-	e.preventDefault();
-
-	if ($(this).parent().parent().is('li.active')) {
-		index = $(this).parent().parent().index();
-
-		if (index == 0) {
-			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
-		} else {
-			$(this).parent().parent().parent().find('li').eq(index - 1).find('a').tab('show');
-		}
-	}
-
-	$(this).parent().parent().remove();
-
-	$($(this).parent().attr('href')).remove();
-
-	if (!$('#code > ul > li').length) {
-		$('#code').hide();
-		$('#warning').show();
-	}
-});
-
 $('.tab-content').on('click', '.btn-primary', function(e) {
 	var node = this;
-
-	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/language/save&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
-		data: 'code=' + encodeURIComponent(editor.getValue()),
+		data: $('#translation input'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');

@@ -242,7 +242,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active select[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',
@@ -274,7 +274,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active select[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');

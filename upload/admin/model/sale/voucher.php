@@ -33,10 +33,8 @@ class ModelSaleVoucher extends Model {
 		$sort_data = array(
 			'v.code',
 			'v.from_name',
-			'v.from_email',
 			'v.to_name',
-			'v.to_email',
-			'v.theme',
+			'theme',
 			'v.amount',
 			'v.status',
 			'v.date_added'

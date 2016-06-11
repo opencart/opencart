@@ -173,9 +173,9 @@ class ControllerSaleVoucher extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['order_id']) {	
-				$order = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true);
+				$order_href = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true);
 			} else {
-				$order = '';
+				$order_href = '';
 			}
 			
 			$data['vouchers'][] = array(
@@ -188,7 +188,7 @@ class ControllerSaleVoucher extends Controller {
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, true),
-				'order'      => $order
+				'order'      => $order_href
 			);
 		}
 

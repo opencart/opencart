@@ -147,7 +147,7 @@ class ControllerSaleRecurring extends Controller {
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
 				'reference'          => $result['reference'],
-				'customer'           => $result['firstname'] . ' ' . $result['lastname'],
+				'customer'           => $result['customer'],
 				'status'             => $status,
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'view'               => $this->url->link('sale/recurring/info', 'token=' . $this->session->data['token'] . '&order_recurring_id=' . $result['order_recurring_id'] . $url, true),

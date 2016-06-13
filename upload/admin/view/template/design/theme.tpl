@@ -133,7 +133,7 @@ $('#path').on('click', 'a.directory', function(e) {
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-left fa-fw pull-right"></i></a>';
 			}
 
 			$('#path').html(html);

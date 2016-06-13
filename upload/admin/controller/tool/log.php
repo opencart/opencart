@@ -89,14 +89,24 @@ class ControllerToolLog extends Controller {
 	}
 
 	public function download() {
-		$this->response->addheader('Pragma: public');
-		$this->response->addheader('Expires: 0');
-		$this->response->addheader('Content-Description: File Transfer');
-		$this->response->addheader('Content-Type: application/octet-stream');
-		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
-		$this->response->addheader('Content-Transfer-Encoding: binary');
+		$this->load->language('tool/log');
 
-		$this->response->setOutput(file_get_contents(DIR_LOGS . $this->config->get('config_error_filename'), FILE_USE_INCLUDE_PATH, null));
+		$file = DIR_LOGS . $this->config->get('config_error_filename');
+
+		if (file_exists($file) && filesize($file) > 0) {
+			$this->response->addheader('Pragma: public');
+			$this->response->addheader('Expires: 0');
+			$this->response->addheader('Content-Description: File Transfer');
+			$this->response->addheader('Content-Type: application/octet-stream');
+			$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
+			$this->response->addheader('Content-Transfer-Encoding: binary');
+
+			$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		} else {
+			$this->session->data['error'] = sprintf($this->language->get('error_warning'), basename($file), '0B');
+
+			$this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->data['token'], true));
+		}
 	}
 	
 	public function clear() {

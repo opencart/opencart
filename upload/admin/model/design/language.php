@@ -1,6 +1,6 @@
 <?php
 class ModelDesignLanguage extends Model {
-	public function editLanguage($store_id, $language_id, $route, $data) {
+	public function editTranslation($store_id, $language_id, $route, $data) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "translation  WHERE route = '" . $this->db->escape($route) . "'");
 
 		if (isset($data['translation'])) {

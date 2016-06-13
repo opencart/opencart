@@ -168,7 +168,7 @@ $('#path').on('click', 'a.file',function(e) {
 	});
 });
 
-$('.tab-content').on('click', '.btn-primary', function(e) {
+$('#translation').on('click', '#button-save', function(e) {
 	var node = this;
 				
 	$.ajax({

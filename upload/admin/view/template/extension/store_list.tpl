@@ -23,6 +23,7 @@
             <div class="input-group-btn">
 
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
+              
               <ul class="dropdown-menu">
                 <li class="dropdown-header">License</li>
                 <li><a href="">License</a></li>
@@ -31,6 +32,7 @@
               </ul>
 
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
+              
               <ul class="dropdown-menu">
                 <li><a href="">All Categories</a></li>
                 <li><a href="theme"><?php echo $text_theme; ?></a></li>
@@ -42,7 +44,8 @@
                 <li><a href="report"><?php echo $text_report; ?></a></li>
                 <li><a href="other"><?php echo $text_other; ?></a></li>
               </ul>
-              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
+              
+              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
 
             </div>
           </div>
@@ -56,12 +59,10 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').bind('click', function(e) {
-	e.perventDefault();
-
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=extension/extension/' + $(this).val() + '&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/store/' + $(this).val() + '&token=<?php echo $token; ?>',
 		dataType: 'html',
 		beforeSend: function() {
 			$(node).prop('disabled', true);

@@ -1,21 +1,9 @@
 <?php $translation_rows = 0; ?>
 <?php foreach ($translations as $translation) { ?>
 <fieldset>
-  <legend><?php echo $text_translation; ?></legend>
+  <legend><?php echo $translation['key']; ?></legend>
   <div class="table-responsive">
   <table id="translation" class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <td><?php echo $entry_key; ?></td>
-         <td colspan="2"><?php echo $translation['key']; ?></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-       
-     
-      </tr>
-    </tbody>
     <thead>
       <tr>
         <td><?php echo $entry_default; ?></td>

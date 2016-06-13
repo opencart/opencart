@@ -22,14 +22,10 @@ class ControllerDesignLanguage extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_language'] = $this->language->get('text_language');
 		$data['text_translation'] = $this->language->get('text_translation');
 		$data['text_default'] = $this->language->get('text_default');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['button_save'] = $this->language->get('button_save');
 		
 		$data['token'] = $this->session->data['token'];
 		
@@ -141,10 +137,14 @@ class ControllerDesignLanguage extends Controller {
 	
 	public function translation() {
 		$this->load->language('design/language');
+		
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_key'] = $this->language->get('entry_key');
 		$data['entry_default'] = $this->language->get('entry_default');
 		$data['entry_value'] = $this->language->get('entry_value');
+		
+		$data['button_save'] = $this->language->get('button_save');
 		
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];			
@@ -183,22 +183,20 @@ class ControllerDesignLanguage extends Controller {
 				$translation_data[$result['key']] = $result['value'];
 			}			
 			
+			print_r($translation_data);
+			
 			$_ = array();
 						
 			include($directory . $language_info['code'] . '/' . $path . '.php');	
 			
 			foreach ($_ as $key => $value) {
-				
-				
 				$data['translations'][] = array(
 					'key'     => $key,
 					'default' => $value,
-					'value'   => $key
+					'value'   => isset($translation_data[$key]) ? $translation_data[$key] : ''
 				);
 			}
 		}
-		
-
 
 		$this->response->setOutput($this->load->view('design/language_translation', $data));
 	}		
@@ -227,12 +225,12 @@ class ControllerDesignLanguage extends Controller {
 		}		
 			
 		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
+		if (!$this->user->hasPermission('modify', 'design/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('design/translation');
+			$this->load->model('design/language');
 			
-			$this->model_design_translation->editTranslation($store_id, $theme, $path, $this->request->post);
+			$this->model_design_language->editTranslation($store_id, $language_id, $path, $this->request->post);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -240,49 +238,4 @@ class ControllerDesignLanguage extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	/*
-	public function translation() {
-		$json = array();
-			
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = '';
-		}
-					
-		if (isset($this->request->get['language_id'])) {
-			$language_id = $this->request->get['language_id'];
-		} else {
-			$language_id = 0;
-		}	
-		
-		if (isset($this->request->get['key'])) {
-			$key = $this->request->get['key'];
-		} else {
-			$key = '';
-		}	
-					
-		$this->load->model('localisation/language');
-		
-		$language_info = $this->model_localisation_language->getLanguage($language_id);
-		
-		if ($language_info) {
-			$directory = DIR_CATALOG . 'language/';
-			
-			if (is_file($directory . $language_info['code'] . '/' . $code . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $code . '.php')), 0, strlen($directory)) == $directory) {
-				$_ = array();
-						
-				include($directory . $language_info['code'] . '/' . $code . '.php');	
-				
-				if (isset($_[$key])) {
-					$json = $_[$key];
-				}
-			}
-		}
-			
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}	
-	*/
 }

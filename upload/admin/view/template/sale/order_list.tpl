@@ -235,6 +235,8 @@ $('input[name^=\'selected\']').on('change', function() {
 	}
 });
 
+$('#button-shipping, #button-invoice').prop('disabled', true);
+
 $('input[name^=\'selected\']:first').trigger('change');
 
 // IE and Edge fix!

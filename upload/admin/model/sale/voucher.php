@@ -2,7 +2,7 @@
 class ModelSaleVoucher extends Model {
 	public function addVoucher($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
-	
+
 		return $this->db->getLastId();
 	}
 
@@ -33,10 +33,8 @@ class ModelSaleVoucher extends Model {
 		$sort_data = array(
 			'v.code',
 			'v.from_name',
-			'v.from_email',
 			'v.to_name',
-			'v.to_email',
-			'v.theme',
+			'theme',
 			'v.amount',
 			'v.status',
 			'v.date_added'
@@ -98,7 +96,7 @@ class ModelSaleVoucher extends Model {
 
 				$data['title'] = sprintf($language->get('text_subject'), $voucher_info['from_name']);
 
-				$data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], (!empty($order_info['currency_code'])?$order_info['currency_code']:$this->config->get('config_currency')), (!empty($order_info['currency_value'])?$order_info['currency_value']:$this->currency->getValue($this->config->get('config_currency')))));
 				$data['text_from'] = sprintf($language->get('text_from'), $voucher_info['from_name']);
 				$data['text_message'] = $language->get('text_message');
 				$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher_info['code']);

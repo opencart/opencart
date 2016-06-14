@@ -279,7 +279,9 @@ class ModelCheckoutOrder extends Model {
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
 				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('extension/total/' . $order_total['code']);
+					if (is_file(DIR_APPLICATION . 'model/total/' . $order_total['code'] . '.php')) {
+						$this->load->model('extension/total/' . $order_total['code']);
+					}
 
 					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'confirm')) {
 						// Confirm coupon, vouchers and reward points

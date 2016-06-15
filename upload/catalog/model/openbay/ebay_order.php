@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayEbayOrder extends Model{
+class ModelExtensionOpenBayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$order_line = $this->getOrderLine($data['txn_id'], $data['item_id']);
 
@@ -65,7 +65,7 @@ class ModelOpenbayEbayOrder extends Model{
 		$this->openbay->ebay->log('Adding order lines');
 
 		foreach ($order->txn as $txn) {
-			$this->model_openbay_ebay_order->addOrderLine(array(
+			$this->model_extension_openbay_ebay_order->addOrderLine(array(
 				'txn_id'                => (string)$txn->item->txn,
 				'item_id'               => (string)$txn->item->id,
 				'containing_order_id'   => (string)$order->order->id,
@@ -243,10 +243,10 @@ class ModelOpenbayEbayOrder extends Model{
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order` ASC");
 
 				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
+					$this->load->model('extension/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
-						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
+					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'confirm')) {
+						$this->{'model_extension_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}
 
@@ -297,7 +297,7 @@ class ModelOpenbayEbayOrder extends Model{
 					$data['text_powered'] = '<a href="http://www.openbaypro.com/">OpenBay Pro - eBay and Amazon order management for OpenCart</a> . ';
 				}
 
-				$data['logo'] = HTTPS_SERVER  . 'image/' . $this->config->get('config_logo');
+				$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 				$data['store_name'] = $order_info['store_name'];
 				$data['store_url'] = $order_info['store_url'];
 				$data['customer_id'] = $order_info['customer_id'];

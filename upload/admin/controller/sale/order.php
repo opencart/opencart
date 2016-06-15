@@ -170,7 +170,7 @@ class ControllerSaleOrder extends Controller {
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_code' => $result['shipping_code'],
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
-				'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
+				'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true)
 			);
 		}
 
@@ -252,7 +252,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['sort_order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, true);
 		$data['sort_customer'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, true);
-		$data['sort_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=order_status' . $url, true);
 		$data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, true);
 		$data['sort_date_added'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, true);
 		$data['sort_date_modified'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_modified' . $url, true);
@@ -629,7 +629,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['stores'][] = array(
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default'),
+			'name'     => $this->language->get('text_default')
 		);
 
 		$results = $this->model_setting_store->getStores();
@@ -1067,7 +1067,7 @@ class ControllerSaleOrder extends Controller {
 
 			$filter_data = array(
 				'sort'  => 'cf.sort_order',
-				'order' => 'ASC',
+				'order' => 'ASC'
 			);
 
 			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
@@ -1232,15 +1232,15 @@ class ControllerSaleOrder extends Controller {
 			// Additional Tabs
 			$data['tabs'] = array();
 
-			if ($this->user->hasPermission('access', 'payment/' . $order_info['payment_code'])) {
-				if (is_file(DIR_CATALOG . 'controller/payment/' . $order_info['payment_code'] . '.php')) {
-					$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
+			if ($this->user->hasPermission('access', 'extension/payment/' . $order_info['payment_code'])) {
+				if (is_file(DIR_CATALOG . 'controller/extension/payment/' . $order_info['payment_code'] . '.php')) {
+					$content = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/order');
 				} else {
 					$content = null;
 				}
 
 				if ($content) {
-					$this->load->language('payment/' . $order_info['payment_code']);
+					$this->load->language('extension/payment/' . $order_info['payment_code']);
 
 					$data['tabs'][] = array(
 						'code'    => $order_info['payment_code'],
@@ -1256,9 +1256,9 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
-					$this->load->language('fraud/' . $extension);
+					$this->load->language('extension/fraud/' . $extension);
 
-					$content = $this->load->controller('fraud/' . $extension . '/order');
+					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 
 					if ($content) {
 						$data['tabs'][] = array(

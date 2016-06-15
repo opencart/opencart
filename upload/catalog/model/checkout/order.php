@@ -19,7 +19,7 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
 		// Vouchers
 		if (isset($data['vouchers'])) {
@@ -28,7 +28,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_extension_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -67,9 +67,9 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
-		$this->model_total_voucher->disableVoucher($order_id);
+		$this->model_extension_total_voucher->disableVoucher($order_id);
 
 		// Vouchers
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
@@ -80,7 +80,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_extension_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -110,9 +110,9 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 
 		// Gift Voucher
-		$this->load->model('total/voucher');
+		$this->load->model('extension/total/voucher');
 
-		$this->model_total_voucher->disableVoucher($order_id);
+		$this->model_extension_total_voucher->disableVoucher($order_id);
 	}
 
 	public function getOrder($order_id) {
@@ -262,7 +262,7 @@ class ModelCheckoutOrder extends Model {
 
 				foreach ($extensions as $extension) {
 					if ($this->config->get($extension['code'] . '_status')) {
-						$this->load->model('fraud/' . $extension['code']);
+						$this->load->model('extension/fraud/' . $extension['code']);
 
 						$fraud_status_id = $this->{'model_fraud_' . $extension['code']}->check($order_info);
 
@@ -279,11 +279,11 @@ class ModelCheckoutOrder extends Model {
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
 				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
+					$this->load->model('extension/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'confirm')) {
 						// Confirm coupon, vouchers and reward points
-						$fraud_status_id = $this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
+						$fraud_status_id = $this->{'model_extension_total_' . $order_total['code']}->confirm($order_info, $order_total);
 						
 						// If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned.
 						if ($fraud_status_id) {
@@ -339,10 +339,10 @@ class ModelCheckoutOrder extends Model {
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
 				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
+					$this->load->model('extension/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_total_' . $order_total['code']}, 'unconfirm')) {
-						$this->{'model_total_' . $order_total['code']}->unconfirm($order_id);
+					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'unconfirm')) {
+						$this->{'model_extension_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
 

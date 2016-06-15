@@ -536,7 +536,7 @@ final class Ebay {
 
 		$openstock = false;
 		if ($this->openbay->addonLoad('openstock') == true) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$openstock = true;
 		}
 
@@ -571,7 +571,7 @@ final class Ebay {
 		//loop through ended listings, if back in stock and not multi var - relist it
 		foreach ($linked_ended_items as $item) {
 			if ($openstock == true) {
-				$options = $this->model_module_openstock->getVariants($item['productId']);
+				$options = $this->model_extension_module_openstock->getVariants($item['productId']);
 			} else {
 				$options = array();
 			}
@@ -617,7 +617,7 @@ final class Ebay {
 				} else {
 					//get any options that are set for this product
 					if ($openstock == true) {
-						$options = $this->model_module_openstock->getVariants($item['productId']);
+						$options = $this->model_extension_module_openstock->getVariants($item['productId']);
 					} else {
 						$options = array();
 					}
@@ -704,14 +704,14 @@ final class Ebay {
 			$this->log('productUpdateListen(' . $product_id . ') - listing found (' . $item_id . ')');
 
 			if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
-				$this->load->model('module/openstock');
+				$this->load->model('extension/module/openstock');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/product');
 
 				$this->log('productUpdateListen(' . $product_id . ') - Variant');
 
 				if (!isset($data['variant'])) {
-					$variants = $this->model_module_openstock->getVariants($product_id);
+					$variants = $this->model_extension_module_openstock->getVariants($product_id);
 				} else {
 					$variants = $data['variant'];
 				}

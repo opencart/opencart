@@ -67,7 +67,7 @@ class ControllerSettingStore extends Controller {
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			$this->load->model('setting/setting');
-			
+
 			foreach ($this->request->post['selected'] as $store_id) {
 				$this->model_setting_store->deleteStore($store_id);
 
@@ -411,7 +411,7 @@ class ControllerSettingStore extends Controller {
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/theme/' . $code);
-			
+
 			$data['themes'][] = array(
 				'text'  => $this->language->get('heading_title'),
 				'value' => $code
@@ -429,7 +429,7 @@ class ControllerSettingStore extends Controller {
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
-		
+
 		if (isset($this->request->post['config_name'])) {
 			$data['config_name'] = $this->request->post['config_name'];
 		} elseif (isset($store_info['config_name'])) {
@@ -528,7 +528,7 @@ class ControllerSettingStore extends Controller {
 
 		if (isset($this->request->post['config_location'])) {
 			$data['config_location'] = $this->request->post['config_location'];
-		} elseif ($this->config->get('config_location')) {
+		} elseif (isset($store_info['config_location'])) {
 			$data['config_location'] = $this->config->get('config_location');
 		} else {
 			$data['config_location'] = array();

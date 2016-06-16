@@ -16,6 +16,12 @@ class ControllerEventTheme extends Controller {
 			$theme = $this->config->get('config_theme');
 		}
 		
+		if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
+			$view = $theme . '/template/' . $view;
+		} else {
+			$view = 'default/template/' . $view;
+		}
+		/*			
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');
 		
@@ -36,5 +42,6 @@ class ControllerEventTheme extends Controller {
 				$view = 'default/template/' . $view;
 			}		
 		}
+		*/
 	}
 }

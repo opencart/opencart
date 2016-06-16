@@ -1,7 +1,9 @@
 <?php
 class ControllerEventDebug extends Controller {
 	public function before(&$route, &$data) {
-		if ($route == '') {
+		if ($route == 'product/product') {
+			echo 'hi';
+			
 			$this->log->write(func_get_args());
 		}
 	}

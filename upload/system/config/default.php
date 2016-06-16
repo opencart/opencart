@@ -3,7 +3,7 @@
 $_['site_base']            = '';
 $_['site_ssl']             = false;
 
-//Url
+// Url
 $_['url_autostart']        = true;
 
 // Language

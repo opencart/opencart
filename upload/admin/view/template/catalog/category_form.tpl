@@ -86,6 +86,9 @@
                 <div class="col-sm-10">
                   <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" class="form-control" />
                   <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
+                  <?php if ($error_parent) { ?>
+                  <div class="text-danger"><?php echo $error_parent; ?></div>
+                  <?php } ?>
                 </div>
               </div>
               <div class="form-group">
@@ -138,7 +141,7 @@
                   <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <?php if ($error_keyword) { ?>
                   <div class="text-danger"><?php echo $error_keyword; ?></div>
-                  <?php } ?>                
+                  <?php } ?>
                 </div>
               </div>
               <div class="form-group">
@@ -237,7 +240,7 @@
   </div>
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {

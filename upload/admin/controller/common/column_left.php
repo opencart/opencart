@@ -411,7 +411,7 @@ class ControllerCommonColumnLeft extends Controller {
 			if ($this->user->hasPermission('access', 'setting/setting')) {
 				$system[] = array(
 					'name'	   => $this->language->get('text_setting'),
-					'href'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}
@@ -825,8 +825,6 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => $report
 				);	
 			}		
-
-
 			
 			// Stats
 			$data['text_complete_status'] = $this->language->get('text_complete_status');

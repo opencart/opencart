@@ -45,8 +45,8 @@ class ControllerExtensionAnalytics extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
-		
-		$this->getList();		
+
+		$this->getList();
 	}
 
 	protected function getList() {
@@ -85,11 +85,11 @@ class ControllerExtensionAnalytics extends Controller {
 				unset($extensions[$key]);
 			}
 		}
-		
+
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
-		
+
 		$data['extensions'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
@@ -101,13 +101,14 @@ class ControllerExtensionAnalytics extends Controller {
 				$this->load->language('extension/analytics/' . $extension);
 
 				$store_data = array();
-				
+
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->link('extension/analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
-									
+
+				$this->load->model('setting/setting');
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
@@ -115,7 +116,7 @@ class ControllerExtensionAnalytics extends Controller {
 						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
-				
+
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'install'   => $this->url->link('extension/analytics/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),

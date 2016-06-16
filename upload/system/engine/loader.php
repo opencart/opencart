@@ -81,7 +81,7 @@ final class Loader {
 			$output = $template->render($route . '.tpl');
 		}
 		
-		// Trigger the post e
+		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
 		if ($result) {

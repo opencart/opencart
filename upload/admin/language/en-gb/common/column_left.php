@@ -97,3 +97,6 @@ $_['text_openbay_report_price']        = 'Pricing report';
 $_['text_openbay_order_import']        = 'Order import';
 $_['text_paypal']                      = 'PayPal';
 $_['text_paypal_search']               = 'Search';
+$_['text_complete_status']             = 'Orders Completed'; 
+$_['text_processing_status']           = 'Orders Processing'; 
+$_['text_other_status']                = 'Other Statuses'; 

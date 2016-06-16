@@ -3,7 +3,7 @@ class ControllerStartupPermission extends Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
-
+			
 			$part = explode('/', $this->request->get['route']);
 
 			if (isset($part[0])) {
@@ -12,6 +12,10 @@ class ControllerStartupPermission extends Controller {
 
 			if (isset($part[1])) {
 				$route .= '/' . $part[1];
+			}
+
+			if (isset($part[2]) && (substr($this->request->get['route'], 0, 10) == 'extension/')) {
+				$route .= '/' . $part[2];
 			}
 
 			$ignore = array(

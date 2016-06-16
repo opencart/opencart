@@ -70,6 +70,7 @@ class ControllerExtensionExtension extends Controller {
 		
 		if ($this->user->hasPermission('access', 'extension/fraud')) {
 			$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php');
+			
 			$data['categories'][] = array(
 				'code' => 'fraud',
 				'text' => $this->language->get('text_fraud') . ' (' . count($files) .')',
@@ -84,16 +85,6 @@ class ControllerExtensionExtension extends Controller {
 				'code' => 'module',
 				'text' => $this->language->get('text_module') . ' (' . count($files) .')',
 				'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/menu')) {
-			$files = glob(DIR_APPLICATION . 'controller/menu/*.php');
-	
-			$data['categories'][] = array(
-				'code' => 'menu',
-				'text' => $this->language->get('text_menu') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/menu', 'token=' . $this->session->data['token'], true)
 			);
 		}
 		

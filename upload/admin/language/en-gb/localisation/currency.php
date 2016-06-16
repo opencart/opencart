@@ -7,6 +7,7 @@ $_['text_success']         = 'Success: You have modified currencies!';
 $_['text_list']            = 'Currency List';
 $_['text_add']             = 'Add Currency';
 $_['text_edit']            = 'Edit Currency';
+$_['text_iso']             = 'You can find a full list of ISO currency codes and settings <a href="http://www.xe.com/iso4217.php" target="_blank">here</a>.';
 
 // Column
 $_['column_title']         = 'Currency Title';
@@ -25,7 +26,7 @@ $_['entry_decimal_place']  = 'Decimal Places';
 $_['entry_status']         = 'Status';
 
 // Help
-$_['help_code']            = 'Do not change if this is your default currency. Must be valid <a href="http://www.xe.com/iso4217.php" target="_blank">ISO code</a>.';
+$_['help_code']            = 'Do not change if this is your default currency.';
 $_['help_value']           = 'Set to 1.00000 if this is your default currency.';
 
 // Error

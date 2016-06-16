@@ -2,15 +2,26 @@
 // Registry
 $registry = new Registry();
 
-// Loader
-$loader = new Loader($registry);
-$registry->set('load', $loader);
-
 // Config
 $config = new Config();
 $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
+
+// Event
+$event = new Event($registry);
+$registry->set('event', $event);
+
+// Event Register
+if ($config->has('action_event')) {
+	foreach ($config->get('action_event') as $key => $value) {
+		$event->register($key, new Action($value));
+	}
+}
+
+// Loader
+$loader = new Loader($registry);
+$registry->set('load', $loader);
 
 // Request
 $registry->set('request', new Request());
@@ -47,17 +58,6 @@ $registry->set('language', $language);
 
 // Document
 $registry->set('document', new Document());
-
-// Event
-$event = new Event($registry);
-$registry->set('event', $event);
-
-// Event Register
-if ($config->has('action_event')) {
-	foreach ($config->get('action_event') as $key => $value) {
-		$event->register($key, new Action($value));
-	}
-}
 
 // Config Autoload
 if ($config->has('config_autoload')) {

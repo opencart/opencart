@@ -29,70 +29,68 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'code') { ?>
-                    <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
-                    <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'trigger') { ?>
-                    <a href="<?php echo $sort_trigger; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_trigger; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_trigger; ?>"><?php echo $column_trigger; ?></a>
-                    <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'action') { ?>
-                    <a href="<?php echo $sort_action; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_action; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_action; ?>"><?php echo $column_action; ?></a>
-                    <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'status') { ?>
-                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
-                    <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'date_added') { ?>
-                    <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
-                    <?php } ?></td>
-                  <td class="text-right"><?php echo $column_action; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($events) { ?>
-                <?php foreach ($events as $event) { ?>
-                <tr>
-                  <td class="text-center"><?php if (in_array($event['event_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $event['event_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $event['event_id']; ?>" />
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $event['code']; ?></td>
-                  <td class="text-left"><?php echo $event['trigger']; ?></td>
-                  <td class="text-left"><?php echo $event['action']; ?></td>
-                  <td class="text-left"><?php echo $event['status']; ?></td>
-                  <td class="text-left"><?php echo $event['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$event['enabled']) { ?>
-                    <a href="<?php echo $event['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $event['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-                    <?php } ?></td>
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          </div>
-        </form>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td class="text-left"><?php if ($sort == 'code') { ?>
+                  <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'trigger') { ?>
+                  <a href="<?php echo $sort_trigger; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_trigger; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_trigger; ?>"><?php echo $column_trigger; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'action') { ?>
+                  <a href="<?php echo $sort_action; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_action; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_action; ?>"><?php echo $column_action; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'status') { ?>
+                  <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'date_added') { ?>
+                  <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($events) { ?>
+              <?php foreach ($events as $event) { ?>
+              <tr>
+                <td class="text-center"><?php if (in_array($event['event_id'], $selected)) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $event['event_id']; ?>" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $event['event_id']; ?>" />
+                  <?php } ?></td>
+                <td class="text-left"><?php echo $event['code']; ?></td>
+                <td class="text-left"><?php echo $event['trigger']; ?></td>
+                <td class="text-left"><?php echo $event['action']; ?></td>
+                <td class="text-left"><?php echo $event['status']; ?></td>
+                <td class="text-left"><?php echo $event['date_added']; ?></td>
+                <td class="text-right"><?php if (!$event['enabled']) { ?>
+                  <a href="<?php echo $event['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $event['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
         <div class="row">
           <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
           <div class="col-sm-6 text-right"><?php echo $results; ?></div>

@@ -130,7 +130,7 @@ class ControllerCommonMenu extends Controller {
 
 		// Extension
 		$extension = array();
-		
+		/*
 		if ($this->user->hasPermission('access', 'extension/store')) {		
 			$extension[] = array(
 				'name'	   => $this->language->get('text_store'),
@@ -138,7 +138,7 @@ class ControllerCommonMenu extends Controller {
 				'children' => array()		
 			);					
 		}
-		
+		*/
 		if ($this->user->hasPermission('access', 'extension/installer')) {		
 			$extension[] = array(
 				'name'	   => $this->language->get('text_installer'),
@@ -191,7 +191,7 @@ class ControllerCommonMenu extends Controller {
 				'children' => array()		
 			);	
 		}
-		
+		/*
 		if ($this->user->hasPermission('access', 'design/menu')) {
 			$design[] = array(
 				'name'	   => $this->language->get('text_menu'),
@@ -215,7 +215,7 @@ class ControllerCommonMenu extends Controller {
 				'children' => array()		
 			);	
 		}
-		
+		*/
 		if ($this->user->hasPermission('access', 'design/banner')) {
 			$design[] = array(
 				'name'	   => $this->language->get('text_banner'),

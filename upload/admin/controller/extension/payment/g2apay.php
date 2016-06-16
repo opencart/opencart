@@ -197,12 +197,6 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$data['g2apay_ipn_uri'] = $this->config->get('g2apay_ipn_uri');
 		}
 
-		if (isset($this->request->post['g2apay_order_status_id'])) {
-			$data['g2apay_order_status_id'] = $this->request->post['g2apay_order_status_id'];
-		} else {
-			$data['g2apay_order_status_id'] = $this->config->get('g2apay_order_status_id');
-		}
-
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

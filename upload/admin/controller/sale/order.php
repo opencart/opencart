@@ -164,7 +164,7 @@ class ControllerSaleOrder extends Controller {
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
-				'order_status'  => $result['order_status'],
+				'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),

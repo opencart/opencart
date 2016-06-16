@@ -49,7 +49,7 @@ class ControllerExtensionStore extends Controller {
 		$json = array();
 				
 		$url = '';
-		
+		/*
 		$url  = '?api_key=' . $this->config->get('config_api_key'); 
 		
 		if (isset($this->request->get['sort'])) {
@@ -71,20 +71,24 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['tags'])) {
 			$url .= '&tags=' . $this->request->get['tags'];
 		}		
-		
-		$curl = curl_init('http://www.opencart.com' . $url);
+		*/
+		//echo HTTP_TEST;// . $url
+		$curl = curl_init(HTTP_TEST);
 				
 		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
+		//curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_PORT, 80);
 		//curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-				
+			
 		$response = curl_exec($curl);
-
+		
+		echo $response;
+/*
 		curl_close($curl);
 
 		if (!$response) {
@@ -95,6 +99,7 @@ class ControllerExtensionStore extends Controller {
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));				
+	*/
 	}
 	
 	public function info() {

@@ -51,9 +51,11 @@
           </div>
         </div>
        </fieldset>
-
-        Sort
-        <div id="store"></div>
+        <div id="store">
+        
+        
+        
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +64,7 @@ $('#button-filter').bind('click', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=extension/store/' + $(this).val() + '&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/store/store&token=<?php echo $token; ?>',
 		dataType: 'html',
 		beforeSend: function() {
 			$(node).prop('disabled', true);
@@ -71,7 +73,7 @@ $('#button-filter').bind('click', function(e) {
 			$(node).prop('disabled', false);
 		},
 		success: function(html) {
-			$('#extension').html(html);
+			$('#store').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

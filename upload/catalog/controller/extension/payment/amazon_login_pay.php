@@ -7,7 +7,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
-		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
+		if (!isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/failure', '', true));
 		}
@@ -27,8 +27,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');
 
 		$data['merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
-		$data['amazon_payment'] = $this->url->link('extension/payment/amazon_login_pay/orderreference', '', true);
-		$data['order_reference'] = $this->url->link('extension/payment/amazon_login_pay/shippingquotes', '', true);
 		$data['shipping_quotes'] = $this->url->link('extension/payment/amazon_login_pay/shippingquotes', '', true);
 		$data['payment_method'] = $this->url->link('extension/payment/amazon_login_pay/paymentmethod', '', true);
 
@@ -62,7 +60,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
-		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
+		if (!isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/failure', '', true));
 		}
@@ -88,6 +86,10 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 		$this->document->addScript($amazon_payment_js);
 
+		if ($this->customer->islogged() && isset($this->session->data['lpa']['address'])) {
+			$this->model_extension_payment_amazon_login_pay->addAddress($this->session->data['lpa']['address']);
+		}
+
 		$data['continue'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
 		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/address', '', true);
 		$data['text_back'] = $this->language->get('text_back');
@@ -111,7 +113,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
-		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
+		if (!isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
 		}
@@ -175,8 +177,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		// Because __call can not keep var references so we put them into an array.
 		$total_data = array(
 			'totals' => &$totals,
-			'taxes'  => &$taxes,
-			'total'  => &$total
+			'taxes' => &$taxes,
+			'total' => &$total
 		);
 
 		$old_taxes = $taxes;
@@ -261,13 +263,28 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$address = $this->session->data['lpa']['address'];
 
-		$order_data['customer_id'] = $this->customer->getId();
-		$order_data['customer_group_id'] = $this->customer->getGroupId();
-		$order_data['firstname'] = $this->customer->getFirstName();
-		$order_data['lastname'] = $this->customer->getLastName();
-		$order_data['email'] = $this->customer->getEmail();
-		$order_data['telephone'] = $address['telephone'];
-		$order_data['fax'] = '';
+		if ($this->customer->isLogged()) {
+			$this->load->model('account/customer');
+
+			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+
+			$order_data['customer_id'] = $this->customer->getId();
+			$order_data['customer_group_id'] = $customer_info['customer_group_id'];
+			$order_data['firstname'] = $customer_info['firstname'];
+			$order_data['lastname'] = $customer_info['lastname'];
+			$order_data['email'] = $customer_info['email'];
+			$order_data['telephone'] = $customer_info['telephone'];
+			$order_data['fax'] = $customer_info['fax'];
+			$order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
+		} elseif (isset($this->session->data['guest'])) {
+			$order_data['customer_id'] = 0;
+			$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
+			$order_data['firstname'] = $this->session->data['guest']['firstname'];
+			$order_data['lastname'] = $this->session->data['guest']['lastname'];
+			$order_data['email'] = $this->session->data['guest']['email'];
+			$order_data['telephone'] = $this->session->data['guest']['telephone'];
+			$order_data['fax'] = $this->session->data['guest']['fax'];
+		}
 
 		if (isset($this->session->data['coupon'])) {
 			$this->load->model('extension/total/coupon');
@@ -286,8 +303,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$order_data['lpa_free_shipping'] = '0';
 		}
 
-		$order_data['payment_firstname'] = $this->customer->getFirstName();
-		$order_data['payment_lastname'] = $this->customer->getLastName();
+		$order_data['payment_firstname'] = $order_data['firstname'];
+		$order_data['payment_lastname'] = $order_data['lastname'];
 		$order_data['payment_company'] = $address['company'];
 		$order_data['payment_company_id'] = $address['company_id'];
 		$order_data['payment_tax_id'] = $address['tax_id'];
@@ -874,4 +891,5 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			}
 		}
 	}
+
 }

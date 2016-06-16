@@ -1,5 +1,4 @@
 <?php
-
 class ControllerExtensionModuleAmazonPay extends Controller {
 	public function index() {
 
@@ -15,10 +14,12 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$this->document->addScript($amazon_payment_js);
 
 			$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
-			$data['amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
+
 			if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
 				$data['amazon_login_pay_test'] = true;
 			}
+
+			$data['amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
 
 			if ($this->config->get('amazon_pay_button_type')) {
 				$data['amazon_pay_button_type'] = $this->config->get('amazon_pay_button_type');
@@ -36,6 +37,12 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 				$data['amazon_pay_button_size'] = $this->config->get('amazon_pay_button_size');
 			} else {
 				$data['amazon_pay_button_size'] = 'medium';
+			}
+
+			if ($this->config->get('amazon_login_pay_language')) {
+				$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+			} else {
+				$data['amazon_login_pay_language'] = 'en-US';
 			}
 
 			return $this->load->view('extension/module/amazon_pay', $data);
@@ -74,7 +81,19 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
 			$this->model_extension_payment_amazon_login_pay->logger($user);
 
-			if ($customer_info) {
+			if ($this->config->get('amazon_login_pay_checkout') == 'guest') {
+				$full_name = explode(' ', $user->name);
+				$last_name = array_pop($full_name);
+				$first_name = implode(' ', $full_name);
+				$this->session->data['account'] = 'guest';
+				$this->session->data['guest']['customer_group_id'] = $this->config->get('config_customer_group_id');
+				$this->session->data['guest']['firstname'] = $first_name;
+				$this->session->data['guest']['lastname'] = $last_name;
+				$this->session->data['guest']['email'] = $user->email;
+				$this->session->data['guest']['telephone'] = '';
+				$this->session->data['guest']['fax'] = '';
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/address', '', true));
+			} else if ($customer_info) {
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
 
@@ -129,7 +148,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 					'zone_id' => (int)$zone_id,
 				);
 
-				$customer_id = $this->model_account_customer->addCustomer($data);
+				$customer_id = $this->model_extension_payment_amazon_login_pay->addCustomer($data);
 
 				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 

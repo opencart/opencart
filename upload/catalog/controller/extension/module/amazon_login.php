@@ -37,6 +37,12 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 				$data['amazon_login_button_size'] = 'medium';
 			}
 
+			if ($this->config->get('amazon_login_pay_language')) {
+				$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+			} else {
+				$data['amazon_login_pay_language'] = 'en-US';
+			}
+
 			return $this->load->view('extension/module/amazon_login', $data);
 		}
 	}
@@ -119,7 +125,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					'zone_id' => (int)$zone_id,
 				);
 
-				$customer_id = $this->model_account_customer->addCustomer($data);
+				$customer_id = $this->model_extension_payment_amazon_login_pay->addCustomer($data);
 
 				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 

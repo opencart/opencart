@@ -1,5 +1,4 @@
 <?php
-
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	private $error = array();
@@ -41,6 +40,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['text_sandbox'] = $this->language->get('text_sandbox');
 		$data['text_auth'] = $this->language->get('text_auth');
 		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_account'] = $this->language->get('text_account');
+		$data['text_guest'] = $this->language->get('text_guest');
 		$data['text_no_capture'] = $this->language->get('text_no_capture');
 		$data['text_sort_order'] = $this->language->get('text_sort_order');
 		$data['text_minimum_total'] = $this->language->get('text_minimum_total');
@@ -64,6 +65,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['entry_client_secret'] = $this->language->get('entry_client_secret');
 		$data['entry_login_pay_test'] = $this->language->get('entry_login_pay_test');
 		$data['entry_login_pay_mode'] = $this->language->get('entry_login_pay_mode');
+		$data['entry_checkout'] = $this->language->get('entry_checkout');
 		$data['entry_capture_status'] = $this->language->get('entry_capture_status');
 		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
 		$data['entry_language'] = $this->language->get('entry_language');
@@ -73,6 +75,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$data['entry_debug'] = $this->language->get('entry_debug');
 
 		$data['help_pay_mode'] = $this->language->get('help_pay_mode');
+		$data['help_checkout'] = $this->language->get('help_checkout');
 		$data['help_capture_status'] = $this->language->get('help_capture_status');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_ipn_url'] = $this->language->get('help_ipn_url');
@@ -119,12 +122,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['error_client_id'] = $this->error['error_client_id'];
 		} else {
 			$data['error_client_id'] = '';
-		}
-
-		if (isset($this->error['error_pay_mode'])) {
-			$data['error_pay_mode'] = $this->error['error_pay_mode'];
-		} else {
-			$data['error_pay_mode'] = '';
 		}
 
 		if (isset($this->error['error_minimum_total'])) {
@@ -214,6 +211,14 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['amazon_login_pay_mode'] = $this->config->get('amazon_login_pay_mode');
 		} else {
 			$data['amazon_login_pay_mode'] = 'payment';
+		}
+
+		if (isset($this->request->post['amazon_login_pay_checkout'])) {
+			$data['amazon_login_pay_checkout'] = $this->request->post['amazon_login_pay_checkout'];
+		} elseif ($this->config->get('amazon_login_pay_checkout')) {
+			$data['amazon_login_pay_checkout'] = $this->config->get('amazon_login_pay_checkout');
+		} else {
+			$data['amazon_login_pay_checkout'] = 'payment';
 		}
 
 		if (isset($this->request->post['amazon_login_pay_payment_region'])) {

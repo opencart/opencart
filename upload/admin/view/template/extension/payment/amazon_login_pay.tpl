@@ -159,9 +159,23 @@
 					<option value="auth"><?php echo $text_auth; ?></option>
 				<?php } ?>
 			  </select>
-			  <?php if ($error_pay_mode) { ?>
-				  <div class="text-danger"><?php echo $error_pay_mode; ?></div>
-			  <?php } ?>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="amazon-login-pay-checkout"><span data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><?php echo $entry_checkout; ?></span></label>
+			<div class="col-sm-10">
+			  <select name="amazon_login_pay_checkout" id="amazon-login-checkout-mode" class="form-control">
+				<?php if ($amazon_login_pay_checkout == 'account') { ?>
+					<option value="account" selected="selected"><?php echo $text_account; ?></option>
+				<?php } else { ?>
+					<option value="account"><?php echo $text_account; ?></option>
+				<?php } ?>
+				<?php if ($amazon_login_pay_checkout == 'guest') { ?>
+					<option value="guest" selected="selected"><?php echo $text_guest; ?></option>
+				<?php } else { ?>
+					<option value="guest"><?php echo $text_guest; ?></option>
+				<?php } ?>
+			  </select>
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -335,7 +349,7 @@
           value: 'true',
           name: 'language_reload'
         }).appendTo('#form-amazon-login-pay');
-		$("#form-amazon-login-pay").submit();
+        $("#form-amazon-login-pay").submit();
       });
       //</script>
   <script type="text/javascript">

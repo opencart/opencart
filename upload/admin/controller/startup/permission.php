@@ -14,7 +14,20 @@ class ControllerStartupPermission extends Controller {
 				$route .= '/' . $part[1];
 			}
 
-			if (isset($part[2]) && (substr($this->request->get['route'], 0, 10) == 'extension/')) {
+			// If a 3rd part is found we need to check if its under one of the extension folders.
+			$routes = array(
+				'extension/analytics',
+				'extension/captcha',
+				'extension/feed',
+				'extension/fraud',
+				'extension/module',
+				'extension/payment',
+				'extension/shipping',
+				'extension/theme',
+				'extension/total'
+			);
+			
+			if (isset($part[2]) && (in_array(substr($this->request->get['route'], 0, 10), $routes))) {
 				$route .= '/' . $part[2];
 			}
 

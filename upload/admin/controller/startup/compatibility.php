@@ -6,7 +6,7 @@ class ControllerStartupCompatibility extends Controller {
 	}
 	
 	public function	rewrite($link) {
-		// Ther below code will old extensions compatible with the extension page move 
+		// The below code will old extensions compatible with the extension page move 
 		if (isset($this->request->get['route']) && (substr($this->request->get['route'], 0, 10) == 'extension/') && ($this->request->get['route'] != 'extension/extension')) {
 			$url_info = parse_url(str_replace('&amp;', '&', $link));
 			

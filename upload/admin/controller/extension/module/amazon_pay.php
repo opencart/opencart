@@ -1,11 +1,9 @@
 <?php
-
 class ControllerExtensionModuleAmazonPay extends Controller {
 
 	private $error = array();
 
 	public function index() {
-		
 		$this->load->language('extension/module/amazon_pay');
 
 		$this->load->model('setting/setting');

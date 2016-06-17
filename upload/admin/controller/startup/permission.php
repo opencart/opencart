@@ -30,7 +30,8 @@ class ControllerStartupPermission extends Controller {
 			if (isset($part[2]) && (in_array(substr($this->request->get['route'], 0, 10), $routes))) {
 				$route .= '/' . $part[2];
 			}
-
+			
+			// We want to ingore some pages from having its permission checked. 
 			$ignore = array(
 				'common/dashboard',
 				'common/login',

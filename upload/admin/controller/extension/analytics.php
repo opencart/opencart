@@ -93,7 +93,7 @@ class ControllerExtensionAnalytics extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/{extension/analytics,analytics}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {

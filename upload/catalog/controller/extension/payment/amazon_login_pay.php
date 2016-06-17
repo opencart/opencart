@@ -787,6 +787,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 			$this->session->data['lpa']['shipping_method'] = $this->session->data['lpa']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];
 			$this->session->data['shipping_method'] = $this->session->data['lpa']['shipping_method'];
+			$this->session->data['payment_address'] = $this->session->data['lpa']['address'];
 			$this->session->data['shipping_address'] = $this->session->data['lpa']['address'];
 			$this->session->data['shipping_country_id'] = $this->session->data['lpa']['address']['country_id'];
 			$this->session->data['shipping_zone_id'] = $this->session->data['lpa']['address']['zone_id'];

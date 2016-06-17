@@ -6,6 +6,7 @@ $(document).ready(function() {
 		$(element).summernote({
 			disableDragAndDrop: true,
 			height: 300,
+			emptyPara: '',
 			toolbar: [
 				['style', ['style']],
 				['font', ['bold', 'underline', 'clear']],
@@ -22,7 +23,7 @@ $(document).ready(function() {
 
 					// create button
 					var button = ui.button({
-						contents: '<i class="fa fa-image" />',
+						contents: '<i class="note-icon-picture" />',
 						tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
 						click: function () {
 							$('#modal-image').remove();
@@ -60,4 +61,5 @@ $(document).ready(function() {
   			}
 		});
 	});
+	
 });

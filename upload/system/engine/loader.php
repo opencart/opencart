@@ -81,7 +81,7 @@ final class Loader {
 			$output = $template->render($route . '.tpl');
 		}
 		
-		// Trigger the post e
+		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
 		if ($result) {
@@ -142,12 +142,13 @@ final class Loader {
 			$output = null;
 			
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route, &$output), $args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
 			
 			if ($result) {
 				return $result;
 			}
 			
+			// Store the model object
 			if (!isset($model[$route])) {
 				$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
 				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
@@ -172,7 +173,7 @@ final class Loader {
 			}
 			
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route, &$output), $args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
 			
 			if ($result) {
 				return $result;

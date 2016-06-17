@@ -27,11 +27,11 @@ class Url {
 				$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
 			}
 		}
-
+		
 		foreach ($this->rewrite as $rewrite) {
 			$url = $rewrite->rewrite($url);
 		}
-
-		return $url;
+		
+		return $url; 
 	}
 }

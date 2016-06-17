@@ -123,7 +123,17 @@ class ModelCatalogProduct extends Model {
 			}
 
 			if (!empty($data['filter_tag'])) {
-				$sql .= "pd.tag LIKE '%" . $this->db->escape($data['filter_tag']) . "%'";
+				$implode = array();
+
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+
+				foreach ($words as $word) {
+					$implode[] = "pd.tag LIKE '%" . $this->db->escape($word) . "%'";
+				}
+
+				if ($implode) {
+					$sql .= " " . implode(" AND ", $implode) . "";
+				}
 			}
 
 			if (!empty($data['filter_name'])) {
@@ -470,7 +480,17 @@ class ModelCatalogProduct extends Model {
 			}
 
 			if (!empty($data['filter_tag'])) {
-				$sql .= "pd.tag LIKE '%" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "%'";
+				$implode = array();
+
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+
+				foreach ($words as $word) {
+					$implode[] = "pd.tag LIKE '%" . $this->db->escape($word) . "%'";
+				}
+
+				if ($implode) {
+					$sql .= " " . implode(" AND ", $implode) . "";
+				}
 			}
 
 			if (!empty($data['filter_name'])) {

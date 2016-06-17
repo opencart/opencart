@@ -439,7 +439,7 @@ class ControllerCheckoutCart extends Controller {
 
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
 
-			$this->session->data['success'] = $this->language->get('text_remove');
+			$json['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

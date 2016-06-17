@@ -178,11 +178,7 @@ class ModelExtensionTotalCoupon extends Model {
 					);
 
 					$total['total'] -= $discount_total;
-				} else {
-					unset($this->session->data['coupon']);
 				}
-			} else {
-				unset($this->session->data['coupon']);
 			}
 		}
 	}

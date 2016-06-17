@@ -351,7 +351,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$json['error'] = true;
 				$reason = '';
 				if ($result === false) {
-					$reason = $this->config->get('text_unknown_failure');
+					$reason = $this->language->get('text_unknown_failure');
 				} else {
 					$errors = explode(',', $result->Errors);
 					foreach ($errors as $error) {

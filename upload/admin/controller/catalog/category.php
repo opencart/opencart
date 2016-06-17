@@ -355,6 +355,12 @@ class ControllerCatalogCategory extends Controller {
 			$data['error_keyword'] = '';
 		}
 
+		if (isset($this->error['parent'])) {
+			$data['error_parent'] = $this->error['parent'];
+		} else {
+			$data['error_parent'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -549,6 +555,18 @@ class ControllerCatalogCategory extends Controller {
 
 			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+			}
+		}
+
+		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
+			$results = $this->model_catalog_category->getCategoryPath($this->request->post['parent_id']);
+			
+			foreach ($results as $result) {
+				if ($result['path_id'] == $this->request->get['category_id']) {
+					$this->error['parent'] = $this->language->get('error_parent');
+					
+					break;
+				}
 			}
 		}
 

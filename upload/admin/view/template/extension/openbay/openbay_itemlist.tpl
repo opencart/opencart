@@ -147,7 +147,7 @@
                   </div>
                 </div>
               </div>
-              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-search"></i> <?php echo $button_filter; ?></a>
+              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
             </div>
           </div>
         </div>

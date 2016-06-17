@@ -36,18 +36,20 @@ class ControllerCommonFileManager extends Controller {
 
 		$this->load->model('tool/image');
 
-		// Get directories
-		$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filter_name)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+			// Get directories
+			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
 
-		if (!$directories) {
-			$directories = array();
-		}
+			if (!$directories) {
+				$directories = array();
+			}
 
-		// Get files
-		$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+			// Get files
+			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
 
-		if (!$files) {
-			$files = array();
+			if (!$files) {
+				$files = array();
+			}
 		}
 
 		// Merge directories and files

@@ -51,6 +51,15 @@
               <?php } ?>
             </div>
           </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label required" for="input-locale"><span data-toggle="tooltip" title="<?php echo $help_locale; ?>"><?php echo $entry_locale; ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" class="form-control" />
+              <?php if ($error_locale) { ?>
+              <div class="text-danger"><?php echo $error_locale; ?></div>
+              <?php } ?>
+            </div>
+          </div>          
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="<?php echo $help_status; ?>"><?php echo $entry_status; ?></span></label>
             <div class="col-sm-10">

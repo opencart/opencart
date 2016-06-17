@@ -1385,7 +1385,7 @@ CREATE TABLE `oc_event` (
 --
 
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
-(1, 'voucher', 'catalog/model/checkout/order/addHistory/after', 'extension/total/voucher/send');
+(1, 'voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send');
 
 -- --------------------------------------------------------
 
@@ -5181,9 +5181,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (1508, 100, 'Bali', 'BA', 1),
 (1509, 100, 'Banten', 'BT', 1),
 (1510, 100, 'Bengkulu', 'BE', 1),
-(1511, 100, 'BoDeTaBek', 'BD', 1),
+(1511, 100, 'Kalimantan Utara', 'BD', 1),
 (1512, 100, 'Gorontalo', 'GO', 1),
-(1513, 100, 'Jakarta Raya', 'JK', 1),
+(1513, 100, 'Jakarta', 'JK', 1),
 (1514, 100, 'Jambi', 'JA', 1),
 (1515, 100, 'Jawa Barat', 'JB', 1),
 (1516, 100, 'Jawa Tengah', 'JT', 1),
@@ -7840,7 +7840,10 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4229, 118, 'North', 'LB-NR', 1),
 (4230, 118, 'South', 'LB-ST', 1),
 (4231, 99, 'Telangana', 'TS', 1),
-(4232, 44, 'Qinghai', 'QH', 1);
+(4232, 44, 'Qinghai', 'QH', 1),
+(4233, 100, 'Papua Barat', 'PB', 1),
+(4234, 100, 'Sulawesi Barat', 'SR', 1),
+(4235, 100, 'Kepulauan Riau', 'KR', 1);
 
 -- --------------------------------------------------------
 

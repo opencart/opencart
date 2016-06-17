@@ -91,8 +91,9 @@ class ControllerExtensionTheme extends Controller {
 		$stores = $this->model_setting_store->getStores();
 
 		$data['extensions'] = array();
-
-		$files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php');
+		
+		// Compatibility code for old extension folders
+		$files = glob(DIR_APPLICATION . 'controller/extension/{extension/theme,theme}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {

@@ -110,20 +110,5 @@ class ModelUpgrade1007 extends Model {
 			
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
 		}
-		
-		// Images
-        $this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE(image, 'data/', 'catalog/')");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE(value, 'data/', 'catalog/') WHERE `key` = 'config_logo'");
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE(value, 'data/', 'catalog/') WHERE `key` = 'config_icon'");		
 	}
 }

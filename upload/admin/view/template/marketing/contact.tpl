@@ -94,7 +94,13 @@
   </div>
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>  
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+<?php if (isset($language_summernote)) { ?>
+  <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $language_summernote; ?>.js"></script>
+  <script type="text/javascript"><!--
+$.summernote.options.lang = '<?php echo $language_summernote; ?>';
+//--></script>
+<?php } ?>
   <script type="text/javascript"><!--
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();

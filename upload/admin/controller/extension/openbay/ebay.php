@@ -1483,6 +1483,12 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 				$data['product'] = $product_info;
 
+				if ($this->config->get('config_admin_language') != 'en-gb') {
+					$language_parts = explode('-', (string)$this->config->get('config_admin_language'));
+
+					$data['language_summernote'] = $language_parts[0] . '-' . mb_strtoupper($language_parts[1]);
+				}
+
 				$data['header'] = $this->load->controller('common/header');
 				$data['column_left'] = $this->load->controller('common/column_left');
 				$data['footer'] = $this->load->controller('common/footer');

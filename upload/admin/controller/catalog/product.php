@@ -724,6 +724,12 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
+		if ($this->config->get('config_admin_language') != 'en-gb') {
+			$language_parts = explode('-', (string)$this->config->get('config_admin_language'));
+
+			$data['language_summernote'] = $language_parts[0] . '-' . mb_strtoupper($language_parts[1]);
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -103,6 +103,12 @@ class ControllerExtensionModuleHTML extends Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		if ($this->config->get('config_admin_language') != 'en-gb') {
+			$language_parts = explode('-', (string)$this->config->get('config_admin_language'));
+
+			$data['language_summernote'] = $language_parts[0] . '-' . mb_strtoupper($language_parts[1]);
+		}
+
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($module_info)) {

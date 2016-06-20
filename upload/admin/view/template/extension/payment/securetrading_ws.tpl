@@ -428,7 +428,8 @@
 	}
 
 	$('.datetime').datetimepicker({
-		pickTime: false
+		pickTime: false,
+		language: '<?php echo $language_locale; ?>'
 	});
 </script>
 <?php echo $footer; ?>

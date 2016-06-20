@@ -193,7 +193,8 @@ $('#form input').keydown(function(e) {
 });
 
 $('.date').datetimepicker({ 
-	pickTime: false 
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 //--></script>
   <script type="text/javascript"><!--

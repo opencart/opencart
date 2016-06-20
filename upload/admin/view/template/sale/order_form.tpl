@@ -2501,16 +2501,19 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 });
 
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.datetime').datetimepicker({
 	pickDate: true,
-	pickTime: true
+	pickTime: true,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.time').datetimepicker({
-	pickDate: false
+	pickDate: false,
+	language: '<?php echo $language_locale; ?>'
 });
 //--></script>
   <script type="text/javascript">

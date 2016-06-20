@@ -295,7 +295,7 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -339,6 +339,8 @@ class ControllerAccountReturn extends Controller {
 
 		$data['button_submit'] = $this->language->get('button_submit');
 		$data['button_back'] = $this->language->get('button_back');
+
+		$data['language_locale'] = $this->session->data['language'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

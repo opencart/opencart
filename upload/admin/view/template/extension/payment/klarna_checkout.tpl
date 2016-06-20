@@ -311,7 +311,8 @@ $(document).on('click', '#button-process-settlement', function() {
 $('#tabs a:first').tab('show');
 
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 <?php if (empty($klarna_checkout_account)) { ?>

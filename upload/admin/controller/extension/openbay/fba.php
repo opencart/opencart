@@ -379,6 +379,7 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $data['cancel'] = $this->url->link('extension/openbay/fba/index', 'token=' . $this->session->data['token'], true);
         $data['token'] = $this->session->data['token'];
+        $data['language_locale'] = $this->config->get('config_admin_language');
 
         if (isset($this->session->data['error'])) {
             $data['error_warning'] = $this->session->data['error'];
@@ -676,6 +677,7 @@ class ControllerExtensionOpenbayFba extends Controller {
 
         $data['cancel'] = $this->url->link('extension/openbay/fba/index', 'token=' . $this->session->data['token'], true);
         $data['token'] = $this->session->data['token'];
+        $data['language_locale'] = $this->config->get('config_admin_language');
 
         $data['status_options'] = array(
             0 => $this->language->get('text_option_new'),

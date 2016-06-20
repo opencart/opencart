@@ -314,6 +314,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['tab_history'] = $this->language->get('tab_history');
 
 		$data['token'] = $this->session->data['token'];
+		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		if (isset($this->request->get['coupon_id'])) {
 			$data['coupon_id'] = $this->request->get['coupon_id'];

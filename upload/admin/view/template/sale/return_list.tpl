@@ -294,7 +294,8 @@ $('input[name=\'filter_model\']').autocomplete({
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 //--></script></div>
 <?php echo $footer; ?> 

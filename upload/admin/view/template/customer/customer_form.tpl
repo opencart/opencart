@@ -1128,16 +1128,19 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 });
 
 $('.date').datetimepicker({
-	pickTime: false
+	pickTime: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.datetime').datetimepicker({
 	pickDate: true,
-	pickTime: true
+	pickTime: true,
+	language: '<?php echo $language_locale; ?>'
 });
 
 $('.time').datetimepicker({
-	pickDate: false
+	pickDate: false,
+	language: '<?php echo $language_locale; ?>'
 });
 
 // Sort the custom fields

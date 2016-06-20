@@ -723,6 +723,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$data['token'] = $this->session->data['token'];
+		$data['language_locale'] = $this->config->get('config_admin_language');
 
 		$this->load->model('localisation/language');
 

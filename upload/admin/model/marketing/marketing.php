@@ -58,7 +58,7 @@ class ModelMarketingMarketing extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY m.name";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -106,6 +106,12 @@ class ModelMarketingMarketing extends Model {
 		}
 
 		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
+
+	public function getTotalMarketingsByCode($code) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row['total'];
 	}

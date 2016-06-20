@@ -1,7 +1,7 @@
 <?php
-class ControllerDashboardOnline extends Controller {
+class ControllerExtensionDashboardOnline extends Controller {
 	public function index() {
-		$this->load->language('dashboard/online');
+		$this->load->language('extension/dashboard/online');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -29,6 +29,6 @@ class ControllerDashboardOnline extends Controller {
 
 		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/online', $data);
+		return $this->load->view('extension/dashboard/online', $data);
 	}
 }

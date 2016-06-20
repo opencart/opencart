@@ -1,5 +1,5 @@
 <?php
-class ControllerDashboardChart extends Controller {
+class ControllerExtensionDashboardChart extends Controller {
 	public function index() {
 		$this->load->language('dashboard/chart');
 
@@ -13,7 +13,7 @@ class ControllerDashboardChart extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		return $this->load->view('dashboard/chart', $data);
+		return $this->load->view('extension/dashboard/chart', $data);
 	}
 
 	public function chart() {

@@ -80,7 +80,7 @@ class ControllerExtensionTotal extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('total');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('total', $value);
 
 				unset($extensions[$key]);

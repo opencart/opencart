@@ -1,5 +1,5 @@
 <?php
-class ControllerDashboardActivity extends Controller {
+class ControllerExtensionDashboardActivity extends Controller {
 	public function index() {
 		$this->load->language('dashboard/activity');
 
@@ -38,6 +38,6 @@ class ControllerDashboardActivity extends Controller {
 			);
 		}
 
-		return $this->load->view('dashboard/activity', $data);
+		return $this->load->view('extension/dashboard/activity', $data);
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-class ControllerDashboardRecent extends Controller {
+class ControllerExtensionDashboardRecent extends Controller {
 	public function index() {
-		$this->load->language('dashboard/recent');
+		$this->load->language('extension/dashboard/recent');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -41,6 +41,6 @@ class ControllerDashboardRecent extends Controller {
 			);
 		}
 
-		return $this->load->view('dashboard/recent', $data);
+		return $this->load->view('extension/dashboard/recent', $data);
 	}
 }

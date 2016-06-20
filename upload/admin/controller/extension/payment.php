@@ -82,7 +82,7 @@ class ControllerExtensionPayment extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);

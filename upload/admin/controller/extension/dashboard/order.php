@@ -1,7 +1,7 @@
 <?php
-class ControllerDashboardOrder extends Controller {
+class ControllerExtensionDashboardOrder extends Controller {
 	public function index() {
-		$this->load->language('dashboard/order');
+		$this->load->language('extension/dashboard/order');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -40,6 +40,6 @@ class ControllerDashboardOrder extends Controller {
 
 		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/order', $data);
+		return $this->load->view('extension/dashboard/order', $data);
 	}
 }

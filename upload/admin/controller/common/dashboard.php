@@ -33,8 +33,7 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+
 		$data['order'] = $this->load->controller('dashboard/order');
 		$data['sale'] = $this->load->controller('dashboard/sale');
 		$data['customer'] = $this->load->controller('dashboard/customer');
@@ -43,6 +42,10 @@ class ControllerCommonDashboard extends Controller {
 		$data['chart'] = $this->load->controller('dashboard/chart');
 		$data['activity'] = $this->load->controller('dashboard/activity');
 		$data['recent'] = $this->load->controller('dashboard/recent');
+
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		// Run currency update

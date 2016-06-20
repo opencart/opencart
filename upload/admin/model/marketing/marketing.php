@@ -20,8 +20,8 @@ class ModelMarketingMarketing extends Model {
 		return $query->row;
 	}
 
-	public function getAffiliateByCode($code) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "affiliate` WHERE code = '" . $this->db->escape($code) . "'");
+	public function getMarketingByCode($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "marketing WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}

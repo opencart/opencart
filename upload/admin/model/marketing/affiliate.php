@@ -194,6 +194,12 @@ class ModelMarketingAffiliate extends Model {
 		return $query->row['total'];
 	}
 
+	public function getTotalAffiliatesByCode($code) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->row['total'];
+	}
+
 	public function addTransaction($affiliate_id, $description = '', $amount = '', $order_id = 0) {
 		$affiliate_info = $this->getAffiliate($affiliate_id);
 

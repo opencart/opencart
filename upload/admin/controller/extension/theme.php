@@ -79,7 +79,7 @@ class ControllerExtensionTheme extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('theme');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('theme', $value);
 
 				unset($extensions[$key]);

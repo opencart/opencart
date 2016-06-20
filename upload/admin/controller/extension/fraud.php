@@ -79,7 +79,7 @@ class ControllerExtensionFraud extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('fraud');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('fraud', $value);
 
 				unset($extensions[$key]);

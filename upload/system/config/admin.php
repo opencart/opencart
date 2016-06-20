@@ -31,5 +31,6 @@ $_['action_default'] = 'common/dashboard';
 
 // Action Events
 $_['action_event'] = array(
-    'view/*/before' => 'event/theme',
+    'view/*/before'               => 'event/theme',
+	'language/extension/*/before' => 'event/compatibility',
 );

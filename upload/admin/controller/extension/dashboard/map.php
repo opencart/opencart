@@ -1,5 +1,5 @@
 <?php
-class ControllerDashboardMap extends Controller {
+class ControllerExtensionDashboardMap extends Controller {
 	public function index() {
 		$this->load->language('dashboard/map');
 
@@ -10,7 +10,7 @@ class ControllerDashboardMap extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 		
-		return $this->load->view('dashboard/map', $data);
+		return $this->load->view('extension/dashboard/map', $data);
 	}
 
 	public function map() {

@@ -1,5 +1,5 @@
 <?php
-class ControllerDashboardCustomer extends Controller {
+class ControllerExtensionDashboardCustomer extends Controller {
 	public function index() {
 		$this->load->language('dashboard/customer');
 
@@ -40,6 +40,6 @@ class ControllerDashboardCustomer extends Controller {
 
 		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/customer', $data);
+		return $this->load->view('extension/dashboard/customer', $data);
 	}
 }

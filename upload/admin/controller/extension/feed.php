@@ -79,7 +79,7 @@ class ControllerExtensionFeed extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('feed');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/extension/feed/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/feed/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/feed/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('feed', $value);
 
 				unset($extensions[$key]);

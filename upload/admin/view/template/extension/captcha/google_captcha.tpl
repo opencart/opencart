@@ -26,17 +26,24 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-captcha" class="form-horizontal">
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?>
-              <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
             <div class="col-sm-10">
               <input type="text" name="google_captcha_key" value="<?php echo $google_captcha_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
+              <?php if ($error_key) { ?>
+              <div class="text-danger"><?php echo $error_key; ?></div>
+              <?php } ?>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-secret"><?php echo $entry_secret; ?></label>
             <div class="col-sm-10">
               <input type="text" name="google_captcha_secret" value="<?php echo $google_captcha_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" class="form-control" />
+              <?php if ($error_secret) { ?>
+              <div class="text-danger"><?php echo $error_secret; ?></div>
+              <?php } ?>
             </div>
           </div>
           <div class="form-group">
@@ -58,4 +65,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

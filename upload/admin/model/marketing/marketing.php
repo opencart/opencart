@@ -20,6 +20,12 @@ class ModelMarketingMarketing extends Model {
 		return $query->row;
 	}
 
+	public function getAffiliateByCode($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "affiliate` WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getMarketings($data = array()) {
 		$implode = array();
 
@@ -106,12 +112,6 @@ class ModelMarketingMarketing extends Model {
 		}
 
 		$query = $this->db->query($sql);
-
-		return $query->row['total'];
-	}
-
-	public function getTotalMarketingsByCode($code) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row['total'];
 	}

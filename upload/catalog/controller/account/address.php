@@ -41,14 +41,16 @@ class ControllerAccountAddress extends Controller {
 			$this->session->data['success'] = $this->language->get('text_add');
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			);
+				$activity_data = array(
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				);
 
-			$this->model_account_activity->addActivity('address_add', $activity_data);
+				$this->model_account_activity->addActivity('address_add', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}
@@ -95,14 +97,16 @@ class ControllerAccountAddress extends Controller {
 			$this->session->data['success'] = $this->language->get('text_edit');
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			);
+				$activity_data = array(
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				);
 
-			$this->model_account_activity->addActivity('address_edit', $activity_data);
+				$this->model_account_activity->addActivity('address_edit', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}
@@ -143,14 +147,16 @@ class ControllerAccountAddress extends Controller {
 			$this->session->data['success'] = $this->language->get('text_delete');
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			);
-			
-			$this->model_account_activity->addActivity('address_delete', $activity_data);
+				$activity_data = array(
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				);
+				
+				$this->model_account_activity->addActivity('address_delete', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('account/address', '', true));
 		}

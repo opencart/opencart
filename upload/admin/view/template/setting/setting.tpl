@@ -523,6 +523,29 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_customer_activity; ?>"><?php echo $entry_customer_activity; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <?php if ($config_customer_activity) { ?>
+                      <input type="radio" name="config_customer_activity" value="1" checked="checked" />
+                      <?php echo $text_yes; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_customer_activity" value="1" />
+                      <?php echo $text_yes; ?>
+                      <?php } ?>
+                    </label>
+                    <label class="radio-inline">
+                      <?php if (!$config_customer_activity) { ?>
+                      <input type="radio" name="config_customer_activity" value="0" checked="checked" />
+                      <?php echo $text_no; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_customer_activity" value="0" />
+                      <?php echo $text_no; ?>
+                      <?php } ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><?php echo $entry_customer_group; ?></span></label>
                   <div class="col-sm-10">
                     <select name="config_customer_group_id" id="input-customer-group" class="form-control">

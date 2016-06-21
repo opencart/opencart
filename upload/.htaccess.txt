@@ -11,8 +11,10 @@ Options -Indexes
 
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
- Order deny,allow
- Deny from all
+ Require all denied
+## For apache 2.2 and older, replace "Require all denied" with these two lines :
+# Order deny,allow
+# Deny from all
 </FilesMatch>
 
 # SEO URL Settings

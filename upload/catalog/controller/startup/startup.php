@@ -52,15 +52,36 @@ class ControllerStartupStartup extends Controller {
 		
 		// Language Detection
 		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
+			$detect = '';
+			
 			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
 			
+			// Try using local to detect the language
 			foreach ($browser_languages as $browser_language) {
-				if (array_key_exists(strtolower($browser_language), $languages)) {
-					$code = strtolower($browser_language);
-					
-					break;
+				foreach ($languages as $key => $value) {
+					if ($value['status']) {
+						$locale = explode(',', $value['locale']);
+						
+						if (in_array($browser_language, $locale)) {
+							$detect = $key;
+							break 2;
+						}
+					}
+				}	
+			}			
+			
+			if (!$detect) { 
+				// Try using language folder to detect the language
+				foreach ($browser_languages as $browser_language) {
+					if (array_key_exists(strtolower($browser_language), $languages)) {
+						$detect = strtolower($browser_language);
+						
+						break;
+					}
 				}
 			}
+			
+			$code = $detect ? $detect : '';
 		}
 		
 		if (!array_key_exists($code, $languages)) {

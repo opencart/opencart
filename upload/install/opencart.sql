@@ -1063,6 +1063,7 @@ CREATE TABLE `oc_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_group_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
+  `language_id` int(11) NOT NULL,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,

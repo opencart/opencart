@@ -24,7 +24,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 			'href' => $this->url->link('extension/feed/openbay', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -55,6 +55,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 1;
 		$settings['openbaypro_status'] = 1;
+		
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		$this->model_extension_event->addEvent('openbay', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
@@ -68,6 +69,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 0;
 		$settings['openbaypro_status'] = 0;
+		
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		$this->model_extension_event->deleteEvent('openbay');

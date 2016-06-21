@@ -3178,6 +3178,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (204, 0, 'config', 'config_tax_default', 'shipping', 0),
 (205, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (206, 0, 'config', 'config_customer_online', '0', 0),
+(314, 0, 'config', 'config_customer_activity', '0', 0),
 (207, 0, 'config', 'config_customer_group_id', '1', 0),
 (208, 0, 'config', 'config_customer_group_display', '["1"]', 1),
 (209, 0, 'config', 'config_customer_price', '0', 0),

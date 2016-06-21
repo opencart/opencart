@@ -23,14 +23,16 @@ class ControllerAffiliateRegister extends Controller {
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 
 			// Add to activity log
-			$this->load->model('affiliate/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('affiliate/activity');
 
-			$activity_data = array(
-				'affiliate_id' => $affiliate_id,
-				'name'         => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
-			);
+				$activity_data = array(
+					'affiliate_id' => $affiliate_id,
+					'name'         => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
+				);
 
-			$this->model_affiliate_activity->addActivity('register', $activity_data);
+				$this->model_affiliate_activity->addActivity('register', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('affiliate/success'));
 		}

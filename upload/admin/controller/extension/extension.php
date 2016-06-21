@@ -58,6 +58,16 @@ class ControllerExtensionExtension extends Controller {
 			);
 		}
 		
+		if ($this->user->hasPermission('access', 'extension/dashboard')) {
+			$files = glob(DIR_APPLICATION . 'controller/extension/dashboard/*.php', GLOB_BRACE);
+	
+			$data['categories'][] = array(
+				'code' => 'dashboard',
+				'text' => $this->language->get('text_dashboard') . ' (' . count($files) .')',
+				'href' => $this->url->link('extension/dashboard', 'token=' . $this->session->data['token'], true)
+			);
+		}
+			
 		if ($this->user->hasPermission('access', 'extension/feed')) {
 			$files = glob(DIR_APPLICATION . 'controller/{extension/feed,feed}/*.php', GLOB_BRACE);
 	

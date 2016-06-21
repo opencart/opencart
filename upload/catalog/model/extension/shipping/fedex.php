@@ -182,7 +182,7 @@ class ModelExtensionShippingFedex extends Model {
 
 						$delivery_time_stamp = $rate_reply_detail->getElementsByTagName('DeliveryTimestamp');
 						
-						if ($this->config->get('fedex_display_time') && $delivery_time_stamp->item(0)) {
+						if ($this->config->get('fedex_display_time') && $delivery_time_stamp->length) {
 							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($delivery_time_stamp->item(0)->nodeValue)) . ')';
 						}
 

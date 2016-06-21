@@ -32,6 +32,12 @@ class ModelMarketingAffiliate extends Model {
 		return $query->row;
 	}
 
+	public function getAffiliateByCode($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "affiliate WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getAffiliates($data = array()) {
 		$sql = "SELECT *, CONCAT(a.firstname, ' ', a.lastname) AS name, (SELECT SUM(at.amount) FROM " . DB_PREFIX . "affiliate_transaction at WHERE at.affiliate_id = a.affiliate_id GROUP BY at.affiliate_id) AS balance FROM " . DB_PREFIX . "affiliate a";
 
@@ -190,12 +196,6 @@ class ModelMarketingAffiliate extends Model {
 
 	public function getTotalAffiliatesByZoneId($zone_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE zone_id = '" . (int)$zone_id . "'");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalAffiliatesByCode($code) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "affiliate WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row['total'];
 	}

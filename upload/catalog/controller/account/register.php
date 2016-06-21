@@ -28,14 +28,16 @@ class ControllerAccountRegister extends Controller {
 			unset($this->session->data['guest']);
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			$activity_data = array(
-				'customer_id' => $customer_id,
-				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
-			);
+				$activity_data = array(
+					'customer_id' => $customer_id,
+					'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
+				);
 
-			$this->model_account_activity->addActivity('register', $activity_data);
+				$this->model_account_activity->addActivity('register', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('account/success'));
 		}

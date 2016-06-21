@@ -55,12 +55,12 @@ class ControllerAccountAccount extends Controller {
 		
 		$data['credit_cards'] = array();
 		
-		$files = glob(DIR_APPLICATION . 'controller/credit_card/*.php');
+		$files = glob(DIR_APPLICATION . 'controller/extension/credit_card/*.php');
 		
 		foreach ($files as $file) {
 			$code = basename($file, '.php');
 			
-			if ($this->config->get($code . '_status') && $this->config->get($code)) {
+			if ($this->config->get($code . '_status') && $this->config->get($code . '_card')) {
 				$this->load->language('extension/credit_card/' . $code);
 
 				$data['credit_cards'][] = array(

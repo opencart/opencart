@@ -272,23 +272,25 @@ class ControllerAccountReturn extends Controller {
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			if ($this->customer->isLogged()) {
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
-					'return_id'   => $return_id
-				);
+				if ($this->customer->isLogged()) {
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+						'return_id'   => $return_id
+					);
 
-				$this->model_account_activity->addActivity('return_account', $activity_data);
-			} else {
-				$activity_data = array(
-					'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
-					'return_id' => $return_id
-				);
+					$this->model_account_activity->addActivity('return_account', $activity_data);
+				} else {
+					$activity_data = array(
+						'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
+						'return_id' => $return_id
+					);
 
-				$this->model_account_activity->addActivity('return_guest', $activity_data);
+					$this->model_account_activity->addActivity('return_guest', $activity_data);
+				}
 			}
 
 			$this->response->redirect($this->url->link('account/return/success', '', true));

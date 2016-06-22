@@ -4,7 +4,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		$this->load->model('extension/payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($_SERVER['HTTPS']) && !($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
+		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS']) && !($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
 			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);

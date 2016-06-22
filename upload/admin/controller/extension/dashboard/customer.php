@@ -84,7 +84,7 @@ class ControllerExtensionDashboardCustomer extends Controller {
 	}
 		
 	public function dashboard() {
-		$this->load->language('dashboard/customer');
+		$this->load->language('extension/dashboard/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -123,6 +123,6 @@ class ControllerExtensionDashboardCustomer extends Controller {
 
 		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('extension/dashboard/customer', $data);
+		return $this->load->view('extension/dashboard/customer_info', $data);
 	}
 }

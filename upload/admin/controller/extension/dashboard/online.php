@@ -112,6 +112,6 @@ class ControllerExtensionDashboardOnline extends Controller {
 
 		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('extension/dashboard/online', $data);
+		return $this->load->view('extension/dashboard/online_info', $data);
 	}
 }

@@ -122,6 +122,6 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('extension/dashboard/sale', $data);
+		return $this->load->view('extension/dashboard/sale_info', $data);
 	}
 }

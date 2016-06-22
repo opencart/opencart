@@ -3,7 +3,6 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('extension/payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -84,7 +83,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
+			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 

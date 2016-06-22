@@ -84,7 +84,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 	}
 	
 	public function dashboard() {
-		$this->load->language('dashboard/activity');
+		$this->load->language('extension/dashboard/activity');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -121,6 +121,6 @@ class ControllerExtensionDashboardActivity extends Controller {
 			);
 		}
 
-		return $this->load->view('extension/dashboard/activity', $data);
+		return $this->load->view('extension/dashboard/activity_info', $data);
 	}
 }

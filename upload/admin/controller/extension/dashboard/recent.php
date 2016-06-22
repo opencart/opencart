@@ -124,6 +124,6 @@ class ControllerExtensionDashboardRecent extends Controller {
 			);
 		}
 
-		return $this->load->view('extension/dashboard/recent', $data);
+		return $this->load->view('extension/dashboard/recent_info', $data);
 	}
 }

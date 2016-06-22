@@ -123,6 +123,6 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('extension/dashboard/order', $data);
+		return $this->load->view('extension/dashboard/order_info', $data);
 	}
 }

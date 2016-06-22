@@ -12,7 +12,7 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$.ajax({
-		url: 'index.php?route=dashboard/map/map&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/dashboard/map/map&token=<?php echo $token; ?>',
 		dataType: 'json',
 		success: function(json) {
 			data = [];

@@ -7,7 +7,7 @@ $_['tab_register']          = 'Register';
 $_['tab_settings']          = 'Settings';
 
 // Text
-$_['text_payment']          = 'Payment';
+$_['text_extension']          = 'Extensions';
 $_['text_success']          = 'Success: You have modified Pilibaba payment module!';
 $_['text_edit']             = 'Edit Pilibaba';
 $_['text_pilibaba']         = '<a href="http://www.pilibaba.com" target="_blank"><img src="view/image/payment/pilibaba.png" alt="Pilibaba" title="Pilibaba"></a>';

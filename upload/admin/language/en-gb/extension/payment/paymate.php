@@ -3,7 +3,7 @@
 $_['heading_title']					= 'Paymate';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified Paymate account details!';
 $_['text_edit']                     = 'Edit Paymate';
 $_['text_paymate']					= '<img src="view/image/payment/paymate.png" alt="Paymate" title="Paymate" style="border: 1px solid #EEEEEE;" />';

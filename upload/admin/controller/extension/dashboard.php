@@ -101,8 +101,8 @@ class ControllerExtensiondashboard extends Controller {
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
-					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
-					'sort_order' => $this->config->get($extension . '_sort_order'),
+					'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
+					'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/dashboard/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall'  => $this->url->link('extension/dashboard/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),

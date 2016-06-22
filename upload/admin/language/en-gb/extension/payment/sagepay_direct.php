@@ -3,7 +3,7 @@
 $_['heading_title']					= 'SagePay Direct';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified SagePay account details!';
 $_['text_edit']                     = 'Edit SagePay Direct';
 $_['text_sagepay_direct']			= '<a href="https://support.sagepay.com/apply/default.aspx?PartnerID=E511AF91-E4A0-42DE-80B0-09C981A3FB61" target="_blank"><img src="view/image/payment/sagepay.png" alt="SagePay" title="SagePay" style="border: 1px solid #EEEEEE;" /></a>';

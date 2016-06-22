@@ -7,7 +7,7 @@ $_['tab_settings']                  = 'Settings';
 $_['tab_order_status']              = 'Order Status';
 
 // Text
-$_['text_payment']                  = 'Payment';
+$_['text_extension']                  = 'Extensions';
 $_['text_success']                  = 'Success: You have modified CardConnect payment module!';
 $_['text_edit']                     = 'Edit CardConnect';
 $_['text_cardconnect']              = '<a href="http://www.cardconnect.com" target="_blank"><img src="view/image/payment/cardconnect.png" alt="CardConnect" title="CardConnect"></a>';

@@ -3,7 +3,7 @@
 $_['heading_title']					= 'Perpetual Payments';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified Perpetual Payments account details!';
 $_['text_edit']                     = 'Edit Perpetual Payments';
 

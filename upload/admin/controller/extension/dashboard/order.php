@@ -43,7 +43,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_dashboard'),
+			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true)
 		);
 

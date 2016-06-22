@@ -3,7 +3,7 @@
 $_['heading_title']					= 'Cardinity';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified Cardinity payment module!';
 $_['text_edit']                     = 'Edit Cardinity';
 $_['text_cardinity']				= '<a href="http://cardinity.com/?crdp=opencart" target="_blank"><img src="view/image/payment/cardinity.png" alt="Cardinity" title="Cardinity" style="border: 1px solid #EEEEEE;" /></a>';

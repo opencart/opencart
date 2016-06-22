@@ -2,7 +2,8 @@
 // Heading
 $_['heading_title']    = 'Account';
 
-$_['text_module']      = 'Modules';
+// Text
+$_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified account module!';
 $_['text_edit']        = 'Edit Account Module';
 

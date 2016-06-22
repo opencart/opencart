@@ -2,8 +2,8 @@
 // Heading
 $_['heading_title'] = 'Pay with Amazon';
 
-//Text
-$_['text_module'] = 'Modules';
+// Text
+$_['text_extension']   = 'Extensions';
 $_['text_success'] = 'Success: You have modified module Pay with Amazon!';
 $_['text_content_top'] = 'Content Top';
 $_['text_content_bottom'] = 'Content Bottom';

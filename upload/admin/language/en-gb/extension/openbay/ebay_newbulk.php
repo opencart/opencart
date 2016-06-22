@@ -28,7 +28,7 @@ $_['text_profile_shipping']         = 'Shipping profile';
 $_['text_profile_returns']          = 'Returns profile';
 $_['text_profile_generic']          = 'Generic profile';
 
-//Text
+// Text
 $_['text_title']                    = 'Title';
 $_['text_price']                    = 'Price';
 $_['text_stock']                    = 'Stock';

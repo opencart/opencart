@@ -376,23 +376,6 @@ class ControllerSaleOrder extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		
-		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
-		
-		// API login
-		$this->load->model('user/api');
-
-		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-
-		if ($api_info) {
-			$data['api_id'] = $api_info['api_id'];
-			$data['api_key'] = $api_info['key'];
-			$data['api_ip'] = $this->request->server['REMOTE_ADDR'];
-		} else {
-			$data['api_id'] = '';
-			$data['api_key'] = '';
-			$data['api_ip'] = '';
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

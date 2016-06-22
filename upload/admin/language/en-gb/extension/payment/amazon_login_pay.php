@@ -2,7 +2,7 @@
 //Headings
 $_['heading_title']                 = 'Login and Pay with Amazon';
 
-//Text
+// Text
 $_['text_success']                  = 'Login and Pay with Amazon module has been updated';
 $_['text_ipn_url']					= 'Cron Job\'s URL';
 $_['text_ipn_token']				= 'Secret Token';

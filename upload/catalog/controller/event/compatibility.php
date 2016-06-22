@@ -43,7 +43,7 @@ class ControllerEventCompatibility extends Controller {
 		}
 	}
 	
-	public function model(&$route) {
+	public function beforeModel(&$route) {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		$part = explode('/', $route);

@@ -6,7 +6,7 @@
         <button type="submit" id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
         <button type="submit" id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
         <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="submit" id="button-delete" form="form-order" formaction="<?php echo $delete; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        <button type="button" id="button-delete" form="form-order" formaction="<?php echo $delete; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -251,16 +251,16 @@ $('#button-shipping, #button-invoice').prop('disabled', true);
 $('input[name^=\'selected\']:first').trigger('change');
 
 // IE and Edge fix!
-$('#button-shipping, #button-invoice, #button-delete').on('click', function(e) {
+$('#button-shipping, #button-invoice').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
 });
 
-$('#button-delete').on('submit', function(e) {
+$('#button-delete').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
-	 
-	 if (confirm('<?php echo $text_confirm; ?>')) {
+	
+	if (confirm('<?php echo $text_confirm; ?>')) {
 		$('#form-order').submit();
-	 } else {
+	} else {
 		return false;
 	}
 });

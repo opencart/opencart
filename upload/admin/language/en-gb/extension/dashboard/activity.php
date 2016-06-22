@@ -3,6 +3,9 @@
 $_['heading_title']                = 'Recent Activity';
 
 // Text
+$_['text_extension']               = 'Extensions';
+$_['text_success']                 = 'Success: You have modified dashboard activity!';
+$_['text_edit']                    = 'Edit Dashboard Recent Activity';
 $_['text_customer_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_customer_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_customer_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';
@@ -22,3 +25,10 @@ $_['text_affiliate_login']         = '<a href="affiliate_id=%d">%s</a> logged in
 $_['text_affiliate_password']      = '<a href="affiliate_id=%d">%s</a> updated their account password.';
 $_['text_affiliate_payment']       = '<a href="affiliate_id=%d">%s</a> updated their payment details.';
 $_['text_affiliate_register']      = '<a href="affiliate_id=%d">%s</a> registered for a new account.';
+
+// Entry
+$_['entry_status']                 = 'Status';
+$_['entry_sort_order']             = 'Sort Order';
+
+// Error
+$_['error_permission']             = 'Warning: You do not have permission to modify dashboard activity!';

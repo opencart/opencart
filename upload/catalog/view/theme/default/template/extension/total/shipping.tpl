@@ -127,6 +127,9 @@ $('#button-quote').on('click', function() {
 					$('#button-shipping').prop('disabled', false);
 				});
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
@@ -155,6 +158,9 @@ $(document).delegate('#button-shipping', 'click', function() {
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

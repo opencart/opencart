@@ -8,6 +8,7 @@ $_['text_list']      = 'Extension List';
 $_['text_type']      = 'Choose the extension type';
 $_['text_analytics'] = 'Analytics';
 $_['text_captcha']   = 'Captcha';
+$_['text_dashboard'] = 'Dashboard';
 $_['text_feed']      = 'Feeds';
 $_['text_fraud']     = 'Anti-Fraud';
 $_['text_module']    = 'Modules';

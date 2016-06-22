@@ -87,13 +87,14 @@ class ControllerExtensionTheme extends Controller {
 		}
 
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
 
 		$data['extensions'] = array();
 		
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/{extension/theme,theme}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/{extension/theme,theme}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -113,7 +114,7 @@ class ControllerExtensionTheme extends Controller {
 					$store_data[] = array(
 						'name'   => $store['name'],
 						'edit'   => $this->url->link('extension/theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
 				

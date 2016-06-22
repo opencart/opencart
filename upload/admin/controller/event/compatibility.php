@@ -1,6 +1,13 @@
 <?php
 class ControllerEventCompatibility extends Controller {
-	public function index(&$route) {
+	public function controller(&$route) {
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+
+
+
+	}
+	
+	public function language(&$route) {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
 		// Compatibility code for old extension folders

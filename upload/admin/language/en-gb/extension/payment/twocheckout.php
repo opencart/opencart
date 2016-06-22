@@ -3,7 +3,7 @@
 $_['heading_title']					= '2Checkout';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified 2Checkout account details!';
 $_['text_edit']                     = 'Edit 2Checkout';
 $_['text_twocheckout']				= '<a href="https://www.2checkout.com/2co/affiliate?affiliate=1596408" target="_blank"><img src="view/image/payment/2checkout.png" alt="2Checkout" title="2Checkout" style="border: 1px solid #EEEEEE;" /></a>';

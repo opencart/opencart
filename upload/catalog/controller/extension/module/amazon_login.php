@@ -85,14 +85,17 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					$this->load->model('account/activity');
+					if ($this->config->get('config_customer_activity')) {
+						$this->load->model('account/activity');
 
-					$activity_data = array(
-						'customer_id' => $this->customer->getId(),
-						'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-					);
+						$activity_data = array(
+							'customer_id' => $this->customer->getId(),
+							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+						);
 
-					$this->model_account_activity->addActivity('login', $activity_data);
+						$this->model_account_activity->addActivity('login', $activity_data);
+					}
+
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 				} else {
 					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
@@ -142,14 +145,16 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					$this->load->model('account/activity');
+					if ($this->config->get('config_customer_activity')) {
+						$this->load->model('account/activity');
 
-					$activity_data = array(
-						'customer_id' => $this->customer->getId(),
-						'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-					);
+						$activity_data = array(
+							'customer_id' => $this->customer->getId(),
+							'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+						);
 
-					$this->model_account_activity->addActivity('login', $activity_data);
+						$this->model_account_activity->addActivity('login', $activity_data);
+					}
 
 					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
 

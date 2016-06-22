@@ -57,7 +57,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_captcha'),
+			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true)
 		);
 

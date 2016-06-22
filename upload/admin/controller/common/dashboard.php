@@ -7,11 +7,6 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_map'] = $this->language->get('text_map');
-		$data['text_activity'] = $this->language->get('text_activity');
-		$data['text_recent'] = $this->language->get('text_recent');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -31,18 +26,28 @@ class ControllerCommonDashboard extends Controller {
 			$data['error_install'] = '';
 		}
 
-		$data['token'] = $this->session->data['token'];
+		// Dashboard Extensions
+		$data['dashboards'] = array();
 
+		$this->load->model('extension/extension');
 
-		$data['order'] = $this->load->controller('dashboard/order');
-		$data['sale'] = $this->load->controller('dashboard/sale');
-		$data['customer'] = $this->load->controller('dashboard/customer');
-		$data['online'] = $this->load->controller('dashboard/online');
-		$data['map'] = $this->load->controller('dashboard/map');
-		$data['chart'] = $this->load->controller('dashboard/chart');
-		$data['activity'] = $this->load->controller('dashboard/activity');
-		$data['recent'] = $this->load->controller('dashboard/recent');
+		// Get a list of installed modules
+		$extensions = $this->model_extension_extension->getInstalled('dashboard');
+		
+		// Add all the modules which have multiple settings for each module
+		foreach ($extensions as $code) {
+			if ($this->config->has('dashboard_' . $code . '_status')) {
+				$data['dashboards'][] = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
+			}
+		}
 
+		$sort_order = array();
+
+		foreach ($data['dashboards'] as $key => $value) {
+			$sort_order[$key] = $this->config->has($code . '_sort_order');
+		}
+
+		array_multisort($sort_order, SORT_ASC, $data['dashboards']);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -3,7 +3,7 @@
 $_['heading_title']					= 'BluePay Hosted Form';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']			    = 'Extensions';
 $_['text_success']					= 'Success: You have modified BluePay Hosted Form account details!';
 $_['text_edit']						= 'Edit BluePay Hosted Form';
 $_['text_bluepay_hosted']			= '<a href="http://www.bluepay.com/preferred-partner/opencart" target="_blank"><img src="view/image/payment/bluepay.jpg" alt="BluePay Hosted Form" title="BluePay Hosted Form" style="border: 1px solid #EEEEEE;" /></a>';
@@ -12,9 +12,9 @@ $_['text_live']						= 'Live';
 $_['text_sale']						= 'Sale';
 $_['text_authenticate']				= 'Authorize';
 $_['text_release_ok']				= 'Release was successful';
-$_['text_release_ok_order']			= 'Release was successful';
-$_['text_rebate_ok']				= 'Rebate was successful';
-$_['text_rebate_ok_order']			= 'Rebate was successful, order status updated to rebated';
+$_['text_release_ok_order']	= 'Release was successful';
+$_['text_rebate_ok']		= 'Rebate was successful';
+$_['text_rebate_ok_order']	= 'Rebate was successful, order status updated to rebated';
 $_['text_void_ok']					= 'Void was successful, order status updated to voided';
 $_['text_payment_info']				= 'Payment information';
 $_['text_release_status']			= 'Payment released';

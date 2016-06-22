@@ -2,7 +2,7 @@
 //Headings
 $_['heading_title']                 = 'Login and Pay with Amazon';
 
-//Text
+// Text
 $_['text_success']                  = 'Login and Pay with Amazon module has been updated';
 $_['text_ipn_url']					= 'Cron Job\'s URL';
 $_['text_ipn_token']				= 'Secret Token';
@@ -18,7 +18,7 @@ $_['text_uk_region']                = 'United Kingdom';
 $_['text_live']                     = 'Live';
 $_['text_sandbox']                  = 'Sandbox';
 $_['text_auth']						= 'Authorization';
-$_['text_payment']                  = 'Payment';
+$_['text_extension']                  = 'Extensions';
 $_['text_account']                  = 'Account';
 $_['text_guest']					= 'Guest';
 $_['text_no_capture']               = '--- No Automatic Capture ---';

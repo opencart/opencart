@@ -3,7 +3,7 @@
 $_['heading_title']					 = 'Realex Redirect';
 
 // Text
-$_['text_payment']				  	 = 'Payment';
+$_['text_extension']				  	 = 'Extensions';
 $_['text_success']					 = 'Success: You have modified Realex account details!';
 $_['text_edit']                      = 'Edit Realex Redirect';
 $_['text_live']						 = 'Live';

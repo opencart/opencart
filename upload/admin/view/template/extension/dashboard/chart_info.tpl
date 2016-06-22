@@ -26,7 +26,7 @@ $('#range a').on('click', function(e) {
 	
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=dashboard/chart/chart&token=<?php echo $token; ?>&range=' + $(this).attr('href'),
+		url: 'index.php?route=extension/dashboard/chart/chart&token=<?php echo $token; ?>&range=' + $(this).attr('href'),
 		dataType: 'json',
 		success: function(json) {
                         if (typeof json['order'] == 'undefined') { return false; }

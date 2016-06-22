@@ -132,7 +132,7 @@ class ControllerExtensionShippingFedex extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_shipping'),
+			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
 		);
 
@@ -434,7 +434,7 @@ class ControllerExtensionShippingFedex extends Controller {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 
-		if (!$this->request->post['fedex_length'] || !$this->request->post['fedex_width'] || !$this->request->post['fedex_width']) {
+		if (!$this->request->post['fedex_length'] || !$this->request->post['fedex_width'] || !$this->request->post['fedex_height']) {
 			$this->error['dimension'] = $this->language->get('error_dimension');
 		}
 

@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_payment']		     = 'Payment Information';
+$_['text_extension']		     = 'Payment Information';
 $_['text_capture_status']	 = 'Capture status';
 $_['text_amount_authorised'] = 'Amount authorised';
 $_['text_amount_captured']	 = 'Amount captured';

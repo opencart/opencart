@@ -3,7 +3,7 @@
 $_['heading_title']					= 'eWAY Payment';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']				= 'Extensions';
 $_['text_success']					= 'Success: You have modified your eWAY details!';
 $_['text_edit']						= 'Edit eWAY';
 $_['text_eway']						= '<a target="_BLANK" href="http://www.eway.com.au/"><img src="view/image/payment/eway.png" alt="eWAY" title="eWAY" style="border: 1px solid #EEEEEE;" /></a>';

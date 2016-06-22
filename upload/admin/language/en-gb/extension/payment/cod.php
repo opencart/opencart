@@ -3,7 +3,7 @@
 $_['heading_title']					= 'Cash On Delivery';
 
 // Text
-$_['text_payment']					= 'Payment';
+$_['text_extension']					= 'Extensions';
 $_['text_success']					= 'Success: You have modified Cash On Delivery payment module!';
 $_['text_edit']                     = 'Edit Cash On Delivery';
 

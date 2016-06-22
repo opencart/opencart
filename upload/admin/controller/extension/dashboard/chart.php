@@ -10,7 +10,7 @@ class ControllerExtensionDashboardChart extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('chart', $this->request->post);
+			$this->model_setting_setting->editSetting('dashboard_chart', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,23 +56,23 @@ class ControllerExtensionDashboardChart extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
 
-		if (isset($this->request->post['chart_status'])) {
-			$data['chart_status'] = $this->request->post['chart_status'];
+		if (isset($this->request->post['dashboard_chart_status'])) {
+			$data['dashboard_chart_status'] = $this->request->post['dashboard_chart_status'];
 		} else {
-			$data['chart_status'] = $this->config->get('chart_status');
+			$data['dashboard_chart_status'] = $this->config->get('dashboard_chart_status');
 		}
 
-		if (isset($this->request->post['chart_sort_order'])) {
-			$data['chart_sort_order'] = $this->request->post['chart_sort_order'];
+		if (isset($this->request->post['dashboard_chart_sort_order'])) {
+			$data['dashboard_chart_sort_order'] = $this->request->post['dashboard_chart_sort_order'];
 		} else {
-			$data['chart_sort_order'] = $this->config->get('chart_sort_order');
+			$data['dashboard_chart_sort_order'] = $this->config->get('dashboard_chart_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/chart', $data));
+		$this->response->setOutput($this->load->view('extension/dashboard/chart_form', $data));
 	}
 
 	protected function validate() {

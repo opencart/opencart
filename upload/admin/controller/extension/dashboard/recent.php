@@ -3,14 +3,14 @@ class ControllerExtensionDashboardRecent extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/dashboard/activity');
+		$this->load->language('extension/dashboard/recent');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('activity', $this->request->post);
+			$this->model_setting_setting->editSetting('dashboard_recent', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -49,30 +49,30 @@ class ControllerExtensionDashboardRecent extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/activity', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/dashboard/recent', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/dashboard/activity', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/dashboard/recent', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
 
-		if (isset($this->request->post['activity_status'])) {
-			$data['activity_status'] = $this->request->post['activity_status'];
+		if (isset($this->request->post['dashboard_recent_status'])) {
+			$data['dashboard_recent_status'] = $this->request->post['dashboard_recent_status'];
 		} else {
-			$data['activity_status'] = $this->config->get('activity_status');
+			$data['dashboard_recent_status'] = $this->config->get('dashboard_recent_status');
 		}
 
-		if (isset($this->request->post['activity_sort_order'])) {
-			$data['activity_sort_order'] = $this->request->post['activity_sort_order'];
+		if (isset($this->request->post['dashboard_recent_sort_order'])) {
+			$data['dashboard_recent_sort_order'] = $this->request->post['dashboard_recent_sort_order'];
 		} else {
-			$data['activity_sort_order'] = $this->config->get('activity_sort_order');
+			$data['dashboard_recent_sort_order'] = $this->config->get('dashboard_recent_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/activity', $data));
+		$this->response->setOutput($this->load->view('extension/dashboard/recent_form', $data));
 	}
 
 	protected function validate() {

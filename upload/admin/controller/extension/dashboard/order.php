@@ -10,7 +10,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('order', $this->request->post);
+			$this->model_setting_setting->editSetting('dashboard_order', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,23 +56,23 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
 
-		if (isset($this->request->post['order_status'])) {
-			$data['order_status'] = $this->request->post['order_status'];
+		if (isset($this->request->post['dashboard_order_status'])) {
+			$data['dashboard_order_status'] = $this->request->post['dashboard_order_status'];
 		} else {
-			$data['order_status'] = $this->config->get('order_status');
+			$data['dashboard_order_status'] = $this->config->get('dashboard_order_status');
 		}
 
-		if (isset($this->request->post['order_sort_order'])) {
-			$data['order_sort_order'] = $this->request->post['order_sort_order'];
+		if (isset($this->request->post['dashboard_order_sort_order'])) {
+			$data['dashboard_order_sort_order'] = $this->request->post['dashboard_order_sort_order'];
 		} else {
-			$data['order_sort_order'] = $this->config->get('order_sort_order');
+			$data['dashboard_order_sort_order'] = $this->config->get('dashboard_order_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/order', $data));
+		$this->response->setOutput($this->load->view('extension/dashboard/order_form', $data));
 	}
 
 	protected function validate() {

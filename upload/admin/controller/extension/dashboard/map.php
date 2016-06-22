@@ -10,7 +10,7 @@ class ControllerExtensionDashboardMap extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('map', $this->request->post);
+			$this->model_setting_setting->editSetting('dashboard_map', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,23 +56,23 @@ class ControllerExtensionDashboardMap extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
 
-		if (isset($this->request->post['map_status'])) {
-			$data['map_status'] = $this->request->post['map_status'];
+		if (isset($this->request->post['dashboard_map_status'])) {
+			$data['dashboard_map_status'] = $this->request->post['dashboard_map_status'];
 		} else {
-			$data['map_status'] = $this->config->get('map_status');
+			$data['dashboard_map_status'] = $this->config->get('dashboard_map_status');
 		}
 
-		if (isset($this->request->post['map_sort_order'])) {
-			$data['map_sort_order'] = $this->request->post['map_sort_order'];
+		if (isset($this->request->post['dashboard_map_sort_order'])) {
+			$data['dashboard_map_sort_order'] = $this->request->post['dashboard_map_sort_order'];
 		} else {
-			$data['map_sort_order'] = $this->config->get('map_sort_order');
+			$data['dashboard_map_sort_order'] = $this->config->get('dashboard_map_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/map', $data));
+		$this->response->setOutput($this->load->view('extension/dashboard/map_form', $data));
 	}
 
 	protected function validate() {

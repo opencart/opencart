@@ -5,7 +5,7 @@ class ModelCatalogReview extends Model {
 
 		$review_id = $this->db->getLastId();
 
-		if ($this->config->get('config_review_mail')) {
+		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/review');
 			$this->load->model('catalog/product');
 			
@@ -37,7 +37,7 @@ class ModelCatalogReview extends Model {
 			$mail->send();
 
 			// Send to additional alert emails
-			$emails = explode(',', $this->config->get('config_mail_alert'));
+			$emails = explode(',', $this->config->get('config_alert_email'));
 
 			foreach ($emails as $email) {
 				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {

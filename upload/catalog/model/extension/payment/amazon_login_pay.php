@@ -59,7 +59,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 		$mail->send();
 
 		// Send to main admin email if new account email is enabled
-		if ($this->config->get('config_account_mail')) {
+		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {
 			$message  = $this->language->get('text_signup') . "\n\n";
 			$message .= $this->language->get('text_website') . ' ' . html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . "\n";
 			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
@@ -85,7 +85,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled
-			$emails = explode(',', $this->config->get('config_mail_alert'));
+			$emails = explode(',', $this->config->get('config_alert_email'));
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {

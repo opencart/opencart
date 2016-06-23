@@ -658,7 +658,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->send();
 	
 				// Admin Alert Mail
-				if ($this->config->get('config_order_mail')) {
+				if (in_array('order', (array)$this->config->get('config_mail_alert'))) {
 					$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
 	
 					// HTML Mail
@@ -746,7 +746,7 @@ class ModelCheckoutOrder extends Model {
 					$mail->send();
 	
 					// Send to additional alert emails
-					$emails = explode(',', $this->config->get('config_mail_alert'));
+					$emails = explode(',', $this->config->get('config_alert_email'));
 	
 					foreach ($emails as $email) {
 						if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {

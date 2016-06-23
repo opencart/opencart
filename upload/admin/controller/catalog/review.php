@@ -186,14 +186,13 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'r.date_added';
-			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -419,6 +418,7 @@ class ControllerCatalogReview extends Controller {
 		$data['entry_product'] = $this->language->get('entry_product');
 		$data['entry_author'] = $this->language->get('entry_author');
 		$data['entry_rating'] = $this->language->get('entry_rating');
+		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_text'] = $this->language->get('entry_text');
 
@@ -553,6 +553,14 @@ class ControllerCatalogReview extends Controller {
 			$data['rating'] = $review_info['rating'];
 		} else {
 			$data['rating'] = '';
+		}
+
+		if (isset($this->request->post['date_added'])) {
+			$data['date_added'] = $this->request->post['date_added'];
+		} elseif (!empty($review_info)) {
+			$data['date_added'] = ($review_info['date_added'] != '0000-00-00 00:00' ? $review_info['date_added'] : '');
+		} else {
+			$data['date_added'] = '';
 		}
 
 		if (isset($this->request->post['status'])) {

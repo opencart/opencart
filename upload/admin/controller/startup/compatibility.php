@@ -1,8 +1,6 @@
 <?php
 class ControllerStartupCompatibility extends Controller {
 	public function index() {
-		
-		
 		// Adding a rewrite so any link to the extension page is changed to to the new extension system  
 		$this->url->addRewrite($this);
 	}
@@ -29,10 +27,7 @@ class ControllerStartupCompatibility extends Controller {
 			);		
 			
 			if (in_array($data['route'], $routes)) {
-				echo 'ghgh';
-				
-				$query  = '?route=extension/extension';
-				$query .= '&type=' . substr($data['route'], 10);
+				$query  = '?route=extension/extension&type=' . substr($data['route'], 10);
 				
 				unset($data['route']);
 				

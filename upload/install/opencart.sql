@@ -1865,6 +1865,7 @@ CREATE TABLE `oc_marketing` (
 -- Table structure for table `oc_menu`
 --
 
+DROP TABLE IF EXISTS `oc_menu`;
 CREATE TABLE `oc_menu` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
@@ -1881,6 +1882,7 @@ CREATE TABLE `oc_menu` (
 -- Table structure for table `oc_menu_description`
 --
 
+DROP TABLE IF EXISTS `oc_menu_description`;
 CREATE TABLE `oc_menu_description` (
   `menu_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -1894,6 +1896,7 @@ CREATE TABLE `oc_menu_description` (
 -- Table structure for table `oc_menu_module`
 --
 
+DROP TABLE IF EXISTS `oc_menu_module`;
 CREATE TABLE `oc_menu_module` (
   `menu_module_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,

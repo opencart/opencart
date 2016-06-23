@@ -148,6 +148,12 @@ class ModelUpgrade1004 extends Model {
 										$module_data['product'] = explode(",", $result2['value']);
 										$module_data['limit'] = 4;
 										break;
+									} else {
+										$featured_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'featured_product'");
+										if ($featured_product_query->num_rows) {
+											$module_data['product'] = explode(",", $featured_product_query->row['value']);
+											$module_data['limit'] = 4;
+										}
 									}
 								}
 							}
@@ -209,7 +215,8 @@ class ModelUpgrade1004 extends Model {
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . $result['store_id'] . "' AND `code` = 'welcome'");
 						}
 					} else {
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+						//$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = 'welcome'");
 					}
 				} else {
 					// could add code for other types here

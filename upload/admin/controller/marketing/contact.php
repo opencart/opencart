@@ -211,9 +211,9 @@ class ControllerMarketingContact extends Controller {
 						break;
 				}
 
-				$json['success'] = $this->language->get('text_success');
-
 				if ($emails) {
+					$json['success'] = $this->language->get('text_success');
+
 					$start = ($page - 1) * 10;
 					$end = $start + 10;
 
@@ -254,6 +254,8 @@ class ControllerMarketingContact extends Controller {
 							$mail->send();
 						}
 					}
+				} else {
+					$json['error']['email'] = $this->language->get('error_email');
 				}
 			}
 		}

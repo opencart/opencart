@@ -212,6 +212,10 @@ function send(url) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
 				}
 
+				if (json['error']['email']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['email'] + '</div>');
+				}
+
 				if (json['error']['subject']) {
 					$('input[name=\'subject\']').after('<div class="text-danger">' + json['error']['subject'] + '</div>');
 				}
@@ -229,9 +233,9 @@ function send(url) {
 				send(json['next']);
 			}
 		},
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
 }
 //--></script></div>

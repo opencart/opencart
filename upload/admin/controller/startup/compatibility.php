@@ -40,7 +40,7 @@ class ControllerStartupCompatibility extends Controller {
 				
 				return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . $url_info['path'] . $query;
 			} else {
-				return $link;hg
+				return $link;
 			}
 		} else {
 			return $link;

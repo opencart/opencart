@@ -88,6 +88,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_tax_customer'] = $this->language->get('entry_tax_customer');
 		$data['entry_customer_online'] = $this->language->get('entry_customer_online');
 		$data['entry_customer_activity'] = $this->language->get('entry_customer_activity');
+		$data['entry_customer_search'] = $this->language->get('entry_customer_search');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_customer_group_display'] = $this->language->get('entry_customer_group_display');
 		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
@@ -162,6 +163,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_tax_customer'] = $this->language->get('help_tax_customer');
 		$data['help_customer_online'] = $this->language->get('help_customer_online');
 		$data['help_customer_activity'] = $this->language->get('help_customer_activity');
+		$data['help_customer_search'] = $this->language->get('help_customer_search');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
 		$data['help_customer_price'] = $this->language->get('help_customer_price');
@@ -653,6 +655,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_customer_activity'] = $this->request->post['config_customer_activity'];
 		} else {
 			$data['config_customer_activity'] = $this->config->get('config_customer_activity');
+		}
+
+		if (isset($this->request->post['config_customer_search'])) {
+			$data['config_customer_search'] = $this->request->post['config_customer_search'];
+		} else {
+			$data['config_customer_search'] = $this->config->get('config_customer_search');
 		}
 
 		if (isset($this->request->post['config_customer_group_id'])) {

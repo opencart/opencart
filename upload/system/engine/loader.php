@@ -1,16 +1,16 @@
 <?php
 final class Loader {
 	protected $registry;
- 
+
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 	
 	public function controller($route, $data = array()) {
-		$output = null;
-		
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		
+		$output = null;
 		
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
@@ -38,7 +38,10 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route))) {
+		// Trigger the pre events
+		$this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
+		
+		if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
 			$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 			
@@ -56,6 +59,9 @@ final class Loader {
 				throw new \Exception('Error: Could not load model ' . $route . '!');
 			}
 		}
+		
+		// Trigger the post events
+		$this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
 	}
 
 	public function view($route, $data = array()) {
@@ -126,7 +132,9 @@ final class Loader {
 	}
 
 	public function language($route) {
-		$this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route));
+		$output = null;
+		
+		$this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$output));
 		
 		$output = $this->registry->get('language')->load($route);
 		

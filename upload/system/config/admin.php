@@ -31,6 +31,21 @@ $_['action_default'] = 'common/dashboard';
 
 // Action Events
 $_['action_event'] = array(
-    'view/*/before'               => 'event/theme',
-	'language/extension/*/before' => 'event/compatibility'
+    'view/*/before'                => 'event/theme',
+	
+	'contoller/extension/analytics/*/before'   => 'event/compatibility/controller',
+	'contoller/extension/captcha/*/before'     => 'event/compatibility/controller',
+	'contoller/extension/credit_card/*/before' => 'event/compatibility/controller',
+	'contoller/extension/feed/*/before'        => 'event/compatibility/controller',
+	'contoller/extension/fraud/*/before'       => 'event/compatibility/controller',
+	'contoller/extension/module/*/before'      => 'event/compatibility/controller',
+	'contoller/extension/payment/*/before'     => 'event/compatibility/controller',
+	'contoller/extension/recurring/*/before'   => 'event/compatibility/controller',
+	'contoller/extension/shipping/*/before'    => 'event/compatibility/controller',
+	'contoller/extension/theme/*/before'       => 'event/compatibility/controller',
+	'contoller/extension/total/*/before'       => 'event/compatibility/controller',	
+	
+	
+	'contoller/extension/*/before' => 'event/compatibility/contoller',
+	'language/extension/*/before'  => 'event/compatibility/language'
 );

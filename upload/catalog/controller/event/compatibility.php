@@ -47,7 +47,7 @@ class ControllerEventCompatibility extends Controller {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		/*
 		$part = explode('/', $route);
-		
+		 
 		$extension = array(
 			'extension/analytics',
 			'extension/captcha',

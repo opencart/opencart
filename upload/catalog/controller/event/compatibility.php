@@ -67,6 +67,30 @@ class ControllerEventCompatibility extends Controller {
 		}
 	}
 	
+	public function afterModel(&$route) {
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		
+		$part = explode('/', $route);
+			
+		$extension = array(
+			'analytics',
+			'captcha',
+			'credit_card',
+			'feed',
+			'fraud',
+			'module',
+			'payment',
+			'recurring',
+			'shipping',
+			'theme',
+			'total'
+		);
+					
+		if (isset($part[0]) && isset($part[1]) && in_array($part[0], $extension)) { 
+			$this->{'model_extension_' . $part[0] . '_' . $part[1]} = $this->{'model_' . $part[0] . '_' . $part[1]};
+		}
+	}
+		
 	public function language(&$route) {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		

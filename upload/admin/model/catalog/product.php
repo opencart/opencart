@@ -111,7 +111,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		if (isset($data['keyword'])) {
+		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 

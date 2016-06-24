@@ -16,16 +16,9 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    
-    
     <?php foreach ($dashboards as $dashboard) { ?>
-    <?php echo $dashboard; ?>
+    <?php echo $dashboard['output']; ?>
     <?php } ?>
-    
-    
-
-    
-    
   </div>
 </div>
 <?php echo $footer; ?>

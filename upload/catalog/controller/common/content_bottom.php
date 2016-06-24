@@ -60,10 +60,10 @@ class ControllerCommonContentBottom extends Controller {
 				$setting_info = $this->model_extension_module->getModule($part[1]);
 
 				if ($setting_info && $setting_info['status']) {
-					$module_data = $this->load->controller('extension/module/' . $part[0], $setting_info);
+					$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
 
-					if ($module_data) {
-						$data['modules'][] = $module_data;
+					if ($output) {
+						$data['modules'][] = $output;
 					}
 				}
 			}

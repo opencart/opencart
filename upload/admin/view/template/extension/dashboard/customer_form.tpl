@@ -26,6 +26,20 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-dashboard" class="form-horizontal">
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-width"><?php echo $entry_width; ?></label>
+            <div class="col-sm-10">
+              <select name="dashboard_customer_width" id="input-width" class="form-control">
+                <?php foreach ($columns as $column) { ?>
+                <?php if ($column == $dashboard_customer_width) { ?>
+                <option value="<?php echo $column; ?>" selected="selected"><?php echo $column; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $column; ?>"><?php echo $column; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>  
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
               <select name="dashboard_customer_status" id="input-status" class="form-control">

@@ -37,12 +37,12 @@ class ControllerCommonDashboard extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->has('dashboard_' . $code . '_status')) {
-				$content = $this->load->controller('extension/dashboard/' . $dashboard['code'] . '/dashboard');
+				$output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
 				
-				if ($content) {
+				if ($output) {
 					$data['dashboards'][] = array(
 						'code'       => $code,
-						'content'    => $content,
+						'output'     => $output,
 						'width'      => $this->config->has('dashboard_' . $code . '_width'),
 						'sort_order' => $this->config->has('dashboard_' . $code . '_sort_order')
 					);
@@ -56,7 +56,11 @@ class ControllerCommonDashboard extends Controller {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
+print_r($data['dashboards']);
+
 		array_multisort($sort_order, SORT_ASC, $data['dashboards']);
+
+print_r($data['dashboards']);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

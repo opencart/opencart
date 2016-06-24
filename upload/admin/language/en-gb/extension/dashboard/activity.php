@@ -27,6 +27,7 @@ $_['text_affiliate_payment']       = '<a href="affiliate_id=%d">%s</a> updated t
 $_['text_affiliate_register']      = '<a href="affiliate_id=%d">%s</a> registered for a new account.';
 
 // Entry
+$_['entry_width']                  = 'Width';
 $_['entry_status']                 = 'Status';
 $_['entry_sort_order']             = 'Sort Order';
 

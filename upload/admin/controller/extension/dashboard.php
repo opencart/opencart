@@ -55,6 +55,7 @@ class ControllerExtensiondashboard extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_width'] = $this->language->get('column_width');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
@@ -101,6 +102,7 @@ class ControllerExtensiondashboard extends Controller {
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
+					'width'      => $this->config->get('dashboard_' . $extension . '_width'),	
 					'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
 					'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/dashboard/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),

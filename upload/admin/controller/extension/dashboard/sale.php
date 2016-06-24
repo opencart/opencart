@@ -23,6 +23,7 @@ class ControllerExtensionDashboardSale extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
+		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -56,6 +57,18 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
 
+		if (isset($this->request->post['dashboard_sale_width'])) {
+			$data['dashboard_sale_width'] = $this->request->post['dashboard_sale_width'];
+		} else {
+			$data['dashboard_sale_width'] = $this->config->get('dashboard_sale_width');
+		}
+	
+		$data['columns'] = array();
+		
+		for ($i = 1; $i <= 12; $i++) {
+			$data['columns'][] = $i;
+		}
+				
 		if (isset($this->request->post['dashboard_sale_status'])) {
 			$data['dashboard_sale_status'] = $this->request->post['dashboard_sale_status'];
 		} else {

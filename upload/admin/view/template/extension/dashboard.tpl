@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <td class="text-left"><?php echo $column_name; ?></td>
+          <td class="text-right"><?php echo $column_width; ?></td>
           <td class="text-left"><?php echo $column_status; ?></td>
           <td class="text-right"><?php echo $column_sort_order; ?></td>
           <td class="text-right"><?php echo $column_action; ?></td>
@@ -25,6 +26,7 @@
         <?php foreach ($extensions as $extension) { ?>
         <tr>
           <td class="text-left"><?php echo $extension['name']; ?></td>
+          <td class="text-right"><?php echo $extension['width']; ?></td>
           <td class="text-left"><?php echo $extension['status']; ?></td>
           <td class="text-right"><?php echo $extension['sort_order']; ?></td>
           <td class="text-right"><?php if ($extension['installed']) { ?>

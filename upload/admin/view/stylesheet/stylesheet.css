@@ -126,12 +126,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: block;
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
-	border-bottom: 1px solid #2e4ba0;
-	background: #212c3a; /* For browsers that do not support gradients */
-	background: -webkit-repeating-linear-gradient(#212c3a, #223d60 96%, #2e4ba0 5%);
-  background: -o-repeating-linear-gradient(#212c3a, #223d60 96%, #2e4ba0 5%);
-  background: -moz-repeating-linear-gradient(#212c3a, #223d60 96%, #2e4ba0 5%);
-  background: repeating-linear-gradient(#212c3a, #223d60 96%, #2e4ba0 5%);
+	border-bottom: 1px solid #585858;
 }
 #profile div {
 	float: left;
@@ -155,7 +150,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 50px;
 	height: 100%;
-	background-color: #212c3a;
+	background-color: #515151;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -215,11 +210,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #C4C4C4;
 	font-size: 14px;
 	padding-left: 13px;
-	border-bottom: 1px solid #586982;
+	border-bottom: 1px solid #585858;
 }
 #menu > li > a:hover {
-	color: #ffd200;
-	background-color: #111111;
+	background-color: #444444;
 }
 #menu > li > a > span {
 	display: none;
@@ -229,8 +223,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #9d9d9d;
 }
 #menu li li a:hover {
-	color: #ffd200;
-	background-color: #273e5b;
+	color: #FFFFFF;
+	background-color: #373737;
 }
 #menu li li a:before {
 	content: "\f101";
@@ -244,17 +238,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 20px;
 }
 #menu > li.active > a {
-	color: #4892ef;
-	background: #212c3a;
+	color: #DDDDDD;
+	background: #373737;
 }
 #menu li.active li a {
 	color: #C4C4C4;
 }
-#menu li.active li a:hover {
-	color: #ffd200;
-}
 #menu li li.active > a:last-child {
-	color: #4892ef;
+	color: #FFFFFF;
 }
 #menu li li.active a:last-child:before {
 	margin-left: 20px;
@@ -266,7 +257,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 50px;
 	top: 0px;
 	width: 210px;
-	background-color: #0c141f;
+	background-color: #444444;
 	visibility: hidden;
 }
 #menu li ul {
@@ -601,8 +592,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	display: none;
 	border-radius: 2px;
 	color: #666666;
-	background: #1d294b;
-	margin: 0;
+	background: #2b2b2b;
+	margin: 15px 20px;
 	padding: 5px 0;
 }
 #stats ul, #stats li {
@@ -612,9 +603,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 #stats li {
 	font-size: 11px;
-	color: #ffd200;
+	color: #9d9d9d;
 	padding: 5px 10px;
-	border-bottom: 1px dotted #586982;
+	border-bottom: 1px dotted #373737;
 }
 #stats div:first-child {
 	margin-bottom: 4px;

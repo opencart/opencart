@@ -42,6 +42,7 @@ $_['text_type_new'] 				= 'Create';
 $_['text_type_ship'] 				= 'Shipment';
 $_['text_type_cancel'] 				= 'Cancellation';
 $_['text_no_requests'] 				= 'No requests have been made yet!';
+$_['text_order_list']				= 'Amazon order list';
 
 
 // Columns

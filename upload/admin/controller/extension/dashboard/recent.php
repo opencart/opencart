@@ -111,6 +111,8 @@ class ControllerExtensionDashboardRecent extends Controller {
 			'limit' => 5
 		);
 
+		$this->load->model('sale/order');
+		
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {

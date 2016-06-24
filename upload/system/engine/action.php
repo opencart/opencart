@@ -23,7 +23,7 @@ class Action {
 		}
 	}
 	
-	function getId() {
+	public function getId() {
 		return $this->id;
 	}
 	
@@ -42,6 +42,7 @@ class Action {
 		
 			$controller = new $class($registry);
 		} else {
+			echo DIR_APPLICATION . 'controller/' . $this->route . '.php';
 			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
 		}
 		
@@ -50,6 +51,7 @@ class Action {
 		if ($reflection->hasMethod($this->method) && $reflection->getMethod($this->method)->getNumberOfRequiredParameters() <= count($args)) {
 			return call_user_func_array(array($controller, $this->method), $args);
 		} else {
+			echo DIR_APPLICATION . 'controller/' . $this->route . '.php';
 			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
 		}
 	}

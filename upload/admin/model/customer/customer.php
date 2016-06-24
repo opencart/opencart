@@ -160,8 +160,6 @@ class ModelCustomerCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 
-			$this->load->language('mail/customer');
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -174,11 +172,25 @@ class ModelCustomerCustomer extends Model {
 				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
 			}
 
-			$message  = sprintf($this->language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $this->language->get('text_approve_login') . "\n";
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/customer');
+				
+			$message  = sprintf($language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
+			$message .= $language->get('text_approve_login') . "\n";
 			$message .= $store_url . "\n\n";
-			$message .= $this->language->get('text_approve_services') . "\n\n";
-			$message .= $this->language->get('text_approve_thanks') . "\n";
+			$message .= $language->get('text_approve_services') . "\n\n";
+			$message .= $language->get('text_approve_thanks') . "\n";
 			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
 
 			$mail = new Mail();
@@ -193,7 +205,7 @@ class ModelCustomerCustomer extends Model {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
+			$mail->setSubject(sprintf($language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
 			$mail->setText($message);
 			$mail->send();
 		}

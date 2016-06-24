@@ -272,23 +272,25 @@ class ControllerAccountReturn extends Controller {
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log
-			$this->load->model('account/activity');
+			if ($this->config->get('config_customer_activity')) {
+				$this->load->model('account/activity');
 
-			if ($this->customer->isLogged()) {
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
-					'return_id'   => $return_id
-				);
+				if ($this->customer->isLogged()) {
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+						'return_id'   => $return_id
+					);
 
-				$this->model_account_activity->addActivity('return_account', $activity_data);
-			} else {
-				$activity_data = array(
-					'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
-					'return_id' => $return_id
-				);
+					$this->model_account_activity->addActivity('return_account', $activity_data);
+				} else {
+					$activity_data = array(
+						'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
+						'return_id' => $return_id
+					);
 
-				$this->model_account_activity->addActivity('return_guest', $activity_data);
+					$this->model_account_activity->addActivity('return_guest', $activity_data);
+				}
 			}
 
 			$this->response->redirect($this->url->link('account/return/success', '', true));
@@ -502,7 +504,7 @@ class ControllerAccountReturn extends Controller {
 
 		// Captcha
 		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+			$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
 		} else {
 			$data['captcha'] = '';
 		}
@@ -573,7 +575,7 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+			$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
 
 			if ($captcha) {
 				$this->error['captcha'] = $captcha;

@@ -1,12 +1,12 @@
 <?php
-class ModelOpenbayEtsyOrder extends Model {
+class ModelExtensionOpenBayEtsyOrder extends Model {
 	public function inbound($orders) {
 		$this->openbay->etsy->log("Model inbound, Orders count: " . count($orders));
 
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/currency');
 
-		$this->load->language('openbay/etsy_order');
+		$this->load->language('extension/openbay/etsy_order');
 
 		if (!empty($orders)) {
 			foreach ($orders as $order) {

@@ -39,7 +39,7 @@ class ModelAffiliateAffiliate extends Model {
 		$mail->send();
 
 		// Send to main admin email if new affiliate email is enabled
-		if ($this->config->get('config_affiliate_mail')) {
+		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
 			$message  = $this->language->get('text_signup') . "\n\n";
 			$message .= $this->language->get('text_store') . ' ' . html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . "\n";
 			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
@@ -62,7 +62,7 @@ class ModelAffiliateAffiliate extends Model {
 			$mail->send();
 
 			// Send to additional alert emails if new affiliate email is enabled
-			$emails = explode(',', $this->config->get('config_mail_alert'));
+			$emails = explode(',', $this->config->get('config_alert_email'));
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -157,4 +157,24 @@ class ModelAffiliateAffiliate extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function addLoginAttempt($email) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate_login WHERE email = '" . $this->db->escape(utf8_strtolower((string)$email)) . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
+
+		if (!$query->num_rows) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_login SET email = '" . $this->db->escape(utf8_strtolower((string)$email)) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', total = 1, date_added = '" . $this->db->escape(date('Y-m-d H:i:s')) . "', date_modified = '" . $this->db->escape(date('Y-m-d H:i:s')) . "'");
+		} else {
+			$this->db->query("UPDATE " . DB_PREFIX . "affiliate_login SET total = (total + 1), date_modified = '" . $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE affiliate_login_id = '" . (int)$query->row['affiliate_login_id'] . "'");
+		}
+	}
+
+	public function getLoginAttempts($email) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_login` WHERE email = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row;
+	}
+
+	public function deleteLoginAttempts($email) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_login` WHERE email = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+	}	
 }

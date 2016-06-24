@@ -109,12 +109,12 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, true),
+			'href' => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$data['recurrings'] = array();
@@ -129,7 +129,7 @@ class ControllerSaleRecurring extends Controller {
 			'order'                     => $order,
 			'sort'                      => $sort,
 			'start'                     => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                     => $this->config->get('config_limit_admin'),
+			'limit'                     => $this->config->get('config_limit_admin')
 		);
 
 		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
@@ -147,7 +147,7 @@ class ControllerSaleRecurring extends Controller {
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
 				'reference'          => $result['reference'],
-				'customer'           => $result['firstname'] . ' ' . $result['lastname'],
+				'customer'           => $result['customer'],
 				'status'             => $status,
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'view'               => $this->url->link('sale/recurring/info', 'token=' . $this->session->data['token'] . '&order_recurring_id=' . $result['order_recurring_id'] . $url, true),
@@ -471,7 +471,7 @@ class ControllerSaleRecurring extends Controller {
 				);
 			}
 
-			$data['buttons'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/recurringButtons');
+			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurringButtons');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

@@ -506,6 +506,18 @@ class ControllerMarketingMarketing extends Controller {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 
+		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
+
+		if (!isset($this->request->get['marketing_id'])) {
+			if ($marketing_info) {
+				$this->error['code'] = $this->language->get('error_exists');
+			}
+		} else {
+			if ($marketing_info && ($this->request->get['marketing_id'] != $marketing_info['marketing_id'])) {
+				$this->error['code'] = $this->language->get('error_exists');
+			}
+		}
+
 		return !$this->error;
 	}
 

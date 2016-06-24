@@ -1,7 +1,5 @@
 <?php
 class ControllerDesignTheme extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('design/theme');
 
@@ -24,189 +22,184 @@ class ControllerDesignTheme extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_store'] = $this->language->get('text_store');
+		$data['text_template'] = $this->language->get('text_template');
+		$data['text_default'] = $this->language->get('text_default');
+		$data['text_warning'] = $this->language->get('text_warning');
+		$data['text_access'] = $this->language->get('text_access');
+		$data['text_permission'] = sprintf($this->language->get('text_permission'), $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true));
+		$data['text_begin'] = $this->language->get('text_begin');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');
 		
 		$data['token'] = $this->session->data['token'];
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('design/theme', $data));
-	}
-
-	public function store() {
-		$this->load->language('design/theme');
 		
-		$json = array();	
-		
-		$json['heading'] = $this->language->get('text_store');
-		
-		$json['directory'] = array();
-		
-		$json['directory'][] = array(
-			'name' => $this->language->get('text_default'),
-			'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=0', true)
-		);		
+		$data['stores'] = array();
 		
 		$this->load->model('setting/store');
 					
 		$results = $this->model_setting_store->getStores();
 		
 		foreach ($results as $result) {
-			$json['directory'][] = array(
-				'name' => $result['name'],
-				'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], true)
+			$data['stores'][] = array(
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
 			);
-		}		
+		}
 		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('design/theme', $data));
 	}
 	
-	public function theme() {
+	public function path() {
 		$this->load->language('design/theme');
 		
 		$json = array();
 		
-		$json['heading'] = $this->language->get('text_theme');
-				
-		$json['directory'] = array();
-				
-		$this->load->model('extension/extension');
-					
-		$extensions = $this->model_extension_extension->getInstalled('theme');
-		
-		foreach ($extensions as $code) {
-			$this->load->language('theme/' . $code);
-			
-			$json['directory'][] = array(
-				'name' => $this->language->get('heading_title'),
-				'href' => $this->url->link('design/theme/directory', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $code, true)
-			);
-		}		
-				
-		$json['back'] = array(
-			'name' => $this->language->get('button_back'),
-			'href' => $this->url->link('design/theme/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
-		);		
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));						
-	}
-	
-	public function directory() {
-		$this->load->language('design/theme');
-		
-		$json = array();
-		
-		if ($this->request->get['theme'] == 'theme_default') {
-			$this->load->model('setting/setting');
-						
-			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $this->request->get['store_id']);			
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
 		} else {
-			$theme = $this->request->get['theme'];
+			$store_id = 0;
+		}	
+		
+		$this->load->model('setting/setting');
+			
+		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
+		
+		// This is only here for compatibility with old themes.
+		if ($theme == 'theme_default') {
+			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);			
 		}
 		
-		if (isset($this->request->get['directory'])) {
-			$directory = $this->request->get['directory'];
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
 		} else {
-			$directory = '';
+			$path = '';
 		}
-			
-		$json['heading'] = $this->language->get('text_file');
-				
-		$json['directory'] = array();
 		
-		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
-			$files = glob(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory . '/*');
+		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
+			$path_data = array();
+			
+			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
+			$files = glob(rtrim(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template/' . $path, '/') . '/*', GLOB_BRACE);
 			
 			if ($files) {
 				foreach($files as $file) {
-					if (is_dir($file)) {
-						$json['directory'][] = array(
-							'name' => basename($file),
-							'href' => $this->url->link('design/theme/directory', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $this->request->get['theme'] . '&directory=' . trim($directory . '/' . basename($file), '/'), true)
-						);
+					if (!in_array(basename($file), $path_data))  {
+						if (is_dir($file)) {
+							$json['directory'][] = array(
+								'name' => basename($file),
+								'path' => trim($path . '/' . basename($file), '/')
+							);
+						}
+						
+						if (is_file($file)) {
+							$json['file'][] = array(
+								'name' => basename($file),
+								'path' => trim($path . '/' . basename($file), '/')
+							);
+						}
+						
+						$path_data[] = basename($file);
 					}
-					
-					if (is_file($file)) {
-						$json['file'][] = array(
-							'name' => basename($file),
-							'href' => $this->url->link('design/theme/code', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $this->request->get['theme'] . '&directory=' . trim($directory . '/' . basename($file), '/'), true)
-						);
-					}			
 				}
 			}
 		}
 
-		$pos = strrpos($directory, '/');
-
-		if ($pos !== false) {
+		if (!empty($this->request->get['path'])) {
 			$json['back'] = array(
 				'name' => $this->language->get('button_back'),
-				'href' => $this->url->link('design/theme/directory', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $this->request->get['theme'] . '&directory=' . urlencode(substr($directory, 0, $pos)), true)
-			);					
-		} else {
-			$json['back'] = array(
-				'name' => $this->language->get('button_back'),
-				'href' => $this->url->link('design/theme/theme', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'] . '&theme=' . $this->request->get['theme'], true)
-			);		
-		}
+				'path' => urlencode(substr($path, 0, strrpos($path, '/')))
+			);
+		}		
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
 	
-	public function code() {
+	public function template() {
 		$this->load->language('design/theme');
-
+		
 		$json = array();
 		
-		if ($this->request->get['theme'] == 'theme_default') {
-			$this->load->model('setting/setting');
-						
-			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $this->request->get['store_id']);			
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
 		} else {
-			$theme = $this->request->get['theme'];
-		}
-							
-		if (isset($this->request->get['directory'])) {
-			$directory = $this->request->get['directory'];
-		} else {
-			$directory = '';
+			$store_id = 0;
+		}	
+		
+		$this->load->model('setting/setting');
+			
+		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
+		
+		// This is only here for compatibility with old themes.
+		if ($theme == 'theme_default') {
+			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);			
 		}
 		
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}
+
 		$this->load->model('design/theme');
 		
-		//$theme_info = $this->model_design_theme->getTheme($this->request->get['store_id'], $this->request->get['theme'], $this->request->get['code']);
-
-		//if ($theme_info) {
-		//	$json['code'] = $theme_info['code'];
-		//} else
+		$theme_info = $this->model_design_theme->getTheme($store_id, $theme, $path);
 		
-		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory) && substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory);
-		}
+		if ($theme_info) {
+			$json['code'] = html_entity_decode($theme_info['code']);
+		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
+		} elseif (is_file(DIR_CATALOG . 'view/theme/default/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/default/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/default/template/' . $path);
+		}		
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}
+		$this->response->setOutput(json_encode($json));
+	}	
 	
 	public function save() {
 		$this->load->language('design/theme');
 		
 		$json = array();
 		
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
+		} else {
+			$store_id = 0;
+		}	
+		
+		$this->load->model('setting/setting');
+			
+		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
+		
+		// This is only here for compatibility with old themes.
+		if ($theme == 'theme_default') {
+			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);			
+		}
+		
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}		
+			
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('design/theme');
-		
-			$this->model_design_theme->editTheme($this->request->get['store_id'], $this->request->get['theme'], $this->request->get['route'], $this->request->post['code']);
+			
+			$pos = strpos($path, '.');
+			
+			$this->model_design_theme->editTheme($store_id, $theme, ($pos !== false) ? substr($path, 0, $pos) : $path, $this->request->post['code']);
+			
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -215,31 +208,34 @@ class ControllerDesignTheme extends Controller {
 	
 	public function reset() {
 		$this->load->language('design/theme');
-
-		$json = array();		
 		
-		if ($this->request->get['theme'] == 'theme_default') {
-			$this->load->model('setting/setting');
-						
-			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $this->request->get['store_id']);			
-		} else {
-			$theme = $this->request->get['theme'];
-		}
-							
-		if (isset($this->request->get['directory'])) {
-			$directory = $this->request->get['directory'];
-		} else {
-			$directory = '';
-		}		
+		$json = array();
 		
-		$this->load->model('design/theme');
-
-		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $directory) && substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/' . $directory . '/' . $file)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/' . $directory . '/' . $file);
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
 		} else {
-			$json['code'] = '';
+			$store_id = 0;
+		}	
+		
+		$this->load->model('setting/setting');
+			
+		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
+		
+		// This is only here for compatibility with old themes.
+		if ($theme == 'theme_default') {
+			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);			
 		}
 				
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}		
+				
+		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
+			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
+		}		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	

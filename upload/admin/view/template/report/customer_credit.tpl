@@ -27,6 +27,10 @@
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
+              <div class="form-group">
+                <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+              </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
@@ -37,7 +41,7 @@
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -82,27 +86,53 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/customer_credit&token=<?php echo $token; ?>';
-	
-	var filter_date_start = $('input[name=\'filter_date_start\']').val();
-	
-	if (filter_date_start) {
-		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
-	}
+  url = 'index.php?route=report/customer_credit&token=<?php echo $token; ?>';
 
-	var filter_date_end = $('input[name=\'filter_date_end\']').val();
-	
-	if (filter_date_end) {
-		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
-	}
-	
-	location = url;
+  var filter_customer = $('input[name=\'filter_customer\']').val();
+
+  if (filter_customer) {
+    url += '&filter_customer=' + encodeURIComponent(filter_customer);
+  }
+
+  var filter_date_start = $('input[name=\'filter_date_start\']').val();
+
+  if (filter_date_start) {
+    url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+  }
+
+  var filter_date_end = $('input[name=\'filter_date_end\']').val();
+
+  if (filter_date_end) {
+    url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+  }
+
+  location = url;
 });
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	pickTime: false
+  pickTime: false
 });
-//--></script> 
-</div>
+//--></script>
+  <script type="text/javascript"><!--
+$('input[name=\'filter_customer\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['customer_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'filter_customer\']').val(item['label']);
+  }
+});
+//--></script></div>
 <?php echo $footer; ?>

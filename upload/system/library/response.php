@@ -57,13 +57,13 @@ class Response {
 
 	public function output() {
 		if ($this->output) {
+			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
 			if (!headers_sent()) {
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}
 			}
-
-			echo $this->level ? $this->compress($this->output, $this->level) : $this->output;
+			echo $output;
 		}
 	}
 }

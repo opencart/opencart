@@ -116,14 +116,14 @@ class Amazonus {
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
-			$this->load->model('module/openstock');
+			$this->load->model('extension/module/openstock');
 			$logger->write('Variant item');
 
 			$quantity_data = array();
 
 			// check if post data['variant'], if not then call db to get variants
 			if (!isset($data['variant'])) {
-				$variants = $this->model_module_openstock->getVariants($product_id);
+				$variants = $this->model_extension_module_openstock->getVariants($product_id);
 			} else {
 				$variants = $data['variant'];
 			}
@@ -154,7 +154,7 @@ class Amazonus {
 		if ($this->config->get('openbay_amazonus_status') != 1 || !defined('HTTPS_CATALOG')) {
 			return;
 		}
-		$this->load->model('openbay/amazonus');
+		$this->load->model('extension/openbay/amazonus');
 
 		$log = new \Log('amazonus.log');
 		$log->write('Called bulkUpdateOrders method');
@@ -165,7 +165,7 @@ class Amazonus {
 
 		foreach ($orders as $order) {
 			$amazon_order = $this->getOrder($order['order_id']);
-			$amazon_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order['order_id']);
+			$amazon_order_products = $this->model_extension_openbay_amazonus->getAmazonusOrderedProducts($order['order_id']);
 
 			$products = array();
 
@@ -224,8 +224,8 @@ class Amazonus {
 		$log = new \Log('amazonus.log');
 		$log->write("Order's $amazonus_order_id status changed to $order_status_string");
 
-		$this->load->model('openbay/amazonus');
-		$amazonus_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
+		$this->load->model('extension/openbay/amazonus');
+		$amazonus_order_products = $this->model_extension_openbay_amazonus->getAmazonusOrderedProducts($order_id);
 
 		$request_node = new \SimpleXMLElement('<Request/>');
 
@@ -254,7 +254,7 @@ class Amazonus {
 		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
+		$this->model_extension_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->call('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");

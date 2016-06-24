@@ -95,13 +95,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
                 <div class="col-sm-10">
                   <textarea name="message" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message" class="form-control"><?php echo $message; ?></textarea>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="amount" value="<?php echo $amount; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />

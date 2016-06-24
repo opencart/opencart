@@ -448,7 +448,8 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
-
+		$data['button_unlock'] = $this->language->get('button_unlock');
+		
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
@@ -1099,6 +1100,18 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if (!$this->request->post['code']) {
 			$this->error['code'] = $this->language->get('error_code');
+		}
+
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByCode($this->request->post['code']);
+
+		if (!isset($this->request->get['affiliate_id'])) {
+			if ($affiliate_info) {
+				$this->error['code'] = $this->language->get('error_code_exists');
+			}
+		} else {
+			if ($affiliate_info && ($this->request->get['affiliate_id'] != $affiliate_info['affiliate_id'])) {
+				$this->error['code'] = $this->language->get('error_code_exists');
+			}
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {

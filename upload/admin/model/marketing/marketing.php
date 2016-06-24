@@ -20,6 +20,12 @@ class ModelMarketingMarketing extends Model {
 		return $query->row;
 	}
 
+	public function getMarketingByCode($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "marketing WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getMarketings($data = array()) {
 		$implode = array();
 
@@ -58,7 +64,7 @@ class ModelMarketingMarketing extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY m.name";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

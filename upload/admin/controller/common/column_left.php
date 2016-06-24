@@ -749,7 +749,15 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()
 				);
 			}
-			
+
+			if ($this->user->hasPermission('access', 'report/customer_search')) {
+				$report_customer[] = array(
+					'name'	   => $this->language->get('text_report_customer_search'),
+					'href'     => $this->url->link('report/customer_search', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);
+			}
+
 			if ($this->user->hasPermission('access', 'report/customer_order')) {	
 				$report_customer[] = array(
 					'name'	   => $this->language->get('text_report_customer_order'),

@@ -42,5 +42,15 @@ $_['action_event'] = array(
 	'controller/extension/shipping/*/before'  => 'event/compatibility/controller',
 	'controller/extension/theme/*/before'     => 'event/compatibility/controller',
 	'controller/extension/total/*/before'     => 'event/compatibility/controller',
+	'language/extension/analytics/*/before'   => 'event/compatibility/language'
+	'language/extension/captcha/*/before'     => 'event/compatibility/language'
+	'language/extension/feed/*/before'        => 'event/compatibility/language'
+	'language/extension/fraud/*/before'       => 'event/compatibility/language'
+	'language/extension/module/*/before'      => 'event/compatibility/language'
+	'language/extension/payment/*/before'     => 'event/compatibility/language'
+	'language/extension/recurring/*/before'   => 'event/compatibility/language'
+	'language/extension/*/before'             => 'event/compatibility/language'
+	'language/extension/*/before'             => 'event/compatibility/language'
+	'language/extension/*/before'             => 'event/compatibility/language'
 	'language/extension/*/before'             => 'event/compatibility/language'
 );

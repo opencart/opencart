@@ -1,4 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
+
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -16,8 +17,12 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <?php foreach ($dashboards as $dashboard) { ?>
-    <?php echo $dashboard['output']; ?>
+    <?php foreach ($rows as $row) { ?>
+    <div class="row">
+      <?php foreach ($row as $dashboard) { ?>
+      <div class="col-lg-<?php echo $dashboard['width']; ?> col-md-3 col-sm-<?php echo ($dashboard['width'] * 2); ?>"><?php echo $dashboard['output']; ?></div>
+      <?php } ?>
+    </div>
     <?php } ?>
   </div>
 </div>

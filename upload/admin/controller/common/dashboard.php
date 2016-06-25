@@ -27,7 +27,7 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		// Dashboard Extensions
-		$data['dashboards'] = array();
+		$dashboards = array();
 
 		$this->load->model('extension/extension');
 
@@ -36,15 +36,15 @@ class ControllerCommonDashboard extends Controller {
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			if ($this->config->has('dashboard_' . $code . '_status')) {
+			if ($this->config->get('dashboard_' . $code . '_status')) {
 				$output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
 				
 				if ($output) {
-					$data['dashboards'][] = array(
+					$dashboards[] = array(
 						'code'       => $code,
-						'output'     => $output,
-						'width'      => $this->config->has('dashboard_' . $code . '_width'),
-						'sort_order' => $this->config->has('dashboard_' . $code . '_sort_order')
+						'width'      => $this->config->get('dashboard_' . $code . '_width'),
+						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
+						'output'     => $output
 					);
 				}
 			}
@@ -52,15 +52,30 @@ class ControllerCommonDashboard extends Controller {
 
 		$sort_order = array();
 
-		foreach ($data['dashboards'] as $key => $value) {
+		foreach ($dashboards as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-print_r($data['dashboards']);
-
-		array_multisort($sort_order, SORT_ASC, $data['dashboards']);
-
-print_r($data['dashboards']);
+		array_multisort($sort_order, SORT_ASC, $dashboards);
+		
+		// Split the array so the columns width is not more than 12 on each row.
+		$width = 0;
+		$column = array();
+		$data['rows'] = array();
+		
+		foreach ($dashboards as $dashboard) {
+			$column[] = $dashboard;
+			
+			$width = ($width + $dashboard['width']);
+			
+			if ($width >= 12) {
+				$width = 0;
+				
+				$data['rows'][] = $column;
+				
+				$column = array();		
+			}
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

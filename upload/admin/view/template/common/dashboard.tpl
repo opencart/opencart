@@ -20,6 +20,36 @@
     <?php foreach ($rows as $row) { ?>
     <div class="row">
       <?php foreach ($row as $dashboard) { ?>
+      <?php if ($dashboard['width'] == 1) { ?>
+      
+      <?php $class = 'col-lg-3 col-md-3 col-sm-6'; ?>
+      
+      <?php } elseif ($dashboard['width'] == 2) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 3) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } elseif ($dashboard['width'] == 4) { ?>
+      
+      <?php } else { ?>
+      
+      <?php } ?>
+//col-lg-3 col-md-3 col-sm-6
+//col-lg-6 col-md-12 col-sx-12 col-sm-12
+
+//col-lg-4 col-md-12 col-sm-12 col-sx-12
+//col-lg-8 col-md-12 col-sm-12 col-sx-12      
+      
+      
       <div class="col-lg-<?php echo $dashboard['width']; ?> col-md-3 col-sm-<?php echo ($dashboard['width'] * 2); ?>"><?php echo $dashboard['output']; ?></div>
       <?php } ?>
     </div>

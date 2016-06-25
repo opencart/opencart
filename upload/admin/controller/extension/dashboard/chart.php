@@ -65,7 +65,7 @@ class ControllerExtensionDashboardChart extends Controller {
 	
 		$data['columns'] = array();
 		
-		for ($i = 1; $i <= 12; $i++) {
+		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
 				

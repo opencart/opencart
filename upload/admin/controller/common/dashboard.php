@@ -69,19 +69,12 @@ class ControllerCommonDashboard extends Controller {
 			$width = ($width + $dashboard['width']);
 			
 			if ($width >= 12) {
-				$width = 0;
-				
 				$data['rows'][] = $column;
 				
-				$column = array();		
+				$width = 0;
+				$column = array();
 			}
 		}
-		
-//col-lg-3 col-md-3 col-sm-6
-//col-lg-6 col-md-12 col-sx-12 col-sm-12
-
-//col-lg-4 col-md-12 col-sm-12 col-sx-12
-//col-lg-8 col-md-12 col-sm-12 col-sx-12
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

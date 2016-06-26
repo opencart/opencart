@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -19,38 +18,14 @@
     <?php } ?>
     <?php foreach ($rows as $row) { ?>
     <div class="row">
-      <?php foreach ($row as $dashboard) { ?>
-      <?php if ($dashboard['width'] == 1) { ?>
-      
-      <?php $class = 'col-lg-3 col-md-3 col-sm-6'; ?>
-      
-      <?php } elseif ($dashboard['width'] == 2) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 3) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } elseif ($dashboard['width'] == 4) { ?>
-      
-      <?php } else { ?>
-      
+      <?php foreach ($row as $dashboard_1) { ?>
+      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-3 col-sm-6'; ?>
+      <?php foreach ($row as $dashboard_2) { ?>
+      <?php if ($dashboard_2['width'] > 3) { ?>
+      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-12 col-sm-12'; ?>
       <?php } ?>
-//col-lg-3 col-md-3 col-sm-6
-//col-lg-6 col-md-12 col-sx-12 col-sm-12
-
-//col-lg-4 col-md-12 col-sm-12 col-sx-12
-//col-lg-8 col-md-12 col-sm-12 col-sx-12      
-      
-      
-      <div class="col-lg-<?php echo $dashboard['width']; ?> col-md-3 col-sm-<?php echo ($dashboard['width'] * 2); ?>"><?php echo $dashboard['output']; ?></div>
+      <?php } ?>
+      <div class="<?php echo $class; ?>"><?php echo $dashboard['output']; ?></div>
       <?php } ?>
     </div>
     <?php } ?>

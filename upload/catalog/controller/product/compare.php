@@ -16,9 +16,9 @@ class ControllerProductCompare extends Controller {
 
 			if ($key !== false) {
 				unset($this->session->data['compare'][$key]);
-			}
 
-			$this->session->data['success'] = $this->language->get('text_remove');
+				$this->session->data['success'] = $this->language->get('text_remove');
+			}
 
 			$this->response->redirect($this->url->link('product/compare'));
 		}

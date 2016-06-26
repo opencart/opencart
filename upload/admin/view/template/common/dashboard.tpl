@@ -25,7 +25,7 @@
       <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-12 col-sm-12'; ?>
       <?php } ?>
       <?php } ?>
-      <div class="<?php echo $class; ?>"><?php echo $dashboard['output']; ?></div>
+      <div class="<?php echo $class; ?>"><?php echo $dashboard_1['output']; ?></div>
       <?php } ?>
     </div>
     <?php } ?>

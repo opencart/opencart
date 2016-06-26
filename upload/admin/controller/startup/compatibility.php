@@ -29,8 +29,6 @@ class ControllerStartupCompatibility extends Controller {
 			if (in_array($data['route'], $routes)) {
 				$query  = '?route=extension/extension&type=' . substr($data['route'], 10);
 				
-				echo $data['route']; 
-				
 				unset($data['route']);
 				
 				$query .= '&' . http_build_query($data);

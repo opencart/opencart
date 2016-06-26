@@ -22,6 +22,38 @@ function getURLVar(key) {
 	}
 }
 
+function goClear(type, key) {
+	$.ajax({
+		url: 'index.php?route=common/clear/clear' + type + '&token=' + getURLVar('token'),
+		type: 'post',
+		data: 'key=' + key,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-' + type + '-' + key).button('loading');
+		},
+		complete: function() {
+			$('#button-' + type + '-' + key).button('reset');
+		},
+		success: function(json) {
+			$('#content > .container-fluid > .alert-success, #content > .container-fluid > .alert-danger').remove();
+			$('.clear-dropdown-toggle').trigger('click');
+
+			if (json['success']) {
+				$('#button-' + type + '-' + key).closest('li').addClass('bg-success');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['error']) {
+				$('#button-' + type + '-' + key).closest('li').addClass('bg-danger');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
 $(document).ready(function() {
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function() {

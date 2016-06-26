@@ -518,27 +518,28 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 		$response = $this->model_extension_openbay_ebay_product->searchEbayCatalog($this->request->post['search'], $this->request->post['category_id']);
 
+		$json = array('error' => false, 'error_message' => '');
+
 		if (isset($response['ack'])) {
 			if ($response['ack'] == 'Success') {
-				$json['error'] = false;
-				$json['error_message'] = '';
-
 				$json['results'] = (int)$response['productSearchResult']['paginationOutput']['totalEntries'];
 				$json['page'] = (int)$response['productSearchResult']['paginationOutput']['pageNumber'];
 				$json['page_total'] = (int)$response['productSearchResult']['paginationOutput']['totalPages'];
-				$json['products'] = $response['productSearchResult']['products'];
-			} else {
-				$json['error'] = true;
 
-				if (isset($response['errorMessage']['error']['message'])) {
-					$json['error_message'] = $response['errorMessage']['error']['message'];
+				if (isset($response['productSearchResult']['products'])) {
+					$json['products'] = $response['productSearchResult']['products'];
 				} else {
-					$json['error_message'] = $this->language->get('error_loading_catalog');
+					$json = array('error' => true, 'error_message' => $this->language->get('error_no_products'));
+				}
+			} else {
+				if (isset($response['errorMessage']['error']['message'])) {
+					$json = array('error' => true, 'error_message' => $response['errorMessage']['error']['message']);
+				} else {
+					$json = array('error' => true, 'error_message' => $this->language->get('error_loading_catalog'));
 				}
 			}
 		} else {
-			$json['error'] = true;
-			$json['error_message'] = $this->language->get('error_generic_fail');
+			$json = array('error' => true, 'error_message' => $this->language->get('error_generic_fail'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

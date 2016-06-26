@@ -1,16 +1,6 @@
 <?php
 class ControllerExtensionOpenbay extends Controller {
 	private $error = array();
-	
-	public function test() {
-
-
-		//$this->response->redirect($this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'], true));
-	}
-
-	public function test2() {
-
-	}
 
 	public function install() {
 		$this->load->language('extension/openbay');

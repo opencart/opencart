@@ -36,28 +36,28 @@
 			// eBay sub menu
 			$ebay = array();
 
-			if ($this->user->hasPermission('access', 'extension/openbay/ebay')) {
+			if ($this->user->hasPermission('access', 'extension/openbay/ebay') && $this->config->get('ebay_status') == 1) {
 				$ebay[] = array(
 					'name'     => $this->language->get('text_openbay_dashboard'),
-					'href'     => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/ebay', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$ebay[] = array(
 					'name'	   => $this->language->get('text_openbay_settings'),
-					'href'     => $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/ebay/settings', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$ebay[] = array(
 					'name'	   => $this->language->get('text_openbay_links'),
-					'href'     => $this->url->link('openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$ebay[] = array(
 					'name'	   => $this->language->get('text_openbay_order_import'),
-					'href'     => $this->url->link('openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 			}
@@ -73,22 +73,22 @@
 			// Amazon EU sub menu
 			$amazon_eu = array();
 
-			if ($this->user->hasPermission('access', 'extension/openbay/amazon')) {
+			if ($this->user->hasPermission('access', 'extension/openbay/amazon') && $this->config->get('openbay_amazon_status') == 1) {
 				$amazon_eu[] = array(
 					'name'     => $this->language->get('text_openbay_dashboard'),
-					'href'     => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazon', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$amazon_eu[] = array(
 					'name'	   => $this->language->get('text_openbay_settings'),
-					'href'     => $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazon/settings', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$amazon_eu[] = array(
 					'name'	   => $this->language->get('text_openbay_links'),
-					'href'     => $this->url->link('openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 			}
@@ -104,22 +104,22 @@
 			// Amazon US sub menu
 			$amazon_us = array();
 
-			if ($this->user->hasPermission('access', 'extension/openbay/amazonus')) {
+			if ($this->user->hasPermission('access', 'extension/openbay/amazonus') && $this->config->get('openbay_amazonus_status') == 1) {
 				$amazon_us[] = array(
 					'name'     => $this->language->get('text_openbay_dashboard'),
-					'href'     => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazonus', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$amazon_us[] = array(
 					'name'	   => $this->language->get('text_openbay_settings'),
-					'href'     => $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazonus/settings', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$amazon_us[] = array(
 					'name'	   => $this->language->get('text_openbay_links'),
-					'href'     => $this->url->link('openbay/amazonus/itemlinks', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/amazonus/itemlinks', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 			}
@@ -135,23 +135,23 @@
 			// Etsy sub menu
 			$etsy = array();
 
-			if ($this->user->hasPermission('access', 'extension/openbay/etsy')) {
+			if ($this->user->hasPermission('access', 'extension/openbay/etsy') && $this->config->get('etsy_status') == 1) {
 				$etsy[] = array(
 					'name'     => $this->language->get('text_openbay_dashboard'),
-					'href'     => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/etsy', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				$etsy[] = array(
 					'name'	   => $this->language->get('text_openbay_settings'),
-					'href'     => $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('extension/openbay/etsy/settings', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 
 				if ($this->user->hasPermission('access', 'extension/openbay/etsy_product')) {
 					$etsy[] = array(
 						'name'	   => $this->language->get('text_openbay_links'),
-						'href'     => $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], true),
+						'href'     => $this->url->link('extension/openbay/etsy_product/links', 'token=' . $this->session->data['token'], true),
 						'children' => array()
 					);
 				}
@@ -165,10 +165,10 @@
 				);
 			}
 
-			// Etsy sub menu
+			// FBA sub menu
 			$fba = array();
 
-			if ($this->user->hasPermission('access', 'extension/openbay/fba')) {
+			if ($this->user->hasPermission('access', 'extension/openbay/fba') && $this->config->get('openbay_fba_status') == 1) {
 				$fba[] = array(
 					'name'     => $this->language->get('text_openbay_dashboard'),
 					'href'     => $this->url->link('extension/openbay/fba', 'token=' . $this->session->data['token'], true),

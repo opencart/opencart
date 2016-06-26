@@ -90,7 +90,6 @@ class fba {
 		$result = curl_exec($ch);
 
 		if (!$result) {
-			echo 'call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch);
 			$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 
 			$response = array('error' => true, 'error_messages' => array(curl_error($ch) . ' ' . curl_errno($ch)), 'body' => null, 'response_http' => 0);

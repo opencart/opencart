@@ -59,6 +59,20 @@
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>
       </ul>
     </li>
+    <?php if ($access_clear) { ?>
+    <li class="dropdown"><a class="dropdown-toggle clear-dropdown-toggle" data-toggle="dropdown"><i class="fa fa-eraser fa-lg"></i></a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-header"><?php echo $text_cache; ?></li>
+        <li><a><?php echo $text_cache_system; ?><button onclick="goClear('cache', 'system');" type="button" data-toggle="tooltip" title="<?php echo $text_clear; ?>" class="btn btn-danger btn-xs pull-right" id="button-cache-system"><i class="fa fa-eraser"></i></button></a></li>
+        <li><a><?php echo $text_cache_modification; ?><button onclick="goClear('cache', 'modification');" type="button" data-toggle="tooltip" title="<?php echo $text_refresh; ?>" class="btn btn-danger btn-xs pull-right" id="button-cache-modification"><i class="fa fa-eraser"></i></button></a></li>
+        <li><a><?php echo $text_cache_image; ?><button onclick="goClear('cache', 'image');" type="button" data-toggle="tooltip" title="<?php echo $text_clear; ?>" class="btn btn-danger btn-xs pull-right" id="button-cache-image"><i class="fa fa-eraser"></i></button></a></li>
+        <li class="divider"></li>
+        <li class="dropdown-header"><?php echo $text_log; ?></li>
+        <li><a><?php echo $text_log_error; ?><button onclick="goClear('log', 'error');" type="button" data-toggle="tooltip" title="<?php echo $text_clear; ?>" class="btn btn-danger btn-xs pull-right" id="button-log-error"><i class="fa fa-eraser"></i></button></a></li>
+        <li><a><?php echo $text_log_modification; ?><button onclick="goClear('log', 'modification');" type="button" data-toggle="tooltip" title="<?php echo $text_clear; ?>" class="btn btn-danger btn-xs pull-right" id="button-log-modification"><i class="fa fa-eraser"></i></button></a></li>
+      </ul>
+    </li>
+    <?php } ?>
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li class="dropdown-header"><?php echo $text_store; ?></li>

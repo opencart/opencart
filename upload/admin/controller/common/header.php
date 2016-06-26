@@ -32,6 +32,15 @@ class ControllerCommonHeader extends Controller {
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
+		$data['text_clear'] = $this->language->get('text_clear');
+		$data['text_refresh'] = $this->language->get('text_refresh');
+		$data['text_cache'] = $this->language->get('text_cache');
+		$data['text_cache_system'] = $this->language->get('text_cache_system');
+		$data['text_cache_modification'] = $this->language->get('text_cache_modification');
+		$data['text_cache_image'] = $this->language->get('text_cache_image');
+		$data['text_log'] = $this->language->get('text_log');
+		$data['text_log_error'] = $this->language->get('text_log_error');
+		$data['text_log_modification'] = $this->language->get('text_log_modification');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_front'] = $this->language->get('text_front');
 		$data['text_help'] = $this->language->get('text_help');
@@ -130,6 +139,13 @@ class ControllerCommonHeader extends Controller {
 					'name' => $result['name'],
 					'href' => $result['url']
 				);
+			}
+
+			// Control the block display
+			if ($this->user->hasPermission('access', 'common/clear')) {
+				$data['access_clear'] = true;
+			} else {
+				$data['access_clear'] = false;
 			}
 		}
 

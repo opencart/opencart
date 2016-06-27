@@ -3,7 +3,7 @@
     <tr>
       <td class="text-left"><?php echo $column_google_category; ?></td>
       <td class="text-left"><?php echo $column_category; ?></td>
-      <td class="text-left"><?php echo $column_action; ?></td>
+      <td class="text-right"><?php echo $column_action; ?></td>
     </tr>
   </thead>
   <tbody>
@@ -12,12 +12,12 @@
     <tr>
       <td class="text-left"><?php echo $google_base_category['google_base_category']; ?></td>
       <td class="text-left"><?php echo $google_base_category['category']; ?></td>
-      <td class="text-left"><button type="button" value="<?php echo $google_base_category['category_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+      <td class="text-right"><button type="button" value="<?php echo $google_base_category['category_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
     </tr>
     <?php } ?>
     <?php } else { ?>
     <tr>
-      <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+      <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
     </tr>
     <?php } ?>
   </tbody>

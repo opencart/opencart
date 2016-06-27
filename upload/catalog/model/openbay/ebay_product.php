@@ -593,13 +593,13 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg');
 		}
 
-		$old_image = DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg';
-		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . '.jpg';
+		$image_old = DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg';
+		$image_new = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . '.jpg';
 
-		if (!file_exists(DIR_IMAGE . $new_image)) {
+		if (!file_exists(DIR_IMAGE . $image_new)) {
 			$path = '';
 
-			$directories = explode('/', dirname(str_replace(' . ./', '', $new_image)));
+			$directories = explode('/', dirname(str_replace(' . ./', '', $image_new)));
 
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;
@@ -612,18 +612,18 @@ class ModelExtensionOpenBayEbayProduct extends Model {
 			list($width_orig, $height_orig) = getimagesize($filename);
 
 			if ($width_orig != $width || $height_orig != $height) {
-				$image = new Image($old_image);
+				$image = new Image($image_old);
 				$image->resize($width, $height, $type);
-				$image->save(DIR_IMAGE . $new_image);
+				$image->save(DIR_IMAGE . $image_new);
 			} else {
-				copy($filename, DIR_IMAGE . $new_image);
+				copy($filename, DIR_IMAGE . $image_new);
 			}
 		}
 
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $this->config->get('config_ssl') . 'image/' . $new_image;
+			return $this->config->get('config_ssl') . 'image/' . $image_new;
 		} else {
-			return $this->config->get('config_url') . 'image/' . $new_image;
+			return $this->config->get('config_url') . 'image/' . $image_new;
 		}
 	}
 

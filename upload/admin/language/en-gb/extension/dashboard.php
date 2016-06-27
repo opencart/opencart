@@ -8,7 +8,6 @@ $_['text_list']         = 'Dashboard List';
 
 // Column
 $_['column_name']       = 'Dashboard Name';
-$_['column_width']      = 'Width';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';

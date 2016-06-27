@@ -7,19 +7,19 @@ class ModelToolImage extends Model {
 
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-		$old_image = $filename;
-		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
+		$image_old = $filename;
+		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
 
-		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $old_image);
+		if (!is_file(DIR_IMAGE . $image_new) || (filectime(DIR_IMAGE . $image_old) > filectime(DIR_IMAGE . $image_new))) {
+			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
 				 
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
-				return DIR_IMAGE . $old_image;
+				return DIR_IMAGE . $image_old;
 			}
 						
 			$path = '';
 
-			$directories = explode('/', dirname($new_image));
+			$directories = explode('/', dirname($image_new));
 
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;
@@ -30,20 +30,20 @@ class ModelToolImage extends Model {
 			}
 
 			if ($width_orig != $width || $height_orig != $height) {
-				$image = new Image(DIR_IMAGE . $old_image);
+				$image = new Image(DIR_IMAGE . $image_old);
 				$image->resize($width, $height);
-				$image->save(DIR_IMAGE . $new_image);
+				$image->save(DIR_IMAGE . $image_new);
 			} else {
-				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
+				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
 		}
 		
-		$new_image = str_replace(' ', '%20', $new_image);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
+		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
 		
 		if ($this->request->server['HTTPS']) {
-			return $this->config->get('config_ssl') . 'image/' . $new_image;
+			return $this->config->get('config_ssl') . 'image/' . $image_new;
 		} else {
-			return $this->config->get('config_url') . 'image/' . $new_image;
+			return $this->config->get('config_url') . 'image/' . $image_new;
 		}
 	}
 }

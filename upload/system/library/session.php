@@ -19,17 +19,13 @@ class Session {
 		return session_id();
 	}
 
-	public function start($session_id = '', $key = 'default') {
+	public function start($session_id = '') {
 		if (!session_id()) {
 			ini_set('session.use_only_cookies', 'Off');
 			ini_set('session.use_cookies', 'On');
 			ini_set('session.use_trans_sid', 'Off');
 			ini_set('session.cookie_httponly', 'On');
 		
-			if ($session_id) {
-				session_id($session_id);
-			}	
-				
 			if (isset($_COOKIE[session_name()]) && !preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $_COOKIE[session_name()])) {
 				exit('Error: Invalid session ID!');
 			}
@@ -38,15 +34,21 @@ class Session {
 			session_start();
 		}
 		
-		if (!isset($_SESSION[$key])) {
-			$_SESSION[$key] = array();
+		if ($session_id) {
+			session_id($session_id);
 		}
 		
-		$this->data =& $_SESSION[$key];	
+		$this->data =& $_SESSION;	
 		
 		return true;			
 	}
-
+	
+	public function close() {
+		if (session_id()) {
+			session_write_close();
+		}
+	}
+	
 	public function destroy() {
 		return session_destroy();
 	}

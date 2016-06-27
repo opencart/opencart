@@ -3,7 +3,7 @@
 $_['heading_title']		 = 'LIQPAY';
 
 // Text
-$_['text_extension']		 = 'Extensions';
+$_['text_extension']	 = 'Extensions';
 $_['text_success']		 = 'Success: You have modified LIQPAY account details!';
 $_['text_edit']          = 'Edit LIQPAY';
 $_['text_pay']			 = 'LIQPAY';

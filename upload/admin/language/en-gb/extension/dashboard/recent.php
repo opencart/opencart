@@ -17,7 +17,6 @@ $_['column_action']     = 'Action';
 
 
 // Entry
-$_['entry_width']       = 'Width';
 $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 

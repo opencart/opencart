@@ -413,4 +413,86 @@ class ModelReportCustomer extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function getCustomerSearches($data = array()) {
+		$sql = "SELECT cs.customer_id, cs.keyword, cs.category_id, cs.products, cs.ip, cs.date_added, CONCAT(c.firstname, ' ', c.lastname) AS customer FROM " . DB_PREFIX . "customer_search cs LEFT JOIN " . DB_PREFIX . "customer c ON (cs.customer_id = c.customer_id)";
+
+		$implode = array();
+
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(cs.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(cs.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+
+		if (!empty($data['filter_keyword'])) {
+			$implode[] = "cs.keyword LIKE '" . $this->db->escape($data['filter_keyword']) . "%'";
+		}
+
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}
+
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "cs.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " ORDER BY cs.date_added DESC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	public function getTotalCustomerSearches($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN " . DB_PREFIX . "customer c ON (cs.customer_id = c.customer_id)";
+
+		$implode = array();
+
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(cs.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(cs.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+
+		if (!empty($data['filter_keyword'])) {
+			$implode[] = "cs.keyword LIKE '" . $this->db->escape($data['filter_keyword']) . "%'";
+		}
+
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}
+
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "cs.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
 }

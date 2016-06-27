@@ -952,8 +952,6 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
 
-//$('#tab-customer select option').not('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency_id\'] option').css({'background-color': 'red'});
-//
 $(document).delegate('#button-ip-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
@@ -1269,7 +1267,7 @@ $('input[name=\'customer\']').autocomplete({
 	'select': function(item) {
 		// Reset all custom fields
 		$('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
-		$('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency_id\'] option')).removeAttr('selected');
+		$('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency\'] option')).removeAttr('selected');
 		$('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
 
 		$('#tab-customer input[name=\'customer\']').val(item['label']);

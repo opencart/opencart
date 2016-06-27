@@ -27,7 +27,7 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		// Dashboard Extensions
-		$data['dashboards'] = array();
+		$dashboards = array();
 
 		$this->load->model('extension/extension');
 
@@ -36,18 +36,45 @@ class ControllerCommonDashboard extends Controller {
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			if ($this->config->has('dashboard_' . $code . '_status')) {
-				$data['dashboards'][] = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
+			if ($this->config->get('dashboard_' . $code . '_status')) {
+				$output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
+				
+				if ($output) {
+					$dashboards[] = array(
+						'code'       => $code,
+						'width'      => $this->config->get('dashboard_' . $code . '_width'),
+						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
+						'output'     => $output
+					);
+				}
 			}
 		}
 
 		$sort_order = array();
 
-		foreach ($data['dashboards'] as $key => $value) {
-			$sort_order[$key] = $this->config->has($code . '_sort_order');
+		foreach ($dashboards as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['dashboards']);
+		array_multisort($sort_order, SORT_ASC, $dashboards);
+		
+		// Split the array so the columns width is not more than 12 on each row.
+		$width = 0;
+		$column = array();
+		$data['rows'] = array();
+		
+		foreach ($dashboards as $dashboard) {
+			$column[] = $dashboard;
+			
+			$width = ($width + $dashboard['width']);
+			
+			if ($width >= 12) {
+				$data['rows'][] = $column;
+				
+				$width = 0;
+				$column = array();
+			}
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

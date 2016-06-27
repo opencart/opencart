@@ -9,7 +9,7 @@ class ControllerStartupStartup extends Controller {
 		}
 		
 		if (isset($this->request->get['store_id'])) {
-			$this->config->set('config_store_id', $this->request->get['store_id']);
+			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
 		} else if ($query->num_rows) {
 			$this->config->set('config_store_id', $query->row['store_id']);
 		} else {
@@ -34,7 +34,7 @@ class ControllerStartupStartup extends Controller {
 
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
-
+		
 		// Language
 		$code = '';
 		

@@ -17,8 +17,8 @@ $_['column_action']     = 'Action';
 
 
 // Entry
-$_['entry_status']     = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
+$_['entry_status']      = 'Status';
+$_['entry_sort_order']  = 'Sort Order';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify dashboard recent orders!';
+$_['error_permission']  = 'Warning: You do not have permission to modify dashboard recent orders!';

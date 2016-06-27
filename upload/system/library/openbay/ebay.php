@@ -987,11 +987,11 @@ final class Ebay {
 		return $header_response;
 	}
 
-	private function getImageCopy($url, $new_image) {
+	private function getImageCopy($url, $image_new) {
 		$handle = @fopen($url, 'r');
 
 		if ($handle !== false) {
-			if (!@copy($url, $new_image)) {
+			if (!@copy($url, $image_new)) {
 				$this->log('getImages() - FAILED COPY: ' . $url);
 				$this->log(print_r(error_get_last(), true));
 				return false;

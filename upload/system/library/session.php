@@ -4,13 +4,13 @@ class Session {
 	private $adaptor = '';
 	public $data = array();
 
-	public function __construct($adaptor = 'native', &$session_id = '') {
+	public function __construct($adaptor = 'native') {
 		$class = 'Session\\' . $adaptor;
 
-		$this->session_id = $session_id;
-
+		$session_id = &$this->session_id;
+		
 		if (class_exists($class)) {
-			$this->adaptor = new $class($this->session_id);
+			$this->adaptor = new $class($session_id);
 		} else {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
 		}		
@@ -35,7 +35,7 @@ class Session {
 		return $this->adaptor->create_sid();
 	}
 	
-	public function start() {
+	public function start($session_id = '') {
 		if (!session_id()) {
 			ini_set('session.use_only_cookies', 'Off');
 			ini_set('session.use_cookies', 'On');
@@ -54,18 +54,21 @@ class Session {
 				exit('Error: Invalid session ID!');
 			}	
 					
-			session_set_cookie_params(0, '/');
+			//echo $this->session_id;
+			
 			session_start();
+			
+			setcookie(session_name(), $this->session_id, 0);
 		}
 		
 		return true;
 	}	
 	
 	public function close() {
-		session_write_close();
+		return $this->adaptor->close();
 	}
 		
 	public function destroy() {
-		session_destroy();
+		return $this->adaptor->destroy();
 	}
 }

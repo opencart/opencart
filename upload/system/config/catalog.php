@@ -15,6 +15,9 @@ $_['db_password']      = DB_PASSWORD;
 $_['db_database']      = DB_DATABASE;
 $_['db_port']          = DB_PORT;
 
+// Session
+$_['session_autostart'] = false;
+
 // Autoload Libraries
 $_['library_autoload'] = array(
 	'openbay'

@@ -28,13 +28,12 @@ class ControllerApiLogin extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			
 				// We want to create a seperate session so changes do not interfere with the admin user.
-				$session_id_new = strtolower(token(32));
+				$session_id_new = strtolower(token(26));
 				
 				$session_id_old = $this->session->getId();
-				
 
 				/*
-				session_id($session_id_new);
+				//session_id($session_id_new);
 				
 				echo 'SESSION ID: ' . session_id() . '<br />';
 				
@@ -51,22 +50,24 @@ class ControllerApiLogin extends Controller {
 				print_r($_SESSION);
 				*/
 				
-				//echo 'OLD SESSION ID: ' . session_id() . "\n";
+				//$this->log->write('SESSION STATUS: ' . session_status());
 				
-				//print_r($_SESSION);
+				//$this->log->write('OLD SESSION ID: ' . session_id());
+				
+				//$this->log->write($_SESSION);
 				
 				// Close and write the current session.
 				$this->session->save();
 								
 				// Start a new session.
-				$this->session->load($session_id_new);
+				$this->session->load($session_id_new, 'test');
 				
-				//echo 'NEW SESSION ID: ' . session_id() . "\n";
+				//$this->log->write('NEW SESSION ID: ' . session_id());
 				
 				// Set API ID in the new session
 				$this->session->data['api_id'] = $api_info['api_id'];
 				
-				//print_r($_SESSION);
+				//$this->log->write($_SESSION);
 				
 				// Close and write the new session.
 				$this->session->save();
@@ -74,9 +75,9 @@ class ControllerApiLogin extends Controller {
 				// Start the old session.
 				$this->session->load($session_id_old);
 				
-				//echo 'OLD SESSION ID: ' . session_id() . "\n";
+				//$this->log->write('OLD SESSION ID: ' . session_id());
 				
-				//print_r($_SESSION);
+				//$this->log->write($_SESSION);
 
 				// Create Token
 				$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);

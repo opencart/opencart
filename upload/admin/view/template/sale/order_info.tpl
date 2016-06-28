@@ -576,6 +576,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
 $('#button-history').on('click', function() {
+	/*
 	if (typeof verifyStatusChange == 'function'){
 		if (verifyStatusChange() == false){
 			return false;
@@ -584,7 +585,7 @@ $('#button-history').on('click', function() {
 		}
 	} else{
 		addOrderInfo();
-	}
+	}*/
 
 	$.ajax({
 		url: '<?php echo $catalog; ?>index.php?route=api/order/history&token=' + token + '&store_id=<?php echo $store_id; ?>&order_id=<?php echo $order_id; ?>',

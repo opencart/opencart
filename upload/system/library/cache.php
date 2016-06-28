@@ -12,14 +12,6 @@ class Cache {
 		}
 	}
 	
-	/**
-	 * Register a binding with the container.
-	 *
-	 * @param  string               $abstract
-	 * @param  Closure|string|null  $concrete
-	 * @param  bool                 $shared
-	 * @return mixed
-	*/
 	public function get($key) {
 		return $this->adaptor->get($key);
 	}

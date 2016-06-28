@@ -19,8 +19,12 @@ class Session {
 		return session_id();
 	}
 
-	public function start($session_id = '', $name = '') {
-		if (!session_id()) {
+	public function start($session_id = '') {
+		if ($session_id) {
+			session_id($session_id);
+		}	
+		
+		if (session_status() != 2) {
 			ini_set('session.use_only_cookies', 'Off');
 			ini_set('session.use_cookies', 'On');
 			ini_set('session.use_trans_sid', 'Off');
@@ -34,28 +38,32 @@ class Session {
 			session_start();
 		}
 		
-		//if ($name) {
-		//	session_name($name);
-		//}
-				
-		if ($session_id) {
-			session_id($session_id);
-		}
-		
-
-				
 		$this->data =& $_SESSION;	
 		
-		return true;			
+		return true;
 	}
 	
-	public function close() {
-		//if (session_id()) {
-			session_write_close();
-		//}
+	public function load($session_id) {
+		$_SESSION = array();
+
+		session_id($session_id);
+		
+		session_start();
+		
+		$this->data =& $_SESSION;
 	}
 	
+	public function save() {
+		session_write_close();
+		
+		$_SESSION = array();
+		
+		$this->data =& $_SESSION;
+	}
+		
 	public function destroy() {
-		return session_destroy();
+		if (session_status() == 2) {
+			return session_destroy();
+		}
 	}
 }

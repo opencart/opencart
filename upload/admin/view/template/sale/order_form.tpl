@@ -1918,6 +1918,7 @@ $('#button-payment-address').on('click', function() {
 			$('#button-payment-address').button('reset');
 		},
 		success: function(json) {
+			console.log(json);
 			$('.alert, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
@@ -1946,12 +1947,10 @@ $('#button-payment-address').on('click', function() {
 					dataType: 'json',
 					crossDomain: true,
 					beforeSend: function() {
-						$('#button-payment-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-						$('#button-payment-address').prop('disabled', true);
+						$('#button-payment-address').button('loading');
 					},
 					complete: function() {
-						$('#button-payment-address i').replaceWith('<i class="fa fa-arrow-right"></i>');
-						$('#button-payment-address').prop('disabled', false);
+						$('#button-payment-address').button('reset');
 					},
 					success: function(json) {
 						if (json['error']) {
@@ -2131,12 +2130,10 @@ $('#button-shipping-address').on('click', function() {
 					url: '<?php echo $catalog; ?>index.php?route=api/shipping/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					beforeSend: function() {
-						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-						$('#button-shipping-address').prop('disabled', true);
+						$('#button-shipping-address').button('loading');
 					},
 					complete: function() {
-						$('#button-shipping-address i').replaceWith('<i class="fa fa-arrow-right"></i>');
-						$('#button-shipping-address').prop('disabled', false);
+						$('#button-shipping-address').button('reset');
 					},
 					success: function(json) {
 						if (json['error']) {

@@ -3,7 +3,7 @@
 $_['site_base']        = HTTP_SERVER;
 $_['site_ssl']         = HTTPS_SERVER;
 
-//Url
+// Url
 $_['url_autostart']    = false;
 
 // Database

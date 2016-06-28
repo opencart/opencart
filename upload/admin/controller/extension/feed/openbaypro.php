@@ -55,7 +55,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 1;
 		$settings['openbaypro_status'] = 1;
-		
+
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		$this->model_extension_event->addEvent('openbay', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
@@ -68,13 +68,11 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		 *
 		 * find a home for the file.
 		 */
-		$xml = simplexml_load_file(DIR_APPLICATION . 'tmp.xml');
-
-		echo $xml; die();
+		$xml = file_get_contents(DIR_APPLICATION . 'tmp.xml');
 
 		$modification_data = array(
 			'name'    => 'OpenBay Pro',
-			'code'    => 'openbaypro_menu',
+			'code'    => 'openbaypro',
 			'author'  => 'EcommerceHQ',
 			'version' => 1,
 			'link'    => 'https://account.openbaypro.com/',
@@ -94,7 +92,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 0;
 		$settings['openbaypro_status'] = 0;
-		
+
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		$this->model_extension_event->deleteEvent('openbay');
@@ -102,7 +100,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$this->load->model('extension/modification');
 
-		$mod = $this->model_extension_modification->getModificationByCode('openbaypro_menu');
+		$mod = $this->model_extension_modification->getModificationByCode('openbaypro');
 
 		$this->model_extension_modification->deleteModification($mod['modification_id']);
 

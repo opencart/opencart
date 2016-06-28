@@ -10,6 +10,8 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->request->post['config_mail_smtp_password'] = $this->encryption->encrypt($this->request->post['config_mail_smtp_password']);
+
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
 			if ($this->config->get('config_currency_auto')) {
@@ -989,9 +991,9 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (isset($this->request->post['config_mail_smtp_password'])) {
-			$data['config_mail_smtp_password'] = $this->request->post['config_mail_smtp_password'];
+			$data['config_mail_smtp_password'] = $this->encryption->decrypt($this->request->post['config_mail_smtp_password']);
 		} else {
-			$data['config_mail_smtp_password'] = $this->config->get('config_mail_smtp_password');
+			$data['config_mail_smtp_password'] = $this->encryption->decrypt($this->config->get('config_mail_smtp_password'));
 		}
 
 		if (isset($this->request->post['config_mail_smtp_port'])) {

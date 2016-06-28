@@ -29,7 +29,6 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
             <div id="category"></div>
             <br />
-
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_google_category; ?></label>
               <div class="col-sm-10">
@@ -70,25 +69,25 @@
 // Google Category
 $('input[name=\'google_base_category\']').autocomplete({
     'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=extension/feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['google_base_category_id']
-                    }
-                }));
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      $.ajax({
+        url: 'index.php?route=extension/feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        dataType: 'json',
+        success: function(json) {
+          response($.map(json, function(item) {
+            return {
+              label: item['name'],
+              value: item['google_base_category_id']
             }
-        });
+          }));
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
     },
     'select': function(item) {
-        $(this).val(item['label']);
-        $('input[name=\'google_base_category_id\']').val(item['value']);
+      $(this).val(item['label']);
+      $('input[name=\'google_base_category_id\']').val(item['value']);
   }
 });
 
@@ -106,14 +105,14 @@ $('input[name=\'category\']').autocomplete({
 					}
 				}));
 			},
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
 	},
 	'select': function(item) {
-        $(this).val(item['label']);
-        $('input[name="category_id"]').val(item['value']);
+      $(this).val(item['label']);
+      $('input[name="category_id"]').val(item['value']);
     }
 });
 
@@ -150,9 +149,9 @@ $('#button-category-add').on('click', function() {
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('input[name=\'category\']').val('');
-                $('input[name=\'category_id\']').val('');
-                $('input[name=\'google_base_category\']').val('');
-                $('input[name=\'google_base_category_id\']').val('');
+          $('input[name=\'category_id\']').val('');
+          $('input[name=\'google_base_category\']').val('');
+          $('input[name=\'google_base_category_id\']').val('');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -184,7 +183,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
-            if (json['success']) {
+      if (json['success']) {
 				$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
 
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -204,7 +203,7 @@ $('#button-import').on('click', function() {
 	$('#form-upload input[name=\'file\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
+    clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
@@ -228,13 +227,13 @@ $('#button-import').on('click', function() {
 				success: function(json) {
 					$('.alert').remove();
 
-                    if (json['error']) {
-        				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-        			}
+          if (json['error']) {
+        		$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        	}
 
-        			if (json['success']) {
-        				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-        			}
+        	if (json['success']) {
+        		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        	}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

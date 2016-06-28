@@ -37,7 +37,7 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
-$session = new Session('file', 'test');
+$session = new Session('native');
 
 if ($config->get('session_autostart')) {
 	$session->start();

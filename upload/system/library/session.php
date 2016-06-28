@@ -1,22 +1,30 @@
 <?php
 class Session {
-	public $session_id = '';
-	public $adatptor = '';
+	private $session_id = '';
+	private $adaptor = '';
 	public $data = array();
 
-	public function __construct($handler = '') {
-		/*
-		if ($handler) {
+	public function __construct($adaptor = 'native', &$session_id = '') {
+		$class = 'Session\\' . $adaptor;
+
+		$this->session_id = $session_id;
+
+		if (class_exists($class)) {
+			$this->adaptor = new $class($this->session_id);
+		} else {
+			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
+		}		
+		
+		if ($this->adaptor) {
 			session_set_save_handler(
-				array($handler, 'open'),
-				array($handler, 'close'),
-				array($handler, 'read'),
-				array($handler, 'write'),
-				array($handler, 'destroy'),
-				array($handler, 'gc')
+				array($this->adaptor, 'open'),
+				array($this->adaptor, 'close'),
+				array($this->adaptor, 'read'),
+				array($this->adaptor, 'write'),
+				array($this->adaptor, 'destroy'),
+				array($this->adaptor, 'gc')
 			);	
 		}
-		*/
 	}
 
 	public function getId() {
@@ -24,72 +32,40 @@ class Session {
 	}
 
 	public function createId() {
-		session_start();
-		
-		session_regenerate_id();
-		
-		$session_id = session_id();
-		
-		session_destroy();
-		
-		return $session_id;
-	}		
-
-	public function start($session_id = '') {
-		if ($session_id) {
-			$this->session_id = $session_id;
-		} elseif (isset($_COOKIE[session_name])) {
-			$this->session_id = $_COOKIE[session_name];
-		} else {
-			$this->session_id = $this->createId();
-		}
-		
-		if (!preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $this->session_id)) {
-			exit('Error: Invalid session ID!');
-		}
-		
-		$file = session_save_path() . '/sess_' . $this->session_id;
-		
-		if (is_file($file)) {
-			$handle = fopen($file, 'r');
-			
-			$data = fread($handle, filesize($file));
-			
-			fclose($handle);
-			
-			$this->data = unserialize($data);
-		}		
-		
-		return true;
+		return $this->adaptor->create_sid();
 	}
 	
-	public function destroy() {
-		if ($this->session_id) {
-			$file = session_save_path() . '/sess_' . $this->session_id;
-				
-			if (is_file($file)) {
-				unset($file);
+	public function start() {
+		if (!session_id()) {
+			ini_set('session.use_only_cookies', 'Off');
+			ini_set('session.use_cookies', 'On');
+			ini_set('session.use_trans_sid', 'Off');
+			ini_set('session.cookie_httponly', 'On');
+							
+			if ($session_id) {
+				$this->session_id = $session_id;
+			} elseif (isset($_COOKIE[session_name()])) {
+				$this->session_id = $_COOKIE[session_name()];
+			} else {
+				$this->session_id = $this->createId();
 			}
 			
-			return session_destroy();
+			if (isset($_COOKIE[session_name()]) && !preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $_COOKIE[session_name()])) {
+				exit('Error: Invalid session ID!');
+			}	
+					
+			session_set_cookie_params(0, '/');
+			session_start();
 		}
-	}
-	
-	public function __destruct() {
-		if ($this->session_id) {
-			$file = session_save_path() . '/sess_' . $this->session_id;
-			
-			$handle = fopen($file, 'w');
-	
-			flock($handle, LOCK_EX);
-	
-			fwrite($handle, serialize($this->data));
-	
-			fflush($handle);
-	
-			flock($handle, LOCK_UN);
-	
-			fclose($handle);
-		}
+		
+		return true;
 	}	
+	
+	public function close() {
+		session_write_close();
+	}
+		
+	public function destroy() {
+		session_destroy();
+	}
 }

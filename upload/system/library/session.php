@@ -19,7 +19,7 @@ class Session {
 		return session_id();
 	}
 
-	public function start($session_id = '') {
+	public function start($session_id = '', $name = '') {
 		if (!session_id()) {
 			ini_set('session.use_only_cookies', 'Off');
 			ini_set('session.use_cookies', 'On');
@@ -34,19 +34,25 @@ class Session {
 			session_start();
 		}
 		
+		//if ($name) {
+		//	session_name($name);
+		//}
+				
 		if ($session_id) {
 			session_id($session_id);
 		}
 		
+
+				
 		$this->data =& $_SESSION;	
 		
 		return true;			
 	}
 	
 	public function close() {
-		if (session_id()) {
+		//if (session_id()) {
 			session_write_close();
-		}
+		//}
 	}
 	
 	public function destroy() {

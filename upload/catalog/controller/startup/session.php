@@ -10,7 +10,9 @@ class ControllerStartupSession extends Controller {
 				$this->session->close();
 				
 				$this->session->start($query->row['session_id']);
-
+				
+				//echo session_save_path() . '\sess_' . $query->row['session_id'];
+				
 				// keep the session alive
 				$this->db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . (int)$query->row['api_session_id'] . "'");
 			}

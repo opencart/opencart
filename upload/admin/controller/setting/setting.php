@@ -45,9 +45,8 @@ class ControllerSettingSetting extends Controller {
 		$data['text_register'] = $this->language->get('text_register');
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_mail'] = $this->language->get('text_mail');
-		$data['text_smtp'] = $this->language->get('text_smtp');
-		$data['text_alert'] = $this->language->get('text_alert');
+		$data['text_mail_mail'] = $this->language->get('text_mail');
+		$data['text_mail_alert'] = $this->language->get('text_mail_alert');
 		$data['text_general'] = $this->language->get('text_general');
 		$data['text_security'] = $this->language->get('text_security');
 		$data['text_upload'] = $this->language->get('text_upload');
@@ -130,6 +129,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_mail_smtp_port'] = $this->language->get('entry_mail_smtp_port');
 		$data['entry_mail_smtp_timeout'] = $this->language->get('entry_mail_smtp_timeout');
 		$data['entry_mail_alert'] = $this->language->get('entry_mail_alert');
+		$data['entry_mail_alert_email'] = $this->language->get('entry_alert_email');
 		$data['entry_alert_email'] = $this->language->get('entry_alert_email');
 		$data['entry_secure'] = $this->language->get('entry_secure');
 		$data['entry_shared'] = $this->language->get('entry_shared');

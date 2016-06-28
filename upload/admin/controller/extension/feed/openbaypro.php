@@ -63,7 +63,14 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$this->load->model('extension/modification');
 
-		$xml = $this->load->view('extension/openbay/openbay_modification_xml', array());
+		/**
+		 * @todo - fix the loading of this file for the modifications
+		 *
+		 * find a home for the file.
+		 */
+		$xml = simplexml_load_file(DIR_APPLICATION . 'tmp.xml');
+
+		echo $xml; die();
 
 		$modification_data = array(
 			'name'    => 'OpenBay Pro',

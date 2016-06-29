@@ -3,8 +3,8 @@ class ModelExtensionOpenBayFba extends Model {
     public function install() {
         $this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbay_fba', 'catalog/model/checkout/order/addOrder/after', 'extension/openbay/fba/eventAddOrder');
-		$this->model_extension_event->addEvent('openbay_fba', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/fba/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('c', 'catalog/model/checkout/order/addOrder/after', 'extension/openbay/fba/eventAddOrder');
+		$this->model_extension_event->addEvent('openbay_fba_add_orderhistory', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/fba/eventAddOrderHistory');
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
@@ -47,7 +47,8 @@ class ModelExtensionOpenBayFba extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_fba'");
 
         $this->load->model('extension/event');
-        $this->model_extension_event->deleteEvent('openbay_fba');
+        $this->model_extension_event->deleteEvent('openbaypro_etsy_add_order');
+        $this->model_extension_event->deleteEvent('openbaypro_etsy_add_orderhistory');
     }
 
     public function patch() {

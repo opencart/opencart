@@ -37,7 +37,7 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
-$session = new Session('file');
+$session = new Session();
 
 if ($config->get('session_autostart')) {
 	$session->start();

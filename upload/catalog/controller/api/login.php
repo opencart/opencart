@@ -32,14 +32,14 @@ class ControllerApiLogin extends Controller {
 				
 				$session_id_new = $this->session->createId();
 				
-				$session = new Session();
+				$this->session->start('api', $session_id_new);
 				
-				$session->start($session_id_new, 'api');
-				
-				$session->data['api_id'] = $api_info['api_id'];
+				$this->session->data['api_id'] = $api_info['api_id'];
 				
 				// Close and write the new session.
-				$session->close();
+				//$session->close();
+
+				$this->session->start('default');
 
 				// Create Token
 				$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);

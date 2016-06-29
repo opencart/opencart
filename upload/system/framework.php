@@ -8,6 +8,11 @@ $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
 
+// Timezone
+if (!ini_get('date.timezone') && $config->has('config_timezone')) {
+	date_default_timezone_set($config->get('config_timezone'));
+}
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);

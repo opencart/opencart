@@ -3,8 +3,8 @@ namespace Session;
 class Native extends \SessionHandler {
     private $session_id;
 
-    public function __construct($session_id) {
-        $this->session_id = $session_id;
+    public function __construct($session) {
+        $this->session = $session;
     }
 
     public function close() {
@@ -16,7 +16,7 @@ class Native extends \SessionHandler {
     }
 
     public function destroy($session_id) {
-        return parent::destroy($this->session_id);
+        return parent::destroy($this->session->getId());
     }
 
     public function gc($maxlifetime) {
@@ -28,10 +28,10 @@ class Native extends \SessionHandler {
     }
 
     public function read($session_id) {
-        return parent::read($this->session_id);
+        return parent::read($this->session->getId());
     }
 
     public function write($session_id, $data) {
-        return parent::write($this->session_id, $data);
+		return parent::write($this->session->getId(), $data);
     }
 }

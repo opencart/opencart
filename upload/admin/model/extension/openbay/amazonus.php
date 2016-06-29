@@ -3,7 +3,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_amazonus_add_order', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazonus/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_amazonus_add_order', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazonus/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
@@ -100,7 +100,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbaypro_amazonus_add_order');
+		$this->model_extension_event->deleteEvent('openbay_amazonus_add_order');
 	}
 
 	public function patch() {

@@ -39,7 +39,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$this->load->model('extension/extension');
 
-		if (!$this->user->hasPermission('modify', 'extension/feed/openbay')) {
+		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true));
@@ -1812,7 +1812,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true));
 	}
 
-	public function eventDeleteProduct($route, $response, $product_id) {
+	public function eventDeleteProduct($route, $data) {
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -1823,12 +1823,12 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 
 			if ($status == 1) {
-				$this->openbay->{$market}->deleteProduct($product_id);
+				$this->openbay->{$market}->deleteProduct((int)$data[0]);
 			}
 		}
 	}
 
-	public function eventEditProduct($route, $response, $product_id, $data) {
+	public function eventEditProduct($route, $data) {
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -1839,7 +1839,7 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 
 			if ($status == 1) {
-				$this->openbay->{$market}->productUpdateListen((int)$product_id, $data);
+				$this->openbay->{$market}->productUpdateListen((int)$data[0], $data[1]);
 			}
 		}
 	}

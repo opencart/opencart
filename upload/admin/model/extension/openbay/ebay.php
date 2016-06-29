@@ -3,7 +3,7 @@ class ModelExtensionOpenBayEbay extends Model{
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_ebay_add_order', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/ebay/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_ebay_add_order', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/ebay/eventAddOrderHistory');
 
 		$value                                  = array();
 		$value["ebay_token"]              = '';
@@ -236,7 +236,7 @@ class ModelExtensionOpenBayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbaypro_ebay_add_order');
+		$this->model_extension_event->deleteEvent('openbay_ebay_add_order');
 	}
 
 	public function patch() {

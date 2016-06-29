@@ -54,11 +54,11 @@ class Session {
 			exit('Error: Invalid session ID!');
 		}	
 				
-				INI_Get('session.cookie_lifetime')
-* INI_Get('session.cookie_path')
-* INI_Get('session.cookie_domain')
-* INI_Get('session.cookie_secure')
-* INI_Get('session.cookie_httponly')
+				
+//ini_get('session.cookie_path')
+//ini_get('session.cookie_domain')
+//ini_get('session.cookie_secure')
+//ini_get('session.cookie_httponly')
 
 
 		session_set_cookie_params();
@@ -69,7 +69,7 @@ class Session {
 		
 		session_start();
 		
-		//setcookie(session_name(), $this->session_id, 0);
+		//setcookie(session_name(), $this->session_id, ini_get('session.cookie_lifetime'), );
 		
 		return true;
 	}	

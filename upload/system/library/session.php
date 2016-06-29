@@ -15,34 +15,21 @@ class Session {
 		
 		if ($this->adaptor) {
 			session_set_save_handler(
-				array(&$this->adaptor, 'open'),
-				array(&$this->adaptor, 'close'),
-				array(&$this->adaptor, 'read'),
-				array(&$this->adaptor, 'write'),
-				array(&$this->adaptor, 'destroy'),
-				array(&$this->adaptor, 'gc')
+				array($this->adaptor, 'open'),
+				array($this->adaptor, 'close'),
+				array($this->adaptor, 'read'),
+				array($this->adaptor, 'write'),
+				array($this->adaptor, 'destroy'),
+				array($this->adaptor, 'gc')
 			);	
 		}
 	}
-
-	public function getId() {
-		return $this->session_id;
-	}
-
-	public function createId() {
-		return $this->adaptor->create_sid();
-	}
 	
 	public function start($session_id = '', $session_name = '') {
-		ini_set('session.use_only_cookies', 'Off');
-		ini_set('session.use_cookies', 'On');
-		ini_set('session.use_trans_sid', 'Off');
-		ini_set('session.cookie_httponly', 'On');
-					
 		if (!$session_name) {
 			$session_name = session_name();
 		}
-						
+
 		if ($session_id) {
 			$this->session_id = $session_id;
 		} elseif (isset($_COOKIE[$session_name])) {
@@ -57,16 +44,38 @@ class Session {
 		
 		setcookie($session_name, $this->session_id, ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
 		
-		session_start();
+		$this->adaptor->open(session_save_path(), $session_name);
+		
+		$this->data = unserialize($this->adaptor->read($this->session_id));
 		
 		return true;
 	}	
-	
+
+	public function getId() {
+		return $this->session_id;
+	}
+
+	public function createId() {
+		if (version_compare(phpversion(), '5.5.0', '>') == true) {
+			return $this->adaptor->create_sid();
+		} else {
+			return mt_rand(0, 0xffff);
+		}
+	}
+		
 	public function close() {
+		$this->adaptor->write($this->session_id, $this->data);
+		
 		return $this->adaptor->close();
 	}
 		
 	public function destroy() {
-		return $this->adaptor->destroy($this->session_id);
+		$this->adaptor->destroy($this->session_id);
+		$this->adaptor->close();
+	}
+	
+	public function __destruct() {
+		$this->adaptor->write($this->session_id, serialize($this->data));
+		$this->adaptor->close();
 	}
 }

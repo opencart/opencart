@@ -31,24 +31,16 @@ class ControllerApiLogin extends Controller {
 				$session_id_new = strtolower(token(26));
 				
 				$session_id_old = $this->session->getId();
-
-				/*
-				//session_id($session_id_new);
 				
-				echo 'SESSION ID: ' . session_id() . '<br />';
+				$session_id_new = $this->session->createId();
 				
-				$this->session->data['api_id'] = $api_info['api_id'];
+				$session = new Session();
 				
-				print_r($_SESSION);
+				$session->start($session_id_new, 'api');
 				
-				session_write_close();
+				$session->data['api_id'] = $api_info['api_id'];
 				
-				session_id($session_id_old);
-				
-				echo 'SESSION ID: ' . session_id() . '<br />';
-				
-				print_r($_SESSION);
-				*/
+				$session->close();
 				
 				//$this->log->write('SESSION STATUS: ' . session_status());
 				

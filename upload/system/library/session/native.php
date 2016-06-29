@@ -1,7 +1,7 @@
 <?php
 namespace Session;
 class Native extends \SessionHandler {
-    private $session_id;
+    private $session;
 
     public function __construct($session) {
         $this->session = $session;
@@ -32,6 +32,6 @@ class Native extends \SessionHandler {
     }
 
     public function write($session_id, $data) {
-		return parent::write($this->session->getId(), $data);
+		return parent::write($this->session->getId(), serialize($this->session->data));
     }
 }

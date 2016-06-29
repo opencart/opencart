@@ -4,7 +4,7 @@ class Session {
 	public $session_id = '';
 	public $data = array();
 
-	public function __construct($adaptor = 'native') {
+	public function __construct($adaptor = 'file') {
 		$class = 'Session\\' . $adaptor;
 		
 		if (class_exists($class)) {
@@ -14,14 +14,7 @@ class Session {
 		}		
 		
 		if ($this->adaptor) {
-			session_set_save_handler(
-				array($this->adaptor, 'open'),
-				array($this->adaptor, 'close'),
-				array($this->adaptor, 'read'),
-				array($this->adaptor, 'write'),
-				array($this->adaptor, 'destroy'),
-				array($this->adaptor, 'gc')
-			);	
+			session_set_save_handler($this->adaptor);
 		}
 	}
 	
@@ -44,6 +37,12 @@ class Session {
 		
 		setcookie($session_name, $this->session_id, ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
 		
+		if (!session_id()) { 
+			session_start();
+		
+		
+		}
+		
 		$this->adaptor->open(session_save_path(), $session_name);
 		
 		$this->data = unserialize($this->adaptor->read($this->session_id));
@@ -64,9 +63,8 @@ class Session {
 	}
 		
 	public function close() {
-		$this->adaptor->write($this->session_id, $this->data);
-		
-		return $this->adaptor->close();
+		$this->adaptor->write($this->session_id, serialize($this->data));
+		$this->adaptor->close();
 	}
 		
 	public function destroy() {

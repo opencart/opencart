@@ -28,55 +28,18 @@ class ControllerApiLogin extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			
 				// We want to create a seperate session so changes do not interfere with the admin user.
-				$session_id_new = strtolower(token(32));
-				
 				$session_id_old = $this->session->getId();
 				
-
-				/*
-				session_id($session_id_new);
+				$session_id_new = $this->session->createId();
 				
-				echo 'SESSION ID: ' . session_id() . '<br />';
+				$session = new Session();
 				
-				$this->session->data['api_id'] = $api_info['api_id'];
+				$session->start($session_id_new, 'api');
 				
-				print_r($_SESSION);
-				
-				session_write_close();
-				
-				session_id($session_id_old);
-				
-				echo 'SESSION ID: ' . session_id() . '<br />';
-				
-				print_r($_SESSION);
-				*/
-				
-				//echo 'OLD SESSION ID: ' . session_id() . "\n";
-				
-				//print_r($_SESSION);
-				
-				// Close and write the current session.
-				$this->session->save();
-								
-				// Start a new session.
-				$this->session->load($session_id_new);
-				
-				//echo 'NEW SESSION ID: ' . session_id() . "\n";
-				
-				// Set API ID in the new session
-				$this->session->data['api_id'] = $api_info['api_id'];
-				
-				//print_r($_SESSION);
+				$session->data['api_id'] = $api_info['api_id'];
 				
 				// Close and write the new session.
-				$this->session->save();
-				
-				// Start the old session.
-				$this->session->load($session_id_old);
-				
-				//echo 'OLD SESSION ID: ' . session_id() . "\n";
-				
-				//print_r($_SESSION);
+				$session->close();
 
 				// Create Token
 				$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);

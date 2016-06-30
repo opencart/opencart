@@ -13,8 +13,15 @@ class ControllerStartupPermission extends Controller {
 			if (isset($part[1])) {
 				$route .= '/' . $part[1];
 			}
-			
-			if (isset($part[2])) {
+
+			$actions = array(
+				'install',
+				'uninstall',
+				'add',
+				'delete'
+			);
+
+			if (isset($part[2]) && !in_array($part[2], $actions)) {
 				// If a 3rd part is found we need to check if its under one of the extension folders.
 				$routes = array(
 					'extension/dashboard',

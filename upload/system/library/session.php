@@ -30,16 +30,12 @@ class Session {
 			session_start(array('read_and_close' => true));
 		}			
 	}
-
-	public function getId() {
-		return $this->session_id;
-	}
 		
 	public function start($key = 'default', $value = '') {
-		if (isset($_COOKIE[$key])) {
-			$this->session_id = $_COOKIE[$key];
-		} elseif ($value) {
+		if ($value) {
 			$this->session_id = $value;
+		} elseif (isset($_COOKIE[$key])) {
+			$this->session_id = $_COOKIE[$key];
 		} else {
 			$this->session_id = $this->createId();
 		}	
@@ -55,6 +51,10 @@ class Session {
 		return $this->session_id;
 	}	
 
+	public function getId() {
+		return $this->session_id;
+	}
+	
 	public function createId() {
 		if (version_compare(phpversion(), '5.5.0', '>') == true) {
 			return $this->adaptor->create_sid();
@@ -63,9 +63,9 @@ class Session {
 		}
 	}
 		
-	public function destroy($key = 'default') {
-		if (isset($this->data[$key])) {
-			unset($this->data[$key]);
+	public function delete($key = 'default') {
+		if (isset($_SESSION[$key])) {
+			unset($_SESSION[$key]);
 		}
 		
 		setcookie($key, '', time() - 42000, ini_get('session.cookie_path'), ini_get('session.cookie_domain'));

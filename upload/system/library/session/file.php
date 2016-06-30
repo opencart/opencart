@@ -1,9 +1,6 @@
 <?php
 namespace Session;
 class File extends \SessionHandler {
-    private $session;
-	private $handle;
-
     public function create_sid() {
         return parent::create_sid();
     }
@@ -20,15 +17,15 @@ class File extends \SessionHandler {
 		$file = session_save_path() . '/sess_' . $session_id;
 		
 		if (is_file($file)) {
-			$this->handle = fopen($file, 'r');
+			$handle = fopen($file, 'r');
 			
-			flock($this->handle, LOCK_SH);
+			flock($handle, LOCK_SH);
 			
-			$data = fread($this->handle, filesize($file));
+			$data = fread($handle, filesize($file));
 			
-			flock($this->handle, LOCK_UN);
+			flock($handle, LOCK_UN);
 			
-			fclose($this->handle);
+			fclose($handle);
 			
 			return $data;
 		}
@@ -39,17 +36,17 @@ class File extends \SessionHandler {
     public function write($session_id, $data) {
 		$file = session_save_path() . '/sess_' . $session_id;
 		
-		$this->handle = fopen($file, 'w');
+		$handle = fopen($file, 'w');
 		
-		flock($this->handle, LOCK_EX);
+		flock($handle, LOCK_EX);
 
-		fwrite($this->handle, $data);
+		fwrite($handle, $data);
 
-		fflush($this->handle);
+		fflush($handle);
 
-		flock($this->handle, LOCK_UN);
+		flock($handle, LOCK_UN);
 		
-		fclose($this->handle);
+		fclose($handle);
 		
 		return true;
     }

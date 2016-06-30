@@ -29,9 +29,7 @@
                 <?php } ?>
                 <?php } ?>
               </select>
-              <div class="input-group-btn">
-                <button type="button" id="button-filter" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
-              </div>
+              <span class="input-group-addon"><i class="fa fa-filter"></i> <?php echo $text_filter; ?></span>
             </div>
           </div>
         </fieldset>
@@ -41,15 +39,18 @@
   </div>
   <?php if ($categories) { ?>
   <script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
+$('select[name="type"]').on('change', function() {
 	$.ajax({
 		url: $('select[name="type"]').val(),
 		dataType: 'html',
 		beforeSend: function() {
-			$('#button-filter').button('loading');
+			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
+			$('.fa-filter').removeClass('fa-filter');
 		},
 		complete: function() {
-			$('#button-filter').button('reset');
+			$('.fa-circle-o-notch').addClass('fa-filter');
+			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
+			
 		},
 		success: function(html) {
 			$('#extension').html(html);
@@ -60,7 +61,7 @@ $('#button-filter').on('click', function() {
 	});
 });
 
-$('#button-filter').trigger('click');
+$('select[name="type"]').trigger('change');
 
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();

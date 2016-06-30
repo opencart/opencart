@@ -20,12 +20,27 @@ class ControllerStartupPermission extends Controller {
 				'uninstall',
 				'add',
 				'delete'
-			);
-			
+			);	
+				
 			if (isset($part[2]) && !in_array($part[2], $action)) {
-				$route .= '/' . $part[2];
+				$extension = array(
+					'extension/dashboard',
+					'extension/analytics',
+					'extension/captcha',
+					'extension/feed',
+					'extension/fraud',
+					'extension/module',
+					'extension/payment',
+					'extension/shipping',
+					'extension/theme',
+					'extension/total'
+				);
+			
+				if (in_array($part[2], $extension)) {
+					$route .= '/' . $part[2];
+				}
 			}
-
+			
 			// We want to ingore some pages from having its permission checked. 
 			$ignore = array(
 				'common/dashboard',

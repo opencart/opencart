@@ -56,14 +56,23 @@ class Session {
 	}
 	
 	public function createId() {
-		if (version_compare(phpversion(), '5.5.0', '>') == true) {
-			return $this->adaptor->create_sid();
-		} else {
-			return mt_rand(0, 0xffff);
-		}
+		//if (version_compare(phpversion(), '5.5.0', '>') == true) {
+		//	return $this->adaptor->create_sid();
+		//} else {
+			$old_session_id = session_id();
+			
+			session_regenerate_id();
+			
+			$new_session_id = session_id();
+			
+			session_id($old_session_id);
+			
+			
+			return $new_session_id;
+		//}
 	}
 		
-	public function delete($key = 'default') {
+	public function destroy($key = 'default') {
 		if (isset($_SESSION[$key])) {
 			unset($_SESSION[$key]);
 		}

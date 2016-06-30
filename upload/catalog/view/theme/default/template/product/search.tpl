@@ -180,7 +180,7 @@ $('#button-search').bind('click', function() {
 
 	var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
 
-	if (sub_category) {
+	if (sub_category && category_id > 0) {
 		url += '&sub_category=true';
 	}
 

@@ -13,27 +13,19 @@ class ControllerStartupPermission extends Controller {
 			if (isset($part[1])) {
 				$route .= '/' . $part[1];
 			}
+
+			// If a 3rd part is found we need to check if its under one of the extension folders.
+			$action = array(
+				'install',
+				'uninstall',
+				'add',
+				'delete'
+			);
 			
-			if (isset($part[2])) {
-				// If a 3rd part is found we need to check if its under one of the extension folders.
-				$routes = array(
-					'extension/dashboard',
-					'extension/analytics',
-					'extension/captcha',
-					'extension/feed',
-					'extension/fraud',
-					'extension/module',
-					'extension/payment',
-					'extension/shipping',
-					'extension/theme',
-					'extension/total'
-				);
-			
-				if (in_array($part[0] . '/' . $part[1], $routes)) {
-					$route .= '/' . $part[2];
-				}
+			if (isset($part[2]) && !in_array($part[2], $action)) {
+				$route .= '/' . $part[2];
 			}
-		
+
 			// We want to ingore some pages from having its permission checked. 
 			$ignore = array(
 				'common/dashboard',
@@ -42,15 +34,7 @@ class ControllerStartupPermission extends Controller {
 				'common/forgotten',
 				'common/reset',
 				'error/not_found',
-				'error/permission',
-				'dashboard/order',
-				'dashboard/sale',
-				'dashboard/customer',
-				'dashboard/online',
-				'dashboard/map',
-				'dashboard/activity',
-				'dashboard/chart',
-				'dashboard/recent'
+				'error/permission'
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {

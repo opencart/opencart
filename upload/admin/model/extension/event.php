@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionEvent extends Model {
-	public function addEvent($code, $trigger, $action) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "'");
+	public function addEvent($code, $trigger, $action, $status = 1) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = now()");
 	
 		return $this->db->getLastId();
 	}

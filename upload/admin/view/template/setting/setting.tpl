@@ -523,7 +523,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_customer_search; ?>"><?php echo $entry_customer_search; ?></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_customer_search; ?></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       <?php if ($config_customer_search) { ?>
@@ -1161,7 +1161,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-mail-alert-email"><span data-toggle="tooltip" title="<?php echo $help_alert_email; ?>"><?php echo $entry_mail_alert_email; ?></span></label>
+                  <label class="col-sm-2 control-label" for="input-mail-alert-email"><span data-toggle="tooltip" title="<?php echo $help_mail_alert_email; ?>"><?php echo $entry_mail_alert_email; ?></span></label>
                   <div class="col-sm-10">
                     <textarea name="config_mail_alert_email" rows="5" placeholder="<?php echo $entry_mail_alert_email; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_email; ?></textarea>
                   </div>

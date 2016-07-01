@@ -46,7 +46,9 @@ class Session {
 		
 		$this->data = &$_SESSION[$this->session_id];
 		
-		setcookie($key, $this->session_id, ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+		if ($key != 'PHPSESSID') {
+			setcookie($key, $this->session_id, ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+		}
 		
 		return $this->session_id;
 	}	
@@ -58,15 +60,48 @@ class Session {
 	public function createId() {
 		//if (version_compare(phpversion(), '5.5.0', '>') == true) {
 		//	return $this->adaptor->create_sid();
+		//} elseif (function_exsits('openssl')) {
+			return bin2hex(openssl_random_pseudo_bytes(16));
 		//} else {
-			$old_session_id = session_id();
+			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 			
-			session_regenerate_id();
+		//	echo getmypid();
 			
-			$new_session_id = session_id();
+			/*
+			# Offset the child rand generator by its PID
+			$n = (getmypid() % 100) * (10 * abs(microtime(true) - time()));
 			
-			session_id($old_session_id);
+			for ($n; $n > 0; $n--) {
+				rand(0, $n);
+			}
+	
+	
 			
+			srand((double)microtime() * 1000000);
+			
+			echo rand() % 33;
+			
+			$max = strlen($string) - 1;
+			
+			$token = '';
+			
+			for ($i = 0; $i < 32; $i++) {
+				$token .= $string[rand(0, $max)];
+			}	
+			
+			
+			
+			$n = (getmypid() % 100) * (10 * abs(microtime(true) - time()));
+for ($n; $n > 0; $n--) {
+      rand(0, $n);
+}
+			
+			*/
+			
+			
+			
+			// Hacky way of gettign a new session ID
+			//md5($_SERVER['REMOTE_IP'] . microtime() . );
 			
 			return $new_session_id;
 		//}

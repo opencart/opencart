@@ -32,13 +32,13 @@ class Session {
 	}
 		
 	public function start($key = 'default', $value = '') {
-		if ($value) {
-			$this->session_id = $value;
-		} elseif (isset($_COOKIE[$key])) {
-			$this->session_id = $_COOKIE[$key];
-		} else {
+		//if ($value) {
+		//	$this->session_id = $value;
+		//} elseif (isset($_COOKIE[$key])) {
+		//	$this->session_id = $_COOKIE[$key];
+		//} else {
 			$this->session_id = $this->createId();
-		}	
+		//}	
 		
 		if (!isset($_SESSION[$this->session_id])) {
 			$_SESSION[$this->session_id] = array();
@@ -61,11 +61,11 @@ class Session {
 		if (version_compare(phpversion(), '5.5.4', '>') == true) {
 			return $this->adaptor->create_sid();
 		} elseif (function_exists('random_bytes')) {
-        	return bin2hex(random_bytes(32));
+        	return substr(bin2hex(random_bytes(26)), 0, 26);
 		} elseif (function_exists('openssl_random_pseudo_bytes')) {
-			return bin2hex(openssl_random_pseudo_bytes(32));
+			return substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 		} else {
-			return bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+			return substr(bin2hex(mcrypt_create_iv(26, MCRYPT_DEV_URANDOM)), 0, 26);
 		}
 	}
 		

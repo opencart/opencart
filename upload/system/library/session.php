@@ -58,7 +58,7 @@ class Session {
 	}
 	
 	public function createId() {
-		if (version_compare(phpversion(), '5.5.0', '>') == true) {
+		if (version_compare(phpversion(), '5.5.4', '>') == true) {
 			return $this->adaptor->create_sid();
 		} elseif (function_exists('random_bytes')) {
         	return bin2hex(random_bytes(32));

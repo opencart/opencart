@@ -15,28 +15,28 @@ class ControllerStartupPermission extends Controller {
 			}
 
 			// If a 3rd part is found we need to check if its under one of the extension folders.
-			$action = array(
-				'install',
-				'uninstall',
-				'add',
-				'delete'
-			);	
-				
-			if (isset($part[2]) && !in_array($part[2], $action)) {
-				$extension = array(
-					'extension/dashboard',
-					'extension/analytics',
-					'extension/captcha',
-					'extension/feed',
-					'extension/fraud',
-					'extension/module',
-					'extension/payment',
-					'extension/shipping',
-					'extension/theme',
-					'extension/total'
+			$extension = array(
+				'extension/dashboard',
+				'extension/analytics',
+				'extension/captcha',
+				'extension/feed',
+				'extension/fraud',
+				'extension/module',
+				'extension/payment',
+				'extension/shipping',
+				'extension/theme',
+				'extension/total'
+			);
+
+			if (in_array($route, $extension)) {
+				$action = array(
+					'install',
+					'uninstall',
+					'add',
+					'delete'
 				);
-			
-				if (in_array($part[2], $extension)) {
+
+				if (isset($part[2]) && !in_array($part[2], $action)) {
 					$route .= '/' . $part[2];
 				}
 			}

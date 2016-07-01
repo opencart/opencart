@@ -58,53 +58,15 @@ class Session {
 	}
 	
 	public function createId() {
-		//if (version_compare(phpversion(), '5.5.0', '>') == true) {
-		//	return $this->adaptor->create_sid();
-		//} elseif (function_exsits('openssl')) {
-			return bin2hex(openssl_random_pseudo_bytes(16));
-		//} else {
-			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			
-		//	echo getmypid();
-			
-			/*
-			# Offset the child rand generator by its PID
-			$n = (getmypid() % 100) * (10 * abs(microtime(true) - time()));
-			
-			for ($n; $n > 0; $n--) {
-				rand(0, $n);
-			}
-	
-	
-			
-			srand((double)microtime() * 1000000);
-			
-			echo rand() % 33;
-			
-			$max = strlen($string) - 1;
-			
-			$token = '';
-			
-			for ($i = 0; $i < 32; $i++) {
-				$token .= $string[rand(0, $max)];
-			}	
-			
-			
-			
-			$n = (getmypid() % 100) * (10 * abs(microtime(true) - time()));
-for ($n; $n > 0; $n--) {
-      rand(0, $n);
-}
-			
-			*/
-			
-			
-			
-			// Hacky way of gettign a new session ID
-			//md5($_SERVER['REMOTE_IP'] . microtime() . );
-			
-			return $new_session_id;
-		//}
+		if (version_compare(phpversion(), '5.5.0', '>') == true) {
+			return $this->adaptor->create_sid();
+		} elseif (function_exists('random_bytes')) {
+        	return bin2hex(random_bytes(32));
+		} elseif (function_exists('openssl_random_pseudo_bytes')) {
+			return bin2hex(openssl_random_pseudo_bytes(32));
+		} else {
+			return bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
+		}
 	}
 		
 	public function destroy($key = 'default') {

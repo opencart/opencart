@@ -34,6 +34,7 @@ class Pagination {
 
 		if ($page > 1) {
 			$output .= '<li><a href="' . str_replace(array('&amp;page={page}', '&page={page}'), '', $this->url) . '">' . $this->text_first . '</a></li>';
+			
 			if ($page - 1 === 1) {
 				$output .= '<li><a href="' . str_replace(array('&amp;page={page}', '&page={page}'), '', $this->url) . '">' . $this->text_prev . '</a></li>';
 			} else {

@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '5.3.0', '<') == true) {
-	exit('PHP5.3+ Required');
+if (version_compare(phpversion(), '5.4.0', '<') == true) {
+	exit('PHP5.4+ Required');
 }
 
 // Magic Quotes Fix
@@ -24,10 +24,6 @@ if (ini_get('magic_quotes_gpc')) {
 	$_GET = clean($_GET);
 	$_POST = clean($_POST);
 	$_COOKIE = clean($_COOKIE);
-}
-
-if (!ini_get('date.timezone')) {
-	date_default_timezone_set('UTC');
 }
 
 // Windows IIS Compatibility

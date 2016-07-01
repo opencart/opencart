@@ -47,7 +47,11 @@ class ControllerSettingSetting extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
-		$data['text_alert'] = $this->language->get('text_alert');
+		$data['text_mail_alert'] = $this->language->get('text_mail_alert');
+		$data['text_mail_account'] = $this->language->get('text_mail_account');
+		$data['text_mail_affiliate'] = $this->language->get('text_mail_affiliate');
+		$data['text_mail_order']  = $this->language->get('text_mail_order');
+		$data['text_mail_review'] = $this->language->get('text_mail_review');
 		$data['text_general'] = $this->language->get('text_general');
 		$data['text_security'] = $this->language->get('text_security');
 		$data['text_upload'] = $this->language->get('text_upload');
@@ -130,6 +134,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_mail_smtp_port'] = $this->language->get('entry_mail_smtp_port');
 		$data['entry_mail_smtp_timeout'] = $this->language->get('entry_mail_smtp_timeout');
 		$data['entry_mail_alert'] = $this->language->get('entry_mail_alert');
+		$data['entry_mail_alert_email'] = $this->language->get('entry_mail_alert_email');
 		$data['entry_alert_email'] = $this->language->get('entry_alert_email');
 		$data['entry_secure'] = $this->language->get('entry_secure');
 		$data['entry_shared'] = $this->language->get('entry_shared');
@@ -142,6 +147,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_encryption'] = $this->language->get('entry_encryption');
 		$data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$data['entry_compression'] = $this->language->get('entry_compression');
+		$data['entry_timezone'] = $this->language->get('entry_timezone');
 		$data['entry_error_display'] = $this->language->get('entry_error_display');
 		$data['entry_error_log'] = $this->language->get('entry_error_log');
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
@@ -163,7 +169,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_tax_customer'] = $this->language->get('help_tax_customer');
 		$data['help_customer_online'] = $this->language->get('help_customer_online');
 		$data['help_customer_activity'] = $this->language->get('help_customer_activity');
-		$data['help_customer_search'] = $this->language->get('help_customer_search');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
 		$data['help_customer_price'] = $this->language->get('help_customer_price');
@@ -196,7 +201,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
 		$data['help_mail_smtp_password'] = $this->language->get('help_mail_smtp_password');
 		$data['help_mail_alert'] = $this->language->get('help_mail_alert');
-		$data['help_alert_email'] = $this->language->get('help_alert_email');
+		$data['help_mail_alert_email'] = $this->language->get('help_mail_alert_email');
 		$data['help_secure'] = $this->language->get('help_secure');
 		$data['help_shared'] = $this->language->get('help_shared');
 		$data['help_robots'] = $this->language->get('help_robots');
@@ -208,6 +213,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_password'] = $this->language->get('help_password');
 		$data['help_encryption'] = $this->language->get('help_encryption');
 		$data['help_compression'] = $this->language->get('help_compression');
+		$data['help_timezone'] = $this->language->get('help_timezone');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -1021,22 +1027,22 @@ class ControllerSettingSetting extends Controller {
 		$data['mail_alerts'] = array();
 
 		$data['mail_alerts'][] = array(
-			'text'  => $this->language->get('text_account_mail'),
+			'text'  => $this->language->get('text_mail_account'),
 			'value' => 'account'
 		);
 
 		$data['mail_alerts'][] = array(
-			'text'  => $this->language->get('text_affiliate_mail'),
+			'text'  => $this->language->get('text_mail_affiliate'),
 			'value' => 'affiliate'
 		);
 
 		$data['mail_alerts'][] = array(
-			'text'  => $this->language->get('text_order_mail'),
+			'text'  => $this->language->get('text_mail_order'),
 			'value' => 'order'
 		);
 
 		$data['mail_alerts'][] = array(
-			'text'  => $this->language->get('text_review_mail'),
+			'text'  => $this->language->get('text_mail_review'),
 			'value' => 'review'
 		);
 
@@ -1113,6 +1119,14 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_compression'] = $this->config->get('config_compression');
 		}
+
+		if (isset($this->request->post['config_timezone'])) {
+			$data['config_timezone'] = $this->request->post['config_timezone'];
+		} else {
+			$data['config_timezone'] = $this->config->get('config_timezone');
+		}
+
+		$data['timezones'] = $this->model_setting_setting->getTimezones();
 
 		if (isset($this->request->post['config_error_display'])) {
 			$data['config_error_display'] = $this->request->post['config_error_display'];

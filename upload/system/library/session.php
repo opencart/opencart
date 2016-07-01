@@ -32,13 +32,13 @@ class Session {
 	}
 		
 	public function start($key = 'default', $value = '') {
-		//if ($value) {
-		//	$this->session_id = $value;
-		//} elseif (isset($_COOKIE[$key])) {
-		//	$this->session_id = $_COOKIE[$key];
-		//} else {
+		if ($value) {
+			$this->session_id = $value;
+		} elseif (isset($_COOKIE[$key])) {
+			$this->session_id = $_COOKIE[$key];
+		} else {
 			$this->session_id = $this->createId();
-		//}	
+		}	
 		
 		if (!isset($_SESSION[$this->session_id])) {
 			$_SESSION[$this->session_id] = array();

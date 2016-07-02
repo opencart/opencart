@@ -24,28 +24,22 @@ class ControllerApiLogin extends Controller {
 				$json['error']['ip'] = sprintf($this->language->get('error_ip'), $this->request->server['REMOTE_ADDR']);
 			}				
 				
-			if (!$json) {	
+			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 			
 				// We want to create a seperate session so changes do not interfere with the admin user.
-				$session_id_new = token(32);
-				
 				$session_id_old = $this->session->getId();
 				
-				// Close and write the current session.
-				$this->session->close();
+				$session_id_new = $this->session->createId();
 				
-				// Start a new session.
-				$this->session->start($session_id_new);
-
-				// Set API ID in the new session
+				$this->session->start('api', $session_id_new);
+				
 				$this->session->data['api_id'] = $api_info['api_id'];
 				
 				// Close and write the new session.
-				$this->session->close();
-				
-				// Start teh old session.
-				$this->session->start($session_id_old);
+				//$session->close();
+
+				$this->session->start('default');
 
 				// Create Token
 				$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);

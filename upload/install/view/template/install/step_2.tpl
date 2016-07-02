@@ -35,8 +35,8 @@
               <tr>
                 <td><?php echo $text_version; ?></td>
                 <td><?php echo $php_version; ?></td>
-                <td>5.3+</td>
-                <td class="text-center"><?php if ($php_version >= '5.3') { ?>
+                <td>5.4+</td>
+                <td class="text-center"><?php if ($php_version >= '5.4') { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

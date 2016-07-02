@@ -8,6 +8,11 @@ $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
 
+// Timezone
+if (!ini_get('date.timezone') && $config->has('config_timezone')) {
+	date_default_timezone_set($config->get('config_timezone'));
+}
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);
@@ -37,11 +42,13 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
+$session = new Session();
+
 if ($config->get('session_autostart')) {
-	$session = new Session();
 	$session->start();
-	$registry->set('session', $session);
 }
+
+$registry->set('session', $session);
 
 // Cache 
 $registry->set('cache', new Cache($config->get('cache_type'), $config->get('cache_expire')));

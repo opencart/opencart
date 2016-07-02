@@ -523,7 +523,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_customer_search; ?>"><?php echo $entry_customer_search; ?></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_customer_search; ?></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       <?php if ($config_customer_search) { ?>
@@ -1139,7 +1139,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend><?php echo $text_alert; ?></legend>
+                <legend><?php echo $text_mail_alert; ?></legend>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_mail_alert; ?>"><?php echo $entry_mail_alert; ?></span></label>
                   <div class="col-sm-10">
@@ -1161,9 +1161,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-alert-email"><span data-toggle="tooltip" title="<?php echo $help_alert_email; ?>"><?php echo $entry_alert_email; ?></span></label>
+                  <label class="col-sm-2 control-label" for="input-mail-alert-email"><span data-toggle="tooltip" title="<?php echo $help_mail_alert_email; ?>"><?php echo $entry_mail_alert_email; ?></span></label>
                   <div class="col-sm-10">
-                    <textarea name="config_alert_email" rows="5" placeholder="<?php echo $entry_alert_email; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_email; ?></textarea>
+                    <textarea name="config_mail_alert_email" rows="5" placeholder="<?php echo $entry_mail_alert_email; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_email; ?></textarea>
                   </div>
                 </div>
               </fieldset>
@@ -1227,6 +1227,26 @@
                   <label class="col-sm-2 control-label" for="input-compression"><span data-toggle="tooltip" title="<?php echo $help_compression; ?>"><?php echo $entry_compression; ?></span></label>
                   <div class="col-sm-10">
                     <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_timezone; ?>"><?php echo $entry_timezone; ?></label>
+                  <div class="col-sm-10">
+                    <select name="config_timezone" id="input-timezone" class="form-control">
+                      <option value=""><?php echo $text_none; ?></option>
+                      <?php if ($config_timezone == 'UTC') { ?>
+                      <option value="UTC" selected="selected">UTC</option>
+                      <?php } else { ?>
+                      <option value="UTC">UTC</option>
+                      <?php } ?>
+                      <?php foreach ($timezones as $tz_gname => $tz_gzones) { ?>
+                      <optgroup label="<?php echo $tz_gname; ?>">
+                        <?php foreach ($tz_gzones as $tz_zone => $tz_locale) { ?>
+                        <option value="<?php echo $tz_zone; ?>" <?php echo ($config_timezone == $tz_zone) ? 'selected="selected"' : ''; ?>><?php echo $tz_locale; ?></option>
+                        <?php } ?>
+                      </optgroup>
+                      <?php } ?>
+                    </select>
                   </div>
                 </div>
               </fieldset>

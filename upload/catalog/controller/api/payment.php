@@ -127,7 +127,7 @@ class ControllerApiPayment extends Controller {
 				);
 
 				$json['success'] = $this->language->get('text_address');
-
+				
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			}
@@ -146,7 +146,7 @@ class ControllerApiPayment extends Controller {
 
 	public function methods() {
 		$this->load->language('api/payment');
-
+		
 		// Delete past shipping methods and method just in case there is an error
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['payment_method']);
@@ -160,7 +160,7 @@ class ControllerApiPayment extends Controller {
 			if (!isset($this->session->data['payment_address'])) {
 				$json['error'] = $this->language->get('error_address');
 			}
-
+			
 			if (!$json) {
 				// Totals
 				$totals = array();

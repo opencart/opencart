@@ -1918,7 +1918,6 @@ $('#button-payment-address').on('click', function() {
 			$('#button-payment-address').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
 			$('.alert, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 

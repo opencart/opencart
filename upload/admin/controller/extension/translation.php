@@ -1,9 +1,9 @@
 <?php
-class ControllerDesignTranslation extends Controller {
+class ControllerExtensionTranslation extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('design/translation');
+		$this->load->language('extension/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -22,126 +22,173 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/translation', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['heading_title']    = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit']        = $this->language->get('text_edit');
-        $data['text_list']        = $this->language->get('text_list');
-		$data['text_no_results']  = $this->language->get('text_no_results');
-		$data['text_confirm']     = $this->language->get('text_confirm');
+        $data['text_list'] = $this->language->get('text_list');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		
+		$data['column_flag'] = $this->language->get('column_flag');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_progress'] = $this->language->get('column_progress');
+        $data['column_action'] = $this->language->get('column_action');
 
-		$data['column_flag']      = $this->language->get('column_flag');
-		$data['column_country']   = $this->language->get('column_country');
-		$data['column_progress']  = $this->language->get('column_progress');
-        $data['column_action']    = $this->language->get('column_action');
+		$data['entry_progress'] = $this->language->get('entry_progress');
 
-		$data['button_install']   = $this->language->get('button_install');
+		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
-		$data['button_refresh']   = $this->language->get('button_refresh');
 
 		$data['token'] = $this->session->data['token'];
 
-		if (empty($this->session->data['translation'])) {
-			$this->refresh();
-		}
+		$data['error_warning'] = '';
 
+		// Try to get a cached translations array
+		$translations = $this->cache->get('translation');
+		
+		if (!$translations) {
+			$curl = curl_init('https://api.crowdin.com/api/project/opencart/status?key=a00e7b58c0790df4126273119b318db5');
+	
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	
+			$response = curl_exec($curl);
+	
+			if (!$response) {
+				$data['error_warning'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
+			} else {
+				$translations = json_decode($response, true);
+				
+				$this->cache->set('translation', $translations);				
+			}
+			
+			curl_close($curl);
+		}
+		
 		$data['translations'] = array();
-
-		if (!empty($this->session->data['translation'])) {
-			$translations = $this->session->data['translation'];
-		} else {
-			$translations = array();
-		}
-
+	
 		$translation_total = count($translations);
-
-		$translations = array_splice($translations, ($page - 1) * 16, 16);
-
-		foreach ($translations as $translation) {
-			$data['translations'][] = array(
-				'name'      => $translation['name'],
-				'code'      => $translation['code'],
-				'progress'  => $translation['progress'],
-				'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
-				'install'   => $this->url->link('design/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'uninstall' => $this->url->link('design/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'installed' => '',
-			);
+		
+		if ($translations) {
+			$translations = array_splice($translations, ($page - 1) * 16, 16);
+			
+			foreach ($translations as $translation){
+				if (is_dir(DIR_LANGUAGE . strtolower($translation['code']))) {
+					$installed = true;
+				} else {
+					$installed = false;
+				}
+				
+				$data['translations'][] = array(
+					'name'      => $translation['name'],
+					'code'      => $translation['code'],
+					'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
+					'progress'  => $translation['translated_progress'],
+					'install'   => $this->url->link('extension/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
+					'uninstall' => $this->url->link('extension/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
+					'installed' => $installed
+				);
+			}
 		}
 
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($translation_total - $this->config->get('config_limit_admin'))) ? $translation_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $translation_total, ceil($translation_total / $this->config->get('config_limit_admin')));
 
-		$data['refresh'] = $this->url->link('design/translation/refresh', 'token=' . $this->session->data['token'], true);
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/translation', $data));
-	}
-
-    public function refresh(){
-		$request = 'json=true';
-		//$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/zh-CN.zip?key=a00e7b58c0790df4126273119b318db5');
-
-        $curl = curl_init('https://api.crowdin.com/api/project/opencart/status?key=a00e7b58c0790df4126273119b318db5');
-
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-        $response = curl_exec($curl);
-
-        if (!$response) {
-            $this->log->write('API ERROR :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
-        }
-
-        $translations = json_decode($response, true);
-
-		curl_close($curl);
-
-		$this->session->data['translation'] = array();
-
-		foreach ($translations as $translation){
-			$this->session->data['translation'][] = array(
-				'name'     => $translation['name'],
-				'code'     => $translation['code'],
-				'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
-				'progress' => $translation['translated_progress']
-			);
-		}
-		$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'design/translation', 'token=' . $this->session->data['token'], true));
+		$this->response->setOutput($this->load->view('extension/translation', $data));
 	}
 
 	public function install() {
-	ini_set('max_execution_time', 300);
-	ini_set('auto_detect_line_endings', 1);
-	ini_set('default_socket_timeout', 5); // socket timeout, just in case
+		$this->load->language('extension/translation');
+		
+		$json = array();
 
-	file_put_contents("translations.zip", file_get_contents("https://api.crowdin.com/api/project/opencart/download/" . $this->request->get['code'] . ".zip?key=a00e7b58c0790df4126273119b318db5"));
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!$json) {
+			
+			$json['text'] = $this->language->get('text_unzip');
+			
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true));
+			
+			
+			
+			// Zip
+			$json['step'][] = array(
+				'text' => $this->language->get('text_unzip'),
+				'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true)),
+				'path' => $path
+			);
+		}
+			
+					
+		
+	
+	
 
-	$this->unzip();
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
+	public function download() {
+		$this->load->language('extension/installer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!$json) {	
+			$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/' . $this->request->get['code'] . '.zip?key=a00e7b58c0790df4126273119b318db5');
+	
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	
+			$response = curl_exec($curl);
+	
+			if (!$response) {
+				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
+			}
+			
+			curl_close($curl);	
+		}
+		
+		file_put_contents("translations.zip", file_get_contents("https://api.crowdin.com/api/project/opencart/download/" . $this->request->get['code'] . ".zip?key=a00e7b58c0790df4126273119b318db5"));
+	
+	}
+	
 	public function unzip() {
 		$this->load->language('extension/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -167,6 +214,7 @@ class ControllerDesignTranslation extends Controller {
 			unlink($file);
 
 		}
+		
 		$this->ftp();
 	}
 
@@ -175,7 +223,7 @@ class ControllerDesignTranslation extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -291,7 +339,7 @@ class ControllerDesignTranslation extends Controller {
 			}
 		}
 
-	echo "download success";
+		echo "download success";
 
 		$this->remove();
 	}
@@ -301,7 +349,7 @@ class ControllerDesignTranslation extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -346,7 +394,8 @@ class ControllerDesignTranslation extends Controller {
 			if (file_exists($directory)) {
 				rmdir($directory);
 			}
-			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'design/translation', 'token=' . $this->session->data['token'], true));
+			
+			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/translation', 'token=' . $this->session->data['token'], true));
 			$json['success'] = $this->language->get('text_success');
 		}
 

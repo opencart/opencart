@@ -126,8 +126,6 @@ $('table a.btn').on('click', function(e) {
 				
 				next();
 			}			
-			
-			$(node).button('loading');	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -157,10 +155,9 @@ function next() {
 					$('#progress-bar').addClass('progress-bar-success');
 					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 					
-								//if ($(node).has('.btn-success')) {
-				//$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
-		//	}
-
+					//if ($(node).has('.btn-success')) {
+					//	$('#button-reward-remove').replaceWith('<a href="" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+					//}
 				}
 
 				if (!json['error'] && !json['success']) {

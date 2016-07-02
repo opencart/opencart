@@ -148,13 +148,13 @@ class ControllerExtensionTranslation extends Controller {
 				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
 			);
 			
-			/*
+			
 			// FTP
 			$json['step'][] = array(
 				'text' => $this->language->get('text_ftp'),
 				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
 			);
-			
+			/*
 			// Clear temporary files
 			$json['step'][] = array(
 				'text' => $this->language->get('text_remove'),
@@ -303,16 +303,6 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 
-			$language_path = "language/" . $this->request->get['code'];
-
-			if (!is_dir(DIR_APPLICATION . $language_path)) {
-				mkdir(DIR_APPLICATION . $language_path, 0755);
-			}
-
-			if (!is_dir(DIR_CATALOG . $language_path)) {
-				mkdir(DIR_CATALOG . $language_path, 0755);
-			}
-
 			// Connect to the site via FTP
 			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 
@@ -334,19 +324,11 @@ class ControllerExtensionTranslation extends Controller {
 							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
 							if (substr($destination, 0, 5) == 'admin') {
-								$destination = basename(DIR_APPLICATION). "/" . $language_path . substr($destination, 5);
+								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 							}
 
 							if (substr($destination, 0, 7) == 'catalog') {
-								$destination = basename(DIR_CATALOG). "/" . $language_path . substr($destination, 7);
-							}
-
-							if (substr($destination, 0, 5) == 'image') {
-								$destination = basename(DIR_IMAGE) . substr($destination, 5);
-							}
-
-							if (substr($destination, 0, 6) == 'system') {
-								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+								$destination = basename(DIR_CATALOG) . substr($destination, 7);
 							}
 
 							if (is_dir($file)) {
@@ -385,12 +367,12 @@ class ControllerExtensionTranslation extends Controller {
 			}
 		}
 
-		echo "download success";
-
-		$this->remove();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function remove() {
+		/*
 		$this->load->language('extension/installer');
 
 		$json = array();
@@ -445,6 +427,64 @@ class ControllerExtensionTranslation extends Controller {
 			
 			
 			$json['success'] = $this->language->get('text_success');
-		}
+			
+			
+			
+		}*/
 	}
+	
+	public function clear() {
+		$this->load->language('extension/installer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
+
+			foreach ($directories as $directory) {
+				// Get a list of files ready to upload
+				$files = array();
+
+				$path = array($directory);
+
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+
+						$files[] = $file;
+					}
+				}
+
+				rsort($files);
+
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+
+				if (file_exists($directory)) {
+					rmdir($directory);
+				}
+			}
+
+			$json['success'] = $this->language->get('text_clear');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

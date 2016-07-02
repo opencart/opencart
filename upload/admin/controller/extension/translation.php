@@ -30,6 +30,9 @@ class ControllerExtensionTranslation extends Controller {
         $data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_progress'] = $this->language->get('text_progress');
+		$data['text_available'] = $this->language->get('text_available');
+		$data['text_crowdin'] = $this->language->get('text_crowdin');
 		
 		$data['column_flag'] = $this->language->get('column_flag');
 		$data['column_name'] = $this->language->get('column_name');
@@ -124,35 +127,48 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+				
 		if (!$json) {
+			$json['step'] = array();
 			
-			$json['text'] = $this->language->get('text_unzip');
-			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true));
-			
-			
+			// Download
+			$json['step'][] = array(
+				'text' => $this->language->get('text_download'),
+				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
+			);			
 			
 			// Zip
 			$json['step'][] = array(
 				'text' => $this->language->get('text_unzip'),
-				'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true)),
-				'path' => $path
+				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
 			);
-		}
 			
-					
-		
-	
-	
-
-
+			/*
+			// FTP
+			$json['step'][] = array(
+				'text' => $this->language->get('text_ftp'),
+				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
+			);
+			
+			// Clear temporary files
+			$json['step'][] = array(
+				'text' => $this->language->get('text_remove'),
+				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
+			);
+			*/						
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
 	public function download() {
-		$this->load->language('extension/installer');
+		$this->load->language('extension/translation');
 
 		$json = array();
 
@@ -160,8 +176,14 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+				
 		if (!$json) {	
-			$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/' . $this->request->get['code'] . '.zip?key=a00e7b58c0790df4126273119b318db5');
+			$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/' . $code . '.zip?key=a00e7b58c0790df4126273119b318db5');
 	
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
@@ -174,17 +196,31 @@ class ControllerExtensionTranslation extends Controller {
 	
 			if (!$response) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
+			} else {
+				$file = DIR_UPLOAD  . $code . '.zip';
+		
+				$handle = fopen($file, 'w');
+		
+				flock($handle, LOCK_EX);
+		
+				fwrite($handle, $response);
+		
+				fflush($handle);
+		
+				flock($handle, LOCK_UN);
+		
+				fclose($handle);			
 			}
 			
 			curl_close($curl);	
 		}
 		
-		file_put_contents("translations.zip", file_get_contents("https://api.crowdin.com/api/project/opencart/download/" . $this->request->get['code'] . ".zip?key=a00e7b58c0790df4126273119b318db5"));
-	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
 	}
 	
 	public function unzip() {
-		$this->load->language('extension/installer');
+		$this->load->language('extension/translation');
 
 		$json = array();
 
@@ -192,19 +228,24 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Sanitize the filename
-		$file = DIR_APPLICATION . '/translations.zip';
-
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_APPLICATION)) != DIR_APPLICATION) {
-			$json['error'] = $this->language->get('error_file');
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
 		}
 
-		if (!$json) {
+		$file = DIR_UPLOAD  . $code . '.zip';
+		
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+			$json['error'] = $this->language->get('error_file');
+		}
+			
+		if (!$json) {	
 			// Unzip the files
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD);
+				$zip->extractTo(DIR_UPLOAD . $code . '/');
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -212,10 +253,10 @@ class ControllerExtensionTranslation extends Controller {
 
 			// Remove Zip
 			unlink($file);
-
 		}
 		
-		$this->ftp();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 
 	public function ftp() {
@@ -231,8 +272,14 @@ class ControllerExtensionTranslation extends Controller {
 		if (!$this->config->get('config_ftp_status')) {
 			$json['error'] = $this->language->get('error_ftp_status');
 		}
-
-		$directory = DIR_UPLOAD . '/2.0.0.x/';
+		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+		
+		$directory = DIR_UPLOAD . $code . '/2.0.0.x/';
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
@@ -288,7 +335,6 @@ class ControllerExtensionTranslation extends Controller {
 							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
 							if (substr($destination, 0, 5) == 'admin') {
 								$destination = basename(DIR_APPLICATION). "/" . $language_path . substr($destination, 5);
-
 							}
 
 							if (substr($destination, 0, 7) == 'catalog') {
@@ -396,9 +442,9 @@ class ControllerExtensionTranslation extends Controller {
 			}
 			
 			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/translation', 'token=' . $this->session->data['token'], true));
+			
+			
 			$json['success'] = $this->language->get('text_success');
 		}
-
 	}
-
 }

@@ -135,7 +135,7 @@ function next() {
 		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
 
 		$.ajax({
-			url: data.url,
+			url: data.href,
 			type: 'post',
 			dataType: 'json',
 			data: 'path=' + data.path,

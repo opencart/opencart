@@ -22,12 +22,12 @@
       </div>
       <div class="panel-body">
         <fieldset>
-          <legend>Install Progress</legend>
+          <legend><?php echo $text_progress; ?></legend>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
             <div class="col-sm-10">
               <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                <div id="progress-bar" class="progress-bar progress-bar-striped" style="width: 0%;"></div>
               </div>
               <div id="progress-text"></div>
             </div>
@@ -35,8 +35,8 @@
         </fieldset>
         <br />
         <fieldset>
-          <legend>Avaliable Translations</legend>
-          <div class="alert alert-info"><i class="fa fa-info-circle"></i> The below translations are translated at the crowdsourcing project <a href="https://crowdin.com/project/opencart">Crowdin</a>. If you can not find </div>
+          <legend><?php echo $text_available; ?></legend>
+          <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_crowdin; ?></div>
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -87,11 +87,19 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('table .btn').on('click', function(e) {
+var step = new Array();
+var total = 0;
+
+$('table a.btn').on('click', function(e) {
 	e.preventDefault();
 	
 	var node = this;
 	
+	// Reset the progress bar		
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-text').html('');
+				
 	$.ajax({
 		url: $(node).attr('href'),
 		method: 'post',
@@ -103,11 +111,23 @@ $('table .btn').on('click', function(e) {
 			$(node).button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+			
 			$('.alert-success, .alert-danger').remove();
 
-			if (json['error']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}		
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');			
+			}
+			
+			if (json['step']) {
+				step = json['step'];
+				total = step.length;
+				
+				next();
+			}			
+			
+			$(node).button('loading');	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -115,7 +135,72 @@ $('table .btn').on('click', function(e) {
 	});
 });
 
+function next() {
+	data = step.shift();
 
+	if (data) {
+		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
+		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
 
+		$.ajax({
+			url: data.href,
+			type: 'post',
+			dataType: 'json',
+			success: function(json) {
+				if (json['error']) {
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+					$('#button-clear').prop('disabled', false);
+				}
+
+				if (json['success']) {
+					$('#progress-bar').addClass('progress-bar-success');
+					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+					
+								//if ($(node).has('.btn-success')) {
+				//$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+		//	}
+
+				}
+
+				if (!json['error'] && !json['success']) {
+					next();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+}
+
+$('#button-clear').bind('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-clear').button('loading');
+		},
+		complete: function() {
+			$('#button-clear').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#button-clear').prop('disabled', true);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 </script> 
 <?php echo $footer; ?> 

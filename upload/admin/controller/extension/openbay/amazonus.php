@@ -125,23 +125,28 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			$table_data = array();
 
 			foreach($simple_xml_obj->update as $update_node) {
-				$row = array('date_requested' => (string)$update_node->date_requested,
-					'date_updated' => (string)$update_node->date_updated,
-					'status' => (string)$update_node->status,
-					);
+				$row = array(
+					'date_requested' => (string)$update_node->date_requested,
+					'date_updated' 	 => (string)$update_node->date_updated,
+					'status' 		 => (string)$update_node->status,
+				);
+
 				$data_items = array();
+
 				foreach($update_node->data->product as $product_node) {
-					$data_items[] = array('sku' => (string)$product_node->sku,
+					$data_items[] = array(
+						'sku' 	=> (string)$product_node->sku,
 						'stock' => (int)$product_node->stock
-						);
+					);
 				}
+
 				$row['data'] = $data_items;
 				$table_data[(int)$update_node->ref] = $row;
 			}
 
 			$data['table_data'] = $table_data;
 		} else {
-			$data['error'] = 'Could not connect to OpenBay PRO API . ';
+			$data['error'] = $data['error_api_connection'];
 		}
 
 		$data['token'] = $this->session->data['token'];

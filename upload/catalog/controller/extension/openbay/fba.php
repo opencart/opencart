@@ -1,20 +1,22 @@
 <?php
 class ControllerExtensionOpenbayFba extends Controller {
-	public function eventAddOrderHistory($route, $order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
-		if (!empty($order_id)) {
+	public function eventAddOrderHistory($route, $data) {
+		$this->openbay->fba->log('eventAddOrderHistory Event fired: ' . $route);
+
+		if (isset($data[0]) && !empty($data[0])) {
 			$this->load->model('checkout/order');
 			$this->load->model('account/order');
 			$this->load->model('catalog/product');
 
-			$this->openbay->fba->log('eventAddOrderHistory Event fired for order ID: ' . $order_id);
+			$this->openbay->fba->log('eventAddOrderHistory Event fired for order ID: ' . $data[0]);
 
-			$order = $this->model_checkout_order->getOrder($order_id);
+			$order = $this->model_checkout_order->getOrder($data[0]);
 
 			if ($order['shipping_method']) {
 				if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
-					$fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($order_id, 0);
+					$fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($data[0], 0);
 
-					$order_products = $this->model_account_order->getOrderProducts($order_id);
+					$order_products = $this->model_account_order->getOrderProducts($data[0]);
 
 					$total_order_products = count($order_products);
 
@@ -45,8 +47,8 @@ class ControllerExtensionOpenbayFba extends Controller {
 							$datetime = new DateTime($order['date_added']);
 							$request['displayable_order_datetime'] = $datetime->format(DateTime::ISO8601);
 
-							$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id;
-							$request['displayable_order_id'] = $order_id;
+							$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $data[0] . '-' . $fba_fulfillment_id;
+							$request['displayable_order_id'] = $data[0];
 							$request['displayable_order_comment'] = 'none';
 							$request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
 							$request['fulfillment_action'] = ($this->config->get('openbay_fba_send_orders') == 1 ? 'Ship' : 'Hold');
@@ -71,19 +73,19 @@ class ControllerExtensionOpenbayFba extends Controller {
 								/**
 								 * @todo notify the admin about any errors
 								 */
-								$this->openbay->fba->updateFBAOrderStatus($order_id, 1);
+								$this->openbay->fba->updateFBAOrderStatus($data[0], 1);
 							} else {
 								if ($this->config->get('openbay_fba_send_orders') == 1) {
-									$this->openbay->fba->updateFBAOrderStatus($order_id, 3);
+									$this->openbay->fba->updateFBAOrderStatus($data[0], 3);
 								} else {
-									$this->openbay->fba->updateFBAOrderStatus($order_id, 2);
+									$this->openbay->fba->updateFBAOrderStatus($data[0], 2);
 								}
 
-								$this->openbay->fba->updateFBAOrderRef($order_id, $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id);
+								$this->openbay->fba->updateFBAOrderRef($data[0], $this->config->get('openbay_fba_order_prefix') . $data[0] . '-' . $fba_fulfillment_id);
 							}
 
 							$this->openbay->fba->populateFBAFulfillment(json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
-							$this->openbay->fba->updateFBAOrderFulfillmentID($order_id, $fba_fulfillment_id);
+							$this->openbay->fba->updateFBAOrderFulfillmentID($data[0], $fba_fulfillment_id);
 						} else {
 							$this->openbay->fba->log('No FBA items found for this order');
 						}
@@ -99,15 +101,19 @@ class ControllerExtensionOpenbayFba extends Controller {
 		}
 	}
 
-	public function eventAddOrder($route, $order_id) {
-		$this->load->model('checkout/order');
+	public function eventAddOrder($route, $data) {
+		$this->openbay->fba->log('eventAddOrder Event fired: ' . $route);
 
-		$this->openbay->fba->log('eventAddOrder Event fired for order ID: ' . $order_id);
+		if (isset($data[0]) && !empty($data[0])) {
+			$this->load->model('checkout/order');
 
-		$order = $this->model_checkout_order->getOrder($order_id);
+			$this->openbay->fba->log('Order ID: ' . (int)$data[0]);
 
-		if ($order['shipping_method']) {
-			$this->openbay->fba->createFBAOrderID($order_id);
+			$order = $this->model_checkout_order->getOrder((int)$data[0]);
+
+			if ($order['shipping_method']) {
+				$this->openbay->fba->createFBAOrderID((int)$data[0]);
+			}
 		}
 	}
 }

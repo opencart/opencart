@@ -337,7 +337,8 @@ class ModelExtensionOpenBayAmazonus extends Model {
 	}
 
 	public function linkProduct($amazonus_sku, $product_id, $var = '') {
-		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		$count = $this->db->query("SELECT COUNT(*) as `count` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		
 		if ($count['count'] == 0) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_link` SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}

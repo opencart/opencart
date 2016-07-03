@@ -25,6 +25,12 @@ final class Etsy {
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
+	
+	public function resetConfig($token, $enc1, $enc2) {
+		$this->token = $token;
+		$this->enc1 = $enc1;
+		$this->enc2 = $enc2;
+	}
 
 	public function call($uri, $method, $data = array()) {
 		if($this->config->get('etsy_status') == 1) {
@@ -146,15 +152,19 @@ final class Etsy {
 
 		$response = $this->call('v1/etsy/data/type/getSetup/', 'GET');
 
-		foreach ($response['data'] as $key => $options) {
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
+		if (isset($response['data']) && is_array($response['data'])) {
+			foreach ($response['data'] as $key => $options) {
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
 
-			$this->log("settingsUpdate() - updated option: " . $key);
+				$this->log("settingsUpdate() - updated option: " . $key);
+			}
+
+			$this->log("settingsUpdate() - complete");
+		} else {
+			$this->log("settingsUpdate() - failed - no data response");
 		}
-
-		$this->log("settingsUpdate() - complete");
 	}
 
 	public function getSetting($key) {

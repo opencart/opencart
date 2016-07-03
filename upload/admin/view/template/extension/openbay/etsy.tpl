@@ -12,9 +12,10 @@
   </div>
   <div class="container-fluid">
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php } ?>
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="row">
       <div class="col-md-3 text-center">

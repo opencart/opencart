@@ -1813,6 +1813,8 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function eventDeleteProduct($route, $data) {
+		$this->openbay->log('eventDeleteProduct fired: ' . $route);
+		
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -1829,6 +1831,8 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function eventEditProduct($route, $data) {
+		$this->openbay->log('eventEditProduct fired: ' . $route);
+		
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -1842,102 +1846,6 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->openbay->{$market}->productUpdateListen((int)$data[0], $data[1]);
 			}
 		}
-	}
-
-	public function purge() {
-		/**
-		 * This is a function that is very dangerous
-		 * Only developers should use this if you need to!!
-		 * You need this code: **135** (includes stars)
-		 *
-		 * ACTIONS HERE CANNOT BE UNDONE WITHOUT A BACKUP
-		 *
-		 * !! IMPORTANT !!
-		 * This section will by default comment out the database delete actions
-		 * If you want to use them, uncomment.
-		 * When you are finished, ensure you comment them back out!
-		 */
-
-		$this->log->write('User is trying to wipe system data');
-
-		if ($this->request->post['pass'] != '**135**') {
-			$this->log->write('User failed password validation');
-			$json = array('msg' => 'Password wrong, check the source code for the password! This is so you know what this feature does.');
-		} else {
-			/**
-			$this->log->write('User passed validation');
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_activity`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_ban_ip`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
-
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
-
-			if ($this->config->get('ebay_status') == 1) {
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category_history`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_image_import`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing_pending`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_stock_reserve`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_payment_method`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_profile`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_setting_option`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location_exclude`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_template`");
-			}
-
-			if ($this->config->get('etsy_status') == 1) {
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_listing`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_setting_option`");
-			}
-
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order_lock`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "category`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_to_store`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_store`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_attribute`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_value`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_image`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_category`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "option`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_description`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
-			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
-
-			if ($this->openbay->addonLoad('openstock')) {
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
-			}
-			*/
-
-			$this->log->write('Data cleared');
-			$json = array('msg' => 'Data cleared');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function eventMenu($route, &$data) {
@@ -2056,7 +1964,7 @@ class ControllerExtensionOpenbay extends Controller {
 				);
 			}
 
-			if ($amazon_eu) {
+			if ($amazon_us) {
 				$openbay_menu[] = array(
 					'name'	   => $this->language->get('text_openbay_amazonus'),
 					'href'     => '',
@@ -2144,5 +2052,101 @@ class ControllerExtensionOpenbay extends Controller {
 				'children' => $openbay_menu
 			);
 		}
+	}
+
+	public function purge() {
+		/**
+		 * This is a function that is very dangerous
+		 * Only developers should use this if you need to!!
+		 * You need this code: **135** (includes stars)
+		 *
+		 * ACTIONS HERE CANNOT BE UNDONE WITHOUT A BACKUP
+		 *
+		 * !! IMPORTANT !!
+		 * This section will by default comment out the database delete actions
+		 * If you want to use them, uncomment.
+		 * When you are finished, ensure you comment them back out!
+		 */
+
+		$this->log->write('User is trying to wipe system data');
+
+		if ($this->request->post['pass'] != '**135**') {
+			$this->log->write('User failed password validation');
+			$json = array('msg' => 'Password wrong, check the source code for the password! This is so you know what this feature does.');
+		} else {
+			/**
+			$this->log->write('User passed validation');
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_activity`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_ban_ip`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
+
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
+
+			if ($this->config->get('ebay_status') == 1) {
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category_history`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_image_import`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing_pending`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_stock_reserve`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_payment_method`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_profile`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_setting_option`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location_exclude`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_template`");
+			}
+
+			if ($this->config->get('etsy_status') == 1) {
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_listing`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_setting_option`");
+			}
+
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order_lock`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "category`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "category_to_store`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_store`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_attribute`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_value`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_image`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_category`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "option`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_description`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
+
+			if ($this->openbay->addonLoad('openstock')) {
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
+			}
+			 */
+
+			$this->log->write('Data cleared');
+			$json = array('msg' => 'Data cleared');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

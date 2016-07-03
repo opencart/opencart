@@ -63,9 +63,9 @@
                       <?php } ?>
                     </div></td>
                   <td class="text-right"><?php if (!$translation['installed']) { ?>
-                    <a href="<?php echo $translation['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                    <a href="<?php echo $translation['install']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                     <?php } else { ?>
-                    <a href="<?php echo $translation['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                    <a href="<?php echo $translation['uninstall']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                     <?php } ?></td>
                 </tr>
                 <?php } ?>
@@ -102,7 +102,6 @@ $('table a.btn').on('click', function(e) {
 				
 	$.ajax({
 		url: $(node).attr('href'),
-		method: 'post',
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
@@ -111,8 +110,6 @@ $('table a.btn').on('click', function(e) {
 			$(node).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-			
 			$('.alert-success, .alert-danger').remove();
 
 			if (json['error']) {
@@ -142,7 +139,6 @@ function next() {
 
 		$.ajax({
 			url: data.href,
-			type: 'post',
 			dataType: 'json',
 			success: function(json) {
 				if (json['error']) {

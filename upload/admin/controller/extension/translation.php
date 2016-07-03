@@ -33,6 +33,7 @@ class ControllerExtensionTranslation extends Controller {
 		$data['text_progress'] = $this->language->get('text_progress');
 		$data['text_available'] = $this->language->get('text_available');
 		$data['text_crowdin'] = $this->language->get('text_crowdin');
+		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['column_flag'] = $this->language->get('column_flag');
 		$data['column_name'] = $this->language->get('column_name');
@@ -52,10 +53,9 @@ class ControllerExtensionTranslation extends Controller {
 		$translations = $this->cache->get('translation');
 		
 		if (!$translations) {
-			$curl = curl_init('https://api.crowdin.com/api/project/opencart/status?key=a00e7b58c0790df4126273119b318db5');
+			// Make a CURL request 
+			$curl = curl_init('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
 	
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -67,15 +67,15 @@ class ControllerExtensionTranslation extends Controller {
 				$data['error_warning'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
 			} else {
 				$translations = json_decode($response, true);
-				
-				$this->cache->set('translation', $translations);				
+	
+				$this->cache->set('translation', $translations);
 			}
 			
 			curl_close($curl);
 		}
 		
 		$data['translations'] = array();
-	
+
 		$translation_total = count($translations);
 		
 		if ($translations) {
@@ -132,7 +132,7 @@ class ControllerExtensionTranslation extends Controller {
 		} else {
 			$code = '';
 		}
-				
+						
 		if (!$json) {
 			$json['step'] = array();
 			
@@ -150,10 +150,35 @@ class ControllerExtensionTranslation extends Controller {
 			
 			
 			// FTP
-			$json['step'][] = array(
-				'text' => $this->language->get('text_ftp'),
-				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);
+			$directory = DIR_LANGUAGE . $this->config->get('config_language') . '/';
+			
+			// Get a list of files ready to upload
+			$files = array();
+
+			$path = array($directory . '*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					$files[] = $file;
+				}
+			}
+			
+			// Split the FTP file upload list so we don't get any max execution errors.
+			$files = array_chunk($files, 20);			
+			
+			for ($i = 0; $i < count($files); $i++) {
+				$json['step'][] = array(
+					'text' => $this->language->get('text_ftp'),
+					'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code . '&page=' . $i, true))
+				);
+			}
+			
 			/*
 			// Clear temporary files
 			$json['step'][] = array(
@@ -182,8 +207,8 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 				
-		if (!$json) {	
-			$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/' . $code . '.zip?key=a00e7b58c0790df4126273119b318db5');
+		if (!$json) {
+			$curl = curl_init('https://crowdin.com/download/project/opencart/' . $code . '.zip');
 	
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
@@ -260,10 +285,16 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function ftp() {
-		$this->load->language('extension/installer');
+		$this->load->language('extension/translation');
 
 		$json = array();
 
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		
 		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -302,6 +333,8 @@ class ControllerExtensionTranslation extends Controller {
 					$files[] = $file;
 				}
 			}
+			
+			$files = array_splice($files, ($page - 1) * 20, 20);
 
 			// Connect to the site via FTP
 			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
@@ -350,6 +383,9 @@ class ControllerExtensionTranslation extends Controller {
 
 							if (is_file($file)) {
 								if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
+									echo "\n" . $file . "\n";
+									echo $destination . "\n";
+									
 									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
 								}
 							}
@@ -372,8 +408,7 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function remove() {
-		/*
-		$this->load->language('extension/installer');
+		$this->load->language('extension/translation');
 
 		$json = array();
 
@@ -381,13 +416,23 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_UPLOAD . '/2.0.0.x';
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+		
+		$directory = DIR_UPLOAD . '/' . $code;
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
+			if (is_file(DIR_UPLOAD . '/' . $code . '.zip')) {
+				
+			}
+			
 			// Get a list of files ready to upload
 			$files = array();
 
@@ -422,28 +467,25 @@ class ControllerExtensionTranslation extends Controller {
 			if (file_exists($directory)) {
 				rmdir($directory);
 			}
-			
-			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/translation', 'token=' . $this->session->data['token'], true));
-			
-			
+						
 			$json['success'] = $this->language->get('text_success');
-			
-			
-			
-		}*/
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function clear() {
-		$this->load->language('extension/installer');
+		$this->load->language('extension/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
+			$directories = glob(DIR_UPLOAD . 'language-*', GLOB_ONLYDIR);
 
 			foreach ($directories as $directory) {
 				// Get a list of files ready to upload

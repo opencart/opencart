@@ -90,6 +90,8 @@
 var step = new Array();
 var total = 0;
 
+$('a.btn').addClass('.disabled');
+
 $('table a.btn').on('click', function(e) {
 	e.preventDefault();
 	
@@ -105,6 +107,8 @@ $('table a.btn').on('click', function(e) {
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
+			//.not(node)
+			$('table a.btn').prop('disabled', true);
 		},
 		complete: function() {
 			$(node).button('reset');
@@ -158,6 +162,8 @@ function next() {
 
 				if (!json['error'] && !json['success']) {
 					next();
+				} else {
+					
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

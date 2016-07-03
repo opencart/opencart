@@ -47,7 +47,13 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['error_warning'] = '';
+		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
+
+		if ($directories) {
+			$data['error_warning'] = $this->language->get('error_temporary');
+		} else {
+			$data['error_warning'] = '';
+		}
 
 		// Try to get a cached translations array
 		$translations = $this->cache->get('translation');
@@ -172,20 +178,18 @@ class ControllerExtensionTranslation extends Controller {
 			// Split the FTP file upload list so we don't get any max execution errors.
 			$files = array_chunk($files, 20);			
 			
-			for ($i = 0; $i < count($files); $i++) {
+			for ($i = 1; $i < count($files); $i++) {
 				$json['step'][] = array(
 					'text' => $this->language->get('text_ftp'),
 					'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code . '&page=' . $i, true))
 				);
 			}
 			
-			/*
 			// Clear temporary files
 			$json['step'][] = array(
 				'text' => $this->language->get('text_remove'),
 				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);
-			*/						
+			);					
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -206,7 +210,17 @@ class ControllerExtensionTranslation extends Controller {
 		} else {
 			$code = '';
 		}
-				
+		
+		$directory = DIR_UPLOAD . 'language-' . $code . '/';
+		
+		if (!is_dir($directory)) {
+			mkdir($directory);
+		}
+
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+			$json['error'] = $this->language->get('error_file');
+		}
+						
 		if (!$json) {
 			$curl = curl_init('https://crowdin.com/download/project/opencart/' . $code . '.zip');
 	
@@ -222,7 +236,7 @@ class ControllerExtensionTranslation extends Controller {
 			if (!$response) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
 			} else {
-				$file = DIR_UPLOAD  . $code . '.zip';
+				$file = DIR_UPLOAD . 'language-' . $code . '/' . $code . '.zip';
 		
 				$handle = fopen($file, 'w');
 		
@@ -259,7 +273,7 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 
-		$file = DIR_UPLOAD  . $code . '.zip';
+		$file = DIR_UPLOAD . 'language-' . $code . '/' . $code . '.zip';
 		
 		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_file');
@@ -270,7 +284,7 @@ class ControllerExtensionTranslation extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD . $code . '/');
+				$zip->extractTo(DIR_UPLOAD . 'language-' . $code . '/');
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -310,7 +324,7 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = DIR_UPLOAD . $code . '/2.0.0.x/';
+		$directory = DIR_UPLOAD . 'language/' . $code . '/2.0.0.x/';
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
@@ -422,17 +436,13 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = DIR_UPLOAD . '/' . $code;
+		$directory = DIR_UPLOAD . 'language-' . $code;
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
-			if (is_file(DIR_UPLOAD . '/' . $code . '.zip')) {
-				
-			}
-			
 			// Get a list of files ready to upload
 			$files = array();
 
@@ -454,7 +464,7 @@ class ControllerExtensionTranslation extends Controller {
 			}
 
 			rsort($files);
-
+			
 			foreach ($files as $file) {
 				if (is_file($file)) {
 					unlink($file);
@@ -464,7 +474,7 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 
-			if (file_exists($directory)) {
+			if (is_dir($directory)) {
 				rmdir($directory);
 			}
 						
@@ -518,7 +528,7 @@ class ControllerExtensionTranslation extends Controller {
 					}
 				}
 
-				if (file_exists($directory)) {
+				if (is_dir($directory)) {
 					rmdir($directory);
 				}
 			}

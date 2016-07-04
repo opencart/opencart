@@ -1,5 +1,7 @@
 <?php
 class ControllerEventCompatibility extends Controller {
+	
+	
 	public function controller(&$route) {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		

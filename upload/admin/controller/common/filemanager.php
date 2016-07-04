@@ -205,7 +205,6 @@ class ControllerCommonFileManager extends Controller {
 
 	public function upload() {
 		$this->load->language('common/filemanager');
-		$this->load->model('setting/setting');
 
 		$json = array();
 
@@ -237,7 +236,7 @@ class ControllerCommonFileManager extends Controller {
 						'type'     => $this->request->files['file']['type'][$key],
 						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
 						'error'    => $this->request->files['file']['error'][$key],
-						'size'    => $this->request->files['file']['size'][$key]
+						'size'     => $this->request->files['file']['size'][$key]
 					);
 				}
 			}
@@ -251,48 +250,28 @@ class ControllerCommonFileManager extends Controller {
 					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
-
-					// Allowed file sizes
-					if(! $allowed = $this->model_setting_setting->getSettingValue('config_file_max_size'))
-					{
-						$allowed = 25600000;
-					}
-
-					if (intval($file['size']) > intval($allowed)) {
-						$json['error'] = $this->language->get('error_filesize');
-					}
-
+					
 					// Allowed file extension types
-					if($allowed = $this->model_setting_setting->getSettingValue('config_file_ext_allowed')) {
-						$allowed = explode(PHP_EOL, $allowed);
-					}
-					else {
-						$allowed = array(
-							'jpg',
-							'jpeg',
-							'gif',
-							'png'
-						);
-					}
-
+					$allowed = array(
+						'jpg',
+						'jpeg',
+						'gif',
+						'png'
+					);
+	
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
-
+					
 					// Allowed file mime types
-					if($allowed = $this->model_setting_setting->getSettingValue('config_file_mime_allowed')) {
-						$allowed = explode(PHP_EOL, $allowed);
-					}
-					else {
-						$allowed = array(
-							'image/jpeg',
-							'image/pjpeg',
-							'image/png',
-							'image/x-png',
-							'image/gif'
-						);
-					}
-
+					$allowed = array(
+						'image/jpeg',
+						'image/pjpeg',
+						'image/png',
+						'image/x-png',
+						'image/gif'
+					);
+	
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}

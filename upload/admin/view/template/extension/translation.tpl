@@ -2,6 +2,14 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <a href="<?php echo $refresh; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></a>
+        <?php if ($error_warning) { ?>
+        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <?php } else { ?>
+        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <?php } ?>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -56,9 +64,9 @@
                   <td class="text-left"><div class="progress">
                       <?php if ($translation['progress'] > 75) { ?>
                       <div class="progress-bar progress-bar-success progress-bar-striped" style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
-                      <?php }else if ($translation['progress'] > 25 && $translation['progress'] < 75) { ?>
+                      <?php } elseif ($translation['progress'] > 25 && $translation['progress'] < 75) { ?>
                       <div class="progress-bar progress-bar-info progress-bar-striped" style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
-                      <?php }else if ($translation['progress'] < 25) { ?>
+                      <?php } elseif ($translation['progress'] < 25) { ?>
                       <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
                       <?php } ?>
                     </div></td>
@@ -106,8 +114,8 @@ $('table a.btn').on('click', function(e) {
 		url: $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).button('loading');
-			//.not(node)
+			$('table a.btn').not(node);
+			
 			$('table a.btn').prop('disabled', true);
 		},
 		complete: function() {
@@ -175,7 +183,7 @@ function next() {
 
 $('#button-clear').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/translation/clear&token=<?php echo $token; ?>',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-clear').button('loading');

@@ -2,6 +2,13 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <?php if ($error_warning) { ?>
+        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <?php } else { ?>
+        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <?php } ?>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -21,11 +28,6 @@
             <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
             <div class="col-sm-10">
               <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-              <?php if ($error_warning) { ?>
-              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-              <?php } else { ?>
-              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-              <?php } ?>
             </div>
           </div>
           <div class="form-group">

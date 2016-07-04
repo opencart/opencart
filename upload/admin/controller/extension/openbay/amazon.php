@@ -863,5 +863,3 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$this->openbay->amazon->putStockUpdateBulk($bulk_array);
 	}
 }
-Status API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy

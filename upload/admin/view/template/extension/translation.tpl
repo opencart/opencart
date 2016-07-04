@@ -90,7 +90,7 @@
 var step = new Array();
 var total = 0;
 
-$('a.btn').addClass('.disabled');
+$('a.btn').attr('disabled', 'disabled');
 
 $('table a.btn').on('click', function(e) {
 	e.preventDefault();

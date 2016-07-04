@@ -27,7 +27,7 @@ class Session {
 			}
 			
 			session_set_cookie_params(0, '/');
-			session_start(array('read_and_close' => true));
+			session_start();
 		}			
 	}
 		

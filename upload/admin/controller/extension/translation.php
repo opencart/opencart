@@ -154,7 +154,6 @@ class ControllerExtensionTranslation extends Controller {
 				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
 			);
 			
-			
 			// FTP
 			$directory = DIR_LANGUAGE . $this->config->get('config_language') . '/';
 			
@@ -324,7 +323,7 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = DIR_UPLOAD . 'language/' . $code . '/2.0.0.x/';
+		$directory = DIR_UPLOAD . 'language-' . $code . '/2.0.0.x/';
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');

@@ -26,7 +26,7 @@
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_fulfillment_list; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_order_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">

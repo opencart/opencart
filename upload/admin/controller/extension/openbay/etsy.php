@@ -58,6 +58,13 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 			$data['success'] = '';
 		}
 
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		$data['validation'] 	= $this->openbay->etsy->validate();
 		$data['links_settings'] = $this->url->link('extension/openbay/etsy/settings', 'token=' . $this->session->data['token'], true);
 		$data['links_products'] = $this->url->link('extension/openbay/etsy_product/links', 'token=' . $this->session->data['token'], true);
@@ -79,10 +86,21 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 
 		$data = $this->language->all();
 
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('etsy', $this->request->post);
-			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->openbay->etsy->resetConfig($this->request->post['etsy_token'], $this->request->post['etsy_enc1'], $this->request->post['etsy_enc2']);
+
+			$account_info = $this->model_extension_openbay_etsy->verifyAccount();
+
+			if (isset($account_info['header_code']) && $account_info['header_code'] == 200) {
+				$this->openbay->etsy->settingsUpdate();
+
+				$this->session->data['success'] = $this->language->get('text_success');
+			} else {
+				$this->session->data['error'] = $this->language->get('error_account_info');
+			}
+
 			$this->response->redirect($this->url->link('extension/openbay/etsy/index&token=' . $this->session->data['token']));
 		}
 
@@ -167,6 +185,12 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 			$data['etsy_order_status_shipped'] = $this->request->post['etsy_order_status_shipped'];
 		} else {
 			$data['etsy_order_status_shipped'] = $this->config->get('etsy_order_status_shipped');
+		}
+
+		if (isset($this->request->post['etsy_logging'])) {
+			$data['etsy_logging'] = $this->request->post['etsy_logging'];
+		} else {
+			$data['etsy_logging'] = $this->config->get('etsy_logging');
 		}
 
 		$data['api_server'] = $this->openbay->etsy->getServer();

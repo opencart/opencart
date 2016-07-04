@@ -66,11 +66,12 @@
           <h4><?php echo $text_heading_template; ?></h4>
           </a> </div>
       </div>
-      <?php }else{ ?>
+      <?php } else { ?>
       <div class="col-md-3 text-center">
-        <div class="well"> <a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-star fa-stack-1x"></i> </span>
+        <div class="well"><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-star fa-stack-1x"></i> </span>
           <h4><?php echo $text_heading_register; ?></h4>
-          </a> </div>
+          </a>
+        </div>
       </div>
       <?php } ?>
     </div>

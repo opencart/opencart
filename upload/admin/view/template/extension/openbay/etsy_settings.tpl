@@ -75,6 +75,20 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="etsy_logging"><?php echo $entry_debug; ?></label>
+            <div class="col-sm-10">
+              <select name="etsy_logging" id="etsy_logging" class="form-control">
+                <?php if ($etsy_logging) { ?>
+                <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                <option value="0"><?php echo $text_no; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_yes; ?></option>
+                <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="etsy_address_format"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_address_format; ?>"><?php echo $entry_address_format; ?></span></label>
             <div class="col-sm-10">
               <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>
@@ -113,14 +127,16 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_pull_orders; ?>"><?php echo $text_pull_orders; ?></span></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
-          </div>
+          <?php if (isset($account_info['header_code']) && $account_info['header_code'] == 200) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_pull_orders; ?>"><?php echo $text_pull_orders; ?></span></label>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
+            </div>
+          <?php } ?>
         </div>
       </div>
     </form>
@@ -132,14 +148,6 @@
   function validateForm() {
       $('#form-etsy-settings').submit();
   }
-
-  $('.credentials').change(function() {
-    checkCredentials();
-  });
-
-  $(document).ready(function() {
-    checkCredentials();
-  });
 
   $('#button-import').bind('click', function() {
     $.ajax({

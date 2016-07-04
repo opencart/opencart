@@ -18,3 +18,6 @@ $_['column_date_updated']   = 'Date updated';
 $_['column_status']         = 'Status';
 $_['column_sku']            = 'Amazon SKU';
 $_['column_stock']          = 'Stock';
+
+// Error
+$_['error_api_connection']  = 'Could not connect to the API';

@@ -1,18 +1,18 @@
 <?php
-class ModelExtensionOpenBayAmazonusOrder extends Model {
+class ModelExtensionOpenBayAmazonOrder extends Model {
 	public function acknowledgeOrder($order_id) {
-		$amazonus_order_id = $this->getAmazonusOrderId($order_id);
+		$amazon_order_id = $this->getAmazonOrderId($order_id);
 
 		$request_xml = "<Request>
-  <AmazonOrderId>$amazonus_order_id</AmazonOrderId>
+  <AmazonOrderId>$amazon_order_id</AmazonOrderId>
   <MerchantOrderId>$order_id</MerchantOrderId>
 </Request>";
 
-		$this->openbay->amazonus->callNoResponse('order/acknowledge', $request_xml, false);
+		$this->openbay->amazon->callNoResponse('order/acknowledge', $request_xml, false);
 	}
 
 	public function getProductId($sku) {
-		$row = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `amazonus_sku` = '" . $this->db->escape($sku) . "'")->row;
+		$row = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `amazon_sku` = '" . $this->db->escape($sku) . "'")->row;
 
 		if (isset($row['product_id']) && !empty($row['product_id'])) {
 			return $row['product_id'];
@@ -22,7 +22,7 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 	}
 
 	public function getProductVar($sku) {
-		$row = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `amazonus_sku` = '" . $this->db->escape($sku) . "'")->row;
+		$row = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `amazon_sku` = '" . $this->db->escape($sku) . "'")->row;
 
 		if (isset($row['var'])) {
 			return $row['var'];
@@ -42,32 +42,32 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 		}
 	}
 
-	public function getMappedStatus($amazonus_status) {
-		$amazonus_status = trim(strtolower($amazonus_status));
+	public function getMappedStatus($amazon_status) {
+		$amazon_status = trim(strtolower($amazon_status));
 
-		switch ($amazonus_status) {
+		switch ($amazon_status) {
 			case 'pending':
-				$order_status = $this->config->get('openbay_amazonus_order_status_pending');
+				$order_status = $this->config->get('openbay_amazon_order_status_pending');
 				break;
 
 			case 'unshipped':
-				$order_status = $this->config->get('openbay_amazonus_order_status_unshipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_unshipped');
 				break;
 
 			case 'partiallyshipped':
-				$order_status = $this->config->get('openbay_amazonus_order_status_partially_shipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_partially_shipped');
 				break;
 
 			case 'shipped':
-				$order_status = $this->config->get('openbay_amazonus_order_status_shipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_shipped');
 				break;
 
 			case 'canceled':
-				$order_status = $this->config->get('openbay_amazonus_order_status_canceled');
+				$order_status = $this->config->get('openbay_amazon_order_status_canceled');
 				break;
 
 			case 'unfulfillable':
-				$order_status = $this->config->get('openbay_amazonus_order_status_unfulfillable');
+				$order_status = $this->config->get('openbay_amazon_order_status_unfulfillable');
 				break;
 
 			default:
@@ -114,15 +114,14 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$status_id . " WHERE `order_id` = " . (int)$order_id);
 	}
 
-	public function addAmazonusOrder($order_id, $amazonus_order_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_order` (`order_id`, `amazonus_order_id`) VALUES (" . (int)$order_id . ", '" . $this->db->escape($amazonus_order_id) . "')");
+	public function addAmazonOrder($order_id, $amazon_order_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_order` (`order_id`, `amazon_order_id`) VALUES (" . (int)$order_id . ", '" . $this->db->escape($amazon_order_id) . "')");
 	}
 
-	/* $data = array(PRODUCT_SKU => ORDER_ITEM_ID) */
-	public function addAmazonusOrderProducts($order_id, $data) {
+	public function addAmazonOrderProducts($order_id, $data) {
 		foreach ($data as $sku => $order_item_id) {
 
-			$row = $this->db->query("SELECT `order_product_id` FROM `" . DB_PREFIX . "order_product` WHERE `model` = '" . $this->db->escape($sku) . "' AND `order_id` = " . (int)$order_id . "LIMIT 1")->row;
+			$row = $this->db->query("SELECT `order_product_id` FROM `" . DB_PREFIX . "order_product` WHERE `model` = '" . $this->db->escape($sku) . "' AND `order_id` = " . (int)$order_id . " LIMIT 1")->row;
 
 			if (!isset($row['order_product_id']) || empty($row['order_product_id'])) {
 				continue;
@@ -130,12 +129,12 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 
 			$order_product_id = $row['order_product_id'];
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_order_product` (`order_product_id`, `amazonus_order_item_id`) VALUES (" . (int)$order_product_id . ", '" . $this->db->escape($order_item_id) . "')");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_order_product` (`order_product_id`, `amazon_order_item_id`) VALUES (" . (int)$order_product_id . ", '" . $this->db->escape($order_item_id) . "')");
 		}
 	}
 
-	public function getOrderId($amazonus_order_id) {
-		$row = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "amazonus_order` WHERE `amazonus_order_id` = '" . $this->db->escape($amazonus_order_id) . "' LIMIT 1")->row;
+	public function getOrderId($amazon_order_id) {
+		$row = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "amazon_order` WHERE `amazon_order_id` = '" . $this->db->escape($amazon_order_id) . "' LIMIT 1")->row;
 
 		if (isset($row['order_id']) && !empty($row['order_id'])) {
 			return $row['order_id'];
@@ -154,11 +153,11 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 		return 0;
 	}
 
-	public function getAmazonusOrderId($order_id) {
-		$row = $this->db->query("SELECT `amazonus_order_id` FROM `" . DB_PREFIX . "amazonus_order` WHERE `order_id` = " . (int)$order_id . " LIMIT 1")->row;
+	public function getAmazonOrderId($order_id) {
+		$row = $this->db->query("SELECT `amazon_order_id` FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = " . (int)$order_id . " LIMIT 1")->row;
 
-		if (isset($row['amazonus_order_id']) && !empty($row['amazonus_order_id'])) {
-			return $row['amazonus_order_id'];
+		if (isset($row['amazon_order_id']) && !empty($row['amazon_order_id'])) {
+			return $row['amazon_order_id'];
 		}
 
 		return null;
@@ -202,18 +201,26 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 	}
 
 	public function addOrderHistory($order_id) {
-		if ($this->config->get('openbay_amazonus_status') != 1) {
+		$logger = new Log('amazon_stocks.log');
+		$logger->write('addOrderHistory() called with order id: ' . $order_id);
+		
+		if ($this->config->get('openbay_amazon_status') != 1) {
+			$logger->write('addOrderHistory() openbay_amazon_status is disabled');
 			return;
 		}
-
-		$logger = new Log('amazonus_stocks.log');
-		$logger->write('addOrder() called with order id: ' . $order_id);
-
+		
 		$order_products = $this->openbay->getOrderProducts($order_id);
+		
+		$logger->write($order_products);
 
-		foreach($order_products as $order_product) {
-			$this->openbay->amazonus->productUpdateListen($order_product['product_id']);
+		if (!empty($order_products)) {
+			foreach($order_products as $order_product) {
+				$this->openbay->amazon->productUpdateListen($order_product['product_id']);
+			}
+		} else {
+			$logger->write('Order product array empty!');
 		}
+
 
 		$logger->write('addOrder() exiting');
 	}

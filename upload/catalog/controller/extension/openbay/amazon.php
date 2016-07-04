@@ -300,6 +300,8 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		if($this->config->get('openbay_amazon_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
+		
+		$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status)));
 
 		$logger->write("Ok");
 		$this->response->setOutput('Ok');
@@ -563,12 +565,13 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 	}
 	
 	public function eventAddOrderHistory($route, $data) {
-		$this->openbay->amazon->log('eventAddOrderHistory Event fired: ' . $route);
+		$logger = new \Log('amazon.log');
+		$logger->write('eventAddOrderHistory Event fired: ' . $route);
 		
 		if (isset($data[0]) && !empty($data[0])) {
 			$this->load->model('extension/openbay/amazon_order');
 			
-			$this->openbay->amazon->log('Order ID: ' . (int)$data[0]);
+			$logger->write('Order ID: ' . (int)$data[0]);
 
 			$this->model_extension_openbay_amazon_order->addOrderHistory((int)$data[0]);
 		}

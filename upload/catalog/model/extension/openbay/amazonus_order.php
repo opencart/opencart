@@ -202,17 +202,24 @@ class ModelExtensionOpenBayAmazonusOrder extends Model {
 	}
 
 	public function addOrderHistory($order_id) {
+		$logger = new Log('amazonus_stocks.log');
+		$logger->write('addOrderHistory() called with order id: ' . $order_id);
+
 		if ($this->config->get('openbay_amazonus_status') != 1) {
+			$logger->write('addOrderHistory() openbay_amazonus_status is disabled');
 			return;
 		}
 
-		$logger = new Log('amazonus_stocks.log');
-		$logger->write('addOrder() called with order id: ' . $order_id);
-
 		$order_products = $this->openbay->getOrderProducts($order_id);
+		
+		$logger->write($order_products);
 
-		foreach($order_products as $order_product) {
-			$this->openbay->amazonus->productUpdateListen($order_product['product_id']);
+		if (!empty($order_products)) {
+			foreach ($order_products as $order_product) {
+				$this->openbay->amazonus->productUpdateListen($order_product['product_id']);
+			}
+		} else {
+			$logger->write('Order product array empty!');
 		}
 
 		$logger->write('addOrder() exiting');

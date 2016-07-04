@@ -300,9 +300,11 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$this->model_extension_openbay_amazonus_order->acknowledgeOrder($order_id);
 
 		//send an email to the administrator about the sale
-		if($this->config->get('openbay_amazonus_notify_admin') == 1){
+		if ($this->config->get('openbay_amazonus_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
+		
+		$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status)));
 
 		$logger->write("Ok");
 		$this->response->setOutput('Ok');
@@ -565,12 +567,13 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	}
 
 	public function eventAddOrderHistory($route, $data) {
-		$this->openbay->amazonus->log('eventAddOrderHistory Event fired: ' . $route);
+		$logger = new \Log('amazonus.log');
+		$logger->write('eventAddOrderHistory Event fired: ' . $route);
 		
 		if (isset($data[0]) && !empty($data[0])) {
 			$this->load->model('extension/openbay/amazonus_order');
 			
-			$this->openbay->amazonus->log('Order ID: ' . (int)$data[0]);
+			$logger->write('Order ID: ' . (int)$data[0]);
 
 			$this->model_extension_openbay_amazonus_order->addOrderHistory((int)$data[0]);
 		}

@@ -94,6 +94,8 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 				if ($this->config->get('ebay_stock_allocate') == 1) {
 					$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
 					$this->model_extension_openbay_ebay_order->addOrderLines($order, $order_id);
+				
+					$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->default_paid_id)));
 				}
 
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
@@ -101,6 +103,8 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 				$this->model_extension_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_extension_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
+				
+				$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $this->default_refunded_id)));
 			} elseif ($order->payment->status == 'Part-Refunded' && ($order_loaded['order_status_id'] != $this->default_part_refunded_id) && in_array($this->default_paid_id, $order_history)) {
 				$this->model_extension_openbay_ebay_order->update($order_id, $this->default_part_refunded_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Part Refunded');
@@ -178,6 +182,8 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 					$this->model_extension_openbay_ebay_order->cancel($order_id);
 					$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
 					$order_status_id = $this->default_refunded_id;
+
+					$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
 				}
 
 				//order is part refunded
@@ -210,6 +216,8 @@ class ModelExtensionOpenBayEbayOpenbay extends Model{
 			if ($this->config->get('ebay_stock_allocate') == 0) {
 				$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
 				$this->model_extension_openbay_ebay_order->addOrderLines($order, $order_id);
+
+				$this->event->trigger('model/checkout/order/addOrderHistory/after', array('model/checkout/order/addOrderHistory/after', array($order_id, $order_status_id)));
 			}
 		}
 

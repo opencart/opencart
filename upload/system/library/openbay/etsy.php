@@ -113,7 +113,7 @@ final class Etsy {
 		if ($this->logging == 1) {
 			if (function_exists('getmypid')) {
 				$process_id = getmypid();
-				$data = $process_id . ' - ' . $data;
+				$data = $process_id . ' - ' . print_r($data, true);
 			}
 
 			if ($write == true) {

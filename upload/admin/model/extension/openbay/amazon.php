@@ -3,7 +3,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbay_amazon_add_order', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazon/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_amazon_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/amazon/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (

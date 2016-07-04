@@ -11,8 +11,9 @@ class ControllerStartupCompatibility extends Controller {
 			$url_info = parse_url(str_replace('&amp;', '&', $link));
 			
 			$data = array();
-
 			parse_str($url_info['query'], $data);
+		
+			$part = explode('/', $data['route']);	
 		
 			$routes = array(
 				'extension/analytics',
@@ -24,15 +25,15 @@ class ControllerStartupCompatibility extends Controller {
 				'extension/shipping',
 				'extension/theme',
 				'extension/total'
-			);		
+			);
 			
-			if (in_array($data['route'], $routes)) {
-				$query  = '?route=extension/extension&type=' . substr($data['route'], 10);
+			if (in_array($part[0] . '/' . $part[1], $routes)) {
+				$query  = '?route=extension/extension&type=' . $part[1];
 				
 				unset($data['route']);
 				
 				$query .= '&' . http_build_query($data);
-				
+			
 				return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . $url_info['path'] . $query;
 			} else {
 				return $link;
@@ -42,3 +43,5 @@ class ControllerStartupCompatibility extends Controller {
 		}
 	}
 }
+Status API Training Shop Blog About
+© 2016 GitHub

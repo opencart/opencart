@@ -110,7 +110,7 @@ class ControllerExtensionExtensionTotal extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/total', $data));
+		$this->response->setOutput($this->load->view('extension/extension/total', $data));
 	}
 
 	protected function validate() {

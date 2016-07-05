@@ -121,7 +121,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/payment', $data));
+		$this->response->setOutput($this->load->view('extension/extension/payment', $data));
 	}
 
 	protected function validate() {

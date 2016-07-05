@@ -19,6 +19,7 @@ class ControllerStartupPermission extends Controller {
 				'extension/dashboard',
 				'extension/analytics',
 				'extension/captcha',
+				'extension/extension',
 				'extension/feed',
 				'extension/fraud',
 				'extension/module',
@@ -28,17 +29,8 @@ class ControllerStartupPermission extends Controller {
 				'extension/total'
 			);
 
-			if (in_array($route, $extension)) {
-				$action = array(
-					'install',
-					'uninstall',
-					'add',
-					'delete'
-				);
-
-				if (isset($part[2]) && !in_array($part[2], $action)) {
-					$route .= '/' . $part[2];
-				}
+			if (isset($part[2]) && in_array($route, $extension)) {
+				$route .= '/' . $part[2];
 			}
 			
 			// We want to ingore some pages from having its permission checked. 

@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionExtensionmenu extends Controller {
+class ControllerExtensionExtensionMenu extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -46,7 +46,7 @@ class ControllerExtensionExtensionmenu extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('menu', $this->request->get['extension']);
 
-			$this->model_extension_menu->deletemenusByCode($this->request->get['extension']);
+			$this->model_extension_menu->deleteMenusByCode($this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/menu/' . $this->request->get['extension'] . '/uninstall');
@@ -67,7 +67,7 @@ class ControllerExtensionExtensionmenu extends Controller {
 		if ($this->validate()) {
 			$this->load->language('menu' . '/' . $this->request->get['extension']);
 			
-			$this->model_extension_menu->addmenu($this->request->get['extension'], $this->language->get('heading_title'));
+			$this->model_extension_menu->addMenu($this->request->get['extension'], $this->language->get('heading_title'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}

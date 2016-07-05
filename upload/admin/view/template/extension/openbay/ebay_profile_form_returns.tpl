@@ -65,7 +65,7 @@
                     </select>
                   </div>
                 </div>
-              <?php }else{ ?>
+              <?php } else { ?>
                 <input type="hidden" name="data[returns_accepted]" value="" />
               <?php } ?>
               <?php if (!empty($setting['returns']['within'])) { ?>
@@ -80,7 +80,7 @@
                   </select>
                 </div>
               </div>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="hidden" name="data[returns_within]" value="" />
               <?php } ?>
               <?php if (!empty($setting['returns']['paidby'])) { ?>
@@ -95,7 +95,7 @@
                   </select>
                 </div>
               </div>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="hidden" name="data[returns_shipping]" value="" />
               <?php } ?>
               <?php if (!empty($setting['returns']['refund'])) { ?>
@@ -110,7 +110,7 @@
                   </select>
                 </div>
               </div>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="hidden" name="data[returns_option]" value="" />
               <?php } ?>
               <?php if ($setting['returns']['description'] == true) { ?>
@@ -121,7 +121,7 @@
                     <textarea name="data[returns_policy]" class="form-control" rows="3" maxlength="5000"><?php echo $data['returns_policy'];?></textarea>
                   </div>
                 </div>
-              <?php }else{ ?>
+              <?php } else { ?>
                 <input type="hidden" name="data[returns_policy]" value="" />
               <?php } ?>
               <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
@@ -136,7 +136,7 @@
                   </select>
                 </div>
               </div>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="hidden" name="data[returns_restocking_fee]" value="" />
               <?php } ?>
             </div>

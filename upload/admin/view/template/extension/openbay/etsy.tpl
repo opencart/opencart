@@ -12,9 +12,10 @@
   </div>
   <div class="container-fluid">
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php } ?>
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="row">
       <div class="col-md-3 text-center">
@@ -33,7 +34,7 @@
           <h4><?php echo $text_heading_listings; ?></h4>
           </a> </div>
       </div>
-      <?php }else{ ?>
+      <?php } else { ?>
       <div class="col-md-3 text-center">
         <div class="well"> <a href="https://account.openbaypro.com/etsy/apiRegister/" target="_BLANK"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-star fa-stack-1x"></i> </span>
           <h4><?php echo $text_heading_register; ?></h4>

@@ -93,24 +93,24 @@
           </div>
         </div>
         <div class="tab-pane" id="tab-orders">
-          <h4><?php echo $text_order_statuses ?></h4>
+          <h4><?php echo $text_order_statuses; ?></h4>
           <?php foreach ($amazonus_order_statuses as $key => $amazonus_order_status) { ?>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $amazonus_order_status['name'] ?></label>
+            <label class="col-sm-2 control-label"><?php echo $amazonus_order_status['name']; ?></label>
             <div class="col-sm-10">
-              <select name="openbay_amazonus_order_status_<?php echo $key ?>" class="form-control">
+              <select name="openbay_amazonus_order_status_<?php echo $key; ?>" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($amazonus_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                <option value="<?php echo $order_status['order_status_id'] ?>" selected="selected"><?php echo $order_status['name'] ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id'] ?>"><?php echo $order_status['name'] ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                 <?php } ?>
                 <?php } ?>
               </select>
             </div>
           </div>
           <?php } ?>
-          <h4><?php echo $text_other ?></h4>
+          <h4><?php echo $text_other; ?></h4>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_import_tax; ?>"><?php echo $entry_import_tax; ?></span></label>
             <div class="col-sm-10">
@@ -138,11 +138,11 @@
             <div class="col-sm-10">
               <select name="openbay_amazonus_notify_admin" id="entry-notify-admin" class="form-control">
                 <?php if ($openbay_amazonus_notify_admin) { ?>
-                <option value="1" selected="selected"><?php echo $text_yes ?></option>
-                <option value="0"><?php echo $text_no ?></option>
+                <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                <option value="0"><?php echo $text_no; ?></option>
                 <?php } else { ?>
-                <option value="1"><?php echo $text_yes ?></option>
-                <option value="0" selected="selected"><?php echo $text_no ?></option>
+                <option value="1"><?php echo $text_yes; ?></option>
+                <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
             </div>

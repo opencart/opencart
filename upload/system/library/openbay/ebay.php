@@ -44,7 +44,7 @@ final class Ebay {
 			if (defined("HTTPS_CATALOG")) {
 				$domain = HTTPS_CATALOG;
 			} else {
-				$domain = HTTPS_SERVER;
+				$domain = $this->config->get('config_url');
 			}
 
 			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
@@ -113,7 +113,7 @@ final class Ebay {
 			if (defined("HTTPS_CATALOG")) {
 				$domain = HTTPS_CATALOG;
 			} else {
-				$domain = HTTPS_SERVER;
+				$domain = $this->config->get('config_url');
 			}
 
 			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
@@ -156,7 +156,7 @@ final class Ebay {
 		if ($this->logging == 1) {
 			if (function_exists('getmypid')) {
 				$process_id = getmypid();
-				$data = $process_id . ' - ' . $data;
+				$data = $process_id . ' - ' . print_r($data, true);
 			}
 
 			if ($write == true) {

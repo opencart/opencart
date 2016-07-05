@@ -86,7 +86,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 	});
 });
 
-$('#extension').on('click', '.btn-danger', function(e) {
+$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
 	
 	if (confirm('<?php echo $text_confirm; ?>')) {

@@ -110,8 +110,8 @@ class Amazonus {
 	}
 
 	public function productUpdateListen($product_id, $data = array()) {
-		$logger = new \Log('amazon_stocks.log');
-		$logger->write('productUpdateListen (' . (int)$product_id . ')');
+		$logger = new \Log('amazonus_stocks.log');
+		$logger->write('productUpdateListen(), product ID: ' . $product_id);
 
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
@@ -129,7 +129,7 @@ class Amazonus {
 			}
 
 			foreach ($variants as $variant) {
-				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
+				$amazon_sku_rows = $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($variant['sku']) . "'")->rows;
 
 				foreach($amazon_sku_rows as $amazon_sku_row) {
 					$quantity_data[$amazon_sku_row['amazonus_sku']] = $variant['stock'];
@@ -146,7 +146,7 @@ class Amazonus {
 			$this->putStockUpdateBulk(array($product_id));
 		}
 
-		$logger->write('productUpdateListen() exit');
+		$logger->write('productUpdateListen() - finished');
 	}
 
 	public function bulkUpdateOrders($orders) {
@@ -307,46 +307,52 @@ class Amazonus {
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false){
 		$logger = new \Log('amazonus_stocks.log');
-		$logger->write('Updating stock using putStockUpdateBulk()');
+		$logger->write('putStockUpdateBulk(), End inactive: ' . $end_inactive . ', ids: ' . json_encode($product_id_array));
+		
 		$quantity_data = array();
+		
 		foreach($product_id_array as $product_id) {
-			$amazonus_rows = $this->getLinkedSkus($product_id);
-			foreach($amazonus_rows as $amazonus_row) {
-				$product_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
-
-				if(!empty($product_row)) {
-					if($end_inactive && $product_row['status'] == '0') {
-						$quantity_data[$amazonus_row['amazonus_sku']] = 0;
-					} else {
-						$quantity_data[$amazonus_row['amazonus_sku']] = $product_row['quantity'];
+			$linked_skus = $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "'")->rows;
+			
+			if (!empty($linked_skus)) {
+				foreach($linked_skus as $sku) {
+					$product = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
+	
+					if(!empty($product)) {
+						if($end_inactive && $product['status'] == '0') {
+							$quantity_data[$sku['amazonus_sku']] = 0;
+						} else {
+							$quantity_data[$sku['amazonus_sku']] = $product['quantity'];
+						}
 					}
 				}
+			} else {
+				$logger->write('No linked SKU');
 			}
 		}
+		
 		if(!empty($quantity_data)) {
-			$logger->write('Quantity data to be sent:' . print_r($quantity_data, true));
+			$logger->write('New Qty:' . print_r($quantity_data, true));
+			
 			$response = $this->updateQuantities($quantity_data);
-			$logger->write('Submit to API. Response: ' . print_r($response, true));
+			
+			$logger->write('API Response: ' . print_r($response, true));
 		} else {
-			$logger->write('No quantity data need to be posted.');
+			$logger->write('No update needed');
 		}
-	}
-
-	public function getLinkedSkus($product_id, $var='') {
-		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($order_id) {
 		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_product` as `op` LEFT JOIN `" . DB_PREFIX . "product` as `p` ON `p`.`product_id` = `op`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'")->rows;
 	}
 
-	public function validate(){
-		if($this->config->get('openbay_amazonus_status') != 0 &&
+	public function validate() {
+		if ($this->config->get('openbay_amazonus_status') != 0 &&
 			$this->config->get('openbay_amazonus_token') != '' &&
 			$this->config->get('openbay_amazonus_enc_string1') != '' &&
-			$this->config->get('openbay_amazonus_enc_string2') != ''){
+			$this->config->get('openbay_amazonus_enc_string2') != '') {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -364,9 +370,9 @@ class Amazonus {
 	public function getOrder($order_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if($qry->num_rows > 0){
+		if ($qry->num_rows > 0) {
 			return $qry->row;
-		}else{
+		} else {
 			return false;
 		}
 	}

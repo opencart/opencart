@@ -3,7 +3,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_amazonus', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazonus/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_amazonus_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/amazonus/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
@@ -100,7 +100,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbaypro_amazonus');
+		$this->model_extension_event->deleteEvent('openbay_amazonus_add_order');
 	}
 
 	public function patch() {
@@ -337,7 +337,8 @@ class ModelExtensionOpenBayAmazonus extends Model {
 	}
 
 	public function linkProduct($amazonus_sku, $product_id, $var = '') {
-		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		$count = $this->db->query("SELECT COUNT(*) as `count` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		
 		if ($count['count'] == 0) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_link` SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
@@ -490,12 +491,7 @@ class ModelExtensionOpenBayAmazonus extends Model {
 	}
 
 	public function updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, $tracking_no) {
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "amazonus_order`
-			SET `courier_id` = '" . $courier_id . "',
-				`courier_other` = " . (int)!$courier_from_list . ",
-				`tracking_no` = '" . $tracking_no . "'
-			WHERE `order_id` = " . (int)$order_id . "");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_order` SET `courier_id` = '" . $this->db->escape($courier_id) . "', `courier_other` = " . (int)!$courier_from_list . ", `tracking_no` = '" . $this->db->escape($tracking_no) . "' WHERE `order_id` = " . (int)$order_id . "");
 	}
 
 	public function getAmazonusOrderId($order_id) {

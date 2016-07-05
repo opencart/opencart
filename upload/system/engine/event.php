@@ -21,7 +21,7 @@ class Event {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
 				foreach ($actions as $action) {
 					$result = $action->execute($this->registry, $args);
-					
+
 					if (!is_null($result) && !($result instanceof Exception)) {
 						return $result;
 					}
@@ -29,19 +29,19 @@ class Event {
 			}
 		}
 	}
-		
+
 	public function unregister($trigger, $route = '') {
 		if ($route) {
 			foreach ($this->data[$trigger] as $key => $action) {
 				if ($action->getId() == $route) {
 					unset($this->data[$trigger][$key]);
 				}
-			}			
+			}
 		} else {
 			unset($this->data[$trigger]);
 		}
 	}
-	
+
 	public function removeAction($trigger, $route) {
 		foreach ($this->data[$trigger] as $key => $action) {
 			if ($action->getId() == $route) {

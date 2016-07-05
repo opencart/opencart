@@ -61,6 +61,8 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 		if (isset($this->request->get['access_token'])) {
 			$this->session->data['access_token'] = $this->request->get['access_token'];
 			$user = $this->model_extension_payment_amazon_login_pay->getUserInfo($this->request->get['access_token']);
+		} else {
+			$user = array();
 		}
 
 		if ((array)$user) {

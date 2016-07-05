@@ -85,7 +85,7 @@
               <?php } else { ?>
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" />'; ?>
               <?php } ?>
-              <label for="p_code_<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></label>
+              <label for="p_code_<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
               <br />
               <?php } ?>
             </div>
@@ -108,17 +108,17 @@
         </div>
         <div class="tab-pane" id="tab-orders">
           <fieldset>
-            <legend><?php echo $text_order_statuses ?></legend>
+            <legend><?php echo $text_order_statuses; ?></legend>
             <?php foreach ($amazon_order_statuses as $key => $amazon_order_status) { ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name'] ?></label>
+              <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name']; ?></label>
               <div class="col-sm-10">
-                <select name="openbay_amazon_order_status_<?php echo $key ?>" class="form-control">
+                <select name="openbay_amazon_order_status_<?php echo $key; ?>" class="form-control">
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($amazon_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                  <option value="<?php echo $order_status['order_status_id'] ?>" selected="selected"><?php echo $order_status['name'] ?></option>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id'] ?>"><?php echo $order_status['name'] ?></option>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -127,10 +127,10 @@
             <?php } ?>
           </fieldset>
           <fieldset>
-            <legend><?php echo $text_marketplaces ?></legend>
+            <legend><?php echo $text_marketplaces; ?></legend>
             <?php foreach ($marketplaces as $marketplace) { ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="code-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name'] ?></label>
+              <label class="col-sm-2 control-label" for="code-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
               <div class="col-sm-10">
                 <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
@@ -142,7 +142,7 @@
             <?php } ?>
           </fieldset>
           <fieldset>
-            <legend><?php echo $text_other ?></legend>
+            <legend><?php echo $text_other; ?></legend>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_import_tax; ?>"><?php echo $entry_import_tax; ?></span></label>
               <div class="col-sm-10">
@@ -170,11 +170,11 @@
               <div class="col-sm-10">
                 <select name="openbay_amazon_notify_admin" id="entry-notify-admin" class="form-control">
                   <?php if ($openbay_amazon_notify_admin) { ?>
-                  <option value="1" selected="selected"><?php echo $text_yes ?></option>
-                  <option value="0"><?php echo $text_no ?></option>
+                  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                  <option value="0"><?php echo $text_no; ?></option>
                   <?php } else { ?>
-                  <option value="1"><?php echo $text_yes ?></option>
-                  <option value="0" selected="selected"><?php echo $text_no ?></option>
+                  <option value="1"><?php echo $text_yes; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
                   <?php } ?>
                 </select>
               </div>

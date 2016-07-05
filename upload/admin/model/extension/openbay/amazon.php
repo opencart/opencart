@@ -3,7 +3,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 	public function install() {
 		$this->load->model('extension/event');
 
-		$this->model_extension_event->addEvent('openbaypro_amazon', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/openbay/amazon/eventAddOrderHistory');
+		$this->model_extension_event->addEvent('openbay_amazon_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/amazon/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
@@ -102,7 +102,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazon'");
 
 		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbaypro_amazon');
+		$this->model_extension_event->deleteEvent('openbay_amazon_add_order');
 	}
 
 	public function patch() {
@@ -337,7 +337,8 @@ class ModelExtensionOpenBayAmazon extends Model {
 	}
 
 	public function linkProduct($amazon_sku, $product_id, $var = '') {
-		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		$count = $this->db->query("SELECT COUNT(*) as `count` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
+		
 		if ($count['count'] == 0) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_product_link` SET `product_id` = '" . (int)$product_id . "', `amazon_sku` = '" . $this->db->escape($amazon_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
@@ -491,12 +492,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 	}
 
 	public function updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, $tracking_no) {
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "amazon_order`
-			SET `courier_id` = '" . $this->db->escape($courier_id) . "',
-				`courier_other` = " . (int)!$courier_from_list . ",
-				`tracking_no` = '" . $this->db->escape($tracking_no) . "'
-			WHERE `order_id` = " . (int)$order_id . "");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_order` SET `courier_id` = '" . $this->db->escape($courier_id) . "', `courier_other` = " . (int)!$courier_from_list . ", `tracking_no` = '" . $this->db->escape($tracking_no) . "' WHERE `order_id` = " . (int)$order_id . "");
 	}
 
 	public function getAmazonOrderId($order_id) {

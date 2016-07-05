@@ -31,8 +31,10 @@ class ControllerExtensionExtensionModule extends Controller {
 			$this->load->controller('extension/module/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
+		} else {
+			$this->session->data['error'] = $this->error['warning'];
 		}
-
+	
 		$this->getList();
 	}
 
@@ -87,7 +89,7 @@ class ControllerExtensionExtensionModule extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
-
+		
 		$this->getList();
 	}
 
@@ -152,7 +154,7 @@ class ControllerExtensionExtensionModule extends Controller {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
-						'edit'      => $this->url->link('extension/extension/module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
+						'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
 						'delete'    => $this->url->link('extension/extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 					);
 				}

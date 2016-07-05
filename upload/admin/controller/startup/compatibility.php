@@ -16,7 +16,7 @@ class ControllerStartupCompatibility extends Controller {
 		
 			$part = explode('/', $this->request->get['route']);
 			
-			if (isset($part[0]) && isset($part[1]) && isset($this->request->get['route']) && in_array($part[0] . '/' . $part[0], $extension)) {
+			if (isset($part[0]) && isset($part[1]) && in_array($part[0] . '/' . $part[1], $extension)) {
 				$route = '';
 				
 				if (isset($part[2])) {

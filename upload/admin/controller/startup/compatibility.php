@@ -1,6 +1,24 @@
 <?php
 class ControllerStartupCompatibility extends Controller {
 	public function index() {
+		$routes = array(
+			'extension/analytics',
+			'extension/captcha',
+			'extension/feed',
+			'extension/fraud',
+			'extension/module',
+			'extension/payment',
+			'extension/shipping',
+			'extension/theme',
+			'extension/total'
+		);
+					
+		
+		if (in_array()) {
+			
+		}
+		
+		
 		// Adding a rewrite so any link to the extension page is changed to to the new extension system  
 		$this->url->addRewrite($this);
 	}

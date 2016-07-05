@@ -3,7 +3,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/shipping');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/shipping');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/shipping');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
@@ -104,19 +104,19 @@ class ControllerExtensionExtensionShipping extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('extension/shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/shipping', $data));
+		$this->response->setOutput($this->load->view('extension/extension/shipping', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

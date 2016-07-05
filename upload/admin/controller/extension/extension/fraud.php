@@ -89,7 +89,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/extension/fraud,fraud}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -100,8 +100,8 @@ class ControllerExtensionExtensionFraud extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('extension/fraud/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -109,7 +109,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		}
 
 
-		$this->response->setOutput($this->load->view('extension/fraud', $data));
+		$this->response->setOutput($this->load->view('extension/extension/fraud', $data));
 	}
 
 	protected function validate() {

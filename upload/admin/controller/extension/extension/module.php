@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionModule extends Controller {
+class ControllerExtensionExtensionModule extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/module');
+		$this->load->language('extension/extension/module');
 
 		$this->load->model('extension/extension');
 
@@ -13,7 +13,7 @@ class ControllerExtensionModule extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/module');
+		$this->load->language('extension/extension/module');
 
 		$this->load->model('extension/extension');
 
@@ -37,7 +37,7 @@ class ControllerExtensionModule extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/module');
+		$this->load->language('extension/extension/module');
 
 		$this->load->model('extension/extension');
 
@@ -58,7 +58,7 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function add() {
-		$this->load->language('extension/extension');
+		$this->load->language('extension/extension/module');
 
 		$this->load->model('extension/extension');
 
@@ -76,7 +76,7 @@ class ControllerExtensionModule extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('extension/module');
+		$this->load->language('extension/extension/module');
 
 		$this->load->model('extension/extension');
 

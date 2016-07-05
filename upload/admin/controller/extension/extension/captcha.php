@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionFraud extends Controller {
+class ControllerExtensionExtensionCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
@@ -11,20 +11,20 @@ class ControllerExtensionFraud extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('fraud', $this->request->get['extension']);
+			$this->model_extension_extension->install('captcha', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/fraud/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/fraud/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/captcha/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/captcha/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
-			$this->load->controller('extension/fraud/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -33,15 +33,15 @@ class ControllerExtensionFraud extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('fraud', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('captcha', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
-			$this->load->controller('extension/fraud/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -76,11 +76,11 @@ class ControllerExtensionFraud extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('fraud');
+		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/fraud/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/fraud/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('fraud', $value);
+			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
+				$this->model_extension_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
 			}
@@ -89,31 +89,30 @@ class ControllerExtensionFraud extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/{extension/captcha,captcha}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/fraud/' . $extension);
+				$this->load->language('extension/captcha/' . $extension);
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title'),
+					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/fraud/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
 
-
-		$this->response->setOutput($this->load->view('extension/fraud', $data));
+		$this->response->setOutput($this->load->view('extension/captcha', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/fraud')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/captcha')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

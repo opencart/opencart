@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensiondashboard extends Controller {
+class ControllerExtensionExtensionDashboard extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensiondashboard extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensiondashboard extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -117,7 +117,7 @@ class ControllerExtensiondashboard extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/dashboard')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

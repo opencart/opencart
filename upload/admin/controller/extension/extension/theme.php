@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionTheme extends Controller {
+class ControllerExtensionExtensionTheme extends Controller {
 	private $error = array();
 
 	public function index() {

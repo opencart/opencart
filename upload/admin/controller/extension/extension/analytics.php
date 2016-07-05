@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionAnalytics extends Controller {
+class ControllerExtensionExtensionAnalytics extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/analytics');
+		$this->load->language('extension/extension/analytics');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionAnalytics extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/analytics');
+		$this->load->language('extension/extension/analytics');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensionAnalytics extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/analytics');
+		$this->load->language('extension/extension/analytics');
 
 		$this->load->model('extension/extension');
 
@@ -133,7 +133,7 @@ class ControllerExtensionAnalytics extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/analytics')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/analytics')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

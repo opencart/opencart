@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionPayment extends Controller {
+class ControllerExtensionExtensionPayment extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensiondashboard extends Controller {
+class ControllerExtensionExtensionDashboard extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensiondashboard extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensiondashboard extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/dashboard');
+		$this->load->language('extension/extension/dashboard');
 
 		$this->load->model('extension/extension');
 
@@ -105,19 +105,19 @@ class ControllerExtensiondashboard extends Controller {
 					'width'      => $this->config->get('dashboard_' . $extension . '_width'),	
 					'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
 					'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
-					'install'    => $this->url->link('extension/dashboard/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall'  => $this->url->link('extension/dashboard/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'    => $this->url->link('extension/extension/dashboard/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/dashboard/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('extension/dashboard/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/dashboard', $data));
+		$this->response->setOutput($this->load->view('extension/extension/dashboard', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/dashboard')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -37,104 +37,23 @@ class ControllerExtensionExtension extends Controller {
 
 		$data['categories'] = array();
 		
-		if ($this->user->hasPermission('access', 'extension/analytics')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/analytics,analytics}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'analytics',
-				'text' => $this->language->get('text_analytics') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true)
-			);
-		}
+		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
 		
-		if ($this->user->hasPermission('access', 'extension/captcha')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/captcha,captcha}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'captcha',
-				'text' => $this->language->get('text_captcha') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/captcha', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/dashboard')) {
-			$files = glob(DIR_APPLICATION . 'controller/extension/dashboard/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'dashboard',
-				'text' => $this->language->get('text_dashboard') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/dashboard', 'token=' . $this->session->data['token'], true)
-			);
-		}
+		foreach ($files as $file) {
+			$extension = basename($file, '.php');
 			
-		if ($this->user->hasPermission('access', 'extension/feed')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/feed,feed}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'feed',
-				'text' => $this->language->get('text_feed') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true)
-			);
-		}
+			// Compatibility code for old extension folders
+			$this->load->language('extension/extension/' . $extension);
 		
-		if ($this->user->hasPermission('access', 'extension/fraud')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
-			
-			$data['categories'][] = array(
-				'code' => 'fraud',
-				'text' => $this->language->get('text_fraud') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
-			);
-		}
+			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
+				$files = glob(DIR_APPLICATION . 'controller/{extension/' . $extension . ',' . $extension . '}/*.php', GLOB_BRACE);
 		
-		if ($this->user->hasPermission('access', 'extension/module')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/module,module}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'module',
-				'text' => $this->language->get('text_module') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/payment')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/payment,payment}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'payment',
-				'text' => $this->language->get('text_payment') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/shipping')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/shipping,shipping}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'shipping',
-				'text' => $this->language->get('text_shipping') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/theme')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/theme,theme}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'theme',
-				'text' => $this->language->get('text_theme') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true)
-			);
-		}
-		
-		if ($this->user->hasPermission('access', 'extension/total')) {
-			$files = glob(DIR_APPLICATION . 'controller/{extension/total,total}/*.php', GLOB_BRACE);
-	
-			$data['categories'][] = array(
-				'code' => 'total',
-				'text' => $this->language->get('text_total') . ' (' . count($files) .')',
-				'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], true)
-			);
+				$data['categories'][] = array(
+					'code' => $extension,
+					'text' => $this->language->get('heading_title') . ' (' . count($files) .')',
+					'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->data['token'], true)
+				);
+			}			
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

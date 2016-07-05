@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionPayment extends Controller {
+class ControllerExtensionExtensionPayment extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/payment');
+		$this->load->language('extension/extension/payment');
 		
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionPayment extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/payment');
+		$this->load->language('extension/extension/payment');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensionPayment extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/payment');
+		$this->load->language('extension/extension/payment');
 
 		$this->load->model('extension/extension');
 
@@ -113,8 +113,8 @@ class ControllerExtensionPayment extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('extension/payment/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -125,7 +125,7 @@ class ControllerExtensionPayment extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/payment')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionFraud extends Controller {
+class ControllerExtensionExtensionFraud extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/fraud');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionFraud extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/fraud');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensionFraud extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/fraud');
+		$this->load->language('extension/extension/fraud');
 
 		$this->load->model('extension/extension');
 
@@ -100,8 +100,8 @@ class ControllerExtensionFraud extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('extension/fraud/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
@@ -109,11 +109,11 @@ class ControllerExtensionFraud extends Controller {
 		}
 
 
-		$this->response->setOutput($this->load->view('extension/fraud', $data));
+		$this->response->setOutput($this->load->view('extension/extension/fraud', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/fraud')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/fraud')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionCaptcha extends Controller {
+class ControllerExtensionExtensionCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/captcha');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
@@ -11,7 +11,7 @@ class ControllerExtensionCaptcha extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/captcha');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
@@ -33,7 +33,7 @@ class ControllerExtensionCaptcha extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/captcha');
+		$this->load->language('extension/extension/captcha');
 
 		$this->load->model('extension/extension');
 
@@ -100,19 +100,19 @@ class ControllerExtensionCaptcha extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
 					'edit'      => $this->url->link('extension/captcha/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/captcha', $data));
+		$this->response->setOutput($this->load->view('extension/extension/captcha', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/captcha')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/captcha')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

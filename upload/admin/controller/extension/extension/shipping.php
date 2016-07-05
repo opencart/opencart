@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionTotal extends Controller {
+class ControllerExtensionExtensionShipping extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/total');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
@@ -11,19 +11,20 @@ class ControllerExtensionTotal extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/total');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('total', $this->request->get['extension']);
+			$this->model_extension_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/total/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/shipping/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/shipping/' . $this->request->get['extension']);
 
-			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/install');
+			// Call install method if it exsits
+			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -32,14 +33,15 @@ class ControllerExtensionTotal extends Controller {
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/total');
+		$this->load->language('extension/extension/shipping');
 
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('shipping', $this->request->get['extension']);
 
-			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/uninstall');
+			// Call uninstall method if it exsits
+			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -77,11 +79,11 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->load->model('extension/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('total');
+		$extensions = $this->model_extension_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('total', $value);
+			if (!is_file(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
+				$this->model_extension_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
 			}
@@ -90,31 +92,31 @@ class ControllerExtensionTotal extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/total,total}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/{extension/shipping,shipping}/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/total/' . $extension);
+				$this->load->language('extension/shipping/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/total/' . $extension, 'token=' . $this->session->data['token'], true)
+					'install'    => $this->url->link('extension/extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('extension/shipping/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}
 
-		$this->response->setOutput($this->load->view('extension/total', $data));
+		$this->response->setOutput($this->load->view('extension/extension/shipping', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/total')) {
+		if (!$this->user->hasPermission('modify', 'extension/extension/shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

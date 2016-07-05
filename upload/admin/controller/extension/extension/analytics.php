@@ -22,6 +22,10 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/analytics/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/analytics/' . $this->request->get['extension']);
+			
+			// Compatibility
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'analytics/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'analytics/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/install');

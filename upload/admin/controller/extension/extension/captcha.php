@@ -23,6 +23,10 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/captcha/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/captcha/' . $this->request->get['extension']);
 
+			// Compatibility
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'captcha/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'captcha/' . $this->request->get['extension']);
+
 			// Call install method if it exsits
 			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/install');
 

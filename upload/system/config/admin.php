@@ -22,8 +22,7 @@ $_['action_pre_action'] = array(
 	'startup/event',
 	'startup/sass',
 	'startup/login',
-	'startup/permission',
-	'startup/compatibility'
+	'startup/permission'
 );
 
 // Actions
@@ -42,6 +41,16 @@ $_['action_event'] = array(
 	'controller/extension/shipping/*/before'  => 'event/compatibility/controller',
 	'controller/extension/theme/*/before'     => 'event/compatibility/controller',
 	'controller/extension/total/*/before'     => 'event/compatibility/controller',
+	'view/analytics/*/before'                 => 'event/compatibility/view',
+	'view/captcha/*/before'                   => 'event/compatibility/view',
+	'view/feed/*/before'                      => 'event/compatibility/view',
+	'view/fraud/*/before'                     => 'event/compatibility/view',
+	'view/module/*/before'                    => 'event/compatibility/view',
+	'view/payment/*/before'                   => 'event/compatibility/view',
+	'view/recurring/*/before'                 => 'event/compatibility/view',
+	'view/shipping/*/before'                  => 'event/compatibility/view',
+	'view/theme/*/before'                     => 'event/compatibility/view',
+	'view/total/*/before'                     => 'event/compatibility/view',
 	'language/extension/analytics/*/before'   => 'event/compatibility/language',
 	'language/extension/captcha/*/before'     => 'event/compatibility/language',
 	'language/extension/feed/*/before'        => 'event/compatibility/language',

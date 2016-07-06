@@ -1,4 +1,4 @@
-<?php echo $header; ?>
+{{ header }}
 <div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="row"><?php echo $column_left; ?>
+  <div class="row">{{ column_left }}
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
@@ -18,7 +18,7 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
+    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
       <div class="table-responsive">
@@ -64,7 +64,7 @@
       <div class="buttons clearfix">
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
-      <?php echo $content_bottom; ?></div>
-    <?php echo $column_right; ?></div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
-<?php echo $footer; ?>
+{{ footer }}

@@ -1,12 +1,12 @@
-<?php echo $header; ?>
+{{ header }}
 <div class="container">
   <div class="row">
-    <div id="content" class="col-sm-9"><?php echo $content_top; ?>
+    <div id="content" class="col-sm-9">{{ content_top }}
 	  <div class="klarna-checkout-main"></div>
-      <?php echo $content_bottom; ?>
+      {{ content_bottom }}
 	</div>
 	<div class="klarna-checkout-sidebar col-sm-3"></div>
-    <?php echo $column_right; ?>
+    {{ column_right }}
   </div>
 </div>
 
@@ -108,4 +108,4 @@ function removeSidebarOverlay() {
 	$('.sidebar-overlay').remove();
 }
 //--></script>
-<?php echo $footer; ?>
+{{ footer }}

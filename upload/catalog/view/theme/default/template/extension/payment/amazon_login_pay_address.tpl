@@ -1,5 +1,5 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div class="container"><?php echo $content_top; ?>
+{{ header }}{{ column_left }}{{ column_right }}
+<div class="container">{{ content_top }}
 	<div style="text-align:center;">
 		<h3><?php echo $heading_address; ?></h3>
 		<?php if(isset($amazon_login_pay_test)){ ?>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<input type="hidden" name="addressSelected" value="0" />
-	<?php echo $content_bottom; ?>
+	{{ content_bottom }}
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
@@ -107,4 +107,4 @@ $(document).ready(function() {
 
 	});
 	//--></script>
-<?php echo $footer; ?>
+{{ footer }}

@@ -1,5 +1,5 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div class="container"><?php echo $content_top; ?>
+{{ header }}{{ column_left }}{{ column_right }}
+<div class="container">{{ content_top }}
 	<div style="text-align:center;">
 		<h3><?php echo $heading_payment; ?></h3>
 		<?php if(isset($amazon_login_pay_test)){ ?>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <input type="hidden" name="payment_method" value="" />
-		<?php echo $content_bottom; ?>
+		{{ content_bottom }}
 	</div>
 </div>
 <script type="text/javascript"><!--
@@ -53,4 +53,4 @@
 		}).bind("walletWidgetDiv");
 	});
 	//--></script>
-<?php echo $footer; ?>
+{{ footer }}

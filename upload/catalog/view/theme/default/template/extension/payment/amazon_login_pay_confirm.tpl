@@ -1,5 +1,5 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div class="container"><?php echo $content_top; ?>
+{{ header }}{{ column_left }}{{ column_right }}
+<div class="container">{{ content_top }}
 	<form class="payment-form" method="POST" action="<?php echo $process_order; ?>">
 		<div style="text-align:center;">
 			<h3><?php echo $heading_confirm; ?></h3>
@@ -67,7 +67,7 @@
 			<input class="btn btn-primary" id="confirm-button" type="submit" value="<?php echo $text_confirm; ?>" />
 		</div>
 	</div>
-	<?php echo $content_bottom; ?>
+	{{ content_bottom }}
 </div>
 <script>
 	$(document).ready(function() {
@@ -110,4 +110,4 @@
 		});
 	});
 //--></script>
-<?php echo $footer; ?>
+{{ footer }}

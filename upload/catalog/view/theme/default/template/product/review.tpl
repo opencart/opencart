@@ -17,7 +17,7 @@
   </tr>
 </table>
 <?php } ?>
-<div class="text-right"><?php echo $pagination; ?></div>
+<div class="text-right">{{ pagination }}</div>
 <?php } else { ?>
 <p><?php echo $text_no_reviews; ?></p>
 <?php } ?>

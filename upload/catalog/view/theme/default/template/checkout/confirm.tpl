@@ -11,45 +11,45 @@
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($products as $product) { ?>
+     {% for product in products %}
       <tr>
-        <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+        <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
           <?php foreach ($product['option'] as $option) { ?>
           <br />
-          &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+          &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
           <?php } ?>
-          <?php if($product['recurring']) { ?>
+          <?php if ($product['recurring']) { ?>
           <br />
-          <span class="label label-info">{{ text_recurring_item }}</span> <small><?php echo $product['recurring']; ?></small>
+          <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small>
           <?php } ?></td>
-        <td class="text-left"><?php echo $product['model']; ?></td>
-        <td class="text-right"><?php echo $product['quantity']; ?></td>
-        <td class="text-right"><?php echo $product['price']; ?></td>
-        <td class="text-right"><?php echo $product['total']; ?></td>
+        <td class="text-left">{{ product.model }}</td>
+        <td class="text-right">{{ product.quantity }}</td>
+        <td class="text-right">{{ product.price }}</td>
+        <td class="text-right">{{ product.total }}</td>
       </tr>
       <?php } ?>
-      <?php foreach ($vouchers as $voucher) { ?>
+     {% for voucher in vouchers %}
       <tr>
-        <td class="text-left"><?php echo $voucher['description']; ?></td>
+        <td class="text-left">{{ voucher.description }}</td>
         <td class="text-left"></td>
         <td class="text-right">1</td>
-        <td class="text-right"><?php echo $voucher['amount']; ?></td>
-        <td class="text-right"><?php echo $voucher['amount']; ?></td>
+        <td class="text-right">{{ voucher.amount }}</td>
+        <td class="text-right">{{ voucher.amount }}</td>
       </tr>
       <?php } ?>
     </tbody>
     <tfoot>
-      <?php foreach ($totals as $total) { ?>
+     {% for total in totals %}
       <tr>
-        <td colspan="4" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
-        <td class="text-right"><?php echo $total['text']; ?></td>
+        <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
+        <td class="text-right">{{ total.text }}</td>
       </tr>
       <?php } ?>
     </tfoot>
   </table>
 </div>
 {{ payment }}
-<?php } else { ?>
+{% else %}
 <script type="text/javascript"><!--
 location = '{{ redirect }}';
 //--></script>

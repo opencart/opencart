@@ -3,23 +3,23 @@
 <?php } ?>
 {% if shipping_methods) { ?>
 <p>{{ text_shipping_method }}</p>
-<?php foreach ($shipping_methods as $shipping_method) { ?>
-<p><strong><?php echo $shipping_method['title']; ?></strong></p>
+% for shipping_method in shipping_methods %}
+<p><strong>{{ shipping_method.title }}</strong></p>
 {% if !$shipping_method['error']) { ?>
 <?php foreach ($shipping_method['quote'] as $quote) { ?>
 <div class="radio">
   <label>
     {% if quote['code'] == $code || !$code) { ?>
     <?php $code = $quote['code']; ?>
-    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
-    <?php } else { ?>
-    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+    {% else %}
+    <input type="radio" name="shipping_method" value="{{ quote.code }}" />
     <?php } ?>
-    <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+    {{ quote.title }} - {{ quote.text }}</label>
 </div>
 <?php } ?>
-<?php } else { ?>
-<div class="alert alert-danger"><?php echo $shipping_method['error']; ?></div>
+{% else %}
+<div class="alert alert-danger">{{ shipping_method.error }}</div>
 <?php } ?>
 <?php } ?>
 <?php } ?>

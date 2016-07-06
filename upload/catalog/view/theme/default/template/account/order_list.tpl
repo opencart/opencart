@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -30,15 +30,15 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($orders as $order) { ?>
+           {% for order in orders %}
             <tr>
-              <td class="text-right">#<?php echo $order['order_id']; ?></td>
-              <td class="text-left"><?php echo $order['name']; ?></td>
-              <td class="text-right"><?php echo $order['products']; ?></td>
-              <td class="text-left"><?php echo $order['status']; ?></td>
-              <td class="text-right"><?php echo $order['total']; ?></td>
-              <td class="text-left"><?php echo $order['date_added']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right">#{{ order.order_id }}</td>
+              <td class="text-left">{{ order.name }}</td>
+              <td class="text-right">{{ order.products }}</td>
+              <td class="text-left">{{ order.status }}</td>
+              <td class="text-right">{{ order.total }}</td>
+              <td class="text-left">{{ order.date_added }}</td>
+              <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -48,7 +48,7 @@
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
-      <?php } else { ?>
+      {% else %}
       <p>{{ text_empty }}</p>
       <?php } ?>
       <div class="buttons clearfix">

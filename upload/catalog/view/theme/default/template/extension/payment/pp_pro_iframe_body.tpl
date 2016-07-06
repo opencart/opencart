@@ -15,7 +15,7 @@
       <script type="text/javascript"><!--
         document.forms["ppform"].submit();
       //--></script>
-    <?php } else { ?>
+    {% else %}
       <div class="warning">{{ error_connection }}</div>
     <?php } ?>
   </body>

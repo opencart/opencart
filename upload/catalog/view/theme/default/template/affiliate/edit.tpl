@@ -1,19 +1,19 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -116,11 +116,11 @@
             <div class="col-sm-10">
               <select name="country_id" id="input-country" class="form-control">
                 <option value="">{{ text_select }}</option>
-                <?php foreach ($countries as $country) { ?>
+               {% for country in countries %}
                 {% if country['country_id'] == $country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                {% else %}
+                <option value="{{ country.country_id }}">{{ country.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>

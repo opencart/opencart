@@ -35,25 +35,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($products as $product) { ?>
+				% for product in products %}
 					<tr>
-						<td class="text-left"><?php echo $product['name']; ?>
+						<td class="text-left">{{ product.name }}
 							<?php foreach ($product['option'] as $option) { ?>
 								<br />
-								&nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+								&nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
 							<?php } ?></td>
-						<td class="text-left"><?php echo $product['model']; ?></td>
-						<td class="text-right"><?php echo $product['quantity']; ?></td>
-						<td class="text-right"><?php echo $product['price']; ?></td>
-						<td class="text-right"><?php echo $product['total']; ?></td>
+						<td class="text-left">{{ product.model }}</td>
+						<td class="text-right">{{ product.quantity }}</td>
+						<td class="text-right">{{ product.price }}</td>
+						<td class="text-right">{{ product.total }}</td>
 					</tr>
 				<?php } ?>
 			</tbody>
 			<tfoot>
-				<?php foreach ($totals as $total) { ?>
+				% for total in totals %}
 					<tr>
-						<td colspan="4" class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
-						<td class="text-right"><?php echo $total['text']; ?></td>
+						<td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
+						<td class="text-right">{{ total.text }}</td>
 					</tr>
 				<?php } ?>
 			</tfoot>

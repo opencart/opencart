@@ -1,6 +1,6 @@
 {% if isset($error)) { ?>
 	<div class="alert alert-danger">Payment Error: {{ error }}</div>
-<?php } else { ?>
+{% else %}
 	<form action="{{ action }}" method="POST" class="form-horizontal" id="eway-payment-form">
 	  <fieldset id="payment">
 		<legend>{{ text_credit_card }}</legend>
@@ -65,15 +65,15 @@
 				<label class="col-sm-2 control-label" for="eway-card-expiry-month">{{ entry_cc_expire_date }}</label>
 				<div class="col-sm-2">
 				  <select name="EWAY_CARDEXPIRYMONTH" id="eway-card-expiry-month" class="form-control">
-					<?php foreach ($months as $month) { ?>
-						<option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+					% for month in months %}
+						<option value="{{ month.value }}">{{ month.text }}</option>
 					<?php } ?>
 				  </select>
 				</div>
 				<div class="col-sm-2">
 				  <select name="EWAY_CARDEXPIRYYEAR" id="eway-card-expiry-year" class="form-control">
-					<?php foreach ($year_expire as $year) { ?>
-						<option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+					% for year in year_expire %}
+						<option value="{{ year.value }}">{{ year.text }}</option>
 					<?php } ?>
 				  </select><div id="expiry-error" class="text-danger"></div>
 				</div>

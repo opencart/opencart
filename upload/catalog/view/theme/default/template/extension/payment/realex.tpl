@@ -19,8 +19,8 @@
       <label class="col-sm-2 control-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>
       <div class="col-sm-10">
         <select name="ACCOUNT" class="form-control" id="input-cc-type">
-          <?php foreach ($cards as $card) { ?>
-          <option value="<?php echo $card['account']; ?>"><?php echo $card['type']; ?></option>
+          {% for card in cards %}
+          <option value="{{ card.account }}">{{ card.type }}</option>
           <?php } ?>
         </select></div>
     </div>

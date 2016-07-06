@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -96,14 +96,14 @@
           </thead>
           <tbody>
             {% if histories) { ?>
-            <?php foreach ($histories as $history) { ?>
+           {% for history in histories %}
             <tr>
-              <td class="text-left"><?php echo $history['date_added']; ?></td>
-              <td class="text-left"><?php echo $history['status']; ?></td>
-              <td class="text-left"><?php echo $history['comment']; ?></td>
+              <td class="text-left">{{ history.date_added }}</td>
+              <td class="text-left">{{ history.status }}</td>
+              <td class="text-left">{{ history.comment }}</td>
             </tr>
             <?php } ?>
-            <?php } else { ?>
+            {% else %}
             <tr>
               <td colspan="3" class="text-center">{{ text_no_results }}</td>
             </tr>

@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -55,42 +55,42 @@
       {% if locations) { ?>
       <h3>{{ text_store }}</h3>
       <div class="panel-group" id="accordion">
-        <?php foreach ($locations as $location) { ?>
+        {% for location in locations %}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class="panel-title"><a href="#collapse-location<?php echo $location['location_id']; ?>" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $location['name']; ?> <i class="fa fa-caret-down"></i></a></h4>
+            <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fa fa-caret-down"></i></a></h4>
           </div>
-          <div class="panel-collapse collapse" id="collapse-location<?php echo $location['location_id']; ?>">
+          <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
             <div class="panel-body">
               <div class="row">
                 {% if location['image']) { ?>
-                <div class="col-sm-3"><img src="<?php echo $location['image']; ?>" alt="<?php echo $location['name']; ?>" title="<?php echo $location['name']; ?>" class="img-thumbnail" /></div>
+                <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" /></div>
                 <?php } ?>
-                <div class="col-sm-3"><strong><?php echo $location['name']; ?></strong><br />
+                <div class="col-sm-3"><strong>{{ location.name }}</strong><br />
                   <address>
-                  <?php echo $location['address']; ?>
+                  {{ location.address }}
                   </address>
                   {% if location['geocode']) { ?>
                   <a href="https://maps.google.com/maps?q=<?php echo urlencode($location['geocode']); ?>&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
                   <?php } ?>
                 </div>
                 <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br>
-                  <?php echo $location['telephone']; ?><br />
+                  {{ location.telephone }}<br />
                   <br />
                   {% if location['fax']) { ?>
                   <strong>{{ text_fax }}</strong><br>
-                  <?php echo $location['fax']; ?>
+                  {{ location.fax }}
                   <?php } ?>
                 </div>
                 <div class="col-sm-3">
                   {% if location['open']) { ?>
                   <strong>{{ text_open }}</strong><br />
-                  <?php echo $location['open']; ?><br />
+                  {{ location.open }}<br />
                   <br />
                   <?php } ?>
                   {% if location['comment']) { ?>
                   <strong>{{ text_comment }}</strong><br />
-                  <?php echo $location['comment']; ?>
+                  {{ location.comment }}
                   <?php } ?>
                 </div>
               </div>

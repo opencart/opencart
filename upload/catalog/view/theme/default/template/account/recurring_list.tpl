@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -28,20 +28,20 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($recurrings as $recurring) { ?>
+           {% for recurring in recurrings %}
             <tr>
-              <td class="text-right">#<?php echo $recurring['order_recurring_id']; ?></td>
-              <td class="text-left"><?php echo $recurring['product']; ?></td>
-              <td class="text-left"><?php echo $recurring['status']; ?></td>
-              <td class="text-left"><?php echo $recurring['date_added']; ?></td>
-              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right">#{{ recurring.order_recurring_id }}</td>
+              <td class="text-left">{{ recurring.product }}</td>
+              <td class="text-left">{{ recurring.status }}</td>
+              <td class="text-left">{{ recurring.date_added }}</td>
+              <td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
           </tbody>
         </table>
       </div>
       <div class="text-right">{{ pagination }}</div>
-      <?php } else { ?>
+      {% else %}
       <p>{{ text_empty }}</p>
       <?php } ?>
       <div class="buttons clearfix">

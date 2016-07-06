@@ -1,19 +1,19 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -59,18 +59,18 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label">{{ entry_theme }}</label>
           <div class="col-sm-10">
-            <?php foreach ($voucher_themes as $voucher_theme) { ?>
+           {% for voucher_theme in voucher_themes %}
             {% if voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
             <div class="radio">
               <label>
-                <input type="radio" name="voucher_theme_id" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" checked="checked" />
-                <?php echo $voucher_theme['name']; ?></label>
+                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" checked="checked" />
+                {{ voucher_theme.name }}</label>
             </div>
-            <?php } else { ?>
+            {% else %}
             <div class="radio">
               <label>
-                <input type="radio" name="voucher_theme_id" value="<?php echo $voucher_theme['voucher_theme_id']; ?>" />
-                <?php echo $voucher_theme['name']; ?></label>
+                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" />
+                {{ voucher_theme.name }}</label>
             </div>
             <?php } ?>
             <?php } ?>
@@ -98,7 +98,7 @@
           <div class="pull-right"> {{ text_agree }}
             {% if agree) { ?>
             <input type="checkbox" name="agree" value="1" checked="checked" />
-            <?php } else { ?>
+            {% else %}
             <input type="checkbox" name="agree" value="1" />
             <?php } ?>
             &nbsp;

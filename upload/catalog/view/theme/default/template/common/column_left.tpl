@@ -1,7 +1,7 @@
-{% if modules) { ?>
+{% if modules %}
 <aside id="column-left" class="col-sm-3 hidden-xs">
-  <?php foreach ($modules as $module) { ?>
+  {% for module in modules %}
   {{ module }}
-  <?php } ?>
+  {% endfor %}
 </aside>
-<?php } ?>
+{% endif %}

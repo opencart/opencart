@@ -23,8 +23,8 @@
 			<label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
 			<div class="col-sm-8">
 			  <select name="Token" class="form-control">
-				<?php foreach ($existing_cards as $existing_card) { ?>
-					<option value="<?php echo $existing_card['token']; ?>"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
+				{% for existing_card in existing_cards %}
+					<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
 				<?php } ?>
 			  </select>
 			</div>
@@ -40,7 +40,7 @@
 		  </div>
 		</div>
 		<div  style="display: none" id="card-new">
-	  <?php } else { ?>
+	  {% else %}
 		  <div id="card-new">
 		<?php } ?>
 		<div class="form-group required">
@@ -53,8 +53,8 @@
 		  <label class="col-sm-2 control-label" for="input-cc-type">{{ entry_cc_type }}</label>
 		  <div class="col-sm-10">
 			<select name="cc_type" id="input-cc-type" class="form-control">
-			  <?php foreach ($cards as $card) { ?>
-				  <option value="<?php echo $card['value']; ?>"><?php echo $card['text']; ?></option>
+			  {% for card in cards %}
+				  <option value="{{ card.value }}">{{ card.text }}</option>
 			  <?php } ?>
 			</select>
 		  </div>
@@ -69,15 +69,15 @@
 		  <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
 		  <div class="col-sm-3">
 			<select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
-			  <?php foreach ($months as $month) { ?>
-				  <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+			  {% for month in months %}
+				  <option value="{{ month.value }}">{{ month.text }}</option>
 			  <?php } ?>
 			</select>
 		  </div>
 		  <div class="col-sm-3">
 			<select name="cc_expire_date_year" class="form-control">
-			  <?php foreach ($year_expire as $year) { ?>
-				  <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+			  {% for year in year_expire %}
+				  <option value="{{ year.value }}">{{ year.text }}</option>
 			  <?php } ?>
 			</select>
 		  </div>

@@ -11,11 +11,11 @@
           <div class="col-sm-10">
             <select name="country_id" id="input-country" class="form-control">
               <option value="">{{ text_select }}</option>
-              <?php foreach ($countries as $country) { ?>
+              {% for country in countries %}
               {% if country['country_id'] == $country_id) { ?>
-              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+              {% else %}
+              <option value="{{ country.country_id }}">{{ country.name }}</option>
               <?php } ?>
               <?php } ?>
             </select>
@@ -110,7 +110,7 @@ $('#button-quote').on('click', function() {
 
 				{% if shipping_method) { ?>
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" />';
-				<?php } else { ?>
+				{% else %}
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" disabled="disabled" />';
 				<?php } ?>
 

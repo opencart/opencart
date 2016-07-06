@@ -1,9 +1,9 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
@@ -11,11 +11,11 @@
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -38,7 +38,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <?php } else { ?>
+        {% else %}
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_payment_address }}</h4>
@@ -120,7 +120,7 @@ $(document).ready(function() {
         }
     });
 });
-<?php } else { ?>
+{% else %}
 $(document).ready(function() {
     $.ajax({
         url: 'index.php?route=checkout/payment_address',
@@ -294,7 +294,7 @@ $(document).delegate('#button-register', 'click', function() {
                         }
                     });
                 }
-                <?php } else { ?>
+                {% else %}
                 $.ajax({
                     url: 'index.php?route=checkout/payment_method',
                     dataType: 'html',
@@ -391,7 +391,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
-                <?php } else { ?>
+                {% else %}
                 $.ajax({
                     url: 'index.php?route=checkout/payment_method',
                     dataType: 'html',
@@ -609,7 +609,7 @@ $(document).delegate('#button-guest', 'click', function() {
                         }
                     });
                 }
-                <?php } else { ?>
+                {% else %}
                 $.ajax({
                     url: 'index.php?route=checkout/payment_method',
                     dataType: 'html',

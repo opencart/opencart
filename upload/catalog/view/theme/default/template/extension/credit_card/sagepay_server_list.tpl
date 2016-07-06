@@ -1,9 +1,8 @@
 {{ header }}
-<div class="container">
-  <ul class="breadcrumb">
-	<?php foreach ($breadcrumbs as $breadcrumb) { ?>
-	    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-	<?php } ?>
+<div class="container">  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if success) { ?>
 	  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
@@ -12,11 +11,11 @@
 	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-	{% if column_left && $column_right) { ?>
+	{% if column_left and column_right %}
 		<?php $class = 'col-sm-6'; ?>
-	<?php } elseif ($column_left || $column_right) { ?>
+	{% elseif column_left || column_right %}
 		<?php $class = 'col-sm-9'; ?>
-	<?php } else { ?>
+	{% else %}
 		<?php $class = 'col-sm-12'; ?>
 	<?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -32,16 +31,16 @@
           </thead>
           <tbody>
 			{% if cards) { ?>
-				<?php foreach ($cards as $card) { ?>
+				% for card in cards %}
 		            <tr>
-		              <td class="text-left"><?php echo $card['type']; ?></td>
-		              <td class="text-left"><?php echo $card['digits']; ?></td>
-		              <td class="text-right"><?php echo $card['expiry']; ?></td>
+		              <td class="text-left">{{ card.type }}</td>
+		              <td class="text-left">{{ card.digits }}</td>
+		              <td class="text-right">{{ card.expiry }}</td>
 					  <td class="text-right"><a href="<?php echo $delete . $card['card_id']; ?>" class="btn btn-danger">{{ button_delete }}</a></td>
 
 		            </tr>
 				<?php } ?>
-			<?php } else { ?>
+			{% else %}
 	            <tr>
 	              <td class="text-center" colspan="5">{{ text_empty }}</td>
 	            </tr>

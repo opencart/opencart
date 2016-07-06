@@ -1,8 +1,8 @@
 <div class="sidebar">
     <ul class="nav nav-tabs nav-stacked">
-        <?php foreach ($informations as $information) { ?>
+       {% for information in informations %}
             <li>
-                <a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a>
+                <a href="{{ information.href }}">{{ information.title }}</a>
             </li>
         <?php } ?>
         <li>

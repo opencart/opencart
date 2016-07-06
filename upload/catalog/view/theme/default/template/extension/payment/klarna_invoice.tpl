@@ -12,29 +12,29 @@
       <div class="col-sm-3">
         <select name="pno_day" id="input-dob" class="form-control">
           <option value="">{{ text_day }}</option>
-          <?php foreach ($days as $day) { ?>
-          <option value="<?php echo $day['value']; ?>"><?php echo $day['text']; ?></option>
+         {% for day in days %}
+          <option value="{{ day.value }}">{{ day.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_month" class="form-control">
           <option value="">{{ text_month }}</option>
-          <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+         {% for month in months %}
+          <option value="{{ month.value }}">{{ month.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_year" class="form-control">
           <option value="">{{ text_year }}</option>
-          <?php foreach ($years as $year) { ?>
-          <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+         {% for year in years %}
+          <option value="{{ year.value }}">{{ year.text }}</option>
           <?php } ?>
         </select>
       </div>
     </div>
-    <?php } else { ?>
+    {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-pno">{{ entry_pno }}</label>
       <div class="col-sm-10">
@@ -42,7 +42,7 @@
       </div>
     </div>
     <?php } ?>
-    <?php } else { ?>
+    {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
       <div class="col-sm-10">

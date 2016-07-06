@@ -1,19 +1,19 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?></a></li>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}"> {{ breadcrumb.text }}</a></li>
     <?php } ?>
   </ul>
   {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -105,18 +105,18 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_reason }}</label>
             <div class="col-sm-10">
-              <?php foreach ($return_reasons as $return_reason) { ?>
+             {% for return_reason in return_reasons %}
               {% if return_reason['return_reason_id'] == $return_reason_id) { ?>
               <div class="radio">
                 <label>
-                  <input type="radio" name="return_reason_id" value="<?php echo $return_reason['return_reason_id']; ?>" checked="checked" />
-                  <?php echo $return_reason['name']; ?></label>
+                  <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" checked="checked" />
+                  {{ return_reason.name }}</label>
               </div>
-              <?php } else { ?>
+              {% else %}
               <div class="radio">
                 <label>
-                  <input type="radio" name="return_reason_id" value="<?php echo $return_reason['return_reason_id']; ?>" />
-                  <?php echo $return_reason['name']; ?></label>
+                  <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" />
+                  {{ return_reason.name }}</label>
               </div>
               <?php  } ?>
               <?php  } ?>
@@ -131,14 +131,14 @@
               <label class="radio-inline">
                 {% if opened) { ?>
                 <input type="radio" name="opened" value="1" checked="checked" />
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="opened" value="1" />
                 <?php } ?>
                 {{ text_yes }}</label>
               <label class="radio-inline">
                 {% if !$opened) { ?>
                 <input type="radio" name="opened" value="0" checked="checked" />
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="opened" value="0" />
                 <?php } ?>
                 {{ text_no }}</label>
@@ -158,13 +158,13 @@
           <div class="pull-right">{{ text_agree }}
             {% if agree) { ?>
             <input type="checkbox" name="agree" value="1" checked="checked" />
-            <?php } else { ?>
+            {% else %}
             <input type="checkbox" name="agree" value="1" />
             <?php } ?>
             <input type="submit" value="{{ button_submit }}" class="btn btn-primary" />
           </div>
         </div>
-        <?php } else { ?>
+        {% else %}
         <div class="buttons clearfix">
           <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
           <div class="pull-right">

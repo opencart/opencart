@@ -1,16 +1,16 @@
 {% if reviews) { ?>
-<?php foreach ($reviews as $review) { ?>
+{% for review in reviews %}
 <table class="table table-striped table-bordered">
   <tr>
-    <td style="width: 50%;"><strong><?php echo $review['author']; ?></strong></td>
-    <td class="text-right"><?php echo $review['date_added']; ?></td>
+    <td style="width: 50%;"><strong>{{ review.author }}</strong></td>
+    <td class="text-right">{{ review.date_added }}</td>
   </tr>
   <tr>
-    <td colspan="2"><p><?php echo $review['text']; ?></p>
+    <td colspan="2"><p>{{ review.text }}</p>
       <?php for ($i = 1; $i <= 5; $i++) { ?>
       {% if review['rating'] < $i) { ?>
       <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-      <?php } else { ?>
+      {% else %}
       <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
       <?php } ?>
       <?php } ?></td>
@@ -18,6 +18,6 @@
 </table>
 <?php } ?>
 <div class="text-right">{{ pagination }}</div>
-<?php } else { ?>
+{% else %}
 <p>{{ text_no_reviews }}</p>
 <?php } ?>

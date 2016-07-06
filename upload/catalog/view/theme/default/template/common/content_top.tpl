@@ -1,3 +1,3 @@
-<?php foreach ($modules as $module) { ?>
+{% for module in modules %}
 {{ module }}
-<?php } ?>
+{% endfor %}

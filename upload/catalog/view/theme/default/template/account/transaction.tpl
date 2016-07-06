@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -29,12 +29,12 @@
             {% if transactions) { ?>
             <?php foreach ($transactions  as $transaction) { ?>
             <tr>
-              <td class="text-left"><?php echo $transaction['date_added']; ?></td>
-              <td class="text-left"><?php echo $transaction['description']; ?></td>
-              <td class="text-right"><?php echo $transaction['amount']; ?></td>
+              <td class="text-left">{{ transaction.date_added }}</td>
+              <td class="text-left">{{ transaction.description }}</td>
+              <td class="text-right">{{ transaction.amount }}</td>
             </tr>
             <?php } ?>
-            <?php } else { ?>
+            {% else %}
             <tr>
               <td class="text-center" colspan="5">{{ text_empty }}</td>
             </tr>

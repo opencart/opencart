@@ -1,19 +1,19 @@
 <div class="panel panel-default">
   <div class="panel-heading">{{ heading_title }}</div>
   <div class="list-group">
-    <?php foreach ($filter_groups as $filter_group) { ?>
-    <a class="list-group-item"><?php echo $filter_group['name']; ?></a>
+   {% for filter_group in filter_groups %}
+    <a class="list-group-item">{{ filter_group.name }}</a>
     <div class="list-group-item">
-      <div id="filter-group<?php echo $filter_group['filter_group_id']; ?>">
+      <div id="filter-group{{ filter_group.filter_group_id }}">
         <?php foreach ($filter_group['filter'] as $filter) { ?>
         <div class="checkbox">
           <label>
             {% if in_array($filter['filter_id'], $filter_category)) { ?>
-            <input type="checkbox" name="filter[]" value="<?php echo $filter['filter_id']; ?>" checked="checked" />
-            <?php echo $filter['name']; ?>
-            <?php } else { ?>
-            <input type="checkbox" name="filter[]" value="<?php echo $filter['filter_id']; ?>" />
-            <?php echo $filter['name']; ?>
+            <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" checked="checked" />
+            {{ filter.name }}
+            {% else %}
+            <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" />
+            {{ filter.name }}
             <?php } ?>
           </label>
         </div>

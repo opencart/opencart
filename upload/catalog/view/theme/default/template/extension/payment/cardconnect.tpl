@@ -31,8 +31,8 @@
           <label class="col-sm-2 control-label" for="input-card-type">{{ entry_card_type }}</label>
           <div class="col-sm-10">
             <select name="card_type" id="input-card-type" class="form-control">
-              <?php foreach ($card_types as $card_type) { ?>
-              <option value="<?php echo $card_type['value']; ?>"><?php echo $card_type['text']; ?></option>
+             {% for card_type in card_types %}
+              <option value="{{ card_type.value }}">{{ card_type.text }}</option>
               <?php } ?>
             </select>
           </div>
@@ -47,15 +47,15 @@
           <label class="col-sm-2 control-label" for="input-card-expiry">{{ entry_card_expiry }}</label>
           <div class="col-sm-3">
             <select name="card_expiry_month" id="input-card-expiry" class="form-control">
-              <?php foreach ($months as $month) { ?>
-              <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+             {% for month in months %}
+              <option value="{{ month.value }}">{{ month.text }}</option>
               <?php } ?>
             </select>
           </div>
           <div class="col-sm-3">
             <select name="card_expiry_year" class="form-control">
-              <?php foreach ($years as $year) { ?>
-              <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+             {% for year in years %}
+              <option value="{{ year.value }}">{{ year.text }}</option>
               <?php } ?>
             </select>
           </div>
@@ -82,10 +82,10 @@
             <select name="card_choice" id="input-card-choice" class="form-control" {% if !$cards) { echo 'disabled'; } ?>>
           	  {% if cards) { ?>
        		    <option value="">{{ text_select_card }}</option>
-                <?php foreach ($cards as $card) { ?>
-                <option value="<?php echo $card['token']; ?>"><?php echo $card['type'] . ', &nbsp; ' . $card['account'] . ', &nbsp; ' . $card['expiry']; ?></option>
+               {% for card in cards %}
+                <option value="{{ card.token }}"><?php echo $card['type'] . ', &nbsp; ' . $card['account'] . ', &nbsp; ' . $card['expiry']; ?></option>
                 <?php } ?>
-              <?php } else { ?>
+              {% else %}
                 <option value="">{{ text_no_cards }}</option>
               <?php } ?>
             </select>

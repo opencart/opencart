@@ -1,13 +1,13 @@
 <div id="slideshow{{ module }}" class="owl-carousel" style="opacity: 1;">
-  <?php foreach ($banners as $banner) { ?>
+ {% for banner in banners %}
   <div class="item">
-    {% if banner['link']) { ?>
-    <a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a>
-    <?php } else { ?>
-    <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" />
-    <?php } ?>
+    {% if banner.link %}
+    <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
+    {% else %}
+    <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+    {% endif %}
   </div>
-  <?php } ?>
+  {% endfor %}
 </div>
 <script type="text/javascript"><!--
 $('#slideshow{{ module }}').owlCarousel({

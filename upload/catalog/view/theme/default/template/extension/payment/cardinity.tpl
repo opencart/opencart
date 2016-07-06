@@ -19,15 +19,15 @@
     <label class="col-sm-2 control-label">{{ entry_expires }}</label>
     <div class="col-sm-3">
       <select name="exp_month" class="form-control">
-        <?php foreach ($months as $month) { ?>
-        <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+       {% for month in months %}
+        <option value="{{ month.value }}">{{ month.text }}</option>
         <?php } ?>
       </select>
     </div>
     <div class="col-sm-3">
       <select name="exp_year" class="form-control">
-        <?php foreach ($years as $year) { ?>
-        <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+       {% for year in years %}
+        <option value="{{ year.value }}">{{ year.text }}</option>
         <?php } ?>
       </select>
     </div>

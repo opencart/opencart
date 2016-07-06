@@ -5,19 +5,19 @@
 <form id="payment" class="form-horizontal">
   <fieldset>
     <legend>{{ text_payment_option }}</legend>
-    <?php foreach ($payment_options as $payment_option) { ?>
+   {% for payment_option in payment_options %}
     <div class="radio">
       <label>
         {% if !isset($code)) { ?>
         <?php $code = $payment_option['code']; ?>
-        <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" checked="checked" />
-        <?php } else { ?>
-        <input type="radio" name="code" value="<?php echo $payment_option['code']; ?>" />
+        <input type="radio" name="code" value="{{ payment_option.code }}" checked="checked" />
+        {% else %}
+        <input type="radio" name="code" value="{{ payment_option.code }}" />
         <?php } ?>
         {% if iso_code_3 == 'NLD') { ?>
         <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
         <?php } ?>
-        <?php echo $payment_option['title']; ?></label>
+        {{ payment_option.title }}</label>
     </div>
     <?php } ?>
   </fieldset>
@@ -31,29 +31,29 @@
       <div class="col-sm-3">
         <select name="pno_day" id="input-dob" class="form-control">
           <option value="">{{ text_day }}</option>
-          <?php foreach ($days as $day) { ?>
-          <option value="<?php echo $day['value']; ?>"><?php echo $day['text']; ?></option>
+         {% for day in days %}
+          <option value="{{ day.value }}">{{ day.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_month" class="form-control">
           <option value="">{{ text_month }}</option>
-          <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+         {% for month in months %}
+          <option value="{{ month.value }}">{{ month.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_year" class="form-control">
           <option value="">{{ text_year }}</option>
-          <?php foreach ($years as $year) { ?>
-          <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+         {% for year in years %}
+          <option value="{{ year.value }}">{{ year.text }}</option>
           <?php } ?>
         </select>
       </div>
     </div>
-    <?php } else { ?>
+    {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-pno">{{ entry_pno }}</label>
       <div class="col-sm-10">
@@ -61,7 +61,7 @@
       </div>
     </div>
     <?php } ?>
-    <?php } else { ?>
+    {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
       <div class="col-sm-10">

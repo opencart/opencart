@@ -8,7 +8,7 @@
     {% if error_captcha) { ?>
     <div class="text-danger">{{ error_captcha }}</div>
     <?php } ?>
-    <?php } else { ?>
+    {% else %}
     <label class="col-sm-2 control-label">{{ entry_captcha }}</label>
     <div class="col-sm-10">
       <div class="g-recaptcha" data-sitekey="{{ site_key }}"></div>

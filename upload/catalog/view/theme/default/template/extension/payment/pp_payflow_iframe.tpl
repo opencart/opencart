@@ -1,6 +1,6 @@
 {% if checkout_method == 'iframe') { ?>
   <iframe src="{{ iframe_url }}" scrolling="no" width="560px" height="540px" frameBorder="0"></iframe>
-<?php } else { ?>
+{% else %}
   <div class="buttons">
     <div class="pull-right">
       <a class="btn btn-primary" href="{{ iframe_url }}">{{ button_confirm }}</a>

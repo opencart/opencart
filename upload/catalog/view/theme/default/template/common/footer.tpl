@@ -1,16 +1,16 @@
 <footer>
   <div class="container">
     <div class="row">
-      {% if informations) { ?>
+      {% if informations %}
       <div class="col-sm-3">
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
-          <?php foreach ($informations as $information) { ?>
-          <li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
-          <?php } ?>
+         {% for information in informations %}
+          <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
         </ul>
       </div>
-      <?php } ?>
+      {% endif %}
       <div class="col-sm-3">
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">

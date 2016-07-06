@@ -7,7 +7,7 @@
     <label for="down-payment" class="col-sm-2">{{ entry_initial }}</label>
     <div class="col-sm-3">
       <select name="INIT" id="input-down-payment" class="form-control">
-        <?php foreach ($initial_payments as $percent) { ?>
+       {% for percent in initial_payments %}
           <option value="{{ percent }}">{{ percent }}%</option>
         <?php } ?>
       </select>
@@ -18,11 +18,11 @@
     <label for="months" class="col-sm-2">{{ entry_months }}</label>
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
-        <?php foreach ($months as $month) { ?>
+        {% for month in months %}
 		  {% if month['value'] == 3) { ?>
-            <option value="<?php echo $month['value']; ?>" selected="selected"><?php echo $month['label']; ?></option>
-		  <?php } else { ?>
-            <option value="<?php echo $month['value']; ?>"><?php echo $month['label']; ?></option>
+            <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+		  {% else %}
+            <option value="{{ month.value }}">{{ month.label }}</option>
 		  <?php } ?>
         <?php } ?>
       </select>

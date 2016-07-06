@@ -23,8 +23,8 @@
       <div class="col-sm-12">
         <?php $i = 0; ?>
 
-        <?php foreach ($stored_cards as $card) { ?>
-          <p><input type="radio" name="cc_choice" value="<?php echo $card['token']; ?>" class="stored_card" <?php echo $i == 0 ? 'checked="checked"' : ''; ?>/> <?php echo $card['card_type'] . ' xxxx ' . $card['digits'] . ', ' . $entry_cc_expire_date . ' ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>
+       {% for card in stored_cards %}
+          <p><input type="radio" name="cc_choice" value="{{ card.token }}" class="stored_card" <?php echo $i == 0 ? 'checked="checked"' : ''; ?>/> <?php echo $card['card_type'] . ' xxxx ' . $card['digits'] . ', ' . $entry_cc_expire_date . ' ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>
           <?php $i++; ?>
         <?php } ?>
 
@@ -53,15 +53,15 @@
 
         <div class="col-sm-3">
           <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
-            <?php foreach ($months as $month) { ?>
-              <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+           {% for month in months %}
+              <option value="{{ month.value }}">{{ month.text }}</option>
             <?php } ?>
           </select>
         </div>
         <div class="col-sm-3">
           <select name="cc_expire_date_year" class="form-control">
-            <?php foreach ($year_expire as $year) { ?>
-            <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+           {% for year in year_expire %}
+            <option value="{{ year.value }}">{{ year.text }}</option>
             <?php } ?>
           </select>
         </div>
@@ -132,7 +132,7 @@ $(' . stored_card').bind('change', function () {
 $(document).ready(function(){
   {% if card_storage == 0) { ?>
     $('#card_info').show();
-  <?php } else { ?>
+  {% else %}
     var stored_cards = <?php echo count($stored_cards); ?>;
     if (stored_cards == 0) {
       $('#card_info').show();

@@ -1,9 +1,9 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
@@ -16,11 +16,11 @@
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -80,30 +80,30 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($products as $product) { ?>
+           {% for product in products %}
             <tr>
-              <td class="text-left"><?php echo $product['name']; ?>
+              <td class="text-left">{{ product.name }}
                 <?php foreach ($product['option'] as $option) { ?>
                 <br />
-                &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+                &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                 <?php } ?></td>
-              <td class="text-left"><?php echo $product['model']; ?></td>
-              <td class="text-right"><?php echo $product['quantity']; ?></td>
-              <td class="text-right"><?php echo $product['price']; ?></td>
-              <td class="text-right"><?php echo $product['total']; ?></td>
+              <td class="text-left">{{ product.model }}</td>
+              <td class="text-right">{{ product.quantity }}</td>
+              <td class="text-right">{{ product.price }}</td>
+              <td class="text-right">{{ product.total }}</td>
               <td class="text-right" style="white-space: nowrap;">{% if product['reorder']) { ?>
-                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                <a href="{{ product.reorder }}" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                 <?php } ?>
-                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
+                <a href="{{ product.return }}" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
             </tr>
             <?php } ?>
-            <?php foreach ($vouchers as $voucher) { ?>
+           {% for voucher in vouchers %}
             <tr>
-              <td class="text-left"><?php echo $voucher['description']; ?></td>
+              <td class="text-left">{{ voucher.description }}</td>
               <td class="text-left"></td>
               <td class="text-right">1</td>
-              <td class="text-right"><?php echo $voucher['amount']; ?></td>
-              <td class="text-right"><?php echo $voucher['amount']; ?></td>
+              <td class="text-right">{{ voucher.amount }}</td>
+              <td class="text-right">{{ voucher.amount }}</td>
               {% if products) { ?>
               <td></td>
               <?php } ?>
@@ -111,11 +111,11 @@
             <?php } ?>
           </tbody>
           <tfoot>
-            <?php foreach ($totals as $total) { ?>
+           {% for total in totals %}
             <tr>
               <td colspan="3"></td>
-              <td class="text-right"><b><?php echo $total['title']; ?></b></td>
-              <td class="text-right"><?php echo $total['text']; ?></td>
+              <td class="text-right"><b>{{ total.title }}</b></td>
+              <td class="text-right">{{ total.text }}</td>
               {% if products) { ?>
               <td></td>
               <?php } ?>
@@ -150,14 +150,14 @@
         </thead>
         <tbody>
           {% if histories) { ?>
-          <?php foreach ($histories as $history) { ?>
+         {% for history in histories %}
           <tr>
-            <td class="text-left"><?php echo $history['date_added']; ?></td>
-            <td class="text-left"><?php echo $history['status']; ?></td>
-            <td class="text-left"><?php echo $history['comment']; ?></td>
+            <td class="text-left">{{ history.date_added }}</td>
+            <td class="text-left">{{ history.status }}</td>
+            <td class="text-left">{{ history.comment }}</td>
           </tr>
           <?php } ?>
-          <?php } else { ?>
+          {% else %}
           <tr>
             <td colspan="3" class="text-center">{{ text_no_results }}</td>
           </tr>

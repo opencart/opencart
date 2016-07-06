@@ -4,7 +4,7 @@
   <input type="hidden" name="success_url" value="{{ success_url }}" />
   <input type="hidden" name="cancel_url" value="{{ cancel_url }}" />
   <input type="hidden" name="declined_url" value="{{ declined_url }}" />
-  <?php } else { ?>
+  {% else %}
   <input type="hidden" name="merchant_id" value="nochex_test" />
   <input type="hidden" name="test_transaction" value="100" />
   <input type="hidden" name="test_success_url" value="{{ success_url }}" />

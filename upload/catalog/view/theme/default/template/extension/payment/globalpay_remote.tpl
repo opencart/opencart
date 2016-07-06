@@ -5,8 +5,8 @@
       <label class="col-sm-2 control-label" for="input-cc-type">{{ entry_cc_type }}</label>
       <div class="col-sm-10">
         <select name="cc_type" id="input-cc-type" class="form-control">
-          <?php foreach ($cards as $card) { ?>
-            <option value="<?php echo $card['code']; ?>"><?php echo $card['text']; ?></option>
+         {% for card in cards %}
+            <option value="{{ card.code }}">{{ card.text }}</option>
           <?php } ?>
         </select>
       </div>
@@ -27,15 +27,15 @@
       <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
       <div class="col-sm-3">
         <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
-          <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+         {% for month in months %}
+          <option value="{{ month.value }}">{{ month.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="cc_expire_date_year" class="form-control">
-          <?php foreach ($year_expire as $year) { ?>
-            <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+         {% for year in year_expire %}
+            <option value="{{ year.value }}">{{ year.text }}</option>
           <?php } ?>
         </select>
       </div>

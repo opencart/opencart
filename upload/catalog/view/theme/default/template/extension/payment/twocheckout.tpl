@@ -16,11 +16,11 @@
   <input type="hidden" name="ship_zip" value="{{ ship_zip }}" />
   <input type="hidden" name="ship_country" value="{{ ship_country }}" />
   <?php $i = 0; ?>
-  <?php foreach ($products as $product) { ?>
-  <input type="hidden" name="c_prod_{{ i }}" value="<?php echo $product['product_id']; ?>,<?php echo $product['quantity']; ?>" />
-  <input type="hidden" name="c_name_{{ i }}" value="<?php echo $product['name']; ?>" />
-  <input type="hidden" name="c_description_{{ i }}" value="<?php echo $product['description']; ?>" />
-  <input type="hidden" name="c_price_{{ i }}" value="<?php echo $product['price']; ?>" />
+  {% for product in products %}
+  <input type="hidden" name="c_prod_{{ i }}" value="{{ product.product_id }},{{ product.quantity }}" />
+  <input type="hidden" name="c_name_{{ i }}" value="{{ product.name }}" />
+  <input type="hidden" name="c_description_{{ i }}" value="{{ product.description }}" />
+  <input type="hidden" name="c_price_{{ i }}" value="{{ product.price }}" />
   <?php $i++; ?>
   <?php } ?>
   <input type="hidden" name="id_type" value="1" />

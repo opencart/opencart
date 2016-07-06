@@ -22,8 +22,8 @@
 			<label class="col-sm-2 control-label" for="token">{{ entry_cc_choice }}</label>
 			<div class="col-sm-10">
 			  <select name="token" data-worldpay="token" class="form-control">
-				<?php foreach ($existing_cards as $existing_card) { ?>
-					<option value="<?php echo $existing_card['token']; ?>"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
+				{% for existing_card in existing_cards %}
+					<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
 				<?php } ?>
 			  </select>
 			</div>
@@ -48,7 +48,7 @@
 	  </div>
 	</form>
 	<form style="display: none" id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
-  <?php } else { ?>
+  {% else %}
 	  <form id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
 	<?php } ?>
 	<fieldset>
@@ -88,7 +88,7 @@
         Worldpay.reusable = true;
 {% if isset($recurring_products)) { ?>
 	        Worldpay.reusable = true;
-<?php } else { ?>
+{% else %}
 	        $('input[name=\'save-card\']').on('change', function () {
 	          if ($(this).is(':checked')) {
 	            Worldpay.reusable = true;

@@ -1,9 +1,9 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
@@ -12,11 +12,11 @@
   <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -24,15 +24,15 @@
       {% if addresses) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
-          <?php foreach ($addresses as $result) { ?>
+         {% for result in addresses %}
           <tr>
-            <td class="text-left"><?php echo $result['address']; ?></td>
-            <td class="text-right"><a href="<?php echo $result['update']; ?>" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="<?php echo $result['delete']; ?>" class="btn btn-danger">{{ button_delete }}</a></td>
+            <td class="text-left">{{ result.address }}</td>
+            <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
           <?php } ?>
         </table>
       </div>
-      <?php } else { ?>
+      {% else %}
       <p>{{ text_empty }}</p>
       <?php } ?>
       <div class="buttons clearfix">

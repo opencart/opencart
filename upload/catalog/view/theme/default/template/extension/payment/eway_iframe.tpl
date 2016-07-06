@@ -1,6 +1,6 @@
   {% if isset($error)) { ?>
     <div class="alert alert-danger">Payment Error: {{ error }}</div>
-  <?php } else { ?>
+  {% else %}
 
   {% if isset($text_testing)) { ?>
     <div class="alert alert-warning">{{ text_testing }}</div>

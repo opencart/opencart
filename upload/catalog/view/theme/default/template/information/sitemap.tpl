@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -18,16 +18,16 @@
       <div class="row">
         <div class="col-sm-6">
           <ul>
-            <?php foreach ($categories as $category_1) { ?>
-            <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
+            {% for category_1 in categories %}
+            <li><a href="{{ category_1.href }}">{{ category_1.name }}</a>
               {% if category_1['children']) { ?>
               <ul>
                 <?php foreach ($category_1['children'] as $category_2) { ?>
-                <li><a href="<?php echo $category_2['href']; ?>"><?php echo $category_2['name']; ?></a>
+                <li><a href="{{ category_2.href }}">{{ category_2.name }}</a>
                   {% if category_2['children']) { ?>
                   <ul>
                     <?php foreach ($category_2['children'] as $category_3) { ?>
-                    <li><a href="<?php echo $category_3['href']; ?>"><?php echo $category_3['name']; ?></a></li>
+                    <li><a href="{{ category_3.href }}">{{ category_3.name }}</a></li>
                     <?php } ?>
                   </ul>
                   <?php } ?>
@@ -56,8 +56,8 @@
             <li><a href="{{ search }}">{{ text_search }}</a></li>
             <li>{{ text_information }}
               <ul>
-                <?php foreach ($informations as $information) { ?>
-                <li><a href="<?php echo $information['href']; ?>"><?php echo $information['title']; ?></a></li>
+                {% for information in informations %}
+                <li><a href="{{ information.href }}">{{ information.title }}</a></li>
                 <?php } ?>
                 <li><a href="{{ contact }}">{{ text_contact }}</a></li>
               </ul>

@@ -6,7 +6,7 @@
       <label>
         {% if account == 'register') { ?>
         <input type="radio" name="account" value="register" checked="checked" />
-        <?php } else { ?>
+        {% else %}
         <input type="radio" name="account" value="register" />
         <?php } ?>
         {{ text_register }}</label>
@@ -16,7 +16,7 @@
       <label>
         {% if account == 'guest') { ?>
         <input type="radio" name="account" value="guest" checked="checked" />
-        <?php } else { ?>
+        {% else %}
         <input type="radio" name="account" value="guest" />
         <?php } ?>
         {{ text_guest }}</label>

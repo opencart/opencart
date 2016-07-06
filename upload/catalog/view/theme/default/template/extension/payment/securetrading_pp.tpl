@@ -6,27 +6,27 @@
         <input type="hidden" name="currencyiso3a" value="{{ currency }}" />
         <input type="hidden" name="mainamount" value="{{ total }}" />
         <input type="hidden" name="version" value="1" />
-        <input type="hidden" name="orderreference" value="<?php echo $order_info['order_id']; ?>" />
+        <input type="hidden" name="orderreference" value="{{ order_info.order_id }}" />
         <input type="hidden" name="settlestatus" value="{{ settle_status }}" />
         <input type="hidden" name="settleduedate" value="{{ settle_due_date }}" />
-        <input type="hidden" name="billingfirstname" value="<?php echo $order_info['payment_firstname']; ?>" />
-        <input type="hidden" name="billinglastname" value="<?php echo $order_info['payment_lastname']; ?>" />
-        <input type="hidden" name="billingpremise" value="<?php echo $order_info['payment_address_1']; ?>" />
-        <input type="hidden" name="billingstreet" value="<?php echo $order_info['payment_address_2']; ?>" />
-        <input type="hidden" name="billingtown" value="<?php echo $order_info['payment_city']; ?>" />
+        <input type="hidden" name="billingfirstname" value="{{ order_info.payment_firstname }}" />
+        <input type="hidden" name="billinglastname" value="{{ order_info.payment_lastname }}" />
+        <input type="hidden" name="billingpremise" value="{{ order_info.payment_address_1 }}" />
+        <input type="hidden" name="billingstreet" value="{{ order_info.payment_address_2 }}" />
+        <input type="hidden" name="billingtown" value="{{ order_info.payment_city }}" />
         <input type="hidden" name="billingcounty" value="{{ billing_county }}" />
-        <input type="hidden" name="billingpostcode" value="<?php echo $order_info['payment_postcode']; ?>" />
-        <input type="hidden" name="billingcountryiso2a" value="<?php echo $payment_country['iso_code_2']; ?>" />
-        <input type="hidden" name="billingemail" value="<?php echo $order_info['email']; ?>" />
-		<input type="hidden" name="customerfirstname" value="<?php echo $order_info['shipping_firstname']; ?>" />
-	    <input type="hidden" name="customerlastname" value="<?php echo $order_info['shipping_lastname']; ?>" />
-        <input type="hidden" name="customerpremise" value="<?php echo $order_info['shipping_address_1']; ?>" />
-        <input type="hidden" name="customerstreet" value="<?php echo $order_info['shipping_address_2']; ?>" />
-        <input type="hidden" name="customertown" value="<?php echo $order_info['shipping_city']; ?>" />
+        <input type="hidden" name="billingpostcode" value="{{ order_info.payment_postcode }}" />
+        <input type="hidden" name="billingcountryiso2a" value="{{ payment_country.iso_code_2 }}" />
+        <input type="hidden" name="billingemail" value="{{ order_info.email }}" />
+		<input type="hidden" name="customerfirstname" value="{{ order_info.shipping_firstname }}" />
+	    <input type="hidden" name="customerlastname" value="{{ order_info.shipping_lastname }}" />
+        <input type="hidden" name="customerpremise" value="{{ order_info.shipping_address_1 }}" />
+        <input type="hidden" name="customerstreet" value="{{ order_info.shipping_address_2 }}" />
+        <input type="hidden" name="customertown" value="{{ order_info.shipping_city }}" />
         <input type="hidden" name="customercounty" value="{{ shipping_county }}" />
-        <input type="hidden" name="customerpostcode" value="<?php echo $order_info['shipping_postcode']; ?>" />
-        <input type="hidden" name="customercountryiso2a" value="<?php echo $shipping_country['iso_code_2']; ?>" />
-        <input type="hidden" name="customeremail" value="<?php echo $order_info['email']; ?>" />
+        <input type="hidden" name="customerpostcode" value="{{ order_info.shipping_postcode }}" />
+        <input type="hidden" name="customercountryiso2a" value="{{ shipping_country.iso_code_2 }}" />
+        <input type="hidden" name="customeremail" value="{{ order_info.email }}" />
 
         {% if parent_css) { ?>
         <input type="hidden" name="parentcss" value="{{ parent_css }}" />
@@ -44,7 +44,7 @@
             <label class="col-sm-2 control-label" for="input-type">{{ entry_card_type }}</label>
             <div class="col-sm-10">
                 <select name="paymenttypedescription" id="input-type" class="form-control">
-                    <?php foreach ($cards as $key => $title) { ?>
+                    {% for key => $title in cards %}
                     <option value="{{ key }}">{{ title }}</option>
                     <?php } ?>
                 </select>

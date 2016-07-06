@@ -6,16 +6,16 @@
   <input type="hidden" name="upload" value="1" />
   <input type="hidden" name="business" value="{{ business }}" />
   <?php $i = 1; ?>
-  <?php foreach ($products as $product) { ?>
-  <input type="hidden" name="item_name_{{ i }}" value="<?php echo $product['name']; ?>" />
-  <input type="hidden" name="item_number_{{ i }}" value="<?php echo $product['model']; ?>" />
-  <input type="hidden" name="amount_{{ i }}" value="<?php echo $product['price']; ?>" />
-  <input type="hidden" name="quantity_{{ i }}" value="<?php echo $product['quantity']; ?>" />
-  <input type="hidden" name="weight_{{ i }}" value="<?php echo $product['weight']; ?>" />
+  {% for product in products %}
+  <input type="hidden" name="item_name_{{ i }}" value="{{ product.name }}" />
+  <input type="hidden" name="item_number_{{ i }}" value="{{ product.model }}" />
+  <input type="hidden" name="amount_{{ i }}" value="{{ product.price }}" />
+  <input type="hidden" name="quantity_{{ i }}" value="{{ product.quantity }}" />
+  <input type="hidden" name="weight_{{ i }}" value="{{ product.weight }}" />
   <?php $j = 0; ?>
   <?php foreach ($product['option'] as $option) { ?>
-  <input type="hidden" name="on{{ j }}_{{ i }}" value="<?php echo $option['name']; ?>" />
-  <input type="hidden" name="os{{ j }}_{{ i }}" value="<?php echo $option['value']; ?>" />
+  <input type="hidden" name="on{{ j }}_{{ i }}" value="{{ option.name }}" />
+  <input type="hidden" name="os{{ j }}_{{ i }}" value="{{ option.value }}" />
   <?php $j++; ?>
   <?php } ?>
   <?php $i++; ?>

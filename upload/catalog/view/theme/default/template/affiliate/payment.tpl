@@ -1,16 +1,16 @@
 {{ header }}
 <div class="container">
   <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left && $column_right) { ?>
+    {% if column_left and column_right %}
     <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
+    {% elseif column_left || column_right %}
     <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
+    {% else %}
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
@@ -31,7 +31,7 @@
                 <label>
                   {% if payment == 'cheque') { ?>
                   <input type="radio" name="payment" value="cheque" checked="checked" />
-                  <?php } else { ?>
+                  {% else %}
                   <input type="radio" name="payment" value="cheque" />
                   <?php } ?>
                   {{ text_cheque }}</label>
@@ -40,7 +40,7 @@
                 <label>
                   {% if payment == 'paypal') { ?>
                   <input type="radio" name="payment" value="paypal" checked="checked" />
-                  <?php } else { ?>
+                  {% else %}
                   <input type="radio" name="payment" value="paypal" />
                   <?php } ?>
                   {{ text_paypal }}</label>
@@ -49,7 +49,7 @@
                 <label>
                   {% if payment == 'bank') { ?>
                   <input type="radio" name="payment" value="bank" checked="checked" />
-                  <?php } else { ?>
+                  {% else %}
                   <input type="radio" name="payment" value="bank" />
                   <?php } ?>
                   {{ text_bank }}</label>

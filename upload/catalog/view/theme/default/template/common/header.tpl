@@ -23,17 +23,17 @@
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
 <link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
-<?php foreach ($styles as $style) { ?>
-<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
 <?php } ?>
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
-<?php foreach ($links as $link) { ?>
-<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
+% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
 <?php } ?>
-<?php foreach ($scripts as $script) { ?>
+% for script in scripts %}
 <script src="{{ script }}" type="text/javascript"></script>
 <?php } ?>
-<?php foreach ($analytics as $analytic) { ?>
+% for analytic in analytics %}
 {{ analytic }}
 <?php } ?>
 </head>
@@ -53,7 +53,7 @@
             <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
             <li><a href="{{ download }}">{{ text_download }}</a></li>
             <li><a href="{{ logout }}">{{ text_logout }}</a></li>
-            <?php } else { ?>
+            {% else %}
             <li><a href="{{ register }}">{{ text_register }}</a></li>
             <li><a href="{{ login }}">{{ text_login }}</a></li>
             <?php } ?>
@@ -73,7 +73,7 @@
         <div id="logo">
           {% if logo) { ?>
           <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
-          <?php } else { ?>
+          {% else %}
           <h1><a href="{{ home }}">{{ name }}</a></h1>
           <?php } ?>
         </div>
@@ -92,23 +92,23 @@
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
-        <?php foreach ($categories as $category) { ?>
+       {% for category in categories %}
         {% if category['children']) { ?>
-        <li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+        <li class="dropdown"><a href="{{ category.href }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu">
             <div class="dropdown-inner">
               <?php foreach (array_chunk($category['children'], ceil(count($category['children']) / $category['column'])) as $children) { ?>
               <ul class="list-unstyled">
-                <?php foreach ($children as $child) { ?>
-                <li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+               {% for child in children %}
+                <li><a href="{{ child.href }}">{{ child.name }}</a></li>
                 <?php } ?>
               </ul>
               <?php } ?>
             </div>
-            <a href="<?php echo $category['href']; ?>" class="see-all">{{ text_all }} <?php echo $category['name']; ?></a> </div>
+            <a href="{{ category.href }}" class="see-all">{{ text_all }} {{ category.name }}</a> </div>
         </li>
-        <?php } else { ?>
-        <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+        {% else %}
+        <li><a href="{{ category.href }}">{{ category.name }}</a></li>
         <?php } ?>
         <?php } ?>
       </ul>

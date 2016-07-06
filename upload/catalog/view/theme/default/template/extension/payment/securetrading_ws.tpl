@@ -24,15 +24,15 @@
       <label class="col-sm-2 control-label" for="input-expire-date">{{ entry_expire_date }}</label>
       <div class="col-sm-3">
         <select name="expire_month" id="expire-date" class="form-control">
-          <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+          {% for month in months %}
+          <option value="{{ month.value }}">{{ month.text }}</option>
           <?php } ?>
         </select>
       </div>
       <div class="col-sm-3">
         <select name="expire_year" class="form-control">
-          <?php foreach ($year_expire as $year) { ?>
-          <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+          {% for year in year_expire %}
+          <option value="{{ year.value }}">{{ year.text }}</option>
           <?php } ?>
         </select>
       </div>

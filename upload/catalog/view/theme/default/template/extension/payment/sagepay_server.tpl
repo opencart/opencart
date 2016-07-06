@@ -20,8 +20,8 @@
 					<label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
 					<div class="col-sm-8">
 						<select name="Token" class="form-control">
-							<?php foreach ($cards as $card) { ?>
-								<option value="<?php echo $card['token']; ?>"><?php echo $text_card_type . ' ' . $card['type']; ?>, <?php echo $text_card_digits . ' ' . $card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $card['expiry']; ?></option>
+							{% for card in cards %}
+								<option value="{{ card.token }}"><?php echo $text_card_type . ' ' . $card['type']; ?>, <?php echo $text_card_digits . ' ' . $card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $card['expiry']; ?></option>
 							<?php } ?>
 						</select>
 					</div>

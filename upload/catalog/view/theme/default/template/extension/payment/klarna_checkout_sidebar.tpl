@@ -19,23 +19,23 @@
   <h3>{{ text_choose_shipping_method }}</h3>
   {% if shipping_methods) { ?>
   <p>{{ text_shipping_method }}</p>
-  <?php foreach ($shipping_methods as $shipping_method) { ?>
-  <p><strong><?php echo $shipping_method['title']; ?></strong></p>
+ {% for shipping_method in shipping_methods %}
+  <p><strong>{{ shipping_method.title }}</strong></p>
   {% if !$shipping_method['error']) { ?>
   <?php foreach ($shipping_method['quote'] as $quote) { ?>
   <div class="radio">
 	<label>
 	  {% if quote['code'] == $code || !$code) { ?>
 	  <?php $code = $quote['code']; ?>
-	  <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
-	  <?php } else { ?>
-	  <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
+	  <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+	  {% else %}
+	  <input type="radio" name="shipping_method" value="{{ quote.code }}" />
 	  <?php } ?>
-	  <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+	  {{ quote.title }} - {{ quote.text }}</label>
   </div>
   <?php } ?>
-  <?php } else { ?>
-  <div class="alert alert-danger"><?php echo $shipping_method['error']; ?></div>
+  {% else %}
+  <div class="alert alert-danger">{{ shipping_method.error }}</div>
   <?php } ?>
   <?php } ?>
   <input type="hidden" name="comment" value="">
@@ -49,45 +49,45 @@
     {% if products || $vouchers) { ?>
         <div style="overflow: auto;">
         	<table class="table-klarna">
-        	  <?php foreach ($products as $product) { ?>
+        	 {% for product in products %}
         	  <tr>
-        		<td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+        		<td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
         		  {% if product['option']) { ?>
         		  <?php foreach ($product['option'] as $option) { ?>
         		  <br />
-        		  - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
+        		  - <small>{{ option.name }} {{ option.value }}</small>
         		  <?php } ?>
         		  <?php } ?>
         		  {% if product['recurring']) { ?>
         		  <br />
-        		  - <small>{{ text_recurring }} <?php echo $product['recurring']; ?></small>
+        		  - <small>{{ text_recurring }} {{ product.recurring }}</small>
         		  <?php } ?></td>
-        		<td class="text-right">x <?php echo $product['quantity']; ?></td>
-        		<td class="text-right"><?php echo $product['total']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.cartRemove('<?php echo $product['cart_id']; ?>');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-right">x {{ product.quantity }}</td>
+        		<td class="text-right">{{ product.total }}</td>
+        		<td class="text-center"><button type="button" onclick="kc.cartRemove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
         	  </tr>
         	  <?php } ?>
-        	  <?php foreach ($vouchers as $voucher) { ?>
+        	 {% for voucher in vouchers %}
         	  <tr>
-        		<td class="text-left"><?php echo $voucher['description']; ?></td>
+        		<td class="text-left">{{ voucher.description }}</td>
         		<td class="text-right">x&nbsp;1</td>
-        		<td class="text-right"><?php echo $voucher['amount']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('<?php echo $voucher['key']; ?>');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-right">{{ voucher.amount }}</td>
+        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('{{ voucher.key }}');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
         	  </tr>
         	  <?php } ?>
         	</table>
         </div>
 		<div>
 		  <table class="table-klarna">
-			<?php foreach ($totals as $total) { ?>
+			% for total in totals %}
 			<tr>
-			  <td class="text-right"><strong><?php echo $total['title']; ?></strong></td>
-			  <td class="text-right"><?php echo $total['text']; ?></td>
+			  <td class="text-right"><strong>{{ total.title }}</strong></td>
+			  <td class="text-right">{{ total.text }}</td>
 			</tr>
 			<?php } ?>
 		  </table>
 		</div>
-	  <?php } else { ?>
+	  {% else %}
 		<p class="text-center">{{ text_empty }}</p>
 	  <?php } ?>
 </div>

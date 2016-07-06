@@ -47,7 +47,7 @@
       <select name="country_id" id="input-shipping-country" class="form-control">
         <option value="">{{ text_select }}</option>
        {% for country in countries %}
-        {% if country['country_id'] == $country_id) { ?>
+        {% if country['country_id'] == $country_id %}
         <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
         {% else %}
         <option value="{{ country.country_id }}">{{ country.name }}</option>
@@ -71,7 +71,7 @@
     <div class="col-sm-10">
       <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
         <option value="">{{ text_select }}</option>
-        <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+        {% for custom_field_value in custom_field.custom_field_value %}
         {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
         <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
         {% else %}
@@ -87,7 +87,7 @@
     <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
     <div class="col-sm-10">
       <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-        <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+        {% for custom_field_value in custom_field.custom_field_value %}
         <div class="radio">
           {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
           <label>
@@ -109,7 +109,7 @@
     <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
     <div class="col-sm-10">
       <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-        <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+        {% for custom_field_value in custom_field.custom_field_value %}
         <div class="checkbox">
           {% if isset($address_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address_custom_field[$custom_field['custom_field_id']])) { ?>
           <label>

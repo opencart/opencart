@@ -40,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-		<?php } elseif ($sagepay_server_card) { ?>
+		<?php } elseif ($sagepay_server_card %}
 			<legend>{{ text_credit_card }}</legend>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">{{ entry_card }}</label>

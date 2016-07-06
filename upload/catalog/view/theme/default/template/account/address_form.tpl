@@ -21,7 +21,7 @@
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-              {% if error_firstname) { ?>
+              {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
               <?php } ?>
             </div>
@@ -30,7 +30,7 @@
             <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-              {% if error_lastname) { ?>
+              {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
               <?php } ?>
             </div>
@@ -45,7 +45,7 @@
             <label class="col-sm-2 control-label" for="input-address-1">{{ entry_address_1 }}</label>
             <div class="col-sm-10">
               <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
-              {% if error_address_1) { ?>
+              {% if error_address_1 %}
               <div class="text-danger">{{ error_address_1 }}</div>
               <?php } ?>
             </div>
@@ -60,7 +60,7 @@
             <label class="col-sm-2 control-label" for="input-city">{{ entry_city }}</label>
             <div class="col-sm-10">
               <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
-              {% if error_city) { ?>
+              {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
               <?php } ?>
             </div>
@@ -69,7 +69,7 @@
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
-              {% if error_postcode) { ?>
+              {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               <?php } ?>
             </div>
@@ -80,14 +80,14 @@
               <select name="country_id" id="input-country" class="form-control">
                 <option value="">{{ text_select }}</option>
                 {% for country in countries %}
-                {% if country['country_id'] == $country_id) { ?>
+                {% if country['country_id'] == $country_id %}
                 <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                 {% else %}
                 <option value="{{ country.country_id }}">{{ country.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
-              {% if error_country) { ?>
+              {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
               <?php } ?>
             </div>
@@ -97,7 +97,7 @@
             <div class="col-sm-10">
               <select name="zone_id" id="input-zone" class="form-control">
               </select>
-              {% if error_zone) { ?>
+              {% if error_zone %}
               <div class="text-danger">{{ error_zone }}</div>
               <?php } ?>
             </div>
@@ -110,7 +110,7 @@
             <div class="col-sm-10">
               <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
                 <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                 {% else %}
@@ -129,7 +129,7 @@
             <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="radio">
                   {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
                   <label>
@@ -154,7 +154,7 @@
             <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="checkbox">
                   {% if isset($address_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
@@ -258,7 +258,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_default }}</label>
             <div class="col-sm-10">
-              {% if default) { ?>
+              {% if default %}
               <label class="radio-inline">
                 <input type="radio" name="default" value="1" checked="checked" />
                 {{ text_yes }}</label>

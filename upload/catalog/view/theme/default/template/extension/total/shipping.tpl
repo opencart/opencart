@@ -12,7 +12,7 @@
             <select name="country_id" id="input-country" class="form-control">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
-              {% if country['country_id'] == $country_id) { ?>
+              {% if country['country_id'] == $country_id %}
               <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
               {% else %}
               <option value="{{ country.country_id }}">{{ country.name }}</option>
@@ -108,7 +108,7 @@ $('#button-quote').on('click', function() {
 				html += '      <div class="modal-footer">';
 				html += '        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>';
 
-				{% if shipping_method) { ?>
+				{% if shipping_method %}
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" />';
 				{% else %}
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" disabled="disabled" />';

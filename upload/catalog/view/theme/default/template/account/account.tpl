@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -24,7 +24,7 @@
         <li><a href="{{ address }}">{{ text_address }}</a></li>
         <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
       </ul>
-      {% if credit_cards) { ?>
+      {% if credit_cards %}
       <h2>{{ text_credit_card }}</h2>
       <ul class="list-unstyled">
        {% for credit_card in credit_cards %}
@@ -36,7 +36,7 @@
       <ul class="list-unstyled">
         <li><a href="{{ order }}">{{ text_order }}</a></li>
         <li><a href="{{ download }}">{{ text_download }}</a></li>
-        {% if reward) { ?>
+        {% if reward %}
         <li><a href="{{ reward }}">{{ text_reward }}</a></li>
         <?php } ?>
         <li><a href="{{ return }}">{{ text_return }}</a></li>

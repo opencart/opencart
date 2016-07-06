@@ -1,15 +1,15 @@
-{% if error_warning) { ?>
+{% if error_warning %}
 <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 <?php } ?>
-{% if shipping_methods) { ?>
+{% if shipping_methods %}
 <p>{{ text_shipping_method }}</p>
 % for shipping_method in shipping_methods %}
 <p><strong>{{ shipping_method.title }}</strong></p>
-{% if !$shipping_method['error']) { ?>
-<?php foreach ($shipping_method['quote'] as $quote) { ?>
+{% if !$shipping_method.error %}
+{% for quote in shipping_method.quote %}
 <div class="radio">
   <label>
-    {% if quote['code'] == $code || !$code) { ?>
+    {% if quote['code'] == $code || !$code %}
     <?php $code = $quote['code']; ?>
     <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
     {% else %}

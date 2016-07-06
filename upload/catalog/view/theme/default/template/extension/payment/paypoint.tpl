@@ -2,7 +2,7 @@
   <input type="hidden" name="merchant" value="{{ merchant }}" />
   <input type="hidden" name="trans_id" value="{{ trans_id }}" />
   <input type="hidden" name="amount" value="{{ amount }}" />
-  {% if digest) { ?>
+  {% if digest %}
   <input type="hidden" name="digest" value="{{ digest }}" />
   <?php } ?>
   <input type="hidden" name="bill_name" value="{{ bill_name }}" />

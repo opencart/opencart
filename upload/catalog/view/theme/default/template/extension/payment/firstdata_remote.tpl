@@ -7,18 +7,18 @@
           <p>
             <strong>{{ text_card_accepted }}</strong>
             <ul>
-              {% if accepted_cards['mastercard'] == 1) { ?><li>{{ text_card_type_m }}</li><?php } ?>
-              {% if accepted_cards['visa'] == 1) { ?><li>{{ text_card_type_v }}</li><?php } ?>
-              {% if accepted_cards['diners'] == 1) { ?><li>{{ text_card_type_c }}</li><?php } ?>
-              {% if accepted_cards['amex'] == 1) { ?><li>{{ text_card_type_a }}</li><?php } ?>
-              {% if accepted_cards['maestro'] == 1) { ?><li>{{ text_card_type_ma }}</li><?php } ?>
+              {% if accepted_cards['mastercard'] == 1 %}<li>{{ text_card_type_m }}</li><?php } ?>
+              {% if accepted_cards['visa'] == 1 %}<li>{{ text_card_type_v }}</li><?php } ?>
+              {% if accepted_cards['diners'] == 1 %}<li>{{ text_card_type_c }}</li><?php } ?>
+              {% if accepted_cards['amex'] == 1 %}<li>{{ text_card_type_a }}</li><?php } ?>
+              {% if accepted_cards['maestro'] == 1 %}<li>{{ text_card_type_ma }}</li><?php } ?>
             </ul>
           </p>
         </div>
       </div>
     <?php } ?>
 
-    {% if card_storage == 1 && count($stored_cards) > 0) { ?>
+    {% if card_storage == 1 && count($stored_cards) > 0 %}
     <div class="form-group">
       <div class="col-sm-12">
         <?php $i = 0; ?>
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      {% if card_storage == 1) { ?>
+      {% if card_storage == 1 %}
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-cc-cvv2">Store card details?</label>
 
@@ -130,7 +130,7 @@ $(' . stored_card').bind('change', function () {
 });
 
 $(document).ready(function(){
-  {% if card_storage == 0) { ?>
+  {% if card_storage == 0 %}
     $('#card_info').show();
   {% else %}
     var stored_cards = <?php echo count($stored_cards); ?>;

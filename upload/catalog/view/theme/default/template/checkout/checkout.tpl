@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <?php } ?>
-        {% if shipping_required) { ?>
+        {% if shipping_required %}
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_shipping_address }}</h4>
@@ -103,7 +103,7 @@ $(document).on('change', 'input[name=\'account\']', function() {
 	}
 });
 
-{% if !$logged) { ?>
+{% if !$logged %}
 $(document).ready(function() {
     $.ajax({
         url: 'index.php?route=checkout/login',
@@ -238,7 +238,7 @@ $(document).delegate('#button-register', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
-                {% if shipping_required) { ?>
+                {% if shipping_required %}
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {
@@ -372,7 +372,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().parent().addClass('has-error');
             } else {
-                {% if shipping_required) { ?>
+                {% if shipping_required %}
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_address',
                     dataType: 'html',
@@ -548,7 +548,7 @@ $(document).delegate('#button-guest', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
-                {% if shipping_required) { ?>
+                {% if shipping_required %}
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {

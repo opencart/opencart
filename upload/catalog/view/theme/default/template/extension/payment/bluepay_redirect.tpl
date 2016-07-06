@@ -66,7 +66,7 @@
                         <input type="text" name="CVCCVV2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
                     </div>
                 </div>
-				{% if bluepay_redirect_card) { ?>
+				{% if bluepay_redirect_card %}
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 						<div class="col-sm-2">

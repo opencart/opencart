@@ -1,31 +1,24 @@
 <div id="cart" class="btn-group btn-block">
   <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
   <ul class="dropdown-menu pull-right">
-    {% if products || $vouchers) { ?>
+    {% if products or vouchers %}
     <li>
       <table class="table table-striped">
-       {% for product in products %}
+        {% for product in products %}
         <tr>
-          <td class="text-center">{% if product['thumb']) { ?>
-            <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a>
-            <?php } ?></td>
-          <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-            {% if product['option']) { ?>
-            <?php foreach ($product['option'] as $option) { ?>
-            <br />
-            - <small>{{ option.name }} {{ option.value }}</small>
-            <?php } ?>
-            <?php } ?>
-            {% if product['recurring']) { ?>
-            <br />
-            - <small>{{ text_recurring }} {{ product.recurring }}</small>
-            <?php } ?></td>
+          <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
+          <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% if product.option %}
+            {% for option in product.option %} <br />
+            - <small>{{ option.name }} {{ option.value }}</small> {% endfor %}
+            {% endif %}
+            {% if product.recurring %} <br />
+            - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
           <td class="text-right">x {{ product.quantity }}</td>
           <td class="text-right">{{ product.total }}</td>
           <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
         </tr>
-        <?php } ?>
-       {% for voucher in vouchers %}
+        {% endfor %}
+        {% for voucher in vouchers %}
         <tr>
           <td class="text-center"></td>
           <td class="text-left">{{ voucher.description }}</td>
@@ -33,18 +26,18 @@
           <td class="text-right">{{ voucher.amount }}</td>
           <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
         </tr>
-        <?php } ?>
+        {% endfor %}
       </table>
     </li>
     <li>
       <div>
         <table class="table table-bordered">
-         {% for total in totals %}
+          {% for total in totals %}
           <tr>
             <td class="text-right"><strong>{{ total.title }}</strong></td>
             <td class="text-right">{{ total.text }}</td>
           </tr>
-          <?php } ?>
+          {% endfor %}
         </table>
         <p class="text-right"><a href="{{ history }}"><strong><i class="fa fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fa fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
@@ -53,6 +46,6 @@
     <li>
       <p class="text-center">{{ text_empty }}</p>
     </li>
-    <?php } ?>
+    {% endif %}
   </ul>
 </div>

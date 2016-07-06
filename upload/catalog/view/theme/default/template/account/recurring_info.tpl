@@ -60,7 +60,7 @@
             </tr>
           </thead>
           <tbody>
-            {% if transactions) { ?>
+            {% if transactions %}
            {% for transaction in transactions %}
             <tr>
               <td class="text-left">{{ transaction.date_added }}</td>

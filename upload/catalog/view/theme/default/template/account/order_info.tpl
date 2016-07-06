@@ -5,12 +5,12 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -33,15 +33,15 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%;">{% if invoice_no) { ?>
+            <td class="text-left" style="width: 50%;">{% if invoice_no %}
               <b>{{ text_invoice_no; ?></b> <?php echo $invoice_no }}<br />
               <?php } ?>
               <b>{{ text_order_id; ?></b> #<?php echo $order_id }}<br />
               <b>{{ text_date_added; ?></b> <?php echo $date_added }}</td>
-            <td class="text-left" style="width: 50%;">{% if payment_method) { ?>
+            <td class="text-left" style="width: 50%;">{% if payment_method %}
               <b>{{ text_payment_method; ?></b> <?php echo $payment_method }}<br />
               <?php } ?>
-              {% if shipping_method) { ?>
+              {% if shipping_method %}
               <b>{{ text_shipping_method; ?></b> <?php echo $shipping_method }}
               <?php } ?></td>
           </tr>
@@ -51,7 +51,7 @@
         <thead>
           <tr>
             <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
-            {% if shipping_address) { ?>
+            {% if shipping_address %}
             <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
             <?php } ?>
           </tr>
@@ -59,7 +59,7 @@
         <tbody>
           <tr>
             <td class="text-left">{{ payment_address }}</td>
-            {% if shipping_address) { ?>
+            {% if shipping_address %}
             <td class="text-left">{{ shipping_address }}</td>
             <?php } ?>
           </tr>
@@ -74,7 +74,7 @@
               <td class="text-right">{{ column_quantity; }}</td>
               <td class="text-right">{{ column_price; }}</td>
               <td class="text-right">{{ column_total; }}</td>
-              {% if products) { ?>
+              {% if products %}
               <td style="width: 20px;"></td>
               <?php } ?>
             </tr>
@@ -83,7 +83,7 @@
            {% for product in products %}
             <tr>
               <td class="text-left">{{ product.name }}
-                <?php foreach ($product['option'] as $option) { ?>
+                {% for option in product.option %}
                 <br />
                 &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                 <?php } ?></td>
@@ -91,7 +91,7 @@
               <td class="text-right">{{ product.quantity }}</td>
               <td class="text-right">{{ product.price }}</td>
               <td class="text-right">{{ product.total }}</td>
-              <td class="text-right" style="white-space: nowrap;">{% if product['reorder']) { ?>
+              <td class="text-right" style="white-space: nowrap;">{% if product.reorder %}
                 <a href="{{ product.reorder }}" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                 <?php } ?>
                 <a href="{{ product.return }}" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
@@ -104,7 +104,7 @@
               <td class="text-right">1</td>
               <td class="text-right">{{ voucher.amount }}</td>
               <td class="text-right">{{ voucher.amount }}</td>
-              {% if products) { ?>
+              {% if products %}
               <td></td>
               <?php } ?>
             </tr>
@@ -116,7 +116,7 @@
               <td colspan="3"></td>
               <td class="text-right"><b>{{ total.title }}</b></td>
               <td class="text-right">{{ total.text }}</td>
-              {% if products) { ?>
+              {% if products %}
               <td></td>
               <?php } ?>
             </tr>
@@ -124,7 +124,7 @@
           </tfoot>
         </table>
       </div>
-      {% if comment) { ?>
+      {% if comment %}
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -138,7 +138,7 @@
         </tbody>
       </table>
       <?php } ?>
-      {% if histories) { ?>
+      {% if histories %}
       <h3>{{ text_history }}</h3>
       <table class="table table-bordered table-hover">
         <thead>
@@ -149,7 +149,7 @@
           </tr>
         </thead>
         <tbody>
-          {% if histories) { ?>
+          {% if histories %}
          {% for history in histories %}
           <tr>
             <td class="text-left">{{ history.date_added }}</td>

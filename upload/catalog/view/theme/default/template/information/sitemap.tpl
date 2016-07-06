@@ -20,13 +20,13 @@
           <ul>
             {% for category_1 in categories %}
             <li><a href="{{ category_1.href }}">{{ category_1.name }}</a>
-              {% if category_1['children']) { ?>
+              {% if category_1.children %}
               <ul>
-                <?php foreach ($category_1['children'] as $category_2) { ?>
+                {% for category_2 in category_1.children %}
                 <li><a href="{{ category_2.href }}">{{ category_2.name }}</a>
-                  {% if category_2['children']) { ?>
+                  {% if category_2.children %}
                   <ul>
-                    <?php foreach ($category_2['children'] as $category_3) { ?>
+                    {% for category_3 in category_2.children %}
                     <li><a href="{{ category_3.href }}">{{ category_3.name }}</a></li>
                     <?php } ?>
                   </ul>

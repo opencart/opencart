@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ heading_title }}</h2>
-      {% if downloads) { ?>
+      {% if downloads %}
       <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <thead>

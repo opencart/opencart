@@ -5,10 +5,10 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -21,7 +21,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ text_address_book }}</h2>
-      {% if addresses) { ?>
+      {% if addresses %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
          {% for result in addresses %}

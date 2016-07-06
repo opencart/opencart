@@ -1,4 +1,4 @@
- {% if success) { ?>
+ {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
 <form class="form-horizontal">
@@ -88,7 +88,7 @@
 			<input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
 		  </div>
 		</div>
-		{% if sagepay_direct_card) { ?>
+		{% if sagepay_direct_card %}
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			  <div class="col-sm-2">

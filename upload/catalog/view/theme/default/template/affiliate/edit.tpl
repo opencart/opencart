@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -25,7 +25,7 @@
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-              {% if error_firstname) { ?>
+              {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
               <?php } ?>
             </div>
@@ -34,7 +34,7 @@
             <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-              {% if error_lastname) { ?>
+              {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
               <?php } ?>
             </div>
@@ -43,7 +43,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              {% if error_email) { ?>
+              {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -52,7 +52,7 @@
             <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              {% if error_telephone) { ?>
+              {% if error_telephone %}
               <div class="text-danger">{{ error_telephone }}</div>
               <?php } ?>
             </div>
@@ -82,7 +82,7 @@
             <label class="col-sm-2 control-label" for="input-address-1">{{ entry_address_1 }}</label>
             <div class="col-sm-10">
               <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
-              {% if error_address_1) { ?>
+              {% if error_address_1 %}
               <div class="text-danger">{{ error_address_1 }}</div>
               <?php } ?>
             </div>
@@ -97,7 +97,7 @@
             <label class="col-sm-2 control-label" for="input-city">{{ entry_city }}</label>
             <div class="col-sm-10">
               <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
-              {% if error_city) { ?>
+              {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
               <?php } ?>
             </div>
@@ -106,7 +106,7 @@
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
-              {% if error_postcode) { ?>
+              {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               <?php } ?>
             </div>
@@ -117,14 +117,14 @@
               <select name="country_id" id="input-country" class="form-control">
                 <option value="">{{ text_select }}</option>
                {% for country in countries %}
-                {% if country['country_id'] == $country_id) { ?>
+                {% if country['country_id'] == $country_id %}
                 <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                 {% else %}
                 <option value="{{ country.country_id }}">{{ country.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
-              {% if error_country) { ?>
+              {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
               <?php } ?>
             </div>
@@ -134,7 +134,7 @@
             <div class="col-sm-10">
               <select name="zone_id" id="input-zone" class="form-control">
               </select>
-              {% if error_zone) { ?>
+              {% if error_zone %}
               <div class="text-danger">{{ error_zone }}</div>
               <?php } ?>
             </div>

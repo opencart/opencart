@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -25,7 +25,7 @@
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }} </label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-              {% if error_firstname) { ?>
+              {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
               <?php } ?>
             </div>
@@ -34,7 +34,7 @@
             <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-              {% if error_lastname) { ?>
+              {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
               <?php } ?>
             </div>
@@ -43,7 +43,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              {% if error_email) { ?>
+              {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -52,7 +52,7 @@
             <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              {% if error_telephone) { ?>
+              {% if error_telephone %}
               <div class="text-danger">{{ error_telephone }}</div>
               <?php } ?>
             </div>
@@ -71,7 +71,7 @@
             <div class="col-sm-10">
               <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 {% if isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                 <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                 {% else %}
@@ -90,7 +90,7 @@
             <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="radio">
                   {% if isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                   <label>
@@ -115,7 +115,7 @@
             <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div>
-                <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="checkbox">
                   {% if isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>

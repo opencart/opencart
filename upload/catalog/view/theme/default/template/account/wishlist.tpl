@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -20,7 +20,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ heading_title }}</h2>
-      {% if products) { ?>
+      {% if products %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -36,15 +36,15 @@
           <tbody>
            {% for product in products %}
             <tr>
-              <td class="text-center">{% if product['thumb']) { ?>
+              <td class="text-center">{% if product.thumb %}
                 <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" /></a>
                 <?php } ?></td>
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a></td>
               <td class="text-left">{{ product.model }}</td>
               <td class="text-right">{{ product.stock }}</td>
-              <td class="text-right">{% if product['price']) { ?>
+              <td class="text-right">{% if product.price %}
                 <div class="price">
-                  {% if !$product['special']) { ?>
+                  {% if !$product.special %}
                   {{ product.price }}
                   {% else %}
                   <b>{{ product.special }}</b> <s>{{ product.price }}</s>

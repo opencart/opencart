@@ -1,7 +1,7 @@
 <form id="cardconnect-form" action="{{ action }}" method="post" class="form form-horizontal">
   <fieldset id="payment">
     <legend>{{ text_card_details }}</legend>
-	{% if echeck) { ?>
+	{% if echeck %}
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-method">{{ entry_method }}</label>
       <div class="col-sm-10">
@@ -66,7 +66,7 @@
             <input type="text" name="card_cvv2" value="" placeholder="{{ entry_card_cvv2 }}" id="input-card-cvv2" class="form-control" />
           </div>
         </div>
-		{% if store_cards) { ?>
+		{% if store_cards %}
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-card-save" style="padding-top:0">{{ entry_card_save }}</label>
             <div class="col-sm-10">
@@ -80,7 +80,7 @@
           <label class="col-sm-2 control-label" for="input-card-choice">{{ entry_card_choice }}</label>
           <div class="col-sm-8">
             <select name="card_choice" id="input-card-choice" class="form-control" {% if !$cards) { echo 'disabled'; } ?>>
-          	  {% if cards) { ?>
+          	  {% if cards %}
        		    <option value="">{{ text_select_card }}</option>
                {% for card in cards %}
                 <option value="{{ card.token }}"><?php echo $card['type'] . ', &nbsp; ' . $card['account'] . ', &nbsp; ' . $card['expiry']; ?></option>

@@ -5,7 +5,7 @@
       <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
         <label class="control-label">{{ entry_customer_group }}</label>
        {% for customer_group in customer_groups %}
-        {% if customer_group['customer_group_id'] == $customer_group_id) { ?>
+        {% if customer_group['customer_group_id'] == $customer_group_id %}
         <div class="radio">
           <label>
             <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" checked="checked" />
@@ -47,7 +47,7 @@
         <label class="control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
         <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
           <option value="">{{ text_select }}</option>
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
           <?php } ?>
         </select>
@@ -57,7 +57,7 @@
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
         <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="radio">
             <label>
               <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -71,7 +71,7 @@
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
         <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="checkbox">
             <label>
               <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -174,7 +174,7 @@
         <select name="country_id" id="input-payment-country" class="form-control">
           <option value="">{{ text_select }}</option>
          {% for country in countries %}
-          {% if country['country_id'] == $country_id) { ?>
+          {% if country['country_id'] == $country_id %}
           <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
           {% else %}
           <option value="{{ country.country_id }}">{{ country.name }}</option>
@@ -194,7 +194,7 @@
         <label class="control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
         <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
           <option value="">{{ text_select }}</option>
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
           <?php } ?>
         </select>
@@ -204,7 +204,7 @@
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
         <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="radio">
             <label>
               <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -218,7 +218,7 @@
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
         <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="checkbox">
             <label>
               <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -291,14 +291,14 @@
     <input type="checkbox" name="newsletter" value="1" id="newsletter" />
     {{ entry_newsletter }}</label>
 </div>
-{% if shipping_required) { ?>
+{% if shipping_required %}
 <div class="checkbox">
   <label>
     <input type="checkbox" name="shipping_address" value="1" checked="checked" />
     {{ entry_shipping }}</label>
 </div>
 <?php } ?>
-{% if text_agree) { ?>
+{% if text_agree %}
 <div class="buttons clearfix">
   <div class="pull-right">{{ text_agree }} &nbsp;
     <input type="checkbox" name="agree" value="1" />

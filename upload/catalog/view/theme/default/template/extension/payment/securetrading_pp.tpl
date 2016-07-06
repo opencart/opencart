@@ -28,15 +28,15 @@
         <input type="hidden" name="customercountryiso2a" value="{{ shipping_country.iso_code_2 }}" />
         <input type="hidden" name="customeremail" value="{{ order_info.email }}" />
 
-        {% if parent_css) { ?>
+        {% if parent_css %}
         <input type="hidden" name="parentcss" value="{{ parent_css }}" />
         <?php } ?>
 
-        {% if child_css) { ?>
+        {% if child_css %}
         <input type="hidden" name="childcss" value="{{ child_css }}" />
         <?php } ?>
 
-        {% if site_security) { ?>
+        {% if site_security %}
         <input type="hidden" name="sitesecurity" value="g{{ site_security }}" />
         <?php } ?>
 

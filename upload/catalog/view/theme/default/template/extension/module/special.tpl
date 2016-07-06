@@ -7,10 +7,10 @@
       <div class="caption">
         <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
         <p>{{ product.description }}</p>
-        {% if product['rating']) { ?>
+        {% if product.rating %}
         <div class="rating">
           <?php for ($i = 1; $i <= 5; $i++) { ?>
-          {% if product['rating'] < $i) { ?>
+          {% if product['rating'] < $i %}
           <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
           {% else %}
           <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -18,14 +18,14 @@
           <?php } ?>
         </div>
         <?php } ?>
-        {% if product['price']) { ?>
+        {% if product.price %}
         <p class="price">
-          {% if !$product['special']) { ?>
+          {% if !$product.special %}
           {{ product.price }}
           {% else %}
           <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
           <?php } ?>
-          {% if product['tax']) { ?>
+          {% if product.tax %}
           <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
           <?php } ?>
         </p>

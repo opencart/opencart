@@ -7,11 +7,11 @@
 <body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
 <div style="width: 680px;"><a href="{{ store_url }}" title="{{ store_name }}"><img src="{{ logo }}" alt="{{ store_name }}" style="margin-bottom: 20px; border: none;" /></a>
   <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_greeting }}</p>
-  {% if customer_id) { ?>
+  {% if customer_id %}
   <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_link }}</p>
   <p style="margin-top: 0px; margin-bottom: 20px;"><a href="{{ link }}">{{ link }}</a></p>
   <?php } ?>
-  {% if download) { ?>
+  {% if download %}
   <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_download }}</p>
   <p style="margin-top: 0px; margin-bottom: 20px;"><a href="{{ download }}">{{ download }}</a></p>
   <?php } ?>
@@ -26,7 +26,7 @@
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><b>{{ text_order_id }}</b> {{ order_id }}<br />
           <b>{{ text_date_added }}</b> {{ date_added; }}<br />
           <b>{{ text_payment_method }}</b> {{ payment_method }}<br />
-          {% if shipping_method) { ?>
+          {% if shipping_method %}
           <b>{{ text_shipping_method }}</b> {{ shipping_method }}
           <?php } ?></td>
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><b>{{ text_email }}</b> {{ email }}<br />
@@ -36,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  {% if comment) { ?>
+  {% if comment %}
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>
@@ -54,7 +54,7 @@
     <thead>
       <tr>
         <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_payment_address }}</td>
-        {% if shipping_address) { ?>
+        {% if shipping_address %}
         <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">{{ text_shipping_address }}</td>
         <?php } ?>
       </tr>
@@ -62,7 +62,7 @@
     <tbody>
       <tr>
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ payment_address }}</td>
-        {% if shipping_address) { ?>
+        {% if shipping_address %}
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ shipping_address }}</td>
         <?php } ?>
       </tr>
@@ -82,7 +82,7 @@
       {% for product in products %}
       <tr>
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ product.name }}
-          <?php foreach ($product['option'] as $option) { ?>
+          {% for option in product.option %}
           <br />
           &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
           <?php } ?></td>

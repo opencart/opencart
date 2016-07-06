@@ -24,19 +24,19 @@
           <select name="category_id" class="form-control">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
-            {% if category_1['category_id'] == $category_id) { ?>
+            {% if category_1['category_id'] == $category_id %}
             <option value="{{ category_1.category_id }}" selected="selected">{{ category_1.name }}</option>
             {% else %}
             <option value="{{ category_1.category_id }}">{{ category_1.name }}</option>
             <?php } ?>
-            <?php foreach ($category_1['children'] as $category_2) { ?>
-            {% if category_2['category_id'] == $category_id) { ?>
+            {% for category_2 in category_1.children %}
+            {% if category_2['category_id'] == $category_id %}
             <option value="{{ category_2.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
             {% else %}
             <option value="{{ category_2.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
             <?php } ?>
-            <?php foreach ($category_2['children'] as $category_3) { ?>
-            {% if category_3['category_id'] == $category_id) { ?>
+            {% for category_3 in category_2.children %}
+            {% if category_3['category_id'] == $category_id %}
             <option value="{{ category_3.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
             {% else %}
             <option value="{{ category_3.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
@@ -48,7 +48,7 @@
         </div>
         <div class="col-sm-3">
           <label class="checkbox-inline">
-            {% if sub_category) { ?>
+            {% if sub_category %}
             <input type="checkbox" name="sub_category" value="1" checked="checked" />
             {% else %}
             <input type="checkbox" name="sub_category" value="1" />
@@ -58,7 +58,7 @@
       </div>
       <p>
         <label class="checkbox-inline">
-          {% if description) { ?>
+          {% if description %}
           <input type="checkbox" name="description" value="1" id="description" checked="checked" />
           {% else %}
           <input type="checkbox" name="description" value="1" id="description" />
@@ -67,7 +67,7 @@
       </p>
       <input type="button" value="{{ button_search }}" id="button-search" class="btn btn-primary" />
       <h2>{{ text_search }}</h2>
-      {% if products) { ?>
+      {% if products %}
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
           <div class="btn-group btn-group-sm">
@@ -85,7 +85,7 @@
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
               {% for sorts in sorts %}
-              {% if sorts['value'] == $sort . '-' . $order) { ?>
+              {% if sorts['value'] == $sort . '-' . $order %}
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
               {% else %}
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
@@ -99,7 +99,7 @@
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
               {% for limits in limits %}
-              {% if limits['value'] == $limit) { ?>
+              {% if limits['value'] == $limit %}
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
               {% else %}
               <option value="{{ limits.href }}">{{ limits.text }}</option>
@@ -118,22 +118,22 @@
               <div class="caption">
                 <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                 <p>{{ product.description }}</p>
-                {% if product['price']) { ?>
+                {% if product.price %}
                 <p class="price">
-                  {% if !$product['special']) { ?>
+                  {% if !$product.special %}
                   {{ product.price }}
                   {% else %}
                   <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
                   <?php } ?>
-                  {% if product['tax']) { ?>
+                  {% if product.tax %}
                   <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
                   <?php } ?>
                 </p>
                 <?php } ?>
-                {% if product['rating']) { ?>
+                {% if product.rating %}
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
-                  {% if product['rating'] < $i) { ?>
+                  {% if product['rating'] < $i %}
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% else %}
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>

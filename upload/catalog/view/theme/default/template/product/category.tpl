@@ -15,20 +15,20 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ heading_title }}</h2>
-      {% if thumb || $description) { ?>
+      {% if thumb || $description %}
       <div class="row">
-        {% if thumb) { ?>
+        {% if thumb %}
         <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
         <?php } ?>
-        {% if description) { ?>
+        {% if description %}
         <div class="col-sm-10">{{ description }}</div>
         <?php } ?>
       </div>
       <hr>
       <?php } ?>
-      {% if categories) { ?>
+      {% if categories %}
       <h3>{{ text_refine }}</h3>
-      {% if count($categories) <= 5) { ?>
+      {% if count($categories) <= 5 %}
       <div class="row">
         <div class="col-sm-3">
           <ul>
@@ -52,7 +52,7 @@
       </div>
       <?php } ?>
       <?php } ?>
-      {% if products) { ?>
+      {% if products %}
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
           <div class="btn-group btn-group-sm">
@@ -70,7 +70,7 @@
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
               {% for sorts in sorts %}
-              {% if sorts['value'] == $sort . '-' . $order) { ?>
+              {% if sorts['value'] == $sort . '-' . $order %}
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
               {% else %}
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
@@ -84,7 +84,7 @@
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
               {% for limits in limits %}
-              {% if limits['value'] == $limit) { ?>
+              {% if limits['value'] == $limit %}
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
               {% else %}
               <option value="{{ limits.href }}">{{ limits.text }}</option>
@@ -103,22 +103,22 @@
               <div class="caption">
                 <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                 <p>{{ product.description }}</p>
-                {% if product['price']) { ?>
+                {% if product.price %}
                 <p class="price">
-                  {% if !$product['special']) { ?>
+                  {% if !$product.special %}
                   {{ product.price }}
                   {% else %}
                   <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
                   <?php } ?>
-                  {% if product['tax']) { ?>
+                  {% if product.tax %}
                   <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
                   <?php } ?>
                 </p>
                 <?php } ?>
-                {% if product['rating']) { ?>
+                {% if product.rating %}
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
-                  {% if product['rating'] < $i) { ?>
+                  {% if product['rating'] < $i %}
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% else %}
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -142,7 +142,7 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       <?php } ?>
-      {% if !$categories && !$products) { ?>
+      {% if !$categories && !$products %}
       <p>{{ text_empty }}</p>
       <div class="buttons">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>

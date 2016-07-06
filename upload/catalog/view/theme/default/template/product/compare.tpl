@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -20,7 +20,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if products) { ?>
+      {% if products %}
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -37,7 +37,7 @@
           <tr>
             <td>{{ text_image }}</td>
             {% for product in products %}
-            <td class="text-center">{% if product['thumb']) { ?>
+            <td class="text-center">{% if product.thumb %}
               <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" />
               <?php } ?></td>
             <?php } ?>
@@ -45,8 +45,8 @@
           <tr>
             <td>{{ text_price }}</td>
             {% for product in products %}
-            <td>{% if product['price']) { ?>
-              {% if !$product['special']) { ?>
+            <td>{% if product.price %}
+              {% if !$product.special %}
               {{ product.price }}
               {% else %}
               <strike>{{ product.price }}</strike> {{ product.special }}
@@ -72,12 +72,12 @@
             <td>{{ product.availability }}</td>
             <?php } ?>
           </tr>
-          {% if review_status) { ?>
+          {% if review_status %}
           <tr>
             <td>{{ text_rating }}</td>
             {% for product in products %}
             <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
-              {% if product['rating'] < $i) { ?>
+              {% if product['rating'] < $i %}
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
               {% else %}
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -113,12 +113,12 @@
             <td colspan="<?php echo count($products) + 1; ?>"><strong>{{ attribute_group.name }}</strong></td>
           </tr>
         </thead>
-        <?php foreach ($attribute_group['attribute'] as $key => $attribute) { ?>
+        {% for attribute in attribute_group.attribute|keys) %}
         <tbody>
           <tr>
             <td>{{ attribute.name }}</td>
             {% for product in products %}
-            {% if isset($product['attribute'][$key])) { ?>
+            {% if isset($product['attribute'][{{ key }}])) { ?>
             <td><?php echo $product['attribute'][$key]; ?></td>
             {% else %}
             <td></td>

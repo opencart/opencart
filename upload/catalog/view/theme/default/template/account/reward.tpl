@@ -26,11 +26,11 @@
             </tr>
           </thead>
           <tbody>
-            {% if rewards) { ?>
+            {% if rewards %}
             <?php foreach ($rewards  as $reward) { ?>
             <tr>
               <td class="text-left">{{ reward.date_added }}</td>
-              <td class="text-left">{% if reward['order_id']) { ?>
+              <td class="text-left">{% if reward.order_id %}
                 <a href="{{ reward.href }}">{{ reward.description }}</a>
                 {% else %}
                 {{ reward.description }}

@@ -10,7 +10,7 @@
   <div>
     <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_greeting }}</p>
     <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_from }}</p>
-    {% if message) { ?>
+    {% if message %}
     <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_message }}</p>
     <p style="margin-top: 0px; margin-bottom: 20px;">{{ message }}</p>
     <?php } ?>

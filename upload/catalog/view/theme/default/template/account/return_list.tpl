@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if returns) { ?>
+      {% if returns %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>

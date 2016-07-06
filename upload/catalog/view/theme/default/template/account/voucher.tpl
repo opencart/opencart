@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -24,7 +24,7 @@
           <label class="col-sm-2 control-label" for="input-to-name">{{ entry_to_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_name" value="{{ to_name }}" id="input-to-name" class="form-control" />
-            {% if error_to_name) { ?>
+            {% if error_to_name %}
             <div class="text-danger">{{ error_to_name }}</div>
             <?php } ?>
           </div>
@@ -33,7 +33,7 @@
           <label class="col-sm-2 control-label" for="input-to-email">{{ entry_to_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_email" value="{{ to_email }}" id="input-to-email" class="form-control" />
-            {% if error_to_email) { ?>
+            {% if error_to_email %}
             <div class="text-danger">{{ error_to_email }}</div>
             <?php } ?>
           </div>
@@ -42,7 +42,7 @@
           <label class="col-sm-2 control-label" for="input-from-name">{{ entry_from_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_name" value="{{ from_name }}" id="input-from-name" class="form-control" />
-            {% if error_from_name) { ?>
+            {% if error_from_name %}
             <div class="text-danger">{{ error_from_name }}</div>
             <?php } ?>
           </div>
@@ -51,7 +51,7 @@
           <label class="col-sm-2 control-label" for="input-from-email">{{ entry_from_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_email" value="{{ from_email }}" id="input-from-email" class="form-control" />
-            {% if error_from_email) { ?>
+            {% if error_from_email %}
             <div class="text-danger">{{ error_from_email }}</div>
             <?php } ?>
           </div>
@@ -60,7 +60,7 @@
           <label class="col-sm-2 control-label">{{ entry_theme }}</label>
           <div class="col-sm-10">
            {% for voucher_theme in voucher_themes %}
-            {% if voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
+            {% if voucher_theme['voucher_theme_id'] == $voucher_theme_id %}
             <div class="radio">
               <label>
                 <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" checked="checked" />
@@ -74,7 +74,7 @@
             </div>
             <?php } ?>
             <?php } ?>
-            {% if error_theme) { ?>
+            {% if error_theme %}
             <div class="text-danger">{{ error_theme }}</div>
             <?php } ?>
           </div>
@@ -89,14 +89,14 @@
           <label class="col-sm-2 control-label" for="input-amount"><span data-toggle="tooltip" title="{{ help_amount }}">{{ entry_amount }}</span></label>
           <div class="col-sm-10">
             <input type="text" name="amount" value="{{ amount }}" id="input-amount" class="form-control" size="5" />
-            {% if error_amount) { ?>
+            {% if error_amount %}
             <div class="text-danger">{{ error_amount }}</div>
             <?php } ?>
           </div>
         </div>
         <div class="buttons clearfix">
           <div class="pull-right"> {{ text_agree }}
-            {% if agree) { ?>
+            {% if agree %}
             <input type="checkbox" name="agree" value="1" checked="checked" />
             {% else %}
             <input type="checkbox" name="agree" value="1" />

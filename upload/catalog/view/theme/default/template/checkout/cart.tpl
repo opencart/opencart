@@ -5,17 +5,17 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if attention) { ?>
+  {% if attention %}
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -30,7 +30,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}
-        {% if weight) { ?>
+        {% if weight %}
         &nbsp;({{ weight }})
         <?php } ?>
       </h1>
@@ -50,24 +50,24 @@
             <tbody>
              {% for product in products %}
               <tr>
-                <td class="text-center">{% if product['thumb']) { ?>
+                <td class="text-center">{% if product.thumb %}
                   <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a>
                   <?php } ?></td>
                 <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-                  {% if !$product['stock']) { ?>
+                  {% if !$product.stock %}
                   <span class="text-danger">***</span>
                   <?php } ?>
-                  {% if product['option']) { ?>
-                  <?php foreach ($product['option'] as $option) { ?>
+                  {% if product.option %}
+                  {% for option in product.option %}
                   <br />
                   <small>{{ option.name }}: {{ option.value }}</small>
                   <?php } ?>
                   <?php } ?>
-                  {% if product['reward']) { ?>
+                  {% if product.reward %}
                   <br />
                   <small>{{ product.reward }}</small>
                   <?php } ?>
-                  {% if product['recurring']) { ?>
+                  {% if product.recurring %}
                   <br />
                   <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small>
                   <?php } ?></td>
@@ -100,7 +100,7 @@
           </table>
         </div>
       </form>
-      {% if modules) { ?>
+      {% if modules %}
       <h2>{{ text_next }}</h2>
       <p>{{ text_next_choice }}</p>
       <div class="panel-group" id="accordion">

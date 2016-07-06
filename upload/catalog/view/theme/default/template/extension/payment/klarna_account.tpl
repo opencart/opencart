@@ -1,4 +1,4 @@
-{% if error_warning) { ?>
+{% if error_warning %}
 <div class="alert alert-warning">{{ error_warning }}</div>
 <?php } ?>
 <p><img src="https://cdn.klarna.com/public/images/{{ iso_code_2 }}/badges/v1/account/{{ iso_code_2 }}_account_badge_std_blue.png?width=150&eid={{ merchant }}" /></p>
@@ -24,7 +24,7 @@
   <br />
   <fieldset>
     <legend>{{ text_additional }}</legend>
-    {% if !$company) { ?>
+    {% if !$company %}
     {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-dob">{{ entry_dob }}</label>

@@ -24,7 +24,7 @@
   <?php $i++; ?>
   <?php } ?>
   <input type="hidden" name="id_type" value="1" />
-  {% if demo) { ?>
+  {% if demo %}
   <input type="hidden" name="demo" value="{{ demo }}" />
   <?php } ?>
   <input type="hidden" name="lang" value="{{ lang }}" />

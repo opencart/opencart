@@ -68,7 +68,7 @@
           </tbody>
         </table>
       </div>
-      {% if comment) { ?>
+      {% if comment %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -95,7 +95,7 @@
             </tr>
           </thead>
           <tbody>
-            {% if histories) { ?>
+            {% if histories %}
            {% for history in histories %}
             <tr>
               <td class="text-left">{{ history.date_added }}</td>

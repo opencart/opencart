@@ -1,13 +1,13 @@
 <div id="banner{{ module }}" class="owl-carousel">
  {% for banner in banners %}
   <div class="item">
-    {% if banner['link']) { ?>
+    {% if banner.link %}
     <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
     {% else %}
     <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
-    <?php } ?>
+    {% endif %}
   </div>
-  <?php } ?>
+  {% endfor %}
 </div>
 <script type="text/javascript"><!--
 $('#banner{{ module }}').owlCarousel({

@@ -26,7 +26,7 @@
             </tr>
           </thead>
           <tbody>
-            {% if transactions) { ?>
+            {% if transactions %}
             <?php foreach ($transactions  as $transaction) { ?>
             <tr>
               <td class="text-left">{{ transaction.date_added }}</td>

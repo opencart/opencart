@@ -1,5 +1,5 @@
 <form class="form-horizontal">
-  {% if addresses) { ?>
+  {% if addresses %}
   <div class="radio">
     <label>
       <input type="radio" name="shipping_address" value="existing" checked="checked" />
@@ -8,7 +8,7 @@
   <div id="shipping-existing">
     <select name="address_id" class="form-control">
      {% for address in addresses %}
-      {% if address['address_id'] == $address_id) { ?>
+      {% if address['address_id'] == $address_id %}
       <option value="{{ address.address_id }}" selected="selected">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% else %}
       <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
@@ -72,7 +72,7 @@
         <select name="country_id" id="input-shipping-country" class="form-control">
           <option value="">{{ text_select }}</option>
          {% for country in countries %}
-          {% if country['country_id'] == $country_id) { ?>
+          {% if country['country_id'] == $country_id %}
           <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
           {% else %}
           <option value="{{ country.country_id }}">{{ country.name }}</option>
@@ -96,7 +96,7 @@
       <div class="col-sm-10">
         <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
           <option value="">{{ text_select }}</option>
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
           <?php } ?>
         </select>
@@ -108,7 +108,7 @@
       <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
       <div class="col-sm-10">
         <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="radio">
             <label>
               <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -124,7 +124,7 @@
       <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
       <div class="col-sm-10">
         <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          {% for custom_field_value in custom_field.custom_field_value %}
           <div class="checkbox">
             <label>
               <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />

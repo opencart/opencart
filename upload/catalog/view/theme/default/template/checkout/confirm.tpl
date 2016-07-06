@@ -14,7 +14,7 @@
      {% for product in products %}
       <tr>
         <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-          <?php foreach ($product['option'] as $option) { ?>
+          {% for option in product.option %}
           <br />
           &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
           <?php } ?>

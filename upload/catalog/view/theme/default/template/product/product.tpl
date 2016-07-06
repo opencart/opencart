@@ -15,18 +15,18 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <div class="row">
-        {% if column_left || $column_right) { ?>
+        {% if column_left || $column_right %}
         <?php $class = 'col-sm-6'; ?>
         {% else %}
         <?php $class = 'col-sm-8'; ?>
         <?php } ?>
         <div class="{{ class }}">
-          {% if thumb || $images) { ?>
+          {% if thumb || $images %}
           <ul class="thumbnails">
-            {% if thumb) { ?>
+            {% if thumb %}
             <li><a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
             <?php } ?>
-            {% if images) { ?>
+            {% if images %}
             {% for image in images %}
             <li class="image-additional"><a class="thumbnail" href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
             <?php } ?>
@@ -35,16 +35,16 @@
           <?php } ?>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
-            {% if attribute_groups) { ?>
+            {% if attribute_groups %}
             <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
             <?php } ?>
-            {% if review_status) { ?>
+            {% if review_status %}
             <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
             <?php } ?>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-description">{{ description }}</div>
-            {% if attribute_groups) { ?>
+            {% if attribute_groups %}
             <div class="tab-pane" id="tab-specification">
               <table class="table table-bordered">
                 {% for attribute_group in attribute_groups %}
@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+                  {% for attribute in attribute_group.attribute %}
                   <tr>
                     <td>{{ attribute.name }}</td>
                     <td>{{ attribute.text }}</td>
@@ -65,12 +65,12 @@
               </table>
             </div>
             <?php } ?>
-            {% if review_status) { ?>
+            {% if review_status %}
             <div class="tab-pane" id="tab-review">
               <form class="form-horizontal" id="form-review">
                 <div id="review"></div>
                 <h2>{{ text_write }}</h2>
-                {% if review_guest) { ?>
+                {% if review_guest %}
                 <div class="form-group required">
                   <div class="col-sm-12">
                     <label class="control-label" for="input-name">{{ entry_name }}</label>
@@ -113,7 +113,7 @@
             <?php } ?>
           </div>
         </div>
-        {% if column_left || $column_right) { ?>
+        {% if column_left || $column_right %}
         <?php $class = 'col-sm-6'; ?>
         {% else %}
         <?php $class = 'col-sm-4'; ?>
@@ -125,18 +125,18 @@
           </div>
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
-            {% if manufacturer) { ?>
+            {% if manufacturer %}
             <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
             <?php } ?>
             <li>{{ text_model }} {{ model }}</li>
-            {% if reward) { ?>
+            {% if reward %}
             <li>{{ text_reward }} {{ reward }}</li>
             <?php } ?>
             <li>{{ text_stock }} {{ stock }}</li>
           </ul>
-          {% if price) { ?>
+          {% if price %}
           <ul class="list-unstyled">
-            {% if !$special) { ?>
+            {% if !$special %}
             <li>
               <h2>{{ price }}</h2>
             </li>
@@ -146,13 +146,13 @@
               <h2>{{ special }}</h2>
             </li>
             <?php } ?>
-            {% if tax) { ?>
+            {% if tax %}
             <li>{{ text_tax }} {{ tax }}</li>
             <?php } ?>
-            {% if points) { ?>
+            {% if points %}
             <li>{{ text_points }} {{ points }}</li>
             <?php } ?>
-            {% if discounts) { ?>
+            {% if discounts %}
             <li>
               <hr>
             </li>
@@ -163,7 +163,7 @@
           </ul>
           <?php } ?>
           <div id="product">
-            {% if options) { ?>
+            {% if options %}
             <hr>
             <h3>{{ text_option }}</h3>
             {% for option in options %}
@@ -172,9 +172,9 @@
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
-                <?php foreach ($option['product_option_value'] as $option_value) { ?>
+                {% for option_value in option.product_option_value %}
                 <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
-                {% if option_value['price']) { ?>
+                {% if option_value.price %}
                 ({{ option_value.price_prefix }}{{ option_value.price }})
                 <?php } ?>
                 </option>
@@ -186,15 +186,15 @@
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label">{{ option.name }}</label>
               <div id="input-option{{ option.product_option_id }}">
-                <?php foreach ($option['product_option_value'] as $option_value) { ?>
+                {% for option_value in option.product_option_value %}
                 <div class="radio">
                   <label>
                     <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
-                    {% if option_value['image']) { ?>
+                    {% if option_value.image %}
                     <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
                     <?php } ?>                    
                     {{ option_value.name }}
-                    {% if option_value['price']) { ?>
+                    {% if option_value.price %}
                     ({{ option_value.price_prefix }}{{ option_value.price }})
                     <?php } ?>
                   </label>
@@ -207,15 +207,15 @@
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label">{{ option.name }}</label>
               <div id="input-option{{ option.product_option_id }}">
-                <?php foreach ($option['product_option_value'] as $option_value) { ?>
+                {% for option_value in option.product_option_value %}
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
-                    {% if option_value['image']) { ?>
+                    {% if option_value.image %}
                     <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
                     <?php } ?>
                     {{ option_value.name }}
-                    {% if option_value['price']) { ?>
+                    {% if option_value.price %}
                     ({{ option_value.price_prefix }}{{ option_value.price }})
                     <?php } ?>
                   </label>
@@ -275,7 +275,7 @@
             <?php } ?>
             <?php } ?>
             <?php } ?>
-            {% if recurrings) { ?>
+            {% if recurrings %}
             <hr>
             <h3>{{ text_payment_recurring }}</h3>
             <div class="form-group required">
@@ -295,15 +295,15 @@
               <br />
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
-            {% if minimum > 1) { ?>
+            {% if minimum > 1 %}
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
             <?php } ?>
           </div>
-          {% if review_status) { ?>
+          {% if review_status %}
           <div class="rating">
             <p>
               <?php for ($i = 1; $i <= 5; $i++) { ?>
-              {% if rating < $i) { ?>
+              {% if rating < $i %}
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
               {% else %}
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -319,7 +319,7 @@
           <?php } ?>
         </div>
       </div>
-      {% if products) { ?>
+      {% if products %}
       <h3>{{ text_related }}</h3>
       <div class="row">
         <?php $i = 0; ?>
@@ -337,10 +337,10 @@
             <div class="caption">
               <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
               <p>{{ product.description }}</p>
-              {% if product['rating']) { ?>
+              {% if product.rating %}
               <div class="rating">
                 <?php for ($j = 1; $j <= 5; $j++) { ?>
-                {% if product['rating'] < $j) { ?>
+                {% if product['rating'] < $j %}
                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                 {% else %}
                 <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -348,14 +348,14 @@
                 <?php } ?>
               </div>
               <?php } ?>
-              {% if product['price']) { ?>
+              {% if product.price %}
               <p class="price">
-                {% if !$product['special']) { ?>
+                {% if !$product.special %}
                 {{ product.price }}
                 {% else %}
                 <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
                 <?php } ?>
-                {% if product['tax']) { ?>
+                {% if product.tax %}
                 <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
                 <?php } ?>
               </p>
@@ -372,14 +372,14 @@
         <div class="clearfix visible-md visible-sm"></div>
         <?php } elseif (($column_left || $column_right) && (($i+1) % 3 == 0)) { ?>
         <div class="clearfix visible-md"></div>
-        <?php } elseif (($i+1) % 4 == 0) { ?>
+        <?php } elseif (($i+1) % 4 == 0 %}
         <div class="clearfix visible-md"></div>
         <?php } ?>
         <?php $i++; ?>
         <?php } ?>
       </div>
       <?php } ?>
-      {% if tags) { ?>
+      {% if tags %}
       <p>{{ text_tags }}
         <?php for ($i = 0; $i < count($tags); $i++) { ?>
         {% if i < (count($tags) - 1)) { ?>

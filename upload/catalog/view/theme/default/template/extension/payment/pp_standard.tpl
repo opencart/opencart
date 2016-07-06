@@ -1,4 +1,4 @@
-{% if testmode) { ?>
+{% if testmode %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 <?php } ?>
 <form action="{{ action }}" method="post">
@@ -13,14 +13,14 @@
   <input type="hidden" name="quantity_{{ i }}" value="{{ product.quantity }}" />
   <input type="hidden" name="weight_{{ i }}" value="{{ product.weight }}" />
   <?php $j = 0; ?>
-  <?php foreach ($product['option'] as $option) { ?>
+  {% for option in product.option %}
   <input type="hidden" name="on{{ j }}_{{ i }}" value="{{ option.name }}" />
   <input type="hidden" name="os{{ j }}_{{ i }}" value="{{ option.value }}" />
   <?php $j++; ?>
   <?php } ?>
   <?php $i++; ?>
   <?php } ?>
-  {% if discount_amount_cart) { ?>
+  {% if discount_amount_cart %}
     <input type="hidden" name="discount_amount_cart" value="{{ discount_amount_cart }}" />
   <?php } ?>
   <input type="hidden" name="currency_code" value="{{ currency_code }}" />

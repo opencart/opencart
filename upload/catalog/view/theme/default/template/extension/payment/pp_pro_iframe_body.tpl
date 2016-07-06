@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{ stylesheet }}" />
   </head>
   <body>
-    {% if !$error_connection) { ?>
+    {% if !$error_connection %}
       <form action="{{ url }}" method="post" name="ppform" id="ppform">
         <input type="hidden" name="cmd" value="_s-xclick">
         <input type="hidden" name="hosted_button_id" value="{{ code }}">

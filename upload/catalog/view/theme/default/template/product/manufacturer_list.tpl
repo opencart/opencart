@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if categories) { ?>
+      {% if categories %}
       <p><strong>{{ text_index }}</strong>
         {% for category in categories %}
         &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#{{ category.name }}">{{ category.name }}</a>
@@ -23,7 +23,7 @@
       </p>
       {% for category in categories %}
       <h2 id="{{ category.name }}">{{ category.name }}</h2>
-      {% if category['manufacturer']) { ?>
+      {% if category.manufacturer %}
       <?php foreach (array_chunk($category['manufacturer'], 4) as $manufacturers) { ?>
       <div class="row">
         {% for manufacturer in manufacturers %}

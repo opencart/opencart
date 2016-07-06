@@ -38,7 +38,7 @@
 				% for product in products %}
 					<tr>
 						<td class="text-left">{{ product.name }}
-							<?php foreach ($product['option'] as $option) { ?>
+							{% for option in product.option %}
 								<br />
 								&nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
 							<?php } ?></td>

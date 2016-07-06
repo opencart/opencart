@@ -19,7 +19,7 @@
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
         {% for month in months %}
-		  {% if month['value'] == 3) { ?>
+		  {% if month['value'] == 3 %}
             <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
 		  {% else %}
             <option value="{{ month.value }}">{{ month.label }}</option>

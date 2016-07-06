@@ -1,5 +1,5 @@
 <div class="buttons clearfix">
-  {% if order_recurring_id) { ?>
+  {% if order_recurring_id %}
   <div class="pull-left">
     <button type="button" id="button-cancel" data-loading-text="{{ text_loading }}" class="btn btn-danger">{{ button_cancel }}</button>
   </div>

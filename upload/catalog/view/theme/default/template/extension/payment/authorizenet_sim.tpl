@@ -5,7 +5,7 @@
   <input type="hidden" name="x_amount" value="{{ x_amount }}" />
   <input type="hidden" name="x_fp_hash" value="{{ x_fp_hash }}" />
   <input type="hidden" name="x_show_form" value="{{ x_show_form }}" />
-  {% if x_test_request) { ?>
+  {% if x_test_request %}
   <input type="hidden" name="x_test_request" value="{{ x_test_request }}" />
   <?php } ?>
   <input type="hidden" name="x_type" value="{{ x_type }}" />

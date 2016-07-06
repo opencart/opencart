@@ -11,7 +11,7 @@
         <?php } ?>
         {{ text_register }}</label>
     </div>
-    {% if checkout_guest) { ?>
+    {% if checkout_guest %}
     <div class="radio">
       <label>
         {% if account == 'guest') { ?>

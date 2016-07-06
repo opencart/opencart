@@ -5,7 +5,7 @@
     <li><a href="{{ breadcrumb.href }}"> {{ breadcrumb.text }}</a></li>
     <?php } ?>
   </ul>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -26,7 +26,7 @@
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-              {% if error_firstname) { ?>
+              {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
               <?php } ?>
             </div>
@@ -35,7 +35,7 @@
             <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-              {% if error_lastname) { ?>
+              {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
               <?php } ?>
             </div>
@@ -44,7 +44,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              {% if error_email) { ?>
+              {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -53,7 +53,7 @@
             <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              {% if error_telephone) { ?>
+              {% if error_telephone %}
               <div class="text-danger">{{ error_telephone }}</div>
               <?php } ?>
             </div>
@@ -62,7 +62,7 @@
             <label class="col-sm-2 control-label" for="input-order-id">{{ entry_order_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
-              {% if error_order_id) { ?>
+              {% if error_order_id %}
               <div class="text-danger">{{ error_order_id }}</div>
               <?php } ?>
             </div>
@@ -82,7 +82,7 @@
             <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-              {% if error_product) { ?>
+              {% if error_product %}
               <div class="text-danger">{{ error_product }}</div>
               <?php } ?>
             </div>
@@ -91,7 +91,7 @@
             <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
             <div class="col-sm-10">
               <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-              {% if error_model) { ?>
+              {% if error_model %}
               <div class="text-danger">{{ error_model }}</div>
               <?php } ?>
             </div>
@@ -106,7 +106,7 @@
             <label class="col-sm-2 control-label">{{ entry_reason }}</label>
             <div class="col-sm-10">
              {% for return_reason in return_reasons %}
-              {% if return_reason['return_reason_id'] == $return_reason_id) { ?>
+              {% if return_reason['return_reason_id'] == $return_reason_id %}
               <div class="radio">
                 <label>
                   <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" checked="checked" />
@@ -120,7 +120,7 @@
               </div>
               <?php  } ?>
               <?php  } ?>
-              {% if error_reason) { ?>
+              {% if error_reason %}
               <div class="text-danger">{{ error_reason }}</div>
               <?php } ?>
             </div>
@@ -129,14 +129,14 @@
             <label class="col-sm-2 control-label">{{ entry_opened }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if opened) { ?>
+                {% if opened %}
                 <input type="radio" name="opened" value="1" checked="checked" />
                 {% else %}
                 <input type="radio" name="opened" value="1" />
                 <?php } ?>
                 {{ text_yes }}</label>
               <label class="radio-inline">
-                {% if !$opened) { ?>
+                {% if !$opened %}
                 <input type="radio" name="opened" value="0" checked="checked" />
                 {% else %}
                 <input type="radio" name="opened" value="0" />
@@ -152,11 +152,11 @@
           </div>
           {{ captcha }}
         </fieldset>
-        {% if text_agree) { ?>
+        {% if text_agree %}
         <div class="buttons clearfix">
           <div class="pull-left"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
           <div class="pull-right">{{ text_agree }}
-            {% if agree) { ?>
+            {% if agree %}
             <input type="checkbox" name="agree" value="1" checked="checked" />
             {% else %}
             <input type="checkbox" name="agree" value="1" />

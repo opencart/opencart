@@ -1,3 +1,3 @@
-{% if klarna_checkout) { ?>
+{% if klarna_checkout %}
 {{ klarna_checkout }}
 <?php } ?>

@@ -31,7 +31,7 @@
 	<input type="hidden" name="email" value="{{ email }}" />
     <input type="hidden" name="invoicenumber" value="{{ version }}" />
 
-    {% if card_storage == 1) { ?>
+    {% if card_storage == 1 %}
       <?php $i = 1; if (!empty($stored_cards)) { ?>
        {% for card in stored_cards %}
           <p><input type="radio" name="hosteddataid" value="{{ card.token }}" <?php echo ($i == 1 ? ' checked="checked"' : ''); ?> /> <?php echo $card['digits'] . ' - ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>

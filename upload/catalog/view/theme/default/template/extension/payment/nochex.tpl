@@ -1,5 +1,5 @@
 <form action="{{ action }}" method="post">
-  {% if !$test) { ?>
+  {% if !$test %}
   <input type="hidden" name="merchant_id" value="{{ merchant_id }}" />
   <input type="hidden" name="success_url" value="{{ success_url }}" />
   <input type="hidden" name="cancel_url" value="{{ cancel_url }}" />

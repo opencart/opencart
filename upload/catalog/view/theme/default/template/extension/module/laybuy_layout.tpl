@@ -53,7 +53,7 @@
 	</tr>
   </thead>
   <tbody>
-  <?php foreach ($transaction['report'] as $report) { ?>
+  {% for report in transaction.report %}
     {% if report['instalment'] == '0') { ?>
       <tr>
 	    <td>{{ text_downpayment }}</td>

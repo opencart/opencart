@@ -5,10 +5,10 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
@@ -43,7 +43,7 @@
                 <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
                 <a href="{{ forgotten }}">{{ text_forgotten }}</a> </div>
               <input type="submit" value="{{ button_login }}" class="btn btn-primary" />
-              {% if redirect) { ?>
+              {% if redirect %}
               <input type="hidden" name="redirect" value="{{ redirect }}" />
               <?php } ?>
             </form>

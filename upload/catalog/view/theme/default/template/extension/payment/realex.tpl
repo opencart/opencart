@@ -13,7 +13,7 @@
   <input type=hidden name="SHIPPING_CO" value="{{ shipping_country }}">
   <input type=hidden name="MERCHANT_RESPONSE_URL" value="{{ response_url }}">
   <input type=hidden name="COMMENT1" value="OpenCart">
-  {% if card_select == true) { ?>
+  {% if card_select == true %}
   <fieldset id="payment">
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>

@@ -10,7 +10,7 @@
     <div class="col-sm-10">
       <input type="text" name="captcha" id="input-captcha" class="form-control" />
       <img src="index.php?route=extension/captcha/basic_captcha/captcha" alt="" />
-      {% if error_captcha) { ?>
+      {% if error_captcha %}
       <div class="text-danger">{{ error_captcha }}</div>
       <?php } ?>
     </div>

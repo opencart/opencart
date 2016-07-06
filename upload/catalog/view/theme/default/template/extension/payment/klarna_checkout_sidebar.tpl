@@ -14,18 +14,18 @@
 
 </style>
 
-{% if shipping_required) { ?>
+{% if shipping_required %}
 <div id="klarna-shipping-method">
   <h3>{{ text_choose_shipping_method }}</h3>
-  {% if shipping_methods) { ?>
+  {% if shipping_methods %}
   <p>{{ text_shipping_method }}</p>
  {% for shipping_method in shipping_methods %}
   <p><strong>{{ shipping_method.title }}</strong></p>
-  {% if !$shipping_method['error']) { ?>
-  <?php foreach ($shipping_method['quote'] as $quote) { ?>
+  {% if !$shipping_method.error %}
+  {% for quote in shipping_method.quote %}
   <div class="radio">
 	<label>
-	  {% if quote['code'] == $code || !$code) { ?>
+	  {% if quote['code'] == $code || !$code %}
 	  <?php $code = $quote['code']; ?>
 	  <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
 	  {% else %}
@@ -46,19 +46,19 @@
     <div class="panel-heading">
         <h3 class="panel-title">Order Summary</h3>
     </div>
-    {% if products || $vouchers) { ?>
+    {% if products || $vouchers %}
         <div style="overflow: auto;">
         	<table class="table-klarna">
         	 {% for product in products %}
         	  <tr>
         		<td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-        		  {% if product['option']) { ?>
-        		  <?php foreach ($product['option'] as $option) { ?>
+        		  {% if product.option %}
+        		  {% for option in product.option %}
         		  <br />
         		  - <small>{{ option.name }} {{ option.value }}</small>
         		  <?php } ?>
         		  <?php } ?>
-        		  {% if product['recurring']) { ?>
+        		  {% if product.recurring %}
         		  <br />
         		  - <small>{{ text_recurring }} {{ product.recurring }}</small>
         		  <?php } ?></td>

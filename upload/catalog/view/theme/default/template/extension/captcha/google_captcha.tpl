@@ -5,14 +5,14 @@
     {% if substr($route, 0, 9) == 'checkout/') { ?>
     <label class="control-label" for="input-payment-captcha">{{ entry_captcha }}</label>
     <div id="input-payment-captcha" class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
-    {% if error_captcha) { ?>
+    {% if error_captcha %}
     <div class="text-danger">{{ error_captcha }}</div>
     <?php } ?>
     {% else %}
     <label class="col-sm-2 control-label">{{ entry_captcha }}</label>
     <div class="col-sm-10">
       <div class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
-      {% if error_captcha) { ?>
+      {% if error_captcha %}
       <div class="text-danger">{{ error_captcha }}</div>
       <?php } ?>
     </div>

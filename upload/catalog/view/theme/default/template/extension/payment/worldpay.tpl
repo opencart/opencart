@@ -55,7 +55,7 @@
 	  <div class="form-group">
 		<div class="col-sm-11" id='paymentDetailsHere' style="margin-left: 3%"></div>
 	  </div>
-	  {% if worldpay_card) { ?>
+	  {% if worldpay_card %}
 		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			<div class="col-sm-2">

@@ -1,4 +1,4 @@
-{% if auto_submit) { ?>
+{% if auto_submit %}
   <!DOCTYPE html>
   <html>
   <head></head>
@@ -23,7 +23,7 @@
   <input type="hidden" name="goodsList" value="{{ goodsList }}">
 </form>
 
-{% if !$auto_submit) { ?>
+{% if !$auto_submit %}
   <div class="buttons">
     <div class="pull-right">
       <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
@@ -39,7 +39,7 @@
 //--></script>
 <?php } ?>
 
-{% if auto_submit) { ?>
+{% if auto_submit %}
   {{ text_redirecting }}
 
   <script>

@@ -5,17 +5,17 @@
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if attention) { ?>
+  {% if attention %}
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  {% if success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  {% if error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -30,7 +30,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if coupon || $voucher || $reward) { ?>
+      {% if coupon || $voucher || $reward %}
       <div class="panel-group" id="accordion">{{ coupon }}{{ voucher }}{{ reward }}</div>
       <?php } ?>
       <?php if($has_shipping) { ?>
@@ -41,11 +41,11 @@
         <div class="panel-body">
           {% for shipping_method in shipping_methods %}
           <p><strong>{{ shipping_method.title }}</strong></p>
-          {% if !$shipping_method['error']) { ?>
-          <?php foreach ($shipping_method['quote'] as $quote) { ?>
+          {% if !$shipping_method.error %}
+          {% for quote in shipping_method.quote %}
           <div class="radio">
             <label>
-              {% if quote['code'] == $code || !$code) { ?>
+              {% if quote['code'] == $code || !$code %}
               <?php $code = $quote['code']; ?>
               <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" checked="checked" />
               {% else %}
@@ -77,11 +77,11 @@
             {% for product in products %}
             <tr>
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-                <?php foreach ($product['option'] as $option) { ?>
+                {% for option in product.option %}
                 <br />
                 <small> - {{ option.name }}: {{ option.value }}</small>
                 <?php } ?>
-                {% if product['recurring']) { ?>
+                {% if product.recurring %}
                 <br />
                 <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring_description }}</small>
                 <?php } ?></td>

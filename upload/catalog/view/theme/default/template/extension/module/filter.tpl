@@ -5,7 +5,7 @@
     <a class="list-group-item">{{ filter_group.name }}</a>
     <div class="list-group-item">
       <div id="filter-group{{ filter_group.filter_group_id }}">
-        <?php foreach ($filter_group['filter'] as $filter) { ?>
+        {% for filter in filter_group.filter %}
         <div class="checkbox">
           <label>
             {% if in_array($filter['filter_id'], $filter_category)) { ?>

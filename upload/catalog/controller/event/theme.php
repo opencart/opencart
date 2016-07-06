@@ -21,6 +21,18 @@ class ControllerEventTheme extends Controller {
 		} else {
 			$view = 'default/template/' . $view;
 		}
+		
+		if (is_file(DIR_TEMPLATE . $view . '.tpl')) {
+			$view .= '.tpl'; 
+			
+			$this->config->set('template_type', 'php');
+		} elseif (is_file(DIR_TEMPLATE . $view . '.twig')) {
+			$view .= '.twig'; 
+			
+			$this->config->set('template_type', 'twig');
+		}
+		
+		
 		/*			
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');

@@ -1,4 +1,4 @@
-<?php
+?php
 class ControllerStartupStartup extends Controller {
 	public function index() {
 		// Settings
@@ -10,11 +10,6 @@ class ControllerStartupStartup extends Controller {
 			} else {
 				$this->config->set($setting['key'], json_decode($setting['value'], true));
 			}
-		}
-
-		// Timezone
-		if ($this->config->get('config_timezone')) {
-			date_default_timezone_set($this->config->get('config_timezone'));
 		}
 		
 		// Language
@@ -34,7 +29,6 @@ class ControllerStartupStartup extends Controller {
 		
 		// Affiliate
 		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
-
 		// Currency
 		$this->registry->set('currency', new Cart\Currency($this->registry));
 	
@@ -44,13 +38,10 @@ class ControllerStartupStartup extends Controller {
 		if ($this->config->get('config_tax_default') == 'shipping') {
 			$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
-
 		if ($this->config->get('config_tax_default') == 'payment') {
 			$this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
-
 		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-
 		// Weight
 		$this->registry->set('weight', new Cart\Weight($this->registry));
 		

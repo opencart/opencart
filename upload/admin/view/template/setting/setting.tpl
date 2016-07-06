@@ -1229,26 +1229,6 @@
                     <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_timezone; ?>"><?php echo $entry_timezone; ?></label>
-                  <div class="col-sm-10">
-                    <select name="config_timezone" id="input-timezone" class="form-control">
-                      <option value=""><?php echo $text_none; ?></option>
-                      <?php if ($config_timezone == 'UTC') { ?>
-                      <option value="UTC" selected="selected">UTC</option>
-                      <?php } else { ?>
-                      <option value="UTC">UTC</option>
-                      <?php } ?>
-                      <?php foreach ($timezones as $tz_gname => $tz_gzones) { ?>
-                      <optgroup label="<?php echo $tz_gname; ?>">
-                        <?php foreach ($tz_gzones as $tz_zone => $tz_locale) { ?>
-                        <option value="<?php echo $tz_zone; ?>" <?php echo ($config_timezone == $tz_zone) ? 'selected="selected"' : ''; ?>><?php echo $tz_locale; ?></option>
-                        <?php } ?>
-                      </optgroup>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
               </fieldset>
               <fieldset>
                 <legend><?php echo $text_security; ?></legend>
@@ -1435,7 +1415,6 @@ $('select[name=\'config_theme\']').on('change', function() {
 		}
 	});
 });
-
 $('select[name=\'config_theme\']').trigger('change');
 //--></script> 
   <script type="text/javascript"><!--
@@ -1451,21 +1430,17 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		},
 		success: function(json) {
 			html = '<option value=""><?php echo $text_select; ?></option>';
-
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
           			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
             			html += ' selected="selected"';
 					}
-
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-
 			$('select[name=\'config_zone_id\']').html(html);
 			
 			$('#button-save').prop('disabled', false);
@@ -1475,7 +1450,6 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		}
 	});
 });
-
 $('select[name=\'config_country_id\']').trigger('change');
 //--></script></div>
 <?php echo $footer; ?> 

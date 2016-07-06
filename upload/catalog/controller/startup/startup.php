@@ -31,12 +31,6 @@ class ControllerStartupStartup extends Controller {
 				$this->config->set($result['key'], json_decode($result['value'], true));
 			}
 		}
-
-		// Timezone
-		if ($this->config->get('config_timezone')) {
-			date_default_timezone_set($this->config->get('config_timezone'));
-		}
-
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 		
@@ -109,7 +103,6 @@ class ControllerStartupStartup extends Controller {
 		
 		// Set the config language_id
 		$this->config->set('config_language_id', $languages[$code]['language_id']);	
-
 		// Customer
 		$customer = new Cart\Customer($this->registry);
 		$this->registry->set('customer', $customer);
@@ -171,13 +164,11 @@ class ControllerStartupStartup extends Controller {
 		} elseif ($this->config->get('config_tax_default') == 'shipping') {
 			$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
-
 		if (isset($this->session->data['payment_address'])) {
 			$this->tax->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
 		} elseif ($this->config->get('config_tax_default') == 'payment') {
 			$this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
-
 		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		
 		// Weight

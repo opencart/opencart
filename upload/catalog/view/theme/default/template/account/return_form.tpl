@@ -5,11 +5,11 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
+  {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -19,14 +19,14 @@
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend>{{ text_order }}</legend>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-              <?php if ($error_firstname) { ?>
+              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+              {% if error_firstname) { ?>
               <div class="text-danger">{{ error_firstname }}</div>
               <?php } ?>
             </div>
@@ -34,8 +34,8 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-              <?php if ($error_lastname) { ?>
+              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+              {% if error_lastname) { ?>
               <div class="text-danger">{{ error_lastname }}</div>
               <?php } ?>
             </div>
@@ -44,7 +44,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              <?php if ($error_email) { ?>
+              {% if error_email) { ?>
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -52,8 +52,8 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
-              <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              <?php if ($error_telephone) { ?>
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
+              {% if error_telephone) { ?>
               <div class="text-danger">{{ error_telephone }}</div>
               <?php } ?>
             </div>
@@ -61,8 +61,8 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-order-id">{{ entry_order_id }}</label>
             <div class="col-sm-10">
-              <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
-              <?php if ($error_order_id) { ?>
+              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
+              {% if error_order_id) { ?>
               <div class="text-danger">{{ error_order_id }}</div>
               <?php } ?>
             </div>
@@ -81,8 +81,8 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input type="text" name="product" value="<?php echo $product; ?>" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-              <?php if ($error_product) { ?>
+              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
+              {% if error_product) { ?>
               <div class="text-danger">{{ error_product }}</div>
               <?php } ?>
             </div>
@@ -90,8 +90,8 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
             <div class="col-sm-10">
-              <input type="text" name="model" value="<?php echo $model; ?>" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-              <?php if ($error_model) { ?>
+              <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+              {% if error_model) { ?>
               <div class="text-danger">{{ error_model }}</div>
               <?php } ?>
             </div>
@@ -99,14 +99,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-quantity">{{ entry_quantity }}</label>
             <div class="col-sm-10">
-              <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
+              <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_reason }}</label>
             <div class="col-sm-10">
               <?php foreach ($return_reasons as $return_reason) { ?>
-              <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
+              {% if return_reason['return_reason_id'] == $return_reason_id) { ?>
               <div class="radio">
                 <label>
                   <input type="radio" name="return_reason_id" value="<?php echo $return_reason['return_reason_id']; ?>" checked="checked" />
@@ -120,7 +120,7 @@
               </div>
               <?php  } ?>
               <?php  } ?>
-              <?php if ($error_reason) { ?>
+              {% if error_reason) { ?>
               <div class="text-danger">{{ error_reason }}</div>
               <?php } ?>
             </div>
@@ -129,14 +129,14 @@
             <label class="col-sm-2 control-label">{{ entry_opened }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($opened) { ?>
+                {% if opened) { ?>
                 <input type="radio" name="opened" value="1" checked="checked" />
                 <?php } else { ?>
                 <input type="radio" name="opened" value="1" />
                 <?php } ?>
                 {{ text_yes }}</label>
               <label class="radio-inline">
-                <?php if (!$opened) { ?>
+                {% if !$opened) { ?>
                 <input type="radio" name="opened" value="0" checked="checked" />
                 <?php } else { ?>
                 <input type="radio" name="opened" value="0" />
@@ -150,13 +150,13 @@
               <textarea name="comment" rows="10" placeholder="{{ entry_fault_detail; ?>" id="input-comment" class="form-control"><?php echo $comment }}</textarea>
             </div>
           </div>
-          <?php echo $captcha; ?>
+          {{ captcha }}
         </fieldset>
-        <?php if ($text_agree) { ?>
+        {% if text_agree) { ?>
         <div class="buttons clearfix">
-          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-danger">{{ button_back }}</a></div>
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
           <div class="pull-right">{{ text_agree }}
-            <?php if ($agree) { ?>
+            {% if agree) { ?>
             <input type="checkbox" name="agree" value="1" checked="checked" />
             <?php } else { ?>
             <input type="checkbox" name="agree" value="1" />
@@ -166,7 +166,7 @@
         </div>
         <?php } else { ?>
         <div class="buttons clearfix">
-          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default">{{ button_back }}</a></div>
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
           <div class="pull-right">
             <input type="submit" value="{{ button_submit }}" class="btn btn-primary" />
           </div>

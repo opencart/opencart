@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>

@@ -1,12 +1,12 @@
-<?php if ($error_warning) { ?>
+{% if error_warning) { ?>
 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 <?php } ?>
-<p><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/invoice/<?php echo $iso_code_2; ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></p>
+<p><img src="https://cdn.klarna.com/public/images/{{ iso_code_2 }}/badges/v1/invoice/{{ iso_code_2 }}_invoice_badge_std_blue.png?width=150&eid={{ merchant }}" /></p>
 <form id="payment" class="form-horizontal">
   <fieldset>
     <legend>{{ text_additional }}</legend>
-    <?php if (!$company) { ?>
-    <?php if ($iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% if !$company) { ?>
+    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-dob">{{ entry_dob }}</label>
       <div class="col-sm-3">
@@ -50,7 +50,7 @@
       </div>
     </div>
     <?php } ?>
-    <?php if ($iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
     <div class="form-group required">
       <label class="col-sm-2 control-label">{{ entry_gender }}</label>
       <div class="col-sm-10">
@@ -65,31 +65,31 @@
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-street">{{ entry_street }}</label>
       <div class="col-sm-10">
-        <input type="text" name="street" value="<?php echo $street; ?>" id="input-street" class="form-control" />
+        <input type="text" name="street" value="{{ street }}" id="input-street" class="form-control" />
       </div>
     </div>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-house-no">{{ entry_house_no }}</label>
       <div class="col-sm-10">
-        <input type="text" name="house_no" value="<?php echo $street_number; ?>" id="input-house-no" class="form-control" />
+        <input type="text" name="house_no" value="{{ street_number }}" id="input-house-no" class="form-control" />
       </div>
     </div>
     <?php } ?>
-    <?php if ($iso_code_3 == 'NLD') { ?>
+    {% if iso_code_3 == 'NLD') { ?>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-house-ext">{{ entry_house_ext }}</label>
       <div class="col-sm-10">
-        <input type="text" name="house_ext" value="<?php echo $street_extension; ?>" id="input-house-ext" class="form-control" />
+        <input type="text" name="house_ext" value="{{ street_extension }}" id="input-house-ext" class="form-control" />
       </div>
     </div>
     <?php } ?>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-phone-no">{{ entry_phone_no }}</label>
       <div class="col-sm-10">
-        <input type="text" name="phone_no" value="<?php echo $phone_number; ?>" id="input-phone-no" class="form-control" />
+        <input type="text" name="phone_no" value="{{ phone_number }}" id="input-phone-no" class="form-control" />
       </div>
     </div>
-    <?php if ($iso_code_3 == 'DEU') { ?>
+    {% if iso_code_3 == 'DEU') { ?>
     <div class="radio">
       <input type="checkbox" name="deu_terms" value="1" />
       Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen

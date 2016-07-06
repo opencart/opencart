@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-cc-issue"><span data-toggle="tooltip" title="<?php echo $help_issue; ?>">{{ entry_cc_issue }}</span></label>
+      <label class="col-sm-2 control-label" for="input-cc-issue"><span data-toggle="tooltip" title="{{ help_issue }}">{{ entry_cc_issue }}</span></label>
       <div class="col-sm-10">
         <input type="text" name="cc_issue" value="" placeholder="{{ entry_cc_issue }}" id="input-cc-issue" class="form-control" />
       </div>

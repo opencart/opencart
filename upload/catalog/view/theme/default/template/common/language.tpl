@@ -1,10 +1,10 @@
-<?php if (count($languages) > 1) { ?>
+{% if count($languages) > 1) { ?>
 <div class="pull-left">
-<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-language">
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-language">
   <div class="btn-group">
     <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
     <?php foreach ($languages as $language) { ?>
-    <?php if ($language['code'] == $code) { ?>
+    {% if language['code'] == $code) { ?>
     <img src="catalog/language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>">
     <?php } ?>
     <?php } ?>
@@ -16,7 +16,7 @@
     </ul>
   </div>
   <input type="hidden" name="code" value="" />
-  <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+  <input type="hidden" name="redirect" value="{{ redirect }}" />
 </form>
 </div>
 <?php } ?>

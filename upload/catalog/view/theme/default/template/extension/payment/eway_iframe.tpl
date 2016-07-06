@@ -1,8 +1,8 @@
-  <?php if (isset($error)) { ?>
-    <div class="alert alert-danger">Payment Error: <?php echo $error; ?></div>
+  {% if isset($error)) { ?>
+    <div class="alert alert-danger">Payment Error: {{ error }}</div>
   <?php } else { ?>
 
-  <?php if (isset($text_testing)) { ?>
+  {% if isset($text_testing)) { ?>
     <div class="alert alert-warning">{{ text_testing }}</div>
   <?php } ?>
 
@@ -19,7 +19,7 @@
 	 * eWAY Rapid IFrame config object.
 	 */
 	var eWAYConfig = {
-		sharedPaymentUrl: "<?php echo $SharedPaymentUrl; ?>"
+		sharedPaymentUrl: "{{ SharedPaymentUrl }}"
 	};
 
 	/**
@@ -27,7 +27,7 @@
 	 */
 	function resultCallback(result, transactionID, errors) {
 		if (result == "Complete") {
-			window.location.href = "<?php echo $callback; ?>";
+			window.location.href = "{{ callback }}";
 		} else if (result == "Error") {
 			$('#button-confirm').button('reset');
 			alert("There was a problem completing the payment: " + result);

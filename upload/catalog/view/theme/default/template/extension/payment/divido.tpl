@@ -317,7 +317,7 @@
         color: #000;
 }
 </style>
-<div id="divido-checkout" data-divido-calculator class="divido-calculator divido-theme-blue" data-divido-amount="<?php echo $grand_total; ?>" data-divido-plans="<?php echo $plan_list; ?>">
+<div id="divido-checkout" data-divido-calculator class="divido-calculator divido-theme-blue" data-divido-amount="{{ grand_total }}" data-divido-plans="{{ plan_list }}">
     <h1>
         <a href="https://www.divido.com" target="_blank" class="divido-logo divido-logo-sm" style="float:right;">Divido</a>
         {{ text_checkout_title }}
@@ -361,7 +361,7 @@
 <script>
 (function($) {
     $(function () {
-        $.getScript('<?php echo $merchant_script; ?>', function () {
+        $.getScript('{{ merchant_script }}', function () {
             divido_calculator($('#divido-checkout'));
         });
 
@@ -397,7 +397,7 @@
                     if (data.status == 'ok') {
                         location = data.url;
                     } else {
-                        message = data.message || '<?php echo $generic_credit_req_error; ?>';
+                        message = data.message || '{{ generic_credit_req_error }}';
                         $('#divido-checkout').prepend('<div class="alert alert-warning">' + message + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                     }
                 }

@@ -11,5 +11,5 @@
     </div>
   </div>
   <?php } ?>
-  <img src="<?php echo $tracking_pixel; ?>" height="0" width="0" />
+  <img src="{{ tracking_pixel }}" height="0" width="0" />
 </div>

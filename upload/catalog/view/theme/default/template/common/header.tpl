@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
-<!--[if IE 8 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie8"><![endif]-->
-<!--[if IE 9 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie9"><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
+<html dir="{{ direction }}" lang="{{ lang }}">
 <!--<![endif]-->
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title><?php echo $title; ?></title>
-<base href="<?php echo $base; ?>" />
-<?php if ($description) { ?>
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if description) { ?>
 <meta name="description" content="{{ description }}" />
 <?php } ?>
-<?php if ($keywords) { ?>
-<meta name="keywords" content= "<?php echo $keywords; ?>" />
+{% if keywords) { ?>
+<meta name="keywords" content= "{{ keywords }}" />
 <?php } ?>
 <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
@@ -31,37 +31,37 @@
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
 <?php foreach ($scripts as $script) { ?>
-<script src="<?php echo $script; ?>" type="text/javascript"></script>
+<script src="{{ script }}" type="text/javascript"></script>
 <?php } ?>
 <?php foreach ($analytics as $analytic) { ?>
-<?php echo $analytic; ?>
+{{ analytic }}
 <?php } ?>
 </head>
 <body class="{{ class }}">
 <nav id="top">
   <div class="container">
-    <?php echo $currency; ?>
-    <?php echo $language; ?>
+    {{ currency }}
+    {{ language }}
     <div id="top-links" class="nav pull-right">
       <ul class="list-inline">
-        <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
-        <li class="dropdown"><a href="<?php echo $account; ?>" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
+        <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md">{{ telephone }}</span></li>
+        <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <?php if ($logged) { ?>
-            <li><a href="<?php echo $account; ?>">{{ text_account }}</a></li>
-            <li><a href="<?php echo $order; ?>">{{ text_order }}</a></li>
-            <li><a href="<?php echo $transaction; ?>">{{ text_transaction }}</a></li>
+            {% if logged) { ?>
+            <li><a href="{{ account }}">{{ text_account }}</a></li>
+            <li><a href="{{ order }}">{{ text_order }}</a></li>
+            <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
             <li><a href="{{ download }}">{{ text_download }}</a></li>
-            <li><a href="<?php echo $logout; ?>">{{ text_logout }}</a></li>
+            <li><a href="{{ logout }}">{{ text_logout }}</a></li>
             <?php } else { ?>
-            <li><a href="<?php echo $register; ?>">{{ text_register }}</a></li>
-            <li><a href="<?php echo $login; ?>">{{ text_login }}</a></li>
+            <li><a href="{{ register }}">{{ text_register }}</a></li>
+            <li><a href="{{ login }}">{{ text_login }}</a></li>
             <?php } ?>
           </ul>
         </li>
-        <li><a href="<?php echo $wishlist; ?>" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
-        <li><a href="<?php echo $shopping_cart; ?>" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
-        <li><a href="<?php echo $checkout; ?>" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
+        <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
+        <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
+        <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
       </ul>
     </div>
   </div>
@@ -71,20 +71,20 @@
     <div class="row">
       <div class="col-sm-4">
         <div id="logo">
-          <?php if ($logo) { ?>
-          <a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+          {% if logo) { ?>
+          <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
           <?php } else { ?>
-          <h1><a href="<?php echo $home; ?>">{{ name }}</a></h1>
+          <h1><a href="{{ home }}">{{ name }}</a></h1>
           <?php } ?>
         </div>
       </div>
-      <div class="col-sm-5"><?php echo $search; ?>
+      <div class="col-sm-5">{{ search }}
       </div>
-      <div class="col-sm-3"><?php echo $cart; ?></div>
+      <div class="col-sm-3">{{ history }}</div>
     </div>
   </div>
 </header>
-<?php if ($categories) { ?>
+{% if categories) { ?>
 <div class="container">
   <nav id="menu" class="navbar">
     <div class="navbar-header"><span id="category" class="visible-xs">{{ text_category }}</span>
@@ -93,7 +93,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <?php foreach ($categories as $category) { ?>
-        <?php if ($category['children']) { ?>
+        {% if category['children']) { ?>
         <li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
           <div class="dropdown-menu">
             <div class="dropdown-inner">

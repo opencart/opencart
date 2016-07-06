@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -15,18 +15,18 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <div class="row">
-        <?php if ($column_left || $column_right) { ?>
+        {% if column_left || $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
         <?php } else { ?>
         <?php $class = 'col-sm-8'; ?>
         <?php } ?>
         <div class="{{ class }}">
-          <?php if ($thumb || $images) { ?>
+          {% if thumb || $images) { ?>
           <ul class="thumbnails">
-            <?php if ($thumb) { ?>
-            <li><a class="thumbnail" href="<?php echo $popup; ?>" title="{{ heading_title }}"><img src="<?php echo $thumb; ?>" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
+            {% if thumb) { ?>
+            <li><a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
             <?php } ?>
-            <?php if ($images) { ?>
+            {% if images) { ?>
             <?php foreach ($images as $image) { ?>
             <li class="image-additional"><a class="thumbnail" href="<?php echo $image['popup']; ?>" title="{{ heading_title }}"> <img src="<?php echo $image['thumb']; ?>" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
             <?php } ?>
@@ -35,16 +35,16 @@
           <?php } ?>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
-            <?php if ($attribute_groups) { ?>
+            {% if attribute_groups) { ?>
             <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
             <?php } ?>
-            <?php if ($review_status) { ?>
+            {% if review_status) { ?>
             <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
             <?php } ?>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-description">{{ description }}</div>
-            <?php if ($attribute_groups) { ?>
+            {% if attribute_groups) { ?>
             <div class="tab-pane" id="tab-specification">
               <table class="table table-bordered">
                 <?php foreach ($attribute_groups as $attribute_group) { ?>
@@ -65,12 +65,12 @@
               </table>
             </div>
             <?php } ?>
-            <?php if ($review_status) { ?>
+            {% if review_status) { ?>
             <div class="tab-pane" id="tab-review">
               <form class="form-horizontal" id="form-review">
                 <div id="review"></div>
                 <h2>{{ text_write }}</h2>
-                <?php if ($review_guest) { ?>
+                {% if review_guest) { ?>
                 <div class="form-group required">
                   <div class="col-sm-12">
                     <label class="control-label" for="input-name">{{ entry_name }}</label>
@@ -99,7 +99,7 @@
                     <input type="radio" name="rating" value="5" />
                     &nbsp;{{ entry_good }}</div>
                 </div>
-                <?php echo $captcha; ?>
+                {{ captcha }}
                 <div class="buttons clearfix">
                   <div class="pull-right">
                     <button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
@@ -113,7 +113,7 @@
             <?php } ?>
           </div>
         </div>
-        <?php if ($column_left || $column_right) { ?>
+        {% if column_left || $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
         <?php } else { ?>
         <?php $class = 'col-sm-4'; ?>
@@ -125,34 +125,34 @@
           </div>
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
-            <?php if ($manufacturer) { ?>
-            <li>{{ text_manufacturer }} <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
+            {% if manufacturer) { ?>
+            <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
             <?php } ?>
-            <li>{{ text_model }} <?php echo $model; ?></li>
-            <?php if ($reward) { ?>
-            <li>{{ text_reward }} <?php echo $reward; ?></li>
+            <li>{{ text_model }} {{ model }}</li>
+            {% if reward) { ?>
+            <li>{{ text_reward }} {{ reward }}</li>
             <?php } ?>
-            <li>{{ text_stock }} <?php echo $stock; ?></li>
+            <li>{{ text_stock }} {{ stock }}</li>
           </ul>
-          <?php if ($price) { ?>
+          {% if price) { ?>
           <ul class="list-unstyled">
-            <?php if (!$special) { ?>
+            {% if !$special) { ?>
             <li>
-              <h2><?php echo $price; ?></h2>
+              <h2>{{ price }}</h2>
             </li>
             <?php } else { ?>
-            <li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>
+            <li><span style="text-decoration: line-through;">{{ price }}</span></li>
             <li>
-              <h2><?php echo $special; ?></h2>
+              <h2>{{ special }}</h2>
             </li>
             <?php } ?>
-            <?php if ($tax) { ?>
-            <li>{{ text_tax }} <?php echo $tax; ?></li>
+            {% if tax) { ?>
+            <li>{{ text_tax }} {{ tax }}</li>
             <?php } ?>
-            <?php if ($points) { ?>
-            <li>{{ text_points }} <?php echo $points; ?></li>
+            {% if points) { ?>
+            <li>{{ text_points }} {{ points }}</li>
             <?php } ?>
-            <?php if ($discounts) { ?>
+            {% if discounts) { ?>
             <li>
               <hr>
             </li>
@@ -163,18 +163,18 @@
           </ul>
           <?php } ?>
           <div id="product">
-            <?php if ($options) { ?>
+            {% if options) { ?>
             <hr>
             <h3>{{ text_option }}</h3>
             <?php foreach ($options as $option) { ?>
-            <?php if ($option['type'] == 'select') { ?>
+            {% if option['type'] == 'select') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <select name="option[<?php echo $option['product_option_id']; ?>]" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control">
                 <option value="">{{ text_select }}</option>
                 <?php foreach ($option['product_option_value'] as $option_value) { ?>
                 <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
-                <?php if ($option_value['price']) { ?>
+                {% if option_value['price']) { ?>
                 (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
                 <?php } ?>
                 </option>
@@ -182,7 +182,7 @@
               </select>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'radio') { ?>
+            {% if option['type'] == 'radio') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
               <div id="input-option<?php echo $option['product_option_id']; ?>">
@@ -190,11 +190,11 @@
                 <div class="radio">
                   <label>
                     <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
-                    <?php if ($option_value['image']) { ?>
+                    {% if option_value['image']) { ?>
                     <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
                     <?php } ?>                    
                     <?php echo $option_value['name']; ?>
-                    <?php if ($option_value['price']) { ?>
+                    {% if option_value['price']) { ?>
                     (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
                     <?php } ?>
                   </label>
@@ -203,7 +203,7 @@
               </div>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'checkbox') { ?>
+            {% if option['type'] == 'checkbox') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
               <div id="input-option<?php echo $option['product_option_id']; ?>">
@@ -211,11 +211,11 @@
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" />
-                    <?php if ($option_value['image']) { ?>
+                    {% if option_value['image']) { ?>
                     <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
                     <?php } ?>
                     <?php echo $option_value['name']; ?>
-                    <?php if ($option_value['price']) { ?>
+                    {% if option_value['price']) { ?>
                     (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
                     <?php } ?>
                   </label>
@@ -224,26 +224,26 @@
               </div>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'text') { ?>
+            {% if option['type'] == 'text') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" placeholder="<?php echo $option['name']; ?>" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'textarea') { ?>
+            {% if option['type'] == 'textarea') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <textarea name="option[<?php echo $option['product_option_id']; ?>]" rows="5" placeholder="<?php echo $option['name']; ?>" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control"><?php echo $option['value']; ?></textarea>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'file') { ?>
+            {% if option['type'] == 'file') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
               <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="input-option<?php echo $option['product_option_id']; ?>" />
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'date') { ?>
+            {% if option['type'] == 'date') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <div class="input-group date">
@@ -253,7 +253,7 @@
                 </span></div>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'datetime') { ?>
+            {% if option['type'] == 'datetime') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <div class="input-group datetime">
@@ -263,7 +263,7 @@
                 </span></div>
             </div>
             <?php } ?>
-            <?php if ($option['type'] == 'time') { ?>
+            {% if option['type'] == 'time') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
               <div class="input-group time">
@@ -275,7 +275,7 @@
             <?php } ?>
             <?php } ?>
             <?php } ?>
-            <?php if ($recurrings) { ?>
+            {% if recurrings) { ?>
             <hr>
             <h3>{{ text_payment_recurring }}</h3>
             <div class="form-group required">
@@ -295,36 +295,36 @@
               <br />
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
-            <?php if ($minimum > 1) { ?>
+            {% if minimum > 1) { ?>
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
             <?php } ?>
           </div>
-          <?php if ($review_status) { ?>
+          {% if review_status) { ?>
           <div class="rating">
             <p>
               <?php for ($i = 1; $i <= 5; $i++) { ?>
-              <?php if ($rating < $i) { ?>
+              {% if rating < $i) { ?>
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } else { ?>
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } ?>
               <?php } ?>
-              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
+              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
             <hr>
             <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style" data-url="<?php echo $share; ?>"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+            <div class="addthis_toolbox addthis_default_style" data-url="{{ share }}"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
             <!-- AddThis Button END -->
           </div>
           <?php } ?>
         </div>
       </div>
-      <?php if ($products) { ?>
+      {% if products) { ?>
       <h3>{{ text_related }}</h3>
       <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
-        <?php if ($column_left && $column_right) { ?>
+        {% if column_left && $column_right) { ?>
         <?php $class = 'col-xs-8 col-sm-6'; ?>
         <?php } elseif ($column_left || $column_right) { ?>
         <?php $class = 'col-xs-6 col-md-4'; ?>
@@ -337,10 +337,10 @@
             <div class="caption">
               <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
               <p><?php echo $product['description']; ?></p>
-              <?php if ($product['rating']) { ?>
+              {% if product['rating']) { ?>
               <div class="rating">
                 <?php for ($j = 1; $j <= 5; $j++) { ?>
-                <?php if ($product['rating'] < $j) { ?>
+                {% if product['rating'] < $j) { ?>
                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                 <?php } else { ?>
                 <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -348,14 +348,14 @@
                 <?php } ?>
               </div>
               <?php } ?>
-              <?php if ($product['price']) { ?>
+              {% if product['price']) { ?>
               <p class="price">
-                <?php if (!$product['special']) { ?>
+                {% if !$product['special']) { ?>
                 <?php echo $product['price']; ?>
                 <?php } else { ?>
                 <span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
                 <?php } ?>
-                <?php if ($product['tax']) { ?>
+                {% if product['tax']) { ?>
                 <span class="price-tax">{{ text_tax }} <?php echo $product['tax']; ?></span>
                 <?php } ?>
               </p>
@@ -368,7 +368,7 @@
             </div>
           </div>
         </div>
-        <?php if (($column_left && $column_right) && (($i+1) % 2 == 0)) { ?>
+        {% if ($column_left && $column_right) && (($i+1) % 2 == 0)) { ?>
         <div class="clearfix visible-md visible-sm"></div>
         <?php } elseif (($column_left || $column_right) && (($i+1) % 3 == 0)) { ?>
         <div class="clearfix visible-md"></div>
@@ -379,10 +379,10 @@
         <?php } ?>
       </div>
       <?php } ?>
-      <?php if ($tags) { ?>
+      {% if tags) { ?>
       <p>{{ text_tags }}
         <?php for ($i = 0; $i < count($tags); $i++) { ?>
-        <?php if ($i < (count($tags) - 1)) { ?>
+        {% if i < (count($tags) - 1)) { ?>
         <a href="<?php echo $tags[$i]['href']; ?>"><?php echo $tags[$i]['tag']; ?></a>,
         <?php } else { ?>
         <a href="<?php echo $tags[$i]['href']; ?>"><?php echo $tags[$i]['tag']; ?></a>

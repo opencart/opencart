@@ -1,7 +1,7 @@
 <h2>{{ text_instruction }}</h2>
 <p><b>{{ text_description }}</b></p>
 <div class="well well-sm">
-  <p><?php echo $bank; ?></p>
+  <p>{{ bank }}</p>
   <p>{{ text_payment }}</p>
 </div>
 <div class="buttons">

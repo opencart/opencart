@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -26,7 +26,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($transactions) { ?>
+            {% if transactions) { ?>
             <?php foreach ($transactions  as $transaction) { ?>
             <tr>
               <td class="text-left"><?php echo $transaction['date_added']; ?></td>

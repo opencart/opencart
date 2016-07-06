@@ -5,23 +5,23 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($attention) { ?>
-  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $attention; ?>
+  {% if attention) { ?>
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($success) { ?>
+  {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($error_warning) { ?>
+  {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -30,11 +30,11 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}
-        <?php if ($weight) { ?>
-        &nbsp;(<?php echo $weight; ?>)
+        {% if weight) { ?>
+        &nbsp;({{ weight }})
         <?php } ?>
       </h1>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
@@ -50,24 +50,24 @@
             <tbody>
               <?php foreach ($products as $product) { ?>
               <tr>
-                <td class="text-center"><?php if ($product['thumb']) { ?>
+                <td class="text-center">{% if product['thumb']) { ?>
                   <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
                   <?php } ?></td>
                 <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                  <?php if (!$product['stock']) { ?>
+                  {% if !$product['stock']) { ?>
                   <span class="text-danger">***</span>
                   <?php } ?>
-                  <?php if ($product['option']) { ?>
+                  {% if product['option']) { ?>
                   <?php foreach ($product['option'] as $option) { ?>
                   <br />
                   <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                   <?php } ?>
                   <?php } ?>
-                  <?php if ($product['reward']) { ?>
+                  {% if product['reward']) { ?>
                   <br />
                   <small><?php echo $product['reward']; ?></small>
                   <?php } ?>
-                  <?php if ($product['recurring']) { ?>
+                  {% if product['recurring']) { ?>
                   <br />
                   <span class="label label-info">{{ text_recurring_item }}</span> <small><?php echo $product['recurring']; ?></small>
                   <?php } ?></td>
@@ -100,12 +100,12 @@
           </table>
         </div>
       </form>
-      <?php if ($modules) { ?>
+      {% if modules) { ?>
       <h2>{{ text_next }}</h2>
       <p>{{ text_next_choice }}</p>
       <div class="panel-group" id="accordion">
         <?php foreach ($modules as $module) { ?>
-        <?php echo $module; ?>
+        {{ module }}
         <?php } ?>
       </div>
       <?php } ?>
@@ -124,7 +124,7 @@
       </div>
       <div class="buttons clearfix">
         <div class="pull-left"><a href="{{ continue }}" class="btn btn-default">{{ button_shopping }}</a></div>
-        <div class="pull-right"><a href="<?php echo $checkout; ?>" class="btn btn-primary">{{ button_checkout }}</a></div>
+        <div class="pull-right"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -28,8 +28,8 @@
                 <b>{{ text_date_added; ?></b> <?php echo $date_added }}<br />
                 <b>{{ text_status; ?></b> <?php echo $status }}<br />
                 <b>{{ text_payment_method; ?></b> <?php echo $payment_method }}</td>
-              <td class="text-left" style="width: 50%;"><b>{{ text_order_id; ?></b> <a href="<?php echo $order; ?>">#<?php echo $order_id }}</a><br />
-                <b>{{ text_product }}</b> <a href="<?php echo $product; ?>"><?php echo $product_name; ?></a><br />
+              <td class="text-left" style="width: 50%;"><b>{{ text_order_id; ?></b> <a href="{{ order }}">#<?php echo $order_id }}</a><br />
+                <b>{{ text_product }}</b> <a href="{{ product }}">{{ product_name }}</a><br />
                 <b>{{ text_quantity; ?></b> <?php echo $product_quantity }}</td>
             </tr>
           </tbody>
@@ -43,8 +43,8 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" style="width: 50%;"><?php echo $recurring_description; ?></td>
-              <td class="text-left" style="width: 50%;"><?php echo $reference; ?></td>
+              <td class="text-left" style="width: 50%;">{{ recurring_description }}</td>
+              <td class="text-left" style="width: 50%;">{{ reference }}</td>
             </tr>
           </tbody>
         </table>
@@ -60,7 +60,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($transactions) { ?>
+            {% if transactions) { ?>
             <?php foreach ($transactions as $transaction) { ?>
             <tr>
               <td class="text-left"><?php echo $transaction['date_added']; ?></td>
@@ -76,7 +76,7 @@
           </tbody>
         </table>
       </div>
-      <?php echo $recurring; ?>{{ content_bottom }}</div>
+      {{ recurring }}{{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
 {{ footer }}

@@ -6,7 +6,7 @@
     <div class="panel-body">
       <label class="col-sm-2 control-label" for="input-reward">{{ entry_reward }}</label>
       <div class="input-group">
-        <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="{{ entry_reward }}" id="input-reward" class="form-control" />
+        <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control" />
         <span class="input-group-btn">
         <input type="submit" value="{{ button_reward }}" id="button-reward" data-loading-text="{{ text_loading }}"  class="btn btn-primary" />
         </span></div>

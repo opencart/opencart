@@ -1,51 +1,51 @@
-<?php if (isset($error)) { ?>
-	<div class="alert alert-danger">Payment Error: <?php echo $error; ?></div>
+{% if isset($error)) { ?>
+	<div class="alert alert-danger">Payment Error: {{ error }}</div>
 <?php } else { ?>
-	<form action="<?php echo $action; ?>" method="POST" class="form-horizontal" id="eway-payment-form">
+	<form action="{{ action }}" method="POST" class="form-horizontal" id="eway-payment-form">
 	  <fieldset id="payment">
 		<legend>{{ text_credit_card }}</legend>
-		<input type="hidden" name="EWAY_ACCESSCODE" value="<?php echo $AccessCode; ?>" />
-		<?php if (isset($text_testing)) { ?>
+		<input type="hidden" name="EWAY_ACCESSCODE" value="{{ AccessCode }}" />
+		{% if isset($text_testing)) { ?>
 			<div class="alert alert-warning">{{ text_testing }}</div>
 		<?php } ?>
 		<div class="form-group">
 		  <div class="col-sm-12">
 			<ul>
-			  <?php if ($payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
+			  {% if payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
 				  <label><input type="radio" name="EWAY_PAYMENTTYPE" id="eway-radio-cc" value="creditcard" checked="checked" onchange="javascript:select_eWAYPaymentOption('creditcard')" />
-					<?php if ($payment_type['visa'] == 1) { ?>
+					{% if payment_type['visa'] == 1) { ?>
 						<img src="catalog/view/theme/default/image/eway_creditcard_visa.png" height="30" alt="Visa" />
 					<?php } ?>
-					<?php if ($payment_type['mastercard'] == 1) { ?>
+					{% if payment_type['mastercard'] == 1) { ?>
 						<img src="catalog/view/theme/default/image/eway_creditcard_master.png" height="30" alt="MasterCard" />
 					<?php } ?>
-					<?php if ($payment_type['diners'] == 1) { ?>
+					{% if payment_type['diners'] == 1) { ?>
 						<img src="catalog/view/theme/default/image/eway_creditcard_diners.png" height="30" alt="Diners Club" />
 					<?php } ?>
-					<?php if ($payment_type['jcb'] == 1) { ?>
+					{% if payment_type['jcb'] == 1) { ?>
 						<img src="catalog/view/theme/default/image/eway_creditcard_jcb.png" height="30" alt="JCB" />
 					<?php } ?>
-					<?php if ($payment_type['amex'] == 1) { ?>
+					{% if payment_type['amex'] == 1) { ?>
 						<img src="catalog/view/theme/default/image/eway_creditcard_amex.png" height="30" alt="AMEX" />
 					<?php } ?>
 				  </label>
 			  <?php } ?>
-			  <?php if ($payment_type['paypal'] == 1) { ?>
+			  {% if payment_type['paypal'] == 1) { ?>
 				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="paypal" onchange="javascript:select_eWAYPaymentOption(paypal)" /> <img src="catalog/view/theme/default/image/eway_paypal.png" height="30" alt="'.$text_card_type_pp.'" /></label> ';
 			  <?php } ?>
-			  <?php if ($payment_type['masterpass'] == 1) { ?>
+			  {% if payment_type['masterpass'] == 1) { ?>
 				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="masterpass" onchange="javascript:select_eWAYPaymentOption(masterpass)" /> <img src="catalog/view/theme/default/image/eway_masterpass.png" height="30" alt="'.$text_card_type_mp.'" /></label> ';
 			  <?php } ?>
 			</ul>
 		  </div>
 		</div>
-		<?php if ($payment_type['paypal'] == 1) { ?>
+		{% if payment_type['paypal'] == 1) { ?>
 			<p id="tip-paypal" style="display:none;">{{ text_type_help; ?><?php echo $text_card_type_pp }}</p>
 		<?php } ?>
-		<?php if ($payment_type['masterpass'] == 1) { ?>
+		{% if payment_type['masterpass'] == 1) { ?>
 			<p id="tip-masterpass" style="display:none;">{{ text_type_help; ?><?php echo $text_card_type_mp }}</p>
 		<?php } ?>
-		<?php if ($payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
+		{% if payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
 			<div id="creditcard-info">
 			  <div class="form-group required">
 				<label class="col-sm-2 control-label" for="eway-cardname">{{ entry_cc_name }}</label>
@@ -83,9 +83,9 @@
 				<div class="col-sm-10">
 				  <input name="EWAY_CARDCVN" type="text" maxlength="4" value="" placeholder="{{ entry_cc_cvv2 }}" id="eway-cardcvn" autocomplete="off" class="form-control" pattern="\d*" />
 				  <span id="cvn-details" class="help">
-					<?php echo $help_cvv; ?>
-					<?php if (in_array('amex', $payment_type)) { ?>
-						<br><?php echo $help_cvv_amex; ?>
+					{{ help_cvv }}
+					{% if in_array('amex', $payment_type)) { ?>
+						<br>{{ help_cvv_amex }}
 					<?php } ?>
 				  </span>
 				  <br>

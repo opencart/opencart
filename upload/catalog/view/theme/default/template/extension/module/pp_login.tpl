@@ -4,13 +4,13 @@
     <script>
 paypal.use(['login'], function(login) {
 	login.render ({
-		'appid': '<?php echo $client_id; ?>',
-		'authend': '<?php echo $sandbox; ?>',
-		'scopes': '<?php echo $scopes; ?>',
+		'appid': '{{ client_id }}',
+		'authend': '{{ sandbox }}',
+		'scopes': '{{ scopes }}',
 		'containerid': 'pp_login_container',
-		'locale': '<?php echo $locale; ?>',
+		'locale': '{{ locale }}',
 		'theme': '{{ button_colour }}',
-		'returnurl': '<?php echo $return_url; ?>'
+		'returnurl': '{{ return_url }}'
 	});
 });
     </script>

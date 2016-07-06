@@ -1,8 +1,8 @@
 {{ header }}{{ column_left }}{{ column_right }}
 <div class="container">{{ content_top }}
-	<form class="payment-form" method="POST" action="<?php echo $process_order; ?>">
+	<form class="payment-form" method="POST" action="{{ process_order }}">
 		<div style="text-align:center;">
-			<h3><?php echo $heading_confirm; ?></h3>
+			<h3>{{ heading_confirm }}</h3>
 			<?php if(isset($amazon_login_pay_test)){ ?>
 			<label>Debug Error Code     :</label>
 			<div id="errorCode_address"></div>
@@ -61,7 +61,7 @@
 	</div>
 	<div class="buttons">
 		<div class="pull-left">
-			<a href="<?php echo $back; ?>" class="btn btn-primary">{{ text_back }}</a>
+			<a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a>
 		</div>
 		<div class="pull-right">
 			<input class="btn btn-primary" id="confirm-button" type="submit" value="{{ text_confirm }}" />
@@ -71,10 +71,10 @@
 </div>
 <script>
 	$(document).ready(function() {
-		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id; ?>');
+		amazon.Login.setClientId('{{ amazon_login_pay_client_id }}');
 		new OffAmazonPayments.Widgets.AddressBook({
-			sellerId: '<?php echo $amazon_login_pay_merchant_id; ?>',
-			amazonOrderReferenceId: '<?php echo $AmazonOrderReferenceId; ?>',
+			sellerId: '{{ amazon_login_pay_merchant_id }}',
+			amazonOrderReferenceId: '{{ AmazonOrderReferenceId }}',
 			displayMode: "Read",
 			design: {
 				designMode: 'responsive'
@@ -87,8 +87,8 @@
 
 
 		new OffAmazonPayments.Widgets.Wallet({
-			sellerId: '<?php echo $amazon_login_pay_merchant_id; ?>',
-			amazonOrderReferenceId: '<?php echo $AmazonOrderReferenceId; ?>',
+			sellerId: '{{ amazon_login_pay_merchant_id }}',
+			amazonOrderReferenceId: '{{ AmazonOrderReferenceId }}',
 			displayMode: "Read",
 			design: {
 				designMode: 'responsive'

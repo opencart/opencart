@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -26,11 +26,11 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($rewards) { ?>
+            {% if rewards) { ?>
             <?php foreach ($rewards  as $reward) { ?>
             <tr>
               <td class="text-left"><?php echo $reward['date_added']; ?></td>
-              <td class="text-left"><?php if ($reward['order_id']) { ?>
+              <td class="text-left">{% if reward['order_id']) { ?>
                 <a href="<?php echo $reward['href']; ?>"><?php echo $reward['description']; ?></a>
                 <?php } else { ?>
                 <?php echo $reward['description']; ?>

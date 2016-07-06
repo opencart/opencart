@@ -5,13 +5,13 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($success) { ?>
+  {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -20,7 +20,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ heading_title }}</h2>
-      <?php if ($products) { ?>
+      {% if products) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -36,15 +36,15 @@
           <tbody>
             <?php foreach ($products as $product) { ?>
             <tr>
-              <td class="text-center"><?php if ($product['thumb']) { ?>
+              <td class="text-center">{% if product['thumb']) { ?>
                 <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
                 <?php } ?></td>
               <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></td>
               <td class="text-left"><?php echo $product['model']; ?></td>
               <td class="text-right"><?php echo $product['stock']; ?></td>
-              <td class="text-right"><?php if ($product['price']) { ?>
+              <td class="text-right">{% if product['price']) { ?>
                 <div class="price">
-                  <?php if (!$product['special']) { ?>
+                  {% if !$product['special']) { ?>
                   <?php echo $product['price']; ?>
                   <?php } else { ?>
                   <b><?php echo $product['special']; ?></b> <s><?php echo $product['price']; ?></s>

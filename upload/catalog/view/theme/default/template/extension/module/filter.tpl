@@ -8,7 +8,7 @@
         <?php foreach ($filter_group['filter'] as $filter) { ?>
         <div class="checkbox">
           <label>
-            <?php if (in_array($filter['filter_id'], $filter_category)) { ?>
+            {% if in_array($filter['filter_id'], $filter_category)) { ?>
             <input type="checkbox" name="filter[]" value="<?php echo $filter['filter_id']; ?>" checked="checked" />
             <?php echo $filter['name']; ?>
             <?php } else { ?>
@@ -34,6 +34,6 @@ $('#button-filter').on('click', function() {
 		filter.push(this.value);
 	});
 
-	location = '<?php echo $action; ?>&filter=' + filter.join(',');
+	location = '{{ action }}&filter=' + filter.join(',');
 });
 //--></script>

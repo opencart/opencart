@@ -2,43 +2,43 @@
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-firstname">{{ entry_firstname }}</label>
     <div class="col-sm-10">
-      <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control" />
+      <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-lastname">{{ entry_lastname }}</label>
     <div class="col-sm-10">
-      <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control" />
+      <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control" />
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label" for="input-shipping-company">{{ entry_company }}</label>
     <div class="col-sm-10">
-      <input type="text" name="company" value="<?php echo $company; ?>" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control" />
+      <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-address-1">{{ entry_address_1 }}</label>
     <div class="col-sm-10">
-      <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control" />
+      <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control" />
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label" for="input-shipping-address-2">{{ entry_address_2 }}</label>
     <div class="col-sm-10">
-      <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control" />
+      <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-city">{{ entry_city }}</label>
     <div class="col-sm-10">
-      <input type="text" name="city" value="<?php echo $city; ?>" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control" />
+      <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-postcode">{{ entry_postcode }}</label>
     <div class="col-sm-10">
-      <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control" />
+      <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
@@ -47,7 +47,7 @@
       <select name="country_id" id="input-shipping-country" class="form-control">
         <option value="">{{ text_select }}</option>
         <?php foreach ($countries as $country) { ?>
-        <?php if ($country['country_id'] == $country_id) { ?>
+        {% if country['country_id'] == $country_id) { ?>
         <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
         <?php } else { ?>
         <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
@@ -64,15 +64,15 @@
     </div>
   </div>
   <?php foreach ($custom_fields as $custom_field) { ?>
-  <?php if ($custom_field['location'] == 'address') { ?>
-  <?php if ($custom_field['type'] == 'select') { ?>
+  {% if custom_field['location'] == 'address') { ?>
+  {% if custom_field['type'] == 'select') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
       <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
         <option value="">{{ text_select }}</option>
         <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-        <?php if (isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
+        {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
         <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
         <?php } else { ?>
         <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
@@ -82,14 +82,14 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'radio') { ?>
+  {% if custom_field['type'] == 'radio') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
       <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
         <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
         <div class="radio">
-          <?php if (isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
+          {% if isset($address_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address_custom_field[$custom_field['custom_field_id']]) { ?>
           <label>
             <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
             <?php echo $custom_field_value['name']; ?></label>
@@ -104,14 +104,14 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'checkbox') { ?>
+  {% if custom_field['type'] == 'checkbox') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
       <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
         <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
         <div class="checkbox">
-          <?php if (isset($address_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address_custom_field[$custom_field['custom_field_id']])) { ?>
+          {% if isset($address_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address_custom_field[$custom_field['custom_field_id']])) { ?>
           <label>
             <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
             <?php echo $custom_field_value['name']; ?></label>
@@ -126,7 +126,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'text') { ?>
+  {% if custom_field['type'] == 'text') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -134,7 +134,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'textarea') { ?>
+  {% if custom_field['type'] == 'textarea') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -142,7 +142,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'file') { ?>
+  {% if custom_field['type'] == 'file') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -151,7 +151,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'date') { ?>
+  {% if custom_field['type'] == 'date') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -163,7 +163,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'time') { ?>
+  {% if custom_field['type'] == 'time') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -175,7 +175,7 @@
     </div>
   </div>
   <?php } ?>
-  <?php if ($custom_field['type'] == 'datetime') { ?>
+  {% if custom_field['type'] == 'datetime') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
@@ -306,7 +306,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
 						html += ' selected="selected"';
           			}
 

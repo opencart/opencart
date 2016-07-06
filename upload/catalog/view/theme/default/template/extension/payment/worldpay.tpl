@@ -1,4 +1,4 @@
-<?php if (!empty($existing_cards)) { ?>
+{% if !empty($existing_cards)) { ?>
 	<legend>{{ text_credit_card }}</legend>
 	<div class="form-horizontal">
 	  <div id="choose-card" class="form-group">
@@ -15,7 +15,7 @@
 		</div>
 	  </div>
 	</div>
-	<form id="payment-existing-form" action="<?php echo $form_submit; ?>" method="post" class="form-horizontal">
+	<form id="payment-existing-form" action="{{ form_submit }}" method="post" class="form-horizontal">
 	  <fieldset>
 		<div id="card-existing">
 		  <div class="form-group required">
@@ -47,15 +47,15 @@
 		</div>
 	  </div>
 	</form>
-	<form style="display: none" id="payment-new-form" action="<?php echo $form_submit; ?>" method="post" class="form-horizontal">
+	<form style="display: none" id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
   <?php } else { ?>
-	  <form id="payment-new-form" action="<?php echo $form_submit; ?>" method="post" class="form-horizontal">
+	  <form id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
 	<?php } ?>
 	<fieldset>
 	  <div class="form-group">
 		<div class="col-sm-11" id='paymentDetailsHere' style="margin-left: 3%"></div>
 	  </div>
-	  <?php if ($worldpay_card) { ?>
+	  {% if worldpay_card) { ?>
 		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			<div class="col-sm-2">
@@ -76,17 +76,17 @@
   <script type="text/javascript"><!--
 
       //Load Worldpay.js and run script functions
-      $.getScript("<?php echo $worldpay_script; ?>", function (data, textStatus, jqxhr) {
-        Worldpay.setClientKey("<?php echo $worldpay_client_key; ?>");
+      $.getScript("{{ worldpay_script }}", function (data, textStatus, jqxhr) {
+        Worldpay.setClientKey("{{ worldpay_client_key }}");
 
         // disable new card form if existing cards
-<?php if (!empty($existing_cards)) { ?>
+{% if !empty($existing_cards)) { ?>
 	        $('#payment-new-form :input').prop('disabled', true);
 <?php } ?>
 
         // Set if token is reusable, remove first value when Worldpay update
         Worldpay.reusable = true;
-<?php if (isset($recurring_products)) { ?>
+{% if isset($recurring_products)) { ?>
 	        Worldpay.reusable = true;
 <?php } else { ?>
 	        $('input[name=\'save-card\']').on('change', function () {

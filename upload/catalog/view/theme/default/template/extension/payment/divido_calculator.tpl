@@ -1,4 +1,4 @@
-<div class="divido-calculator divido-theme-blue" data-divido-calculator data-divido-plans="<?php echo $planList; ?>" data-divido-amount="<?php echo $productPrice; ?>">
+<div class="divido-calculator divido-theme-blue" data-divido-calculator data-divido-plans="{{ planList }}" data-divido-amount="{{ productPrice }}">
     <h1>
         <a href="https://www.divido.com" target="_blank" class="divido-logo divido-logo-sm" style="float:right;">Divido</a>
         {{ text_checkout_title }} 

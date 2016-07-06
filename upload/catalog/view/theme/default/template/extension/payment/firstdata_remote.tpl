@@ -1,24 +1,24 @@
 <form class="form-horizontal" id="payment_form">
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
-    <?php if (!empty($accepted_cards)) { ?>
+    {% if !empty($accepted_cards)) { ?>
       <div class="form-group">
         <div class="col-sm-12">
           <p>
             <strong>{{ text_card_accepted }}</strong>
             <ul>
-              <?php if ($accepted_cards['mastercard'] == 1) { ?><li>{{ text_card_type_m }}</li><?php } ?>
-              <?php if ($accepted_cards['visa'] == 1) { ?><li>{{ text_card_type_v }}</li><?php } ?>
-              <?php if ($accepted_cards['diners'] == 1) { ?><li>{{ text_card_type_c }}</li><?php } ?>
-              <?php if ($accepted_cards['amex'] == 1) { ?><li>{{ text_card_type_a }}</li><?php } ?>
-              <?php if ($accepted_cards['maestro'] == 1) { ?><li>{{ text_card_type_ma }}</li><?php } ?>
+              {% if accepted_cards['mastercard'] == 1) { ?><li>{{ text_card_type_m }}</li><?php } ?>
+              {% if accepted_cards['visa'] == 1) { ?><li>{{ text_card_type_v }}</li><?php } ?>
+              {% if accepted_cards['diners'] == 1) { ?><li>{{ text_card_type_c }}</li><?php } ?>
+              {% if accepted_cards['amex'] == 1) { ?><li>{{ text_card_type_a }}</li><?php } ?>
+              {% if accepted_cards['maestro'] == 1) { ?><li>{{ text_card_type_ma }}</li><?php } ?>
             </ul>
           </p>
         </div>
       </div>
     <?php } ?>
 
-    <?php if ($card_storage == 1 && count($stored_cards) > 0) { ?>
+    {% if card_storage == 1 && count($stored_cards) > 0) { ?>
     <div class="form-group">
       <div class="col-sm-12">
         <?php $i = 0; ?>
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <?php if ($card_storage == 1) { ?>
+      {% if card_storage == 1) { ?>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-cc-cvv2">Store card details?</label>
 
@@ -130,7 +130,7 @@ $(' . stored_card').bind('change', function () {
 });
 
 $(document).ready(function(){
-  <?php if ($card_storage == 0) { ?>
+  {% if card_storage == 0) { ?>
     $('#card_info').show();
   <?php } else { ?>
     var stored_cards = <?php echo count($stored_cards); ?>;

@@ -1,28 +1,28 @@
-<form action="<?php echo $action; ?>" method="post">
-  <input type="hidden" name="pay_to_email" value="<?php echo $pay_to_email; ?>" />
+<form action="{{ action }}" method="post">
+  <input type="hidden" name="pay_to_email" value="{{ pay_to_email }}" />
   <input type="hidden" name="recipient_description" value="{{ description }}" />
-  <input type="hidden" name="transaction_id" value="<?php echo $transaction_id; ?>" />
-  <input type="hidden" name="return_url" value="<?php echo $return_url; ?>" />
-  <input type="hidden" name="cancel_url" value="<?php echo $cancel_url; ?>" />
-  <input type="hidden" name="status_url" value="<?php echo $status_url; ?>" />
-  <input type="hidden" name="language" value="<?php echo $language; ?>" />
-  <input type="hidden" name="logo_url" value="<?php echo $logo; ?>" />
-  <input type="hidden" name="pay_from_email" value="<?php echo $pay_from_email; ?>" />
-  <input type="hidden" name="firstname" value="<?php echo $firstname; ?>" />
-  <input type="hidden" name="lastname" value="<?php echo $lastname; ?>" />
-  <input type="hidden" name="address" value="<?php echo $address; ?>" />
-  <input type="hidden" name="address2" value="<?php echo $address2; ?>" />
-  <input type="hidden" name="phone_number" value="<?php echo $phone_number; ?>" />
-  <input type="hidden" name="postal_code" value="<?php echo $postal_code; ?>" />
-  <input type="hidden" name="city" value="<?php echo $city; ?>" />
-  <input type="hidden" name="state" value="<?php echo $state; ?>" />
+  <input type="hidden" name="transaction_id" value="{{ transaction_id }}" />
+  <input type="hidden" name="return_url" value="{{ return_url }}" />
+  <input type="hidden" name="cancel_url" value="{{ cancel_url }}" />
+  <input type="hidden" name="status_url" value="{{ status_url }}" />
+  <input type="hidden" name="language" value="{{ language }}" />
+  <input type="hidden" name="logo_url" value="{{ logo }}" />
+  <input type="hidden" name="pay_from_email" value="{{ pay_from_email }}" />
+  <input type="hidden" name="firstname" value="{{ firstname }}" />
+  <input type="hidden" name="lastname" value="{{ lastname }}" />
+  <input type="hidden" name="address" value="{{ address }}" />
+  <input type="hidden" name="address2" value="{{ address2 }}" />
+  <input type="hidden" name="phone_number" value="{{ phone_number }}" />
+  <input type="hidden" name="postal_code" value="{{ postal_code }}" />
+  <input type="hidden" name="city" value="{{ city }}" />
+  <input type="hidden" name="state" value="{{ state }}" />
   <input type="hidden" name="country" value="{{ country }}" />
   <input type="hidden" name="amount" value="{{ amount }}" />
-  <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
-  <input type="hidden" name="detail1_text" value="<?php echo $detail1_text; ?>" />
+  <input type="hidden" name="currency" value="{{ currency }}" />
+  <input type="hidden" name="detail1_text" value="{{ detail1_text }}" />
   <input type="hidden" name="merchant_fields" value="order_id" />
-  <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
-  <input type="hidden" name="platform" value="<?php echo $platform; ?>" />
+  <input type="hidden" name="order_id" value="{{ order_id }}" />
+  <input type="hidden" name="platform" value="{{ platform }}" />
   <div class="buttons">
     <div class="pull-right">
       <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />

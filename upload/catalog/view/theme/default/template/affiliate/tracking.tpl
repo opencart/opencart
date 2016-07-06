@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="<?php echo $help_generator; ?>">{{ entry_generator }}</span></label>
+          <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="{{ help_generator }}">{{ entry_generator }}</span></label>
           <div class="col-sm-10">
             <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control" />
           </div>

@@ -1,4 +1,4 @@
-<?php if (!isset($redirect)) { ?>
+{% if !isset($redirect)) { ?>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <thead>
@@ -48,9 +48,9 @@
     </tfoot>
   </table>
 </div>
-<?php echo $payment; ?>
+{{ payment }}
 <?php } else { ?>
 <script type="text/javascript"><!--
-location = '<?php echo $redirect; ?>';
+location = '{{ redirect }}';
 //--></script>
 <?php } ?>

@@ -6,11 +6,11 @@
             </li>
         <?php } ?>
         <li>
-            <a href="<?php echo $contact; ?>">{{ text_contact }}</a>
+            <a href="{{ contact }}">{{ text_contact }}</a>
         </li>
 
         <li>
-            <a href="<?php echo $sitemap; ?>">{{ text_sitemap }}</a>
+            <a href="{{ sitemap }}">{{ text_sitemap }}</a>
         </li>
     </ul>
 </div>

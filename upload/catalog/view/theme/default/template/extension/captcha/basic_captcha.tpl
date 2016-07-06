@@ -1,7 +1,7 @@
 <fieldset>
   <legend>{{ text_captcha }}</legend>
   <div class="form-group required">
-    <?php if (substr($route, 0, 9) == 'checkout/') { ?>
+    {% if substr($route, 0, 9) == 'checkout/') { ?>
     <label class="control-label" for="input-payment-captcha">{{ entry_captcha }}</label>
     <input type="text" name="captcha" id="input-payment-captcha" class="form-control" autocomplete="off" />
     <img src="index.php?route=extension/captcha/basic_captcha/captcha" alt="" />
@@ -10,7 +10,7 @@
     <div class="col-sm-10">
       <input type="text" name="captcha" id="input-captcha" class="form-control" />
       <img src="index.php?route=extension/captcha/basic_captcha/captcha" alt="" />
-      <?php if ($error_captcha) { ?>
+      {% if error_captcha) { ?>
       <div class="text-danger">{{ error_captcha }}</div>
       <?php } ?>
     </div>

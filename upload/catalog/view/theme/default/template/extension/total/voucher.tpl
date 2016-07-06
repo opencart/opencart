@@ -6,7 +6,7 @@
     <div class="panel-body">
       <label class="col-sm-2 control-label" for="input-voucher">{{ entry_voucher }}</label>
       <div class="input-group">
-        <input type="text" name="voucher" value="<?php echo $voucher; ?>" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control" />
+        <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control" />
         <span class="input-group-btn">
         <input type="submit" value="{{ button_voucher }}" id="button-voucher" data-loading-text="{{ text_loading }}"  class="btn btn-primary" />
         </span> </div>

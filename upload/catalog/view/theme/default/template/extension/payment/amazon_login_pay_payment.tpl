@@ -1,7 +1,7 @@
 {{ header }}{{ column_left }}{{ column_right }}
 <div class="container">{{ content_top }}
 	<div style="text-align:center;">
-		<h3><?php echo $heading_payment; ?></h3>
+		<h3>{{ heading_payment }}</h3>
 		<?php if(isset($amazon_login_pay_test)){ ?>
 		<label>Debug Error Code     :</label>
 		<div id="errorCode"></div>
@@ -14,7 +14,7 @@
 		<div style="clear: both;"></div>
         <div class="buttons">
             <div class="pull-left">
-                <a href="<?php echo $back; ?>" class="btn btn-primary">{{ text_back }}</a>
+                <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a>
             </div>
             <div class="pull-right">
                 <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}" />
@@ -26,7 +26,7 @@
 </div>
 <script type="text/javascript"><!--
 	$(document).ready(function() {
-		amazon.Login.setClientId('<?php echo $amazon_login_pay_client_id; ?>');
+		amazon.Login.setClientId('{{ amazon_login_pay_client_id }}');
 
 		$('#continue-button').click(function() {
 			$('div.warning').remove();
@@ -39,7 +39,7 @@
 		});
 
 		new OffAmazonPayments.Widgets.Wallet({
-			sellerId: '<?php echo $amazon_login_pay_merchant_id; ?>',
+			sellerId: '{{ amazon_login_pay_merchant_id }}',
 			onPaymentSelect: function(orderReference) {
 				$("input[name='payment_method']").val('1');
 			},

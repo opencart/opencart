@@ -1,22 +1,22 @@
 <div id="cart" class="btn-group btn-block">
   <button type="button" data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
   <ul class="dropdown-menu pull-right">
-    <?php if ($products || $vouchers) { ?>
+    {% if products || $vouchers) { ?>
     <li>
       <table class="table table-striped">
         <?php foreach ($products as $product) { ?>
         <tr>
-          <td class="text-center"><?php if ($product['thumb']) { ?>
+          <td class="text-center">{% if product['thumb']) { ?>
             <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
             <?php } ?></td>
           <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-            <?php if ($product['option']) { ?>
+            {% if product['option']) { ?>
             <?php foreach ($product['option'] as $option) { ?>
             <br />
             - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
             <?php } ?>
             <?php } ?>
-            <?php if ($product['recurring']) { ?>
+            {% if product['recurring']) { ?>
             <br />
             - <small>{{ text_recurring }} <?php echo $product['recurring']; ?></small>
             <?php } ?></td>
@@ -46,7 +46,7 @@
           </tr>
           <?php } ?>
         </table>
-        <p class="text-right"><a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo $checkout; ?>"><strong><i class="fa fa-share"></i> {{ text_checkout }}</strong></a></p>
+        <p class="text-right"><a href="{{ history }}"><strong><i class="fa fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fa fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
     </li>
     <?php } else { ?>

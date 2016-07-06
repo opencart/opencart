@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -19,40 +19,40 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <?php if ($image) { ?>
-            <div class="col-sm-3"><img src="<?php echo $image; ?>" alt="<?php echo $store; ?>" title="<?php echo $store; ?>" class="img-thumbnail" /></div>
+            {% if image) { ?>
+            <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail" /></div>
             <?php } ?>
-            <div class="col-sm-3"><strong><?php echo $store; ?></strong><br />
+            <div class="col-sm-3"><strong>{{ store }}</strong><br />
               <address>
-              <?php echo $address; ?>
+              {{ address }}
               </address>
-              <?php if ($geocode) { ?>
-              <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+              {% if geocode) { ?>
+              <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
               <?php } ?>
             </div>
             <div class="col-sm-3"><strong>{{ text_telephone }}</strong><br>
-              <?php echo $telephone; ?><br />
+              {{ telephone }}<br />
               <br />
-              <?php if ($fax) { ?>
+              {% if fax) { ?>
               <strong>{{ text_fax }}</strong><br>
-              <?php echo $fax; ?>
+              {{ fax }}
               <?php } ?>
             </div>
             <div class="col-sm-3">
-              <?php if ($open) { ?>
+              {% if open) { ?>
               <strong>{{ text_open }}</strong><br />
-              <?php echo $open; ?><br />
+              {{ open }}<br />
               <br />
               <?php } ?>
-              <?php if ($comment) { ?>
+              {% if comment) { ?>
               <strong>{{ text_comment }}</strong><br />
-              <?php echo $comment; ?>
+              {{ comment }}
               <?php } ?>
             </div>
           </div>
         </div>
       </div>
-      <?php if ($locations) { ?>
+      {% if locations) { ?>
       <h3>{{ text_store }}</h3>
       <div class="panel-group" id="accordion">
         <?php foreach ($locations as $location) { ?>
@@ -63,32 +63,32 @@
           <div class="panel-collapse collapse" id="collapse-location<?php echo $location['location_id']; ?>">
             <div class="panel-body">
               <div class="row">
-                <?php if ($location['image']) { ?>
+                {% if location['image']) { ?>
                 <div class="col-sm-3"><img src="<?php echo $location['image']; ?>" alt="<?php echo $location['name']; ?>" title="<?php echo $location['name']; ?>" class="img-thumbnail" /></div>
                 <?php } ?>
                 <div class="col-sm-3"><strong><?php echo $location['name']; ?></strong><br />
                   <address>
                   <?php echo $location['address']; ?>
                   </address>
-                  <?php if ($location['geocode']) { ?>
-                  <a href="https://maps.google.com/maps?q=<?php echo urlencode($location['geocode']); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
+                  {% if location['geocode']) { ?>
+                  <a href="https://maps.google.com/maps?q=<?php echo urlencode($location['geocode']); ?>&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
                   <?php } ?>
                 </div>
                 <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br>
                   <?php echo $location['telephone']; ?><br />
                   <br />
-                  <?php if ($location['fax']) { ?>
+                  {% if location['fax']) { ?>
                   <strong>{{ text_fax }}</strong><br>
                   <?php echo $location['fax']; ?>
                   <?php } ?>
                 </div>
                 <div class="col-sm-3">
-                  <?php if ($location['open']) { ?>
+                  {% if location['open']) { ?>
                   <strong>{{ text_open }}</strong><br />
                   <?php echo $location['open']; ?><br />
                   <br />
                   <?php } ?>
-                  <?php if ($location['comment']) { ?>
+                  {% if location['comment']) { ?>
                   <strong>{{ text_comment }}</strong><br />
                   <?php echo $location['comment']; ?>
                   <?php } ?>
@@ -100,14 +100,14 @@
         <?php } ?>
       </div>
       <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend>{{ text_contact }}</legend>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name) { ?>
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -116,7 +116,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
-              <?php if ($error_email) { ?>
+              {% if error_email) { ?>
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -124,13 +124,13 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
             <div class="col-sm-10">
-              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"><?php echo $enquiry; ?></textarea>
-              <?php if ($error_enquiry) { ?>
+              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+              {% if error_enquiry) { ?>
               <div class="text-danger">{{ error_enquiry }}</div>
               <?php } ?>
             </div>
           </div>
-          <?php echo $captcha; ?>
+          {{ captcha }}
         </fieldset>
         <div class="buttons">
           <div class="pull-right">

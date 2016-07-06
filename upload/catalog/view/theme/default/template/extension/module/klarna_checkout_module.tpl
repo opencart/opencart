@@ -1,4 +1,4 @@
 <script type="text/javascript"><!--
 	$('.breadcrumb').parent().hide();
-	location = '<?php echo $klarna_checkout; ?>';
+	location = '{{ klarna_checkout }}';
 //--></script>

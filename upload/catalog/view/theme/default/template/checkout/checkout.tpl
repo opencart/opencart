@@ -5,13 +5,13 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
+  {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -29,7 +29,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <?php if (!$logged && $account != 'guest') { ?>
+        {% if !$logged && $account != 'guest') { ?>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_account }}</h4>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <?php } ?>
-        <?php if ($shipping_required) { ?>
+        {% if shipping_required) { ?>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_shipping_address }}</h4>
@@ -103,7 +103,7 @@ $(document).on('change', 'input[name=\'account\']', function() {
 	}
 });
 
-<?php if (!$logged) { ?>
+{% if !$logged) { ?>
 $(document).ready(function() {
     $.ajax({
         url: 'index.php?route=checkout/login',
@@ -238,7 +238,7 @@ $(document).delegate('#button-register', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
-                <?php if ($shipping_required) { ?>
+                {% if shipping_required) { ?>
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {
@@ -372,7 +372,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().parent().addClass('has-error');
             } else {
-                <?php if ($shipping_required) { ?>
+                {% if shipping_required) { ?>
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_address',
                     dataType: 'html',
@@ -548,7 +548,7 @@ $(document).delegate('#button-guest', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
-                <?php if ($shipping_required) { ?>
+                {% if shipping_required) { ?>
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {

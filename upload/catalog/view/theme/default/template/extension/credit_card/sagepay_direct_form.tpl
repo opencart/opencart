@@ -6,7 +6,7 @@
 	<?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-	<?php if ($column_left && $column_right) { ?>
+	{% if column_left && $column_right) { ?>
 		<?php $class = 'col-sm-6'; ?>
 	<?php } elseif ($column_left || $column_right) { ?>
 		<?php $class = 'col-sm-9'; ?>
@@ -15,7 +15,7 @@
 	<?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-	  <form class="form-horizontal" action="<?php echo $add; ?>" method="post">
+	  <form class="form-horizontal" action="{{ add }}" method="post">
 		<fieldset id="payment">
 		  <div id="card-new">
 			<div class="form-group required">
@@ -65,7 +65,7 @@
 			</div>
 		  </div>
 		  <div class="buttons clearfix">
-			<div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default">{{ button_back }}</a></div>
+			<div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
 			<div class="pull-right"><input type="submit" value="{{ button_add_card }}" class="btn btn-primary" /></div>
 		  </div>
 		</fieldset>

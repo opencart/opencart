@@ -5,23 +5,23 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($attention) { ?>
-  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $attention; ?>
+  {% if attention) { ?>
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($success) { ?>
+  {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($error_warning) { ?>
+  {% if error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -30,22 +30,22 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <?php if ($coupon || $voucher || $reward) { ?>
-      <div class="panel-group" id="accordion"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
+      {% if coupon || $voucher || $reward) { ?>
+      <div class="panel-group" id="accordion">{{ coupon }}{{ voucher }}{{ reward }}</div>
       <?php } ?>
       <?php if($has_shipping) { ?>
       <?php if(!isset($shipping_methods)) { ?>
       <div class="warning">{{ error_no_shipping }}</div>
       <?php } else { ?>
-      <form action="<?php echo $action_shipping; ?>" method="post" id="shipping_form">
+      <form action="{{ action_shipping }}" method="post" id="shipping_form">
         <div class="panel-body">
           <?php foreach ($shipping_methods as $shipping_method) { ?>
           <p><strong><?php echo $shipping_method['title']; ?></strong></p>
-          <?php if (!$shipping_method['error']) { ?>
+          {% if !$shipping_method['error']) { ?>
           <?php foreach ($shipping_method['quote'] as $quote) { ?>
           <div class="radio">
             <label>
-              <?php if ($quote['code'] == $code || !$code) { ?>
+              {% if quote['code'] == $code || !$code) { ?>
               <?php $code = $quote['code']; ?>
               <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" id="<?php echo $quote['code']; ?>" checked="checked" />
               <?php } else { ?>
@@ -81,7 +81,7 @@
                 <br />
                 <small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                 <?php } ?>
-                <?php if ($product['recurring']) { ?>
+                {% if product['recurring']) { ?>
                 <br />
                 <span class="label label-info">{{ text_recurring_item }}</span> <small><?php echo $product['recurring_description']; ?></small>
                 <?php } ?></td>
@@ -117,7 +117,7 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="pull-right"><a href="<?php echo $action_confirm; ?>" class="btn btn-primary">{{ button_confirm }}</a></div>
+        <div class="pull-right"><a href="{{ action_confirm }}" class="btn btn-primary">{{ button_confirm }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

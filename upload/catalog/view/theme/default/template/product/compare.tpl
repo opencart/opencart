@@ -5,13 +5,13 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($success) { ?>
+  {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -20,7 +20,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <?php if ($products) { ?>
+      {% if products) { ?>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -37,7 +37,7 @@
           <tr>
             <td>{{ text_image }}</td>
             <?php foreach ($products as $product) { ?>
-            <td class="text-center"><?php if ($product['thumb']) { ?>
+            <td class="text-center">{% if product['thumb']) { ?>
               <img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" />
               <?php } ?></td>
             <?php } ?>
@@ -45,8 +45,8 @@
           <tr>
             <td>{{ text_price }}</td>
             <?php foreach ($products as $product) { ?>
-            <td><?php if ($product['price']) { ?>
-              <?php if (!$product['special']) { ?>
+            <td>{% if product['price']) { ?>
+              {% if !$product['special']) { ?>
               <?php echo $product['price']; ?>
               <?php } else { ?>
               <strike><?php echo $product['price']; ?></strike> <?php echo $product['special']; ?>
@@ -72,12 +72,12 @@
             <td><?php echo $product['availability']; ?></td>
             <?php } ?>
           </tr>
-          <?php if ($review_status) { ?>
+          {% if review_status) { ?>
           <tr>
             <td>{{ text_rating }}</td>
             <?php foreach ($products as $product) { ?>
             <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
-              <?php if ($product['rating'] < $i) { ?>
+              {% if product['rating'] < $i) { ?>
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } else { ?>
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
@@ -118,7 +118,7 @@
           <tr>
             <td><?php echo $attribute['name']; ?></td>
             <?php foreach ($products as $product) { ?>
-            <?php if (isset($product['attribute'][$key])) { ?>
+            {% if isset($product['attribute'][$key])) { ?>
             <td><?php echo $product['attribute'][$key]; ?></td>
             <?php } else { ?>
             <td></td>

@@ -1,3 +1,3 @@
-<?php if ($klarna_checkout) { ?>
-<?php echo $klarna_checkout; ?>
+{% if klarna_checkout) { ?>
+{{ klarna_checkout }}
 <?php } ?>

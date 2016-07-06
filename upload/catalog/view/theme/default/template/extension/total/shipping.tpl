@@ -12,7 +12,7 @@
             <select name="country_id" id="input-country" class="form-control">
               <option value="">{{ text_select }}</option>
               <?php foreach ($countries as $country) { ?>
-              <?php if ($country['country_id'] == $country_id) { ?>
+              {% if country['country_id'] == $country_id) { ?>
               <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
@@ -31,7 +31,7 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
           <div class="col-sm-10">
-            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
           </div>
         </div>
         <button type="button" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
@@ -91,7 +91,7 @@ $('#button-quote').on('click', function() {
 							html += '<div class="radio">';
 							html += '  <label>';
 
-							if (json['shipping_method'][i]['quote'][j]['code'] == '<?php echo $shipping_method; ?>') {
+							if (json['shipping_method'][i]['quote'][j]['code'] == '{{ shipping_method }}') {
 								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked="checked" />';
 							} else {
 								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" />';
@@ -108,7 +108,7 @@ $('#button-quote').on('click', function() {
 				html += '      <div class="modal-footer">';
 				html += '        <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>';
 
-				<?php if ($shipping_method) { ?>
+				{% if shipping_method) { ?>
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" />';
 				<?php } else { ?>
 				html += '        <input type="button" value="{{ button_shipping }}" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary" disabled="disabled" />';
@@ -189,7 +189,7 @@ $('select[name=\'country_id\']').on('change', function() {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+					if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
 						html += ' selected="selected"';
 					}
 

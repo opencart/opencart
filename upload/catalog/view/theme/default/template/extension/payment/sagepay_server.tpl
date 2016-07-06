@@ -1,6 +1,6 @@
 <form class="form-horizontal">
     <fieldset id="payment">
-		<?php if (!empty($cards)) { ?>
+		{% if !empty($cards)) { ?>
 			<legend>{{ text_credit_card }}</legend>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">{{ entry_card }}</label>

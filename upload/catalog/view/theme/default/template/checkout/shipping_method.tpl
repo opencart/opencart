@@ -1,15 +1,15 @@
-<?php if ($error_warning) { ?>
+{% if error_warning) { ?>
 <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
 <?php } ?>
-<?php if ($shipping_methods) { ?>
+{% if shipping_methods) { ?>
 <p>{{ text_shipping_method }}</p>
 <?php foreach ($shipping_methods as $shipping_method) { ?>
 <p><strong><?php echo $shipping_method['title']; ?></strong></p>
-<?php if (!$shipping_method['error']) { ?>
+{% if !$shipping_method['error']) { ?>
 <?php foreach ($shipping_method['quote'] as $quote) { ?>
 <div class="radio">
   <label>
-    <?php if ($quote['code'] == $code || !$code) { ?>
+    {% if quote['code'] == $code || !$code) { ?>
     <?php $code = $quote['code']; ?>
     <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
     <?php } else { ?>
@@ -25,7 +25,7 @@
 <?php } ?>
 <p><strong>{{ text_comments }}</strong></p>
 <p>
-  <textarea name="comment" rows="8" class="form-control"><?php echo $comment; ?></textarea>
+  <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
 </p>
 <div class="buttons">
   <div class="pull-right">

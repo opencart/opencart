@@ -14,18 +14,18 @@
 
 </style>
 
-<?php if ($shipping_required) { ?>
+{% if shipping_required) { ?>
 <div id="klarna-shipping-method">
   <h3>{{ text_choose_shipping_method }}</h3>
-  <?php if ($shipping_methods) { ?>
+  {% if shipping_methods) { ?>
   <p>{{ text_shipping_method }}</p>
   <?php foreach ($shipping_methods as $shipping_method) { ?>
   <p><strong><?php echo $shipping_method['title']; ?></strong></p>
-  <?php if (!$shipping_method['error']) { ?>
+  {% if !$shipping_method['error']) { ?>
   <?php foreach ($shipping_method['quote'] as $quote) { ?>
   <div class="radio">
 	<label>
-	  <?php if ($quote['code'] == $code || !$code) { ?>
+	  {% if quote['code'] == $code || !$code) { ?>
 	  <?php $code = $quote['code']; ?>
 	  <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
 	  <?php } else { ?>
@@ -46,19 +46,19 @@
     <div class="panel-heading">
         <h3 class="panel-title">Order Summary</h3>
     </div>
-    <?php if ($products || $vouchers) { ?>
+    {% if products || $vouchers) { ?>
         <div style="overflow: auto;">
         	<table class="table-klarna">
         	  <?php foreach ($products as $product) { ?>
         	  <tr>
         		<td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-        		  <?php if ($product['option']) { ?>
+        		  {% if product['option']) { ?>
         		  <?php foreach ($product['option'] as $option) { ?>
         		  <br />
         		  - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small>
         		  <?php } ?>
         		  <?php } ?>
-        		  <?php if ($product['recurring']) { ?>
+        		  {% if product['recurring']) { ?>
         		  <br />
         		  - <small>{{ text_recurring }} <?php echo $product['recurring']; ?></small>
         		  <?php } ?></td>

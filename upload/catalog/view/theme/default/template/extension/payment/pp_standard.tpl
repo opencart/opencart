@@ -1,49 +1,49 @@
-<?php if ($testmode) { ?>
+{% if testmode) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 <?php } ?>
-<form action="<?php echo $action; ?>" method="post">
+<form action="{{ action }}" method="post">
   <input type="hidden" name="cmd" value="_cart" />
   <input type="hidden" name="upload" value="1" />
-  <input type="hidden" name="business" value="<?php echo $business; ?>" />
+  <input type="hidden" name="business" value="{{ business }}" />
   <?php $i = 1; ?>
   <?php foreach ($products as $product) { ?>
-  <input type="hidden" name="item_name_<?php echo $i; ?>" value="<?php echo $product['name']; ?>" />
-  <input type="hidden" name="item_number_<?php echo $i; ?>" value="<?php echo $product['model']; ?>" />
-  <input type="hidden" name="amount_<?php echo $i; ?>" value="<?php echo $product['price']; ?>" />
-  <input type="hidden" name="quantity_<?php echo $i; ?>" value="<?php echo $product['quantity']; ?>" />
-  <input type="hidden" name="weight_<?php echo $i; ?>" value="<?php echo $product['weight']; ?>" />
+  <input type="hidden" name="item_name_{{ i }}" value="<?php echo $product['name']; ?>" />
+  <input type="hidden" name="item_number_{{ i }}" value="<?php echo $product['model']; ?>" />
+  <input type="hidden" name="amount_{{ i }}" value="<?php echo $product['price']; ?>" />
+  <input type="hidden" name="quantity_{{ i }}" value="<?php echo $product['quantity']; ?>" />
+  <input type="hidden" name="weight_{{ i }}" value="<?php echo $product['weight']; ?>" />
   <?php $j = 0; ?>
   <?php foreach ($product['option'] as $option) { ?>
-  <input type="hidden" name="on<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['name']; ?>" />
-  <input type="hidden" name="os<?php echo $j; ?>_<?php echo $i; ?>" value="<?php echo $option['value']; ?>" />
+  <input type="hidden" name="on{{ j }}_{{ i }}" value="<?php echo $option['name']; ?>" />
+  <input type="hidden" name="os{{ j }}_{{ i }}" value="<?php echo $option['value']; ?>" />
   <?php $j++; ?>
   <?php } ?>
   <?php $i++; ?>
   <?php } ?>
-  <?php if ($discount_amount_cart) { ?>
-    <input type="hidden" name="discount_amount_cart" value="<?php echo $discount_amount_cart; ?>" />
+  {% if discount_amount_cart) { ?>
+    <input type="hidden" name="discount_amount_cart" value="{{ discount_amount_cart }}" />
   <?php } ?>
-  <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>" />
-  <input type="hidden" name="first_name" value="<?php echo $first_name; ?>" />
-  <input type="hidden" name="last_name" value="<?php echo $last_name; ?>" />
-  <input type="hidden" name="address1" value="<?php echo $address1; ?>" />
-  <input type="hidden" name="address2" value="<?php echo $address2; ?>" />
-  <input type="hidden" name="city" value="<?php echo $city; ?>" />
-  <input type="hidden" name="zip" value="<?php echo $zip; ?>" />
+  <input type="hidden" name="currency_code" value="{{ currency_code }}" />
+  <input type="hidden" name="first_name" value="{{ first_name }}" />
+  <input type="hidden" name="last_name" value="{{ last_name }}" />
+  <input type="hidden" name="address1" value="{{ address1 }}" />
+  <input type="hidden" name="address2" value="{{ address2 }}" />
+  <input type="hidden" name="city" value="{{ city }}" />
+  <input type="hidden" name="zip" value="{{ zip }}" />
   <input type="hidden" name="country" value="{{ country }}" />
   <input type="hidden" name="address_override" value="0" />
   <input type="hidden" name="email" value="{{ email }}" />
-  <input type="hidden" name="invoice" value="<?php echo $invoice; ?>" />
-  <input type="hidden" name="lc" value="<?php echo $lc; ?>" />
+  <input type="hidden" name="invoice" value="{{ invoice }}" />
+  <input type="hidden" name="lc" value="{{ lc }}" />
   <input type="hidden" name="rm" value="2" />
   <input type="hidden" name="no_note" value="1" />
   <input type="hidden" name="no_shipping" value="1" />
   <input type="hidden" name="charset" value="utf-8" />
-  <input type="hidden" name="return" value="<?php echo $return; ?>" />
-  <input type="hidden" name="notify_url" value="<?php echo $notify_url; ?>" />
-  <input type="hidden" name="cancel_return" value="<?php echo $cancel_return; ?>" />
-  <input type="hidden" name="paymentaction" value="<?php echo $paymentaction; ?>" />
-  <input type="hidden" name="custom" value="<?php echo $custom; ?>" />
+  <input type="hidden" name="return" value="{{ return }}" />
+  <input type="hidden" name="notify_url" value="{{ notify_url }}" />
+  <input type="hidden" name="cancel_return" value="{{ cancel_return }}" />
+  <input type="hidden" name="paymentaction" value="{{ paymentaction }}" />
+  <input type="hidden" name="custom" value="{{ custom }}" />
   <input type="hidden" name="bn" value="OpenCart_2.0_WPS" />
   <div class="buttons">
     <div class="pull-right">

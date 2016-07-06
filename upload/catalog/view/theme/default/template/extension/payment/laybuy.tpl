@@ -1,4 +1,4 @@
-<form id="laybuy-form" action="<?php echo $action; ?>" method="post" class="form form-horizontal">
+<form id="laybuy-form" action="{{ action }}" method="post" class="form form-horizontal">
   <div>
     <h3>{{ heading_title }}</h3>
   </div>
@@ -8,7 +8,7 @@
     <div class="col-sm-3">
       <select name="INIT" id="input-down-payment" class="form-control">
         <?php foreach ($initial_payments as $percent) { ?>
-          <option value="<?php echo $percent; ?>"><?php echo $percent; ?>%</option>
+          <option value="{{ percent }}">{{ percent }}%</option>
         <?php } ?>
       </select>
     </div>
@@ -19,7 +19,7 @@
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
         <?php foreach ($months as $month) { ?>
-		  <?php if ($month['value'] == 3) { ?>
+		  {% if month['value'] == 3) { ?>
             <option value="<?php echo $month['value']; ?>" selected="selected"><?php echo $month['label']; ?></option>
 		  <?php } else { ?>
             <option value="<?php echo $month['value']; ?>"><?php echo $month['label']; ?></option>
@@ -64,8 +64,8 @@ $(document).ready(function() {
    		calculate($('#input-down-payment').val(), $('#input-months').val());
 	});
 
-	var symbol_left = "<?php echo $currency_symbol_left; ?>";
-	var symbol_right = "<?php echo $currency_symbol_right; ?>";
+	var symbol_left = "{{ currency_symbol_left }}";
+	var symbol_right = "{{ currency_symbol_right }}";
 	var order = <?php echo json_encode($order_info); ?>;
 	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
 

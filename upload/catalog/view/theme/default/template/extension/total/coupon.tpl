@@ -6,7 +6,7 @@
     <div class="panel-body">
       <label class="col-sm-2 control-label" for="input-coupon">{{ entry_coupon }}</label>
       <div class="input-group">
-        <input type="text" name="coupon" value="<?php echo $coupon; ?>" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control" />
+        <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control" />
         <span class="input-group-btn">
         <input type="button" value="{{ button_coupon }}" id="button-coupon" data-loading-text="{{ text_loading }}"  class="btn btn-primary" />
         </span></div>

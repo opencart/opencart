@@ -1,4 +1,4 @@
-<script src="<?php echo $merchant_script; ?>"></script>
+<script src="{{ merchant_script }}"></script>
 <style>
 .divido-calculator {
 	padding:10px 20px 20px 20px;
@@ -318,7 +318,7 @@
         color: #000;
 }
 </style>
-<div id="divido-checkout" data-divido-calculator class="divido-calculator divido-theme-blue" data-divido-amount="<?php echo $product_price; ?>" data-divido-plans="<?php echo $plan_list; ?>">
+<div id="divido-checkout" data-divido-calculator class="divido-calculator divido-theme-blue" data-divido-amount="{{ product_price }}" data-divido-plans="{{ plan_list }}">
     <h1>
         <a href="https://www.divido.com" target="_blank" class="divido-logo divido-logo-sm" style="float:right;">Divido</a>
         {{ text_checkout_title }}

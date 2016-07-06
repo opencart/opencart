@@ -5,14 +5,14 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($success) { ?>
+  {% if success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
-  <?php if ($error_warning) { ?>
+  {% if error_warning) { ?>
   <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -21,7 +21,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ text_address_book }}</h2>
-      <?php if ($addresses) { ?>
+      {% if addresses) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <?php foreach ($addresses as $result) { ?>
@@ -36,8 +36,8 @@
       <p>{{ text_empty }}</p>
       <?php } ?>
       <div class="buttons clearfix">
-        <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default">{{ button_back }}</a></div>
-        <div class="pull-right"><a href="<?php echo $add; ?>" class="btn btn-primary">{{ button_new_address }}</a></div>
+        <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
+        <div class="pull-right"><a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

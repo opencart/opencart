@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -18,25 +18,25 @@
       <label class="control-label" for="input-search">{{ entry_search }}</label>
       <div class="row">
         <div class="col-sm-4">
-          <input type="text" name="search" value="<?php echo $search; ?>" placeholder="{{ text_keyword }}" id="input-search" class="form-control" />
+          <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control" />
         </div>
         <div class="col-sm-3">
           <select name="category_id" class="form-control">
             <option value="0">{{ text_category }}</option>
             <?php foreach ($categories as $category_1) { ?>
-            <?php if ($category_1['category_id'] == $category_id) { ?>
+            {% if category_1['category_id'] == $category_id) { ?>
             <option value="<?php echo $category_1['category_id']; ?>" selected="selected"><?php echo $category_1['name']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $category_1['category_id']; ?>"><?php echo $category_1['name']; ?></option>
             <?php } ?>
             <?php foreach ($category_1['children'] as $category_2) { ?>
-            <?php if ($category_2['category_id'] == $category_id) { ?>
+            {% if category_2['category_id'] == $category_id) { ?>
             <option value="<?php echo $category_2['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $category_2['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_2['name']; ?></option>
             <?php } ?>
             <?php foreach ($category_2['children'] as $category_3) { ?>
-            <?php if ($category_3['category_id'] == $category_id) { ?>
+            {% if category_3['category_id'] == $category_id) { ?>
             <option value="<?php echo $category_3['category_id']; ?>" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $category_3['category_id']; ?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $category_3['name']; ?></option>
@@ -48,7 +48,7 @@
         </div>
         <div class="col-sm-3">
           <label class="checkbox-inline">
-            <?php if ($sub_category) { ?>
+            {% if sub_category) { ?>
             <input type="checkbox" name="sub_category" value="1" checked="checked" />
             <?php } else { ?>
             <input type="checkbox" name="sub_category" value="1" />
@@ -58,7 +58,7 @@
       </div>
       <p>
         <label class="checkbox-inline">
-          <?php if ($description) { ?>
+          {% if description) { ?>
           <input type="checkbox" name="description" value="1" id="description" checked="checked" />
           <?php } else { ?>
           <input type="checkbox" name="description" value="1" id="description" />
@@ -67,7 +67,7 @@
       </p>
       <input type="button" value="{{ button_search }}" id="button-search" class="btn btn-primary" />
       <h2>{{ text_search }}</h2>
-      <?php if ($products) { ?>
+      {% if products) { ?>
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
           <div class="btn-group btn-group-sm">
@@ -85,7 +85,7 @@
             <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
             <select id="input-sort" class="form-control" onchange="location = this.value;">
               <?php foreach ($sorts as $sorts) { ?>
-              <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+              {% if sorts['value'] == $sort . '-' . $order) { ?>
               <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
@@ -99,7 +99,7 @@
             <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
             <select id="input-limit" class="form-control" onchange="location = this.value;">
               <?php foreach ($limits as $limits) { ?>
-              <?php if ($limits['value'] == $limit) { ?>
+              {% if limits['value'] == $limit) { ?>
               <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
@@ -118,22 +118,22 @@
               <div class="caption">
                 <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
                 <p><?php echo $product['description']; ?></p>
-                <?php if ($product['price']) { ?>
+                {% if product['price']) { ?>
                 <p class="price">
-                  <?php if (!$product['special']) { ?>
+                  {% if !$product['special']) { ?>
                   <?php echo $product['price']; ?>
                   <?php } else { ?>
                   <span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
                   <?php } ?>
-                  <?php if ($product['tax']) { ?>
+                  {% if product['tax']) { ?>
                   <span class="price-tax">{{ text_tax }} <?php echo $product['tax']; ?></span>
                   <?php } ?>
                 </p>
                 <?php } ?>
-                <?php if ($product['rating']) { ?>
+                {% if product['rating']) { ?>
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
-                  <?php if ($product['rating'] < $i) { ?>
+                  {% if product['rating'] < $i) { ?>
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   <?php } else { ?>
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>

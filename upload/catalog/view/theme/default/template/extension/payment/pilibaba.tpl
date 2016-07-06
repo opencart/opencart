@@ -1,29 +1,29 @@
-<?php if ($auto_submit) { ?>
+{% if auto_submit) { ?>
   <!DOCTYPE html>
   <html>
   <head></head>
   <body>
 <?php } ?>
 
-<form action="<?php echo $url; ?>" id="pilibaba-form" method="post">
-  <input type="hidden" name="version" value="<?php echo $version; ?>">
-  <input type="hidden" name="merchantNo" value="<?php echo $merchantNo; ?>">
-  <input type="hidden" name="currencyType" value="<?php echo $currencyType; ?>">
-  <input type="hidden" name="orderNo" value="<?php echo $orderNo; ?>">
-  <input type="hidden" name="orderAmount" value="<?php echo $orderAmount; ?>">
-  <input type="hidden" name="orderTime" value="<?php echo $orderTime; ?>">
-  <input type="hidden" name="pageUrl" value="<?php echo $pageUrl; ?>">
-  <input type="hidden" name="serverUrl" value="<?php echo $serverUrl; ?>">
-  <input type="hidden" name="redirectUrl" value="<?php echo $redirectUrl; ?>">
-  <input type="hidden" name="notifyType" value="<?php echo $notifyType; ?>">
-  <input type="hidden" name="shipper" value="<?php echo $shipper; ?>">
-  <input type="hidden" name="tax" value="<?php echo $tax; ?>">
-  <input type="hidden" name="signType" value="<?php echo $signType; ?>">
-  <input type="hidden" name="signMsg" value="<?php echo $signMsg; ?>">
-  <input type="hidden" name="goodsList" value="<?php echo $goodsList; ?>">
+<form action="{{ url }}" id="pilibaba-form" method="post">
+  <input type="hidden" name="version" value="{{ version }}">
+  <input type="hidden" name="merchantNo" value="{{ merchantNo }}">
+  <input type="hidden" name="currencyType" value="{{ currencyType }}">
+  <input type="hidden" name="orderNo" value="{{ orderNo }}">
+  <input type="hidden" name="orderAmount" value="{{ orderAmount }}">
+  <input type="hidden" name="orderTime" value="{{ orderTime }}">
+  <input type="hidden" name="pageUrl" value="{{ pageUrl }}">
+  <input type="hidden" name="serverUrl" value="{{ serverUrl }}">
+  <input type="hidden" name="redirectUrl" value="{{ redirectUrl }}">
+  <input type="hidden" name="notifyType" value="{{ notifyType }}">
+  <input type="hidden" name="shipper" value="{{ shipper }}">
+  <input type="hidden" name="tax" value="{{ tax }}">
+  <input type="hidden" name="signType" value="{{ signType }}">
+  <input type="hidden" name="signMsg" value="{{ signMsg }}">
+  <input type="hidden" name="goodsList" value="{{ goodsList }}">
 </form>
 
-<?php if (!$auto_submit) { ?>
+{% if !$auto_submit) { ?>
   <div class="buttons">
     <div class="pull-right">
       <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
@@ -39,7 +39,7 @@
 //--></script>
 <?php } ?>
 
-<?php if ($auto_submit) { ?>
+{% if auto_submit) { ?>
   {{ text_redirecting }}
 
   <script>

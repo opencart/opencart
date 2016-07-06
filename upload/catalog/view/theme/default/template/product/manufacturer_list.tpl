@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <?php if ($categories) { ?>
+      {% if categories) { ?>
       <p><strong>{{ text_index }}</strong>
         <?php foreach ($categories as $category) { ?>
         &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
@@ -23,7 +23,7 @@
       </p>
       <?php foreach ($categories as $category) { ?>
       <h2 id="<?php echo $category['name']; ?>"><?php echo $category['name']; ?></h2>
-      <?php if ($category['manufacturer']) { ?>
+      {% if category['manufacturer']) { ?>
       <?php foreach (array_chunk($category['manufacturer'], 4) as $manufacturers) { ?>
       <div class="row">
         <?php foreach ($manufacturers as $manufacturer) { ?>

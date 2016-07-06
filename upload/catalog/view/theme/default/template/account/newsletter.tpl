@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -15,12 +15,12 @@
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
-              <?php if ($newsletter) { ?>
+              {% if newsletter) { ?>
               <label class="radio-inline">
                 <input type="radio" name="newsletter" value="1" checked="checked" />
                 {{ text_yes }} </label>
@@ -39,7 +39,7 @@
           </div>
         </fieldset>
         <div class="buttons clearfix">
-          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default">{{ button_back }}</a></div>
+          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
           <div class="pull-right">
             <input type="submit" value="{{ button_continue }}" class="btn btn-primary" />
           </div>

@@ -4,17 +4,17 @@
     <p>{{ text_checkout }}</p>
     <div class="radio">
       <label>
-        <?php if ($account == 'register') { ?>
+        {% if account == 'register') { ?>
         <input type="radio" name="account" value="register" checked="checked" />
         <?php } else { ?>
         <input type="radio" name="account" value="register" />
         <?php } ?>
         {{ text_register }}</label>
     </div>
-    <?php if ($checkout_guest) { ?>
+    {% if checkout_guest) { ?>
     <div class="radio">
       <label>
-        <?php if ($account == 'guest') { ?>
+        {% if account == 'guest') { ?>
         <input type="radio" name="account" value="guest" checked="checked" />
         <?php } else { ?>
         <input type="radio" name="account" value="guest" />
@@ -35,7 +35,7 @@
     <div class="form-group">
       <label class="control-label" for="input-password">{{ entry_password }}</label>
       <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-      <a href="<?php echo $forgotten; ?>">{{ text_forgotten }}</a></div>
+      <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
     <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>

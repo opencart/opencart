@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row">{{ column_left }}
-    <?php if ($column_left && $column_right) { ?>
+    {% if column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
     <?php $class = 'col-sm-9'; ?>
@@ -42,9 +42,9 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-left"><?php echo $product; ?></td>
-              <td class="text-left"><?php echo $model; ?></td>
-              <td class="text-right"><?php echo $quantity; ?></td>
+              <td class="text-left">{{ product }}</td>
+              <td class="text-left">{{ model }}</td>
+              <td class="text-right">{{ quantity }}</td>
             </tr>
           </tbody>
         </table>
@@ -61,14 +61,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-left"><?php echo $reason; ?></td>
-              <td class="text-left"><?php echo $opened; ?></td>
-              <td class="text-left"><?php echo $action; ?></td>
+              <td class="text-left">{{ reason }}</td>
+              <td class="text-left">{{ opened }}</td>
+              <td class="text-left">{{ action }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <?php if ($comment) { ?>
+      {% if comment) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -78,7 +78,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-left"><?php echo $comment; ?></td>
+              <td class="text-left">{{ comment }}</td>
             </tr>
           </tbody>
         </table>
@@ -95,7 +95,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($histories) { ?>
+            {% if histories) { ?>
             <?php foreach ($histories as $history) { ?>
             <tr>
               <td class="text-left"><?php echo $history['date_added']; ?></td>

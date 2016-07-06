@@ -1,7 +1,7 @@
 <form class="form-horizontal" action="https://secure.bluepay.com/interfaces/bp10emu" method=POST>
     <fieldset id="payment">
         <legend>{{ text_credit_card }}</legend>
-		<?php if (!empty($existing_cards)) { ?>
+		{% if !empty($existing_cards)) { ?>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">{{ entry_card }}</label>
 				<div class="col-sm-10">
@@ -66,7 +66,7 @@
                         <input type="text" name="CVCCVV2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
                     </div>
                 </div>
-				<?php if ($bluepay_redirect_card) { ?>
+				{% if bluepay_redirect_card) { ?>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 						<div class="col-sm-2">
@@ -85,7 +85,7 @@
 </form>
 <script type="text/javascript"><!--
     $(document).ready(function() {
-<?php if (!empty($existing_cards)) { ?>
+{% if !empty($existing_cards)) { ?>
 			$('#card-new input').prop('disabled', true);
 			$('#card-new input').prop('disabled', true);
 			$('#card-new select').prop('disabled', true);

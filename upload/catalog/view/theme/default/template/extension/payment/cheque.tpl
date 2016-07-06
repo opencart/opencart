@@ -1,9 +1,9 @@
 <h2>{{ text_instruction }}</h2>
 <div class="well well-sm">
   <p><b>{{ text_payable }}</b></p>
-  <p><?php echo $payable; ?></p>
+  <p>{{ payable }}</p>
   <b>{{ text_address }}</b><br />
-  <p><?php echo $address; ?></p>
+  <p>{{ address }}</p>
   <p>{{ text_payment }}</p>
 </div>
 <div class="buttons">

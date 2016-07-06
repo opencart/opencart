@@ -1,7 +1,7 @@
-<?php if ($modules) { ?>
+{% if modules) { ?>
 <aside id="column-right" class="col-sm-3 hidden-xs">
   <?php foreach ($modules as $module) { ?>
-  <?php echo $module; ?>
+  {{ module }}
   <?php } ?>
 </aside>
 <?php } ?>

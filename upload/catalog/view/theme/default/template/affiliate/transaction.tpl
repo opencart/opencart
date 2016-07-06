@@ -13,16 +13,16 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
-      <p><?php echo $text_balance; ?> <strong><?php echo $balance; ?></strong>.</p>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_balance; ?> <strong><?php echo $balance }}</strong>.</p>
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_date_added; ?></td>
-              <td class="text-left"><?php echo $column_description; ?></td>
-              <td class="text-right"><?php echo $column_amount; ?></td>
+              <td class="text-left">{{ column_date_added; }}</td>
+              <td class="text-left">{{ column_description; }}</td>
+              <td class="text-right">{{ column_amount; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="text-center" colspan="5"><?php echo $text_empty; ?></td>
+              <td class="text-center" colspan="5">{{ text_empty }}</td>
             </tr>
             <?php } ?>
           </tbody>
@@ -44,7 +44,7 @@
       </div>
       <div class="text-right">{{ pagination }}</div>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

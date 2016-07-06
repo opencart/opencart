@@ -14,10 +14,10 @@
 		<div style="clear: both;"></div>
         <div class="buttons">
             <div class="pull-left">
-                <a href="<?php echo $back; ?>" class="btn btn-primary"><?php echo $text_back; ?></a>
+                <a href="<?php echo $back; ?>" class="btn btn-primary">{{ text_back }}</a>
             </div>
             <div class="pull-right">
-                <input class="btn btn-primary" id="continue-button" type="submit" value="<?php echo $text_continue; ?>" />
+                <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}" />
             </div>
         </div>
         <input type="hidden" name="payment_method" value="" />
@@ -32,9 +32,9 @@
 			$('div.warning').remove();
 
 			if ($("input[name='payment_method']").val() == '1') {
-				location = '<?php echo $continue; ?>';
+				location = '{{ continue }}';
 			} else {
-				$('#walletWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_payment_method; ?></div>');
+				$('#walletWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>{{ error_payment_method }}</div>');
 			}
 		});
 

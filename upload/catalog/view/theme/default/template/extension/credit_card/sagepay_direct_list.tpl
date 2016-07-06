@@ -6,10 +6,10 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   <?php } ?>
   <div class="row">{{ column_left }}
     <?php if ($column_left && $column_right) { ?>
@@ -19,15 +19,15 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_type; ?></td>
-              <td class="text-left"><?php echo $column_digits; ?></td>
-              <td class="text-right"><?php echo $column_expiry; ?></td>
+              <td class="text-left">{{ column_type; }}</td>
+              <td class="text-left">{{ column_digits; }}</td>
+              <td class="text-right">{{ column_expiry; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -37,13 +37,13 @@
               <td class="text-left"><?php echo $card['type']; ?></td>
               <td class="text-left"><?php echo $card['digits']; ?></td>
               <td class="text-right"><?php echo $card['expiry']; ?></td>
-			  <td class="text-right"><a href="<?php echo $delete . $card['card_id']; ?>" class="btn btn-danger"><?php echo $button_delete; ?></a></td>
+			  <td class="text-right"><a href="<?php echo $delete . $card['card_id']; ?>" class="btn btn-danger">{{ button_delete }}</a></td>
 
             </tr>
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="text-center" colspan="5"><?php echo $text_empty; ?></td>
+              <td class="text-center" colspan="5">{{ text_empty }}</td>
             </tr>
             <?php } ?>
           </tbody>
@@ -54,8 +54,8 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
 	  <div class="buttons clearfix">
-        <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
-        <div class="pull-right"><a href="<?php echo $add; ?>" class="btn btn-primary"><?php echo $button_new_card; ?></a></div>
+        <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default">{{ button_back }}</a></div>
+        <div class="pull-right"><a href="<?php echo $add; ?>" class="btn btn-primary">{{ button_new_card }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

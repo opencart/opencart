@@ -1,10 +1,10 @@
 <form action="https://payments.securetrading.net/process/payments/details" method="POST" class="form-horizontal">
     <fieldset id="payment">
-        <legend><?php echo $text_payment_details; ?></legend>
+        <legend>{{ text_payment_details }}</legend>
 
         <input type="hidden" name="sitereference" value="<?php echo $site_reference; ?>" />
         <input type="hidden" name="currencyiso3a" value="<?php echo $currency; ?>" />
-        <input type="hidden" name="mainamount" value="<?php echo $total; ?>" />
+        <input type="hidden" name="mainamount" value="{{ total }}" />
         <input type="hidden" name="version" value="1" />
         <input type="hidden" name="orderreference" value="<?php echo $order_info['order_id']; ?>" />
         <input type="hidden" name="settlestatus" value="<?php echo $settle_status; ?>" />
@@ -41,7 +41,7 @@
         <?php } ?>
 
         <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_card_type; ?></label>
+            <label class="col-sm-2 control-label" for="input-type">{{ entry_card_type }}</label>
             <div class="col-sm-10">
                 <select name="paymenttypedescription" id="input-type" class="form-control">
                     <?php foreach ($cards as $key => $title) { ?>
@@ -55,7 +55,7 @@
             <div class="col-sm-12">
                 <div class="buttons">
                     <div class="pull-right">
-                        <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+                        <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
                     </div>
                 </div>
             </div>

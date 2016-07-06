@@ -1,14 +1,14 @@
-<h2><?php echo $text_instruction; ?></h2>
+<h2>{{ text_instruction }}</h2>
 <div class="well well-sm">
-  <p><b><?php echo $text_payable; ?></b></p>
+  <p><b>{{ text_payable }}</b></p>
   <p><?php echo $payable; ?></p>
-  <b><?php echo $text_address; ?></b><br />
+  <b>{{ text_address }}</b><br />
   <p><?php echo $address; ?></p>
-  <p><?php echo $text_payment; ?></p>
+  <p>{{ text_payment }}</p>
 </div>
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}" />
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -24,7 +24,7 @@ $('#button-confirm').on('click', function() {
 			$('#button-confirm').button('reset');
 		},
 		success: function() {
-			location = '<?php echo $continue; ?>';
+			location = '{{ continue }}';
 		}
 	});
 });

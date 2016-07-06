@@ -13,31 +13,31 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" colspan="2"><?php echo $text_return_detail; ?></td>
+            <td class="text-left" colspan="2">{{ text_return_detail }}</td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%;"><b><?php echo $text_return_id; ?></b> #<?php echo $return_id; ?><br />
-              <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-            <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
-              <b><?php echo $text_date_ordered; ?></b> <?php echo $date_ordered; ?></td>
+            <td class="text-left" style="width: 50%;"><b>{{ text_return_id; ?></b> #<?php echo $return_id }}<br />
+              <b>{{ text_date_added; ?></b> <?php echo $date_added }}</td>
+            <td class="text-left" style="width: 50%;"><b>{{ text_order_id; ?></b> #<?php echo $order_id }}<br />
+              <b>{{ text_date_ordered; ?></b> <?php echo $date_ordered }}</td>
           </tr>
         </tbody>
       </table>
-      <h3><?php echo $text_product; ?></h3>
+      <h3>{{ text_product }}</h3>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_product; ?></td>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_model; ?></td>
-              <td class="text-right" style="width: 33.3%;"><?php echo $column_quantity; ?></td>
+              <td class="text-left" style="width: 33.3%;">{{ column_product; }}</td>
+              <td class="text-left" style="width: 33.3%;">{{ column_model; }}</td>
+              <td class="text-right" style="width: 33.3%;">{{ column_quantity; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -49,14 +49,14 @@
           </tbody>
         </table>
       </div>
-      <h3><?php echo $text_reason; ?></h3>
+      <h3>{{ text_reason }}</h3>
       <div class="table-responsive">
         <table class="list table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_reason; ?></td>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_opened; ?></td>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_action; ?></td>
+              <td class="text-left" style="width: 33.3%;">{{ column_reason; }}</td>
+              <td class="text-left" style="width: 33.3%;">{{ column_opened; }}</td>
+              <td class="text-left" style="width: 33.3%;">{{ column_action; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +73,7 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $text_comment; ?></td>
+              <td class="text-left">{{ text_comment }}</td>
             </tr>
           </thead>
           <tbody>
@@ -84,14 +84,14 @@
         </table>
       </div>
       <?php } ?>
-      <h3><?php echo $text_history; ?></h3>
+      <h3>{{ text_history }}</h3>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_date_added; ?></td>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_status; ?></td>
-              <td class="text-left" style="width: 33.3%;"><?php echo $column_comment; ?></td>
+              <td class="text-left" style="width: 33.3%;">{{ column_date_added; }}</td>
+              <td class="text-left" style="width: 33.3%;">{{ column_status; }}</td>
+              <td class="text-left" style="width: 33.3%;">{{ column_comment; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -105,14 +105,14 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
+              <td colspan="3" class="text-center">{{ text_no_results }}</td>
             </tr>
             <?php } ?>
           </tbody>
         </table>
       </div>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

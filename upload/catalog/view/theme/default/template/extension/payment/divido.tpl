@@ -320,41 +320,41 @@
 <div id="divido-checkout" data-divido-calculator class="divido-calculator divido-theme-blue" data-divido-amount="<?php echo $grand_total; ?>" data-divido-plans="<?php echo $plan_list; ?>">
     <h1>
         <a href="https://www.divido.com" target="_blank" class="divido-logo divido-logo-sm" style="float:right;">Divido</a>
-        <?php echo $text_checkout_title; ?>
+        {{ text_checkout_title }}
     </h1>
     <div style="clear:both;"></div>
     <dl>
-        <dt><span data-divido-choose-finance data-divido-label="<?php echo $text_choose_plan; ?>" data-divido-form="divido_finance"></span></dt>
-        <dd><span class="divido-deposit" data-divido-choose-deposit data-divido-label="<?php echo $text_choose_deposit; ?>" data-divido-form="divido_deposit"></span></dd>
+        <dt><span data-divido-choose-finance data-divido-label="{{ text_choose_plan }}" data-divido-form="divido_finance"></span></dt>
+        <dd><span class="divido-deposit" data-divido-choose-deposit data-divido-label="{{ text_choose_deposit }}" data-divido-form="divido_deposit"></span></dd>
     </dl>
     <div class="description">
         <strong>
-        <span data-divido-agreement-duration></span> <?php echo $text_monthly_payments; ?> <span data-divido-monthly-instalment></span>
+        <span data-divido-agreement-duration></span> {{ text_monthly_payments }} <span data-divido-monthly-instalment></span>
         </strong>
     </div>
     <div class="divido-info">
         <dl>
-            <dt><?php echo $text_term; ?></dt>
-            <dd><span data-divido-agreement-duration></span> <?php echo $text_months; ?></dd>
-            <dt><?php echo $text_monthly_installment; ?></dt>
+            <dt>{{ text_term }}</dt>
+            <dd><span data-divido-agreement-duration></span> {{ text_months }}</dd>
+            <dt>{{ text_monthly_installment }}</dt>
             <dd><span data-divido-monthly-instalment></span></dd>
-            <dt><?php echo $text_deposit; ?></dt>
+            <dt>{{ text_deposit }}</dt>
             <dd><span data-divido-deposit></span></dd>
-            <dt><?php echo $text_credit_amount; ?></dt>
+            <dt>{{ text_credit_amount }}</dt>
             <dd><span data-divido-credit-amount-rounded></span></dd>
-            <dt><?php echo $text_amount_payable; ?></dt>
+            <dt>{{ text_amount_payable }}</dt>
             <dd><span data-divido-total-payable-rounded></span></dd>
-            <dt><?php echo $text_total_interest; ?></dt>
+            <dt>{{ text_total_interest }}</dt>
             <dd><span data-divido-interest-rate></span></dd>
         </dl>
     </div>
     <div class="clear"></div>
-    <p><?php echo $text_redirection; ?></p>
+    <p>{{ text_redirection }}</p>
 </div>
 
 <div class="buttons">
     <div class="pull-right">
-        <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
+        <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}" />
     </div>
 </div>
 

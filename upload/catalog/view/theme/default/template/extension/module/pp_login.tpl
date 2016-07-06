@@ -9,7 +9,7 @@ paypal.use(['login'], function(login) {
 		'scopes': '<?php echo $scopes; ?>',
 		'containerid': 'pp_login_container',
 		'locale': '<?php echo $locale; ?>',
-		'theme': '<?php echo $button_colour; ?>',
+		'theme': '{{ button_colour }}',
 		'returnurl': '<?php echo $return_url; ?>'
 	});
 });

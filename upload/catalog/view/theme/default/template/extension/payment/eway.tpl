@@ -3,10 +3,10 @@
 <?php } else { ?>
 	<form action="<?php echo $action; ?>" method="POST" class="form-horizontal" id="eway-payment-form">
 	  <fieldset id="payment">
-		<legend><?php echo $text_credit_card; ?></legend>
+		<legend>{{ text_credit_card }}</legend>
 		<input type="hidden" name="EWAY_ACCESSCODE" value="<?php echo $AccessCode; ?>" />
 		<?php if (isset($text_testing)) { ?>
-			<div class="alert alert-warning"><?php echo $text_testing; ?></div>
+			<div class="alert alert-warning">{{ text_testing }}</div>
 		<?php } ?>
 		<div class="form-group">
 		  <div class="col-sm-12">
@@ -40,29 +40,29 @@
 		  </div>
 		</div>
 		<?php if ($payment_type['paypal'] == 1) { ?>
-			<p id="tip-paypal" style="display:none;"><?php echo $text_type_help; ?><?php echo $text_card_type_pp; ?></p>
+			<p id="tip-paypal" style="display:none;">{{ text_type_help; ?><?php echo $text_card_type_pp }}</p>
 		<?php } ?>
 		<?php if ($payment_type['masterpass'] == 1) { ?>
-			<p id="tip-masterpass" style="display:none;"><?php echo $text_type_help; ?><?php echo $text_card_type_mp; ?></p>
+			<p id="tip-masterpass" style="display:none;">{{ text_type_help; ?><?php echo $text_card_type_mp }}</p>
 		<?php } ?>
 		<?php if ($payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
 			<div id="creditcard-info">
 			  <div class="form-group required">
-				<label class="col-sm-2 control-label" for="eway-cardname"><?php echo $entry_cc_name; ?></label>
+				<label class="col-sm-2 control-label" for="eway-cardname">{{ entry_cc_name }}</label>
 				<div class="col-sm-10">
-				  <input name="EWAY_CARDNAME" type="text" value="" id="eway-cardname" placeholder="<?php echo $entry_cc_name; ?>"  autocomplete="off" class="form-control"/>
+				  <input name="EWAY_CARDNAME" type="text" value="" id="eway-cardname" placeholder="{{ entry_cc_name }}"  autocomplete="off" class="form-control"/>
 				  <span id="ewaycard-error" class="text-danger"></span>
 				</div>
 			  </div>
 			  <div class="form-group required">
-				<label class="col-sm-2 control-label" for="eway-cardnumber"><?php echo $entry_cc_number; ?></label>
+				<label class="col-sm-2 control-label" for="eway-cardnumber">{{ entry_cc_number }}</label>
 				<div class="col-sm-10">
-				  <input name="EWAY_CARDNUMBER" type="text" maxlength="19" id="eway-cardnumber" value="" placeholder="<?php echo $entry_cc_number; ?>"  autocomplete="off" class="form-control" pattern="\d*" />
+				  <input name="EWAY_CARDNUMBER" type="text" maxlength="19" id="eway-cardnumber" value="" placeholder="{{ entry_cc_number }}"  autocomplete="off" class="form-control" pattern="\d*" />
 				  <span id="ewaynumber-error" class="text-danger"></span>
 				</div>
 			  </div>
 			  <div class="form-group required">
-				<label class="col-sm-2 control-label" for="eway-card-expiry-month"><?php echo $entry_cc_expire_date; ?></label>
+				<label class="col-sm-2 control-label" for="eway-card-expiry-month">{{ entry_cc_expire_date }}</label>
 				<div class="col-sm-2">
 				  <select name="EWAY_CARDEXPIRYMONTH" id="eway-card-expiry-month" class="form-control">
 					<?php foreach ($months as $month) { ?>
@@ -79,9 +79,9 @@
 				</div>
 			  </div>
 			  <div class="form-group required">
-				<label class="col-sm-2 control-label" for="eway-cardcvn"><?php echo $entry_cc_cvv2; ?></label>
+				<label class="col-sm-2 control-label" for="eway-cardcvn">{{ entry_cc_cvv2 }}</label>
 				<div class="col-sm-10">
-				  <input name="EWAY_CARDCVN" type="text" maxlength="4" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="eway-cardcvn" autocomplete="off" class="form-control" pattern="\d*" />
+				  <input name="EWAY_CARDCVN" type="text" maxlength="4" value="" placeholder="{{ entry_cc_cvv2 }}" id="eway-cardcvn" autocomplete="off" class="form-control" pattern="\d*" />
 				  <span id="cvn-details" class="help">
 					<?php echo $help_cvv; ?>
 					<?php if (in_array('amex', $payment_type)) { ?>
@@ -97,7 +97,7 @@
 	</form>
 	<div class="buttons">
 	  <div class="pull-right">
-		<input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+		<input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 	  </div>
 	</div>
 	<script language="JavaScript" type="text/javascript" >//<!--

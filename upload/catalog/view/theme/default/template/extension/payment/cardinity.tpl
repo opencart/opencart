@@ -4,19 +4,19 @@
 </div>
 <form class="form-horizontal" id="payment">
   <div class="form-group required">
-    <label class="col-sm-2 control-label" for="input-holder"><?php echo $entry_holder; ?></label>
+    <label class="col-sm-2 control-label" for="input-holder">{{ entry_holder }}</label>
     <div class="col-sm-10">
-	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="32" name="holder" placeholder="<?php echo $entry_holder; ?>" id="input-holder" class="form-control" />
+	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="32" name="holder" placeholder="{{ entry_holder }}" id="input-holder" class="form-control" />
     </div>
   </div>
   <div class="form-group required">
-    <label class="col-sm-2 control-label" for="input-pan"><?php echo $entry_pan; ?></label>
+    <label class="col-sm-2 control-label" for="input-pan">{{ entry_pan }}</label>
     <div class="col-sm-10">
-	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="19" name="pan" placeholder="<?php echo $entry_pan; ?>" id="input-pan" class="form-control" />
+	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="19" name="pan" placeholder="{{ entry_pan }}" id="input-pan" class="form-control" />
     </div>
   </div>
   <div id="expiry-date-group" class="form-group required">
-    <label class="col-sm-2 control-label"><?php echo $entry_expires; ?></label>
+    <label class="col-sm-2 control-label">{{ entry_expires }}</label>
     <div class="col-sm-3">
       <select name="exp_month" class="form-control">
         <?php foreach ($months as $month) { ?>
@@ -33,14 +33,14 @@
     </div>
   </div>
   <div class="form-group required">
-    <label class="col-sm-2 control-label" for="input-cvc"><?php echo $entry_cvc; ?></label>
+    <label class="col-sm-2 control-label" for="input-cvc">{{ entry_cvc }}</label>
     <div class="col-sm-10">
-	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="4" name="cvc" placeholder="<?php echo $entry_cvc; ?>" id="input-cvc" class="form-control" />
+	  <input type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="4" name="cvc" placeholder="{{ entry_cvc }}" id="input-cvc" class="form-control" />
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-1 col-sm-offset-2">
-      <input id="button-confirm" type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+      <input id="button-confirm" type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
     </div>
   </div>
 </form>

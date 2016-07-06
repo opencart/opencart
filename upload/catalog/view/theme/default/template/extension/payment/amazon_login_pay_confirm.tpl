@@ -27,11 +27,11 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td class="text-left"><?php echo $column_name; ?></td>
-					<td class="text-left"><?php echo $column_model; ?></td>
-					<td class="text-right"><?php echo $column_quantity; ?></td>
-					<td class="text-right"><?php echo $column_price; ?></td>
-					<td class="text-right"><?php echo $column_total; ?></td>
+					<td class="text-left">{{ column_name; }}</td>
+					<td class="text-left">{{ column_model; }}</td>
+					<td class="text-right">{{ column_quantity; }}</td>
+					<td class="text-right">{{ column_price; }}</td>
+					<td class="text-right">{{ column_total; }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -61,10 +61,10 @@
 	</div>
 	<div class="buttons">
 		<div class="pull-left">
-			<a href="<?php echo $back; ?>" class="btn btn-primary"><?php echo $text_back; ?></a>
+			<a href="<?php echo $back; ?>" class="btn btn-primary">{{ text_back }}</a>
 		</div>
 		<div class="pull-right">
-			<input class="btn btn-primary" id="confirm-button" type="submit" value="<?php echo $text_confirm; ?>" />
+			<input class="btn btn-primary" id="confirm-button" type="submit" value="{{ text_confirm }}" />
 		</div>
 	</div>
 	{{ content_bottom }}

@@ -19,5 +19,5 @@
 <?php } ?>
 <div class="text-right">{{ pagination }}</div>
 <?php } else { ?>
-<p><?php echo $text_no_reviews; ?></p>
+<p>{{ text_no_reviews }}</p>
 <?php } ?>

@@ -11,12 +11,12 @@
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -28,14 +28,14 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
       <?php if ($coupon || $voucher || $reward) { ?>
       <div class="panel-group" id="accordion"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       <?php } ?>
       <?php if($has_shipping) { ?>
       <?php if(!isset($shipping_methods)) { ?>
-      <div class="warning"><?php echo $error_no_shipping; ?></div>
+      <div class="warning">{{ error_no_shipping }}</div>
       <?php } else { ?>
       <form action="<?php echo $action_shipping; ?>" method="post" id="shipping_form">
         <div class="panel-body">
@@ -66,11 +66,11 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_name; ?></td>
-              <td class="text-left"><?php echo $column_model; ?></td>
-              <td class="text-center"><?php echo $column_quantity; ?></td>
-              <td class="text-right"><?php echo $column_price; ?></td>
-              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-left">{{ column_name; }}</td>
+              <td class="text-left">{{ column_model; }}</td>
+              <td class="text-center">{{ column_quantity; }}</td>
+              <td class="text-right">{{ column_price; }}</td>
+              <td class="text-right">{{ column_total; }}</td>
             </tr>
           </thead>
           <tbody>
@@ -83,7 +83,7 @@
                 <?php } ?>
                 <?php if ($product['recurring']) { ?>
                 <br />
-                <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $product['recurring_description']; ?></small>
+                <span class="label label-info">{{ text_recurring_item }}</span> <small><?php echo $product['recurring_description']; ?></small>
                 <?php } ?></td>
               <td class="text-left"><?php echo $product['model']; ?></td>
               <td class="text-center"><?php echo $product['quantity']; ?></td>
@@ -117,7 +117,7 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="pull-right"><a href="<?php echo $action_confirm; ?>" class="btn btn-primary"><?php echo $button_confirm; ?></a></div>
+        <div class="pull-right"><a href="<?php echo $action_confirm; ?>" class="btn btn-primary">{{ button_confirm }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

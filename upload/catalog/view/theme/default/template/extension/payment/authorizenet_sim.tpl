@@ -35,7 +35,7 @@
   <input type="hidden" name="x_solution_id" value="A1000015" />
   <div class="buttons">
     <div class="pull-right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
     </div>
   </div>
 </form>

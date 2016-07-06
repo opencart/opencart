@@ -8,7 +8,7 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}{{ content_bottom }}</div>
+    <div id="content" class="{{ class }}">{{ content_top }}{{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
 

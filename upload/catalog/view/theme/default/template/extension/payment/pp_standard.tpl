@@ -1,5 +1,5 @@
 <?php if ($testmode) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="cmd" value="_cart" />
@@ -30,9 +30,9 @@
   <input type="hidden" name="address2" value="<?php echo $address2; ?>" />
   <input type="hidden" name="city" value="<?php echo $city; ?>" />
   <input type="hidden" name="zip" value="<?php echo $zip; ?>" />
-  <input type="hidden" name="country" value="<?php echo $country; ?>" />
+  <input type="hidden" name="country" value="{{ country }}" />
   <input type="hidden" name="address_override" value="0" />
-  <input type="hidden" name="email" value="<?php echo $email; ?>" />
+  <input type="hidden" name="email" value="{{ email }}" />
   <input type="hidden" name="invoice" value="<?php echo $invoice; ?>" />
   <input type="hidden" name="lc" value="<?php echo $lc; ?>" />
   <input type="hidden" name="rm" value="2" />
@@ -47,7 +47,7 @@
   <input type="hidden" name="bn" value="OpenCart_2.0_WPS" />
   <div class="buttons">
     <div class="pull-right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
     </div>
   </div>
 </form>

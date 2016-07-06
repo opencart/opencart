@@ -26,7 +26,7 @@
 <?php if (!$auto_submit) { ?>
   <div class="buttons">
     <div class="pull-right">
-      <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+      <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
     </div>
   </div>
 
@@ -40,7 +40,7 @@
 <?php } ?>
 
 <?php if ($auto_submit) { ?>
-  <?php echo $text_redirecting; ?>
+  {{ text_redirecting }}
 
   <script>
   document.getElementById('pilibaba-form').submit();

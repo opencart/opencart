@@ -1,7 +1,7 @@
 <form action="https://www.secpay.com/java-bin/ValCard" method="post">
   <input type="hidden" name="merchant" value="<?php echo $merchant; ?>" />
   <input type="hidden" name="trans_id" value="<?php echo $trans_id; ?>" />
-  <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
+  <input type="hidden" name="amount" value="{{ amount }}" />
   <?php if ($digest) { ?>
   <input type="hidden" name="digest" value="<?php echo $digest; ?>" />
   <?php } ?>
@@ -26,7 +26,7 @@
   <input type="hidden" name="options" value="<?php echo $options; ?>" />
   <div class="buttons">
     <div class="pull-right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
     </div>
   </div>
 </form>

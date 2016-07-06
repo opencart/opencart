@@ -17,6 +17,6 @@
   <input type="hidden" name="return" value="<?php echo $return; ?>" />
   <input type="hidden" name="popup" value="false" />
   <div class="buttons">
-    <div class="pull-right"><input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" /></div>
+    <div class="pull-right"><input type="submit" value="{{ button_confirm }}" class="btn btn-primary" /></div>
   </div>
 </form>

@@ -1,10 +1,10 @@
 <form id="laybuy-form" action="<?php echo $action; ?>" method="post" class="form form-horizontal">
   <div>
-    <h3><?php echo $heading_title; ?></h3>
+    <h3>{{ heading_title }}</h3>
   </div>
 
   <div class="form-group">
-    <label for="down-payment" class="col-sm-2"><?php echo $entry_initial; ?></label>
+    <label for="down-payment" class="col-sm-2">{{ entry_initial }}</label>
     <div class="col-sm-3">
       <select name="INIT" id="input-down-payment" class="form-control">
         <?php foreach ($initial_payments as $percent) { ?>
@@ -15,7 +15,7 @@
   </div>
 
   <div class="form-group">
-    <label for="months" class="col-sm-2"><?php echo $entry_months; ?></label>
+    <label for="months" class="col-sm-2">{{ entry_months }}</label>
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
         <?php foreach ($months as $month) { ?>
@@ -31,12 +31,12 @@
 </form>
 
 <div class="table-responsive">
-  <h3><?php echo $text_plan_preview; ?></h3>
+  <h3>{{ text_plan_preview }}</h3>
   <table class="table table-responsive table-condensed" id="payment-table">
     <thead>
-      <th><?php echo $text_payment; ?></th>
-      <th><?php echo $text_due_date; ?></th>
-      <th class="text-right"><?php echo $text_amount; ?></th>
+      <th>{{ text_payment }}</th>
+      <th>{{ text_due_date }}</th>
+      <th class="text-right">{{ text_amount }}</th>
     </thead>
     <tbody>
       <tr>
@@ -48,13 +48,13 @@
   </table>
 </div>
 
-<p style="font-size: 1.3em"><?php echo $text_delivery_msg; ?></p>
+<p style="font-size: 1.3em">{{ text_delivery_msg }}</p>
 
-<p style="font-size: 1.3em"><?php echo $text_fee_msg; ?></p>
+<p style="font-size: 1.3em">{{ text_fee_msg }}</p>
 
 <div class="buttons">
   <div class="pull-right">
-    <input type="submit" form="laybuy-form" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>">
+    <input type="submit" form="laybuy-form" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}">
   </div>
 </div>
 
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	var symbol_left = "<?php echo $currency_symbol_left; ?>";
 	var symbol_right = "<?php echo $currency_symbol_right; ?>";
 	var order = <?php echo json_encode($order_info); ?>;
-	var total = parseFloat(parseFloat(<?php echo $total; ?>) * parseFloat(order.currency_value)).toFixed(4);
+	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
 
 	calculate($('#input-down-payment').val(), $('#input-months').val());
 
@@ -78,8 +78,8 @@ $(document).ready(function() {
 
 		var payments = getPayments(remainder, months);
 			payments[0] = {
-			payment: '<?php echo $text_downpayment; ?>',
-			dueDate: '<?php echo $text_today; ?>',
+			payment: '{{ text_downpayment }}',
+			dueDate: '{{ text_today }}',
 			amount: parseFloat(down_payment).toFixed(2)
 		};
 
@@ -103,7 +103,7 @@ $(document).ready(function() {
 			new_date.setMonth(new_date.getMonth() + i);
 
 			payments[i] = {
-				payment: '<?php echo $text_month; ?> ' + i,
+				payment: '{{ text_month }} ' + i,
 				dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
 				amount: parseFloat(payment_amount).toFixed(2)
 			}

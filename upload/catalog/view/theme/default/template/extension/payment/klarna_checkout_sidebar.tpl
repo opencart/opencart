@@ -16,9 +16,9 @@
 
 <?php if ($shipping_required) { ?>
 <div id="klarna-shipping-method">
-  <h3><?php echo $text_choose_shipping_method; ?></h3>
+  <h3>{{ text_choose_shipping_method }}</h3>
   <?php if ($shipping_methods) { ?>
-  <p><?php echo $text_shipping_method; ?></p>
+  <p>{{ text_shipping_method }}</p>
   <?php foreach ($shipping_methods as $shipping_method) { ?>
   <p><strong><?php echo $shipping_method['title']; ?></strong></p>
   <?php if (!$shipping_method['error']) { ?>
@@ -60,11 +60,11 @@
         		  <?php } ?>
         		  <?php if ($product['recurring']) { ?>
         		  <br />
-        		  - <small><?php echo $text_recurring; ?> <?php echo $product['recurring']; ?></small>
+        		  - <small>{{ text_recurring }} <?php echo $product['recurring']; ?></small>
         		  <?php } ?></td>
         		<td class="text-right">x <?php echo $product['quantity']; ?></td>
         		<td class="text-right"><?php echo $product['total']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.cartRemove('<?php echo $product['cart_id']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-center"><button type="button" onclick="kc.cartRemove('<?php echo $product['cart_id']; ?>');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
         	  </tr>
         	  <?php } ?>
         	  <?php foreach ($vouchers as $voucher) { ?>
@@ -72,7 +72,7 @@
         		<td class="text-left"><?php echo $voucher['description']; ?></td>
         		<td class="text-right">x&nbsp;1</td>
         		<td class="text-right"><?php echo $voucher['amount']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('<?php echo $voucher['key']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('<?php echo $voucher['key']; ?>');" title="{{ button_remove }}" class="btn-link"><i class="fa fa-times"></i></button></td>
         	  </tr>
         	  <?php } ?>
         	</table>
@@ -88,7 +88,7 @@
 		  </table>
 		</div>
 	  <?php } else { ?>
-		<p class="text-center"><?php echo $text_empty; ?></p>
+		<p class="text-center">{{ text_empty }}</p>
 	  <?php } ?>
 </div>
 

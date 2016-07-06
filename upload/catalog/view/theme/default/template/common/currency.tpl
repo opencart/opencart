@@ -10,7 +10,7 @@
     <strong><?php echo $currency['symbol_right']; ?></strong>
     <?php } ?>
     <?php } ?>
-    <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_currency; ?></span> <i class="fa fa-caret-down"></i></button>
+    <span class="hidden-xs hidden-sm hidden-md">{{ text_currency }}</span> <i class="fa fa-caret-down"></i></button>
     <ul class="dropdown-menu">
       <?php foreach ($currencies as $currency) { ?>
       <?php if ($currency['symbol_left']) { ?>

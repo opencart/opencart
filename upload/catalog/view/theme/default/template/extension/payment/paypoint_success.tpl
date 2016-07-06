@@ -7,16 +7,16 @@
 </head>
 <body>
 <div style="text-align: center;">
-  <h1><?php echo $heading_title; ?></h1>
-  <p><?php echo $text_response; ?></p>
+  <h1>{{ heading_title }}</h1>
+  <p>{{ text_response }}</p>
   <div style="border: 1px solid #DDDDDD; margin-bottom: 20px; width: 350px; margin-left: auto; margin-right: auto;">
     <WPDISPLAY ITEM=banner>
   </div>
-  <p><?php echo $text_success; ?></p>
-  <p><?php echo $text_success_wait; ?></p>
+  <p>{{ text_success }}</p>
+  <p>{{ text_success_wait }}</p>
 </div>
 <script type="text/javascript"><!--
-setTimeout('location = \'<?php echo $continue; ?>\';', 2500);
+setTimeout('location = \'{{ continue }}\';', 2500);
 //--></script>
 </body>
 </html>

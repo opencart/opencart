@@ -13,17 +13,17 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h2><?php echo $heading_title; ?></h2>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h2>{{ heading_title }}</h2>
       <?php if ($downloads) { ?>
       <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-right"><?php echo $column_order_id; ?></td>
-            <td class="text-left"><?php echo $column_name; ?></td>
-            <td class="text-left"><?php echo $column_size; ?></td>
-            <td class="text-left"><?php echo $column_date_added; ?></td>
+            <td class="text-right">{{ column_order_id; }}</td>
+            <td class="text-left">{{ column_name; }}</td>
+            <td class="text-left">{{ column_size; }}</td>
+            <td class="text-left">{{ column_date_added; }}</td>
             <td></td>
           </tr>
         </thead>
@@ -34,7 +34,7 @@
             <td class="text-left"><?php echo $download['name']; ?></td>
             <td class="text-left"><?php echo $download['size']; ?></td>
             <td class="text-left"><?php echo $download['date_added']; ?></td>
-            <td><a href="<?php echo $download['href']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a></td>
+            <td><a href="<?php echo $download['href']; ?>" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -45,10 +45,10 @@
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       <?php } else { ?>
-      <p><?php echo $text_empty; ?></p>
+      <p>{{ text_empty }}</p>
       <?php } ?>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

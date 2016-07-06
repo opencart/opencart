@@ -6,12 +6,12 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -23,26 +23,26 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h2><?php echo $heading_title; ?></h2>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h2>{{ heading_title }}</h2>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" colspan="2"><?php echo $text_order_detail; ?></td>
+            <td class="text-left" colspan="2">{{ text_order_detail }}</td>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="text-left" style="width: 50%;"><?php if ($invoice_no) { ?>
-              <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
+              <b>{{ text_invoice_no; ?></b> <?php echo $invoice_no }}<br />
               <?php } ?>
-              <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
-              <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
+              <b>{{ text_order_id; ?></b> #<?php echo $order_id }}<br />
+              <b>{{ text_date_added; ?></b> <?php echo $date_added }}</td>
             <td class="text-left" style="width: 50%;"><?php if ($payment_method) { ?>
-              <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
+              <b>{{ text_payment_method; ?></b> <?php echo $payment_method }}<br />
               <?php } ?>
               <?php if ($shipping_method) { ?>
-              <b><?php echo $text_shipping_method; ?></b> <?php echo $shipping_method; ?>
+              <b>{{ text_shipping_method; ?></b> <?php echo $shipping_method }}
               <?php } ?></td>
           </tr>
         </tbody>
@@ -50,9 +50,9 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><?php echo $text_payment_address; ?></td>
+            <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
             <?php if ($shipping_address) { ?>
-            <td class="text-left" style="width: 50%; vertical-align: top;"><?php echo $text_shipping_address; ?></td>
+            <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
             <?php } ?>
           </tr>
         </thead>
@@ -69,11 +69,11 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_name; ?></td>
-              <td class="text-left"><?php echo $column_model; ?></td>
-              <td class="text-right"><?php echo $column_quantity; ?></td>
-              <td class="text-right"><?php echo $column_price; ?></td>
-              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-left">{{ column_name; }}</td>
+              <td class="text-left">{{ column_model; }}</td>
+              <td class="text-right">{{ column_quantity; }}</td>
+              <td class="text-right">{{ column_price; }}</td>
+              <td class="text-right">{{ column_total; }}</td>
               <?php if ($products) { ?>
               <td style="width: 20px;"></td>
               <?php } ?>
@@ -92,9 +92,9 @@
               <td class="text-right"><?php echo $product['price']; ?></td>
               <td class="text-right"><?php echo $product['total']; ?></td>
               <td class="text-right" style="white-space: nowrap;"><?php if ($product['reorder']) { ?>
-                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
                 <?php } ?>
-                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
+                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>
@@ -128,7 +128,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left"><?php echo $text_comment; ?></td>
+            <td class="text-left">{{ text_comment }}</td>
           </tr>
         </thead>
         <tbody>
@@ -139,13 +139,13 @@
       </table>
       <?php } ?>
       <?php if ($histories) { ?>
-      <h3><?php echo $text_history; ?></h3>
+      <h3>{{ text_history }}</h3>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left"><?php echo $column_date_added; ?></td>
-            <td class="text-left"><?php echo $column_status; ?></td>
-            <td class="text-left"><?php echo $column_comment; ?></td>
+            <td class="text-left">{{ column_date_added; }}</td>
+            <td class="text-left">{{ column_status; }}</td>
+            <td class="text-left">{{ column_comment; }}</td>
           </tr>
         </thead>
         <tbody>
@@ -159,14 +159,14 @@
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td colspan="3" class="text-center"><?php echo $text_no_results; ?></td>
+            <td colspan="3" class="text-center">{{ text_no_results }}</td>
           </tr>
           <?php } ?>
         </tbody>
       </table>
       <?php } ?>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

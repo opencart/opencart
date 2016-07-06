@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-sm-6">
     <fieldset id="account">
-      <legend><?php echo $text_your_details; ?></legend>
+      <legend>{{ text_your_details }}</legend>
       <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
-        <label class="control-label"><?php echo $entry_customer_group; ?></label>
+        <label class="control-label">{{ entry_customer_group }}</label>
         <?php foreach ($customer_groups as $customer_group) { ?>
         <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
         <div class="radio">
@@ -21,24 +21,24 @@
         <?php } ?>
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
-        <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
+        <label class="control-label" for="input-payment-firstname">{{ entry_firstname }}</label>
+        <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
-        <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
+        <label class="control-label" for="input-payment-lastname">{{ entry_lastname }}</label>
+        <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-email"><?php echo $entry_email; ?></label>
-        <input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-payment-email" class="form-control" />
+        <label class="control-label" for="input-payment-email">{{ entry_email }}</label>
+        <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-payment-email" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-telephone"><?php echo $entry_telephone; ?></label>
-        <input type="text" name="telephone" value="" placeholder="<?php echo $entry_telephone; ?>" id="input-payment-telephone" class="form-control" />
+        <label class="control-label" for="input-payment-telephone">{{ entry_telephone }}</label>
+        <input type="text" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-payment-telephone" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label" for="input-payment-fax"><?php echo $entry_fax; ?></label>
-        <input type="text" name="fax" value="" placeholder="<?php echo $entry_fax; ?>" id="input-payment-fax" class="form-control" />
+        <label class="control-label" for="input-payment-fax">{{ entry_fax }}</label>
+        <input type="text" name="fax" value="" placeholder="{{ entry_fax }}" id="input-payment-fax" class="form-control" />
       </div>
       <?php foreach ($custom_fields as $custom_field) { ?>
       <?php if ($custom_field['location'] == 'account') { ?>
@@ -46,7 +46,7 @@
       <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
         <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
         <select name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
+          <option value="">{{ text_select }}</option>
           <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
           <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
           <?php } ?>
@@ -97,7 +97,7 @@
       <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
         <label class="control-label"><?php echo $custom_field['name']; ?></label>
         <br />
-        <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+        <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
         <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
       </div>
       <?php } ?>
@@ -135,44 +135,44 @@
       <?php } ?>
     </fieldset>
     <fieldset>
-      <legend><?php echo $text_your_password; ?></legend>
+      <legend>{{ text_your_password }}</legend>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-password"><?php echo $entry_password; ?></label>
-        <input type="password" name="password" value="" placeholder="<?php echo $entry_password; ?>" id="input-payment-password" class="form-control" />
+        <label class="control-label" for="input-payment-password">{{ entry_password }}</label>
+        <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-payment-password" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-confirm"><?php echo $entry_confirm; ?></label>
-        <input type="password" name="confirm" value="" placeholder="<?php echo $entry_confirm; ?>" id="input-payment-confirm" class="form-control" />
+        <label class="control-label" for="input-payment-confirm">{{ entry_confirm }}</label>
+        <input type="password" name="confirm" value="" placeholder="{{ entry_confirm }}" id="input-payment-confirm" class="form-control" />
       </div>
     </fieldset>
   </div>
   <div class="col-sm-6">
     <fieldset id="address">
-      <legend><?php echo $text_your_address; ?></legend>
+      <legend>{{ text_your_address }}</legend>
       <div class="form-group">
-        <label class="control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
-        <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
+        <label class="control-label" for="input-payment-company">{{ entry_company }}</label>
+        <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
-        <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
+        <label class="control-label" for="input-payment-address-1">{{ entry_address_1 }}</label>
+        <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
-        <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
+        <label class="control-label" for="input-payment-address-2">{{ entry_address_2 }}</label>
+        <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
-        <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
+        <label class="control-label" for="input-payment-city">{{ entry_city }}</label>
+        <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
+        <label class="control-label" for="input-payment-postcode">{{ entry_postcode }}</label>
+        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control" />
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+        <label class="control-label" for="input-payment-country">{{ entry_country }}</label>
         <select name="country_id" id="input-payment-country" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
+          <option value="">{{ text_select }}</option>
           <?php foreach ($countries as $country) { ?>
           <?php if ($country['country_id'] == $country_id) { ?>
           <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -183,7 +183,7 @@
         </select>
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
+        <label class="control-label" for="input-payment-zone">{{ entry_zone }}</label>
         <select name="zone_id" id="input-payment-zone" class="form-control">
         </select>
       </div>
@@ -193,7 +193,7 @@
       <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
         <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
         <select name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
+          <option value="">{{ text_select }}</option>
           <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
           <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
           <?php } ?>
@@ -244,7 +244,7 @@
       <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
         <label class="control-label"><?php echo $custom_field['name']; ?></label>
         <br />
-        <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+        <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
         <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
       </div>
       <?php } ?>
@@ -289,26 +289,26 @@
 <div class="checkbox">
   <label for="newsletter">
     <input type="checkbox" name="newsletter" value="1" id="newsletter" />
-    <?php echo $entry_newsletter; ?></label>
+    {{ entry_newsletter }}</label>
 </div>
 <?php if ($shipping_required) { ?>
 <div class="checkbox">
   <label>
     <input type="checkbox" name="shipping_address" value="1" checked="checked" />
-    <?php echo $entry_shipping; ?></label>
+    {{ entry_shipping }}</label>
 </div>
 <?php } ?>
 <?php if ($text_agree) { ?>
 <div class="buttons clearfix">
-  <div class="pull-right"><?php echo $text_agree; ?> &nbsp;
+  <div class="pull-right">{{ text_agree }} &nbsp;
     <input type="checkbox" name="agree" value="1" />
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons clearfix">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
 <?php } ?>
@@ -461,7 +461,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value="">{{ text_select }}</option>';
 
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -474,7 +474,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected">{{ text_none }}</option>';
 			}
 
 			$('#collapse-payment-address select[name=\'zone_id\']').html(html);

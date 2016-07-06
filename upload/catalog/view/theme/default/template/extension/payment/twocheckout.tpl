@@ -1,14 +1,14 @@
 <form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
-  <input type="hidden" name="total" value="<?php echo $total; ?>" />
+  <input type="hidden" name="total" value="{{ total }}" />
   <input type="hidden" name="cart_order_id" value="<?php echo $cart_order_id; ?>" />
   <input type="hidden" name="card_holder_name" value="<?php echo $card_holder_name; ?>" />
   <input type="hidden" name="street_address" value="<?php echo $street_address; ?>" />
   <input type="hidden" name="city" value="<?php echo $city; ?>" />
   <input type="hidden" name="state" value="<?php echo $state; ?>" />
   <input type="hidden" name="zip" value="<?php echo $zip; ?>" />
-  <input type="hidden" name="country" value="<?php echo $country; ?>" />
-  <input type="hidden" name="email" value="<?php echo $email; ?>" />
+  <input type="hidden" name="country" value="{{ country }}" />
+  <input type="hidden" name="email" value="{{ email }}" />
   <input type="hidden" name="phone" value="<?php echo $phone; ?>" />
   <input type="hidden" name="ship_street_address" value="<?php echo $ship_street_address; ?>" />
   <input type="hidden" name="ship_city" value="<?php echo $ship_city; ?>" />
@@ -31,7 +31,7 @@
   <input type="hidden" name="return_url" value="<?php echo $return_url; ?>" />
   <div class="buttons">
     <div class="pull-right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+      <input type="submit" value="{{ button_confirm }}" class="btn btn-primary" />
     </div>
   </div>
 </form>

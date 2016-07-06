@@ -3,12 +3,12 @@
   <?php } else { ?>
 
   <?php if (isset($text_testing)) { ?>
-    <div class="alert alert-warning"><?php echo $text_testing; ?></div>
+    <div class="alert alert-warning">{{ text_testing }}</div>
   <?php } ?>
 
   <div class="buttons">
     <div class="pull-right">
-      <input type="button" value="<?php echo $button_pay; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+      <input type="button" value="{{ button_pay }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
     </div>
   </div>
 

@@ -1,2 +1,2 @@
-<h2><?php echo $text_response; ?></h2>
-<p><?php echo $text_link; ?></p>
+<h2>{{ text_response }}</h2>
+<p>{{ text_link }}</p>

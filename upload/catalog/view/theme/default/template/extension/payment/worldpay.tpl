@@ -1,16 +1,16 @@
 <?php if (!empty($existing_cards)) { ?>
-	<legend><?php echo $text_credit_card; ?></legend>
+	<legend>{{ text_credit_card }}</legend>
 	<div class="form-horizontal">
 	  <div id="choose-card" class="form-group">
-		<label class="col-sm-2 control-label"><?php echo $entry_card; ?></label>
+		<label class="col-sm-2 control-label">{{ entry_card }}</label>
 		<div class="col-sm-10">
 		  <label class="radio-inline">
 			<input type="radio" name="existing-card" value="1" checked="checked"/>
-			<?php echo $entry_card_existing; ?>
+			{{ entry_card_existing }}
 		  </label>
 		  <label class="radio-inline">
 			<input type="radio" name="existing-card" value="0"/>
-			<?php echo $entry_card_new; ?>
+			{{ entry_card_new }}
 		  </label>
 		</div>
 	  </div>
@@ -19,7 +19,7 @@
 	  <fieldset>
 		<div id="card-existing">
 		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="token"><?php echo $entry_cc_choice; ?></label>
+			<label class="col-sm-2 control-label" for="token">{{ entry_cc_choice }}</label>
 			<div class="col-sm-10">
 			  <select name="token" data-worldpay="token" class="form-control">
 				<?php foreach ($existing_cards as $existing_card) { ?>
@@ -30,20 +30,20 @@
 		  </div>
 		  <div class="buttons clearfix">
 			<div class="pull-right">
-			  <input type="button" value="<?php echo $button_delete_card; ?>" id="button-delete" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+			  <input type="button" value="{{ button_delete_card }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 			</div>
 		  </div>
 		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="input-cc-cvc"><?php echo $entry_cc_cvc; ?></label>
+			<label class="col-sm-2 control-label" for="input-cc-cvc">{{ entry_cc_cvc }}</label>
 			<div class="col-sm-10">
-			  <input type="text" data-worldpay="cvc" value="" size="4" placeholder="<?php echo $entry_cc_cvc; ?>" id="input-cc-cvc" class="form-control" />
+			  <input type="text" data-worldpay="cvc" value="" size="4" placeholder="{{ entry_cc_cvc }}" id="input-cc-cvc" class="form-control" />
 			</div>
 		  </div>
 		</div>
 	  </fieldset>
 	  <div class="buttons">
 		<div class="pull-right">
-		  <input type="submit" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+		  <input type="submit" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 		</div>
 	  </div>
 	</form>
@@ -57,7 +57,7 @@
 	  </div>
 	  <?php if ($worldpay_card) { ?>
 		  <div class="form-group">
-			<label class="col-sm-2 control-label" for="input-cc-save"><?php echo $entry_card_save; ?></label>
+			<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			<div class="col-sm-2">
 			  <input type="checkbox" name="save-card" value=true id="input-cc-save"/>
 			</div>
@@ -67,7 +67,7 @@
 	</fieldset>
 	<div class="buttons">
 	  <div class="pull-right">
-		<input type="submit" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+		<input type="submit" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
 	  </div>
 	</div>
   </form>
@@ -130,7 +130,7 @@
       $('#button-delete').on('click', function () {
         var token = $('select[name=\'token\'] option:selected');
 
-        if (confirm('<?php echo $text_confirm_delete; ?>\n' + token.text())) {
+        if (confirm('{{ text_confirm_delete }}\n' + token.text())) {
           $.ajax({
             url: 'index.php?route=extension/payment/worldpay/deleteCard',
             type: 'post',

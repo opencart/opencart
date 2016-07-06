@@ -1,23 +1,23 @@
 <form class="form-horizontal">
     <fieldset id="payment">
 		<?php if (!empty($cards)) { ?>
-			<legend><?php echo $text_credit_card; ?></legend>
+			<legend>{{ text_credit_card }}</legend>
 			<div class="form-group">
-				<label class="col-sm-2 control-label"><?php echo $entry_card; ?></label>
+				<label class="col-sm-2 control-label">{{ entry_card }}</label>
 				<div class="col-sm-10">
 					<label class="radio-inline">
 						<input type="radio" name="CreateToken" value="0" checked="checked"/>
-						<?php echo $entry_card_existing; ?>
+						{{ entry_card_existing }}
 					</label>
 					<label class="radio-inline">
 						<input type="radio" name="CreateToken" value=""/>
-						<?php echo $entry_card_new; ?>
+						{{ entry_card_new }}
 					</label>
 				</div>
 			</div>
 			<div id="card-existing">
 				<div class="form-group required">
-					<label class="col-sm-2 control-label" for="Token"><?php echo $entry_cc_choice; ?></label>
+					<label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
 					<div class="col-sm-8">
 						<select name="Token" class="form-control">
 							<?php foreach ($cards as $card) { ?>
@@ -26,12 +26,12 @@
 						</select>
 					</div>
 					<div class="col-sm-2">
-			  <input type="button" value="<?php echo $button_delete_card; ?>" id="button-delete" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger" />
+			  <input type="button" value="{{ button_delete_card }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-danger" />
 			</div>
 				</div>
 			</div>
 			<div style="display:none" id="card-save" class="form-group">
-				<label class="col-sm-2 control-label"><?php echo $entry_card_save; ?></label>
+				<label class="col-sm-2 control-label">{{ entry_card_save }}</label>
 				<div class="col-sm-10">
 					<div class="checkbox">
 						<label>
@@ -41,18 +41,18 @@
 				</div>
 			</div>
 		<?php } elseif ($sagepay_server_card) { ?>
-			<legend><?php echo $text_credit_card; ?></legend>
+			<legend>{{ text_credit_card }}</legend>
 			<div class="form-group">
-				<label class="col-sm-2 control-label"><?php echo $entry_card; ?></label>
+				<label class="col-sm-2 control-label">{{ entry_card }}</label>
 				<div class="col-sm-10">
 					<label class="radio-inline">
 						<input type="radio" name="CreateToken" value="" checked="checked"/>
-						<?php echo $entry_card_new; ?>
+						{{ entry_card_new }}
 					</label>
 				</div>
 			</div>
 			<div id="card-save" class="form-group">
-				<label class="col-sm-2 control-label"><?php echo $entry_card_save; ?></label>
+				<label class="col-sm-2 control-label">{{ entry_card_save }}</label>
 				<div class="col-sm-10">
 					<div class="checkbox">
 						<label>
@@ -64,7 +64,7 @@
 		<?php } ?>
         <div class="buttons">
             <div class="pull-right">
-                <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+                <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
             </div>
         </div>
     </fieldset>
@@ -122,7 +122,7 @@
 //--></script>
 <script type="text/javascript"><!--
     $('#button-delete').bind('click', function () {
-      if (confirm('<?php echo $text_confirm_delete; ?>')) {
+      if (confirm('{{ text_confirm_delete }}')) {
         $.ajax({
           url: 'index.php?route=extension/payment/sagepay_server/delete',
           type: 'post',

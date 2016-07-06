@@ -3,7 +3,7 @@
 <?php } else { ?>
   <div class="buttons">
     <div class="pull-right">
-      <a class="btn btn-primary" href="<?php echo $iframe_url; ?>"><?php echo $button_confirm; ?></a>
+      <a class="btn btn-primary" href="<?php echo $iframe_url; ?>">{{ button_confirm }}</a>
     </div>
   </div>
 <?php } ?>

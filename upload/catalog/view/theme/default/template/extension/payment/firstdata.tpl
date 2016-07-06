@@ -6,7 +6,7 @@
     <input type="hidden" name="hash" value="<?php echo $hash; ?>" />
     <input type="hidden" name="storename" value="<?php echo $merchant_id; ?>" />
     <input type="hidden" name="mode" value="payonly" />
-    <input type="hidden" name="chargetotal" value="<?php echo $amount; ?>" />
+    <input type="hidden" name="chargetotal" value="{{ amount }}" />
     <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
     <input type="hidden" name="oid" value="<?php echo $order_id; ?>" />
     <input type="hidden" name="mobileMode" value="<?php echo $mobile; ?>" />
@@ -28,7 +28,7 @@
     <input type="hidden" name="bstate" value="<?php echo $bstate; ?>" />
     <input type="hidden" name="bcountry" value="<?php echo $bcountry; ?>" />
     <input type="hidden" name="bzip" value="<?php echo $bzip; ?>" />
-	<input type="hidden" name="email" value="<?php echo $email; ?>" />
+	<input type="hidden" name="email" value="{{ email }}" />
     <input type="hidden" name="invoicenumber" value="<?php echo $version; ?>" />
 
     <?php if ($card_storage == 1) { ?>
@@ -47,7 +47,7 @@
 
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" />
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
   </div>
 </div>
 

@@ -13,10 +13,10 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
       <?php if ($categories) { ?>
-      <p><strong><?php echo $text_index; ?></strong>
+      <p><strong>{{ text_index }}</strong>
         <?php foreach ($categories as $category) { ?>
         &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
         <?php } ?>
@@ -34,9 +34,9 @@
       <?php } ?>
       <?php } ?>
       <?php } else { ?>
-      <p><?php echo $text_empty; ?></p>
+      <p>{{ text_empty }}</p>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       <?php } ?>
       {{ content_bottom }}</div>

@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,24 +18,24 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
       <?php if ($products) { ?>
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td colspan="<?php echo count($products) + 1; ?>"><strong><?php echo $text_product; ?></strong></td>
+            <td colspan="<?php echo count($products) + 1; ?>"><strong>{{ text_product }}</strong></td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><?php echo $text_name; ?></td>
+            <td>{{ text_name }}</td>
             <?php foreach ($products as $product) { ?>
             <td><a href="<?php echo $product['href']; ?>"><strong><?php echo $product['name']; ?></strong></a></td>
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_image; ?></td>
+            <td>{{ text_image }}</td>
             <?php foreach ($products as $product) { ?>
             <td class="text-center"><?php if ($product['thumb']) { ?>
               <img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" />
@@ -43,7 +43,7 @@
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_price; ?></td>
+            <td>{{ text_price }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php if ($product['price']) { ?>
               <?php if (!$product['special']) { ?>
@@ -55,26 +55,26 @@
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_model; ?></td>
+            <td>{{ text_model }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php echo $product['model']; ?></td>
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_manufacturer; ?></td>
+            <td>{{ text_manufacturer }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php echo $product['manufacturer']; ?></td>
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_availability; ?></td>
+            <td>{{ text_availability }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php echo $product['availability']; ?></td>
             <?php } ?>
           </tr>
           <?php if ($review_status) { ?>
           <tr>
-            <td><?php echo $text_rating; ?></td>
+            <td>{{ text_rating }}</td>
             <?php foreach ($products as $product) { ?>
             <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($product['rating'] < $i) { ?>
@@ -89,19 +89,19 @@
           </tr>
           <?php } ?>
           <tr>
-            <td><?php echo $text_summary; ?></td>
+            <td>{{ text_summary }}</td>
             <?php foreach ($products as $product) { ?>
             <td class="description"><?php echo $product['description']; ?></td>
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_weight; ?></td>
+            <td>{{ text_weight }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php echo $product['weight']; ?></td>
             <?php } ?>
           </tr>
           <tr>
-            <td><?php echo $text_dimension; ?></td>
+            <td>{{ text_dimension }}</td>
             <?php foreach ($products as $product) { ?>
             <td><?php echo $product['length']; ?> x <?php echo $product['width']; ?> x <?php echo $product['height']; ?></td>
             <?php } ?>
@@ -131,15 +131,15 @@
         <tr>
           <td></td>
           <?php foreach ($products as $product) { ?>
-          <td><input type="button" value="<?php echo $button_cart; ?>" class="btn btn-primary btn-block" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');" />
-            <a href="<?php echo $product['remove']; ?>" class="btn btn-danger btn-block"><?php echo $button_remove; ?></a></td>
+          <td><input type="button" value="{{ button_cart }}" class="btn btn-primary btn-block" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');" />
+            <a href="<?php echo $product['remove']; ?>" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
           <?php } ?>
         </tr>
       </table>
       <?php } else { ?>
-      <p><?php echo $text_empty; ?></p>
+      <p>{{ text_empty }}</p>
       <div class="buttons">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-default"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-default">{{ button_continue }}</a></div>
       </div>
       <?php } ?>
       {{ content_bottom }}</div>

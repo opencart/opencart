@@ -1,26 +1,26 @@
  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
   <?php } ?>
 <form class="form-horizontal">
   <fieldset id="payment">
-	<legend><?php echo $text_credit_card; ?></legend>
+	<legend>{{ text_credit_card }}</legend>
 	<?php if (!empty($existing_cards)) { ?>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label"><?php echo $entry_card; ?></label>
+		  <label class="col-sm-2 control-label">{{ entry_card }}</label>
 		  <div class="col-sm-10">
 			<label class="radio-inline">
 			  <input type="radio" name="CreateToken" value="0" checked="checked"/>
-			  <?php echo $entry_card_existing; ?>
+			  {{ entry_card_existing }}
 			</label>
 			<label class="radio-inline">
 			  <input type="radio" name="CreateToken" value=""/>
-			  <?php echo $entry_card_new; ?>
+			  {{ entry_card_new }}
 			</label>
 		  </div>
 		</div>
 		<div id="card-existing">
 		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="Token"><?php echo $entry_cc_choice; ?></label>
+			<label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
 			<div class="col-sm-8">
 			  <select name="Token" class="form-control">
 				<?php foreach ($existing_cards as $existing_card) { ?>
@@ -29,13 +29,13 @@
 			  </select>
 			</div>
 			<div class="col-sm-2">
-			  <input type="button" value="<?php echo $button_delete_card; ?>" id="button-delete" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger" />
+			  <input type="button" value="{{ button_delete_card }}" id="button-delete" data-loading-text="{{ text_loading }}" class="btn btn-danger" />
 			</div>
 		  </div>
 		  <div class="form-group required">
-			<label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
+			<label class="col-sm-2 control-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="cc_cvv2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />
+			  <input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
 			</div>
 		  </div>
 		</div>
@@ -44,13 +44,13 @@
 		  <div id="card-new">
 		<?php } ?>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-cc-owner"><?php echo $entry_cc_owner; ?></label>
+		  <label class="col-sm-2 control-label" for="input-cc-owner">{{ entry_cc_owner }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="cc_owner" value="" placeholder="<?php echo $entry_cc_owner; ?>" id="input-cc-owner" class="form-control" />
+			<input type="text" name="cc_owner" value="" placeholder="{{ entry_cc_owner }}" id="input-cc-owner" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-cc-type"><?php echo $entry_cc_type; ?></label>
+		  <label class="col-sm-2 control-label" for="input-cc-type">{{ entry_cc_type }}</label>
 		  <div class="col-sm-10">
 			<select name="cc_type" id="input-cc-type" class="form-control">
 			  <?php foreach ($cards as $card) { ?>
@@ -60,13 +60,13 @@
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-cc-number"><?php echo $entry_cc_number; ?></label>
+		  <label class="col-sm-2 control-label" for="input-cc-number">{{ entry_cc_number }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="cc_number" value="" placeholder="<?php echo $entry_cc_number; ?>" id="input-cc-number" class="form-control" />
+			<input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-cc-expire-date"><?php echo $entry_cc_expire_date; ?></label>
+		  <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
 		  <div class="col-sm-3">
 			<select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
 			  <?php foreach ($months as $month) { ?>
@@ -83,14 +83,14 @@
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
+		  <label class="col-sm-2 control-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="cc_cvv2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />
+			<input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
 		  </div>
 		</div>
 		<?php if ($sagepay_direct_card) { ?>
 			<div class="form-group">
-			  <label class="col-sm-2 control-label" for="input-cc-save"><?php echo $entry_card_save; ?></label>
+			  <label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			  <div class="col-sm-2">
 				<input type="checkbox" name="CreateToken" value="1" id="input-cc-save"/>
 			  </div>
@@ -101,7 +101,7 @@
 </form>
 <div class="buttons">
   <div class="pull-right">
-	<input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+	<input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
 <script type="text/javascript">
@@ -174,7 +174,7 @@ $('#button-confirm').bind('click', function() {
 //--></script>
 <script type="text/javascript"><!--
     $('#button-delete').bind('click', function () {
-      if (confirm('<?php echo $text_confirm_delete; ?>')) {
+      if (confirm('{{ text_confirm_delete }}')) {
         $.ajax({
           url: 'index.php?route=extension/payment/sagepay_direct/delete',
           type: 'post',

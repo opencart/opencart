@@ -13,31 +13,31 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="<?php echo $class; ?>">{{ content_top }}
-      <h1><?php echo $heading_title; ?></h1>
-      <p><?php echo $text_description; ?></p>
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_description }}</p>
       <form class="form-horizontal">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+          <label class="col-sm-2 control-label" for="input-code">{{ entry_code }}</label>
           <div class="col-sm-10">
-            <textarea cols="40" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $code; ?></textarea>
+            <textarea cols="40" rows="5" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ code }}</textarea>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="<?php echo $help_generator; ?>"><?php echo $entry_generator; ?></span></label>
+          <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="<?php echo $help_generator; ?>">{{ entry_generator }}</span></label>
           <div class="col-sm-10">
-            <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
+            <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-link"><?php echo $entry_link; ?></label>
+          <label class="col-sm-2 control-label" for="input-link">{{ entry_link }}</label>
           <div class="col-sm-10">
-            <textarea name="link" cols="40" rows="5" placeholder="<?php echo $entry_link; ?>" id="input-link" class="form-control"></textarea>
+            <textarea name="link" cols="40" rows="5" placeholder="{{ entry_link }}" id="input-link" class="form-control"></textarea>
           </div>
         </div>
       </form>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

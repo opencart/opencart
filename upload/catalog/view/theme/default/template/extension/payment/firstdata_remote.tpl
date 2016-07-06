@@ -1,17 +1,17 @@
 <form class="form-horizontal" id="payment_form">
   <fieldset id="payment">
-    <legend><?php echo $text_credit_card; ?></legend>
+    <legend>{{ text_credit_card }}</legend>
     <?php if (!empty($accepted_cards)) { ?>
       <div class="form-group">
         <div class="col-sm-12">
           <p>
-            <strong><?php echo $text_card_accepted; ?></strong>
+            <strong>{{ text_card_accepted }}</strong>
             <ul>
-              <?php if ($accepted_cards['mastercard'] == 1) { ?><li><?php echo $text_card_type_m; ?></li><?php } ?>
-              <?php if ($accepted_cards['visa'] == 1) { ?><li><?php echo $text_card_type_v; ?></li><?php } ?>
-              <?php if ($accepted_cards['diners'] == 1) { ?><li><?php echo $text_card_type_c; ?></li><?php } ?>
-              <?php if ($accepted_cards['amex'] == 1) { ?><li><?php echo $text_card_type_a; ?></li><?php } ?>
-              <?php if ($accepted_cards['maestro'] == 1) { ?><li><?php echo $text_card_type_ma; ?></li><?php } ?>
+              <?php if ($accepted_cards['mastercard'] == 1) { ?><li>{{ text_card_type_m }}</li><?php } ?>
+              <?php if ($accepted_cards['visa'] == 1) { ?><li>{{ text_card_type_v }}</li><?php } ?>
+              <?php if ($accepted_cards['diners'] == 1) { ?><li>{{ text_card_type_c }}</li><?php } ?>
+              <?php if ($accepted_cards['amex'] == 1) { ?><li>{{ text_card_type_a }}</li><?php } ?>
+              <?php if ($accepted_cards['maestro'] == 1) { ?><li>{{ text_card_type_ma }}</li><?php } ?>
             </ul>
           </p>
         </div>
@@ -35,21 +35,21 @@
 
     <div id="card_info" style="display:none;">
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-name"><?php echo $entry_cc_name; ?></label>
+        <label class="col-sm-2 control-label" for="input-cc-name">{{ entry_cc_name }}</label>
 
         <div class="col-sm-10">
-          <input type="text" name="cc_name" value="" placeholder="<?php echo $entry_cc_name; ?>" id="input-cc-name" class="form-control"/>
+          <input type="text" name="cc_name" value="" placeholder="{{ entry_cc_name }}" id="input-cc-name" class="form-control"/>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-number"><?php echo $entry_cc_number; ?></label>
+        <label class="col-sm-2 control-label" for="input-cc-number">{{ entry_cc_number }}</label>
 
         <div class="col-sm-10">
-          <input type="text" name="cc_number" value="" placeholder="<?php echo $entry_cc_number; ?>" id="input-cc-number" class="form-control"/>
+          <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control"/>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-expire-date"><?php echo $entry_cc_expire_date; ?></label>
+        <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
 
         <div class="col-sm-3">
           <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
@@ -79,16 +79,16 @@
     </div>
 
     <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
+      <label class="col-sm-2 control-label" for="input-cc-cvv2">{{ entry_cc_cvv2 }}</label>
       <div class="col-sm-10">
-        <input type="text" name="cc_cvv2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control"/>
+        <input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control"/>
       </div>
     </div>
   </fieldset>
 </form>
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"/>
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary"/>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -101,7 +101,7 @@ $('#button-confirm').bind('click', function () {
     beforeSend: function () {
       $('#firstdata_message_error').remove();
       $('#button-confirm').attr('disabled', true);
-      $('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+      $('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
     },
     complete: function () {
       $('#button-confirm').attr('disabled', false);

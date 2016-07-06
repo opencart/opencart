@@ -1,14 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title"><a href="#collapse-reward" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
+    <h4 class="panel-title"><a href="#collapse-reward" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ heading_title }} <i class="fa fa-caret-down"></i></a></h4>
   </div>
   <div id="collapse-reward" class="panel-collapse collapse">
     <div class="panel-body">
-      <label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
+      <label class="col-sm-2 control-label" for="input-reward">{{ entry_reward }}</label>
       <div class="input-group">
-        <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="<?php echo $entry_reward; ?>" id="input-reward" class="form-control" />
+        <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="{{ entry_reward }}" id="input-reward" class="form-control" />
         <span class="input-group-btn">
-        <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-primary" />
+        <input type="submit" value="{{ button_reward }}" id="button-reward" data-loading-text="{{ text_loading }}"  class="btn btn-primary" />
         </span></div>
       <script type="text/javascript"><!--
 $('#button-reward').on('click', function() {

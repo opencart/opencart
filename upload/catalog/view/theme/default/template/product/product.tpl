@@ -7,16 +7,16 @@
   </ul>
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
-    <?php $class = 'col-sm-6'; ?>
-    {% elseif column_left || column_right %}
-    <?php $class = 'col-sm-9'; ?>
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
     {% else %}
-    <?php $class = 'col-sm-12'; ?>
+    {% set class = 'col-sm-12' %}
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <div class="row">
         {% if column_left || $column_right %}
-        <?php $class = 'col-sm-6'; ?>
+        {% set class = 'col-sm-6' %}
         {% else %}
         <?php $class = 'col-sm-8'; ?>
         <?php } ?>
@@ -114,7 +114,7 @@
           </div>
         </div>
         {% if column_left || $column_right %}
-        <?php $class = 'col-sm-6'; ?>
+        {% set class = 'col-sm-6' %}
         {% else %}
         <?php $class = 'col-sm-4'; ?>
         <?php } ?>
@@ -326,7 +326,7 @@
         {% for product in products %}
         {% if column_left and column_right %}
         <?php $class = 'col-xs-8 col-sm-6'; ?>
-        {% elseif column_left || column_right %}
+        {% elseif column_left or column_right %}
         <?php $class = 'col-xs-6 col-md-4'; ?>
         {% else %}
         <?php $class = 'col-xs-6 col-sm-3'; ?>

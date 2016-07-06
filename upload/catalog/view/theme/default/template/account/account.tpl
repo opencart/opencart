@@ -10,11 +10,11 @@
   <?php } ?>
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
-    <?php $class = 'col-sm-6'; ?>
-    {% elseif column_left || column_right %}
-    <?php $class = 'col-sm-9'; ?>
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
     {% else %}
-    <?php $class = 'col-sm-12'; ?>
+    {% set class = 'col-sm-12' %}
     <?php } ?>
     <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ text_my_account }}</h2>

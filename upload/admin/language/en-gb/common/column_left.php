@@ -50,6 +50,7 @@ $_['text_report_product_viewed']     = 'Viewed';
 $_['text_report_product_purchased']  = 'Purchased';
 $_['text_report_customer']           = 'Customers';
 $_['text_report_customer_activity']  = 'Customer Activity';
+$_['text_report_customer_search']    = 'Customer Searches';
 $_['text_report_customer_online']    = 'Customers Online';
 $_['text_report_customer_order']     = 'Orders';
 $_['text_report_customer_reward']    = 'Reward Points';

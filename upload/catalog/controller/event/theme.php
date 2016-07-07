@@ -31,9 +31,7 @@ class ControllerEventTheme extends Controller {
 			
 			$this->config->set('template_type', 'twig');
 		}
-		
-		
-		/*			
+		/*	
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');
 		

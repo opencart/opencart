@@ -9,7 +9,7 @@
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -47,7 +47,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <?php } ?>
+        {% endif %}
         {% if shipping_required %}
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -65,7 +65,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <?php } ?>
+        {% endif %}
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">{{ text_checkout_payment_method }}</h4>
@@ -137,7 +137,7 @@ $(document).ready(function() {
         }
     });
 });
-<?php } ?>
+{% endif %}
 
 // Checkout
 $(document).delegate('#button-account', 'click', function() {
@@ -311,7 +311,7 @@ $(document).delegate('#button-register', 'click', function() {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
-                <?php } ?>
+                {% endif %}
 
                 $.ajax({
                     url: 'index.php?route=checkout/payment_address',
@@ -408,7 +408,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
-                <?php } ?>
+                {% endif %}
 
                 $.ajax({
                     url: 'index.php?route=checkout/payment_address',
@@ -629,7 +629,7 @@ $(document).delegate('#button-guest', 'click', function() {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
-                <?php } ?>
+                {% endif %}
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

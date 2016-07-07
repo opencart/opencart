@@ -5,11 +5,11 @@
 	<input type="hidden" name="MD" value="{{ MD }}" />
 </form>
 <script type="text/javascript"><!--
-	$('#cardinity-3ds-form').submit();
+$('#cardinity-3ds-form').submit();
 //--></script>
-<?php } ?>
+{% endif %}
 {% if redirect %}
 <script type="text/javascript"><!--
-	location = '{{ redirect }}';
+location = '{{ redirect }}';
 //--></script>
-<?php } ?>
+{% endif %}

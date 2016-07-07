@@ -26,20 +26,22 @@
             </tr>
           </thead>
           <tbody>
-            {% if transactions %}
-            <?php foreach ($transactions  as $transaction) { ?>
-            <tr>
-              <td class="text-left">{{ transaction.date_added }}</td>
-              <td class="text-left">{{ transaction.description }}</td>
-              <td class="text-right">{{ transaction.amount }}</td>
-            </tr>
-            <?php } ?>
-            {% else %}
-            <tr>
-              <td class="text-center" colspan="5">{{ text_empty }}</td>
-            </tr>
-            <?php } ?>
-          </tbody>
+          
+          {% if transactions %}
+          {% for transaction in transactions %}
+          <tr>
+            <td class="text-left">{{ transaction.date_added }}</td>
+            <td class="text-left">{{ transaction.description }}</td>
+            <td class="text-right">{{ transaction.amount }}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center" colspan="5">{{ text_empty }}</td>
+          </tr>
+          {% endif %}
+            </tbody>
+          
         </table>
       </div>
       <div class="row">

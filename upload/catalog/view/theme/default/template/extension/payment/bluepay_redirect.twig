@@ -20,9 +20,9 @@
 					<label class="col-sm-2 control-label" for="Token">{{ entry_cc_choice }}</label>
 					<div class="col-sm-10">
 						<select name="RRNO" class="form-control">
-							% for existing_card in existing_cards %}
+							{% for existing_card in existing_cards %}
 								<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
-							<?php } ?>
+							{% endfor %}
 						</select>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
 			<div  style="display: none" id="card-new">
 			{% else %}
 				<div id="card-new">
-				<?php } ?>
+				{% endif %}
                 <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-cc-number">{{ entry_cc_number }}</label>
                     <div class="col-sm-10">
@@ -49,14 +49,14 @@
                         <select name="CC_EXPIRES_MONTH" id="input-cc-expire-date" class="form-control">
 							% for month in months %}
 								<option value="{{ month.value }}">{{ month.text }}</option>
-							<?php } ?>
+							{% endfor %}
                         </select>
                     </div>
                     <div class="col-sm-3">
                         <select name="CC_EXPIRES_YEAR" class="form-control">
 							% for year in year_expire %}
 								<option value="{{ year.value }}">{{ year.text }}</option>
-							<?php } ?>
+							{% endfor %}
                         </select>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
 							<input id="input-cc-save" type="checkbox" name="CreateToken" value="1" />
 						</div>
 					</div>
-				<?php } ?>
+				{% endif %}
             </div>
         </div>
         <div class="buttons">
@@ -89,7 +89,7 @@
 			$('#card-new input').prop('disabled', true);
 			$('#card-new input').prop('disabled', true);
 			$('#card-new select').prop('disabled', true);
-<?php } ?>
+{% endif %}
 	});
 //--></script>
 <script type="text/javascript"><!--

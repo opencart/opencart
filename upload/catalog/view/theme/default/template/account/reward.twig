@@ -26,24 +26,24 @@
             </tr>
           </thead>
           <tbody>
-            {% if rewards %}
-            <?php foreach ($rewards  as $reward) { ?>
-            <tr>
-              <td class="text-left">{{ reward.date_added }}</td>
-              <td class="text-left">{% if reward.order_id %}
-                <a href="{{ reward.href }}">{{ reward.description }}</a>
-                {% else %}
-                {{ reward.description }}
-                <?php } ?></td>
-              <td class="text-right">{{ reward.points }}</td>
-            </tr>
-            <?php } ?>
-            {% else %}
-            <tr>
-              <td class="text-center" colspan="3">{{ text_empty }}</td>
-            </tr>
-            <?php } ?>
-          </tbody>
+          
+          {% if rewards %}
+          {% for reward in rewards %}
+          <tr>
+            <td class="text-left">{{ reward.date_added }}</td>
+            <td class="text-left">{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
+              {{ reward.description }}
+              {% endif %}</td>
+            <td class="text-right">{{ reward.points }}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center" colspan="3">{{ text_empty }}</td>
+          </tr>
+          {% endif %}
+            </tbody>
+          
         </table>
       </div>
       <div class="row">

@@ -8,7 +8,7 @@
         <select name="type" id="input-type" class="form-control">
           <?php foreach ($cards as $key => $title) { ?>
             <option value="{{ key }}">{{ title }}</option>
-          <?php } ?>
+          {% endfor %}
         </select>
       </div>
     </div>
@@ -26,14 +26,14 @@
         <select name="expire_month" id="expire-date" class="form-control">
           {% for month in months %}
           <option value="{{ month.value }}">{{ month.text }}</option>
-          <?php } ?>
+          {% endif %}
         </select>
       </div>
       <div class="col-sm-3">
         <select name="expire_year" class="form-control">
           {% for year in year_expire %}
           <option value="{{ year.value }}">{{ year.text }}</option>
-          <?php } ?>
+          {% endif %}
         </select>
       </div>
     </div>

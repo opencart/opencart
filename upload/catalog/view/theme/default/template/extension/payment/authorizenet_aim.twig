@@ -17,16 +17,24 @@
       <label class="col-sm-2 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
       <div class="col-sm-3">
         <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
+          
          {% for month in months %}
+          
           <option value="{{ month.value }}">{{ month.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
-       </div>
-       <div class="col-sm-3">
+      </div>
+      <div class="col-sm-3">
         <select name="cc_expire_date_year" class="form-control">
+          
          {% for year in year_expire %}
+          
           <option value="{{ year.value }}">{{ year.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
     </div>

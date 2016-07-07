@@ -68,14 +68,14 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
-
 $('#history').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/delete&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			url: $(node).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -87,16 +87,14 @@ $('#history').on('click', '.btn-danger', function(e) {
 				$('.alert').remove();
 				
 				if (json['error']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
 				}
-				
-				var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
-				editor.setValue(json['code']);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -104,6 +102,8 @@ $('#history').on('click', '.btn-danger', function(e) {
 		});
 	}
 });
+
+$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
 
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({

@@ -7,10 +7,10 @@
   </ul>
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-  <?php } ?>
+  {% endif %}
   {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -31,33 +31,34 @@
             </tr>
           </thead>
           <tbody>
-            {% if cards %}
-            <?php foreach ($cards  as $card) { ?>
-            <tr>
-              <td class="text-left">{{ card.type }}</td>
-              <td class="text-left">{{ card.digits }}</td>
-              <td class="text-right">{{ card.expiry }}</td>
-			  <td class="text-right"><a href="{{ delete }} {{ card.card_id }}" class="btn btn-danger">{{ button_delete }}</a></td>
-
-            </tr>
-            <?php } ?>
-            {% else %}
-            <tr>
-              <td class="text-center" colspan="5">{{ text_empty }}</td>
-            </tr>
-            <?php } ?>
-          </tbody>
+          
+          {% if cards %}
+          {% for card in cards %}
+          <tr>
+            <td class="text-left">{{ card.type }}</td>
+            <td class="text-left">{{ card.digits }}</td>
+            <td class="text-right">{{ card.expiry }}</td>
+            <td class="text-right"><a href="{{ delete }} {{ card.card_id }}" class="btn btn-danger">{{ button_delete }}</a></td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center" colspan="5">{{ text_empty }}</td>
+          </tr>
+          {% endif %}
+            </tbody>
+          
         </table>
       </div>
       <div class="row">
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
-	  <div class="buttons clearfix">
+      <div class="buttons clearfix">
         <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
         <div class="pull-right"><a href="{{ add }}" class="btn btn-primary">{{ button_new_card }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }}
+{{ footer }} 

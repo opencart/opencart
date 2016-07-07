@@ -57,6 +57,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->language('design/theme');
 		
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['column_store'] = $this->language->get('column_store');
 		$data['column_route'] = $this->language->get('column_route');
@@ -65,6 +66,7 @@ class ControllerDesignTheme extends Controller {
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -95,7 +97,7 @@ class ControllerDesignTheme extends Controller {
 				'theme'      => $result['theme'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('design/theme/edit', 'token=' . $this->session->data['token'], true),
-				'delete'     => $this->url->link('design/theme/delete', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'] . '', true)
+				'delete'     => $this->url->link('design/theme/delete', 'token=' . $this->session->data['token'] . '&theme_id=' . $result['theme_id'], true)
 			);			
 		}
 		
@@ -301,6 +303,34 @@ class ControllerDesignTheme extends Controller {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
 		}		
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function delete() {
+		$this->load->language('design/theme');
+		
+		$json = array();
+		
+		if (isset($this->request->get['theme_id'])) {
+			$theme_id = $this->request->get['theme_id'];			
+		} else {
+			$theme_id = 0;
+		}	
+	
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'design/theme')) {
+			$json['error'] = $this->language->get('error_permission');
+		} 
+		
+		if (!$json) { 		
+			$this->load->model('design/theme');
+		
+			$this->model_design_theme->deleteTheme($theme_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	

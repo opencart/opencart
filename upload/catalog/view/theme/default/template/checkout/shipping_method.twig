@@ -1,28 +1,27 @@
 {% if error_warning %}
 <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-<?php } ?>
+{% endif %}
 {% if shipping_methods %}
 <p>{{ text_shipping_method }}</p>
 % for shipping_method in shipping_methods %}
 <p><strong>{{ shipping_method.title }}</strong></p>
-{% if !$shipping_method.error %}
+{% if not shipping_method.error %}
 {% for quote in shipping_method.quote %}
 <div class="radio">
-  <label>
-    {% if quote['code'] == $code || !$code %}
-    <?php $code = $quote['code']; ?>
+  <label> {% if quote.code == code or not code %}
+    {% set code = quote.code %}
     <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
     {% else %}
     <input type="radio" name="shipping_method" value="{{ quote.code }}" />
-    <?php } ?>
+    {% endif %}
     {{ quote.title }} - {{ quote.text }}</label>
 </div>
-<?php } ?>
+{% endfor %}
 {% else %}
 <div class="alert alert-danger">{{ shipping_method.error }}</div>
-<?php } ?>
-<?php } ?>
-<?php } ?>
+{% endif %}
+{% endfor %}
+{% endif %}
 <p><strong>{{ text_comments }}</strong></p>
 <p>
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>

@@ -21,14 +21,14 @@
       <select name="exp_month" class="form-control">
        {% for month in months %}
         <option value="{{ month.value }}">{{ month.text }}</option>
-        <?php } ?>
+        {% endfor %}
       </select>
     </div>
     <div class="col-sm-3">
       <select name="exp_year" class="form-control">
        {% for year in years %}
         <option value="{{ year.value }}">{{ year.text }}</option>
-        <?php } ?>
+        {% endfor %}>
       </select>
     </div>
   </div>

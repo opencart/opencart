@@ -33,7 +33,7 @@
                   <input type="radio" name="payment" value="cheque" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="cheque" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_cheque }}</label>
               </div>
               <div class="radio">
@@ -42,7 +42,7 @@
                   <input type="radio" name="payment" value="paypal" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="paypal" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_paypal }}</label>
               </div>
               <div class="radio">
@@ -51,7 +51,7 @@
                   <input type="radio" name="payment" value="bank" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="bank" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_bank }}</label>
               </div>
             </div>

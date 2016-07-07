@@ -14,22 +14,22 @@
           <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
           {% else %}
           <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-          <?php } ?>
-          <?php } ?>
+          {% endif %}
+          {% endfor %}
         </div>
-        <?php } ?>
+        {% endif %}
         {% if product.price %}
         <p class="price">
           {% if !$product.special %}
           {{ product.price }}
           {% else %}
           <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-          <?php } ?>
+          {% endif %}
           {% if product.tax %}
           <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-          <?php } ?>
+          {% endif %}
         </p>
-        <?php } ?>
+        {% endif %}
       </div>
       <div class="button-group">
         <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
@@ -38,5 +38,5 @@
       </div>
     </div>
   </div>
-  <?php } ?>
+  {% endfor %}
 </div>

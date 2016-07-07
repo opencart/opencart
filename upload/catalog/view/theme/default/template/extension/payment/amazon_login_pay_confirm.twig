@@ -9,7 +9,7 @@
 			<br>
 			<label>Debug Error Message  :</label>
 			<div id="errorMessage_address"></div>
-			<?php } ?>
+			{% endif %}
 			<div style="display: inline-block; width: 400px; height: 185px;" id="readOnlyAddressBookWidgetDiv"></div>
 			<br>
 			<?php if(isset($amazon_login_pay_test)){ ?>
@@ -18,7 +18,7 @@
 			<br>
 			<label>Debug Error Message  :</label>
 			<div id="errorMessage_wallet"></div>
-			<?php } ?>
+			{% endif %}
 			<div style="display: inline-block; width: 400px; height: 185px;" id="readOnlyWalletWidgetDiv"></div>
 		</div>
 		<div style="clear: both;"></div>
@@ -41,13 +41,13 @@
 							{% for option in product.option %}
 								<br />
 								&nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
-							<?php } ?></td>
+							{% endfor %}</td>
 						<td class="text-left">{{ product.model }}</td>
 						<td class="text-right">{{ product.quantity }}</td>
 						<td class="text-right">{{ product.price }}</td>
 						<td class="text-right">{{ product.total }}</td>
 					</tr>
-				<?php } ?>
+				{% endfor %}
 			</tbody>
 			<tfoot>
 				% for total in totals %}
@@ -55,7 +55,7 @@
 						<td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
 						<td class="text-right">{{ total.text }}</td>
 					</tr>
-				<?php } ?>
+				{% endfor %}
 			</tfoot>
 		</table>
 	</div>

@@ -6,8 +6,8 @@ class ModelDesignTheme extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET store_id = '" . (int)$store_id . "', theme = '" . $this->db->escape($theme) . "', route = '" . $this->db->escape($route) . "', code = '" . $this->db->escape($code) . "', date_added = NOW()");
 	}
 
-	public function deleteTheme($store_id, $theme, $route) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE store_id = '" . (int)$store_id . "' AND theme = '" . $this->db->escape($theme) . "' AND route = '" . $this->db->escape($route) . "'");
+	public function deleteTheme($theme_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE theme_id = '" . (int)$theme_id . "'");
 	}
 
 	public function getTheme($store_id, $theme, $route) {

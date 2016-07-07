@@ -18,29 +18,29 @@
         {% if column_left || $column_right %}
         {% set class = 'col-sm-6' %}
         {% else %}
-        <?php $class = 'col-sm-8'; ?>
-        <?php } ?>
+        {% set class = 'col-sm-8' %}
+        {% endif %}
         <div class="{{ class }}">
-          {% if thumb || $images %}
+          {% if thumb or images %}
           <ul class="thumbnails">
             {% if thumb %}
             <li><a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
-            <?php } ?>
+            {% endif %}
             {% if images %}
             {% for image in images %}
             <li class="image-additional"><a class="thumbnail" href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
-            <?php } ?>
-            <?php } ?>
+            {% endfor %}
+            {% endif %}
           </ul>
-          <?php } ?>
+          {% endif %}
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
             {% if attribute_groups %}
             <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
-            <?php } ?>
+            {% endif %}
             {% if review_status %}
             <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
-            <?php } ?>
+            {% endif %}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-description">{{ description }}</div>
@@ -59,12 +59,12 @@
                     <td>{{ attribute.name }}</td>
                     <td>{{ attribute.text }}</td>
                   </tr>
-                  <?php } ?>
+                  {% endfor %}
                 </tbody>
-                <?php } ?>
+                {% endfor %}
               </table>
             </div>
-            <?php } ?>
+            {% endif %}
             {% if review_status %}
             <div class="tab-pane" id="tab-review">
               <form class="form-horizontal" id="form-review">
@@ -107,7 +107,7 @@
                 </div>
                 {% else %}
                 {{ text_login }}
-                <?php } ?>
+                {% endif %}
               </form>
             </div>
             <?php } ?>
@@ -116,8 +116,8 @@
         {% if column_left || $column_right %}
         {% set class = 'col-sm-6' %}
         {% else %}
-        <?php $class = 'col-sm-4'; ?>
-        <?php } ?>
+        {% set class = 'col-sm-4' %}
+        {% endif %}
         <div class="{{ class }}">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
@@ -127,11 +127,11 @@
           <ul class="list-unstyled">
             {% if manufacturer %}
             <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
-            <?php } ?>
+            {% endif %}
             <li>{{ text_model }} {{ model }}</li>
             {% if reward %}
             <li>{{ text_reward }} {{ reward }}</li>
-            <?php } ?>
+            {% endif %}
             <li>{{ text_stock }} {{ stock }}</li>
           </ul>
           {% if price %}
@@ -145,30 +145,30 @@
             <li>
               <h2>{{ special }}</h2>
             </li>
-            <?php } ?>
+            {% endif %}
             {% if tax %}
             <li>{{ text_tax }} {{ tax }}</li>
-            <?php } ?>
+            {% endif %}
             {% if points %}
             <li>{{ text_points }} {{ points }}</li>
-            <?php } ?>
+            {% endif %}
             {% if discounts %}
             <li>
               <hr>
             </li>
             {% for discount in discounts %}
             <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
-            <?php } ?>
-            <?php } ?>
+            {% endfor %}
+            {% endif %}
           </ul>
-          <?php } ?>
+          {% endif %}
           <div id="product">
             {% if options %}
             <hr>
             <h3>{{ text_option }}</h3>
             {% for option in options %}
             {% if option['type'] == 'select') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                 <option value="">{{ text_select }}</option>
@@ -176,14 +176,14 @@
                 <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
                 {% if option_value.price %}
                 ({{ option_value.price_prefix }}{{ option_value.price }})
-                <?php } ?>
+                {% endif %}
                 </option>
-                <?php } ?>
+                {% endfor %}
               </select>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'radio') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'radio' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label">{{ option.name }}</label>
               <div id="input-option{{ option.product_option_id }}">
                 {% for option_value in option.product_option_value %}
@@ -192,19 +192,19 @@
                     <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
                     {% if option_value.image %}
                     <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
-                    <?php } ?>                    
+                    {% endif %}                  
                     {{ option_value.name }}
                     {% if option_value.price %}
                     ({{ option_value.price_prefix }}{{ option_value.price }})
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'checkbox') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'checkbox' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label">{{ option.name }}</label>
               <div id="input-option{{ option.product_option_id }}">
                 {% for option_value in option.product_option_value %}
@@ -213,38 +213,38 @@
                     <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
                     {% if option_value.image %}
                     <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
-                    <?php } ?>
+                    {% endif %}
                     {{ option_value.name }}
                     {% if option_value.price %}
                     ({{ option_value.price_prefix }}{{ option_value.price }})
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'text') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'text' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control" />
             </div>
-            <?php } ?>
-            {% if option['type'] == 'textarea') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'textarea' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'file') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'file' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label">{{ option.name }}</label>
               <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}" />
             </div>
-            <?php } ?>
-            {% if option['type'] == 'date') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'date' %}
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <div class="input-group date">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD" id="input-option{{ option.product_option_id }}" class="form-control" />
@@ -252,9 +252,9 @@
                 <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'datetime') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+             {% endif %}
+            {% if option.type == 'datetime') { ?>
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <div class="input-group datetime">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
@@ -262,9 +262,9 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
-            <?php } ?>
-            {% if option['type'] == 'time') { ?>
-            <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
+            {% endif %}
+            {% if option.type == 'time') { ?>
+            <div class="form-group{% if custom_field.required %} required {% endif %}">
               <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
               <div class="input-group time">
                 <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" data-date-format="HH:mm" id="input-option{{ option.product_option_id }}" class="form-control" />
@@ -272,9 +272,9 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
-            <?php } ?>
-            <?php } ?>
-            <?php } ?>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
             {% if recurrings %}
             <hr>
             <h3>{{ text_payment_recurring }}</h3>
@@ -283,11 +283,11 @@
                 <option value="">{{ text_select }}</option>
                 {% for recurring in recurrings %}
                 <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
-                <?php } ?>
+                {% endfor %}
               </select>
               <div class="help-block" id="recurring-description"></div>
             </div>
-            <?php } ?>
+            {% endif %}
             <div class="form-group">
               <label class="control-label" for="input-quantity">{{ entry_qty }}</label>
               <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" />

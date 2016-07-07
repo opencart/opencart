@@ -9,7 +9,7 @@
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -34,33 +34,29 @@
             </tr>
           </thead>
           <tbody>
-           {% for product in products %}
-            <tr>
-              <td class="text-center">{% if product.thumb %}
-                <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" /></a>
-                <?php } ?></td>
-              <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a></td>
-              <td class="text-left">{{ product.model }}</td>
-              <td class="text-right">{{ product.stock }}</td>
-              <td class="text-right">{% if product.price %}
-                <div class="price">
-                  {% if !$product.special %}
-                  {{ product.price }}
-                  {% else %}
-                  <b>{{ product.special }}</b> <s>{{ product.price }}</s>
-                  <?php } ?>
-                </div>
-                <?php } ?></td>
-              <td class="text-right"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                <a href="{{ product.remove }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
-            </tr>
-            <?php } ?>
-          </tbody>
+          
+          {% for product in products %}
+          <tr>
+            <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" /></a> {% endif %}</td>
+            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a></td>
+            <td class="text-left">{{ product.model }}</td>
+            <td class="text-right">{{ product.stock }}</td>
+            <td class="text-right">{% if product.price %}
+              <div class="price"> {% if !$product.special %}
+                {{ product.price }}
+                {% else %} <b>{{ product.special }}</b> <s>{{ product.price }}</s> {% endif %} </div>
+              {% endif %}</td>
+            <td class="text-right"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+              <a href="{{ product.remove }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
+          </tr>
+          {% endfor %}
+            </tbody>
+          
         </table>
       </div>
       {% else %}
       <p>{{ text_empty }}</p>
-      <?php } ?>
+      {% endif %}
       <div class="buttons clearfix">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>

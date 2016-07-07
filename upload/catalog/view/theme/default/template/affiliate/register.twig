@@ -7,7 +7,7 @@
   </ul>
   {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -29,7 +29,7 @@
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
               {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -38,7 +38,7 @@
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
               {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -47,7 +47,7 @@
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
               {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -56,7 +56,7 @@
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
               {% if error_telephone %}
               <div class="text-danger">{{ error_telephone }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -86,7 +86,7 @@
               <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
               {% if error_address_1 %}
               <div class="text-danger">{{ error_address_1 }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -101,7 +101,7 @@
               <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
               {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -110,7 +110,7 @@
               <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
               {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -119,16 +119,16 @@
               <select name="country_id" id="input-country" class="form-control">
                 <option value="false">{{ text_select }}</option>
                {% for country in countries %}
-                {% if country['country_id'] == $country_id %}
+                {% if country.country_id == country_id %}
                 <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                 {% else %}
                 <option value="{{ country.country_id }}">{{ country.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
               {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -138,7 +138,7 @@
               </select>
               {% if error_zone %}
               <div class="text-danger">{{ error_zone }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
         </fieldset>
@@ -159,7 +159,7 @@
                   <input type="radio" name="payment" value="cheque" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="cheque" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_cheque }}</label>
               </div>
               <div class="radio">
@@ -168,7 +168,7 @@
                   <input type="radio" name="payment" value="paypal" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="paypal" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_paypal }}</label>
               </div>
               <div class="radio">
@@ -177,7 +177,7 @@
                   <input type="radio" name="payment" value="bank" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="bank" />
-                  <?php } ?>
+                  {% endif %}
                   {{ text_bank }}</label>
               </div>
             </div>
@@ -235,7 +235,7 @@
               <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -244,7 +244,7 @@
               <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" />
               {% if error_confirm %}
               <div class="text-danger">{{ error_confirm }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
         </fieldset>
@@ -256,7 +256,7 @@
             <input type="checkbox" name="agree" value="1" checked="checked" />
             {% else %}
             <input type="checkbox" name="agree" value="1" />
-            <?php } ?>
+            {% endif %}
             &nbsp;
             <input type="submit" value="{{ button_continue }}" class="btn btn-primary" />
           </div>
@@ -267,7 +267,7 @@
             <input type="submit" value="{{ button_continue }}" class="btn btn-primary" />
           </div>
         </div>
-        <?php } ?>
+        {% endif %}
       </form>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

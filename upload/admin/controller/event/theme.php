@@ -5,5 +5,7 @@ class ControllerEventTheme extends Controller {
 		if (substr($view, -3) == 'tpl') {
 			$view = substr($view, 0, -3);
 		}
+		
+		$view .= '.tpl';
 	}
 }

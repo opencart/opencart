@@ -7,10 +7,10 @@
   </ul>
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-  <?php } ?>
+  {% endif %}
   {% if error_warning %}
   <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -24,12 +24,12 @@
       {% if addresses %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
-         {% for result in addresses %}
+          {% for result in addresses %}
           <tr>
             <td class="text-left">{{ result.address }}</td>
             <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
-          <?php } ?>
+          {% endfor %}
         </table>
       </div>
       {% else %}

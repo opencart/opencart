@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -40,20 +39,17 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_twig; ?></div>
             <div id="code" style="display: none;">
               <ul class="nav nav-tabs">
               </ul>
               <div class="tab-content"></div>
             </div>
-            <div id="warning">
-              <div class="alert alert-warning">
-                <h4><i class="fa fa-exclamation-circle"></i> <?php echo $text_warning; ?></h4>
-                <p><?php echo $text_access; ?></p>
-                <p><?php echo $text_permission; ?></p>
-              </div>
-              <div class="alert alert-info">
-                <p><i class="fa fa-info-circle"></i> <?php echo $text_begin; ?></p>
-              </div>
+            <div id="recent">
+              <fieldset>
+                <legend><?php echo $text_history; ?></legend>
+                <div id="history"></div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -66,6 +62,49 @@
   <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
   <script type="text/javascript"><!--
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
+
+$('#history').on('click', '.btn-danger', function(e) {
+	if (confirm('<?php echo $text_confirm; ?>')) {
+		var node = this;
+
+		$.ajax({
+			url: 'index.php?route=design/theme/delete&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+				
+				if (json['error']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
+				
+				editor.setValue(json['code']);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
 		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
@@ -173,7 +212,7 @@ $('#path').on('click', 'a.file',function(e) {
 			success: function(json) {
 				if (json['code']) {
 					$('#code').show();
-					$('#warning').hide();
+					$('#recent').hide();
 
 					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
@@ -232,7 +271,7 @@ $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();
-		$('#warning').show();
+		$('#recent').show();
 	}
 });
 
@@ -261,6 +300,8 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

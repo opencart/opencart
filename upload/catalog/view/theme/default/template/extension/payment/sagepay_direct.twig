@@ -1,6 +1,6 @@
  {% if success %}
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-  <?php } ?>
+ <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
+ {% endif %}
 <form class="form-horizontal">
   <fieldset id="payment">
 	<legend>{{ text_credit_card }}</legend>
@@ -24,8 +24,8 @@
 			<div class="col-sm-8">
 			  <select name="Token" class="form-control">
 				{% for existing_card in existing_cards %}
-					<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
-				<?php } ?>
+					<option value="{{ existing_card.token }}">{{ text_card_type }} {{ existing_card.type }}, {{ text_card_digits }} {{ existing_card.digits }}, {{ text_card_expiry }} {{ existing_card.expiry }}</option>
+				{% endfor %}
 			  </select>
 			</div>
 			<div class="col-sm-2">
@@ -42,7 +42,7 @@
 		<div  style="display: none" id="card-new">
 	  {% else %}
 		  <div id="card-new">
-		<?php } ?>
+		{% endif %}
 		<div class="form-group required">
 		  <label class="col-sm-2 control-label" for="input-cc-owner">{{ entry_cc_owner }}</label>
 		  <div class="col-sm-10">
@@ -55,7 +55,7 @@
 			<select name="cc_type" id="input-cc-type" class="form-control">
 			  {% for card in cards %}
 				  <option value="{{ card.value }}">{{ card.text }}</option>
-			  <?php } ?>
+			  {% endfor %}
 			</select>
 		  </div>
 		</div>
@@ -71,14 +71,14 @@
 			<select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
 			  {% for month in months %}
 				  <option value="{{ month.value }}">{{ month.text }}</option>
-			  <?php } ?>
+			  {% endfor %}
 			</select>
 		  </div>
 		  <div class="col-sm-3">
 			<select name="cc_expire_date_year" class="form-control">
 			  {% for year in year_expire %}
 				  <option value="{{ year.value }}">{{ year.text }}</option>
-			  <?php } ?>
+			  {% endfor %}
 			</select>
 		  </div>
 		</div>
@@ -95,7 +95,7 @@
 				<input type="checkbox" name="CreateToken" value="1" id="input-cc-save"/>
 			  </div>
 			</div>
-		<?php } ?>
+		{% endif %}
 	  </div>
   </fieldset>
 </form>
@@ -105,13 +105,13 @@
   </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function() {
-{% if !empty($existing_cards)) { ?>
-	      $('#card-new input').prop('disabled', true);
-	      $('#card-new input').prop('disabled', true);
-	      $('#card-new select').prop('disabled', true);
-<?php } ?>
-    });
+$(document).ready(function() {
+{% if not existing_cards %}
+	$('#card-new input').prop('disabled', true);
+	$('#card-new input').prop('disabled', true);
+	$('#card-new select').prop('disabled', true);
+{% endif %}
+});
 //</script>
 <script type="text/javascript">
 	$('input[name=\'CreateToken\']').on('change', function() {
@@ -143,7 +143,7 @@ $('#button-confirm').bind('click', function() {
 			beforeSend: function() {
           $('#button-confirm').button('loading');
         },
-			complete: function() {
+		complete: function() {
           $('#button-confirm').button('reset');
         },
 			success: function(json) {
@@ -173,39 +173,39 @@ $('#button-confirm').bind('click', function() {
     });
 //--></script>
 <script type="text/javascript"><!--
-    $('#button-delete').bind('click', function () {
-      if (confirm('{{ text_confirm_delete }}')) {
-        $.ajax({
-          url: 'index.php?route=extension/payment/sagepay_direct/delete',
-          type: 'post',
-          data: $('#card-existing :input[name=\'Token\']'),
-          dataType: 'json',
-          beforeSend: function () {
-            $('#button-delete').button('loading');
-          },
-          complete: function () {
-            $('#button-delete').button('reset');
-          },
-          success: function (json) {
-            if (json['error']) {
-              alert(json['error']);
-            }
-
-            if (json['success']) {
-              $.ajax({
-                url: 'index.php?route=checkout/confirm',
-                dataType: 'html',
-                success: function (html) {
-                  $('#collapse-checkout-confirm .panel-body').html(html);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-              });
-            }
-
-          }
-        });
-      }
-    });
+$('#button-delete').bind('click', function () {
+	if (confirm('{{ text_confirm_delete }}')) {
+		$.ajax({
+			url: 'index.php?route=extension/payment/sagepay_direct/delete',
+			type: 'post',
+			data: $('#card-existing :input[name=\'Token\']'),
+			dataType: 'json',
+			beforeSend: function () {
+				$('#button-delete').button('loading');
+			},
+			complete: function () {
+				$('#button-delete').button('reset');
+			},
+			success: function (json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+			
+				if (json['success']) {
+					$.ajax({
+						url: 'index.php?route=checkout/confirm',
+						dataType: 'html',
+						success: function (html) {
+							$('#collapse-checkout-confirm .panel-body').html(html);
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+			
+			}
+		});
+	}
+});
 //--></script>

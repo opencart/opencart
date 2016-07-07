@@ -4,7 +4,7 @@
 
   {% if isset($text_testing)) { ?>
     <div class="alert alert-warning">{{ text_testing }}</div>
-  <?php } ?>
+  {% endif %}
 
   <div class="buttons">
     <div class="pull-right">
@@ -43,4 +43,4 @@
 
 //--></script>
 
-<?php } ?>
+{% endif %}

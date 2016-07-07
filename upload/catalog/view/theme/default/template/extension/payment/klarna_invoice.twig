@@ -1,36 +1,48 @@
 {% if error_warning %}
 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-<?php } ?>
+{% endif %}
 <p><img src="https://cdn.klarna.com/public/images/{{ iso_code_2 }}/badges/v1/invoice/{{ iso_code_2 }}_invoice_badge_std_blue.png?width=150&eid={{ merchant }}" /></p>
 <form id="payment" class="form-horizontal">
   <fieldset>
     <legend>{{ text_additional }}</legend>
-    {% if !$company %}
-    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% if not company %}
+    {% if iso_code_3 == 'DEU' or iso_code_3 == 'NLD' %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-dob">{{ entry_dob }}</label>
       <div class="col-sm-3">
         <select name="pno_day" id="input-dob" class="form-control">
           <option value="">{{ text_day }}</option>
+          
          {% for day in days %}
+          
           <option value="{{ day.value }}">{{ day.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_month" class="form-control">
           <option value="">{{ text_month }}</option>
+          
          {% for month in months %}
+          
           <option value="{{ month.value }}">{{ month.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_year" class="form-control">
           <option value="">{{ text_year }}</option>
+          
          {% for year in years %}
+          
           <option value="{{ year.value }}">{{ year.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
     </div>
@@ -41,7 +53,7 @@
         <input type="text" name="pno" value="" id="input-pno" class="form-control" />
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
@@ -49,8 +61,8 @@
         <input type="text" name="pno" value="" id="input-company" class="form-control" />
       </div>
     </div>
-    <?php } ?>
-    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% endif %}
+    {% if iso_code_3 == 'DEU' or iso_code_3 == 'NLD' %}
     <div class="form-group required">
       <label class="col-sm-2 control-label">{{ entry_gender }}</label>
       <div class="col-sm-10">
@@ -74,7 +86,7 @@
         <input type="text" name="house_no" value="{{ street_number }}" id="input-house-no" class="form-control" />
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     {% if iso_code_3 == 'NLD') { ?>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-house-ext">{{ entry_house_ext }}</label>
@@ -82,7 +94,7 @@
         <input type="text" name="house_ext" value="{{ street_extension }}" id="input-house-ext" class="form-control" />
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-phone-no">{{ entry_phone_no }}</label>
       <div class="col-sm-10">
@@ -94,7 +106,7 @@
       <input type="checkbox" name="deu_terms" value="1" />
       Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen
       Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen. </div>
-    <?php } ?>
+    {% endif %}
   </fieldset>
 </form>
 <div class="buttons">
@@ -129,4 +141,4 @@ $('#button-confirm').on('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 

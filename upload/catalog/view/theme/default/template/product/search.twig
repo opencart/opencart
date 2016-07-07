@@ -133,12 +133,14 @@
                 {% if product.rating %}
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
+                  {% for i in () %}
+                 
                   {% if product['rating'] < $i %}
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% else %}
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% endif %}
-                  <?php } ?>
+                  {% endfor %}
                 </div>
                 {% endif %}
               </div>

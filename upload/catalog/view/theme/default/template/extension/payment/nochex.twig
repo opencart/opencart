@@ -1,5 +1,5 @@
 <form action="{{ action }}" method="post">
-  {% if !$test %}
+  {% if not test %}
   <input type="hidden" name="merchant_id" value="{{ merchant_id }}" />
   <input type="hidden" name="success_url" value="{{ success_url }}" />
   <input type="hidden" name="cancel_url" value="{{ cancel_url }}" />
@@ -10,7 +10,7 @@
   <input type="hidden" name="test_success_url" value="{{ success_url }}" />
   <input type="hidden" name="test_cancel_url" value="{{ cancel_url }}" />
   <input type="hidden" name="test_declined_url" value="{{ declined_url }}" />
-  <?php } ?>
+  {% endif %}
   <input type="hidden" name="callback_url" value="{{ callback_url }}" />
   <input type="hidden" name="amount" value="{{ amount }}" />
   <input type="hidden" name="description" value="{{ description }}" />

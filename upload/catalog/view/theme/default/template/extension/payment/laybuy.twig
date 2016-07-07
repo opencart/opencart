@@ -9,7 +9,7 @@
       <select name="INIT" id="input-down-payment" class="form-control">
        {% for percent in initial_payments %}
           <option value="{{ percent }}">{{ percent }}%</option>
-        <?php } ?>
+        {% endfor %}
       </select>
     </div>
   </div>
@@ -23,8 +23,8 @@
             <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
 		  {% else %}
             <option value="{{ month.value }}">{{ month.label }}</option>
-		  <?php } ?>
-        <?php } ?>
+		  {% endif %}
+        {% endfor %}
       </select>
     </div>
   </div>

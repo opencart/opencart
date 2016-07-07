@@ -1,22 +1,22 @@
 <form class="form-horizontal" id="payment_form">
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
-    {% if !empty($accepted_cards)) { ?>
+    {% if not accepted_cards %}
       <div class="form-group">
         <div class="col-sm-12">
           <p>
             <strong>{{ text_card_accepted }}</strong>
             <ul>
-              {% if accepted_cards['mastercard'] == 1 %}<li>{{ text_card_type_m }}</li><?php } ?>
-              {% if accepted_cards['visa'] == 1 %}<li>{{ text_card_type_v }}</li><?php } ?>
-              {% if accepted_cards['diners'] == 1 %}<li>{{ text_card_type_c }}</li><?php } ?>
-              {% if accepted_cards['amex'] == 1 %}<li>{{ text_card_type_a }}</li><?php } ?>
-              {% if accepted_cards['maestro'] == 1 %}<li>{{ text_card_type_ma }}</li><?php } ?>
+              {% if accepted_cards.mastercard == 1 %}<li>{{ text_card_type_m }}</li>{% endif %}
+              {% if accepted_cards.visa == 1 %}<li>{{ text_card_type_v }}</li>{% endif %}
+              {% if accepted_cards.diners == 1 %}<li>{{ text_card_type_c }}</li>{% endif %}
+              {% if accepted_cards.amex == 1 %}<li>{{ text_card_type_a }}</li>{% endif %}
+              {% if accepted_cards.maestro == 1 %}<li>{{ text_card_type_ma }}</li>{% endif %}
             </ul>
           </p>
         </div>
       </div>
-    <?php } ?>
+    {% endif %}
 
     {% if card_storage == 1 && count($stored_cards) > 0 %}
     <div class="form-group">
@@ -26,12 +26,12 @@
        {% for card in stored_cards %}
           <p><input type="radio" name="cc_choice" value="{{ card.token }}" class="stored_card" <?php echo $i == 0 ? 'checked="checked"' : ''; ?>/> <?php echo $card['card_type'] . ' xxxx ' . $card['digits'] . ', ' . $entry_cc_expire_date . ' ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>
           <?php $i++; ?>
-        <?php } ?>
+        {% endfor %}
 
         <p><input type="radio" name="cc_choice" value="new" class="stored_card" />New card</p>
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
 
     <div id="card_info" style="display:none;">
       <div class="form-group required">
@@ -55,14 +55,14 @@
           <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
            {% for month in months %}
               <option value="{{ month.value }}">{{ month.text }}</option>
-            <?php } ?>
+            {% endfor %}
           </select>
         </div>
         <div class="col-sm-3">
           <select name="cc_expire_date_year" class="form-control">
            {% for year in year_expire %}
             <option value="{{ year.value }}">{{ year.text }}</option>
-            <?php } ?>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -75,7 +75,7 @@
           <input type="hidden" name="cc_store" value="0"/> <input type="checkbox" name="cc_store" value="1" checked/>
         </div>
       </div>
-      <?php } ?>
+      {% endif %}
     </div>
 
     <div class="form-group required">
@@ -137,6 +137,6 @@ $(document).ready(function(){
     if (stored_cards == 0) {
       $('#card_info').show();
     }
-  <?php } ?>
+  {% endif %}
 });
 //--></script>

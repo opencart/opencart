@@ -13,7 +13,7 @@
           {% endfor %} </div>
         {% endif %}
         {% if product.price %}
-        <p class="price"> {% if !$product.special %}
+        <p class="price"> {% if not product.special %}
           {{ product.price }}
           {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
           {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>

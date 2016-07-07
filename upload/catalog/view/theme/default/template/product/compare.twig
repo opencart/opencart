@@ -9,7 +9,7 @@
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -32,81 +32,64 @@
             <td>{{ text_name }}</td>
             {% for product in products %}
             <td><a href="{{ product.href }}"><strong>{{ product.name }}</strong></a></td>
-            <?php } ?>
-          </tr>
+            {% endfor %} </tr>
           <tr>
             <td>{{ text_image }}</td>
             {% for product in products %}
-            <td class="text-center">{% if product.thumb %}
-              <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" />
-              <?php } ?></td>
-            <?php } ?>
-          </tr>
+            <td class="text-center">{% if product.thumb %} <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /> {% endif %}</td>
+            {% endfor %} </tr>
           <tr>
             <td>{{ text_price }}</td>
             {% for product in products %}
             <td>{% if product.price %}
-              {% if !$product.special %}
+              {% if not product.special %}
               {{ product.price }}
-              {% else %}
-              <strike>{{ product.price }}</strike> {{ product.special }}
-              <?php } ?>
-              <?php } ?></td>
-            <?php } ?>
-          </tr>
+              {% else %} <strike>{{ product.price }}</strike> {{ product.special }}
+              {% endif %}
+              {% endif %}</td>
+            {% endfor %} </tr>
           <tr>
             <td>{{ text_model }}</td>
             {% for product in products %}
             <td>{{ product.model }}</td>
-            <?php } ?>
-          </tr>
+            {% endfor %} </tr>
           <tr>
             <td>{{ text_manufacturer }}</td>
             {% for product in products %}
             <td>{{ product.manufacturer }}</td>
-            <?php } ?>
-          </tr>
+            {% endfor %} </tr>
           <tr>
             <td>{{ text_availability }}</td>
             {% for product in products %}
             <td>{{ product.availability }}</td>
-            <?php } ?>
-          </tr>
-          {% if review_status %}
-          <tr>
-            <td>{{ text_rating }}</td>
-            {% for product in products %}
-            <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
-              {% if product['rating'] < $i %}
-              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-              {% else %}
-              <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-              <?php } ?>
-              <?php } ?>
-              <br />
-              {{ product.reviews }}</td>
-            <?php } ?>
-          </tr>
-          <?php } ?>
-          <tr>
-            <td>{{ text_summary }}</td>
-            {% for product in products %}
-            <td class="description">{{ product.description }}</td>
-            <?php } ?>
-          </tr>
-          <tr>
-            <td>{{ text_weight }}</td>
-            {% for product in products %}
-            <td>{{ product.weight }}</td>
-            <?php } ?>
-          </tr>
-          <tr>
-            <td>{{ text_dimension }}</td>
-            {% for product in products %}
-            <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
-            <?php } ?>
-          </tr>
-        </tbody>
+            {% endfor %} </tr>
+        {% if review_status %}
+        <tr>
+          <td>{{ text_rating }}</td>
+          {% for product in products %}
+          <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
+            {% if product['rating'] < $i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+            {% endfor %} <br />
+            {{ product.reviews }}</td>
+          {% endfor %} </tr>
+        {% endif %}
+        <tr>
+          <td>{{ text_summary }}</td>
+          {% for product in products %}
+          <td class="description">{{ product.description }}</td>
+          {% endfor %} </tr>
+        <tr>
+          <td>{{ text_weight }}</td>
+          {% for product in products %}
+          <td>{{ product.weight }}</td>
+          {% endfor %} </tr>
+        <tr>
+          <td>{{ text_dimension }}</td>
+          {% for product in products %}
+          <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
+          {% endfor %} </tr>
+          </tbody>
+        
         {% for attribute_group in attribute_groups %}
         <thead>
           <tr>
@@ -118,31 +101,29 @@
           <tr>
             <td>{{ attribute.name }}</td>
             {% for product in products %}
-            {% if isset($product['attribute'][{{ key }}])) { ?>
-            <td><?php echo $product['attribute'][$key]; ?></td>
+            {% if product.attribute[key])) %}
+            <td>{{ product.attribute[key] }}</td>
             {% else %}
             <td></td>
-            <?php } ?>
-            <?php } ?>
-          </tr>
+            {% endif %}
+            {% endfor %} </tr>
         </tbody>
-        <?php } ?>
-        <?php } ?>
+        {% endfor %}
+        {% endfor %}
         <tr>
           <td></td>
           {% for product in products %}
           <td><input type="button" value="{{ button_cart }}" class="btn btn-primary btn-block" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" />
             <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
-          <?php } ?>
-        </tr>
+          {% endfor %} </tr>
       </table>
       {% else %}
       <p>{{ text_empty }}</p>
       <div class="buttons">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-default">{{ button_continue }}</a></div>
       </div>
-      <?php } ?>
+      {% endif %}
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }}
+{{ footer }} 

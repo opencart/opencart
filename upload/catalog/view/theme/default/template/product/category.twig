@@ -19,13 +19,13 @@
       <div class="row">
         {% if thumb %}
         <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
-        <?php } ?>
+        {% endif %}
         {% if description %}
         <div class="col-sm-10">{{ description }}</div>
-        <?php } ?>
+         {% endif %}
       </div>
       <hr>
-      <?php } ?>
+       {% endif %}
       {% if categories %}
       <h3>{{ text_refine }}</h3>
       {% if count($categories) <= 5 %}
@@ -34,7 +34,7 @@
           <ul>
             {% for category in categories %}
             <li><a href="{{ category.href }}">{{ category.name }}</a></li>
-            <?php } ?>
+             {% endfor %}
           </ul>
         </div>
       </div>
@@ -45,13 +45,13 @@
           <ul>
             {% for category in categories %}
             <li><a href="{{ category.href }}">{{ category.name }}</a></li>
-            <?php } ?>
+            {% endfor %}
           </ul>
         </div>
-        <?php } ?>
+        {% endfor %}
       </div>
-      <?php } ?>
-      <?php } ?>
+       {% endif %}
+      {% endif %}
       {% if products %}
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
@@ -74,8 +74,8 @@
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
               {% else %}
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-              <?php } ?>
-              <?php } ?>
+              {% endif %}
+              {% endfor %}
             </select>
           </div>
         </div>
@@ -88,8 +88,8 @@
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
               {% else %}
               <option value="{{ limits.href }}">{{ limits.text }}</option>
-              <?php } ?>
-              <?php } ?>
+              {% endif %}
+              {% endfor %}
             </select>
           </div>
         </div>
@@ -105,16 +105,16 @@
                 <p>{{ product.description }}</p>
                 {% if product.price %}
                 <p class="price">
-                  {% if !$product.special %}
+                  {% if not product.special %}
                   {{ product.price }}
                   {% else %}
                   <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                  <?php } ?>
+                  {% endif %}
                   {% if product.tax %}
                   <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                  <?php } ?>
+                  {% endif %}
                 </p>
-                <?php } ?>
+                {% endif %}
                 {% if product.rating %}
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
@@ -122,10 +122,10 @@
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% else %}
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                  <?php } ?>
-                  <?php } ?>
+                  <{% endif %}
+                  {% endfor %}
                 </div>
-                <?php } ?>
+                {% endif %}
               </div>
               <div class="button-group">
                 <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
@@ -135,19 +135,19 @@
             </div>
           </div>
         </div>
-        <?php } ?>
+         {% endfor %}
       </div>
       <div class="row">
         <div class="col-sm-6 text-left">{{ pagination }}</div>
         <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
-      <?php } ?>
+       {% endif %}
       {% if !$categories && !$products %}
       <p>{{ text_empty }}</p>
       <div class="buttons">
         <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
-      <?php } ?>
+       {% endif %}
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

@@ -1,6 +1,6 @@
 {% if testmode %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
-<?php } ?>
+{% endif %}
 <form action="{{ action }}" method="post">
   <input type="hidden" name="cmd" value="_cart" />
   <input type="hidden" name="upload" value="1" />

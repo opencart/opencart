@@ -42,7 +42,7 @@
             <td class="text-left">{{ product.model }}</td>
             <td class="text-right">{{ product.stock }}</td>
             <td class="text-right">{% if product.price %}
-              <div class="price"> {% if !$product.special %}
+              <div class="price"> {% if not product.special %}
                 {{ product.price }}
                 {% else %} <b>{{ product.special }}</b> <s>{{ product.price }}</s> {% endif %} </div>
               {% endif %}</td>

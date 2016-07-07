@@ -1,55 +1,64 @@
 {% if error_warning %}
 <div class="alert alert-warning">{{ error_warning }}</div>
-<?php } ?>
+{% endif %}
 <p><img src="https://cdn.klarna.com/public/images/{{ iso_code_2 }}/badges/v1/account/{{ iso_code_2 }}_account_badge_std_blue.png?width=150&eid={{ merchant }}" /></p>
 <form id="payment" class="form-horizontal">
   <fieldset>
     <legend>{{ text_payment_option }}</legend>
-   {% for payment_option in payment_options %}
+    {% for payment_option in payment_options %}
     <div class="radio">
-      <label>
-        {% if !isset($code)) { ?>
-        <?php $code = $payment_option['code']; ?>
+      <label> {% if not code %}
+        {% set code = payment_option.code %}
         <input type="radio" name="code" value="{{ payment_option.code }}" checked="checked" />
         {% else %}
         <input type="radio" name="code" value="{{ payment_option.code }}" />
-        <?php } ?>
-        {% if iso_code_3 == 'NLD') { ?>
-        <img src="catalog/view/theme/default/image/klarna_nld_banner.png" />
-        <?php } ?>
+        {% endif %}
+        {% if iso_code_3 == 'NLD' %} <img src="catalog/view/theme/default/image/klarna_nld_banner.png" /> {% endif %}
         {{ payment_option.title }}</label>
     </div>
-    <?php } ?>
+    {% endfor %}
   </fieldset>
   <br />
   <fieldset>
     <legend>{{ text_additional }}</legend>
-    {% if !$company %}
-    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% if not company %}
+    {% if iso_code_3 == 'DEU' or iso_code_3 == 'NLD' %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-dob">{{ entry_dob }}</label>
       <div class="col-sm-3">
         <select name="pno_day" id="input-dob" class="form-control">
           <option value="">{{ text_day }}</option>
+          
          {% for day in days %}
+          
           <option value="{{ day.value }}">{{ day.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_month" class="form-control">
           <option value="">{{ text_month }}</option>
+          
          {% for month in months %}
+          
           <option value="{{ month.value }}">{{ month.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
       <div class="col-sm-3">
         <select name="pno_year" class="form-control">
           <option value="">{{ text_year }}</option>
+          
          {% for year in years %}
+          
           <option value="{{ year.value }}">{{ year.text }}</option>
-          <?php } ?>
+          
+          {% endfor %}
+        
         </select>
       </div>
     </div>
@@ -60,7 +69,7 @@
         <input type="text" name="pno" value="" id="input-pno" class="form-control" />
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     {% else %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
@@ -68,8 +77,8 @@
         <input type="text" name="pno" value="" id="input-company" class="form-control" />
       </div>
     </div>
-    <?php } ?>
-    {% if iso_code_3 == 'DEU' || $iso_code_3 == 'NLD') { ?>
+    {% endif %}
+    {% if iso_code_3 == 'DEU' or iso_code_3 == 'NLD' %}
     <div class="form-group required">
       <label class="col-sm-2 control-label">{{ entry_gender }}</label>
       <div class="col-sm-10">
@@ -93,27 +102,27 @@
         <input type="text" name="house_no" value="{{ street_number }}" id="input-house-no" class="form-control" />
       </div>
     </div>
-    <?php } ?>
-    {% if iso_code_3 == 'NLD') { ?>
+    {% endif %}
+    {% if iso_code_3 == 'NLD' %}
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-house-ext">{{ entry_house_ext }}</label>
       <div class="col-sm-10">
         <input type="text" name="house_ext" value="{{ street_extension }}" id="input-house-ext" class="form-control" />
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-phone-no">{{ entry_phone_no }}</label>
       <div class="col-sm-10">
         <input type="text" name="phone_no" value="{{ phone_number }}" id="input-phone-no" class="form-control" />
       </div>
     </div>
-    {% if iso_code_3 == 'DEU') { ?>
+    {% if iso_code_3 == 'DEU' %}
     <div class="radio">
       <input type="checkbox" name="deu_terms" value="1" />
       Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen
       Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.</div>
-    <?php } ?>
+    {% endif %}
   </fieldset>
 </form>
 <div class="buttons">
@@ -148,4 +157,4 @@ $('#button-confirm').on('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 

@@ -15,7 +15,7 @@
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
       <div class="row">
-        {% if column_left || $column_right %}
+        {% if column_left || column_right %}
         {% set class = 'col-sm-6' %}
         {% else %}
         {% set class = 'col-sm-8' %}
@@ -110,10 +110,10 @@
                 {% endif %}
               </form>
             </div>
-            <?php } ?>
+            {% endif %}
           </div>
         </div>
-        {% if column_left || $column_right %}
+        {% if column_left or column_right %}
         {% set class = 'col-sm-6' %}
         {% else %}
         {% set class = 'col-sm-4' %}
@@ -136,7 +136,7 @@
           </ul>
           {% if price %}
           <ul class="list-unstyled">
-            {% if !$special %}
+            {% if not special %}
             <li>
               <h2>{{ price }}</h2>
             </li>
@@ -191,7 +191,7 @@
                   <label>
                     <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
                     {% if option_value.image %}
-                    <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
+                    <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> 
                     {% endif %}                  
                     {{ option_value.name }}
                     {% if option_value.price %}
@@ -212,7 +212,7 @@
                   <label>
                     <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" />
                     {% if option_value.image %}
-                    <img src="{{ option_value.image }}" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
+                    <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail" /> 
                     {% endif %}
                     {{ option_value.name }}
                     {% if option_value.price %}
@@ -297,7 +297,7 @@
             </div>
             {% if minimum > 1 %}
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
-            <?php } ?>
+            {% endif %}
           </div>
           {% if review_status %}
           <div class="rating">
@@ -307,8 +307,8 @@
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
               {% else %}
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-              <?php } ?>
-              <?php } ?>
+              {% endif %}
+              {% endfor %}
               <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
             <hr>
             <!-- AddThis Button BEGIN -->
@@ -325,12 +325,12 @@
         <?php $i = 0; ?>
         {% for product in products %}
         {% if column_left and column_right %}
-        <?php $class = 'col-xs-8 col-sm-6'; ?>
+        {% set class = 'col-xs-8 col-sm-6' %}
         {% elseif column_left or column_right %}
-        <?php $class = 'col-xs-6 col-md-4'; ?>
+        {% set class = 'col-xs-6 col-md-4' %}
         {% else %}
-        <?php $class = 'col-xs-6 col-sm-3'; ?>
-        <?php } ?>
+        {% set class = 'col-xs-6 col-sm-3' %}
+        {% endif %}
         <div class="{{ class }}">
           <div class="product-thumb transition">
             <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
@@ -344,22 +344,22 @@
                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                 {% else %}
                 <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </div>
-              <?php } ?>
+              {% endif %}
               {% if product.price %}
               <p class="price">
-                {% if !$product.special %}
+                {% if not product.special %}
                 {{ product.price }}
                 {% else %}
                 <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                <?php } ?>
+                {% endif %}
                 {% if product.tax %}
                 <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                <?php } ?>
+                {% endif %}
               </p>
-              <?php } ?>
+              {% endif %}
             </div>
             <div class="button-group">
               <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>

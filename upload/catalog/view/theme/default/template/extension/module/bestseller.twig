@@ -20,7 +20,7 @@
         {% endif %}
         {% if product.price %}
         <p class="price">
-          {% if !$product.special %}
+          {% if not product.special %}
           {{ product.price }}
           {% else %}
           <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>

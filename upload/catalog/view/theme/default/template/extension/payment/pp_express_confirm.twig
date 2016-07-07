@@ -9,17 +9,17 @@
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
     {% set class = 'col-sm-6' %}
@@ -30,38 +30,35 @@
     {% endif %}
     <div id="content" class="{{ class }}">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if coupon || $voucher || $reward %}
+      {% if coupon || voucher || reward %}
       <div class="panel-group" id="accordion">{{ coupon }}{{ voucher }}{{ reward }}</div>
-      <?php } ?>
-      <?php if($has_shipping) { ?>
-      <?php if(!isset($shipping_methods)) { ?>
+      {% endif %}
+      {% if has_shipping %}
+      {% if not shipping_methods %}
       <div class="warning">{{ error_no_shipping }}</div>
       {% else %}
       <form action="{{ action_shipping }}" method="post" id="shipping_form">
-        <div class="panel-body">
-          {% for shipping_method in shipping_methods %}
+        <div class="panel-body"> {% for shipping_method in shipping_methods %}
           <p><strong>{{ shipping_method.title }}</strong></p>
           {% if !$shipping_method.error %}
           {% for quote in shipping_method.quote %}
           <div class="radio">
-            <label>
-              {% if quote['code'] == $code || !$code %}
-              <?php $code = $quote['code']; ?>
+            <label> {% if quote.code == code or not code %}
+              {% set code = quote.code %}
               <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" checked="checked" />
               {% else %}
               <input type="radio" name="shipping_method" value="{{ quote.code }}" id="{{ quote.code }}" />
-              <?php } ?>
+              {% endif %}
               {{ quote.title }} </label>
           </div>
-          <?php } ?>
+          {% endfor %}
           {% else %}
           <div class="warning">{{ shipping_method.error }}</div>
-          <?php } ?>
-          <?php } ?>
-        </div>
+          {% endif %}
+          {% endfor %} </div>
       </form>
-      <?php } ?>
-      <?php } ?>
+      {% endif %}
+      {% endif %}
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -74,33 +71,30 @@
             </tr>
           </thead>
           <tbody>
-            {% for product in products %}
-            <tr>
-              <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-                {% for option in product.option %}
-                <br />
-                <small> - {{ option.name }}: {{ option.value }}</small>
-                <?php } ?>
-                {% if product.recurring %}
-                <br />
-                <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring_description }}</small>
-                <?php } ?></td>
-              <td class="text-left">{{ product.model }}</td>
-              <td class="text-center">{{ product.quantity }}</td>
-              <td class="text-right">{{ product.price }}</td>
-              <td class="text-right">{{ product.total }}</td>
-            </tr>
-            <?php } ?>
-            {% for voucher in vouchers %}
-            <tr>
-              <td class="text-left">{{ voucher.description }}</td>
-              <td class="text-left"></td>
-              <td class="text-center">1</td>
-              <td class="text-right">{{ voucher.amount }}</td>
-              <td class="text-right">{{ voucher.amount }}</td>
-            </tr>
-            <?php } ?>
-          </tbody>
+          
+          {% for product in products %}
+          <tr>
+            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+              <small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
+              {% if product.recurring %} <br />
+              <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring_description }}</small> {% endif %}</td>
+            <td class="text-left">{{ product.model }}</td>
+            <td class="text-center">{{ product.quantity }}</td>
+            <td class="text-right">{{ product.price }}</td>
+            <td class="text-right">{{ product.total }}</td>
+          </tr>
+          {% endfor %}
+          {% for voucher in vouchers %}
+          <tr>
+            <td class="text-left">{{ voucher.description }}</td>
+            <td class="text-left"></td>
+            <td class="text-center">1</td>
+            <td class="text-right">{{ voucher.amount }}</td>
+            <td class="text-right">{{ voucher.amount }}</td>
+          </tr>
+          {% endfor %}
+            </tbody>
+          
         </table>
       </div>
       <br />
@@ -112,7 +106,7 @@
               <td class="text-right"><strong>{{ total.title }}:</strong></td>
               <td class="text-right">{{ total.text }}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
           </table>
         </div>
       </div>
@@ -122,7 +116,7 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-{{ footer }}
+{{ footer }} 
 <script type="text/javascript"><!--
 $('input[name=\'shipping_method\']').change(function() {
 	$('#shipping_form').submit();

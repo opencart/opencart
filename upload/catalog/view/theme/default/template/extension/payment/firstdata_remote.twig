@@ -18,14 +18,13 @@
       </div>
     {% endif %}
 
-    {% if card_storage == 1 && count($stored_cards) > 0 %}
+    {% if card_storage == 1 and stored_cards|length > 0 %}
     <div class="form-group">
       <div class="col-sm-12">
-        <?php $i = 0; ?>
-
+       {% set i = 0 %}
        {% for card in stored_cards %}
-          <p><input type="radio" name="cc_choice" value="{{ card.token }}" class="stored_card" <?php echo $i == 0 ? 'checked="checked"' : ''; ?>/> <?php echo $card['card_type'] . ' xxxx ' . $card['digits'] . ', ' . $entry_cc_expire_date . ' ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>
-          <?php $i++; ?>
+          <p><input type="radio" name="cc_choice" value="{{ card.token }}" class="stored_card" {% if i == 0 %} checked="checked"{% endif %} /> {{ card.card_type }} xxxx {{ card.digits }}, {{ entry_cc_expire_date }}  {{ card.expire_month }} / {{ card.expire_year }}</p>
+          {% set i = i + 1 %}
         {% endfor %}
 
         <p><input type="radio" name="cc_choice" value="new" class="stored_card" />New card</p>
@@ -93,50 +92,51 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function () {
-  $.ajax({
-    url: 'index.php?route=extension/payment/firstdata_remote/send',
-    type: 'post',
-    data: $('#payment_form').serialize(),
-    dataType: 'json',
-    beforeSend: function () {
-      $('#firstdata_message_error').remove();
-      $('#button-confirm').attr('disabled', true);
-      $('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
-    },
-    complete: function () {
-      $('#button-confirm').attr('disabled', false);
-      $('#firstdata_message_wait').remove();
-    },
-    success: function (json) {
-      // if error
-      if (json['error']) {
-        $('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
-      }
-
-      // if success
-      if (json['success']) {
-        location = json['success'];
-      }
-    }
-  });
+	$.ajax({
+		url: 'index.php?route=extension/payment/firstdata_remote/send',
+		type: 'post',
+		data: $('#payment_form').serialize(),
+		dataType: 'json',
+		beforeSend: function () {
+			$('#firstdata_message_error').remove();
+			$('#button-confirm').attr('disabled', true);
+			$('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_wait }}</div>');
+		},
+		complete: function () {
+			$('#button-confirm').attr('disabled', false);
+			$('#firstdata_message_wait').remove();
+		},
+		success: function (json) {
+			// if error
+			if (json['error']) {
+				$('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			// if success
+			if (json['success']) {
+				location = json['success'];
+			}
+		}
+	});
 });
 
-$(' . stored_card').bind('change', function () {
-  if ($(this).val() == 'new') {
-    $('#card_info').slideDown();
-  } else {
-    $('#card_info').slideUp();
-  }
+$('.stored_card').bind('change', function () {
+	if ($(this).val() == 'new') {
+		$('#card_info').slideDown();
+	} else {
+		$('#card_info').slideUp();
+	}
 });
 
 $(document).ready(function(){
-  {% if card_storage == 0 %}
-    $('#card_info').show();
-  {% else %}
-    var stored_cards = <?php echo count($stored_cards); ?>;
-    if (stored_cards == 0) {
-      $('#card_info').show();
-    }
-  {% endif %}
+	{% if card_storage == 0 %}
+	$('#card_info').show();
+	{% else %}
+	var stored_cards = {{ stored_cards|length }};
+	
+	if (stored_cards == 0) {
+		$('#card_info').show();
+	}
+	{% endif %}
 });
 //--></script>

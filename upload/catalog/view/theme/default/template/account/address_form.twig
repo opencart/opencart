@@ -76,7 +76,7 @@
                 <option value="">{{ text_select }}</option>
                 
                 {% for country in countries %}
-                  {% if country['country_id'] == $country_id %}
+                  {% if country.country_id == country_id %}
                 
                 <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                 
@@ -163,7 +163,7 @@
             <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div> {% for custom_field_value in custom_field.custom_field_value %}
-                <div class="checkbox"> {% if address_custom_field[custom_field.custom_field_id] and  custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id]|key %}
+                <div class="checkbox"> {% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id] %}
                   <label>
                     <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                     {{ custom_field_value.name }}</label>

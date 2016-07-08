@@ -28,31 +28,33 @@
     <input type="hidden" name="bstate" value="{{ bstate }}" />
     <input type="hidden" name="bcountry" value="{{ bcountry }}" />
     <input type="hidden" name="bzip" value="{{ bzip }}" />
-	<input type="hidden" name="email" value="{{ email }}" />
+    <input type="hidden" name="email" value="{{ email }}" />
     <input type="hidden" name="invoicenumber" value="{{ version }}" />
-
     {% if card_storage == 1 %}
-      <?php $i = 1; if (!empty($stored_cards)) { ?>
-       {% for card in stored_cards %}
-          <p><input type="radio" name="hosteddataid" value="{{ card.token }}" <?php echo ($i == 1 ? ' checked="checked"' : ''); ?> /> <?php echo $card['digits'] . ' - ' . $card['expire_month'] . '/' . $card['expire_year']; ?></p>
-          <?php $i++; ?>
-       {% endfor %}
-        <p><input type="radio" name="hosteddataid" value="{{ new_hosted_id }}" <?php echo $i == 1 ? ' checked="checked"' : ''; ?> /> Use a new card</p>
-      {% else %}
-        <input type="hidden" name="hosteddataid" value="{{ new_hosted_id }}" />
-      {% endif %}
+    {% set i = 1 %}
+    {% if stored_cards %}
+    {% for card in stored_cards %}
+    <p>
+      <input type="radio" name="hosteddataid" value="{{ card.token }}"{% if i == 1 %} checked="checked"{% endif %} />
+      {{ card.digits }} - {{ card.expire_month }} / {{ card.expire_year }}</p>
+    {% set i = i + 1 %}
+    {% endfor %}
+    <p>
+      <input type="radio" name="hosteddataid" value="{{ new_hosted_id }}" {% set i == 1 %} checked="checked"{% endif %} />
+      Use a new card</p>
+    {% else %}
+    <input type="hidden" name="hosteddataid" value="{{ new_hosted_id }}" />
+    {% endif %}
     {% endif %}
   </fieldset>
 </form>
-
 <div class="buttons">
   <div class="pull-right">
     <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
-  $('#firstdata_form_redirect').submit();
+	$('#firstdata_form_redirect').submit();
 });
 //--></script>

@@ -24,7 +24,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td colspan="<?php echo count($products) + 1; ?>"><strong>{{ text_product }}</strong></td>
+            <td colspan="{{ products|length + 1 }}"><strong>{{ text_product }}</strong></td>
           </tr>
         </thead>
         <tbody>
@@ -67,9 +67,8 @@
         <tr>
           <td>{{ text_rating }}</td>
           {% for product in products %}
-          <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
-          
-            {% if product['rating'] < $i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+          <td class="rating"> {% for i in 1..5 %}
+            {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
             {% endfor %} <br />
             {{ product.reviews }}</td>
           {% endfor %} </tr>
@@ -94,20 +93,21 @@
         {% for attribute_group in attribute_groups %}
         <thead>
           <tr>
-            <td colspan="<?php echo count($products) + 1; ?>"><strong>{{ attribute_group.name }}</strong></td>
+            <td colspan="{{ products|length + 1 }}"><strong>{{ attribute_group.name }}</strong></td>
           </tr>
         </thead>
-        {% for attribute in attribute_group.attribute|keys) %}
+        {% for key, attribute in attribute_group.attribute %}
         <tbody>
           <tr>
             <td>{{ attribute.name }}</td>
             {% for product in products %}
-            {% if product.attribute[key])) %}
-            <td>{{ product.attribute[key] }}</td>
+            {% if product.attribute[key] %}
+            <td> {{ product.attribute[key] }}</td>
             {% else %}
             <td></td>
             {% endif %}
-            {% endfor %} </tr>
+            {% endfor %}
+          </tr>
         </tbody>
         {% endfor %}
         {% endfor %}

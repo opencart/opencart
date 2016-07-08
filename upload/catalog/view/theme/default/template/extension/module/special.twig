@@ -7,10 +7,9 @@
         <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
         <p>{{ product.description }}</p>
         {% if product.rating %}
-        <div class="rating">
-          <?php for ($i = 1; $i <= 5; $i++) { ?>
+        <div class="rating">{% for i in 1..5 %}
           {% if product['rating'] < $i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
-          {% endfor %} </div>
+          {% endfor %}</div>
         {% endif %}
         {% if product.price %}
         <p class="price"> {% if not product.special %}

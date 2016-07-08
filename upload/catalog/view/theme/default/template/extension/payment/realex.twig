@@ -13,19 +13,24 @@
   <input type=hidden name="SHIPPING_CO" value="{{ shipping_country }}">
   <input type=hidden name="MERCHANT_RESPONSE_URL" value="{{ response_url }}">
   <input type=hidden name="COMMENT1" value="OpenCart">
-  {% if card_select == true %}
+  {% if card_select %}
   <fieldset id="payment">
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>
       <div class="col-sm-10">
         <select name="ACCOUNT" class="form-control" id="input-cc-type">
+          
           {% for card in cards %}
+          
           <option value="{{ card.account }}">{{ card.type }}</option>
-          <?php } ?>
-        </select></div>
+          
+          {% endfor %}
+        
+        </select>
+      </div>
     </div>
   </fieldset>
-  <?php } ?>
+  {% endif %}
 </form>
 <div class="buttons">
   <div class="pull-right">

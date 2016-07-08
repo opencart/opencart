@@ -19,14 +19,14 @@
         <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
           {% for month in months %}
           <option value="{{ month.value }}">{{ month.text }}</option>
-          <?php } ?>
+          {% endfor %}
         </select>
       </div>
       <div class="col-sm-3">
         <select name="cc_expire_date_year" class="form-control">
           {% for year in year_expire %}
           <option value="{{ year.value }}">{{ year.text }}</option>
-          <?php } ?>
+          {% endfor %}
         </select>
       </div>
     </div>

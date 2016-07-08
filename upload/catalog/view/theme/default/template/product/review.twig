@@ -7,12 +7,8 @@
   </tr>
   <tr>
     <td colspan="2"><p>{{ review.text }}</p>
-      <?php for ($i = 1; $i <= 5; $i++) { ?>
-      {% if review['rating'] < $i %}
-      <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-      {% else %}
-      <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-      {% endif %}
+      {% for i in 1..5 %}
+      {% if review.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
       {% endfor %}</td>
   </tr>
 </table>
@@ -20,4 +16,4 @@
 <div class="text-right">{{ pagination }}</div>
 {% else %}
 <p>{{ text_no_reviews }}</p>
-{% endif %}
+{% endif %} 

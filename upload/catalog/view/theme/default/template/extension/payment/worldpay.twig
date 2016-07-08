@@ -23,8 +23,8 @@
 			<div class="col-sm-10">
 			  <select name="token" data-worldpay="token" class="form-control">
 				{% for existing_card in existing_cards %}
-					<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
-				<?php } ?>
+					<option value="{{ existing_card.token }}">{{ text_card_type }} {{ existing_card.type }}, {{ text_card_digits }} {{ $existing_card['digits'] }}, {{ text_card_expiry }} {{ existing_card.expiry }}</option>
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>
@@ -50,7 +50,7 @@
 	<form style="display: none" id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
   {% else %}
 	  <form id="payment-new-form" action="{{ form_submit }}" method="post" class="form-horizontal">
-	<?php } ?>
+	{% endif %}
 	<fieldset>
 	  <div class="form-group">
 		<div class="col-sm-11" id='paymentDetailsHere' style="margin-left: 3%"></div>
@@ -62,7 +62,7 @@
 			  <input type="checkbox" name="save-card" value=true id="input-cc-save"/>
 			</div>
 		  </div>
-	  <?php } ?>
+	  {% endif %}
 	  </div>
 	</fieldset>
 	<div class="buttons">
@@ -80,13 +80,13 @@
         Worldpay.setClientKey("{{ worldpay_client_key }}");
 
         // disable new card form if existing cards
-{% if !empty($existing_cards)) { ?>
+{% if not existing_cards %}
 	        $('#payment-new-form :input').prop('disabled', true);
-<?php } ?>
+{% endif %}
 
         // Set if token is reusable, remove first value when Worldpay update
         Worldpay.reusable = true;
-{% if isset($recurring_products)) { ?>
+{% if recurring_products %}
 	        Worldpay.reusable = true;
 {% else %}
 	        $('input[name=\'save-card\']').on('change', function () {
@@ -96,7 +96,7 @@
 	            Worldpay.reusable = false;
 	          }
 	        });
-<?php } ?>
+{% endif %}
 
         Worldpay.templateSaveButton = false;
         Worldpay.useTemplate('payment-new-form', 'paymentDetailsHere', 'inline', function (obj) {

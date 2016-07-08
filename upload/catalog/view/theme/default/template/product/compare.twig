@@ -68,6 +68,7 @@
           <td>{{ text_rating }}</td>
           {% for product in products %}
           <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
+          
             {% if product['rating'] < $i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
             {% endfor %} <br />
             {{ product.reviews }}</td>

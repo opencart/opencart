@@ -1,28 +1,28 @@
 {% if testmode %}
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
+<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 {% endif %}
 <form action="{{ action }}" method="post">
   <input type="hidden" name="cmd" value="_cart" />
   <input type="hidden" name="upload" value="1" />
   <input type="hidden" name="business" value="{{ business }}" />
-  <?php $i = 1; ?>
+  {% set i = 1 %}
   {% for product in products %}
   <input type="hidden" name="item_name_{{ i }}" value="{{ product.name }}" />
   <input type="hidden" name="item_number_{{ i }}" value="{{ product.model }}" />
   <input type="hidden" name="amount_{{ i }}" value="{{ product.price }}" />
   <input type="hidden" name="quantity_{{ i }}" value="{{ product.quantity }}" />
   <input type="hidden" name="weight_{{ i }}" value="{{ product.weight }}" />
-  <?php $j = 0; ?>
+  {% set j = 0 %}
   {% for option in product.option %}
   <input type="hidden" name="on{{ j }}_{{ i }}" value="{{ option.name }}" />
   <input type="hidden" name="os{{ j }}_{{ i }}" value="{{ option.value }}" />
-  <?php $j++; ?>
-  <?php } ?>
-  <?php $i++; ?>
-  <?php } ?>
+  {% set j = j + 1 %}
+  {% endfor %}
+  {% set i = i + 1 %}
+  {% endfor %}
   {% if discount_amount_cart %}
-    <input type="hidden" name="discount_amount_cart" value="{{ discount_amount_cart }}" />
-  <?php } ?>
+  <input type="hidden" name="discount_amount_cart" value="{{ discount_amount_cart }}" />
+  {% endif %}
   <input type="hidden" name="currency_code" value="{{ currency_code }}" />
   <input type="hidden" name="first_name" value="{{ first_name }}" />
   <input type="hidden" name="last_name" value="{{ last_name }}" />

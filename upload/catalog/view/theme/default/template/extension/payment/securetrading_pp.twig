@@ -42,7 +42,7 @@
       <div class="col-sm-10">
         <select name="paymenttypedescription" id="input-type" class="form-control">
           
-                    {% for key => $title in cards %}
+                    {% for key, title in cards %}
                     
           <option value="{{ key }}">{{ title }}</option>
           

@@ -1,4 +1,4 @@
-{% if !empty($existing_cards)) { ?>
+{% if existing_cards %}
 	<legend>{{ text_credit_card }}</legend>
 	<div class="form-horizontal">
 	  <div id="choose-card" class="form-group">
@@ -23,7 +23,7 @@
 			<div class="col-sm-10">
 			  <select name="token" data-worldpay="token" class="form-control">
 				{% for existing_card in existing_cards %}
-					<option value="{{ existing_card.token }}">{{ text_card_type }} {{ existing_card.type }}, {{ text_card_digits }} {{ $existing_card['digits'] }}, {{ text_card_expiry }} {{ existing_card.expiry }}</option>
+					<option value="{{ existing_card.token }}">{{ text_card_type }} {{ existing_card.type }}, {{ text_card_digits }} {{ existing_card.digits }}, {{ text_card_expiry }} {{ existing_card.expiry }}</option>
 				{% endfor %}
 			  </select>
 			</div>

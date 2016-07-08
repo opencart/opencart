@@ -8,7 +8,7 @@
   <div id="shipping-existing">
     <select name="address_id" class="form-control">
      {% for address in addresses %}
-      {% if address['address_id'] == address_id %}
+      {% if address.address_id == address_id %}
       <option value="{{ address.address_id }}" selected="selected">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% else %}
       <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>

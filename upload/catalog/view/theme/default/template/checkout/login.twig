@@ -3,7 +3,7 @@
     <h2>{{ text_new_customer }}</h2>
     <p>{{ text_checkout }}</p>
     <div class="radio">
-      <label> {% if account == 'register') { ?>
+      <label> {% if account == 'register' %}
         <input type="radio" name="account" value="register" checked="checked" />
         {% else %}
         <input type="radio" name="account" value="register" />
@@ -12,7 +12,7 @@
     </div>
     {% if checkout_guest %}
     <div class="radio">
-      <label> {% if account == 'guest') { ?>
+      <label> {% if account == 'guest' %}
         <input type="radio" name="account" value="guest" checked="checked" />
         {% else %}
         <input type="radio" name="account" value="guest" />

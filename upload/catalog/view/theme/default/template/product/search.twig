@@ -30,13 +30,13 @@
             <option value="{{ category_1.category_id }}">{{ category_1.name }}</option>
             {% endif %}
             {% for category_2 in category_1.children %}
-            {% if category_2['category_id'] == $category_id %}
+            {% if category_2.category_id == category_id %}
             <option value="{{ category_2.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
             {% else %}
             <option value="{{ category_2.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
             {% endif %}
             {% for category_3 in category_2.children %}
-            {% if category_3['category_id'] == $category_id %}
+            {% if category_3.category_id == category_id %}
             <option value="{{ category_3.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
             {% else %}
             <option value="{{ category_3.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
@@ -133,7 +133,7 @@
                 {% if product.rating %}
                 <div class="rating">
                   {% for i in 1..5 %}
-                  {% if product['rating'] < i %}
+                  {% if product.rating < i %}
                   <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                   {% else %}
                   <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>

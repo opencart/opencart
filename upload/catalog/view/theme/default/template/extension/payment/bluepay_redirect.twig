@@ -1,7 +1,7 @@
 <form class="form-horizontal" action="https://secure.bluepay.com/interfaces/bp10emu" method=POST>
     <fieldset id="payment">
         <legend>{{ text_credit_card }}</legend>
-		{% if !empty($existing_cards)) { ?>
+		{% if not existing_cards %}
 			<div class="form-group">
 				<label class="col-sm-2 control-label">{{ entry_card }}</label>
 				<div class="col-sm-10">
@@ -21,7 +21,7 @@
 					<div class="col-sm-10">
 						<select name="RRNO" class="form-control">
 							{% for existing_card in existing_cards %}
-								<option value="{{ existing_card.token }}"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
+								<option value="{{ existing_card.token }}">{{ text_card_type }} {{ existing_card.type, {{ text_card_digits }} {{ existing_card.digits }}, {{ text_card_expiry }} {{ existing_card.expiry }}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -84,11 +84,11 @@
     </fieldset>
 </form>
 <script type="text/javascript"><!--
-    $(document).ready(function() {
-{% if !empty($existing_cards)) { ?>
-			$('#card-new input').prop('disabled', true);
-			$('#card-new input').prop('disabled', true);
-			$('#card-new select').prop('disabled', true);
+$(document).ready(function() {
+{% if existing_cards %}
+	$('#card-new input').prop('disabled', true);
+	$('#card-new input').prop('disabled', true);
+	$('#card-new select').prop('disabled', true);
 {% endif %}
 	});
 //--></script>
@@ -126,8 +126,6 @@
 				$('#button-confirm').button('reset');
 			},
 			success: function(json) {
-
-
 				if (json['error']) {
 					alert(json['error']);
 				}

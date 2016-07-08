@@ -20,7 +20,7 @@
   {% if not shipping_method.error %}
   {% for quote in shipping_method.quote %}
   <div class="radio">
-    <label> {% if quote.code == code || not code %}
+    <label> {% if quote.code == code or not code %}
       {% set code = quote.code %}
       <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
       {% else %}

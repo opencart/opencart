@@ -2,42 +2,49 @@
   <div>
     <h3>{{ heading_title }}</h3>
   </div>
-
   <div class="form-group">
     <label for="down-payment" class="col-sm-2">{{ entry_initial }}</label>
     <div class="col-sm-3">
       <select name="INIT" id="input-down-payment" class="form-control">
+        
        {% for percent in initial_payments %}
-          <option value="{{ percent }}">{{ percent }}%</option>
+          
+        <option value="{{ percent }}">{{ percent }}%</option>
+        
         {% endfor %}
+      
       </select>
     </div>
   </div>
-
   <div class="form-group">
     <label for="months" class="col-sm-2">{{ entry_months }}</label>
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
+        
         {% for month in months %}
-		  {% if month['value'] == 3 %}
-            <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+		  {% if month.value == 3 %}
+            
+        <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+        
 		  {% else %}
-            <option value="{{ month.value }}">{{ month.label }}</option>
+            
+        <option value="{{ month.value }}">{{ month.label }}</option>
+        
 		  {% endif %}
         {% endfor %}
+      
       </select>
     </div>
   </div>
 </form>
-
 <div class="table-responsive">
   <h3>{{ text_plan_preview }}</h3>
   <table class="table table-responsive table-condensed" id="payment-table">
     <thead>
-      <th>{{ text_payment }}</th>
+    <th>{{ text_payment }}</th>
       <th>{{ text_due_date }}</th>
       <th class="text-right">{{ text_amount }}</th>
-    </thead>
+        </thead>
     <tbody>
       <tr>
         <td></td>
@@ -47,17 +54,13 @@
     </tbody>
   </table>
 </div>
-
 <p style="font-size: 1.3em">{{ text_delivery_msg }}</p>
-
 <p style="font-size: 1.3em">{{ text_fee_msg }}</p>
-
 <div class="buttons">
   <div class="pull-right">
     <input type="submit" form="laybuy-form" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}">
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#laybuy-form').on('change', 'select', function() {
@@ -66,7 +69,7 @@ $(document).ready(function() {
 
 	var symbol_left = "{{ currency_symbol_left }}";
 	var symbol_right = "{{ currency_symbol_right }}";
-	var order = <?php echo json_encode($order_info); ?>;
+	var order = {{ order_info|json_encode() }};
 	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
 
 	calculate($('#input-down-payment').val(), $('#input-months').val());
@@ -132,8 +135,7 @@ $(document).ready(function() {
 		$('#payment-table').find('tbody').append(row);
 	}
 });
-//--></script>
-
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$('#button-confirm').button('loading');

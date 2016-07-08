@@ -84,7 +84,7 @@
           </div>
         </div>
         {% endif %} </div>
-      <div class="card_old_container" style="display:none">
+      <div class="card_old_container" style="display: none">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-card-choice">{{ entry_card_choice }}</label>
           <div class="col-sm-8">
@@ -95,7 +95,7 @@
               
                {% for card in cards %}
                 
-              <option value="{{ card.token }}"><?php echo $card['type'] . ', &nbsp; ' . $card['account'] . ', &nbsp; ' . $card['expiry']; ?></option>
+              <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
               
                 {% endfor %}
               {% else %}

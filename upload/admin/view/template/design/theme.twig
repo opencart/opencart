@@ -1,8 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -13,18 +13,18 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_store; ?></h4>
+                <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
               <div class="list-group-item">
                 <select name="store_id" class="form-control">
-                  <option value="0"><?php echo $text_default; ?></option>
+                  <option value="0">{{ text_default }}</option>
                   <?php foreach ($stores as $store) { ?>
                   <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
                   <?php } ?>
@@ -33,13 +33,13 @@
             </div>
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_template; ?></h4>
+                <h4 class="list-group-item-heading">{{ text_template }}</h4>
               </div>
               <div id="path"></div>
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_twig; ?></div>
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_twig }}</div>
             <div id="code" style="display: none;">
               <ul class="nav nav-tabs">
               </ul>
@@ -47,7 +47,7 @@
             </div>
             <div id="recent">
               <fieldset>
-                <legend><?php echo $text_history; ?></legend>
+                <legend>{{ text_history }}</legend>
                 <div id="history"></div>
               </fieldset>
             </div>
@@ -71,7 +71,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 $('#history').on('click', '.btn-danger', function(e) {
 	e.preventDefault();
 	
-	if (confirm('<?php echo $text_confirm; ?>')) {
+	if (confirm('{{ text_confirm }}')) {
 		var node = this;
 
 		$.ajax({
@@ -93,7 +93,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 				if (json['success']) {
 					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-					$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
+					$('#history').load('index.php?route=design/theme/history&token={{ token }}');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -103,11 +103,11 @@ $('#history').on('click', '.btn-danger', function(e) {
 	}
 });
 
-$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
+$('#history').load('index.php?route=design/theme/history&token={{ token }}');
 
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val(),
+		url: 'index.php?route=design/theme/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -146,7 +146,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=design/theme/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/theme/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -199,7 +199,7 @@ $('#path').on('click', 'a.file',function(e) {
 	
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
-			url: 'index.php?route=design/theme/template&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+			url: 'index.php?route=design/theme/template&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).find('i').removeClass('fa-arrow-right');
@@ -222,8 +222,8 @@ $('#path').on('click', 'a.file',function(e) {
 					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
 					html += '  <br />';
 					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>';
-					html += '    <button type="button" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-recycle"></i> <?php echo $button_reset; ?></button>';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
@@ -281,7 +281,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
 	$.ajax({
-		url: 'index.php?route=design/theme/save&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&token={{ token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',
@@ -301,7 +301,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
-				$('#history').load('index.php?route=design/theme/history&token=<?php echo $token; ?>');
+				$('#history').load('index.php?route=design/theme/history&token={{ token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -311,11 +311,11 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 });
 
 $('.tab-content').on('click', '.btn-danger', function(e) {
-	if (confirm('<?php echo $text_confirm; ?>')) {
+	if (confirm('{{ text_confirm }}')) {
 		var node = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/reset&token=<?php echo $token; ?>&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&token={{ token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(node).button('loading');
@@ -346,4 +346,4 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 });
 //--></script> 
 </div>
-<?php echo $footer; ?> 
+{{ footer }} 

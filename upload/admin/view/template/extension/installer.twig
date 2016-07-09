@@ -1,15 +1,15 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($error_warning) { ?>
-        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         <?php } else { ?>
-        <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
+        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         <?php } ?>
       </div>
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -20,18 +20,18 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_upload; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_upload }}</h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
+            <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="{{ help_upload }}">{{ entry_upload }}</span></label>
             <div class="col-sm-10">
-              <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_progress }}</label>
             <div class="col-sm-10">
               <div class="progress">
                 <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -40,11 +40,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_overwrite }}</label>
             <div class="col-sm-10">
               <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
               <br />
-              <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
+              <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> {{ button_continue }}</button>
             </div>
           </div>
         </form>
@@ -77,7 +77,7 @@ $('#button-upload').on('click', function() {
 			$('#progress-text').html('');
 
 			$.ajax({
-				url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/installer/upload&token={{ token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -166,7 +166,7 @@ function next() {
 
 $('#button-clear').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/installer/clear&token={{ token }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-clear').button('loading');
@@ -193,4 +193,4 @@ $('#button-clear').bind('click', function() {
 	});
 });
 //--></script></div>
-<?php echo $footer; ?> 
+{{ footer }} 

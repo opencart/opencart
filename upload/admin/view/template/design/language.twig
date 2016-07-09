@@ -1,8 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -13,18 +13,18 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_store; ?></h4>
+                <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
               <div class="list-group-item">
                 <select name="store_id" class="form-control">
-                  <option value="0"><?php echo $text_default; ?></option>
+                  <option value="0">{{ text_default }}</option>
                   <?php foreach ($stores as $store) { ?>
                   <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
                   <?php } ?>
@@ -33,7 +33,7 @@
             </div>
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_language; ?></h4>
+                <h4 class="list-group-item-heading">{{ text_language }}</h4>
               </div>
               <div class="list-group-item">
                 <select name="language_id" class="form-control">
@@ -49,7 +49,7 @@
             </div>
             <div class="list-group">
               <div class="list-group-item">
-                <h4 class="list-group-item-heading"><?php echo $text_translation; ?></h4>
+                <h4 class="list-group-item-heading">{{ text_translation }}</h4>
               </div>
               <div id="path"></div>
             </div>
@@ -66,7 +66,7 @@
   <script type="text/javascript"><!--
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/language/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
+		url: 'index.php?route=design/language/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -105,7 +105,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=design/language/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/language/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -149,7 +149,7 @@ $('#path').on('click', 'a.file',function(e) {
 	
 	// Check if the file has an extension
 	$.ajax({
-		url: 'index.php?route=design/language/translation&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/language/translation&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'html',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -172,7 +172,7 @@ $('#translation').on('click', '#button-save', function(e) {
 	var node = this;
 				
 	$.ajax({
-		url: 'index.php?route=design/language/save&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/language/save&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: $('#translation input'),
 		dataType: 'json',
@@ -200,4 +200,4 @@ $('#translation').on('click', '#button-save', function(e) {
 });
 //--></script> 
 </div>
-<?php echo $footer; ?> 
+{{ footer }} 

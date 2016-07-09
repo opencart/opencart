@@ -2,20 +2,20 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title">{% heading_title %}</h4>
+      <h4 class="modal-title">{{ heading_title }}</h4>
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="{% parent %}" data-toggle="tooltip" title="{% button_parent %}" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="{% refresh %}" data-toggle="tooltip" title="{% button_refresh %}" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
-          <button type="button" data-toggle="tooltip" title="{% button_upload %}" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-          <button type="button" data-toggle="tooltip" title="{% button_folder %}" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
-          <button type="button" data-toggle="tooltip" title="{% button_delete %}" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+          <button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+          <button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
+          <button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
         <div class="col-sm-7">
           <div class="input-group">
-            <input type="text" name="search" value="{% filter_name %}" placeholder="{% entry_search %}" class="form-control">
+            <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
             <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="{% button_search %}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </span></div>
         </div>
       </div>
@@ -42,7 +42,7 @@
       <br />
       <?php } ?>
     </div>
-    <div class="modal-footer">{% pagination %}</div>
+    <div class="modal-footer">{{ pagination }}</div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -51,10 +51,10 @@ $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
 	<?php if ($thumb) { ?>
-	$('#{% thumb %}').find('img').attr('src', $(this).find('img').attr('src'));
+	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
-	$('#{% target %}').val($(this).parent().find('input').val());
+	$('#{{ target }}').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
@@ -91,7 +91,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&token={% token %}&directory={% directory %}';
+	var url = 'index.php?route=common/filemanager&token={{ token }}&directory={{ directory }}';
 
 	var filter_name = $('input[name=\'search\']').val();
 
@@ -100,11 +100,11 @@ $('#button-search').on('click', function(e) {
 	}
 
 	<?php if ($thumb) { ?>
-	url += '&thumb=' + '{% thumb %}';
+	url += '&thumb=' + '{{ thumb }}';
 	<?php } ?>
 
 	<?php if ($target) { ?>
-	url += '&target=' + '{% target %}';
+	url += '&target=' + '{{ target }}';
 	<?php } ?>
 
 	$('#modal-image').load(url);
@@ -127,7 +127,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&token={% token %}&directory={% directory %}',
+				url: 'index.php?route=common/filemanager/upload&token={{ token }}&directory={{ directory }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -165,11 +165,11 @@ $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',
 	trigger: 'click',
-	title: '{% entry_folder %}',
+	title: '{{ entry_folder }}',
 	content: function() {
 		html  = '<div class="input-group">';
-		html += '  <input type="text" name="folder" value="" placeholder="{% entry_folder %}" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="{% button_folder %}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
+		html += '  <span class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
 		html += '</div>';
 
 		return html;
@@ -179,7 +179,7 @@ $('#button-folder').popover({
 $('#button-folder').on('shown.bs.popover', function() {
 	$('#button-create').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&token={% token %}&directory={% directory %}',
+			url: 'index.php?route=common/filemanager/folder&token={{ token }}&directory={{ directory }}',
 			type: 'post',
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
@@ -208,9 +208,9 @@ $('#button-folder').on('shown.bs.popover', function() {
 });
 
 $('#modal-image #button-delete').on('click', function(e) {
-	if (confirm('{% text_confirm %}')) {
+	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/delete&token={% token %}',
+			url: 'index.php?route=common/filemanager/delete&token={{ token }}',
 			type: 'post',
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),

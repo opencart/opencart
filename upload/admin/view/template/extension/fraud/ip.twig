@@ -1,11 +1,11 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button class="btn btn-primary" data-toggle="tooltip" form="form-google-base" title="<?php echo $button_save; ?>" type="submit"><i class="fa fa-save"></i></button>
-        <a class="btn btn-default" data-toggle="tooltip" href="<?php echo $cancel; ?>" title="<?php echo $button_cancel; ?>"><i class="fa fa-reply"></i></a></div>
-      <h1><?php echo $heading_title; ?></h1>
+        <button class="btn btn-primary" data-toggle="tooltip" form="form-google-base" title="{{ button_save }}" type="submit"><i class="fa fa-save"></i></button>
+        <a class="btn btn-default" data-toggle="tooltip" href="{{ cancel }}" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -15,24 +15,24 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button class="close" data-dismiss="alert" type="button">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
-      <form action="<?php echo $action; ?>" class="form-horizontal" enctype="multipart/form-data" id="form-google-base" method="post">
+      <form action="{{ action }}" class="form-horizontal" enctype="multipart/form-data" id="form-google-base" method="post">
         <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#tab-general"><?php echo $tab_general; ?></a></li>
-          <li><a data-toggle="tab" href="#tab-ip"><?php echo $tab_ip; ?></a></li>
+          <li class="active"><a data-toggle="tab" href="#tab-general">{{ tab_general }}</a></li>
+          <li><a data-toggle="tab" href="#tab-ip">{{ tab_ip }}</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
+              <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
               <div class="col-sm-10">
                 <select class="form-control" id="input-order-status" name="ip_order_status_id">
                   <?php foreach ($order_statuses as $order_status) { ?>
@@ -46,15 +46,15 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status"> <?php echo $entry_status; ?> </label>
+              <label class="col-sm-2 control-label" for="input-status"> {{ entry_status }} </label>
               <div class="col-sm-10">
                 <select class="form-control" id="input-status" name="ip_status">
                   <?php if ($ip_status) { ?>
-                  <option selected="selected" value="1"> <?php echo $text_enabled; ?> </option>
-                  <option value="0"> <?php echo $text_disabled; ?> </option>
+                  <option selected="selected" value="1"> {{ text_enabled }} </option>
+                  <option value="0"> {{ text_disabled }} </option>
                   <?php } else { ?>
-                  <option value="1"> <?php echo $text_enabled; ?> </option>
-                  <option selected="selected" value="0"> <?php echo $text_disabled; ?> </option>
+                  <option value="1"> {{ text_enabled }} </option>
+                  <option selected="selected" value="0"> {{ text_disabled }} </option>
                   <?php } ?>
                 </select>
               </div>
@@ -62,21 +62,21 @@
           </div>
           <div class="tab-pane" id="tab-ip">
             <fieldset>
-              <legend> <?php echo $text_ip_add; ?> </legend>
+              <legend> {{ text_ip_add }} </legend>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-ip"> <?php echo $entry_ip; ?> </label>
+                <label class="col-sm-2 control-label" for="input-ip"> {{ entry_ip }} </label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input  class="form-control" id="input-ip" placeholder="<?php echo $entry_ip; ?>" type="text" value=""/>
+                    <input  class="form-control" id="input-ip" placeholder="{{ entry_ip }}" type="text" value=""/>
                     <span class="input-group-btn">
-                    <button class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" id="button-ip-add" type="button"> <?php echo $button_ip_add; ?> </button>
+                    <button class="btn btn-primary" data-loading-text="{{ text_loading }}" id="button-ip-add" type="button"> {{ button_ip_add }} </button>
                     </span> </div>
                 </div>
               </div>
             </fieldset>
             <br/>
             <fieldset>
-              <legend> <?php echo $text_ip_list; ?> </legend>
+              <legend> {{ text_ip_list }} </legend>
               <div id="ip"></div>
             </fieldset>
           </div>
@@ -92,11 +92,11 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=extension/fraud/ip/ip&token=<?php echo $token; ?>');
+$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
 
 $('#button-ip-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/addip&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/fraud/ip/addip&token={{ token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
@@ -116,7 +116,7 @@ $('#button-ip-add').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&token=<?php echo $token; ?>');
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
 				
 				$('#input-ip').val('');
 			}
@@ -131,7 +131,7 @@ $('#ip').delegate('button', 'click', function() {
 	var element = this;
 	
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/removeip&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/fraud/ip/removeip&token={{ token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($(element).val()),
@@ -151,7 +151,7 @@ $('#ip').delegate('button', 'click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&token=<?php echo $token; ?>');
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -161,4 +161,4 @@ $('#ip').delegate('button', 'click', function() {
 });
 //--></script> 
 </div>
-<?php echo $footer; ?> 
+{{ footer }} 

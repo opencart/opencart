@@ -1,12 +1,12 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-import" data-toggle="tooltip" title="<?php echo $button_import; ?>" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
-        <button type="submit" form="form-google-base" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><?php echo $heading_title; ?></h1>
+        <button type="button" id="button-import" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
+        <button type="submit" form="form-google-base" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -16,47 +16,47 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_import; ?> <button type="button" class="close" data-dismiss="alert">×</button></div>
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
+        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_import }} <button type="button" class="close" data-dismiss="alert">×</button></div>
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
             <div id="category"></div>
             <br />
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_google_category; ?></label>
+              <label class="col-sm-2 control-label" for="input-data-feed">{{ entry_google_category }}</label>
               <div class="col-sm-10">
-                  <input type="text" name="google_base_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" />
+                  <input type="text" name="google_base_category" value="" placeholder="{{ entry_google_category }}" id="input-google-category" class="form-control" />
                   <input type="hidden" name="google_base_category_id" value="" />
                   <div class="input-group">
-                    <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
+                    <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
                     <input type="hidden" name="category_id" value="" />
-                    <span class="input-group-btn"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></button></span>
+                    <span class="input-group-btn"><button type="button" id="button-category-add" data-toggle="tooltip" title="{{ button_category_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></button></span>
                   </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
+              <label class="col-sm-2 control-label" for="input-data-feed">{{ entry_data_feed }}</label>
               <div class="col-sm-10">
-                <textarea rows="5" id="input-data-feed" class="form-control" readonly><?php echo $data_feed; ?></textarea>
+                <textarea rows="5" id="input-data-feed" class="form-control" readonly>{{ data_feed }}</textarea>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="google_base_status" id="input-status" class="form-control">
                   <?php if ($google_base_status) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
                   <?php } else { ?>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
                   <?php } ?>
                 </select>
               </div>
@@ -70,7 +70,7 @@
 $('input[name=\'google_base_category\']').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=extension/feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=extension/feed/google_base/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function(json) {
           response($.map(json, function(item) {
@@ -95,7 +95,7 @@ $('input[name=\'google_base_category\']').autocomplete({
 $('input[name=\'category\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/category/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -122,11 +122,11 @@ $('#category').delegate('.pagination a', 'click', function(e) {
 	$('#category').load(this.href);
 });
 
-$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
+$('#category').load('index.php?route=extension/feed/google_base/category&token={{ token }}');
 
 $('#button-category-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/feed/google_base/addcategory&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/feed/google_base/addcategory&token={{ token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'google_base_category_id=' + $('input[name=\'google_base_category_id\']').val() + '&category_id=' + $('input[name=\'category_id\']').val(),
@@ -144,7 +144,7 @@ $('#button-category-add').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
+				$('#category').load('index.php?route=extension/feed/google_base/category&token={{ token }}');
 
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
@@ -164,7 +164,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=extension/feed/google_base/removecategory&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/feed/google_base/removecategory&token={{ token }}',
 		type: 'post',
 		data: 'category_id=' + encodeURIComponent(this.value),
 		dataType: 'json',
@@ -184,7 +184,7 @@ $('#category').delegate('.btn-danger', 'click', function() {
 			}
 
       if (json['success']) {
-				$('#category').load('index.php?route=extension/feed/google_base/category&token=<?php echo $token; ?>');
+				$('#category').load('index.php?route=extension/feed/google_base/category&token={{ token }}');
 
 				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -211,7 +211,7 @@ $('#button-import').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=extension/feed/google_base/import&token=<?php echo $token; ?>',
+				url: 'index.php?route=extension/feed/google_base/import&token={{ token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -244,4 +244,4 @@ $('#button-import').on('click', function() {
 });
 //--></script>
 </div>
-<?php echo $footer; ?>
+{{ footer }}

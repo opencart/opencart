@@ -1,8 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -13,11 +13,11 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</h3>
       </div>
       <div class="panel-body">
         <fieldset>
-          <legend><?php echo $text_type; ?></legend>
+          <legend>{{ text_type }}</legend>
           <div class="well">
             <div class="input-group">
               <select name="type" class="form-control">
@@ -29,7 +29,7 @@
                 <?php } ?>
                 <?php } ?>
               </select>
-              <span class="input-group-addon"><i class="fa fa-filter"></i> <?php echo $text_filter; ?></span>
+              <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
             </div>
           </div>
         </fieldset>
@@ -89,7 +89,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
 	
-	if (confirm('<?php echo $text_confirm; ?>')) {
+	if (confirm('{{ text_confirm }}')) {
 		var node = this;
 	
 		$.ajax({
@@ -113,4 +113,4 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 //--></script>
   <?php } ?>
 </div>
-<?php echo $footer; ?> 
+{{ footer }} 

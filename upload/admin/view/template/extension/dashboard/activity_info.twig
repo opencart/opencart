@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
+    <h3 class="panel-title"><i class="fa fa-calendar"></i> {{ heading_title }}</h3>
   </div>
   <ul class="list-group">
     <?php if ($activities) { ?>
@@ -9,7 +9,7 @@
       <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
     <?php } ?>
     <?php } else { ?>
-    <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
+    <li class="list-group-item text-center">{{ text_no_results }}</li>
     <?php } ?>
   </ul>
 </div>

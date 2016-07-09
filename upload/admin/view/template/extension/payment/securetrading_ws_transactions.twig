@@ -1,15 +1,15 @@
 <table class="transactions list">
     <thead>
         <tr>
-            <td class="left"><?php echo $column_order_id; ?></td>
-            <td class="left"><?php echo $column_transaction_reference; ?></td>
-            <td class="left"><?php echo $column_customer; ?></td>
-            <td class="left"><?php echo $column_total; ?></td>
-            <td class="left"><?php echo $column_currency; ?></td>
-            <td class="left"><?php echo $column_settle_status; ?></td>
-            <td class="left"><?php echo $column_status; ?></td>
-            <td class="left"><?php echo $column_payment_type; ?></td>
-            <td class="left"><?php echo $column_type; ?></td>
+            <td class="left">{{ column_order_id }}</td>
+            <td class="left">{{ column_transaction_reference }}</td>
+            <td class="left">{{ column_customer }}</td>
+            <td class="left">{{ column_total }}</td>
+            <td class="left">{{ column_currency }}</td>
+            <td class="left">{{ column_settle_status }}</td>
+            <td class="left">{{ column_status }}</td>
+            <td class="left">{{ column_payment_type }}</td>
+            <td class="left">{{ column_type }}</td>
         </tr>
     </thead>
     <tbody>
@@ -32,7 +32,7 @@
         <?php } else { ?>
         
         <tr>
-            <td colspan="9" class="center"><?php echo $text_no_transactions; ?></td>
+            <td colspan="9" class="center">{{ text_no_transactions }}</td>
         </tr>
         
         <?php } ?>

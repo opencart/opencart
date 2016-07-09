@@ -1,30 +1,30 @@
-<h2><?php echo $text_payment_info; ?></h2>
+<h2>{{ text_payment_info }}</h2>
 <?php if ($transaction) { ?>
 <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction" class="form-horizontal">
 <ul class="nav nav-tabs">
- <li class="active"><a href="#tab-reference" data-toggle="tab"><?php echo $tab_reference; ?></a></li>
- <li class=""><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
- <li class=""><a href="#tab-payment-plan" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
+ <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
+ <li class=""><a href="#tab-customer" data-toggle="tab">{{ tab_customer }}</a></li>
+ <li class=""><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
  <?php if ($transaction['status_id'] == 1) { ?>
- <li class=""><a href="#tab-modify" data-toggle="tab"><?php echo $tab_modify; ?></a></li>
+ <li class=""><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
  <?php } ?>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="tab-reference">
     <div class="form-group">
-      <label class="col-sm-2 control-label"><?php echo $text_paypal_profile_id; ?></label>
+      <label class="col-sm-2 control-label">{{ text_paypal_profile_id }}</label>
       <div class="col-sm-10">
         <?php echo $transaction['paypal_profile_id']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_laybuy_ref_no; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_laybuy_ref_no }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['laybuy_ref_no']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_order_id; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_order_id }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['order_id']; ?>
 	  </div>
@@ -32,49 +32,49 @@
   </div>
   <div class="tab-pane" id="tab-customer">
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_firstname; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_firstname }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['firstname']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_lastname; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_lastname }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['lastname']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_email; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_email }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['email']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_address; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_address }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['address']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_suburb; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_suburb }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['suburb']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_state; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_state }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['state']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_country; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_country }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['country']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_postcode; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_postcode }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['postcode']; ?>
 	  </div>
@@ -82,71 +82,71 @@
   </div>
   <div class="tab-pane" id="tab-payment-plan">
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_status; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_status }}</label>
 	  <div class="col-sm-10" id="laybuy-status">
 	    <?php echo $transaction['status']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_amount; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_amount }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['amount']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_downpayment_percent; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_downpayment_percent }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['downpayment'] . '%'; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_months; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_months }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['months']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_downpayment_amount; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_downpayment_amount }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['downpayment_amount']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_payment_amounts; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_payment_amounts }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['payment_amounts']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_first_payment_due; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_first_payment_due }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['first_payment_due']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_last_payment_due; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_last_payment_due }}</label>
 	  <div class="col-sm-10">
 	    <?php echo $transaction['last_payment_due']; ?>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_report; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_report }}</label>
 	  <div class="col-sm-10">
 	    <table class="table table-striped">
 		  <thead>
 		    <tr>
-			  <th><?php echo $text_instalment; ?></th>
-			  <th><?php echo $text_amount; ?></th>
-			  <th><?php echo $text_date; ?></th>
-			  <th><?php echo $text_pp_trans_id; ?></th>
-			  <th><?php echo $text_status; ?></th>
+			  <th>{{ text_instalment }}</th>
+			  <th>{{ text_amount }}</th>
+			  <th>{{ text_date }}</th>
+			  <th>{{ text_pp_trans_id }}</th>
+			  <th>{{ text_status }}</th>
 			</tr>
 		  </thead>
 		  <tbody>
 		  <?php foreach ($transaction['report'] as $report) { ?>
 		    <?php if ($report['instalment'] == '0') { ?>
 		      <tr>
-			    <td><?php echo $text_downpayment; ?></td>
+			    <td>{{ text_downpayment }}</td>
 			    <td><?php echo $report['amount']; ?></td>
 			    <td><?php echo $report['date']; ?></td>
 			    <td><?php echo $report['pp_trans_id']; ?></td>
@@ -170,31 +170,31 @@
   <?php if ($transaction['status_id'] == 1) { ?>
   <div class="tab-pane" id="tab-modify">
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_cancel_plan; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_cancel_plan }}</label>
 	  <div class="col-sm-10">
-	    <button class="btn btn-primary btn-xs" id="cancel-plan"><?php echo $button_cancel_plan; ?></button>
+	    <button class="btn btn-primary btn-xs" id="cancel-plan">{{ button_cancel_plan }}</button>
 	  </div>
 	</div>
 	<div class="form-group">
-	  <label class="col-sm-2 control-label"><?php echo $text_revise_plan; ?></label>
+	  <label class="col-sm-2 control-label">{{ text_revise_plan }}</label>
 	  <div class="col-sm-10">
-	    <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px"><?php echo $button_revise_plan; ?></button>
+	    <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px">{{ button_revise_plan }}</button>
 		<div class="amount_remaining">
-		  <b><?php echo $text_remaining; ?></b> <?php echo $transaction['remaining']; ?>
-		  <input type="hidden" id="amount" name="amount" value="<?php echo $total; ?>" />
+		  <b>{{ text_remaining }}</b> <?php echo $transaction['remaining']; ?>
+		  <input type="hidden" id="amount" name="amount" value="{{ total }}" />
 		</div>
 	    <select name="payment_type" id="payment-type">
-	 	          <option value="1"><?php echo $text_type_laybuy; ?></option>
-	 	          <option value="0"><?php echo $text_type_buynow; ?></option>
+	 	          <option value="1">{{ text_type_laybuy }}</option>
+	 	          <option value="0">{{ text_type_buynow }}</option>
 	   			</select>
 		<div class="laybuy_section">
 		  <br>
 	      <select name="INIT" id="down-payment">
 	              <?php foreach ($initial_payments as $percent) { ?>
 	 		          <?php if ($percent == $transaction['downpayment']) { ?>
-	 	                <option value="<?php echo $percent; ?>" selected="selected"><?php echo $percent; ?>%</option>
+	 	                <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
 	     	          <?php } else { ?>
-	 	                <option value="<?php echo $percent; ?>"><?php echo $percent; ?>%</option>
+	 	                <option value="{{ percent }}">{{ percent }}%</option>
 		      <?php } ?>
 	        <?php } ?>
 	   	  </select>
@@ -210,9 +210,9 @@
 		  <div class="table-responsive">
 		    <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
 		      <thead>
-		        <th><?php echo $text_payment; ?></th>
-		        <th><?php echo $text_due_date; ?></th>
-		        <th class="text-right"><?php echo $text_amount; ?></th>
+		        <th>{{ text_payment }}</th>
+		        <th>{{ text_due_date }}</th>
+		        <th class="text-right">{{ text_amount }}</th>
 		      </thead>
 		      <tbody>
                 <tr>
@@ -231,7 +231,7 @@
 </div>
 </form>
 <?php } else { ?>
-<?php echo $text_not_found; ?>
+{{ text_not_found }}
 <?php } ?>
 
 <style>
@@ -253,10 +253,10 @@ var token = '';
 
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login',
+	url: '{{ store_url }}index.php?route=api/login',
 	type: 'post',
 	dataType: 'json',
-	data: 'key=<?php echo $api_key; ?>',
+	data: 'key={{ api_key }}',
 	crossDomain: true,
 	success: function(json) {
         if (json['error']) {
@@ -284,7 +284,7 @@ $('#cancel-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=extension/payment/laybuy/cancel&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=order',
+		url: 'index.php?route=extension/payment/laybuy/cancel&token={{ token }}&id={{ id }}&source=order',
 		type: 'post',
 		dataType: 'json',
 		cache: false,
@@ -305,7 +305,7 @@ $('#cancel-plan').on('click', function(e) {
 				if (token) {
 					// Send order history to the API
 					$.ajax({
-						url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=' + json['order_id'],
+						url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id=' + json['order_id'],
 						type: 'post',
 						dataType: 'json',
 						data: 'order_status_id=' + json['order_status_id'] + '&notify=1&override=0&append=0&comment=' + encodeURIComponent(json['comment']),
@@ -337,7 +337,7 @@ $('#revise-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=extension/payment/laybuy/revise&token=<?php echo $token; ?>&id=<?php echo $id; ?>&source=order',
+		url: 'index.php?route=extension/payment/laybuy/revise&token={{ token }}&id={{ id }}&source=order',
 		type: 'post',
 		data: $('#payment-type, #amount, #down-payment, #months'),
 		dataType: 'json',
@@ -386,10 +386,10 @@ $(document).ready(function() {
    		calculate($('#down-payment').val(), $('#months').val());
 	});
 
-	var symbol_left = "<?php echo $currency_symbol_left; ?>";
-	var symbol_right = "<?php echo $currency_symbol_right; ?>";
+	var symbol_left = "{{ currency_symbol_left }}";
+	var symbol_right = "{{ currency_symbol_right }}";
 	var order = <?php echo json_encode($order_info); ?>;
-	var total = parseFloat(parseFloat(<?php echo $total; ?>) * parseFloat(order.currency_value)).toFixed(4);
+	var total = parseFloat(parseFloat({{ total }}) * parseFloat(order.currency_value)).toFixed(4);
 
 	calculate($('#down-payment').val(), $('#months').val());
 
@@ -400,8 +400,8 @@ $(document).ready(function() {
 
 		var payments = getPayments(remainder, months);
 			payments[0] = {
-			payment: '<?php echo $text_downpayment; ?>',
-			dueDate: '<?php echo $text_today; ?>',
+			payment: '{{ text_downpayment }}',
+			dueDate: '{{ text_today }}',
 			amount: parseFloat(down_payment).toFixed(2)
 		};
 
@@ -425,7 +425,7 @@ $(document).ready(function() {
 			new_date.setMonth(new_date.getMonth() + i);
 
 			payments[i] = {
-				payment: '<?php echo $text_month; ?> ' + i,
+				payment: '{{ text_month }} ' + i,
 				dueDate: ('0' + new_date.getDate()).slice(-2) + '/' + ('0' + (new_date.getMonth() + 1)).slice(-2) + '/' + new_date.getFullYear(),
 				amount: parseFloat(payment_amount).toFixed(2)
 			}

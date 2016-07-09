@@ -4,18 +4,18 @@
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($success) { ?>
+    {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     <?php if (!empty($error)) { ?>
       <?php foreach($error as $error_message) { ?>
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>

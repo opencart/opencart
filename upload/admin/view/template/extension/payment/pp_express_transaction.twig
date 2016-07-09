@@ -1,13 +1,13 @@
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <td class="text-left"><?php echo $column_transaction; ?></td>
-      <td class="text-left"><?php echo $column_amount; ?></td>
-      <td class="text-left"><?php echo $column_type; ?></td>
-      <td class="text-left"><?php echo $column_status; ?></td>
-      <td class="text-left"><?php echo $column_pending_reason; ?></td>
-      <td class="text-left"><?php echo $column_date_added; ?></td>
-      <td class="text-left"><?php echo $column_action; ?></td>
+      <td class="text-left">{{ column_transaction }}</td>
+      <td class="text-left">{{ column_amount }}</td>
+      <td class="text-left">{{ column_type }}</td>
+      <td class="text-left">{{ column_status }}</td>
+      <td class="text-left">{{ column_pending_reason }}</td>
+      <td class="text-left">{{ column_date_added }}</td>
+      <td class="text-left">{{ column_action }}</td>
     </tr>
   </thead>
   <tbody>
@@ -22,19 +22,19 @@
         <td class="text-left"><?php echo $transaction['date_added']; ?></td>
         <td class="text-left">
           <?php if ($transaction['transaction_id']) { ?>
-            <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+            <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
             <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
-              <a href="<?php echo $transaction['refund']; ?>" data-toggle="tooltip" title="<?php echo $button_refund; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;
+              <a href="<?php echo $transaction['refund']; ?>" data-toggle="tooltip" title="{{ button_refund }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;
             <?php } ?>
           <?php } else { ?>
-            <button type="button" value="<?php echo $transaction['resend']; ?>" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></button>
+            <button type="button" value="<?php echo $transaction['resend']; ?>" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info"><i class="fa fa-refresh"></i></button>
           <?php } ?>
         </td>
       </tr>
       <?php } ?>
     <?php } else { ?>
     <tr>
-      <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
+      <td class="text-center" colspan="7">{{ text_no_results }}</td>
     </tr>
     <?php } ?>
   </tbody>

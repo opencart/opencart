@@ -1,61 +1,61 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a> </div>
-      <h1><?php echo $heading_title; ?></h1>
+      <div class="pull-right"> <a href="{{ cancel }}" class="btn btn-primary"><i class="fa fa-reply"></i> {{ button_cancel }}</a> </div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     <?php if ($error != '') { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($attention != '') { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ attention }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_refund; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_refund }}</h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-          <input type="hidden" name="amount_original" value="<?php echo $amount_original; ?>"/>
-          <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>"/>
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+          <input type="hidden" name="amount_original" value="{{ amount_original }}"/>
+          <input type="hidden" name="currency_code" value="{{ currency_code }}"/>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-transaction-id"><?php echo $entry_transaction_id; ?></label>
+            <label class="col-sm-2 control-label" for="input-transaction-id">{{ entry_transaction_id }}</label>
             <div class="col-sm-10">
-              <input type="text" name="transaction_id" value="<?php echo $transaction_id; ?>" placeholder="<?php echo $entry_transaction_id; ?>" id="input-transaction-id" class="form-control"/>
+              <input type="text" name="transaction_id" value="{{ transaction_id }}" placeholder="{{ entry_transaction_id }}" id="input-transaction-id" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_full_refund; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_full_refund }}</label>
             <div class="col-sm-10">
               <input type="hidden" name="refund_full" value="0"/>
               <input type="checkbox" name="refund_full" id="refund_full" value="1" <?php echo ($refund_available == '' ? 'checked="checked"' : ''); ?> onchange="refundAmount();"/>
             </div>
           </div>
           <div class="form-group" <?php echo ($refund_available == '' ? 'style="display:none;" ' : ''); ?>id="partial_amount_row">
-            <label class="col-sm-2 control-label"><?php echo $entry_amount; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_amount }}</label>
             <div class="col-sm-10">
-              <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="<?php echo $entry_amount; ?>" class="form-control"/>
+              <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="{{ entry_amount }}" class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_message; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_message }}</label>
             <div class="col-sm-10">
               <textarea name="refund_message" id="paypal_refund_message" cols="40" rows="5"></textarea>
             </div>
           </div>
-          <div class="pull-right"> <a onclick="$('#form').submit();" class="btn btn-primary"><?php echo $button_refund; ?></a> </div>
+          <div class="pull-right"> <a onclick="$('#form').submit();" class="btn btn-primary">{{ button_refund }}</a> </div>
         </form>
       </div>
     </div>
@@ -72,4 +72,4 @@ function refundAmount() {
   }
 }
 //--></script>
-<?php echo $footer; ?>
+{{ footer }}

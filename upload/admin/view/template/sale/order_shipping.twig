@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
+<html dir="{{ direction }}" lang="{{ lang }}">
 <head>
 <meta charset="UTF-8" />
-<title><?php echo $title; ?></title>
-<base href="<?php echo $base; ?>" />
+<title>{{ title }}</title>
+<base href="{{ base }}" />
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
@@ -14,11 +14,11 @@
 <div class="container">
   <?php foreach ($orders as $order) { ?>
   <div style="page-break-after: always;">
-    <h1><?php echo $text_picklist; ?> #<?php echo $order['order_id']; ?></h1>
+    <h1>{{ text_picklist }} #<?php echo $order['order_id']; ?></h1>
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td colspan="2"><?php echo $text_order_detail; ?></td>
+          <td colspan="2">{{ text_order_detail }}</td>
         </tr>
       </thead>
       <tbody>
@@ -27,19 +27,19 @@
             <strong><?php echo $order['store_name']; ?></strong><br />
             <?php echo $order['store_address']; ?>
             </address>
-            <b><?php echo $text_telephone; ?></b> <?php echo $order['store_telephone']; ?><br />
+            <b>{{ text_telephone }}</b> <?php echo $order['store_telephone']; ?><br />
             <?php if ($order['store_fax']) { ?>
-            <b><?php echo $text_fax; ?></b> <?php echo $order['store_fax']; ?><br />
+            <b>{{ text_fax }}</b> <?php echo $order['store_fax']; ?><br />
             <?php } ?>
-            <b><?php echo $text_email; ?></b> <?php echo $order['store_email']; ?><br />
-            <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
-          <td style="width: 50%;"><b><?php echo $text_date_added; ?></b> <?php echo $order['date_added']; ?><br />
+            <b>{{ text_email }}</b> <?php echo $order['store_email']; ?><br />
+            <b>{{ text_website }}</b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
+          <td style="width: 50%;"><b>{{ text_date_added }}</b> <?php echo $order['date_added']; ?><br />
             <?php if ($order['invoice_no']) { ?>
-            <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_no']; ?><br />
+            <b>{{ text_invoice_no }}</b> <?php echo $order['invoice_no']; ?><br />
             <?php } ?>
-            <b><?php echo $text_order_id; ?></b> <?php echo $order['order_id']; ?><br />
+            <b>{{ text_order_id }}</b> <?php echo $order['order_id']; ?><br />
             <?php if ($order['shipping_method']) { ?>
-            <b><?php echo $text_shipping_method; ?></b> <?php echo $order['shipping_method']; ?><br />
+            <b>{{ text_shipping_method }}</b> <?php echo $order['shipping_method']; ?><br />
             <?php } ?></td>
         </tr>
       </tbody>
@@ -47,8 +47,8 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td style="width: 50%;"><b><?php echo $text_shipping_address; ?></b></td>
-          <td style="width: 50%;"><b><?php echo $text_contact; ?></b></td>
+          <td style="width: 50%;"><b>{{ text_shipping_address }}</b></td>
+          <td style="width: 50%;"><b>{{ text_contact }}</b></td>
         </tr>
       </thead>
       <tbody>
@@ -62,12 +62,12 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td><b><?php echo $column_location; ?></b></td>
-          <td><b><?php echo $column_reference; ?></b></td>
-          <td><b><?php echo $column_product; ?></b></td>
-          <td><b><?php echo $column_weight; ?></b></td>
-          <td><b><?php echo $column_model; ?></b></td>
-          <td class="text-right"><b><?php echo $column_quantity; ?></b></td>
+          <td><b>{{ column_location }}</b></td>
+          <td><b>{{ column_reference }}</b></td>
+          <td><b>{{ column_product }}</b></td>
+          <td><b>{{ column_weight }}</b></td>
+          <td><b>{{ column_model }}</b></td>
+          <td class="text-right"><b>{{ column_quantity }}</b></td>
         </tr>
       </thead>
       <tbody>
@@ -75,22 +75,22 @@
         <tr>
           <td><?php echo $product['location']; ?></td>
           <td><?php if ($product['sku']) { ?>
-            <?php echo $text_sku; ?> <?php echo $product['sku']; ?><br />
+            {{ text_sku }} <?php echo $product['sku']; ?><br />
             <?php } ?>
             <?php if ($product['upc']) { ?>
-            <?php echo $text_upc; ?> <?php echo $product['upc']; ?><br />
+            {{ text_upc }} <?php echo $product['upc']; ?><br />
             <?php } ?>
             <?php if ($product['ean']) { ?>
-            <?php echo $text_ean; ?> <?php echo $product['ean']; ?><br />
+            {{ text_ean }} <?php echo $product['ean']; ?><br />
             <?php } ?>
             <?php if ($product['jan']) { ?>
-            <?php echo $text_jan; ?> <?php echo $product['jan']; ?><br />
+            {{ text_jan }} <?php echo $product['jan']; ?><br />
             <?php } ?>
             <?php if ($product['isbn']) { ?>
-            <?php echo $text_isbn; ?> <?php echo $product['isbn']; ?><br />
+            {{ text_isbn }} <?php echo $product['isbn']; ?><br />
             <?php } ?>
             <?php if ($product['mpn']) { ?>
-            <?php echo $text_mpn; ?><?php echo $product['mpn']; ?><br />
+            {{ text_mpn }}<?php echo $product['mpn']; ?><br />
             <?php } ?></td>
           <td><?php echo $product['name']; ?>
             <?php foreach ($product['option'] as $option) { ?>
@@ -108,7 +108,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td><b><?php echo $text_comment; ?></b></td>
+          <td><b>{{ text_comment }}</b></td>
         </tr>
       </thead>
       <tbody>

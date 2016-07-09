@@ -1,36 +1,36 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_list }}</h3>
       </div>
       <div class="panel-body">
         <div class="well">
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+                  <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
               </div>
               <div class="form-group">
-                <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+                  <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
@@ -38,7 +38,7 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
+                <label class="control-label" for="input-group">{{ entry_group }}</label>
                 <select name="filter_group" id="input-group" class="form-control">
                   <?php foreach ($groups as $group) { ?>
                   <?php if ($group['value'] == $filter_group) { ?>
@@ -50,9 +50,9 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_order_status_id" id="input-status" class="form-control">
-                  <option value="0"><?php echo $text_all_status; ?></option>
+                  <option value="0">{{ text_all_status }}</option>
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -62,7 +62,7 @@
                   <?php } ?>
                 </select>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
@@ -70,11 +70,11 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <td class="text-left"><?php echo $column_date_start; ?></td>
-                <td class="text-left"><?php echo $column_date_end; ?></td>
-                <td class="text-left"><?php echo $column_title; ?></td>
-                <td class="text-right"><?php echo $column_orders; ?></td>
-                <td class="text-right"><?php echo $column_total; ?></td>
+                <td class="text-left">{{ column_date_start }}</td>
+                <td class="text-left">{{ column_date_end }}</td>
+                <td class="text-left">{{ column_title }}</td>
+                <td class="text-right">{{ column_orders }}</td>
+                <td class="text-right">{{ column_total }}</td>
               </tr>
             </thead>
             <tbody>
@@ -90,22 +90,22 @@
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="5">{{ text_no_results }}</td>
               </tr>
               <?php } ?>
             </tbody>
           </table>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/sale_shipping&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/sale_shipping&token={{ token }}';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	
@@ -139,4 +139,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-<?php echo $footer; ?>
+{{ footer }}

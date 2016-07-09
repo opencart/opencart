@@ -1,14 +1,14 @@
-<h3><?php echo $text_payment_info; ?></h3>
+<h3>{{ text_payment_info }}</h3>
 <div class="alert alert-success" style="display: none;"><i class="fa fa-check-circle"></i></div>
 <div id="table-action"></div>
 
 <script type="text/javascript"><!--
 function getPayment() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/cardinity/getPayment&token=<?php echo $token; ?>',
+		url: 'index.php?route=extension/payment/cardinity/getPayment&token={{ token }}',
 		dataType: 'html',
 		data: {
-			order_id: '<?php echo $order_id; ?>'
+			order_id: '{{ order_id }}'
 		},
 		beforeSend: function() {
 			$('#button-filter').button('loading');

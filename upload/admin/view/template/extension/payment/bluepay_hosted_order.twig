@@ -22,8 +22,8 @@
       <?php if ($bluepay_hosted_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="release_amount" value="{{ bluepay_hosted_order.total }}"/>
       <a class="button btn btn-primary" id="button-release">{{ button_release }}</a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
-      <?php } ?></td>
+      {% endif %}
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ text_void_status }}</td>

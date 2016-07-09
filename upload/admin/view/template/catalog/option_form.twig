@@ -34,7 +34,7 @@
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
-              <?php } ?>
+              {% endif %}
               <?php } ?>
             </div>
           </div>
@@ -47,53 +47,53 @@
                 <option value="select" selected="selected">{{ text_select }}</option>
                 {% else %}
                 <option value="select">{{ text_select }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'radio' %}
                 <option value="radio" selected="selected">{{ text_radio }}</option>
                 {% else %}
                 <option value="radio">{{ text_radio }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'checkbox' %}
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
                 {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_input }}">
                 {% if type == 'text' %}
                 <option value="text" selected="selected">{{ text_text }}</option>
                 {% else %}
                 <option value="text">{{ text_text }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'textarea' %}
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
                 {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_file }}">
                 {% if type == 'file' %}
                 <option value="file" selected="selected">{{ text_file }}</option>
                 {% else %}
                 <option value="file">{{ text_file }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_date }}">
                 {% if type == 'date' %}
                 <option value="date" selected="selected">{{ text_date }}</option>
                 {% else %}
                 <option value="date">{{ text_date }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'time' %}
                 <option value="time" selected="selected">{{ text_time }}</option>
                 {% else %}
                 <option value="time">{{ text_time }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'datetime' %}
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
                 {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
               </select>
             </div>
@@ -124,7 +124,7 @@
                   </div>
                   <?php if (isset($error_option_value[$option_value_row][$language['language_id']])) { ?>
                   <div class="text-danger"><?php echo $error_option_value[$option_value_row][$language['language_id']]; ?></div>
-                  <?php } ?>
+                  {% endif %}
                   {% endif %}</td>
                 <td class="text-left"><a href="" id="thumb-image{{ option_value_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ option_value.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                   <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}" /></td>

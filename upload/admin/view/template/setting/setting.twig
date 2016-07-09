@@ -399,7 +399,7 @@
                     <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control" />
                     {% if error_voucher_min %}
                     <div class="text-danger">{{ error_voucher_min }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group required">
@@ -408,7 +408,7 @@
                     <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control" />
                     {% if error_voucher_max %}
                     <div class="text-danger">{{ error_voucher_max }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
@@ -424,7 +424,7 @@
                       {% else %}
                       <input type="radio" name="config_tax" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       <?php if (!$config_tax) { ?>
@@ -433,7 +433,7 @@
                       {% else %}
                       <input type="radio" name="config_tax" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -442,16 +442,16 @@
                   <div class="col-sm-10">
                     <select name="config_tax_default" id="input-tax-default" class="form-control">
                       <option value="">{{ text_none }}</option>
-                      <?php  if ($config_tax_default == 'shipping') { ?>
+                      {% if config_tax_default == 'shipping' %}
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
                       {% else %}
                       <option value="shipping">{{ text_shipping }}</option>
-                      <?php } ?>
-                      <?php  if ($config_tax_default == 'payment') { ?>
+                      {% endif %}
+                      {% if config_tax_default == 'payment' %}
                       <option value="payment" selected="selected">{{ text_payment }}</option>
                       {% else %}
                       <option value="payment">{{ text_payment }}</option>
-                      <?php } ?>
+                      {% endif %}
                     </select>
                   </div>
                 </div>
@@ -460,16 +460,16 @@
                   <div class="col-sm-10">
                     <select name="config_tax_customer" id="input-tax-customer" class="form-control">
                       <option value="">{{ text_none }}</option>
-                      <?php  if ($config_tax_customer == 'shipping') { ?>
+                      {% if config_tax_customer == 'shipping' %}
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
                       {% else %}
                       <option value="shipping">{{ text_shipping }}</option>
-                      <?php } ?>
-                      <?php  if ($config_tax_customer == 'payment') { ?>
+                      {% endif %}
+                      {% if config_tax_customer == 'payment' %}
                       <option value="payment" selected="selected">{{ text_payment }}</option>
                       {% else %}
                       <option value="payment">{{ text_payment }}</option>
-                      <?php } ?>
+                      {% endif %}
                     </select>
                   </div>
                 </div>

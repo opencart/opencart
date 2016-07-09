@@ -6,10 +6,10 @@
 <base href="{{ base }}" />
 {% if description %}
 <meta name="description" content="{{ description }}" />
-<?php } ?>
+{% endif %}
 {% if keywords %}
 <meta name="keywords" content="{{ keywords }}" />
-<?php } ?>
+{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
@@ -21,14 +21,14 @@
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
 {% for style in styles %}
 <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}" />
-<?php } ?>
+{% endfor %}
 {% for link in links %}
 <link href="{{ link.href }}" rel="{{ link.rel }}" />
-<?php } ?>
+{% endfor %}
 <script src="view/javascript/common.js" type="text/javascript"></script>
 {% for script in scripts %}
 <script type="text/javascript" src="{{ script }}"></script>
-<?php } ?>
+{% endfor %}
 </head>
 <body>
 <div id="container">
@@ -36,11 +36,11 @@
   <div class="navbar-header">
     {% if logged %}
     <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
-    <?php } ?>
+    {% endif %}
     <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
   {% if logged %}
   <ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{% if alerts > 0 %} <span class="label label-danger pull-left">{{ alerts }}</span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{% if alerts > 0 %} <span class="label label-danger pull-left">{{ alerts }}</span>{% endif %} <i class="fa fa-bell fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
         <li class="dropdown-header">{{ text_order }}</li>
         <li><a href="{{ processing_status }}" style="display: block; overflow: auto;"><span class="label label-warning pull-right">{{ processing_status_total }}</span>{{ text_processing_status }}</a></li>
@@ -64,7 +64,7 @@
         <li class="dropdown-header">{{ text_store }}</li>
         {% for store in stores %}
         <li><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>
-        <?php } ?>
+        {% endfor %}
       </ul>
     </li>
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-life-ring fa-lg"></i></a>
@@ -77,5 +77,5 @@
     </li>
     <li><a href="{{ logout }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_logout }}</span> <i class="fa fa-sign-out fa-lg"></i></a></li>
   </ul>
-  <?php } ?>
+  {% endif %}
 </header>

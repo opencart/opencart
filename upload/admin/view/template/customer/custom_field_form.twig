@@ -33,7 +33,7 @@
                 <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
-              <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+              <div class="text-danger">{{ error_name[language.language_id] }}</div>
               <?php } ?>
               <?php } ?>
             </div>
@@ -205,7 +205,7 @@
                     <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="<?php echo isset($custom_field_value['custom_field_value_description'][$language['language_id']]) ? $custom_field_value['custom_field_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_custom_value }}" class="form-control" />
                   </div>
                   {% if error_custom_field_value[custom_field_value_row][$language.language_id] %}
-                  <div class="text-danger"><?php echo $error_custom_field_value[$custom_field_value_row][$language['language_id']]; ?></div>
+                  <div class="text-danger">{{ error_custom_field_value[custom_field_value_row][$language.language_id] }}</div>
                   <?php } ?>
                   <?php } ?></td>
                 <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>

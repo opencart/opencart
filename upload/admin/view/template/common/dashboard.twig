@@ -15,20 +15,20 @@
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_install }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     {% for row in rows %}
     <div class="row">
       {% for dashboard_1 in row %}
-      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-3 col-sm-6'; ?>
+      {% set class = 'col-lg-'|format(dashboard_1.width, ' col-md-3 col-sm-6') %}
       {% for dashboard_2 in row %}
-      <?php if ($dashboard_2['width'] > 3) { ?>
-      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-12 col-sm-12'; ?>
-      <?php } ?>
-      <?php } ?>
+      {% if dashboard_2.width > 3 %}
+      {% set class = 'col-lg-'|format(dashboard_1.width, ' col-md-12 col-sm-12') %}
+      {% endif %}
+      {% endfor %}
       <div class="{{ class }}">{{ dashboard_1.output }}</div>
-      <?php } ?>
+      {% endfor %}
     </div>
-    <?php } ?>
+    {% endfor %}
   </div>
 </div>
 {{ footer }}

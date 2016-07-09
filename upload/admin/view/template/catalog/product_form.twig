@@ -53,7 +53,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="product_description[{{ language.language_id }}][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
                       {% if error_name[language.language_id] %}
-                      <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+                      <div class="text-danger">{{ error_name[language.language_id] }}</div>
                       <?php } ?>
                     </div>
                   </div>
@@ -68,7 +68,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
                       {% if error_meta_title[language.language_id] %}
-                      <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
+                      <div class="text-danger">{{ error_meta_title[language.language_id] }}</div>
                       <?php } ?>
                     </div>
                   </div>

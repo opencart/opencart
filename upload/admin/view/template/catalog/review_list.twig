@@ -80,27 +80,27 @@
                     <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a>
                     {% else %}
                     <a href="{{ sort_product }}">{{ column_product }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'r.author' %}
                     <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a>
                     {% else %}
                     <a href="{{ sort_author }}">{{ column_author }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'r.rating' %}
                     <a href="{{ sort_rating }}" class="{{ order|lower }}">{{ column_rating }}</a>
                     {% else %}
                     <a href="{{ sort_rating }}">{{ column_rating }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'r.status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'r.date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>

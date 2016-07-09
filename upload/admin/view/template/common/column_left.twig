@@ -1,59 +1,35 @@
 <nav id="column-left">
   <div id="profile">
-    <div>
-      {% if image %}
-      <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" />
-      {% else %}
-      <i class="fa fa-opencart"></i>
-      <?php } ?>
-    </div>
+    <div> {% if image %} <img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="img-circle" /> {% else %} <i class="fa fa-opencart"></i> {% endif %} </div>
     <div>
       <h4>{{ firstname }} {{ lastname }}</h4>
       <small>{{ user_group }}</small></div>
   </div>
   <ul id="menu">
     {% for menu in menus %}
-    <li id="{{ menu.id }}">
-      {% if menu.href %}
-      <a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a>
-      {% else %}
-      <a class="parent"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a>
-      <?php } ?>
+    <li id="{{ menu.id }}"> {% if menu.href %} <a href="{{ menu.href }}"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% else %} <a class="parent"><i class="fa {{ menu.icon }} fw"></i> <span>{{ menu.name }}</span></a> {% endif %}
       {% if menu.children %}
       <ul>
         {% for children_1 in menu.children %}
-        <li>
-          {% if children_1.href %}
-          <a href="{{ children_1.href }}">{{ children_1.name }}</a>
-          {% else %}
-          <a class="parent">{{ children_1.name }}</a>
-          <?php } ?>
+        <li> {% if children_1.href %} <a href="{{ children_1.href }}">{{ children_1.name }}</a> {% else %} <a class="parent">{{ children_1.name }}</a> {% endif %}
           {% if children_1.children %}
           <ul>
             {% for children_2 in children_1.children %}
-            <li>
-              {% if children_2.href %}
-              <a href="{{ children_2.href }}">{{ children_2.name }}</a>
-              {% else %}
-              <a class="parent">{{ children_2.name }}</a>
-              <?php } ?>
+            <li> {% if children_2.href %} <a href="{{ children_2.href }}">{{ children_2.name }}</a> {% else %} <a class="parent">{{ children_2.name }}</a> {% endif %}
               {% if children_2.children %}
               <ul>
                 {% for children_3 in children_2.children %}
                 <li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
-                <?php } ?>
+                {% endfor %}
               </ul>
-              <?php } ?>
-            </li>
-            <?php } ?>
+              {% endif %} </li>
+            {% endfor %}
           </ul>
-          <?php } ?>
-        </li>
-        <?php } ?>
+          {% endif %} </li>
+        {% endfor %}
       </ul>
-      <?php } ?>
-    </li>
-    <?php } ?>
+      {% endif %} </li>
+    {% endfor %}
   </ul>
   <div id="stats">
     <ul>

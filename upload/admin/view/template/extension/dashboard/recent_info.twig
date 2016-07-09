@@ -25,12 +25,12 @@
           <td class="text-right">{{ order.total }}</td>
           <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% else %}
         <tr>
           <td class="text-center" colspan="6">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
       </tbody>
     </table>
   </div>

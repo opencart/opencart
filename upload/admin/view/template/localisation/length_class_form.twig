@@ -33,7 +33,7 @@
                 <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="{{ entry_title }}" class="form-control" />
               </div>
               {% if error_title[language.language_id] %}
-              <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
+              <div class="text-danger">{{ error_title[language.language_id] }}</div>
               <?php } ?>
               <?php } ?>
             </div>
@@ -46,7 +46,7 @@
                 <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="{{ entry_unit }}" class="form-control" />
               </div>
               {% if error_unit[language.language_id] %}
-              <div class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></div>
+              <div class="text-danger">{{ error_unit[language.language_id] }}</div>
               <?php } ?>
               <?php } ?>
             </div>

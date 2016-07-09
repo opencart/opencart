@@ -33,7 +33,7 @@
                 <input type="text" name="return_action[{{ language.language_id }}][name]" value="<?php echo isset($return_action[$language['language_id']]) ? $return_action[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
-              <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+              <div class="text-danger">{{ error_name[language.language_id] }}</div>
               <?php } ?>
               <?php } ?>
             </div>

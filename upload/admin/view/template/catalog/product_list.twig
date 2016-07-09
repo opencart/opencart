@@ -100,27 +100,27 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'p.model' %}
                     <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
                     {% else %}
                     <a href="{{ sort_model }}">{{ column_model }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'p.price' %}
                     <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>
                     {% else %}
                     <a href="{{ sort_price }}">{{ column_price }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'p.quantity' %}
                     <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
                     {% else %}
                     <a href="{{ sort_quantity }}">{{ column_quantity }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'p.status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>

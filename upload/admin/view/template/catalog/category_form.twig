@@ -35,7 +35,7 @@
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
                 <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
-                <?php } ?>
+                {% endfor %}
               </ul>
               <div class="tab-content">
                 {% for language in languages %}
@@ -45,8 +45,8 @@
                     <div class="col-sm-10">
                       <input type="text" name="category_description[{{ language.language_id }}][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
                       {% if error_name[language.language_id] %}
-                      <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-                      <?php } ?>
+                      <div class="text-danger">{{ error_name[language.language_id] }}</div>
+                      {% endif %}
                     </div>
                   </div>
                   <div class="form-group">
@@ -60,8 +60,8 @@
                     <div class="col-sm-10">
                       <input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
                       {% if error_meta_title[language.language_id] %}
-                      <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
-                      <?php } ?>
+                      <div class="text-danger">{{ error_meta_title[language.language_id] }}</div>
+                      {% endif %}
                     </div>
                   </div>
                   <div class="form-group">
@@ -77,7 +77,7 @@
                     </div>
                   </div>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
             <div class="tab-pane" id="tab-data">
@@ -88,7 +88,7 @@
                   <input type="hidden" name="parent_id" value="{{ parent_id }}" />
                   {% if error_parent %}
                   <div class="text-danger">{{ error_parent }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -100,7 +100,7 @@
                     <div id="category-filter{{ category_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ category_filter.name }}
                       <input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -116,7 +116,7 @@
                         {% else %}
                         <input type="checkbox" name="category_store[]" value="0" />
                         {{ text_default }}
-                        <?php } ?>
+                        {% endif %}
                       </label>
                     </div>
                     {% for store in stores %}
@@ -128,10 +128,10 @@
                         {% else %}
                         <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" />
                         {{ store.name }}
-                        <?php } ?>
+                        {% endif %}
                       </label>
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -141,7 +141,7 @@
                   <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
                   {% if error_keyword %}
                   <div class="text-danger">{{ error_keyword }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -159,7 +159,7 @@
                       <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
                       {% else %}
                       <input type="checkbox" name="top" value="1" id="input-top" />
-                      <?php } ?>
+                      {% endif %}
                       &nbsp; </label>
                   </div>
                 </div>
@@ -186,7 +186,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -210,8 +210,8 @@
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                     </tr>
                     {% for store in stores %}
@@ -224,11 +224,11 @@
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                     </tr>
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

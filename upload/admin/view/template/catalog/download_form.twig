@@ -32,7 +32,7 @@
               <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="download_description[{{ language.language_id }}][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
-              <?php if (isset($error_name[$language['language_id']])) { ?>
+              {% if error_name[language.language_id] %}
               <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
               <?php } ?>
               <?php } ?>

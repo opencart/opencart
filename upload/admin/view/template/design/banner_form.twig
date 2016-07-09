@@ -69,7 +69,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if (isset($banner_images[$language['language_id']])) { ?>
+                  {% if banner_images[language.language_id] %}
                   <?php foreach ($banner_images[$language['language_id']] as $banner_image) { ?>
                   <tr id="image-row{{ image_row }}">
                     <td class="text-left"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control" />

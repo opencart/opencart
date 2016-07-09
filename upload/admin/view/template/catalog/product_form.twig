@@ -52,7 +52,7 @@
                     <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="product_description[{{ language.language_id }}][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
-                      <?php if (isset($error_name[$language['language_id']])) { ?>
+                      {% if error_name[language.language_id] %}
                       <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                       <?php } ?>
                     </div>
@@ -67,7 +67,7 @@
                     <label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
-                      <?php if (isset($error_meta_title[$language['language_id']])) { ?>
+                      {% if error_meta_title[language.language_id] %}
                       <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
                       <?php } ?>
                     </div>
@@ -563,7 +563,7 @@
                             {% for product_option_value in product_option.product_option_value %}
                             <tr id="option-value-row{{ option_value_row }}">
                               <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" class="form-control">
-                                  <?php if (isset($option_values[$product_option['option_id']])) { ?>
+                                  {% if option_values[product_option.option_id] %}
                                   <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
                                   <?php if ($option_value['option_value_id'] == $product_option_value['option_value_id']) { ?>
                                   <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>
@@ -637,7 +637,7 @@
                         </table>
                       </div>
                       <select id="option-values{{ option_row }}" style="display: none;">
-                        <?php if (isset($option_values[$product_option['option_id']])) { ?>
+                        {% if option_values[product_option.option_id] %}
                         <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
                         <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
                         <?php } ?>

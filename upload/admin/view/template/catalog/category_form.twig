@@ -44,7 +44,7 @@
                     <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="category_description[{{ language.language_id }}][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
-                      <?php if (isset($error_name[$language['language_id']])) { ?>
+                      {% if error_name[language.language_id] %}
                       <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                       <?php } ?>
                     </div>
@@ -59,7 +59,7 @@
                     <label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
-                      <?php if (isset($error_meta_title[$language['language_id']])) { ?>
+                      {% if error_meta_title[language.language_id] %}
                       <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
                       <?php } ?>
                     </div>

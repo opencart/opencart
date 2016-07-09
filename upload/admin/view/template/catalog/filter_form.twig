@@ -32,7 +32,7 @@
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_group }}" class="form-control" />
               </div>
-              <?php if (isset($error_group[$language['language_id']])) { ?>
+              {% if error_group[language.language_id] %}
               <div class="text-danger"><?php echo $error_group[$language['language_id']]; ?></div>
               <?php } ?>
               <?php } ?>

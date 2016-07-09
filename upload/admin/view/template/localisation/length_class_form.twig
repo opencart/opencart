@@ -32,7 +32,7 @@
               <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="{{ entry_title }}" class="form-control" />
               </div>
-              <?php if (isset($error_title[$language['language_id']])) { ?>
+              {% if error_title[language.language_id] %}
               <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
               <?php } ?>
               <?php } ?>
@@ -45,7 +45,7 @@
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="{{ entry_unit }}" class="form-control" />
               </div>
-              <?php if (isset($error_unit[$language['language_id']])) { ?>
+              {% if error_unit[language.language_id] %}
               <div class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></div>
               <?php } ?>
               <?php } ?>

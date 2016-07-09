@@ -39,17 +39,17 @@
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'unit' %}
                     <a href="{{ sort_unit }}" class="{{ order|lower }}">{{ column_unit }}</a>
                     {% else %}
                     <a href="{{ sort_unit }}">{{ column_unit }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -61,7 +61,7 @@
                     <input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ length_class.title }}</td>
                   <td class="text-left">{{ length_class.unit }}</td>
                   <td class="text-right">{{ length_class.value }}</td>
@@ -72,7 +72,7 @@
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

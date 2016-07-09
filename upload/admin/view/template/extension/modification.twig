@@ -48,27 +48,27 @@
                         <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                         {% else %}
                         <a href="{{ sort_name }}">{{ column_name }}</a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-left">{% if sort == 'author' %}
                         <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a>
                         {% else %}
                         <a href="{{ sort_author }}">{{ column_author }}</a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-left">{% if sort == 'version' %}
                         <a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>
                         {% else %}
                         <a href="{{ sort_version }}">{{ column_version }}</a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-left">{% if sort == 'status' %}
                         <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                         {% else %}
                         <a href="{{ sort_status }}">{{ column_status }}</a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-left">{% if sort == 'date_added' %}
                         <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                         {% else %}
                         <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
@@ -80,7 +80,7 @@
                         <input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" checked="checked" />
                         {% else %}
                         <input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" />
-                        <?php } ?></td>
+                        {% endif %}</td>
                       <td class="text-left">{{ modification.name }}</td>
                       <td class="text-left">{{ modification.author }}</td>
                       <td class="text-left">{{ modification.version }}</td>
@@ -90,19 +90,19 @@
                         <a href="{{ modification.link }}" data-toggle="tooltip" title="{{ button_link }}" class="btn btn-info" target="_blank"><i class="fa fa-link"></i></a>
                         {% else %}
                         <button type="button" class="btn btn-info" disabled="disabled"><i class="fa fa-link"></i></button>
-                        <?php } ?>
+                        {% endif %}
                         <?php if (!$modification['enabled']) { ?>
                         <a href="{{ modification.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                         {% else %}
                         <a href="{{ modification.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-                        <?php } ?></td>
+                        {% endif %}</td>
                     </tr>
                     <?php } ?>
                     {% else %}
                     <tr>
                       <td class="text-center" colspan="7">{{ text_no_results }}</td>
                     </tr>
-                    <?php } ?>
+                    {% endif %}
                   </tbody>
                 </table>
               </div>

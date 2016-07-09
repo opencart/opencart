@@ -39,32 +39,32 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'code' %}
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'discount' %}
                     <a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
                     {% else %}
                     <a href="{{ sort_discount }}">{{ column_discount }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'date_start' %}
                     <a href="{{ sort_date_start }}" class="{{ order|lower }}">{{ column_date_start }}</a>
                     {% else %}
                     <a href="{{ sort_date_start }}">{{ column_date_start }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'date_end' %}
                     <a href="{{ sort_date_end }}" class="{{ order|lower }}">{{ column_date_end }}</a>
                     {% else %}
                     <a href="{{ sort_date_end }}">{{ column_date_end }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -76,7 +76,7 @@
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ coupon.name }}</td>
                   <td class="text-left">{{ coupon.code }}</td>
                   <td class="text-right">{{ coupon.discount }}</td>
@@ -90,7 +90,7 @@
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

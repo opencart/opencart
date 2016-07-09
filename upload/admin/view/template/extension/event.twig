@@ -38,27 +38,27 @@
                   <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                   {% else %}
                   <a href="{{ sort_code }}">{{ column_code }}</a>
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-left">{% if sort == 'trigger' %}
                   <a href="{{ sort_trigger }}" class="{{ order|lower }}">{{ column_trigger }}</a>
                   {% else %}
                   <a href="{{ sort_trigger }}">{{ column_trigger }}</a>
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-left">{% if sort == 'action' %}
                   <a href="{{ sort_action }}" class="{{ order|lower }}">{{ column_action }}</a>
                   {% else %}
                   <a href="{{ sort_action }}">{{ column_action }}</a>
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-left">{% if sort == 'status' %}
                   <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                   {% else %}
                   <a href="{{ sort_status }}">{{ column_status }}</a>
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-left">{% if sort == 'date_added' %}
                   <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                   {% else %}
                   <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-right">{{ column_action }}</td>
               </tr>
             </thead>
@@ -70,7 +70,7 @@
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" checked="checked" />
                   {% else %}
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" />
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-left">{{ event.code }}</td>
                 <td class="text-left">{{ event.trigger }}</td>
                 <td class="text-left">{{ event.action }}</td>
@@ -87,7 +87,7 @@
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>

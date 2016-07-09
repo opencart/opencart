@@ -54,7 +54,7 @@
                 <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
                 {% else %}
                 {{ firstname }} {{ lastname }}
-                <?php } ?></td>
+                {% endif %}</td>
             </tr>
             <tr>
               <td><button data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
@@ -85,7 +85,7 @@
                   <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
                   {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ text_reward }}</td>
@@ -95,26 +95,26 @@
                   <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
                   <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
-                  <?php } ?>
+                  {% endif %}
                   {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ text_affiliate }}
                   {% if affiliate %}
                   (<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-right">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
                   <?php if (!$commission_total) { ?>
                   <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
                   <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
-                  <?php } ?>
+                  {% endif %}
                   {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
             </tbody>
           </table>
@@ -132,7 +132,7 @@
               <td style="width: 50%;" class="text-left">{{ text_payment_address }}</td>
               {% if shipping_method %}
               <td style="width: 50%;" class="text-left">{{ text_shipping_address }}</td>
-              <?php } ?>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -140,7 +140,7 @@
               <td class="text-left">{{ payment_address }}</td>
               {% if shipping_method %}
               <td class="text-left">{{ shipping_address }}</td>
-              <?php } ?>
+              {% endif %}
             </tr>
           </tbody>
         </table>
@@ -164,7 +164,7 @@
                 &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                 {% else %}
                 &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                <?php } ?>
+                {% endif %}
                 <?php } ?></td>
               <td class="text-left">{{ product.model }}</td>
               <td class="text-right">{{ product.quantity }}</td>
@@ -233,7 +233,7 @@
                       <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
                       {% else %}
                       <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
-                      <?php } ?>
+                      {% endif %}
                       <?php } ?>
                     </select>
                   </div>
@@ -281,7 +281,7 @@
                 </tbody>
               </table>
             </div>
-            <?php } ?>
+            {% endif %}
             {% if payment_custom_fields %}
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -300,7 +300,7 @@
                 </tbody>
               </table>
             </div>
-            <?php } ?>
+            {% endif %}
             <?php if ($shipping_method && $shipping_custom_fields) { ?>
             <div class="table-responsive">
               <table class="table table-bordered">

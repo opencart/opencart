@@ -39,22 +39,22 @@
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'code' %}
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'date_modified' %}
                     <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
                     {% else %}
                     <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -66,7 +66,7 @@
                     <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ currency.title }}</td>
                   <td class="text-left">{{ currency.code }}</td>
                   <td class="text-right">{{ currency.value }}</td>
@@ -78,7 +78,7 @@
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

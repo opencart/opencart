@@ -162,27 +162,27 @@
                 <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                 {% else %}
                 <a href="{{ sort_name }}">{{ column_name }}</a>
-                <?php } ?></td>
+                {% endif %}</td>
               <td class="text-left">{% if sort == 'p.model' %}
                 <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
                 {% else %}
                 <a href="{{ sort_model }}">{{ column_model }}</a>
-                <?php } ?></td>
+                {% endif %}</td>
               <td class="text-left">{% if sort == 'p.price' %}
                 <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>
                 {% else %}
                 <a href="{{ sort_price }}">{{ column_price }}</a>
-                <?php } ?></td>
+                {% endif %}</td>
               <td class="text-right">{% if sort == 'p.quantity' %}
                 <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
                 {% else %}
                 <a href="{{ sort_quantity }}">{{ column_quantity }}</a>
-                <?php } ?></td>
+                {% endif %}</td>
               <td class="text-left">{% if sort == 'p.status' %}
                 <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                 {% else %}
                 <a href="{{ sort_status }}">{{ column_status }}</a>
-                <?php } ?></td>
+                {% endif %}</td>
                 <td width="230">{{ text_markets }}</td>
             </tr>
           </thead>
@@ -198,7 +198,7 @@
                       <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
                       {% else %}
                       <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
-                      <?php } ?>
+                      {% endif %}
                   </td>
                   <td class="text-left"><a href="{{ product.edit }}">{{ product.name }}</a></td>
                   <td class="text-left">{{ product.model }}</td>
@@ -208,7 +208,7 @@
                       <div class="text-danger">{{ product.special }}</div>
                     {% else %}
                       {{ product.price }}
-                    <?php } ?>
+                    {% endif %}
                   </td>
                   <td class="text-right">
                     <?php if ($product['has_option'] == 0) { ?>
@@ -218,11 +218,11 @@
                         <span class="label label-warning">{{ product.quantity }}</span>
                       {% else %}
                         <span class="label label-success">{{ product.quantity }}</span>
-                      <?php } ?>
+                      {% endif %}
                     {% else %}
                       <span class="label label-info">{{ product.vCount }} {{ text_variations }}</span><br />
                       <span class="label label-info">{{ product.vsCount }} {{ text_variations_stock }}</span>
-                    <?php } ?>
+                    {% endif %}
                   </td>
                   <td class="text-left">{{ product.status }}</td>
                   <td>
@@ -236,10 +236,10 @@
                           <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-info">{{ market.name }}</a>
                         {% else %}
                           <a disable="disable" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-info btn-block btn-sm">{{ market.name }}</a>
-                        <?php } ?>
+                        {% endif %}
                       {% else %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-default">{{ market.name }}</a>
-                      <?php } ?>
+                      {% endif %}
                     <?php } ?>
                   </td>
                 </tr>
@@ -248,7 +248,7 @@
               <tr>
                 <td class="center" colspan="8">{{ text_no_results }}</td>
               </tr>
-            <?php } ?>
+            {% endif %}
           </tbody>
         </table>
           </div>

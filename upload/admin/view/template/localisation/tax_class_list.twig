@@ -39,7 +39,7 @@
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -51,7 +51,7 @@
                     <input type="checkbox" name="selected[]" value="{{ tax_class.tax_class_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ tax_class.tax_class_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ tax_class.title }}</td>
                   <td class="text-right"><a href="{{ tax_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
@@ -60,7 +60,7 @@
                 <tr>
                   <td class="text-center" colspan="3">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

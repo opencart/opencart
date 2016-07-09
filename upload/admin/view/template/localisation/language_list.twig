@@ -39,17 +39,17 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'code' %}
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -61,7 +61,7 @@
                     <input type="checkbox" name="selected[]" value="{{ language.language_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ language.language_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ language.name }}</td>
                   <td class="text-left">{{ language.code }}</td>
                   <td class="text-right">{{ language.sort_order }}</td>
@@ -72,7 +72,7 @@
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

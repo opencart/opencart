@@ -112,7 +112,7 @@
                     <input type="checkbox" name="selected[]" value="{{ review.review_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ review.review_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ review.name }}</td>
                   <td class="text-left">{{ review.author }}</td>
                   <td class="text-right">{{ review.rating }}</td>
@@ -125,7 +125,7 @@
                 <tr>
                   <td class="text-center" colspan="7">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

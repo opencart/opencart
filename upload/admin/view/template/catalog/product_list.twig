@@ -132,12 +132,12 @@
                     <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-center">{% if product.image %}
                     <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
                     {% else %}
                     <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ product.name }}</td>
                   <td class="text-left">{{ product.model }}</td>
                   <td class="text-right">{% if product.special %}
@@ -145,14 +145,14 @@
                     <div class="text-danger">{{ product.special }}</div>
                     {% else %}
                     {{ product.price }}
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
                     <span class="label label-warning">{{ product.quantity }}</span>
                     <?php } elseif ($product['quantity'] <= 5) { ?>
                     <span class="label label-danger">{{ product.quantity }}</span>
                     {% else %}
                     <span class="label label-success">{{ product.quantity }}</span>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ product.status }}</td>
                   <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
@@ -161,7 +161,7 @@
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

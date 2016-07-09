@@ -117,27 +117,27 @@
                   <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a>
                   {% else %}
                   <a href="{{ sort_order }}">{{ column_order_id }}</a>
-                  <?php } ?></th>
+                  {% endif %}</th>
                 <th class="text-left">{% if sort == 'customer' %}
                   <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
                   {% else %}
                   <a href="{{ sort_customer }}">{{ column_customer }}</a>
-                  <?php } ?></th>
+                  {% endif %}</th>
                 <th class="text-left">{% if sort == 'status' %}
                   <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                   {% else %}
                   <a href="{{ sort_status }}">{{ column_status }}</a>
-                  <?php } ?></th>
+                  {% endif %}</th>
                 <th class="text-left">{% if sort == 'channel' %}
                   <a href="{{ sort_channel }}" class="{{ order|lower }}">{{ column_channel }}</a>
                   {% else %}
                   <a href="{{ sort_channel }}">{{ column_channel }}</a>
-                  <?php } ?></th>
+                  {% endif %}</th>
                 <th class="text-left">{% if sort == 'o.date_added' %}
                   <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                   {% else %}
                   <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                  <?php } ?></th>
+                  {% endif %}</th>
                 <th class="text-right">{{ column_action }}</th>
               </tr>
             </thead>
@@ -150,7 +150,7 @@
                       <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked" />
                     {% else %}
                       <input type="checkbox" name="selected[]" value="{{ order.order_id }}" />
-                    <?php } ?>
+                    {% endif %}
                   </td>
                   <td class="text-left">{{ order.order_id }}</td>
                   <td class="text-left">{{ order.customer }}</td>
@@ -164,7 +164,7 @@
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
           </div>

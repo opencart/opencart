@@ -39,17 +39,17 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    <{% endif %}</td>
                   <td class="text-left">{% if sort == 'iso_code_2' %}
                     <a href="{{ sort_iso_code_2 }}" class="{{ order|lower }}">{{ column_iso_code_2 }}</a>
                     {% else %}
                     <a href="{{ sort_iso_code_2 }}">{{ column_iso_code_2 }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'iso_code_3' %}
                     <a href="{{ sort_iso_code_3 }}" class="{{ order|lower }}">{{ column_iso_code_3 }}</a>
                     {% else %}
                     <a href="{{ sort_iso_code_3 }}">{{ column_iso_code_3 }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -61,7 +61,7 @@
                     <input type="checkbox" name="selected[]" value="{{ country.country_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ country.country_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ country.name }}</td>
                   <td class="text-left">{{ country.iso_code_2 }}</td>
                   <td class="text-left">{{ country.iso_code_3 }}</td>
@@ -72,7 +72,7 @@
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

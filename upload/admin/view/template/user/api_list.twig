@@ -39,17 +39,17 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -61,7 +61,7 @@
                     <input type="checkbox" name="selected[]" value="{{ api.api_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ api.api_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ api.name }}</td>
                   <td class="text-left">{{ api.status }}</td>
                   <td class="text-left">{{ api.date_added }}</td>
@@ -72,7 +72,7 @@
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

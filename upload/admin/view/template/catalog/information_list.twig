@@ -56,7 +56,7 @@
                     <input type="checkbox" name="selected[]" value="{{ information.information_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ information.information_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ information.title }}</td>
                   <td class="text-right">{{ information.sort_order }}</td>
                   <td class="text-right"><a href="{{ information.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -66,7 +66,7 @@
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

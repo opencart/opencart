@@ -39,22 +39,22 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'cf.location' %}
                     <a href="{{ sort_location }}" class="{{ order|lower }}">{{ column_location }}</a>
                     {% else %}
                     <a href="{{ sort_location }}">{{ column_location }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'cf.type' %}
                     <a href="{{ sort_type }}" class="{{ order|lower }}">{{ column_type }}</a>
                     {% else %}
                     <a href="{{ sort_type }}">{{ column_type }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'cf.sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -66,7 +66,7 @@
                     <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ custom_field.name }}</td>
                   <td class="text-left">{{ custom_field.location }}</td>
                   <td class="text-left">{{ custom_field.type }}</td>
@@ -78,7 +78,7 @@
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

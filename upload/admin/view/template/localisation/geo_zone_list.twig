@@ -39,12 +39,12 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'description' %}
                     <a href="{{ sort_description }}" class="{{ order|lower }}">{{ column_description }}</a>
                     {% else %}
                     <a href="{{ sort_description }}">{{ column_description }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -56,7 +56,7 @@
                     <input type="checkbox" name="selected[]" value="{{ geo_zone.geo_zone_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ geo_zone.geo_zone_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ geo_zone.name }}</td>
                   <td class="text-left">{{ geo_zone.description }}</td>
                   <td class="text-right"><a href="{{ geo_zone.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -66,7 +66,7 @@
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

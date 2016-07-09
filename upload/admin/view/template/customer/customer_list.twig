@@ -117,32 +117,32 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'c.email' %}
                     <a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>
                     {% else %}
                     <a href="{{ sort_email }}">{{ column_email }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'customer_group' %}
                     <a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a>
                     {% else %}
                     <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'c.status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'c.ip' %}
                     <a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>
                     {% else %}
                     <a href="{{ sort_ip }}">{{ column_ip }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'c.date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -154,7 +154,7 @@
                     <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">{{ customer.name }}</td>
                   <td class="text-left">{{ customer.email }}</td>
                   <td class="text-left">{{ customer.customer_group }}</td>
@@ -165,7 +165,7 @@
                     <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
-                    <?php } ?>
+                    {% endif %}
                     <div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
                       <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
                       <ul class="dropdown-menu pull-right">
@@ -179,7 +179,7 @@
                     <a href="{{ customer.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
-                    <?php } ?>
+                    {% endif %}
                     <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
@@ -187,7 +187,7 @@
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

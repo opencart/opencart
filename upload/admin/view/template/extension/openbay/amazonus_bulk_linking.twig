@@ -1,9 +1,9 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
-      <h1><?php echo $heading_title; ?></h1>
+      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -13,14 +13,14 @@
   </div>
   <div class="container-fluid">
     <?php if ($bulk_linking_status) { ?>
-    <div class="alert alert-info"><?php echo $text_load_listings; ?></div>
+    <div class="alert alert-info">{{ text_load_listings }}</div>
     <div class="well">
       <div class="row">
         <div class="col-sm-12">
           <?php if ($marketplace_processing) { ?>
-          <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></a> </div>
+          <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
           <?php } else { ?>
-          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $link_load_listings; ?>"><?php echo $button_load; ?></a> </div>
+          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="{{ link_load_listings }}">{{ button_load }}</a> </div>
           <?php } ?>
         </div>
       </div>
@@ -33,18 +33,18 @@
           <thead>
           <tr>
             <th></th>
-            <th class="text-center" colspan="4"><?php echo $text_amazon; ?></th>
-            <th class="text-center" colspan="3"><?php echo $text_local; ?></th>
+            <th class="text-center" colspan="4">{{ text_amazon }}</th>
+            <th class="text-center" colspan="3">{{ text_local }}</th>
           </tr>
           <tr>
             <th class="text-center"><input type="checkbox" id="master-checkbox" value="1"/></th>
-            <th class="text-left"><?php echo $column_asin; ?></th>
-            <th class="text-left"><?php echo $column_sku; ?></th>
-            <th class="text-center"><?php echo $column_quantity; ?></th>
-            <th class="text-right"><?php echo $column_price; ?></th>
-            <th class="text-left"><?php echo $column_name; ?></th>
-            <th class="text-left"><?php echo $column_sku; ?></th>
-            <th class="text-center"><?php echo $column_quantity; ?></th>
+            <th class="text-left">{{ column_asin }}</th>
+            <th class="text-left">{{ column_sku }}</th>
+            <th class="text-center">{{ column_quantity }}</th>
+            <th class="text-right">{{ column_price }}</th>
+            <th class="text-left">{{ column_name }}</th>
+            <th class="text-left">{{ column_sku }}</th>
+            <th class="text-center">{{ column_quantity }}</th>
           </tr>
           </thead>
           <tbody>
@@ -66,9 +66,9 @@
             <td class="text-left"><a href="<?php echo $product['href_product']; ?>" target="_blank"><?php echo $product['name']; ?></a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
             <td class="text-left"><?php echo $product['sku']; ?></td>
             <td class="text-center"><?php echo $product['quantity']; ?></td>
-            <input type="hidden" name="link[<?php echo $row; ?>][amazon_sku]" value="<?php echo $product['amazon_sku']; ?>"/>
-            <input type="hidden" name="link[<?php echo $row; ?>][product_id]" value="<?php echo $product['product_id']; ?>"/>
-            <input type="hidden" name="link[<?php echo $row; ?>][sku]" value="<?php echo $product['var']; ?>"/>
+            <input type="hidden" name="link[{{ row }}][amazon_sku]" value="<?php echo $product['amazon_sku']; ?>"/>
+            <input type="hidden" name="link[{{ row }}][product_id]" value="<?php echo $product['product_id']; ?>"/>
+            <input type="hidden" name="link[{{ row }}][sku]" value="<?php echo $product['var']; ?>"/>
           </tr>
           <?php } ?>
           </tbody>
@@ -76,20 +76,20 @@
         <div class="well">
           <div class="row">
             <div class="col-sm-12 text-right">
-              <div class="pull-right"> <a id="link-button" class="btn btn-primary" href="<?php echo $button_save; ?>" data-toggle="tooltip" title="<?php echo $button_load; ?>"><i class="fa fa-save"></i></a></div>
+              <div class="pull-right"> <a id="link-button" class="btn btn-primary" href="{{ button_save }}" data-toggle="tooltip" title="{{ button_load }}"><i class="fa fa-save"></i></a></div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
         </div>
         <?php } ?>
         <?php } ?>
       </div>
     </form>
     <?php } else { ?>
-    <div class="warning"><?php echo $error_bulk_link_permission; ?></div>
+    <div class="warning">{{ error_bulk_link_permission }}</div>
     <?php } ?>
   </div>
   <script type="text/javascript"><!--
@@ -100,7 +100,7 @@
       url: $(this).attr('href'),
       dataType: 'json',
       beforeSend: function () {
-        $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?>').attr('disabled','disabled');
+        $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}').attr('disabled','disabled');
         $('.alert-danger, .alert-success').remove();
       },
       success: function (json) {
@@ -114,7 +114,7 @@
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       },
       complete: function() {
-        $('#button-load-listings').empty().removeAttr('disabled').html('<?php echo $button_load; ?>');
+        $('#button-load-listings').empty().removeAttr('disabled').html('{{ button_load }}');
       }
     });
 
@@ -150,4 +150,4 @@
     });
   });
   //--></script></div>
-<?php echo $footer; ?>
+{{ footer }}

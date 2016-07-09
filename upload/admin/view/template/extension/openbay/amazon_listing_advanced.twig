@@ -1,13 +1,13 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($has_listing_errors) { ?>
-        <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>
+        <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
         <?php } ?>
-        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
-      <h1><?php echo $text_title_advanced; ?></h1>
+        <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <h1>{{ text_title_advanced }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -26,19 +26,19 @@
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
     <?php } ?>
     <ul class="nav nav-tabs" id="tabs">
-      <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $tab_main; ?></a></li>
+      <li class="active"><a href="#page-main" data-toggle="tab">{{ tab_main }}</a></li>
     </ul>
     <form method="POST" id="product_form_advanced" class="form-horizontal">
       <input type="hidden" name="upload_after" value="false">
       <div class="tab-content" id="tab-content">
         <div class="tab-pane active" id="page-main">
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_product; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <p> <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?>
+              <p> <a href="{{ listing_url }}">{{ listing_name }}
                 <?php if (!empty($options)) { echo " : "; } ?>
                 </a>
                 <?php if (!empty($options)) { ?>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_marketplace; ?></label>
+            <label class="col-sm-2 control-label">{{ entry_marketplace }}</label>
             <div class="col-sm-10" id="marketplaces">
               <?php foreach ($marketplaces as $mp) { ?>
               <label class="radio-inline">
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $entry_category; ?></label>
+            <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label">{{ entry_category }}</label>
             <div class="col-sm-4">
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
@@ -93,7 +93,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-              <h4 id="mySmallModalLabel" class="modal-title"><?php echo $entry_browse_node; ?></h4>
+              <h4 id="mySmallModalLabel" class="modal-title">{{ entry_browse_node }}</h4>
             </div>
             <div class="modal-body">
               <div id="browse-node-content"></div>
@@ -104,7 +104,7 @@
     </form>
     <div class="well">
       <div class="row">
-        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save; ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload; ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings; ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
+        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="{{ button_save }}" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="{{ button_save_upload }}" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="{{ button_saved_listings }}" href="{{ saved_listings_url }}"><i class="fa fa-copy fa-lg"></i></a> </div>
       </div>
     </div>
   </div>
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     <?php if (empty($amazon_categories)) { ?>
         $("#advanced_table").html("");
-        $(".content").prepend('<div id="warning" class="alert alert-danger"><?php echo $error_connecting; ?></div>');
+        $(".content").prepend('<div id="warning" class="alert alert-danger">{{ error_connecting }}</div>');
         return;
     <?php } ?>
 
@@ -486,7 +486,7 @@ function validate(formType) {
   });
 
   if (mChecked == 0) {
-    $('#marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required; ?></div>');
+    $('#marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert">{{ error_required }}</div>');
     warnings ++;
   } else {
     $('#marketplace-alert').remove();
@@ -516,13 +516,13 @@ function validate(formType) {
 
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
-              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required; ?>').show();
+              $('.fields_' + formType + ' #error_' + field_name).text('{{ error_required }}').show();
               warnings ++;
             } else if (min_length != undefined && field_value.length < min_length) {
-              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>').show();
+              $('.fields_' + formType + ' #error_' + field_name).text('{{ error_length }} ' + min_length + ' {{ text_characters }}').show();
               warnings ++;
             } else if (max_length != undefined && field_value.length > max_length) {
-              $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>').show();
+              $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' {{ error_char_limit }}').show();
               warnings ++;
             } else {
                 $('.fields_' + formType + ' #error_' + field_name).text('').hide();
@@ -560,7 +560,7 @@ function validate_and_save(formType) {
       $("#product_form_quick").submit();
     }
   } else {
-    alert('<?php echo $error_not_saved; ?>');
+    alert('{{ error_not_saved }}');
   }
 }
 
@@ -570,7 +570,7 @@ function save_and_upload() {
     if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
-        alert('<?php echo $error_not_saved; ?>');
+        alert('{{ error_not_saved }}');
     }
 }
 
@@ -621,7 +621,7 @@ function loadBrowseNode(field) {
     nodeStringSimple = '';
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token={{ token }}',
         type: 'POST',
         data: { marketplaceId: market},
         dataType: 'json',
@@ -634,7 +634,7 @@ function loadBrowseNode(field) {
                 html += '<div class="well">';
                   html += '<div class="input-group col-md-12">';
                     html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
-                      html += '<option value=""><?php echo $text_select; ?></option>';
+                      html += '<option value="">{{ text_select }}</option>';
                       $.each(data.children, function(k,v){
                           html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
                       });
@@ -648,10 +648,10 @@ function loadBrowseNode(field) {
             }
         },
         failure: function(){
-            alert('<?php echo $error_load_nodes; ?>');
+            alert('{{ error_load_nodes }}');
         },
         error: function(){
-            alert('<?php echo $error_load_nodes; ?>');
+            alert('{{ error_load_nodes }}');
         }
     });
 }
@@ -665,7 +665,7 @@ function nodeSelect(field, original_field) {
     nodeStringSimple += parentNodeName+' > ';
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=extension/openbay/amazon_listing/getBrowseNodes&token={{ token }}',
         type: 'POST',
         data: { marketplaceId: market, node: node},
         dataType: 'json',
@@ -683,7 +683,7 @@ function nodeSelect(field, original_field) {
               html += '<div class="well">';
                 html += '<div class="input-group col-md-12">';
                   html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';
-                    html += '<option value=""><?php echo $text_select; ?></option>';
+                    html += '<option value="">{{ text_select }}</option>';
                     $.each(data.children, function(k,v){
                         html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
                     });
@@ -693,7 +693,7 @@ function nodeSelect(field, original_field) {
             }else{
               html += '<div class="row">';
                 html += '<div class="col-sm-12 text-right">';
-                  html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a>';
+                  html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> {{ button_save }}</a>';
                 html += '</div>';
               html += '</div>';
             }
@@ -704,10 +704,10 @@ function nodeSelect(field, original_field) {
           }
         },
         failure: function(){
-            alert('<?php echo $error_load_nodes; ?>');
+            alert('{{ error_load_nodes }}');
         },
         error: function(){
-            alert('<?php echo $error_load_nodes; ?>');
+            alert('{{ error_load_nodes }}');
         }
     });
 }
@@ -718,4 +718,4 @@ function saveNode(id, field, text){
   $('#browse-node-modal').modal('toggle');
 }
 //--></script>
-<?php echo $footer; ?>
+{{ footer }}

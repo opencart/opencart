@@ -1,10 +1,10 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><?php echo $heading_title; ?></h1>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -15,28 +15,28 @@
   <div class="container-fluid">
     <form id="product-form">
       <div class="alert alert-info">
-        <p><?php echo $text_desc1; ?></p>
-        <p><?php echo $text_desc2; ?></p>
-        <p><?php echo $text_desc3; ?></p>
+        <p>{{ text_desc1 }}</p>
+        <p>{{ text_desc2 }}</p>
+        <p>{{ text_desc3 }}</p>
       </div>
       <div class="well">
         <div class="row">
           <div class="col-sm-12 text-right">
-            <a class="btn btn-primary" id="button-load"><?php echo $button_load; ?></a>
+            <a class="btn btn-primary" id="button-load">{{ button_load }}</a>
           </div>
         </div>
       </div>
       <table class="table table-bordered table-hover">
         <thead id="table-head-1">
           <tr>
-            <th class="text-center" colspan="3"><h4><?php echo $text_new_link; ?></h4></th>
+            <th class="text-center" colspan="3"><h4>{{ text_new_link }}</h4></th>
           </tr>
         </thead>
         <thead id="table-head-2">
           <tr>
-            <th class="text-right"><?php echo $text_autocomplete_product; ?></th>
-            <th class="text-left"><?php echo $text_amazon_sku; ?></th>
-            <th class="text-center"><?php echo $text_action; ?></th>
+            <th class="text-right">{{ text_autocomplete_product }}</th>
+            <th class="text-left">{{ text_amazon_sku }}</th>
+            <th class="text-center">{{ text_action }}</th>
           </tr>
         </thead>
         <tbody id="unlinked-items">
@@ -49,7 +49,7 @@
               <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
             </td>
             <td class="text-center">
-              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="{{ button_add }}"><i class="fa fa-plus-circle"></i></a>
             </td>
           </tr>
         </tbody>
@@ -57,17 +57,17 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>
+            <th class="text-center" colspan="6"><h4>{{ text_linked_items }}</h4></th>
           </tr>
         </thead>
         <thead>
           <tr>
-            <th><?php echo $text_name; ?></th>
-            <th><?php echo $text_sku; ?></th>
-            <th><?php echo $text_model; ?></th>
-            <th><?php echo $text_combination; ?></th>
-            <th><?php echo $text_amazon_sku; ?></th>
-            <th class="text-center"><?php echo $text_action; ?></th>
+            <th>{{ text_name }}</th>
+            <th>{{ text_sku }}</th>
+            <th>{{ text_model }}</th>
+            <th>{{ text_combination }}</th>
+            <th>{{ text_amazon_sku }}</th>
+            <th class="text-center">{{ text_action }}</th>
           </tr>
         </thead>
         <tbody id="linked-items"></tbody>
@@ -105,7 +105,7 @@
           }
 
           rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
-          rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
+          rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="{{ button_remove }}" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
           rows += '</tr>';
         }
         $('#linked-items').html(rows);
@@ -127,23 +127,23 @@
         $('#button-load').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#button-load').empty().html('<?php echo $button_load; ?>').removeAttr('disabled');
+        $('#button-load').empty().html('{{ button_load }}').removeAttr('disabled');
       },
       success: function (json) {
         var thread1 = '';
         thread1 += '<tr>';
-          thread1 += '<td class="text-center" colspan="6"><?php echo $text_unlinked_items; ?></td>';
+          thread1 += '<td class="text-center" colspan="6">{{ text_unlinked_items }}</td>';
         thread1 += '</tr>';
         $('#table-head-1').html(thread1);
 
         var thread2 = '';
         thread2 += '<tr>';
-          thread2 += '<td><?php echo $text_name; ?></td>';
-          thread2 += '<td><?php echo $text_model; ?></td>';
-          thread2 += '<td><?php echo $text_combination; ?></td>';
-          thread2 += '<td><?php echo $text_sku; ?></td>';
-          thread2 += '<td><?php echo $text_amazon_sku; ?></td>';
-          thread2 += '<td class="text-center"><?php echo $text_action; ?></td>';
+          thread2 += '<td>{{ text_name }}</td>';
+          thread2 += '<td>{{ text_model }}</td>';
+          thread2 += '<td>{{ text_combination }}</td>';
+          thread2 += '<td>{{ text_sku }}</td>';
+          thread2 += '<td>{{ text_amazon_sku }}</td>';
+          thread2 += '<td class="text-center">{{ text_action }}</td>';
         thread2 += '</tr>';
         $('#table-head-2').html(thread2);
 
@@ -161,12 +161,12 @@
                     rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['sku'] + '"  type="text">';
                   rows += '</div>';
                   rows += '<div class="col-sm-4 form-group">';
-                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
+                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="{{ button_add }}"><i class="fa fa-plus-circle"></i></a>';
                   rows += '</div>';
                 rows += '</div>';
               rows += '</div>';
             rows += '</td>';
-            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
+            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="{{ button_add }}"><i class="fa fa-plus-circle"></i></a></td>';
           rows += '</tr>';
         }
 
@@ -250,7 +250,7 @@
       }
     });
     if (errors > 0) {
-      alert('<?php echo $error_empty_sku; ?>');
+      alert('{{ error_empty_sku }}');
       return;
     }
 
@@ -263,17 +263,17 @@
 
   function addNewLinkAutocomplete() {
     if ($('#new-product').val() == "") {
-      alert('<?php echo $error_empty_name; ?>');
+      alert('{{ error_empty_name }}');
       return;
     }
 
     if ($('#new-product-id').attr('label') != $('#new-product').val()) {
-      alert('<?php echo $error_no_product_exists; ?>');
+      alert('{{ error_no_product_exists }}');
       return;
     }
 
     if ($('#new-amazon-sku').val() == "") {
-      alert('<?php echo $error_empty_sku; ?>');
+      alert('{{ error_empty_sku }}');
       return;
     }
 
@@ -296,7 +296,7 @@
   $('#new-product').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=catalog/product/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function (json) {
           response($.map(json, function (item) {

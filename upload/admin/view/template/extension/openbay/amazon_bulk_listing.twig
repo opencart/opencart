@@ -1,9 +1,9 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
-      <h1><?php echo $heading_title; ?></h1>
+      <div class="pull-right"> <a href="{{ link_overview }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -17,7 +17,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <label class="control-label" for="filter-marketplace"><?php echo $text_marketplace; ?></label>
+              <label class="control-label" for="filter-marketplace">{{ text_marketplace }}</label>
               <select id="filter-marketplace" name="filter_marketplace" class="form-control">
                 <?php foreach ($marketplaces as $marketplace) { ?>
                 <?php if ($filter_marketplace == $marketplace['code']) { ?>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a> <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+          <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> {{ button_filter }}</a> <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> {{ button_search }}</a> </div>
         </div>
       </div>
       <form id="bulk-list-form" class="form-horizontal">
@@ -39,12 +39,12 @@
           <thead>
             <tr>
               <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'product_ids[]\']').prop('checked', this.checked);"/></th>
-              <th class="text-center"><?php echo $column_image; ?></th>
-              <th class="text-left"><?php echo $column_name; ?></th>
-              <th class="text-right"><?php echo $column_model; ?></th>
-              <th class="text-right"><?php echo $column_status; ?></th>
-              <th class="text-right"><?php echo $column_matches; ?></th>
-              <th class="text-left"><?php echo $column_result; ?></th>
+              <th class="text-center">{{ column_image }}</th>
+              <th class="text-left">{{ column_name }}</th>
+              <th class="text-right">{{ column_model }}</th>
+              <th class="text-right">{{ column_status }}</th>
+              <th class="text-right">{{ column_matches }}</th>
+              <th class="text-left">{{ column_result }}</th>
             </tr>
           </thead>
           <tbody>
@@ -80,21 +80,21 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>
+              <td colspan="7" class="text-center">{{ text_no_results }}</td>
             </tr>
             <?php } ?>
           </tbody>
         </table>
       </form>
       <div class="row">
-        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
       </div>
       <div class="well" style="margin-top:10px;">
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-condition" class="control-label"><?php echo $entry_condition; ?></label>
+              <label for="input-condition" class="control-label">{{ entry_condition }}</label>
               <select name="condition" class="form-control" id="input-condition">
                 <option value=""></option>
                 <?php foreach ($conditions as $value => $name) { ?>
@@ -109,15 +109,15 @@
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-condition-note" class="control-label"><?php echo $entry_condition_note; ?></label>
+              <label for="input-condition-note" class="control-label">{{ entry_condition_note }}</label>
               <input type="text" name="condition_note" class="form-control" id="input-condition-note" />
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-start" class="control-label"><?php echo $entry_start_selling; ?></label>
+              <label for="input-start" class="control-label">{{ entry_start_selling }}</label>
               <div class="input-group date">
-                <input type="text" class="form-control" id="input-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
+                <input type="text" class="form-control" id="input-start" data-date-format="YYYY-MM-DD" placeholder="{{ entry_start_selling }}" name="start_selling">
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                 </span> </div>
@@ -126,7 +126,7 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <div class="pull-right"> <a class="btn btn-primary" id="button-list"><i class="fa fa-plus-circle"></i> <?php echo $button_list; ?></a> </div>
+            <div class="pull-right"> <a class="btn btn-primary" id="button-list"><i class="fa fa-plus-circle"></i> {{ button_list }}</a> </div>
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@
     var request_data = $('input[name="product_ids[]"]:checked').serialize();
 
     if (request_data != '') {
-      request_data += '&marketplace=<?php echo $filter_marketplace; ?>';
+      request_data += '&marketplace={{ filter_marketplace }}';
 
       $.ajax({
         url: 'index.php?route=extension/openbay/amazon/doBulkSearch&token=<?php echo $token ?>',
@@ -238,8 +238,8 @@
         }
       });
     } else {
-      $('#bulk-list-form').prepend('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
+      $('#bulk-list-form').prepend('<div class="alert alert-danger">{{ error_select_items }}</div>');
     }
   });
 //--></script></div>
-<?php echo $footer; ?>
+{{ footer }}

@@ -1,11 +1,11 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
       </div>
-      <h1><?php echo $heading_title; ?></h1>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
           <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -16,44 +16,44 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-plus fa-lg"></i> <?php echo $text_new_link; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-plus fa-lg"></i> {{ text_new_link }}</h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
+        <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> {{ text_link_saved }}</div>
         <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
         <div class="well">
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <label class="control-label" for="input-name">{{ entry_name }}</label>
             <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
-            <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            <input type="text" name="add_link_product" value="" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
-            <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
-            <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
+            <label class="control-label" for="input-etsy-id">{{ entry_etsy_id }}</label>
+            <input type="text" name="add_link_etsy_id" value="" placeholder="{{ entry_etsy_id }}" id="input-etsy-id" class="form-control" />
           </div>
-          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
+          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> {{ button_save }}</a> </div>
       </div>
     </div>
       </div>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $text_current_links; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-link fa-lg"></i> {{ text_current_links }}</h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-left"><?php echo $column_product; ?></th>
-              <th class="text-center"><?php echo $column_item_id; ?></th>
-              <th class="text-center"><?php echo $column_store_stock; ?></th>
-              <th class="text-center"><?php echo $column_status; ?></th>
-              <th class="text-center"><?php echo $column_action; ?></th>
+              <th class="text-left">{{ column_product }}</th>
+              <th class="text-center">{{ column_item_id }}</th>
+              <th class="text-center">{{ column_store_stock }}</th>
+              <th class="text-center">{{ column_status }}</th>
+              <th class="text-center">{{ column_action }}</th>
             </tr>
           </thead>
           <tbody id="show-linked-items">
@@ -73,15 +73,15 @@
               <?php } ?>
             <?php } else { ?>
             <tr>
-              <td colspan="5" class="text-center"><?php echo $text_no_links; ?></td>
+              <td colspan="5" class="text-center">{{ text_no_links }}</td>
             </tr>
             <?php } ?>
           </tbody>
         </table>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
         </div>
       </div>
     </div>
@@ -93,17 +93,17 @@
     var etsy_id = $('#input-etsy-id').val();
 
     if (product_id == '') {
-      alert('<?php echo $error_product_id; ?>');
+      alert('{{ error_product_id }}');
       return false;
     }
 
     if (etsy_id == '') {
-      alert('<?php echo $error_etsy_id; ?>');
+      alert('{{ error_etsy_id }}');
       return false;
     }
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/addLink&token={{ token }}',
       dataType: 'json',
       method: 'POST',
       data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
@@ -122,17 +122,17 @@
           $('#alert-link-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
         }
 
-        $('#button-submit-link').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+        $('#button-submit-link').empty().html('<i class="fa fa-check"></i> {{ button_save }}').removeAttr('disabled');
       },
       failure: function() {
-        $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+        $('#button-submit').empty().html('<i class="fa fa-check"></i> {{ button_save }}').removeAttr('disabled');
       }
     });
   }
 
   function deleteLink(etsy_link_id) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/etsy_product/deleteLink&token={{ token }}',
       dataType: 'json',
       method: 'POST',
       data: { 'etsy_link_id' : etsy_link_id },
@@ -156,7 +156,7 @@
   $('input[name=\'add_link_product\']').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=catalog/product/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function(json) {
           response($.map(json, function(item) {
@@ -178,4 +178,4 @@
 
   });
 //--></script>
-<?php echo $footer; ?>
+{{ footer }}

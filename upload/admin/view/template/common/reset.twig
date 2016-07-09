@@ -1,4 +1,4 @@
-<?php echo $header; ?>
+{% header %}
 <div id="content">
   <div class="container-fluid"><br />
     <br />
@@ -6,15 +6,15 @@
       <div class="col-sm-offset-4 col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-repeat"></i> <?php echo $heading_title; ?></h1>
+            <h1 class="panel-title"><i class="fa fa-repeat"></i> {% heading_title %}</h1>
           </div>
           <div class="panel-body">
-            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-              <p><?php echo $text_password; ?></p>
+            <form action="{% action %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+              <p>{% text_password %}</p>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+                <label class="col-sm-2 control-label" for="input-password">{% entry_password %}</label>
                 <div class="col-sm-10">
-                  <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" class="form-control" />
+                  <input type="password" name="password" value="{% password %}" id="input-password" class="form-control" />
                   <?php if ($error_password) { ?>
                   <div class="text-danger"><?php echo $error_password; ?></div>
                   <?php } ?>

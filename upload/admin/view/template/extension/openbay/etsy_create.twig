@@ -20,14 +20,14 @@
       <div class="panel-body">
         <?php if ($error_variant) { ?>
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_variant }}</div>
-        <?php } else { ?>
+        {% else %}
           <div id="page-listing">
             <?php if ($error_warning) { ?>
               <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
             <?php } ?>
             <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-              <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
-              <input type="hidden" name="quantity" value="<?php echo $product['quantity']; ?>"/>
+              <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+              <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
               <input type="hidden" name="taxonomy_id" value="" id="taxonomy-id" />
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-listing-general" data-toggle="tab">{{ tab_general }}</a></li>
@@ -52,19 +52,19 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-title">{{ entry_title }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="title" value="<?php echo $product['name']; ?>" placeholder="{{ entry_title }}" id="input-title" class="form-control" />
+                      <input type="text" name="title" value="{{ product.name }}" placeholder="{{ entry_title }}" id="input-title" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-description"><span data-toggle="tooltip" data-container="#tab-listing-general" title="{{ help_description }}">{{ entry_description }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="description" placeholder="{{ entry_description }}" id="input-description" class="form-control"><?php echo $product['description_raw']; ?></textarea>
+                      <textarea name="description" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ product.description_raw }}</textarea>
                     </div>
                   </div>
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-price">{{ entry_price }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="price" value="<?php echo $product['price']; ?>" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
+                      <input type="text" name="price" value="{{ product.price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group required">
@@ -221,8 +221,8 @@
                 <div id="tab-images" class="tab-pane">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
-                    <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
-                      <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
+                    <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="{{ product.thumb }}" alt="" title="" /></a>
+                      <input type="hidden" name="image" value="{{ product.image_url }}" id="input-image" />
                     </div>
                   </div>
                   <?php if (!empty($product['product_images'])) { ?>
@@ -238,8 +238,8 @@
                       <?php $image_row = 0; ?>
                       <?php foreach ($product['product_images'] as $product_image) { ?>
                       <tr>
-                        <td class="text-left"><input type="checkbox" name="product_image[{{ image_row }}][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                        <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
+                        <td class="text-left"><input type="checkbox" name="product_image[{{ image_row }}][image_url]" value="{{ product_image.image_url }}" class="product-image" checked="checked" /></td>
+                        <td class="text-left"><a href="" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" /></a></td>
                       </tr>
                       <?php $image_row++; ?>
                       <?php } ?>

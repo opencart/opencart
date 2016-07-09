@@ -43,19 +43,19 @@
                     <?php if (in_array(0, $manufacturer_store)) { ?>
                     <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
                     {{ text_default }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="checkbox" name="manufacturer_store[]" value="0" />
                     {{ text_default }}
                     <?php } ?>
                   </label>
                 </div>
-                <?php foreach ($stores as $store) { ?>
+                {% for store in stores %}
                 <div class="checkbox">
                   <label>
                     <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
                     <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" />
                     {{ store.name }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" />
                     {{ store.name }}
                     <?php } ?>

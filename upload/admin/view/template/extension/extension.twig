@@ -21,11 +21,11 @@
           <div class="well">
             <div class="input-group">
               <select name="type" class="form-control">
-                <?php foreach ($categories as $category) { ?>
+                {% for category in categories %}
                 <?php if ($type == $category['code']) { ?>
-                <option value="<?php echo $category['href']; ?>" selected="selected"><?php echo $category['text']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $category['href']; ?>"><?php echo $category['text']; ?></option>
+                <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+                {% else %}
+                <option value="{{ category.href }}">{{ category.text }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>

@@ -82,9 +82,9 @@
                   <select name="config_theme" id="input-theme" class="form-control">
                     <?php foreach ($themes as $theme) { ?>
                     <?php if ($theme['value'] == $config_theme) { ?>
-                    <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
+                    <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
+                    {% else %}
+                    <option value="{{ theme.value }}">{{ theme.text }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -97,9 +97,9 @@
                   <select name="config_layout_id" id="input-layout" class="form-control">
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                    <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                    {% else %}
+                    <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -190,11 +190,11 @@
                   <div class="checkbox">
                     <label>
                       <?php if (in_array($location['location_id'], $config_location)) { ?>
-                      <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" checked="checked" />
-                      <?php echo $location['name']; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" />
-                      <?php echo $location['name']; ?>
+                      <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" />
+                      {{ location.name }}
+                      {% else %}
+                      <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" />
+                      {{ location.name }}
                       <?php } ?>
                     </label>
                   </div>
@@ -210,9 +210,9 @@
                   <select name="config_country_id" id="input-country" class="form-control">
                     <?php foreach ($countries as $country) { ?>
                     <?php if ($country['country_id'] == $config_country_id) { ?>
-                    <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                    <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                    {% else %}
+                    <option value="{{ country.country_id }}">{{ country.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -231,9 +231,9 @@
                   <select name="config_language" id="input-language" class="form-control">
                     <?php foreach ($languages as $language) { ?>
                     <?php if ($language['code'] == $config_language) { ?>
-                    <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
+                    <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
+                    {% else %}
+                    <option value="{{ language.code }}">{{ language.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -245,9 +245,9 @@
                   <select name="config_currency" id="input-currency" class="form-control">
                     <?php foreach ($currencies as $currency) { ?>
                     <?php if ($currency['code'] == $config_currency) { ?>
-                    <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
+                    <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
+                    {% else %}
+                    <option value="{{ currency.code }}">{{ currency.title }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -264,7 +264,7 @@
                       <?php if ($config_tax) { ?>
                       <input type="radio" name="config_tax" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_tax" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -273,7 +273,7 @@
                       <?php if (!$config_tax) { ?>
                       <input type="radio" name="config_tax" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_tax" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -287,12 +287,12 @@
                       <option value="">{{ text_none }}</option>
                       <?php  if ($config_tax_default == 'shipping') { ?>
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="shipping">{{ text_shipping }}</option>
                       <?php } ?>
                       <?php  if ($config_tax_default == 'payment') { ?>
                       <option value="payment" selected="selected">{{ text_payment }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="payment">{{ text_payment }}</option>
                       <?php } ?>
                     </select>
@@ -305,12 +305,12 @@
                       <option value="">{{ text_none }}</option>
                       <?php  if ($config_tax_customer == 'shipping') { ?>
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="shipping">{{ text_shipping }}</option>
                       <?php } ?>
                       <?php  if ($config_tax_customer == 'payment') { ?>
                       <option value="payment" selected="selected">{{ text_payment }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="payment">{{ text_payment }}</option>
                       <?php } ?>
                     </select>
@@ -325,9 +325,9 @@
                     <select name="config_customer_group_id" id="input-customer-group" class="form-control">
                       <?php foreach ($customer_groups as $customer_group) { ?>
                       <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
-                      <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                      <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                      {% else %}
+                      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -340,11 +340,11 @@
                     <div class="checkbox">
                       <label>
                         <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
-                        <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                        <?php echo $customer_group['name']; ?>
-                        <?php } else { ?>
-                        <input type="checkbox" name="config_customer_group_display[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                        <?php echo $customer_group['name']; ?>
+                        <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
+                        {{ customer_group.name }}
+                        {% else %}
+                        <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" />
+                        {{ customer_group.name }}
                         <?php } ?>
                       </label>
                     </div>
@@ -361,7 +361,7 @@
                       <?php if ($config_customer_price) { ?>
                       <input type="radio" name="config_customer_price" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_customer_price" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -370,7 +370,7 @@
                       <?php if (!$config_customer_price) { ?>
                       <input type="radio" name="config_customer_price" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_customer_price" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -384,9 +384,9 @@
                       <option value="0">{{ text_none }}</option>
                       <?php foreach ($informations as $information) { ?>
                       <?php if ($information['information_id'] == $config_account_id) { ?>
-                      <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                      <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                      {% else %}
+                      <option value="{{ information.information_id }}">{{ information.title }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -402,7 +402,7 @@
                       <?php if ($config_cart_weight) { ?>
                       <input type="radio" name="config_cart_weight" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_cart_weight" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -411,7 +411,7 @@
                       <?php if (!$config_cart_weight) { ?>
                       <input type="radio" name="config_cart_weight" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_cart_weight" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -425,7 +425,7 @@
                       <?php if ($config_checkout_guest) { ?>
                       <input type="radio" name="config_checkout_guest" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_checkout_guest" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -434,7 +434,7 @@
                       <?php if (!$config_checkout_guest) { ?>
                       <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_checkout_guest" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -448,9 +448,9 @@
                       <option value="0">{{ text_none }}</option>
                       <?php foreach ($informations as $information) { ?>
                       <?php if ($information['information_id'] == $config_checkout_id) { ?>
-                      <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                      <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                      {% else %}
+                      <option value="{{ information.information_id }}">{{ information.title }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -462,9 +462,9 @@
                     <select name="config_order_status_id" id="input-order-status" class="form-control">
                       <?php foreach ($order_statuses as $order_status) { ?>
                       <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
-                      <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -480,7 +480,7 @@
                       <?php if ($config_stock_display) { ?>
                       <input type="radio" name="config_stock_display" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_stock_display" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -489,7 +489,7 @@
                       <?php if (!$config_stock_display) { ?>
                       <input type="radio" name="config_stock_display" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_stock_display" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -503,7 +503,7 @@
                       <?php if ($config_stock_checkout) { ?>
                       <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
                       {{ text_yes }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_stock_checkout" value="1" />
                       {{ text_yes }}
                       <?php } ?>
@@ -512,7 +512,7 @@
                       <?php if (!$config_stock_checkout) { ?>
                       <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
                       {{ text_no }}
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="config_stock_checkout" value="0" />
                       {{ text_no }}
                       <?php } ?>
@@ -543,7 +543,7 @@
                     <?php if ($config_secure) { ?>
                     <input type="radio" name="config_secure" value="1" checked="checked" />
                     {{ text_yes }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="config_secure" value="1" />
                     {{ text_yes }}
                     <?php } ?>
@@ -552,7 +552,7 @@
                     <?php if (!$config_secure) { ?>
                     <input type="radio" name="config_secure" value="0" checked="checked" />
                     {{ text_no }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="config_secure" value="0" />
                     {{ text_no }}
                     <?php } ?>

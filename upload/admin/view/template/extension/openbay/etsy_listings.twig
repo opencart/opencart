@@ -78,7 +78,7 @@
             </thead>
             <tbody>
               <?php if ($listings) { ?>
-              <?php foreach ($listings as $listing) { ?>
+              {% for listing in listings %}
               <tr>
                 <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
                 <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
@@ -93,7 +93,7 @@
                           echo $text_status_ok;
                         }
                        ?></td>
-                <?php } else { ?>
+                {% else %}
                 <td class="text-center"><i class="fa fa-minus"></i></td>
                 <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
                 <td class="text-center">{{ text_status_nolink }}</td>
@@ -114,7 +114,7 @@
                   <?php } ?></td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="8">{{ text_no_results }}</td>
               </tr>

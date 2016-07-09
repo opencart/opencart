@@ -28,9 +28,9 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                <input type="text" name="custom_field_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
+              {% for language in languages %}
+              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               <?php if (isset($error_name[$language['language_id']])) { ?>
               <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -44,12 +44,12 @@
               <select name="location" id="input-location" class="form-control">
                 <?php if ($location == 'account') { ?>
                 <option value="account" selected="selected">{{ text_account }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="account">{{ text_account }}</option>
                 <?php } ?>
                 <?php if ($location == 'address') { ?>
                 <option value="address" selected="selected">{{ text_address }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="address">{{ text_address }}</option>
                 <?php } ?>
               </select>
@@ -62,53 +62,53 @@
                 <optgroup label="{{ text_choose }}">
                 <?php if ($type == 'select') { ?>
                 <option value="select" selected="selected">{{ text_select }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="select">{{ text_select }}</option>
                 <?php } ?>
                 <?php if ($type == 'radio') { ?>
                 <option value="radio" selected="selected">{{ text_radio }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="radio">{{ text_radio }}</option>
                 <?php } ?>
                 <?php if ($type == 'checkbox') { ?>
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_input }}">
                 <?php if ($type == 'text') { ?>
                 <option value="text" selected="selected">{{ text_text }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="text">{{ text_text }}</option>
                 <?php } ?>
                 <?php if ($type == 'textarea') { ?>
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_file }}">
                 <?php if ($type == 'file') { ?>
                 <option value="file" selected="selected">{{ text_file }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="file">{{ text_file }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_date }}">
                 <?php if ($type == 'date') { ?>
                 <option value="date" selected="selected">{{ text_date }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="date">{{ text_date }}</option>
                 <?php } ?>
                 <?php if ($type == 'time') { ?>
                 <option value="time" selected="selected">{{ text_time }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="time">{{ text_time }}</option>
                 <?php } ?>
                 <?php if ($type == 'datetime') { ?>
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
                 <?php } ?>
                 </optgroup>
@@ -131,15 +131,15 @@
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <?php $customer_group_row = 0; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
+              {% for customer_group in customer_groups %}
               <div class="checkbox">
                 <label>
                   <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group)) { ?>
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                  <?php echo $customer_group['name']; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                  <?php echo $customer_group['name']; ?>
+                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" checked="checked" />
+                  {{ customer_group.name }}
+                  {% else %}
+                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />
+                  {{ customer_group.name }}
                   <?php } ?>
                 </label>
               </div>
@@ -151,15 +151,15 @@
             <label class="col-sm-2 control-label">{{ entry_required }}</label>
             <div class="col-sm-10">
               <?php $customer_group_row = 0; ?>
-              <?php foreach ($customer_groups as $customer_group) { ?>
+              {% for customer_group in customer_groups %}
               <div class="checkbox">
                 <label>
                   <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                  <?php echo $customer_group['name']; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                  <?php echo $customer_group['name']; ?>
+                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" />
+                  {{ customer_group.name }}
+                  {% else %}
+                  <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />
+                  {{ customer_group.name }}
                   <?php } ?>
                 </label>
               </div>
@@ -174,7 +174,7 @@
                 <?php if ($status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>
@@ -197,18 +197,18 @@
             </thead>
             <tbody>
               <?php $custom_field_value_row = 0; ?>
-              <?php foreach ($custom_field_values as $custom_field_value) { ?>
+              {% for custom_field_value in custom_field_values %}
               <tr id="custom-field-value-row{{ custom_field_value_row }}">
-                <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-                  <?php foreach ($languages as $language) { ?>
-                  <div class="input-group"> <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                    <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_value['custom_field_value_description'][$language['language_id']]) ? $custom_field_value['custom_field_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_custom_value }}" class="form-control" />
+                <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}" />
+                  {% for language in languages %}
+                  <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                    <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="<?php echo isset($custom_field_value['custom_field_value_description'][$language['language_id']]) ? $custom_field_value['custom_field_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_custom_value }}" class="form-control" />
                   </div>
                   <?php if (isset($error_custom_field_value[$custom_field_value_row][$language['language_id']])) { ?>
                   <div class="text-danger"><?php echo $error_custom_field_value[$custom_field_value_row][$language['language_id']]; ?></div>
                   <?php } ?>
                   <?php } ?></td>
-                <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
+                <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
                 <td class="text-left"><button onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $custom_field_value_row++; ?>
@@ -268,9 +268,9 @@ var custom_field_value_row = {{ custom_field_value_row }};
 function addCustomFieldValue() {
 	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';	
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
-	<?php foreach ($languages as $language) { ?>
+	{% for language in languages %}
 	html += '    <div class="input-group">';
-	html += '      <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="{{ entry_custom_value }}" class="form-control" />';
+	html += '      <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" class="form-control" />';
     html += '    </div>';
 	<?php } ?>
 	html += '  </td>';

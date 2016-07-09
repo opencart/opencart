@@ -19,8 +19,8 @@
     <?php if ($errors) { ?>
     <div class="alert alert-danger">
       <ul>
-        <?php foreach ($errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error['message']; ?></li>
+        {% for listing_error in errors %}
+        <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>
         <?php } ?>
       </ul>
     </div>
@@ -60,14 +60,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_marketplace }}</label>
             <div class="col-sm-10" id="marketplaces">
-              <?php foreach ($marketplaces as $mp) { ?>
+              {% for mp in marketplaces %}
               <label class="radio-inline">
                 <?php if ($saved_marketplaces === false) { ?>
-                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code']; ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
-                <?php } else { ?>
-                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code']; ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                {% else %}
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
                 <?php } ?>
-                <?php echo $mp['name']; ?> </label>
+                {{ mp.name }} </label>
               <?php } ?>
             </div>
           </div>
@@ -77,7 +77,7 @@
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
                 <?php foreach($amazon_categories as $category) {  ?>
-                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template']; ?>"><?php echo $category['friendly_name']; ?></option>
+                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
                 <?php } ?>
               </select>
             </div>

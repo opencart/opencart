@@ -28,9 +28,9 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                <input type="text" name="customer_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
+              {% for language in languages %}
+              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <input type="text" name="customer_group_description[{{ language.language_id }}][name]" value="<?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               <?php if (isset($error_name[$language['language_id']])) { ?>
               <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -38,12 +38,12 @@
               <?php } ?>
             </div>
           </div>
-          <?php foreach ($languages as $language) { ?>
+          {% for language in languages %}
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>">{{ entry_description }}</label>
+            <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
             <div class="col-sm-10">
-              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" rows="5" placeholder="{{ entry_description }}" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
+              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
                 <?php if ($approval) { ?>
                 <input type="radio" name="approval" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="approval" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -64,7 +64,7 @@
                 <?php if (!$approval) { ?>
                 <input type="radio" name="approval" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="approval" value="0" />
                 {{ text_no }}
                 <?php } ?>

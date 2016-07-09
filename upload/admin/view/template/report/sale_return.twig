@@ -42,9 +42,9 @@
                 <select name="filter_group" id="input-group" class="form-control">
                   <?php foreach ($groups as $group) { ?>
                   <?php if ($group['value'] == $filter_group) { ?>
-                  <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
+                  <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
+                  {% else %}
+                  <option value="{{ group.value }}">{{ group.text }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -55,9 +55,9 @@
                   <option value="0">{{ text_all_status }}</option>
                   <?php foreach ($return_statuses as $return_status) { ?>
                   <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
+                  <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
+                  {% else %}
+                  <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -79,12 +79,12 @@
               <?php if ($returns) { ?>
               <?php foreach ($returns as $return) { ?>
               <tr>
-                <td class="text-left"><?php echo $return['date_start']; ?></td>
-                <td class="text-left"><?php echo $return['date_end']; ?></td>
-                <td class="text-right"><?php echo $return['returns']; ?></td>
+                <td class="text-left">{{ return.date_start }}</td>
+                <td class="text-left">{{ return.date_end }}</td>
+                <td class="text-right">{{ return.returns }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="3">{{ text_no_results }}</td>
               </tr>

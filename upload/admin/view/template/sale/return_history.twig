@@ -19,13 +19,13 @@
     <?php if ($histories) { ?>
     <?php foreach ($histories as $history) { ?>
     <tr>
-      <td class="text-left"><?php echo $history['date_added']; ?></td>
-      <td class="text-left"><?php echo $history['comment']; ?></td>
-      <td class="text-left"><?php echo $history['status']; ?></td>
-      <td class="text-left"><?php echo $history['notify']; ?></td>
+      <td class="text-left">{{ history.date_added }}</td>
+      <td class="text-left">{{ history.comment }}</td>
+      <td class="text-left">{{ history.status }}</td>
+      <td class="text-left">{{ history.notify }}</td>
     </tr>
     <?php } ?>
-    <?php } else { ?>
+    {% else %}
     <tr>
       <td class="text-center" colspan="4">{{ text_no_results }}</td>
     </tr>

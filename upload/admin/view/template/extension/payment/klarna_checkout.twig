@@ -39,7 +39,7 @@
                     <?php if ($klarna_checkout_debug) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -56,11 +56,11 @@
 				<label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
 				<div class="col-sm-10">
 				  <select name="klarna_checkout_order_status_id" id="input-order-status" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 					<?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_id) { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+					<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+					<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?>
 					<?php } ?>
 				  </select>
@@ -70,11 +70,11 @@
 				<label class="col-sm-2 control-label" for="input-terms">{{ entry_terms }}</label>
 				<div class="col-sm-10">
 				  <select name="klarna_checkout_terms" id="input-terms" class="form-control">
-					<?php foreach ($informations as $information) { ?>
+					{% for information in informations %}
 					<?php if ($information['information_id'] == $klarna_checkout_terms) { ?>
-					<option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
-					<?php } else { ?>
-					<option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+					<option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+					{% else %}
+					<option value="{{ information.information_id }}">{{ information.title }}</option>
 					<?php } ?>
 					<?php } ?>
 				  </select>
@@ -87,7 +87,7 @@
                     <?php if ($klarna_checkout_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -114,16 +114,16 @@
 				</thead>
 				<tbody>
 				  <?php $account_row = 0; ?>
-				  <?php foreach ($klarna_checkout_account as $key => $account) { ?>
+				  {% for key => $account in klarna_checkout_account %}
 				  <tr id="account-row{{ account_row }}">
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="<?php echo $account['merchant_id']; ?>" />
+					  <input type="text" name="klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.merchant_id }}" />
 					  <?php if (isset($error_account[$key]['merchant_id'])) { ?>
 					  <div class="text-danger"><?php echo $error_account[$key]['merchant_id']; ?></div>
 					  <?php } ?>
 					</td>
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="<?php echo $account['secret']; ?>" />
+					  <input type="text" name="klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.secret }}" />
 					  <?php if (isset($error_account[$key]['secret'])) { ?>
 					  <div class="text-danger"><?php echo $error_account[$key]['secret']; ?></div>
 					  <?php } ?>
@@ -133,7 +133,7 @@
 						<?php if ($account['environment'] == 'live') { ?>
 						<option value="test">{{ text_test }}</option>
 						<option value="live" selected="selected">{{ text_live }}</option>
-						<?php } else { ?>
+						{% else %}
 						<option value="test" selected="selected">{{ text_test }}</option>
 						<option value="live">{{ text_live }}</option>
 						<?php } ?>
@@ -141,39 +141,39 @@
 					</td>
 					<td class="text-left">
 					  <select name="klarna_checkout_account[{{ account_row }}][country]" class="form-control">
-						<?php foreach ($countries as $country) { ?>
+						{% for country in countries %}
 						<?php if ($country['country_id'] == $account['country']) { ?>
-						<option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-						<?php } else { ?>
-						<option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+						<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+						{% else %}
+						<option value="{{ country.country_id }}">{{ country.name }}</option>
 						<?php } ?>
 						<?php } ?>
 					  </select>
 					</td>
 					<td class="text-left">
 					  <select name="klarna_checkout_account[{{ account_row }}][currency]" class="form-control">
-						<?php foreach ($currencies as $currency) { ?>
+						{% for currency in currencies %}
 						<?php if ($currency['code'] == $account['currency']) { ?>
-						<option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
-						<?php } else { ?>
-						<option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
+						<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
+						{% else %}
+						<option value="{{ currency.code }}">{{ currency.title }}</option>
 						<?php } ?>
 						<?php } ?>
 					  </select>
 					</td>
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="<?php echo $account['locale']; ?>" />
+					  <input type="text" name="klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="{{ account.locale }}" />
 					  <?php if (isset($error_account[$key]['locale'])) { ?>
 					  <div class="text-danger"><?php echo $error_account[$key]['locale']; ?></div>
 					  <?php } ?>
 					</td>
 					<td class="text-left">
 					  <select name="klarna_checkout_account[{{ account_row }}][api]" class="form-control klarna-checkout-api">
-						<?php foreach ($api_locations as $api_location) { ?>
+						{% for api_location in api_locations %}
 						<?php if ($api_location['code'] == $account['api']) { ?>
-						<option value="<?php echo $api_location['code']; ?>" selected="selected"><?php echo $api_location['name']; ?></option>
-						<?php } else { ?>
-						<option value="<?php echo $api_location['code']; ?>"><?php echo $api_location['name']; ?></option>
+						<option value="{{ api_location.code }}" selected="selected">{{ api_location.name }}</option>
+						{% else %}
+						<option value="{{ api_location.code }}">{{ api_location.name }}</option>
 						<?php } ?>
 						<?php } ?>
 					  </select>
@@ -208,11 +208,11 @@
 				<label class="col-sm-2 control-label" for="input-settlement-order-status"><span data-toggle="tooltip" title="{{ help_settlement_order_status }}">{{ entry_settlement_order_status }}</span></label>
 				<div class="col-sm-10">
 				  <select name="klarna_checkout_settlement_order_status_id" id="input-settlement-order-status" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 					<?php if ($order_status['order_status_id'] == $klarna_checkout_settlement_order_status_id) { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+					<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+					<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?>
 					<?php } ?>
 				  </select>
@@ -331,19 +331,19 @@ function addAccount() {
 	html += '    <option value="test" selected="selected">{{ text_test }}</option>';
 	html += '  </select>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][country]" class="form-control">';
-	<?php foreach ($countries as $country) { ?>
-	html += '    <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
+	{% for country in countries %}
+	html += '    <option value="{{ country.country_id }}"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';
-	<?php foreach ($currencies as $currency) { ?>
-	html += '    <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>';
+	{% for currency in currencies %}
+	html += '    <option value="{{ currency.code }}">{{ currency.title }}</option>';
 	<?php } ?>
 	html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="klarna_checkout_account[' + account_row + '][locale]" placeholder="{{ entry_locale }}" class="form-control" value="" /></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][api]" class="form-control">';
-	<?php foreach ($api_locations as $api_location) { ?>
-	html += '    <option value="<?php echo $api_location['code']; ?>"><?php echo $api_location['name']; ?></option>';
+	{% for api_location in api_locations %}
+	html += '    <option value="{{ api_location.code }}">{{ api_location.name }}</option>';
 	<?php } ?>
 	html += '  </select></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

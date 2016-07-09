@@ -39,9 +39,9 @@
             <div class="col-sm-10">
               <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
               <div id="featured-product" class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($products as $product) { ?>
-                <div id="featured-product<?php echo $product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
-                  <input type="hidden" name="product[]" value="<?php echo $product['product_id']; ?>" />
+                {% for product in products %}
+                <div id="featured-product{{ product.product_id }}"><i class="fa fa-minus-circle"></i> {{ product.name }}
+                  <input type="hidden" name="product[]" value="{{ product.product_id }}" />
                 </div>
                 <?php } ?>
               </div>
@@ -78,7 +78,7 @@
                 <?php if ($status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

@@ -363,8 +363,8 @@
                 html += '</label>';
                 <?php foreach($shipping_international_zones as $zone) { ?>
                   html += '<label class="checkbox-inline">';
-                    html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
-                    html += ' <?php echo $zone['description']; ?>';
+                    html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="{{ zone.shipping_location }}" />';
+                    html += ' {{ zone.description }}';
                   html += '</label>';
                 <?php } ?>
               html += '</div>';

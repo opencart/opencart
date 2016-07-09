@@ -41,7 +41,7 @@
                 <?php foreach ($languages as $language) { ?>
                 <?php if ($language == $code) { ?>
                 <option value="{{ language }}" selected="selected">{{ language }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="{{ language }}">{{ language }}</option>
                 <?php } ?>
                 <?php } ?>
@@ -67,7 +67,7 @@
                 <?php if ($status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

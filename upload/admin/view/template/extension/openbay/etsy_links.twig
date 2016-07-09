@@ -57,20 +57,20 @@
           </thead>
           <tbody id="show-linked-items">
             <?php if (!empty($items)) { ?>
-              <?php foreach ($items as $id => $item) { ?>
-                <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
-                  <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-                  <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
-                  <td class="text-center"><?php echo $item['quantity']; ?></td>
+              {% for id => $item in items %}
+                <tr id="row-{{ item.etsy_listing_id }}">
+                  <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>
+                  <td class="text-center"><a href="{{ item.link_etsy }}" target="_BLANK">{{ item.etsy_item_id }}</a></td>
+                  <td class="text-center">{{ item.quantity }}</td>
                   <td class="text-center"><?php if ($item['status'] == 1) { ?>
                     <i class="fa fa-check" style="color: green;"></i>
-                    <?php } else { ?>
+                    {% else %}
                     <i class="fa fa-times" style="color: red;"></i>
                     <?php } ?></td>
-                  <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button></td>
+                  <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-{{ item.etsy_listing_id }}" onclick="deleteLink('{{ item.etsy_listing_id }}')"><i class="fa fa-times"></i></button></td>
                 </tr>
               <?php } ?>
-            <?php } else { ?>
+            {% else %}
             <tr>
               <td colspan="5" class="text-center">{{ text_no_links }}</td>
             </tr>

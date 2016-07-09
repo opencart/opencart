@@ -21,9 +21,9 @@
       </div>
       <div class="panel-body" id="page-listing">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-          <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
+          <input type="hidden" name="product_id" value="{{ product.product_id }}" />
           <input type="hidden" name="auction_type" value="FixedPriceItem" />
-          <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
+          <input type="hidden" name="attributes" value="{{ product.attributes }}" />
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-listing-general" data-toggle="tab">{{ tab_general }}</a></li>
             <li><a href="#tab-listing-feature" data-toggle="tab">{{ tab_feature }}</a></li>
@@ -66,12 +66,12 @@
                     <strong>{{ text_none }}</strong></p>
                   <?php foreach ($product['popular_cats'] as $cat) { ?>
                   <p>
-                    <input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" />
-                    <?php echo $cat['breadcrumb']; ?></p>
+                    <input type="radio" name="popular" value="{{ cat.CategoryID }}" class="popular-category" />
+                    {{ cat.breadcrumb }}</p>
                   <?php } ?>
                 </div>
               </div>
-              <?php } else { ?>
+              {% else %}
               <input type="hidden" name="popular" value="" />
               <?php } ?>
               <div class="form-group" id="category-selections-row">
@@ -168,24 +168,24 @@
                   <label class="col-sm-2 control-label">{{ text_ean }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_ean_required" class="product_identifier_required" value="0" />
-                    <input type="hidden" id="identifier_ean_original" value="<?php echo $product['ean']; ?>" />
-                    <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean" class="form-control" />
+                    <input type="hidden" id="identifier_ean_original" value="{{ product.ean }}" />
+                    <input type="text" name="identifier_ean" value="{{ product.ean }}" id="identifier_ean" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_isbn_container" style="display:none;">
                   <label class="col-sm-2 control-label">{{ text_isbn }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_isbn_required" class="product_identifier_required" value="0" />
-                    <input type="hidden" id="identifier_isbn_original" value="<?php echo $product['isbn']; ?>" />
-                    <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn" class="form-control" />
+                    <input type="hidden" id="identifier_isbn_original" value="{{ product.isbn }}" />
+                    <input type="text" name="identifier_isbn" value="{{ product.isbn }}" id="identifier_isbn" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_upc_container" style="display:none;">
                   <label class="col-sm-2 control-label">{{ text_upc }}</label>
                   <div class="col-sm-10">
                     <input type="hidden" id="identifier_upc_required" class="product_identifier_required" value="0" />
-                    <input type="hidden" id="identifier_upc_original" value="<?php echo $product['upc']; ?>" />
-                    <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc" class="form-control" />
+                    <input type="hidden" id="identifier_upc_original" value="{{ product.upc }}" />
+                    <input type="text" name="identifier_upc" value="{{ product.upc }}" id="identifier_upc" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group">
@@ -251,7 +251,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_title }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" class="form-control" />
+                  <input type="text" name="name" value="{{ product.name }}" size="85" id="name" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
@@ -263,7 +263,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_description }}</label>
                 <div class="col-sm-10">
-                  <textarea name="description" id="description-field" class="form-control summernote"><?php echo $product['description']; ?></textarea>
+                  <textarea name="description" id="description-field" class="form-control summernote">{{ product.description }}</textarea>
                 </div>
               </div>
             </div>
@@ -369,23 +369,23 @@
                       <?php $i = 0; $i_valid = null; ?>
                       <?php foreach ($product['product_images'] as $img) { ?>
                       <tr>
-                        <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
+                        <td class="text-center"><img src="{{ img.preview }}" class="img-thumbnail" /></td>
                         <td class="text-center"><?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
-                          <span class="label label-danger" data-toggle="tooltip" data-original-title="{{ error_ebay_imagesize }}"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
-                          <?php } else { ?>
+                          <span class="label label-danger" data-toggle="tooltip" data-original-title="{{ error_ebay_imagesize }}">{{ img.width }} x {{ img.height }}</span>
+                          {% else %}
                           <?php if ($i_valid === null) { $i_valid = $i; } ?>
-                          <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
+                          <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}">{{ img.width }} x {{ img.height }}</span>
                           <?php } ?></td>
-                        <td class="text-center"><input type="checkbox" id="imgUrl{{ i }}" name="img_tpl[{{ i }}]" value="<?php echo $img['image']; ?>" class="check-template-image" /></td>
+                        <td class="text-center"><input type="checkbox" id="imgUrl{{ i }}" name="img_tpl[{{ i }}]" value="{{ img.image }}" class="check-template-image" /></td>
                         <td class="text-center"><input type="hidden" name="img[{{ i }}]" value="null" />
                           <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                          <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
-                          <?php } else { ?>
+                          <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="{{ img.image }}" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
+                          {% else %}
                           -
                           <?php } ?></td>
                         <td class="text-center"><?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
                           <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="{{ i }}" id="image-radio-{{ i }}" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
-                          <?php } else { ?>
+                          {% else %}
                           -
                           <?php } ?></td>
                       </tr>
@@ -394,7 +394,7 @@
                     </tbody>
                   </table>
                 </div>
-                <?php } else { ?>
+                {% else %}
                 <div class="alert alert-danger">{{ text_images_none }}</div>
                 <?php } ?>
               </div>
@@ -415,23 +415,23 @@
                 <label class="col-sm-2 control-label">{{ text_option_images_choice }}</label>
                 <div class="col-sm-10">
                   <?php foreach ($product['option_groups'] as $option_group) { ?>
-                  <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
+                  <div id="option-group-img-{{ option_group.option_id }}" class="option-group-img">
                     <div class="table-responsive">
                       <table class="table table-striped table-bordered table-hover">
                         <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
                         <tr>
-                          <td><?php echo $option_group_choice['name']; ?></td>
-                          <td><input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>"/>
-                            <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="btn btn-primary"><span>{{ text_add }}</span></a></td>
-                          <td><table class="table table-striped table-bordered table-hover" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
+                          <td>{{ option_group_choice.name }}</td>
+                          <td><input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][name]" value="{{ option_group_choice.name }}"/>
+                            <a onclick="addVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }});" class="btn btn-primary"><span>{{ text_add }}</span></a></td>
+                          <td><table class="table table-striped table-bordered table-hover" id="option_images_{{ option_group_choice.product_option_value_id }}">
                               <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
                               <tr>
-                                <td id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_{{ x }}"><img src="<?php echo $option_group_choice['image_thumb']; ?>"/>
-                                  <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>"/></td>
-                                <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, {{ x }});" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                <td id="option_image_{{ option_group.option_id }}_{{ option_group_choice.product_option_value_id }}_{{ x }}"><img src="{{ option_group_choice.image_thumb }}"/>
+                                  <input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][images][]" value="{{ option_group_choice.image }}"/></td>
+                                <td><button type="button" onclick="removeVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }}, {{ x }});" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                               </tr>
                               <?php } ?>
-                              <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="{{ x }}"/>
+                              <input type="hidden" name="option_image_count_{{ option_group.option_id }}" id="option_image_count_{{ option_group.option_id }}" value="{{ x }}"/>
                             </table></td>
                         </tr>
                         <?php } ?>
@@ -477,8 +477,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <input type="hidden" name="optGroupArray" value="<?php echo $product['option_group_array']; ?>" />
-                    <input type="hidden" name="optGroupRelArray" value="<?php echo $product['option_group_relation_array']; ?>" />
+                    <input type="hidden" name="optGroupArray" value="{{ product.option_group_array }}" />
+                    <input type="hidden" name="optGroupRelArray" value="{{ product.option_group_relation_array }}" />
                     <?php
                         $option_count = 0;
                         foreach ($product['options'] as $option) {
@@ -522,12 +522,12 @@
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>
-              <?php } else { ?>
+              {% else %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_qty }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
-                  <span class="help-block">{{ help_quantity_reserve }}</span> <span class="help-block">{{ column_stock_total }}: <?php echo $product['quantity']; ?><br/>
+                  <input type="text" name="qty[0]" id="qty_0" value="{{ product.quantity }}" class="form-control" onkeyup="updateReserveMessage('0', '{{ product.quantity }}');" />
+                  <span class="help-block">{{ help_quantity_reserve }}</span> <span class="help-block">{{ column_stock_total }}: {{ product.quantity }}<br/>
                   <span id="qty_reserve_0">0</span> {{ text_stock_reserved }}</span> </div>
               </div>
               <div class="form-group">
@@ -583,11 +583,11 @@
                   <?php foreach ($product['payments'] as $payment) { ?>
                   <?php if ($payment['ebay_name'] == 'PayPal') { ?>
                   <?php $paypal = true; ?>
-                  <?php } else { ?>
+                  {% else %}
                   <p>
-                    <input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1"
+                    <input type="checkbox" name="payments[{{ payment.ebay_name }}]" value="1"
                         <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/>
-                    - <?php echo $payment['local_name']; ?></p>
+                    - {{ payment.local_name }}</p>
                   <?php } ?>
                   <?php } ?>
                 </div>
@@ -860,13 +860,13 @@
                       <div class="col-sm-6">
                         <label class="control-label">{{ text_weight_major }}</label>
                         <div class="input-group col-xs-12">
-                          <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $product['weight_major']; ?>">
+                          <input type="text" name="package[weight_major]" class="form-control" value="{{ product.weight_major }}">
                           <span class="input-group-addon" id="weight-major-text"></span> </div>
                       </div>
                       <div class="col-sm-6">
                         <label class="control-label">{{ text_weight_minor }}</label>
                         <div class="input-group col-xs-12">
-                          <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $product['weight_minor']; ?>">
+                          <input type="text" name="package[weight_minor]" class="form-control" value="{{ product.weight_minor }}">
                           <span class="input-group-addon" id="weight-minor-text"></span> </div>
                       </div>
                     </div>
@@ -886,19 +886,19 @@
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_depth }}</label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[depth]" class="form-control" value="<?php echo $product['height']; ?>">
+                      <input type="text" name="package[depth]" class="form-control" value="{{ product.height }}">
                       <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_length }}</label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[length]" class="form-control" value="<?php echo $product['length']; ?>">
+                      <input type="text" name="package[length]" class="form-control" value="{{ product.length }}">
                       <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_width }}</label>
                     <div class="input-group col-xs-12">
-                      <input type="text" name="package[width]" class="form-control" value="<?php echo $product['width']; ?>">
+                      <input type="text" name="package[width]" class="form-control" value="{{ product.width }}">
                       <span class="input-group-addon size-unit-text"></span> </div>
                   </div>
                   <div class="col-sm-3">
@@ -921,7 +921,7 @@
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
                         <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
-                        <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
+                        <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
                         <?php } } ?>
                       </select>
                     </div>
@@ -934,7 +934,7 @@
                 <div class="col-sm-10">
                   <select name="returns_accepted" id="returns_accepted" class="form-control">
                     <?php foreach ($setting['returns']['accepted'] as $v) { ?>
-                    <option value="<?php echo $v['ReturnsAcceptedOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <option value="{{ v.ReturnsAcceptedOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -946,7 +946,7 @@
                 <div class="col-sm-10">
                   <select name="returns_within" id="returns_within" class="form-control">
                     <?php foreach ($setting['returns']['within'] as $v) { ?>
-                    <option value="<?php echo $v['ReturnsWithinOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <option value="{{ v.ReturnsWithinOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -958,7 +958,7 @@
                 <div class="col-sm-10">
                   <select name="returns_shipping" id="returns_shipping" class="form-control">
                     <?php foreach ($setting['returns']['paidby'] as $v) { ?>
-                    <option value="<?php echo $v['ShippingCostPaidByOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <option value="{{ v.ShippingCostPaidByOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -970,7 +970,7 @@
                 <div class="col-sm-10">
                   <select name="returns_option" id="returns_option" class="form-control">
                     <?php foreach ($setting['returns']['refund'] as $v) { ?>
-                    <option value="<?php echo $v['RefundOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <option value="{{ v.RefundOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -990,7 +990,7 @@
                 <div class="col-sm-10">
                   <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
                     <?php foreach ($setting['returns']['restocking_fee'] as $v) { ?>
-                    <option value="<?php echo $v['RestockingFeeValueOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <option value="{{ v.RestockingFeeValueOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -1018,7 +1018,7 @@
         <div class="alert alert-success">{{ text_created_msg }}: <span id="item-number"></span></div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-6 text-left"> <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> {{ button_view }}</a> <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> {{ button_edit }}</a> </div>
+            <div class="col-sm-6 text-left"> <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> {{ button_view }}</a> <a class="btn btn-primary" href="{{ product.edit_link }}"><i class="fa fa-pencil fa-lg"></i> {{ button_edit }}</a> </div>
             <div class="col-sm-6 text-right"> <a class="btn btn-primary" href="{{ cancel }}"><i class="fa fa-reply fa-lg"></i> {{ text_return }}</a> </div>
           </div>
         </div>
@@ -1868,8 +1868,8 @@
           html += '</label>';
         <?php foreach ($data['shipping_international_zones'] as $zone) { ?>
             html += '<label class="checkbox-inline">';
-            html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
-            html += ' <?php echo $zone['description']; ?>';
+            html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="{{ zone.shipping_location }}" />';
+            html += ' {{ zone.description }}';
             html += '</label>';
           <?php } ?>
           html += '</div>';
@@ -1982,7 +1982,7 @@
 
     <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
         var hasOptions = "yes";
-    <?php } else { ?>
+    {% else %}
         var hasOptions = "no";
 
         if ($('#qty').val() < 1) {
@@ -2399,22 +2399,22 @@
     updateUnit();
 
     <?php if ($product['profiles_returns_def'] > 0) { ?>
-        $('#profile-return-input').val(<?php echo $product['profiles_returns_def']; ?>);
+        $('#profile-return-input').val({{ product.profiles_returns_def }});
         profileReturnUpdate();
     <?php } ?>
 
     <?php if ($product['profiles_generic_def'] > 0) { ?>
-        $('#profile-generic-input').val(<?php echo $product['profiles_generic_def']; ?>);
+        $('#profile-generic-input').val({{ product.profiles_generic_def }});
         profileGenericUpdate();
     <?php } ?>
 
     <?php if ($product['profiles_shipping_def'] > 0) { ?>
-        $('#profile-shipping-input').val(<?php echo $product['profiles_shipping_def']; ?>);
+        $('#profile-shipping-input').val({{ product.profiles_shipping_def }});
         profileShippingUpdate();
     <?php } ?>
 
     <?php if ($product['profiles_theme_def'] > 0) { ?>
-        $('#profile-theme-input').val(<?php echo $product['profiles_theme_def']; ?>);
+        $('#profile-theme-input').val({{ product.profiles_theme_def }});
         profileThemeUpdate();
     <?php } ?>
 

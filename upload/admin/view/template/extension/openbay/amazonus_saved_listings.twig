@@ -40,19 +40,19 @@
       </thead>
       <tbody>
         <?php if (!empty($saved_products)) { ?>
-        <?php foreach ($saved_products as $saved_product) { ?>
+        {% for saved_product in saved_products %}
         <tr>
-          <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
-          <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-          <td class="text-left"><?php echo $saved_product['var']; ?></td>
-          <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
+          <td class="text-left">{{ saved_product.product_name }}</td>
+          <td class="text-left">{{ saved_product.product_model }}</td>
+          <td class="text-left">{{ saved_product.var }}</td>
+          <td class="text-left">{{ saved_product.amazon_sku }}</td>
           <td class="text-right">
-            <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="{{ button_edit }}"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="{{ button_remove }}"><i class="fa fa-times-circle"></i></a>
+            <a class="btn btn-primary" href="{{ saved_product.edit_link }}" data-toggle="tooltip" data-original-title="{{ button_edit }}"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-danger" onclick="removeSaved('{{ saved_product.product_id }}', '{{ saved_product.var }}', this)" data-toggle="tooltip" data-original-title="{{ button_remove }}"><i class="fa fa-times-circle"></i></a>
           </td>
         </tr>
         <?php } ?>
-        <?php } else { ?>
+        {% else %}
         <tr>
           <td colspan="5" class="text-center">{{ text_no_results }}</td>
         </tr>

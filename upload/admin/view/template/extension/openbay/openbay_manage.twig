@@ -78,7 +78,7 @@
               <label class="col-sm-2 control-label" for="input-language">{{ text_language }}</label>
               <div class="col-sm-10">
                 <select name="openbay_language" id="input-language" class="form-control">
-                  <?php foreach ($languages as $key => $language) { ?>
+                  {% for key => $language in languages %}
                     <option value="{{ key }}" <?php if ($key == $openbay_language) { echo'selected="selected"'; } ?>>{{ language }}</option>
                   <?php } ?>
                 </select>

@@ -58,7 +58,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value=""<?php echo (is_null($filter_status) ? ' selected' : '') ?>>{{ text_option_all }}</option>
-                  <?php foreach ($status_options as $option_key => $option) { ?>
+                  {% for option_key => $option in status_options %}
                     <option value="{{ option_key }}"<?php echo (!is_null($filter_status) && ($filter_status == $option_key) ? ' selected' : '') ?>>{{ option }}</option>
                   <?php } ?>
                 </select>
@@ -83,14 +83,14 @@
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
-              <?php } else { ?>
-                <?php foreach ($orders as $order) { ?>
+              {% else %}
+                {% for order in orders %}
                   <tr>
-                    <td class="text-left"><a href="<?php echo $order['order_link']; ?>"><?php echo $order['order_id']; ?></a></td>
-                    <td class="text-left"><?php echo $order['created']; ?></td>
+                    <td class="text-left"><a href="{{ order.order_link }}">{{ order.order_id }}</a></td>
+                    <td class="text-left">{{ order.created }}</td>
                     <td class="text-left"><?php echo $status_options[$order['status']]; ?></td>
-                    <td class="text-center"><?php echo $order['fba_item_count']; ?></td>
-                    <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-center">{{ order.fba_item_count }}</td>
+                    <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                 <?php } ?>
               <?php } ?>

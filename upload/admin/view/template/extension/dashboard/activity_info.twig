@@ -4,11 +4,11 @@
   </div>
   <ul class="list-group">
     <?php if ($activities) { ?>
-    <?php foreach ($activities as $activity) { ?>
-    <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-      <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
+    {% for activity in activities %}
+    <li class="list-group-item">{{ activity.comment }}<br />
+      <small class="text-muted"><i class="fa fa-clock-o"></i> {{ activity.date_added }}</small></li>
     <?php } ?>
-    <?php } else { ?>
+    {% else %}
     <li class="list-group-item text-center">{{ text_no_results }}</li>
     <?php } ?>
   </ul>

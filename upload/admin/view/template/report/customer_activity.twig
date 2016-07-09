@@ -62,12 +62,12 @@
               <?php if ($activities) { ?>
               <?php foreach ($activities as $activity) { ?>
               <tr>
-                <td class="text-left"><?php echo $activity['comment']; ?></td>
-                <td class="text-left"><?php echo $activity['ip']; ?></td>
-                <td class="text-left"><?php echo $activity['date_added']; ?></td>
+                <td class="text-left">{{ activity.comment }}</td>
+                <td class="text-left">{{ activity.ip }}</td>
+                <td class="text-left">{{ activity.date_added }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="4">{{ text_no_results }}</td>
               </tr>

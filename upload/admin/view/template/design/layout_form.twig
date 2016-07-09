@@ -46,19 +46,19 @@
               </thead>
               <tbody>
                 <?php $route_row = 0; ?>
-                <?php foreach ($layout_routes as $layout_route) { ?>
+                {% for layout_route in layout_routes %}
                 <tr id="route-row{{ route_row }}">
                   <td class="text-left"><select name="layout_route[{{ route_row }}][store_id]" class="form-control">
                       <option value="0">{{ text_default }}</option>
-                      <?php foreach ($stores as $store) { ?>
+                      {% for store in stores %}
                       <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
-                      <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                      <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                      {% else %}
+                      <option value="{{ store.store_id }}">{{ store.name }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select></td>
-                  <td class="text-left"><input type="text" name="layout_route[{{ route_row }}][route]" value="<?php echo $layout_route['route']; ?>" placeholder="{{ entry_route }}" class="form-control" /></td>
+                  <td class="text-left"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control" /></td>
                   <td class="text-left"><button type="button" onclick="$('#route-row{{ route_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                 </tr>
                 <?php $route_row++; ?>
@@ -84,34 +84,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    {% for layout_module in layout_modules %}
                     <?php if ($layout_module['position'] == 'column_left') { ?>
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
                           <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
                             <?php if ($extension['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
                             <?php } ?>
-                            <?php } else { ?>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
                             <?php if ($module['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
                             <?php } ?>
                           </select>
-                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="<?php echo $layout_module['position']; ?>" />
-                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn"><a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
@@ -124,13 +124,13 @@
                     <tr>
                       <td class="text-left"><div class="input-group">
                           <select class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
@@ -152,34 +152,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    {% for layout_module in layout_modules %}
                     <?php if ($layout_module['position'] == 'content_top') { ?>
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
                           <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
                             <?php if ($extension['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
                             <?php } ?>
-                            <?php } else { ?>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
                             <?php if ($module['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
                             <?php } ?>
                           </select>
-                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="<?php echo $layout_module['position']; ?>" />
-                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn"> <a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"> <a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
@@ -192,13 +192,13 @@
                     <tr>
                       <td class="text-left"><div class="input-group">
                           <select class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
@@ -218,34 +218,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    {% for layout_module in layout_modules %}
                     <?php if ($layout_module['position'] == 'content_bottom') { ?>
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
                           <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
                             <?php if ($extension['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
                             <?php } ?>
-                            <?php } else { ?>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
                             <?php if ($module['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
                             <?php } ?>
                           </select>
-                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="<?php echo $layout_module['position']; ?>" />
-                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn"><a href="<?php echo $layout_module['edit']; ?>" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" type="button" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
@@ -258,13 +258,13 @@
                     <tr>
                       <td class="text-left"><div class="input-group">
                           <select class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
@@ -286,34 +286,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($layout_modules as $layout_module) { ?>
+                    {% for layout_module in layout_modules %}
                     <?php if ($layout_module['position'] == 'column_right') { ?>
                     <tr id="module-row{{ module_row }}">
                       <td class="text-left"><div class="input-group">
                           <select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
                             <?php if ($extension['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                            <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+                            {% else %}
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
                             <?php } ?>
-                            <?php } else { ?>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
                             <?php if ($module['code'] == $layout_module['code']) { ?>
-                            <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+                            {% else %}
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
                             <?php } ?>
                           </select>
-                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="<?php echo $layout_module['position']; ?>" />
-                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" />
-                          <div class="input-group-btn"><a href="<?php echo $layout_module['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                          <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}" />
+                          <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}" />
+                          <div class="input-group-btn"><a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             <button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button>
                           </div>
                         </div></td>
@@ -326,13 +326,13 @@
                     <tr>
                       <td class="text-left"><div class="input-group">
                           <select class="form-control input-sm">
-                            <?php foreach ($extensions as $extension) { ?>
-                            <optgroup label="<?php echo $extension['name']; ?>">
+                            {% for extension in extensions %}
+                            <optgroup label="{{ extension.name }}">
                             <?php if (!$extension['module']) { ?>
-                            <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
-                            <?php } else { ?>
+                            <option value="{{ extension.code }}">{{ extension.name }}</option>
+                            {% else %}
                             <?php foreach ($extension['module'] as $module) { ?>
-                            <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                            <option value="{{ module.code }}">{{ module.name }}</option>
                             <?php } ?>
                             <?php } ?>
                             </optgroup>
@@ -359,8 +359,8 @@ function addRoute() {
 	html  = '<tr id="route-row' + route_row + '">';
 	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
 	html += '  <option value="0">{{ text_default }}</option>';
-	<?php foreach ($stores as $store) { ?>
-	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+	{% for store in stores %}
+	html += '<option value="{{ store.store_id }}"><?php echo addslashes($store['name']); ?></option>';
 	<?php } ?>   
 	html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="{{ entry_route }}" class="form-control" /></td>';
@@ -377,13 +377,13 @@ var module_row = {{ module_row }};
 function addModule(type) {
 	html  = '<tr id="module-row' + module_row + '">';
     html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
-	<?php foreach ($extensions as $extension) { ?>
+	{% for extension in extensions %}
 	html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
 	<?php if (!$extension['module']) { ?>
-	html += '      <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
-	<?php } else { ?>
+	html += '      <option value="{{ extension.code }}"><?php echo addslashes($extension['name']); ?></option>';
+	{% else %}
 	<?php foreach ($extension['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
+	html += '      <option value="{{ module.code }}"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	<?php } ?>
 	html += '    </optgroup>';

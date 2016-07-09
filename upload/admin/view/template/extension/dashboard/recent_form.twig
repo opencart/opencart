@@ -29,10 +29,10 @@
             <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
             <div class="col-sm-10">
               <select name="dashboard_recent_width" id="input-width" class="form-control">
-                <?php foreach ($columns as $column) { ?>
+                {% for column in columns %}
                 <?php if ($column == $dashboard_recent_width) { ?>
                 <option value="{{ column }}" selected="selected">{{ column }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="{{ column }}">{{ column }}</option>
                 <?php } ?>
                 <?php } ?>
@@ -46,7 +46,7 @@
                 <?php if ($dashboard_recent_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

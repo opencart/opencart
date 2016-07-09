@@ -34,10 +34,10 @@
             </div>
           </div>
           <?php if ($products) { ?>
-            <?php foreach ($products as $product) { ?>
+            {% for product in products %}
               <div class="well listingBox" id="p_row_{{ i }}">
                 <input type="hidden" class="product_id openbay_data_{{ i }}" name="product_id" value="{{ i }}" />
-                <input type="hidden" class="openbay_data_{{ i }}" name="product_id" value="<?php echo $product['product_id']; ?>" id="product-id-{{ i }}" />
+                <input type="hidden" class="openbay_data_{{ i }}" name="product_id" value="{{ product.product_id }}" id="product-id-{{ i }}" />
                 <input type="hidden" name="price_original" id="price_original_{{ i }}" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
                 <input type="hidden" class="openbay_data_{{ i }}" name="catalog_epid" id="catalog_epid_{{ i }}" value="0" />
                 <div class="row">
@@ -59,13 +59,13 @@
                       <div class="col-sm-2">
                         <div class="row">
                           <div class="col-sm-12 form-group text-center">
-                            <img class="img-thumbnail" src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" />
+                            <img class="img-thumbnail" src="{{ product.image }}" alt="{{ product.name }}" />
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-sm-12 form-group">
-                            <h4 class="text-center"><span class="label label-success">{{ text_stock }}: <?php echo $product['quantity']; ?></span></h4>
-                            <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbay_data_{{ i }}" />
+                            <h4 class="text-center"><span class="label label-success">{{ text_stock }}: {{ product.quantity }}</span></h4>
+                            <input type="hidden" name="qty" value="{{ product.quantity }}" class="openbay_data_{{ i }}" />
                           </div>
                         </div>
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-feature-{{ i }}" data-backdrop="static" data-keyboard="false">
@@ -89,24 +89,24 @@
                                             <label class="col-sm-2 control-label">{{ text_ean }}</label>
                                             <div class="col-sm-10">
                                               <input type="hidden" id="identifier_ean_required_{{ i }}" class="product_identifier_required_{{ i }}" value="0" />
-                                              <input type="hidden" id="identifier_ean_original_{{ i }}" value="<?php echo $product['ean']; ?>" />
-                                              <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean_{{ i }}" class="form-control openbay_data_{{ i }}" />
+                                              <input type="hidden" id="identifier_ean_original_{{ i }}" value="{{ product.ean }}" />
+                                              <input type="text" name="identifier_ean" value="{{ product.ean }}" id="identifier_ean_{{ i }}" class="form-control openbay_data_{{ i }}" />
                                             </div>
                                           </div>
                                           <div class="form-group" id="product_identifier_isbn_container_{{ i }}" style="display:none;">
                                             <label class="col-sm-2 control-label">{{ text_isbn }}</label>
                                             <div class="col-sm-10">
                                               <input type="hidden" id="identifier_isbn_required_{{ i }}" class="product_identifier_required_{{ i }}" value="0" />
-                                              <input type="hidden" id="identifier_isbn_original_{{ i }}" value="<?php echo $product['isbn']; ?>" />
-                                              <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn_{{ i }}" class="form-control openbay_data_{{ i }}" />
+                                              <input type="hidden" id="identifier_isbn_original_{{ i }}" value="{{ product.isbn }}" />
+                                              <input type="text" name="identifier_isbn" value="{{ product.isbn }}" id="identifier_isbn_{{ i }}" class="form-control openbay_data_{{ i }}" />
                                             </div>
                                           </div>
                                           <div class="form-group" id="product_identifier_upc_container_{{ i }}" style="display:none;">
                                             <label class="col-sm-2 control-label">{{ text_upc }}</label>
                                             <div class="col-sm-10">
                                               <input type="hidden" id="identifier_upc_required_{{ i }}" class="product_identifier_required" value="0" />
-                                              <input type="hidden" id="identifier_upc_original_{{ i }}" value="<?php echo $product['upc']; ?>" />
-                                              <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc_{{ i }}" class="form-control openbay_data_{{ i }}" />
+                                              <input type="hidden" id="identifier_upc_original_{{ i }}" value="{{ product.upc }}" />
+                                              <input type="text" name="identifier_upc" value="{{ product.upc }}" id="identifier_upc_{{ i }}" class="form-control openbay_data_{{ i }}" />
                                             </div>
                                           </div>
                                           <div class="form-group">
@@ -296,7 +296,7 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label">{{ text_title }}</label>
                           <div class="col-sm-10">
-                            <input type="text" name="title" class="openbay_data_{{ i }} form-control" value="<?php echo $product['name']; ?>" id="title_{{ i }}" />
+                            <input type="text" name="title" class="openbay_data_{{ i }} form-control" value="{{ product.name }}" id="title_{{ i }}" />
                           </div>
                         </div>
                         <div class="form-group">
@@ -330,7 +330,7 @@
               </div>
               <?php $i++;?>
             <?php } ?>
-          <?php } else { ?>
+          {% else %}
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_no_results }}</div>
           <?php } ?>
         </form>
@@ -346,7 +346,7 @@
             </div>
           </div>
         </div>
-      <?php } else { ?>
+      {% else %}
         <?php foreach($error_fail as $fail) { ?>
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ fail }}</div>
         <?php } ?>

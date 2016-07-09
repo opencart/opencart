@@ -41,7 +41,7 @@
                   <ul class="nav nav-pills nav-stacked" id="address">
                     <li class="active"><a href="#tab-customer" data-toggle="tab">{{ tab_general }}</a></li>
                     <?php $address_row = 1; ?>
-                    <?php foreach ($addresses as $address) { ?>
+                    {% for address in addresses %}
                     <li><a href="#tab-address{{ address_row }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('#address a:first').tab('show'); $('#address a[href=\'#tab-address{{ address_row }}\']').parent().remove(); $('#tab-address{{ address_row }}').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                     <?php $address_row++; ?>
                     <?php } ?>
@@ -55,11 +55,11 @@
                         <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                         <div class="col-sm-10">
                           <select name="customer_group_id" id="input-customer-group" class="form-control">
-                            <?php foreach ($customer_groups as $customer_group) { ?>
+                            {% for customer_group in customer_groups %}
                             <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-                            <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                            <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                            {% else %}
+                            <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                             <?php } ?>
                             <?php } ?>
                           </select>
@@ -107,19 +107,19 @@
                           <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control" />
                         </div>
                       </div>
-                      <?php foreach ($custom_fields as $custom_field) { ?>
+                      {% for custom_field in custom_fields %}
                       <?php if ($custom_field['location'] == 'account') { ?>
                       <?php if ($custom_field['type'] == 'select') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+                          <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                             <option value="">{{ text_select }}</option>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
-                            <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
+                            <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                            {% else %}
+                            <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
                             <?php } ?>
                             <?php } ?>
                           </select>
@@ -130,20 +130,20 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'radio') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <div class="radio">
                               <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                               <label>
-                                <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
-                                <?php echo $custom_field_value['name']; ?></label>
-                              <?php } else { ?>
+                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                                {{ custom_field_value.name }}</label>
+                              {% else %}
                               <label>
-                                <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-                                <?php echo $custom_field_value['name']; ?></label>
+                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
+                                {{ custom_field_value.name }}</label>
                               <?php } ?>
                             </div>
                             <?php } ?>
@@ -155,20 +155,20 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'checkbox') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <div class="checkbox">
                               <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
                               <label>
-                                <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
-                                <?php echo $custom_field_value['name']; ?></label>
-                              <?php } else { ?>
+                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                                {{ custom_field_value.name }}</label>
+                              {% else %}
                               <label>
-                                <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-                                <?php echo $custom_field_value['name']; ?></label>
+                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
+                                {{ custom_field_value.name }}</label>
                               <?php } ?>
                             </div>
                             <?php } ?>
@@ -180,10 +180,10 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'text') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                           <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -191,10 +191,10 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'textarea') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
+                          <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
                           <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -202,11 +202,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'file') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
-                          <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
+                          <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                          <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field{{ custom_field.custom_field_id }}" />
                           <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -214,11 +214,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'date') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group date">
-                            <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -229,11 +229,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'time') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group time">
-                            <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -244,11 +244,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'datetime') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order']; ?>">
-                        <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group datetime">
-                            <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -285,7 +285,7 @@
                             <?php if ($newsletter) { ?>
                             <option value="1" selected="selected">{{ text_enabled }}</option>
                             <option value="0">{{ text_disabled }}</option>
-                            <?php } else { ?>
+                            {% else %}
                             <option value="1">{{ text_enabled }}</option>
                             <option value="0" selected="selected">{{ text_disabled }}</option>
                             <?php } ?>
@@ -299,7 +299,7 @@
                             <?php if ($status) { ?>
                             <option value="1" selected="selected">{{ text_enabled }}</option>
                             <option value="0">{{ text_disabled }}</option>
-                            <?php } else { ?>
+                            {% else %}
                             <option value="1">{{ text_enabled }}</option>
                             <option value="0" selected="selected">{{ text_disabled }}</option>
                             <?php } ?>
@@ -313,7 +313,7 @@
                             <?php if ($approved) { ?>
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
-                            <?php } else { ?>
+                            {% else %}
                             <option value="1">{{ text_yes }}</option>
                             <option value="0" selected="selected">{{ text_no }}</option>
                             <?php } ?>
@@ -327,7 +327,7 @@
                             <?php if ($safe) { ?>
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
-                            <?php } else { ?>
+                            {% else %}
                             <option value="1">{{ text_yes }}</option>
                             <option value="0" selected="selected">{{ text_no }}</option>
                             <?php } ?>
@@ -336,13 +336,13 @@
                       </div>
                     </div>
                     <?php $address_row = 1; ?>
-                    <?php foreach ($addresses as $address) { ?>
+                    {% for address in addresses %}
                     <div class="tab-pane" id="tab-address{{ address_row }}">
-                      <input type="hidden" name="address[{{ address_row }}][address_id]" value="<?php echo $address['address_id']; ?>" />
+                      <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}" />
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-firstname{{ address_row }}">{{ entry_firstname }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="{{ entry_firstname }}" id="input-firstname{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][firstname]" value="{{ address.firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['firstname'])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['firstname']; ?></div>
                           <?php } ?>
@@ -351,7 +351,7 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-lastname{{ address_row }}">{{ entry_lastname }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="{{ entry_lastname }}" id="input-lastname{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][lastname]" value="{{ address.lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['lastname'])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['lastname']; ?></div>
                           <?php } ?>
@@ -360,13 +360,13 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-company{{ address_row }}">{{ entry_company }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][company]" value="<?php echo $address['company']; ?>" placeholder="{{ entry_company }}" id="input-company{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][company]" value="{{ address.company }}" placeholder="{{ entry_company }}" id="input-company{{ address_row }}" class="form-control" />
                         </div>
                       </div>
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-address-1{{ address_row }}">{{ entry_address_1 }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="{{ entry_address_1 }}" id="input-address-1{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][address_1]" value="{{ address.address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['address_1'])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['address_1']; ?></div>
                           <?php } ?>
@@ -375,13 +375,13 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-address-2{{ address_row }}">{{ entry_address_2 }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="{{ entry_address_2 }}" id="input-address-2{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][address_2]" value="{{ address.address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2{{ address_row }}" class="form-control" />
                         </div>
                       </div>
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-city{{ address_row }}">{{ entry_city }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][city]" value="<?php echo $address['city']; ?>" placeholder="{{ entry_city }}" id="input-city{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][city]" value="{{ address.city }}" placeholder="{{ entry_city }}" id="input-city{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['city'])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['city']; ?></div>
                           <?php } ?>
@@ -390,7 +390,7 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-postcode{{ address_row }}">{{ entry_postcode }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="{{ entry_postcode }}" id="input-postcode{{ address_row }}" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][postcode]" value="{{ address.postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['postcode'])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['postcode']; ?></div>
                           <?php } ?>
@@ -399,13 +399,13 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-country{{ address_row }}">{{ entry_country }}</label>
                         <div class="col-sm-10">
-                          <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '<?php echo $address['zone_id']; ?>');" class="form-control">
+                          <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="form-control">
                             <option value="">{{ text_select }}</option>
-                            <?php foreach ($countries as $country) { ?>
+                            {% for country in countries %}
                             <?php if ($country['country_id'] == $address['country_id']) { ?>
-                            <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                            <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+                            {% else %}
+                            <option value="{{ country.country_id }}">{{ country.name }}</option>
                             <?php } ?>
                             <?php } ?>
                           </select>
@@ -424,19 +424,19 @@
                           <?php } ?>
                         </div>
                       </div>
-                      <?php foreach ($custom_fields as $custom_field) { ?>
+                      {% for custom_field in custom_fields %}
                       <?php if ($custom_field['location'] == 'address') { ?>
                       <?php if ($custom_field['type'] == 'select') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <select name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+                          <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                             <option value="">{{ text_select }}</option>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address['custom_field'][$custom_field['custom_field_id']]) { ?>
-                            <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
-                            <?php } else { ?>
-                            <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
+                            <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                            {% else %}
+                            <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
                             <?php } ?>
                             <?php } ?>
                           </select>
@@ -447,20 +447,20 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'radio') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <div class="radio">
                               <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address['custom_field'][$custom_field['custom_field_id']]) { ?>
                               <label>
-                                <input type="radio" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
-                                <?php echo $custom_field_value['name']; ?></label>
-                              <?php } else { ?>
+                                <input type="radio" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                                {{ custom_field_value.name }}</label>
+                              {% else %}
                               <label>
-                                <input type="radio" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-                                <?php echo $custom_field_value['name']; ?></label>
+                                <input type="radio" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
+                                {{ custom_field_value.name }}</label>
                               <?php } ?>
                             </div>
                             <?php } ?>
@@ -472,20 +472,20 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'checkbox') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                             <div class="checkbox">
                               <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address['custom_field'][$custom_field['custom_field_id']])) { ?>
                               <label>
-                                <input type="checkbox" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
-                                <?php echo $custom_field_value['name']; ?></label>
-                              <?php } else { ?>
+                                <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                                {{ custom_field_value.name }}</label>
+                              {% else %}
                               <label>
-                                <input type="checkbox" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
-                                <?php echo $custom_field_value['name']; ?></label>
+                                <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
+                                {{ custom_field_value.name }}</label>
                               <?php } ?>
                             </div>
                             <?php } ?>
@@ -497,10 +497,10 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'text') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                          <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -508,10 +508,10 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'textarea') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <textarea name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
+                          <textarea name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
                           <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -519,11 +519,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'file') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <button type="button" id="button-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
-                          <input type="hidden" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
+                          <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
+                          <input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
                           <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
@@ -531,11 +531,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'date') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group date">
-                            <input type="text" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -546,11 +546,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'time') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group time">
-                            <input type="text" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -561,11 +561,11 @@
                       </div>
                       <?php } ?>
                       <?php if ($custom_field['type'] == 'datetime') { ?>
-                      <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                        <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group datetime">
-                            <input type="text" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address{{ address_row }}-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                            <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
@@ -583,7 +583,7 @@
                           <label class="radio">
                             <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
                             <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" checked="checked" />
-                            <?php } else { ?>
+                            {% else %}
                             <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" />
                             <?php } ?>
                           </label>
@@ -730,8 +730,8 @@ function addAddress() {
 	html += '    <label class="col-sm-2 control-label" for="input-country' + address_row + '">{{ entry_country }}</label>';
 	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
     html += '         <option value="">{{ text_select }}</option>';
-    <?php foreach ($countries as $country) { ?>
-    html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
+    {% for country in countries %}
+    html += '         <option value="{{ country.country_id }}"><?php echo addslashes($country['name']); ?></option>';
     <?php } ?>
     html += '      </select></div>';
 	html += '  </div>';
@@ -742,18 +742,18 @@ function addAddress() {
 	html += '  </div>';
 
 	// Custom Fields
-	<?php foreach ($custom_fields as $custom_field) { ?>
+	{% for custom_field in custom_fields %}
 	<?php if ($custom_field['location'] == 'address') { ?>
 	<?php if ($custom_field['type'] == 'select') { ?>
 
-	html += '  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '  		<div class="col-sm-10">';
-	html += '  		  <select name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">';
+	html += '  		  <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">';
 	html += '  			<option value="">{{ text_select }}</option>';
 
 	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-	html += '  			<option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo addslashes($custom_field_value['name']); ?></option>';
+	html += '  			<option value="{{ custom_field_value.custom_field_value_id }}"><?php echo addslashes($custom_field_value['name']); ?></option>';
 	<?php } ?>
 
 	html += '  		  </select>';
@@ -762,13 +762,13 @@ function addAddress() {
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'radio') { ?>
-	html += '  	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
+	html += '  	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}">';
 	html += '  		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '  		<div class="col-sm-10">';
 	html += '  		  <div>';
 
 	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-	html += '  			<div class="radio"><label><input type="radio" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
+	html += '  			<div class="radio"><label><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
 	<?php } ?>
 
 	html += '		  </div>';
@@ -777,13 +777,13 @@ function addAddress() {
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'checkbox') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
 	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
 	html += '		  <div>';
 
 	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
+	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
 	<?php } ?>
 
 	html += '		  </div>';
@@ -792,56 +792,56 @@ function addAddress() {
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'text') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />';
+	html += '		  <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" />';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'textarea') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <textarea name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo addslashes($custom_field['value']); ?></textarea>';
+	html += '		  <textarea name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo addslashes($custom_field['value']); ?></textarea>';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'file') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
 	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <button type="button" id="button-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>';
-	html += '		  <input type="hidden" name="address[' + address_row + '][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" />';
+	html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>';
+	html += '		  <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value="" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" />';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'date') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'time') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
 
 	<?php if ($custom_field['type'] == 'datetime') { ?>
-	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	<?php } ?>
@@ -1142,7 +1142,7 @@ $('.time').datetimepicker({
 
 // Sort the custom fields
 <?php $address_row = 1; ?>
-<?php foreach ($addresses as $address) { ?>
+{% for address in addresses %}
 $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address{{ address_row }} .form-group').length) {
 		$('#tab-address{{ address_row }} .form-group').eq($(this).attr('data-sort')).before(this);
@@ -1160,7 +1160,7 @@ $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function
 <?php } ?>
 
 
-<?php foreach ($addresses as $address) { ?>
+{% for address in addresses %}
 $('#tab-customer .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
 		$('#tab-customer .form-group').eq($(this).attr('data-sort')).before(this);

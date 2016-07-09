@@ -9,13 +9,13 @@
     </thead>
     <tbody>
       <?php if ($ips) { ?>
-      <?php foreach ($ips as $ip) { ?>
+      {% for ip in ips %}
       <tr>
-        <td class="text-left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
-        <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
-        <td class="text-left"><?php echo $ip['date_added']; ?></td>      </tr>
+        <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+        <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
+        <td class="text-left">{{ ip.date_added }}</td>      </tr>
       <?php } ?>
-      <?php } else { ?>
+      {% else %}
       <tr>
         <td class="text-center" colspan="3">{{ text_no_results }}</td>
       </tr>

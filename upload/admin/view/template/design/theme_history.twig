@@ -11,16 +11,16 @@
     </thead>
     <tbody>
       <?php if ($histories) { ?>
-      <?php foreach ($histories as $history) { ?>
+      {% for history in histories %}
       <tr>
-        <td class="text-left"><?php echo $history['store']; ?></td>
-        <td class="text-left"><?php echo $history['route']; ?></td>
-        <td class="text-left"><?php echo $history['theme']; ?></td>
-        <td class="text-left"><?php echo $history['date_added']; ?></td>
-        <td class="text-right"><a href="<?php echo $history['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $history['delete']; ?>" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa fa-trash-o"></i></a></td>
+        <td class="text-left">{{ history.store }}</td>
+        <td class="text-left">{{ history.route }}</td>
+        <td class="text-left">{{ history.theme }}</td>
+        <td class="text-left">{{ history.date_added }}</td>
+        <td class="text-right"><a href="{{ history.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ history.delete }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa fa-trash-o"></i></a></td>
       </tr>
       <?php } ?>
-      <?php } else { ?>
+      {% else %}
       <tr>
         <td class="text-center" colspan="5">{{ text_no_results }}</td>
       </tr>

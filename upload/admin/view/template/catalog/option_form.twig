@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <?php foreach ($languages as $language) { ?>
+              {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="option_description[{{ language.language_id }}][name]" value="<?php echo isset($option_description[$language['language_id']]) ? $option_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
               </div>
@@ -45,53 +45,53 @@
                 <optgroup label="{{ text_choose }}">
                 <?php if ($type == 'select') { ?>
                 <option value="select" selected="selected">{{ text_select }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="select">{{ text_select }}</option>
                 <?php } ?>
                 <?php if ($type == 'radio') { ?>
                 <option value="radio" selected="selected">{{ text_radio }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="radio">{{ text_radio }}</option>
                 <?php } ?>
                 <?php if ($type == 'checkbox') { ?>
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_input }}">
                 <?php if ($type == 'text') { ?>
                 <option value="text" selected="selected">{{ text_text }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="text">{{ text_text }}</option>
                 <?php } ?>
                 <?php if ($type == 'textarea') { ?>
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_file }}">
                 <?php if ($type == 'file') { ?>
                 <option value="file" selected="selected">{{ text_file }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="file">{{ text_file }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_date }}">
                 <?php if ($type == 'date') { ?>
                 <option value="date" selected="selected">{{ text_date }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="date">{{ text_date }}</option>
                 <?php } ?>
                 <?php if ($type == 'time') { ?>
                 <option value="time" selected="selected">{{ text_time }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="time">{{ text_time }}</option>
                 <?php } ?>
                 <?php if ($type == 'datetime') { ?>
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
                 <?php } ?>
                 </optgroup>
@@ -115,10 +115,10 @@
             </thead>
             <tbody>
               <?php $option_value_row = 0; ?>
-              <?php foreach ($option_values as $option_value) { ?>
+              {% for option_value in option_values %}
               <tr id="option-value-row{{ option_value_row }}">
                 <td class="text-left"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}" />
-                  <?php foreach ($languages as $language) { ?>
+                  {% for language in languages %}
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                     <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="<?php echo isset($option_value['option_value_description'][$language['language_id']]) ? $option_value['option_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_option_value }}" class="form-control" />
                   </div>
@@ -161,7 +161,7 @@ var option_value_row = {{ option_value_row }};
 function addOptionValue() {
 	html  = '<tr id="option-value-row' + option_value_row + '">';	
     html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
-	<?php foreach ($languages as $language) { ?>
+	{% for language in languages %}
 	html += '    <div class="input-group">';
 	html += '      <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" class="form-control" />';
     html += '    </div>';

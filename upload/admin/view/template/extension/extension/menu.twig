@@ -21,26 +21,26 @@
       </thead>
       <tbody>
         <?php if ($menus) { ?>
-        <?php foreach ($menus as $menu) { ?>
+        {% for menu in menus %}
         <tr>
-          <td class="text-left" colspan="2"><b><?php echo $menu['name']; ?></b></td>
+          <td class="text-left" colspan="2"><b>{{ menu.name }}</b></td>
           <td class="text-right"><?php if (!$menu['installed']) { ?>
-            <a href="<?php echo $menu['install']; ?>" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-            <?php } else { ?>
-            <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+            <a href="{{ menu.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+            {% else %}
+            <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             <?php } ?></td>
         </tr>
         <?php if ($menu['installed']) { ?>
         <?php foreach ($menu['store'] as $store) { ?>
         <tr>
-          <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
-          <td class="text-left"><?php echo $store['status']; ?></td>
-          <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+          <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
+          <td class="text-left">{{ store.status }}</td>
+          <td class="text-right"><a href="{{ store.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
         </tr>
         <?php } ?>
         <?php } ?>
         <?php } ?>
-        <?php } else { ?>
+        {% else %}
         <tr>
           <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>

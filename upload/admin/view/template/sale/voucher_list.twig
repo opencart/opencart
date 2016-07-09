@@ -39,37 +39,37 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'v.code') { ?>
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'v.from_name') { ?>
                     <a href="{{ sort_from }}" class="{{ order|lower }}">{{ column_from }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_from }}">{{ column_from }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'v.to_name') { ?>
                     <a href="{{ sort_to }}" class="{{ order|lower }}">{{ column_to }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_to }}">{{ column_to }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'v.amount') { ?>
                     <a href="{{ sort_amount }}" class="{{ order|lower }}">{{ column_amount }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_amount }}">{{ column_amount }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'theme') { ?>
                     <a href="{{ sort_theme }}" class="{{ order|lower }}">{{ column_theme }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_theme }}">{{ column_theme }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'v.status') { ?>
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'v.date_added') { ?>
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -80,25 +80,25 @@
                 <?php foreach ($vouchers as $voucher) { ?>
                 <tr>
                   <td class="text-center"><?php if (in_array($voucher['voucher_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $voucher['voucher_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $voucher['voucher_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $voucher['code']; ?></td>
-                  <td class="text-left"><?php echo $voucher['from']; ?></td>
-                  <td class="text-left"><?php echo $voucher['to']; ?></td>
-                  <td class="text-right"><?php echo $voucher['amount']; ?></td>
-                  <td class="text-left"><?php echo $voucher['theme']; ?></td>
-                  <td class="text-left"><?php echo $voucher['status']; ?></td>
-                  <td class="text-left"><?php echo $voucher['date_added']; ?></td>
+                  <td class="text-left">{{ voucher.code }}</td>
+                  <td class="text-left">{{ voucher.from }}</td>
+                  <td class="text-left">{{ voucher.to }}</td>
+                  <td class="text-right">{{ voucher.amount }}</td>
+                  <td class="text-left">{{ voucher.theme }}</td>
+                  <td class="text-left">{{ voucher.status }}</td>
+                  <td class="text-left">{{ voucher.date_added }}</td>
                   <td class="text-right">
                   <?php if ($voucher['order']) { ?>
-                  <a href="<?php echo $voucher['order']; ?>" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
+                  <a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
                   <?php } ?>
-                  <a href="<?php echo $voucher['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="9">{{ text_no_results }}</td>
                 </tr>

@@ -24,7 +24,7 @@
   </div>
   <div class="container-fluid" id="main-body">
     <?php if ($error_warning) { ?>
-      <?php foreach ($error_warning as $warning) { ?>
+      {% for warning in error_warning %}
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}
           <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
@@ -110,27 +110,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($products as $product) { ?>
+                {% for product in products %}
                 <tr>
-                  <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+                  <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
                     <?php foreach ($product['option'] as $option) { ?>
                     <br />
                     <?php if ($option['type'] != 'file') { ?>
-                    &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+                    &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                     <?php } ?>
                     <?php } ?></td>
                   <td class="text-left">
                     <?php if (!empty($product['sku'])) { ?>
-                    <?php echo $product['sku']; ?>
-                    <?php } else { ?>
+                    {{ product.sku }}
+                    {% else %}
                     <span class="label label-danger">{{ text_no_sku }}</span>
                     <?php } ?>
                   </td>
-                  <td class="text-right"><?php echo $product['quantity']; ?></td>
+                  <td class="text-right">{{ product.quantity }}</td>
                   <td class="text-right">
                     <?php if ($product['fba'] == 1) { ?>
                     <span class="btn btn-success btn-sm"><i class="fa fa-check fa-fw"></i></span>
-                    <?php } else { ?>
+                    {% else %}
                     <span class="btn btn-danger btn-sm"><i class="fa fa-minus fa-fw"></i></span>
                     <?php } ?>
                   </td>
@@ -159,40 +159,40 @@
                 </thead>
                 <tbody>
                 <?php if (!empty($fulfillments)) { ?>
-                  <?php foreach ($fulfillments as $fulfillment) { ?>
+                  {% for fulfillment in fulfillments %}
                     <tr>
-                      <td class="text-left"><?php echo $fulfillment['fba_order_fulfillment_id']; ?></td>
-                      <td class="text-left"><?php echo $fulfillment['created']; ?></td>
+                      <td class="text-left">{{ fulfillment.fba_order_fulfillment_id }}</td>
+                      <td class="text-left">{{ fulfillment.created }}</td>
                       <td class="text-left"><?php echo $type_options[$fulfillment['type']]; ?></td>
-                      <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>"><?php echo $fulfillment['response_header_code']; ?></label></td>
+                      <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>">{{ fulfillment.response_header_code }}</label></td>
                       <td class="text-right">
-                        <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="{{ text_show_request }}" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
-                        <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="{{ text_show_response }}" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
-                        <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="{{ text_show_errors }}" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="{{ text_show_request }}" class="btn btn-info btn-sm" onclick="$('#request-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="{{ text_show_response }}" class="btn btn-info btn-sm" onclick="$('#response-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="{{ text_show_errors }}" class="btn btn-danger btn-sm" onclick="$('#error-row-{{ fulfillment.fba_order_fulfillment_id }}').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
                       </td>
                     </tr>
-                    <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                    <tr id="error-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
                       <td class="text-left" colspan="4">
                         <?php if (empty($fulfillment['errors'])) { ?>
                         <div class="alert alert-info" style="width:100%;">{{ text_no_errors }}</div>
                         <?php } ?>
                         <?php foreach($fulfillment['errors'] as $fulfillment_error) { ?>
-                        <div class="alert alert-warning" style="width:100%;">(<?php echo $fulfillment_error['code']; ?>) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
+                        <div class="alert alert-warning" style="width:100%;">({{ fulfillment_error.code }}) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
                         <?php } ?>
                       </td>
                     </tr>
-                    <tr id="request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                    <tr id="request-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
                       <td class="text-left" colspan="4">
                         <pre><?php print_r($fulfillment['request_body']); ?></pre>
                       </td>
                     </tr>
-                    <tr id="response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                    <tr id="response-row-{{ fulfillment.fba_order_fulfillment_id }}" style="display:none;">
                       <td class="text-left" colspan="4">
                         <pre><?php print_r($fulfillment['response_body']); ?></pre>
                       </td>
                     </tr>
                   <?php } ?>
-                <?php } else { ?>
+                {% else %}
                   <tr>
                     <td class="text-center" colspan="5">{{ text_no_requests }}</td>
                   </tr>

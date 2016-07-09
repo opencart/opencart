@@ -34,16 +34,16 @@
         </thead>
         <tbody>
         <?php if ($templates) { ?>
-          <?php foreach ($templates as $template) { ?>
+          {% for template in templates %}
             <tr>
-              <td class="text-left"><?php echo $template['name']; ?></td>
+              <td class="text-left">{{ template.name }}</td>
               <td class="text-right">
-                <a href="<?php echo $template['link_edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
-                <a href="<?php echo $template['link_delete']; ?>" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
+                <a href="{{ template.link_edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
+                <a href="{{ template.link_delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
               </td>
             </tr>
           <?php } ?>
-        <?php } else { ?>
+        {% else %}
           <tr>
             <td class="text-center" colspan="2">{{ text_no_results }}</td>
           </tr>

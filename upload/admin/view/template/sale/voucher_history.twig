@@ -12,13 +12,13 @@
       <?php if ($histories) { ?>
       <?php foreach ($histories as $history) { ?>
       <tr>
-        <td class="text-right"><?php echo $history['order_id']; ?></td>
-        <td class="text-left"><?php echo $history['customer']; ?></td>
-        <td class="text-right"><?php echo $history['amount']; ?></td>
-        <td class="text-left"><?php echo $history['date_added']; ?></td>
+        <td class="text-right">{{ history.order_id }}</td>
+        <td class="text-left">{{ history.customer }}</td>
+        <td class="text-right">{{ history.amount }}</td>
+        <td class="text-left">{{ history.date_added }}</td>
       </tr>
       <?php } ?>
-      <?php } else { ?>
+      {% else %}
       <tr>
         <td class="text-center" colspan="4">{{ text_no_results }}</td>
       </tr>

@@ -57,12 +57,12 @@
                   <select name="type" id="input-type" class="form-control">
                     <?php if ($type == 'P') { ?>
                     <option value="P" selected="selected">{{ text_percent }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="P">{{ text_percent }}</option>
                     <?php } ?>
                     <?php if ($type == 'F') { ?>
                     <option value="F" selected="selected">{{ text_amount }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="F">{{ text_amount }}</option>
                     <?php } ?>
                   </select>
@@ -87,7 +87,7 @@
                     <?php if ($logged) { ?>
                     <input type="radio" name="logged" value="1" checked="checked" />
                     {{ text_yes }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="logged" value="1" />
                     {{ text_yes }}
                     <?php } ?>
@@ -96,7 +96,7 @@
                     <?php if (!$logged) { ?>
                     <input type="radio" name="logged" value="0" checked="checked" />
                     {{ text_no }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="logged" value="0" />
                     {{ text_no }}
                     <?php } ?>
@@ -110,7 +110,7 @@
                     <?php if ($shipping) { ?>
                     <input type="radio" name="shipping" value="1" checked="checked" />
                     {{ text_yes }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="shipping" value="1" />
                     {{ text_yes }}
                     <?php } ?>
@@ -119,7 +119,7 @@
                     <?php if (!$shipping) { ?>
                     <input type="radio" name="shipping" value="0" checked="checked" />
                     {{ text_no }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="radio" name="shipping" value="0" />
                     {{ text_no }}
                     <?php } ?>
@@ -132,8 +132,8 @@
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
                   <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
                     <?php foreach ($coupon_product as $coupon_product) { ?>
-                    <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_product['name']; ?>
-                      <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
+                    <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
+                      <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
                     </div>
                     <?php } ?>
                   </div>
@@ -145,8 +145,8 @@
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
                   <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;">
                     <?php foreach ($coupon_category as $coupon_category) { ?>
-                    <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_category['name']; ?>
-                      <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
+                    <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
+                      <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
                     </div>
                     <?php } ?>
                   </div>
@@ -191,7 +191,7 @@
                     <?php if ($status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>

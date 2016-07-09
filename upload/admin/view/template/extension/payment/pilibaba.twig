@@ -34,7 +34,7 @@
 		    <?php if ($show_register) { ?>
 		      <li class="active" id="li-tab-register"><a href="#tab-register" data-toggle="tab">{{ tab_register }}</a></li>
 		      <li id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
-			<?php } else { ?>
+			{% else %}
 		      <li class="active" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
 			<?php } ?>
 		  </ul>
@@ -57,7 +57,7 @@
 			    <div class="col-sm-10">
 			      <select name="pilibaba_currency" id="input-pilibaba-currency" class="form-control">
 			      	<option value="">Select Currency</option>
-			        <?php foreach ($currencies as $currency) { ?>
+			        {% for currency in currencies %}
 			        <option value="{{ currency }}">{{ currency }}</option>
 			        <?php } ?>
 			      </select>
@@ -68,8 +68,8 @@
 			    <div class="col-sm-10">
 			      <select name="pilibaba_warehouse" id="input-pilibaba-warehouse" class="form-control">
 			      	<option value="">Select Warehouse</option>
-			        <?php foreach ($warehouses as $warehouse) { ?>
-			        <option value="<?php echo $warehouse['id']; ?>"><?php echo $warehouse['country'] . ' ' . $warehouse['city'] . ' ' . $warehouse['firstName'] . ' ' . $warehouse['lastName']; ?></option>
+			        {% for warehouse in warehouses %}
+			        <option value="{{ warehouse.id }}"><?php echo $warehouse['country'] . ' ' . $warehouse['city'] . ' ' . $warehouse['firstName'] . ' ' . $warehouse['lastName']; ?></option>
 			        <?php } ?>
 			        <option value="other">{{ text_other }}</option>
 			      </select>
@@ -80,8 +80,8 @@
 			    <div class="col-sm-10">
 			      <select name="pilibaba_country" id="input-pilibaba-country" class="form-control">
 			      	<option value="">Select Country</option>
-			        <?php foreach ($countries as $country) { ?>
-			        <option value="<?php echo $country['iso_code_3']; ?>"><?php echo $country['name']; ?></option>
+			        {% for country in countries %}
+			        <option value="{{ country.iso_code_3 }}">{{ country.name }}</option>
 			        <?php } ?>
 			      </select>
 			    </div>
@@ -121,12 +121,12 @@
                   <select name="pilibaba_environment" id="input-pilibaba-environment" class="form-control">
                     <?php if ($pilibaba_environment == 'live') { ?>
                     <option value="live" selected="selected">{{ text_live }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="live">{{ text_live }}</option>
                     <?php } ?>
                     <?php if ($pilibaba_environment == 'test') { ?>
                     <option value="test" selected="selected">{{ text_test }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="test">{{ text_test }}</option>
                     <?php } ?>
                   </select>
@@ -145,11 +145,11 @@
                 <label class="col-sm-2 control-label" for="input-pilibaba-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
                 <div class="col-sm-10">
                   <select name="pilibaba_order_status_id" id="input-pilibaba-order-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pilibaba_order_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -162,7 +162,7 @@
                     <?php if ($pilibaba_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -176,7 +176,7 @@
                     <?php if ($pilibaba_logging) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>

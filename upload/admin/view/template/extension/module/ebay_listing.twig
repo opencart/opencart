@@ -50,7 +50,7 @@
                 <?php if ($ebay_listing_description) { ?>
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
                 <?php } ?>
@@ -87,12 +87,12 @@
               <select name="ebay_listing_sort" id="input-sort" class="form-control">
                 <?php if ($ebay_listing_sort == 'StartTimeNewest') { ?>
                 <option value="StartTimeNewest" selected>{{ text_latest }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="StartTimeNewest">{{ text_latest }}</option>
                 <?php } ?>
                 <?php if ($ebay_listing_sort == 'random') { ?>
                 <option value="random" selected>{{ text_random }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="random">{{ text_random }}</option>
                 <?php } ?>
               </select>
@@ -104,9 +104,9 @@
               <select name="ebay_listing_site" id="input-site" class="form-control">
                 <?php foreach($sites as $site) { ?>
                 <?php if ($site['value'] == $ebay_listing_site) { ?>
-                <option value="<?php echo $site['value']; ?>" selected><?php echo $site['text']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $site['value']; ?>"><?php echo $site['text']; ?></option>
+                <option value="{{ site.value }}" selected>{{ site.text }}</option>
+                {% else %}
+                <option value="{{ site.value }}">{{ site.text }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -119,7 +119,7 @@
                 <?php if ($ebay_listing_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

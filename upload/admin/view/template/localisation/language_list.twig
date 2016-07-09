@@ -37,17 +37,17 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'name') { ?>
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'code') { ?>
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'sort_order') { ?>
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -58,17 +58,17 @@
                 <?php foreach ($languages as $language) { ?>
                 <tr>
                   <td class="text-center"><?php if (in_array($language['language_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $language['language_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $language['language_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ language.language_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ language.language_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $language['name']; ?></td>
-                  <td class="text-left"><?php echo $language['code']; ?></td>
-                  <td class="text-right"><?php echo $language['sort_order']; ?></td>
-                  <td class="text-right"><a href="<?php echo $language['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ language.name }}</td>
+                  <td class="text-left">{{ language.code }}</td>
+                  <td class="text-right">{{ language.sort_order }}</td>
+                  <td class="text-right"><a href="{{ language.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>

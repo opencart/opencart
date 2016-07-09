@@ -58,16 +58,16 @@
               <?php if ($affiliates) { ?>
               <?php foreach ($affiliates as $affiliate) { ?>
               <tr>
-                <td class="text-left"><?php echo $affiliate['affiliate']; ?></td>
-                <td class="text-left"><?php echo $affiliate['email']; ?></td>
-                <td class="text-left"><?php echo $affiliate['status']; ?></td>
-                <td class="text-right"><?php echo $affiliate['commission']; ?></td>
-                <td class="text-right"><?php echo $affiliate['orders']; ?></td>
-                <td class="text-right"><?php echo $affiliate['total']; ?></td>
-                <td class="text-right"><a href="<?php echo $affiliate['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-left">{{ affiliate.affiliate }}</td>
+                <td class="text-left">{{ affiliate.email }}</td>
+                <td class="text-left">{{ affiliate.status }}</td>
+                <td class="text-right">{{ affiliate.commission }}</td>
+                <td class="text-right">{{ affiliate.orders }}</td>
+                <td class="text-right">{{ affiliate.total }}</td>
+                <td class="text-right"><a href="{{ affiliate.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>
               </tr>

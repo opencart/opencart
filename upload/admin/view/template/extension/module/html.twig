@@ -36,23 +36,23 @@
           </div>         
           <div class="tab-pane">
             <ul class="nav nav-tabs" id="language">
-              <?php foreach ($languages as $language) { ?>
-              <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+              {% for language in languages %}
+              <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
               <?php } ?>
             </ul>
             <div class="tab-content">
-              <?php foreach ($languages as $language) { ?>
-              <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+              {% for language in languages %}
+              <div class="tab-pane" id="language{{ language.language_id }}">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-title<?php echo $language['language_id']; ?>">{{ entry_title }}</label>
+                  <label class="col-sm-2 control-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="module_description[<?php echo $language['language_id']; ?>][title]" placeholder="{{ entry_title }}" id="input-heading<?php echo $language['language_id']; ?>" value="<?php echo isset($module_description[$language['language_id']]['title']) ? $module_description[$language['language_id']]['title'] : ''; ?>" class="form-control" />
+                    <input type="text" name="module_description[{{ language.language_id }}][title]" placeholder="{{ entry_title }}" id="input-heading{{ language.language_id }}" value="<?php echo isset($module_description[$language['language_id']]['title']) ? $module_description[$language['language_id']]['title'] : ''; ?>" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>">{{ entry_description }}</label>
+                  <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                   <div class="col-sm-10">
-                    <textarea name="module_description[<?php echo $language['language_id']; ?>][description]" placeholder="{{ entry_description }}" id="input-description<?php echo $language['language_id']; ?>" class="form-control summernote"><?php echo isset($module_description[$language['language_id']]['description']) ? $module_description[$language['language_id']]['description'] : ''; ?></textarea>
+                    <textarea name="module_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote"><?php echo isset($module_description[$language['language_id']]['description']) ? $module_description[$language['language_id']]['description'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@
                 <?php if ($status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

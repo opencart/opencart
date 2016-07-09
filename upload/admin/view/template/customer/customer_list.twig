@@ -46,11 +46,11 @@
                 <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                   <option value="*"></option>
-                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  {% for customer_group in customer_groups %}
                   <?php if ($customer_group['customer_group_id'] == $filter_customer_group_id) { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                  <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                  {% else %}
+                  <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -61,12 +61,12 @@
                   <option value="*"></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <?php } ?>
                   <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="0">{{ text_disabled }}</option>
                   <?php } ?>
                 </select>
@@ -79,12 +79,12 @@
                   <option value="*"></option>
                   <?php if ($filter_approved) { ?>
                   <option value="1" selected="selected">{{ text_yes }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_yes }}</option>
                   <?php } ?>
                   <?php if (!$filter_approved && !is_null($filter_approved)) { ?>
                   <option value="0" selected="selected">{{ text_no }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="0">{{ text_no }}</option>
                   <?php } ?>
                 </select>
@@ -115,32 +115,32 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'name') { ?>
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'c.email') { ?>
                     <a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_email }}">{{ column_email }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'customer_group') { ?>
                     <a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'c.status') { ?>
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'c.ip') { ?>
                     <a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_ip }}">{{ column_ip }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'c.date_added') { ?>
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -148,42 +148,42 @@
               </thead>
               <tbody>
                 <?php if ($customers) { ?>
-                <?php foreach ($customers as $customer) { ?>
+                {% for customer in customers %}
                 <tr>
                   <td class="text-center"><?php if (in_array($customer['customer_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $customer['name']; ?></td>
-                  <td class="text-left"><?php echo $customer['email']; ?></td>
-                  <td class="text-left"><?php echo $customer['customer_group']; ?></td>
-                  <td class="text-left"><?php echo $customer['status']; ?></td>
-                  <td class="text-left"><?php echo $customer['ip']; ?></td>
-                  <td class="text-left"><?php echo $customer['date_added']; ?></td>
+                  <td class="text-left">{{ customer.name }}</td>
+                  <td class="text-left">{{ customer.email }}</td>
+                  <td class="text-left">{{ customer.customer_group }}</td>
+                  <td class="text-left">{{ customer.status }}</td>
+                  <td class="text-left">{{ customer.ip }}</td>
+                  <td class="text-left">{{ customer.date_added }}</td>
                   <td class="text-right"><?php if ($customer['approve']) { ?>
-                    <a href="<?php echo $customer['approve']; ?>" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
-                    <?php } else { ?>
+                    <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
+                    {% else %}
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     <?php } ?>
                     <div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
                       <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
                       <ul class="dropdown-menu pull-right">
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id=<?php echo $customer['customer_id']; ?>&store_id=0" target="_blank">{{ text_default }}</a></li>
-                        <?php foreach ($stores as $store) { ?>
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id=<?php echo $customer['customer_id']; ?>&store_id=<?php echo $store['store_id']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
+                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
+                        {% for store in stores %}
+                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
                         <?php } ?>
                       </ul>
                     </div>
                     <?php if ($customer['unlock']) { ?>
-                    <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
-                    <?php } else { ?>
+                    <a href="{{ customer.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                    {% else %}
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
                     <?php } ?>
-                    <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>

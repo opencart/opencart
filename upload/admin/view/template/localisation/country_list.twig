@@ -37,17 +37,17 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'name') { ?>
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'iso_code_2') { ?>
                     <a href="{{ sort_iso_code_2 }}" class="{{ order|lower }}">{{ column_iso_code_2 }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_iso_code_2 }}">{{ column_iso_code_2 }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'iso_code_3') { ?>
                     <a href="{{ sort_iso_code_3 }}" class="{{ order|lower }}">{{ column_iso_code_3 }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_iso_code_3 }}">{{ column_iso_code_3 }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -58,17 +58,17 @@
                 <?php foreach ($countries as $country) { ?>
                 <tr>
                   <td class="text-center"><?php if (in_array($country['country_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ country.country_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ country.country_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $country['name']; ?></td>
-                  <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
-                  <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
-                  <td class="text-right"><a href="<?php echo $country['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ country.name }}</td>
+                  <td class="text-left">{{ country.iso_code_2 }}</td>
+                  <td class="text-left">{{ country.iso_code_3 }}</td>
+                  <td class="text-right"><a href="{{ country.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>

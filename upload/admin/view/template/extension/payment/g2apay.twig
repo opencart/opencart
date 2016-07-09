@@ -65,7 +65,7 @@
 					<?php if ($g2apay_environment) { ?>
 						<option value="1" selected="selected">{{ g2apay_environment_live }}</option>
 						<option value="0">{{ g2apay_environment_test }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="1">{{ g2apay_environment_live }}</option>
 						<option value="0" selected="selected">{{ g2apay_environment_test }}</option>
 					<?php } ?>
@@ -97,11 +97,11 @@
 				<div class="col-sm-10">
 				  <select name="g2apay_geo_zone_id" id="input-geo-zone" class="form-control">
 					<option value="0">{{ text_all_zones }}</option>
-					<?php foreach ($geo_zones as $geo_zone) { ?>
+					{% for geo_zone in geo_zones %}
 						<?php if ($geo_zone['geo_zone_id'] == $g2apay_geo_zone_id) { ?>
-							<option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+							<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+						{% else %}
+							<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -114,7 +114,7 @@
 					<?php if ($g2apay_debug) { ?>
 						<option value="1" selected="selected">{{ text_enabled }}</option>
 						<option value="0">{{ text_disabled }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="1">{{ text_enabled }}</option>
 						<option value="0" selected="selected">{{ text_disabled }}</option>
 					<?php } ?>
@@ -129,7 +129,7 @@
 					<?php if ($g2apay_status) { ?>
 						<option value="1" selected="selected">{{ text_enabled }}</option>
 						<option value="0">{{ text_disabled }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="1">{{ text_enabled }}</option>
 						<option value="0" selected="selected">{{ text_disabled }}</option>
 					<?php } ?>
@@ -148,11 +148,11 @@
 				<label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_order_status_id" id="input-order-status" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_order_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -162,11 +162,11 @@
 				<label class="col-sm-2 control-label">{{ entry_complete_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_complete_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_complete_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -176,11 +176,11 @@
 				<label class="col-sm-2 control-label">{{ entry_rejected_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_rejected_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_rejected_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -190,11 +190,11 @@
 				<label class="col-sm-2 control-label">{{ entry_cancelled_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_cancelled_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_cancelled_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -204,11 +204,11 @@
 				<label class="col-sm-2 control-label">{{ entry_pending_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_pending_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_pending_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -218,11 +218,11 @@
 				<label class="col-sm-2 control-label">{{ entry_refunded_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_refunded_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_refunded_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>
@@ -232,11 +232,11 @@
 				<label class="col-sm-2 control-label">{{ entry_partially_refunded_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_partially_refunded_status_id" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
+					{% for order_status in order_statuses %}
 						<?php if ($order_status['order_status_id'] == $g2apay_partially_refunded_status_id) { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-						<?php } else { ?>
-							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+							<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+						{% else %}
+							<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 						<?php } ?>
 					<?php } ?>
 				  </select>

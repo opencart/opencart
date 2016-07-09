@@ -24,7 +24,7 @@
 		<input type="hidden" value="{{ sp_id }}" name="spId">
 		<input type="hidden" value="{{ unique_id }}" name="uniqueId">
 		<input type="hidden" value="{{ allowed_login_domain }}" name="allowedLoginDomains[]">
-		<?php foreach ($login_redirect_urls as $login_redirect_url) { ?>
+		{% for login_redirect_url in login_redirect_urls %}
 			<input type="hidden" value="{{ login_redirect_url }}" name="loginRedirectURLs[]">
 		<?php } ?>
 		<input type="hidden" value="{{ store_name }}" name="storeDescription">
@@ -54,10 +54,10 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-payment-region">{{ entry_payment_region }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
-				<?php foreach ($payment_regions as $payment_region_code => $payment_region_name) { ?>
+				{% for payment_region_code => $payment_region_name in payment_regions %}
 					<?php if ($payment_region_code == $amazon_login_pay_payment_region) { ?>
 						<option value="{{ payment_region_code }}" selected="selected">{{ payment_region_name }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="{{ payment_region_code }}">{{ payment_region_name }}</option>
 					<?php } ?>
 				<?php } ?>
@@ -68,10 +68,10 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-language">{{ entry_language }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_language" id="amazon-login-pay-language" class="form-control">
-				<?php foreach ($languages as $language_code => $language_name) { ?>
+				{% for language_code => $language_name in languages %}
 					<?php if ($language_code == $amazon_login_pay_language) { ?>
 						<option value="{{ language_code }}" selected="selected">{{ language_name }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="{{ language_code }}">{{ language_name }}</option>
 					<?php } ?>
 				<?php } ?>
@@ -132,12 +132,12 @@
 			  <select name="amazon_login_pay_test" id="amazon-login-pay-test" class="form-control">
 				<?php if ($amazon_login_pay_test == 'sandbox') { ?>
 					<option value="sandbox" selected="selected">{{ text_sandbox }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="sandbox">{{ text_sandbox }}</option>
 				<?php } ?>
 				<?php if ($amazon_login_pay_test == 'live') { ?>
 					<option value="live" selected="selected">{{ text_live }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="live">{{ text_live }}</option>
 				<?php } ?>
 			  </select>
@@ -149,12 +149,12 @@
 			  <select name="amazon_login_pay_mode" id="amazon-login-pay-mode" class="form-control">
 				<?php if ($amazon_login_pay_mode == 'payment') { ?>
 					<option value="payment" selected="selected">{{ text_payment }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="payment">{{ text_payment }}</option>
 				<?php } ?>
 				<?php if ($amazon_login_pay_mode == 'auth') { ?>
 					<option value="auth" selected="selected">{{ text_auth }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="auth">{{ text_auth }}</option>
 				<?php } ?>
 			  </select>
@@ -166,12 +166,12 @@
 			  <select name="amazon_login_pay_checkout" id="amazon-login-checkout-mode" class="form-control">
 				<?php if ($amazon_login_pay_checkout == 'account') { ?>
 					<option value="account" selected="selected">{{ text_account }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="account">{{ text_account }}</option>
 				<?php } ?>
 				<?php if ($amazon_login_pay_checkout == 'guest') { ?>
 					<option value="guest" selected="selected">{{ text_guest }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="guest">{{ text_guest }}</option>
 				<?php } ?>
 			  </select>
@@ -182,11 +182,11 @@
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_capture_status" id="amazon-login-pay-capturet-status" class="form-control">
 				<option value="">{{ text_no_capture }}</option>
-				<?php foreach ($order_statuses as $order_status) { ?>
+				{% for order_status in order_statuses %}
 					<?php if ($order_status['order_status_id'] == $amazon_login_pay_capture_status) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?>
 				<?php } ?>
 			  </select>
@@ -196,11 +196,11 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-pending-status">{{ entry_pending_status }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_pending_status" id="amazon-login-pay-pendingt-status" class="form-control">
-				<?php foreach ($order_statuses as $order_status) { ?>
+				{% for order_status in order_statuses %}
 					<?php if ($order_status['order_status_id'] == $amazon_login_pay_pending_status) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?>
 				<?php } ?>
 			  </select>
@@ -235,14 +235,14 @@
 			  <select name="amazon_login_pay_geo_zone" id="amazon-login-pay-geo-zone" class="form-control">
 				<?php if ($amazon_login_pay_geo_zone == 0) { ?>
 					<option value="0" selected="selected">{{ text_all_geo_zones }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="0">{{ text_all_geo_zones }}</option>
 				<?php } ?>
-				<?php foreach ($geo_zones as $geo_zone) { ?>
+				{% for geo_zone in geo_zones %}
 					<?php if ($amazon_login_pay_geo_zone == $geo_zone['geo_zone_id']) { ?>
-						<option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+						<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+					{% else %}
+						<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
 					<?php } ?>
 				<?php } ?>
 			  </select>
@@ -255,7 +255,7 @@
 				<?php if ($amazon_login_pay_debug) { ?>
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="1">{{ text_enabled }}</option>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
 				<?php } ?>
@@ -274,12 +274,12 @@
 			  <select name="amazon_login_pay_status" id="amazon-login-pay-status" class="form-control">
 				<?php if ($amazon_login_pay_status == 1) { ?>
 					<option value="1" selected="selected">{{ text_enabled }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="1">{{ text_enabled }}</option>
 				<?php } ?>
 				<?php if ($amazon_login_pay_status == 0) { ?>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="0">{{ text_disabled }}</option>
 				<?php } ?>
 			  </select>
@@ -290,10 +290,10 @@
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_declined_code" id="amazon-login-pay-declined_code" class="form-control">
 				<option value="">{{ text_amazon_no_declined }}</option>
-				<?php foreach ($declined_codes as $declined_code) { ?>
+				{% for declined_code in declined_codes %}
 					<?php if ($amazon_login_pay_declined_code == $declined_code) { ?>
 						<option value="{{ declined_code }}" selected="selected">{{ declined_code }}</option>
-					<?php } else { ?>
+					{% else %}
 						<option value="{{ declined_code }}">{{ declined_code }}</option>
 					<?php } ?>
 				<?php } ?>

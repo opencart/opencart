@@ -112,7 +112,7 @@
                       <?php if ($status) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                       <?php } ?>
@@ -174,9 +174,9 @@
                       <option value="">{{ text_select }}</option>
                       <?php foreach ($countries as $country) { ?>
                       <?php if ($country['country_id'] == $country_id) { ?>
-                      <option value="<?php echo $country['country_id']; ?>" selected="selected"> <?php echo $country['name']; ?> </option>
-                      <?php } else { ?>
-                      <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                      <option value="{{ country.country_id }}" selected="selected"> {{ country.name }} </option>
+                      {% else %}
+                      <option value="{{ country.country_id }}">{{ country.name }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -217,7 +217,7 @@
                     <label>
                       <?php if ($payment == 'cheque') { ?>
                       <input type="radio" name="payment" value="cheque" checked="checked" />
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="payment" value="cheque" />
                       <?php } ?>
                       {{ text_cheque }}</label>
@@ -226,7 +226,7 @@
                     <label>
                       <?php if ($payment == 'paypal') { ?>
                       <input type="radio" name="payment" value="paypal" checked="checked" />
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="payment" value="paypal" />
                       <?php } ?>
                       {{ text_paypal }}</label>
@@ -235,7 +235,7 @@
                     <label>
                       <?php if ($payment == 'bank') { ?>
                       <input type="radio" name="payment" value="bank" checked="checked" />
-                      <?php } else { ?>
+                      {% else %}
                       <input type="radio" name="payment" value="bank" />
                       <?php } ?>
                       {{ text_bank }}</label>

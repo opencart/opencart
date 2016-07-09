@@ -38,9 +38,9 @@
                 <option value="0">{{ text_none }}</option>
                 <?php foreach ($tax_classes as $tax_class) { ?>
                 <?php if ($tax_class['tax_class_id'] == $item_tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                {% else %}
+                <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -53,9 +53,9 @@
                 <option value="0">{{ text_all_zones }}</option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php if ($geo_zone['geo_zone_id'] == $item_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -68,7 +68,7 @@
                 <?php if ($item_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

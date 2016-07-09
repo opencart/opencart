@@ -25,12 +25,12 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-bank-transfer" class="form-horizontal">
-          <?php foreach ($languages as $language) { ?>
+          {% for language in languages %}
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-bank<?php echo $language['language_id']; ?>">{{ entry_bank }}</label>
+            <label class="col-sm-2 control-label" for="input-bank{{ language.language_id }}">{{ entry_bank }}</label>
             <div class="col-sm-10">
-              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                <textarea name="bank_transfer_bank<?php echo $language['language_id']; ?>" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
+              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <textarea name="bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
               </div>
               <?php if (${'error_bank' . $language['language_id']}) { ?>
               <div class="text-danger"><?php echo ${'error_bank' . $language['language_id']}; ?></div>
@@ -48,11 +48,11 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="bank_transfer_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $bank_transfer_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -63,11 +63,11 @@
             <div class="col-sm-10">
               <select name="bank_transfer_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $bank_transfer_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -80,7 +80,7 @@
                 <?php if ($bank_transfer_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

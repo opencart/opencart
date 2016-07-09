@@ -52,7 +52,7 @@
                     <?php if ($openbay_fba_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -66,7 +66,7 @@
                     <?php if ($openbay_fba_debug_log) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -80,7 +80,7 @@
                     <?php if ($openbay_fba_send_orders) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -94,7 +94,7 @@
                     <?php if ($openbay_fba_only_fill_complete) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -112,7 +112,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_fulfill_policy"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_fulfill_policy }}">{{ entry_fulfill_policy }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_fulfill_policy" id="openbay_fba_fulfill_policy" class="form-control ftpsetting">
-                    <?php foreach ($fulfillment_policy as $code => $fulfillment_policy_option) { ?>
+                    {% for code => $fulfillment_policy_option in fulfillment_policy %}
                     <option value="<?php echo $code;?>" <?php echo ($openbay_fba_fulfill_policy == $code ? 'selected="selected"' : '') ?>>{{ fulfillment_policy_option }}</option>
                     <?php } ?>
                   </select>
@@ -122,7 +122,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_shipping_speed"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_shipping_speed }}">{{ entry_shipping_speed }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_shipping_speed" id="openbay_fba_shipping_speed" class="form-control ftpsetting">
-                    <?php foreach ($shipping_speed as $code => $shipping_speed_option) { ?>
+                    {% for code => $shipping_speed_option in shipping_speed %}
                       <option value="<?php echo $code;?>" <?php echo ($openbay_fba_shipping_speed == $code ? 'selected="selected"' : '') ?>>{{ shipping_speed_option }}</option>
                     <?php } ?>
                   </select>
@@ -132,8 +132,8 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_order_trigger_status"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_new_order_status }}">{{ entry_new_order_status }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
-                    <?php foreach ($order_statuses as $status) { ?>
-                    <option value="<?php echo $status['order_status_id']; ?>" <?php echo ($openbay_fba_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>><?php echo $status['name']; ?></option>
+                    {% for status in order_statuses %}
+                    <option value="{{ status.order_status_id }}" <?php echo ($openbay_fba_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>>{{ status.name }}</option>
                     <?php } ?>
                   </select>
                 </div>

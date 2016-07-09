@@ -33,12 +33,12 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <ul class="nav nav-tabs" id="language">
-                <?php foreach ($languages as $language) { ?>
+                {% for language in languages %}
                 <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
                 <?php } ?>
               </ul>
               <div class="tab-content">
-                <?php foreach ($languages as $language) { ?>
+                {% for language in languages %}
                 <div class="tab-pane" id="language{{ language.language_id }}">
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
@@ -93,19 +93,19 @@
                         <?php if (in_array(0, $information_store)) { ?>
                         <input type="checkbox" name="information_store[]" value="0" checked="checked" />
                         {{ text_default }}
-                        <?php } else { ?>
+                        {% else %}
                         <input type="checkbox" name="information_store[]" value="0" />
                         {{ text_default }}
                         <?php } ?>
                       </label>
                     </div>
-                    <?php foreach ($stores as $store) { ?>
+                    {% for store in stores %}
                     <div class="checkbox">
                       <label>
                         <?php if (in_array($store['store_id'], $information_store)) { ?>
                         <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" checked="checked" />
                         {{ store.name }}
-                        <?php } else { ?>
+                        {% else %}
                         <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" />
                         {{ store.name }}
                         <?php } ?>
@@ -131,7 +131,7 @@
                     <label>
                       <?php if ($bottom) { ?>
                       <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
-                      <?php } else { ?>
+                      {% else %}
                       <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                       <?php } ?>
                       &nbsp; </label>
@@ -145,7 +145,7 @@
                     <?php if ($status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -173,24 +173,24 @@
                       <td class="text-left">{{ text_default }}</td>
                       <td class="text-left"><select name="information_layout[0]" class="form-control">
                           <option value=""></option>
-                          <?php foreach ($layouts as $layout) { ?>
+                          {% for layout in layouts %}
                           <?php if (isset($information_layout[0]) && $information_layout[0] == $layout['layout_id']) { ?>
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                          <?php } else { ?>
+                          {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
                           <?php } ?>
                           <?php } ?>
                         </select></td>
                     </tr>
-                    <?php foreach ($stores as $store) { ?>
+                    {% for store in stores %}
                     <tr>
                       <td class="text-left">{{ store.name }}</td>
                       <td class="text-left"><select name="information_layout[{{ store.store_id }}]" class="form-control">
                           <option value=""></option>
-                          <?php foreach ($layouts as $layout) { ?>
+                          {% for layout in layouts %}
                           <?php if (isset($information_layout[$store['store_id']]) && $information_layout[$store['store_id']] == $layout['layout_id']) { ?>
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                          <?php } else { ?>
+                          {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
                           <?php } ?>
                           <?php } ?>

@@ -21,8 +21,8 @@
     <?php if ($account_info != false) { ?>
       <?php if ($account_info['header_code'] == 200) { ?>
         <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_account_ok }}</div>
-      <?php } else { ?>
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_info }} (<?php echo $account_info['header_code']; ?>)</div>
+      {% else %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_info }} ({{ account_info.header_code }})</div>
       <?php } ?>
     <?php } ?>
     <div class="panel panel-default">
@@ -43,7 +43,7 @@
                 <?php if ($etsy_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>
@@ -81,7 +81,7 @@
                 <?php if ($etsy_logging) { ?>
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
                 <?php } ?>
@@ -99,7 +99,7 @@
             <div class="col-sm-10">
               <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
                 <?php if (empty($etsy_order_status_new)) { $etsy_order_status_new = 1; } ?>
-                <?php foreach ($order_statuses as $status) { ?>
+                {% for status in order_statuses %}
                 <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_new == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                 <?php } ?>
               </select>
@@ -110,7 +110,7 @@
             <div class="col-sm-10">
               <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
                 <?php if (empty($etsy_order_status_paid)) { $etsy_order_status_paid = 2; } ?>
-                <?php foreach ($order_statuses as $status) { ?>
+                {% for status in order_statuses %}
                 <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_paid == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                 <?php } ?>
               </select>
@@ -121,7 +121,7 @@
             <div class="col-sm-10">
               <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
                 <?php if (empty($etsy_order_status_shipped)) { $etsy_order_status_shipped = 3; } ?>
-                <?php foreach ($order_statuses as $status) { ?>
+                {% for status in order_statuses %}
                 <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_shipped == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                 <?php } ?>
               </select>

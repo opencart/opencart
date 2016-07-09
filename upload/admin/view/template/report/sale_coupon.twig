@@ -56,14 +56,14 @@
               <?php if ($coupons) { ?>
               <?php foreach ($coupons as $coupon) { ?>
               <tr>
-                <td class="text-left"><?php echo $coupon['name']; ?></td>
-                <td class="text-left"><?php echo $coupon['code']; ?></td>
-                <td class="text-right"><?php echo $coupon['orders']; ?></td>
-                <td class="text-right"><?php echo $coupon['total']; ?></td>
-                <td class="text-right"><a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-left">{{ coupon.name }}</td>
+                <td class="text-left">{{ coupon.code }}</td>
+                <td class="text-right">{{ coupon.orders }}</td>
+                <td class="text-right">{{ coupon.total }}</td>
+                <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>
               </tr>

@@ -40,9 +40,9 @@
               <select name="user_group_id" id="input-user-group" class="form-control">
                 <?php foreach ($user_groups as $user_group) { ?>
                 <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
-                <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
+                <option value="{{ user_group.user_group_id }}" selected="selected">{{ user_group.name }}</option>
+                {% else %}
+                <option value="{{ user_group.user_group_id }}">{{ user_group.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -106,7 +106,7 @@
                 <?php if ($status) { ?>
                 <option value="0">{{ text_disabled }}</option>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <option value="1">{{ text_enabled }}</option>
                 <?php } ?>

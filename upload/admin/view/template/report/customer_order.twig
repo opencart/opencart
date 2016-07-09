@@ -47,9 +47,9 @@
                   <option value="0">{{ text_all_status }}</option>
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -76,17 +76,17 @@
               <?php if ($customers) { ?>
               <?php foreach ($customers as $customer) { ?>
               <tr>
-                <td class="text-left"><?php echo $customer['customer']; ?></td>
-                <td class="text-left"><?php echo $customer['email']; ?></td>
-                <td class="text-left"><?php echo $customer['customer_group']; ?></td>
-                <td class="text-left"><?php echo $customer['status']; ?></td>
-                <td class="text-right"><?php echo $customer['orders']; ?></td>
-                <td class="text-right"><?php echo $customer['products']; ?></td>
-                <td class="text-right"><?php echo $customer['total']; ?></td>
-                <td class="text-right"><a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-left">{{ customer.customer }}</td>
+                <td class="text-left">{{ customer.email }}</td>
+                <td class="text-left">{{ customer.customer_group }}</td>
+                <td class="text-left">{{ customer.status }}</td>
+                <td class="text-right">{{ customer.orders }}</td>
+                <td class="text-right">{{ customer.products }}</td>
+                <td class="text-right">{{ customer.total }}</td>
+                <td class="text-right"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="8">{{ text_no_results }}</td>
               </tr>

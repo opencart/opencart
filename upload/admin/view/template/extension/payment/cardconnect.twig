@@ -78,12 +78,12 @@
                   <select name="cardconnect_transaction" id="input-cardconnect-transaction" class="form-control">
                     <?php if ($cardconnect_transaction == 'payment') { ?>
                     <option value="payment" selected="selected">{{ text_payment }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="payment">{{ text_payment }}</option>
                     <?php } ?>
                     <?php if ($cardconnect_transaction == 'authorize') { ?>
                     <option value="authorize" selected="selected">{{ text_authorize }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="authorize">{{ text_authorize }}</option>
                     <?php } ?>
                   </select>
@@ -104,12 +104,12 @@
                   <select name="cardconnect_environment" id="input-cardconnect-environment" class="form-control">
                     <?php if ($cardconnect_environment == 'live') { ?>
                     <option value="live" selected="selected">{{ text_live }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="live">{{ text_live }}</option>
                     <?php } ?>
                     <?php if ($cardconnect_environment == 'test') { ?>
                     <option value="test" selected="selected">{{ text_test }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="test">{{ text_test }}</option>
                     <?php } ?>
                   </select>
@@ -122,7 +122,7 @@
                     <?php if ($cardconnect_store_cards) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -136,7 +136,7 @@
                     <?php if ($cardconnect_echeck) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -154,10 +154,10 @@
 			    <div class="col-sm-10">
 			      <select name="cardconnect_geo_zone" id="input-cardconnect-geo-zone" class="form-control">
 				    <option value="0">{{ text_all_zones }}</option>
-				    <?php foreach ($geo_zones as $geo_zone) { ?>
+				    {% for geo_zone in geo_zones %}
                     <?php if ($geo_zone['geo_zone_id'] == $cardconnect_geo_zone) { ?>
 				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name'] ?></option>
-					  <?php } else { ?>
+					  {% else %}
 				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name'] ?></option>
     			      <?php } ?>
 				    <?php } ?>
@@ -171,7 +171,7 @@
                     <?php if ($cardconnect_status) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -185,7 +185,7 @@
                     <?php if ($cardconnect_logging) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -216,11 +216,11 @@
                 <label class="col-sm-2 control-label" for="input-cardconnect-order-status-pending"><span data-toggle="tooltip" title="{{ help_order_status_pending }}">{{ entry_order_status_pending }}</span></label>
                 <div class="col-sm-10">
                   <select name="cardconnect_order_status_id_pending" id="input-cardconnect-order-status-pending" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $cardconnect_order_status_id_pending) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                     <?php } ?>
                   </select>
@@ -230,11 +230,11 @@
                 <label class="col-sm-2 control-label" for="input-cardconnect-order-status-processing"><span data-toggle="tooltip" title="{{ help_order_status_processing }}">{{ entry_order_status_processing }}</span></label>
                 <div class="col-sm-10">
                   <select name="cardconnect_order_status_id_processing" id="input-cardconnect-order-status-processing" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $cardconnect_order_status_id_processing) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                     <?php } ?>
                   </select>

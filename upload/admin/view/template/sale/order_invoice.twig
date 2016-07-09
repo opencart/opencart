@@ -14,7 +14,7 @@
 <div class="container">
   <?php foreach ($orders as $order) { ?>
   <div style="page-break-after: always;">
-    <h1>{{ text_invoice }} #<?php echo $order['order_id']; ?></h1>
+    <h1>{{ text_invoice }} #{{ order.order_id }}</h1>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -24,23 +24,23 @@
       <tbody>
         <tr>
           <td style="width: 50%;"><address>
-            <strong><?php echo $order['store_name']; ?></strong><br />
-            <?php echo $order['store_address']; ?>
+            <strong>{{ order.store_name }}</strong><br />
+            {{ order.store_address }}
             </address>
-            <b>{{ text_telephone }}</b> <?php echo $order['store_telephone']; ?><br />
+            <b>{{ text_telephone }}</b> {{ order.store_telephone }}<br />
             <?php if ($order['store_fax']) { ?>
-            <b>{{ text_fax }}</b> <?php echo $order['store_fax']; ?><br />
+            <b>{{ text_fax }}</b> {{ order.store_fax }}<br />
             <?php } ?>
-            <b>{{ text_email }}</b> <?php echo $order['store_email']; ?><br />
-            <b>{{ text_website }}</b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
-          <td style="width: 50%;"><b>{{ text_date_added }}</b> <?php echo $order['date_added']; ?><br />
+            <b>{{ text_email }}</b> {{ order.store_email }}<br />
+            <b>{{ text_website }}</b> <a href="{{ order.store_url }}">{{ order.store_url }}</a></td>
+          <td style="width: 50%;"><b>{{ text_date_added }}</b> {{ order.date_added }}<br />
             <?php if ($order['invoice_no']) { ?>
-            <b>{{ text_invoice_no }}</b> <?php echo $order['invoice_no']; ?><br />
+            <b>{{ text_invoice_no }}</b> {{ order.invoice_no }}<br />
             <?php } ?>
-            <b>{{ text_order_id }}</b> <?php echo $order['order_id']; ?><br />
-            <b>{{ text_payment_method }}</b> <?php echo $order['payment_method']; ?><br />
+            <b>{{ text_order_id }}</b> {{ order.order_id }}<br />
+            <b>{{ text_payment_method }}</b> {{ order.payment_method }}<br />
             <?php if ($order['shipping_method']) { ?>
-            <b>{{ text_shipping_method }}</b> <?php echo $order['shipping_method']; ?><br />
+            <b>{{ text_shipping_method }}</b> {{ order.shipping_method }}<br />
             <?php } ?></td>
         </tr>
       </tbody>
@@ -55,10 +55,10 @@
       <tbody>
         <tr>
           <td><address>
-            <?php echo $order['payment_address']; ?>
+            {{ order.payment_address }}
             </address></td>
           <td><address>
-            <?php echo $order['shipping_address']; ?>
+            {{ order.shipping_address }}
             </address></td>
         </tr>
       </tbody>
@@ -76,30 +76,30 @@
       <tbody>
         <?php foreach ($order['product'] as $product) { ?>
         <tr>
-          <td><?php echo $product['name']; ?>
+          <td>{{ product.name }}
             <?php foreach ($product['option'] as $option) { ?>
             <br />
-            &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+            &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
             <?php } ?></td>
-          <td><?php echo $product['model']; ?></td>
-          <td class="text-right"><?php echo $product['quantity']; ?></td>
-          <td class="text-right"><?php echo $product['price']; ?></td>
-          <td class="text-right"><?php echo $product['total']; ?></td>
+          <td>{{ product.model }}</td>
+          <td class="text-right">{{ product.quantity }}</td>
+          <td class="text-right">{{ product.price }}</td>
+          <td class="text-right">{{ product.total }}</td>
         </tr>
         <?php } ?>
         <?php foreach ($order['voucher'] as $voucher) { ?>
         <tr>
-          <td><?php echo $voucher['description']; ?></td>
+          <td>{{ voucher.description }}</td>
           <td></td>
           <td class="text-right">1</td>
-          <td class="text-right"><?php echo $voucher['amount']; ?></td>
-          <td class="text-right"><?php echo $voucher['amount']; ?></td>
+          <td class="text-right">{{ voucher.amount }}</td>
+          <td class="text-right">{{ voucher.amount }}</td>
         </tr>
         <?php } ?>
         <?php foreach ($order['total'] as $total) { ?>
         <tr>
-          <td class="text-right" colspan="4"><b><?php echo $total['title']; ?></b></td>
-          <td class="text-right"><?php echo $total['text']; ?></td>
+          <td class="text-right" colspan="4"><b>{{ total.title }}</b></td>
+          <td class="text-right">{{ total.text }}</td>
         </tr>
         <?php } ?>
       </tbody>
@@ -113,7 +113,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><?php echo $order['comment']; ?></td>
+          <td>{{ order.comment }}</td>
         </tr>
       </tbody>
     </table>

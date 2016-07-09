@@ -14,19 +14,19 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">{{ text_paypal_profile_id }}</label>
       <div class="col-sm-10">
-        <?php echo $transaction['paypal_profile_id']; ?>
+        {{ transaction.paypal_profile_id }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_laybuy_ref_no }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['laybuy_ref_no']; ?>
+	    {{ transaction.laybuy_ref_no }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_order_id }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['order_id']; ?>
+	    {{ transaction.order_id }}
 	  </div>
     </div>
   </div>
@@ -34,49 +34,49 @@
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_firstname }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['firstname']; ?>
+	    {{ transaction.firstname }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_lastname }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['lastname']; ?>
+	    {{ transaction.lastname }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_email }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['email']; ?>
+	    {{ transaction.email }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_address }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['address']; ?>
+	    {{ transaction.address }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_suburb }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['suburb']; ?>
+	    {{ transaction.suburb }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_state }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['state']; ?>
+	    {{ transaction.state }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_country }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['country']; ?>
+	    {{ transaction.country }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_postcode }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['postcode']; ?>
+	    {{ transaction.postcode }}
 	  </div>
 	</div>
   </div>
@@ -84,13 +84,13 @@
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_status }}</label>
 	  <div class="col-sm-10" id="laybuy-status">
-	    <?php echo $transaction['status']; ?>
+	    {{ transaction.status }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_amount }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['amount']; ?>
+	    {{ transaction.amount }}
 	  </div>
 	</div>
 	<div class="form-group">
@@ -102,31 +102,31 @@
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_months }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['months']; ?>
+	    {{ transaction.months }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_downpayment_amount }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['downpayment_amount']; ?>
+	    {{ transaction.downpayment_amount }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_payment_amounts }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['payment_amounts']; ?>
+	    {{ transaction.payment_amounts }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_first_payment_due }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['first_payment_due']; ?>
+	    {{ transaction.first_payment_due }}
 	  </div>
 	</div>
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_last_payment_due }}</label>
 	  <div class="col-sm-10">
-	    <?php echo $transaction['last_payment_due']; ?>
+	    {{ transaction.last_payment_due }}
 	  </div>
 	</div>
 	<div class="form-group">
@@ -147,18 +147,18 @@
 		    <?php if ($report['instalment'] == '0') { ?>
 		      <tr>
 			    <td>{{ text_downpayment }}</td>
-			    <td><?php echo $report['amount']; ?></td>
-			    <td><?php echo $report['date']; ?></td>
-			    <td><?php echo $report['pp_trans_id']; ?></td>
-			    <td><?php echo $report['status']; ?></td>
+			    <td>{{ report.amount }}</td>
+			    <td>{{ report.date }}</td>
+			    <td>{{ report.pp_trans_id }}</td>
+			    <td>{{ report.status }}</td>
 			  </tr>
-		    <?php } else { ?>
+		    {% else %}
 		      <tr>
 			    <td><?php echo $text_month . ' ' . $report['instalment']; ?></td>
-			    <td><?php echo $report['amount']; ?></td>
-			    <td><?php echo $report['date']; ?></td>
-			    <td><?php echo $report['pp_trans_id']; ?></td>
-			    <td><?php echo $report['status']; ?></td>
+			    <td>{{ report.amount }}</td>
+			    <td>{{ report.date }}</td>
+			    <td>{{ report.pp_trans_id }}</td>
+			    <td>{{ report.status }}</td>
 			  </tr>
 		    <?php } ?>
 		  <?php } ?>
@@ -180,7 +180,7 @@
 	  <div class="col-sm-10">
 	    <button class="btn btn-primary btn-xs" id="revise-plan" style="margin-bottom:10px">{{ button_revise_plan }}</button>
 		<div class="amount_remaining">
-		  <b>{{ text_remaining }}</b> <?php echo $transaction['remaining']; ?>
+		  <b>{{ text_remaining }}</b> {{ transaction.remaining }}
 		  <input type="hidden" id="amount" name="amount" value="{{ total }}" />
 		</div>
 	    <select name="payment_type" id="payment-type">
@@ -190,20 +190,20 @@
 		<div class="laybuy_section">
 		  <br>
 	      <select name="INIT" id="down-payment">
-	              <?php foreach ($initial_payments as $percent) { ?>
+	              {% for percent in initial_payments %}
 	 		          <?php if ($percent == $transaction['downpayment']) { ?>
 	 	                <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
-	     	          <?php } else { ?>
+	     	          {% else %}
 	 	                <option value="{{ percent }}">{{ percent }}%</option>
 		      <?php } ?>
 	        <?php } ?>
 	   	  </select>
 	  	  <select name="MONTHS" id="months">
-	           <?php foreach ($months as $month) { ?>
+	           {% for month in months %}
 	  		      <?php if ($month['value'] == $transaction['months']) { ?>
-	               <option value="<?php echo $month['value']; ?>" selected="selected"><?php echo $month['label']; ?></option>
-		      <?php } else { ?>
-	               <option value="<?php echo $month['value']; ?>"><?php echo $month['label']; ?></option>
+	               <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
+		      {% else %}
+	               <option value="{{ month.value }}">{{ month.label }}</option>
 		      <?php } ?>
 	           <?php } ?>
 	      </select>
@@ -230,7 +230,7 @@
 <?php } ?>
 </div>
 </form>
-<?php } else { ?>
+{% else %}
 {{ text_not_found }}
 <?php } ?>
 

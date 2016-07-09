@@ -52,7 +52,7 @@
               <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
               <td><?php if ($customer) { ?>
                 <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
-                <?php } else { ?>
+                {% else %}
                 {{ firstname }} {{ lastname }}
                 <?php } ?></td>
             </tr>
@@ -83,7 +83,7 @@
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
                 <td style="width: 1%;" class="text-center"><?php if (!$invoice_no) { ?>
                   <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
-                  <?php } else { ?>
+                  {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
                   <?php } ?></td>
               </tr>
@@ -93,10 +93,10 @@
                 <td class="text-center"><?php if ($customer && $reward) { ?>
                   <?php if (!$reward_total) { ?>
                   <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                  <?php } else { ?>
+                  {% else %}
                   <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
                   <?php } ?>
-                  <?php } else { ?>
+                  {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   <?php } ?></td>
               </tr>
@@ -109,10 +109,10 @@
                 <td class="text-center"><?php if ($affiliate) { ?>
                   <?php if (!$commission_total) { ?>
                   <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                  <?php } else { ?>
+                  {% else %}
                   <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
                   <?php } ?>
-                  <?php } else { ?>
+                  {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   <?php } ?></td>
               </tr>
@@ -157,34 +157,34 @@
           <tbody>
             <?php foreach ($products as $product) { ?>
             <tr>
-              <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+              <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
                 <?php foreach ($product['option'] as $option) { ?>
                 <br />
                 <?php if ($option['type'] != 'file') { ?>
-                &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-                <?php } else { ?>
-                &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
+                &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
+                {% else %}
+                &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="text-left"><?php echo $product['model']; ?></td>
-              <td class="text-right"><?php echo $product['quantity']; ?></td>
-              <td class="text-right"><?php echo $product['price']; ?></td>
-              <td class="text-right"><?php echo $product['total']; ?></td>
+              <td class="text-left">{{ product.model }}</td>
+              <td class="text-right">{{ product.quantity }}</td>
+              <td class="text-right">{{ product.price }}</td>
+              <td class="text-right">{{ product.total }}</td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>
             <tr>
-              <td class="text-left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
+              <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
               <td class="text-left"></td>
               <td class="text-right">1</td>
-              <td class="text-right"><?php echo $voucher['amount']; ?></td>
-              <td class="text-right"><?php echo $voucher['amount']; ?></td>
+              <td class="text-right">{{ voucher.amount }}</td>
+              <td class="text-right">{{ voucher.amount }}</td>
             </tr>
             <?php } ?>
             <?php foreach ($totals as $total) { ?>
             <tr>
-              <td colspan="4" class="text-right"><?php echo $total['title']; ?></td>
-              <td class="text-right"><?php echo $total['text']; ?></td>
+              <td colspan="4" class="text-right">{{ total.title }}</td>
+              <td class="text-right">{{ total.text }}</td>
             </tr>
             <?php } ?>
           </tbody>
@@ -214,7 +214,7 @@
           <li class="active"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
           <li><a href="#tab-additional" data-toggle="tab">{{ tab_additional }}</a></li>
           <?php foreach ($tabs as $tab) { ?>
-          <li><a href="#tab-<?php echo $tab['code']; ?>" data-toggle="tab"><?php echo $tab['title']; ?></a></li>
+          <li><a href="#tab-{{ tab.code }}" data-toggle="tab">{{ tab.title }}</a></li>
           <?php } ?>
         </ul>
         <div class="tab-content">
@@ -230,9 +230,9 @@
                     <select name="order_status_id" id="input-order-status" class="form-control">
                       <?php foreach ($order_statuses as $order_statuses) { ?>
                       <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
-                      <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
+                      <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
+                      {% else %}
+                      <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
                       <?php } ?>
                       <?php } ?>
                     </select>
@@ -274,8 +274,8 @@
                 <tbody>
                   <?php foreach ($account_custom_fields as $custom_field) { ?>
                   <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo $custom_field['value']; ?></td>
+                    <td>{{ custom_field.name }}</td>
+                    <td>{{ custom_field.value }}</td>
                   </tr>
                   <?php } ?>
                 </tbody>
@@ -293,8 +293,8 @@
                 <tbody>
                   <?php foreach ($payment_custom_fields as $custom_field) { ?>
                   <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo $custom_field['value']; ?></td>
+                    <td>{{ custom_field.name }}</td>
+                    <td>{{ custom_field.value }}</td>
                   </tr>
                   <?php } ?>
                 </tbody>
@@ -312,8 +312,8 @@
                 <tbody>
                   <?php foreach ($shipping_custom_fields as $custom_field) { ?>
                   <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo $custom_field['value']; ?></td>
+                    <td>{{ custom_field.name }}</td>
+                    <td>{{ custom_field.value }}</td>
                   </tr>
                   <?php } ?>
                 </tbody>
@@ -351,7 +351,7 @@
             </div>
           </div>
           <?php foreach ($tabs as $tab) { ?>
-          <div class="tab-pane" id="tab-<?php echo $tab['code']; ?>"><?php echo $tab['content']; ?></div>
+          <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
           <?php } ?>
         </div>
       </div>

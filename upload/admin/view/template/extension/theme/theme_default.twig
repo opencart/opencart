@@ -34,7 +34,7 @@
                   <?php foreach ($directories as $directory) { ?>
                   <?php if ($directory == $theme_default_directory) { ?>
                   <option value="{{ directory }}" selected="selected">{{ directory }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="{{ directory }}">{{ directory }}</option>
                   <?php } ?>
                   <?php } ?>
@@ -48,7 +48,7 @@
                   <?php if ($theme_default_status) { ?>
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   <option value="0">{{ text_disabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   <?php } ?>

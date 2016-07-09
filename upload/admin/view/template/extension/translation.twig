@@ -6,7 +6,7 @@
         <a href="{{ refresh }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fa fa-refresh"></i></a>
         <?php if ($error_warning) { ?>
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        <?php } else { ?>
+        {% else %}
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         <?php } ?>
       </div>
@@ -57,27 +57,27 @@
               </thead>
               <tbody>
                 <?php if ($translations) { ?>
-                <?php foreach ($translations as $translation) { ?>
+                {% for translation in translations %}
                 <tr>
-                  <td class="text-center"><img src="<?php echo $translation['image']; ?>" alt="<?php echo $translation['name']; ?>" title="<?php echo $translation['name']; ?>" style="width: 48px; height: 48px;" /></td>
-                  <td class="text-left"><?php echo $translation['name']; ?></td>
+                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" style="width: 48px; height: 48px;" /></td>
+                  <td class="text-left">{{ translation.name }}</td>
                   <td class="text-left"><div class="progress">
                       <?php if ($translation['progress'] > 75) { ?>
-                      <div class="progress-bar progress-bar-success progress-bar-striped" style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
+                      <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                       <?php } elseif ($translation['progress'] > 25 && $translation['progress'] < 75) { ?>
-                      <div class="progress-bar progress-bar-info progress-bar-striped" style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
+                      <div class="progress-bar progress-bar-info progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                       <?php } elseif ($translation['progress'] < 25) { ?>
-                      <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:<?php echo $translation['progress']; ?>%"><?php echo $translation['progress']; ?>%</div>
+                      <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                       <?php } ?>
                     </div></td>
                   <td class="text-right"><?php if (!$translation['installed']) { ?>
-                    <a href="<?php echo $translation['install']; ?>" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $translation['uninstall']; ?>" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                    <a href="{{ translation.install }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                    {% else %}
+                    <a href="{{ translation.uninstall }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                     <?php } ?></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>

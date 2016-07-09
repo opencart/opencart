@@ -9,7 +9,7 @@
     <div class="col-sm-11">
       <select name="data[national][calculated][service_id][{{ key }}]" class="form-control">
         <?php foreach($data['national']['calculated']['types']['service'] as $service_key => $service_type) { ?>
-        <option value="{{ service_key }}" <?php if ($service_key == $service) { echo ' selected'; } ?>><?php echo $service_type['description']; ?></option>
+        <option value="{{ service_key }}" <?php if ($service_key == $service) { echo ' selected'; } ?>>{{ service_type.description }}</option>
         <?php } ?>
       </select>
     </div>

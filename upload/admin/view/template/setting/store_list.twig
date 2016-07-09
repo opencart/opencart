@@ -45,16 +45,16 @@
                 <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="text-center"><?php if (in_array($store['store_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ store.store_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ store.store_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $store['name']; ?></td>
-                  <td class="text-left"><?php echo $store['url']; ?></td>
-                  <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ store.name }}</td>
+                  <td class="text-left">{{ store.url }}</td>
+                  <td class="text-right"><a href="{{ store.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>

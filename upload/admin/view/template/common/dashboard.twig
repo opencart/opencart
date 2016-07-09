@@ -16,16 +16,16 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <?php foreach ($rows as $row) { ?>
+    {% for row in rows %}
     <div class="row">
-      <?php foreach ($row as $dashboard_1) { ?>
+      {% for dashboard_1 in row %}
       <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-3 col-sm-6'; ?>
-      <?php foreach ($row as $dashboard_2) { ?>
+      {% for dashboard_2 in row %}
       <?php if ($dashboard_2['width'] > 3) { ?>
       <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-12 col-sm-12'; ?>
       <?php } ?>
       <?php } ?>
-      <div class="{{ class }}"><?php echo $dashboard_1['output']; ?></div>
+      <div class="{{ class }}">{{ dashboard_1.output }}</div>
       <?php } ?>
     </div>
     <?php } ?>

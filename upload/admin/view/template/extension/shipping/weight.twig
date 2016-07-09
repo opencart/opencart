@@ -30,7 +30,7 @@
               <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
-                <li><a href="#tab-geo-zone<?php echo $geo_zone['geo_zone_id']; ?>" data-toggle="tab"><?php echo $geo_zone['name']; ?></a></li>
+                <li><a href="#tab-geo-zone{{ geo_zone.geo_zone_id }}" data-toggle="tab">{{ geo_zone.name }}</a></li>
                 <?php } ?>
               </ul>
             </div>
@@ -44,9 +44,9 @@
                         <option value="0">{{ text_none }}</option>
                         <?php foreach ($tax_classes as $tax_class) { ?>
                         <?php if ($tax_class['tax_class_id'] == $weight_tax_class_id) { ?>
-                        <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                        <?php } else { ?>
-                        <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                        <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                        {% else %}
+                        <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
                         <?php } ?>
                         <?php } ?>
                       </select>
@@ -59,7 +59,7 @@
                         <?php if ($weight_status) { ?>
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
-                        <?php } else { ?>
+                        {% else %}
                         <option value="1">{{ text_enabled }}</option>
                         <option value="0" selected="selected">{{ text_disabled }}</option>
                         <?php } ?>
@@ -74,21 +74,21 @@
                   </div>
                 </div>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
-                <div class="tab-pane" id="tab-geo-zone<?php echo $geo_zone['geo_zone_id']; ?>">
+                <div class="tab-pane" id="tab-geo-zone{{ geo_zone.geo_zone_id }}">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
+                    <label class="col-sm-2 control-label" for="input-rate{{ geo_zone.geo_zone_id }}"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate<?php echo $geo_zone['geo_zone_id']; ?>" class="form-control"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
+                      <textarea name="weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-status<?php echo $geo_zone['geo_zone_id']; ?>">{{ entry_status }}</label>
+                    <label class="col-sm-2 control-label" for="input-status{{ geo_zone.geo_zone_id }}">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_status" id="input-status<?php echo $geo_zone['geo_zone_id']; ?>" class="form-control">
+                      <select name="weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-control">
                         <?php if (${'weight_' . $geo_zone['geo_zone_id'] . '_status'}) { ?>
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
-                        <?php } else { ?>
+                        {% else %}
                         <option value="1">{{ text_enabled }}</option>
                         <option value="0" selected="selected">{{ text_disabled }}</option>
                         <?php } ?>

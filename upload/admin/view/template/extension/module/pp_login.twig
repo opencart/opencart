@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <?php if (isset($error['error_warning'])) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
@@ -50,7 +50,7 @@
                 <?php if ($pp_login_sandbox) { ?>
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
                 <?php } ?>
@@ -64,7 +64,7 @@
                 <?php if ($pp_login_debug) { ?>
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
                 <?php } ?>
@@ -75,11 +75,11 @@
             <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
             <div class="col-sm-10">
               <select name="pp_login_customer_group_id" id="input-customer-group" class="form-control">
-                <?php foreach ($customer_groups as $customer_group) { ?>
+                {% for customer_group in customer_groups %}
                 <?php if ($customer_group['customer_group_id'] == $pp_login_customer_group_id) { ?>
-                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                {% else %}
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -92,7 +92,7 @@
                 <?php if ($pp_login_button_colour == 'blue') { ?>
                 <option value="blue" selected="selected">{{ text_button_blue }}</option>
                 <option value="grey">{{ text_button_grey }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="blue">{{ text_button_blue }}</option>
                 <option value="grey" selected="selected">{{ text_button_grey }}</option>
                 <?php } ?>
@@ -106,7 +106,7 @@
                 <?php if ($pp_login_seamless) { ?>
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
                 <?php } ?>
@@ -116,14 +116,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_locale }}">{{ entry_locale }}</span></label>
             <div class="col-sm-10">
-              <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
-                <select name="pp_login_locale[<?php echo $language['language_id']; ?>]" class="form-control">
-                  <?php foreach ($locales as $locale) { ?>
+              {% for language in languages %}
+              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                <select name="pp_login_locale[{{ language.language_id }}]" class="form-control">
+                  {% for locale in locales %}
                   <?php if (isset($pp_login_locale[$language['language_id']]) && $pp_login_locale[$language['language_id']] == $locale['value']) { ?>
-                  <option value="<?php echo $locale['value']; ?>" selected="selected"><?php echo $locale['text']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $locale['value']; ?>"><?php echo $locale['text']; ?></option>
+                  <option value="{{ locale.value }}" selected="selected">{{ locale.text }}</option>
+                  {% else %}
+                  <option value="{{ locale.value }}">{{ locale.text }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -144,7 +144,7 @@
                 <?php if ($pp_login_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

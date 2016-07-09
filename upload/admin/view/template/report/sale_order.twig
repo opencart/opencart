@@ -42,9 +42,9 @@
                 <select name="filter_group" id="input-group" class="form-control">
                   <?php foreach ($groups as $group) { ?>
                   <?php if ($group['value'] == $filter_group) { ?>
-                  <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
+                  <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
+                  {% else %}
+                  <option value="{{ group.value }}">{{ group.text }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -55,9 +55,9 @@
                   <option value="0">{{ text_all_status }}</option>
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -82,15 +82,15 @@
               <?php if ($orders) { ?>
               <?php foreach ($orders as $order) { ?>
               <tr>
-                <td class="text-left"><?php echo $order['date_start']; ?></td>
-                <td class="text-left"><?php echo $order['date_end']; ?></td>
-                <td class="text-right"><?php echo $order['orders']; ?></td>
-                <td class="text-right"><?php echo $order['products']; ?></td>
-                <td class="text-right"><?php echo $order['tax']; ?></td>
-                <td class="text-right"><?php echo $order['total']; ?></td>
+                <td class="text-left">{{ order.date_start }}</td>
+                <td class="text-left">{{ order.date_end }}</td>
+                <td class="text-right">{{ order.orders }}</td>
+                <td class="text-right">{{ order.products }}</td>
+                <td class="text-right">{{ order.tax }}</td>
+                <td class="text-right">{{ order.total }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>
               </tr>

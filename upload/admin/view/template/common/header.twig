@@ -19,14 +19,14 @@
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
-<?php foreach ($styles as $style) { ?>
-<link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+{% for style in styles %}
+<link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}" />
 <?php } ?>
-<?php foreach ($links as $link) { ?>
-<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
 <?php } ?>
 <script src="view/javascript/common.js" type="text/javascript"></script>
-<?php foreach ($scripts as $script) { ?>
+{% for script in scripts %}
 <script type="text/javascript" src="{{ script }}"></script>
 <?php } ?>
 </head>
@@ -62,8 +62,8 @@
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li class="dropdown-header">{{ text_store }}</li>
-        <?php foreach ($stores as $store) { ?>
-        <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
+        {% for store in stores %}
+        <li><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>
         <?php } ?>
       </ul>
     </li>

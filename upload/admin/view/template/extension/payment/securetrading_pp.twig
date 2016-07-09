@@ -52,12 +52,12 @@
               <select name="securetrading_pp_site_security_status" id="securetrading_pp_status" class="form-control">
                 <?php if ($securetrading_pp_site_security_status == 1) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <?php } ?>
                 <?php if ($securetrading_pp_site_security_status == 0) { ?>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="0">{{ text_disabled }}</option>
                 <?php } ?>
               </select>
@@ -93,12 +93,12 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="securetrading_pp_cards_accepted">{{ entry_cards_accepted }}</label>
             <div class="col-sm-10">
-              <?php foreach ($cards as $key => $value) { ?>
+              {% for key => $value in cards %}
               <div class="checkbox">
                 <label>
                   <?php if (in_array($key, $securetrading_pp_cards_accepted)) { ?>
                   <input type="checkbox" checked="checked" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
-                  <?php } else { ?>
+                  {% else %}
                   <input type="checkbox" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
                   <?php } ?>
                   {{ value }} </label>
@@ -113,10 +113,10 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_settle_status">{{ entry_settle_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_settle_status" id="securetrading_pp_settle_status" class="form-control">
-                <?php foreach ($settlement_statuses as $key => $value) { ?>
+                {% for key => $value in settlement_statuses %}
                 <?php if ($key == $securetrading_pp_settle_status) { ?>
                 <option value="{{ key }}" selected="selected">{{ value }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="{{ key }}">{{ value }}</option>
                 <?php } ?>
                 <?php } ?>
@@ -129,13 +129,13 @@
               <select name="securetrading_pp_settle_due_date" id="securetrading_pp_settle_due_date" class="form-control">
                 <?php if ($securetrading_pp_settle_due_date == 0) { ?>
                 <option value="0" selected="selected">{{ text_process_immediately }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="0">{{ text_process_immediately }}</option>
                 <?php } ?>
                 <?php for ($i = 1; $i < 8; $i++) { ?>
                 <?php if ($i == $securetrading_pp_settle_due_date) { ?>
                 <option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
-                <?php } else { ?>
+                {% else %}
                 <option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 <?php } ?>
                 <?php } ?>
@@ -152,11 +152,11 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_order_status_id">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_order_status_id" id="securetrading_pp_order_status_id" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $securetrading_pp_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -166,11 +166,11 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_declined_order_status_id">{{ entry_declined_order_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_declined_order_status_id" id="securetrading_pp_declined_order_status_id" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $securetrading_pp_declined_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -180,11 +180,11 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_refunded_order_status_id">{{ entry_refunded_order_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_refunded_order_status_id" id="securetrading_pp_refunded_order_status_id" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $securetrading_pp_refunded_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -194,11 +194,11 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_authorisation_reversed_order_status_id">{{ entry_authorisation_reversed_order_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_authorisation_reversed_order_status_id" id="securetrading_pp_authorisation_reversed_order_status_id" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $securetrading_pp_authorisation_reversed_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -210,14 +210,14 @@
               <select name="securetrading_pp_geo_zone_id" id="securetrading_pp_geo_zone_id" class="form-control">
                 <?php if ($securetrading_pp_geo_zone_id == 0) { ?>
                 <option value="0" selected="selected">{{ text_all_geo_zones }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="0">{{ text_all_geo_zones }}</option>
                 <?php } ?>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($securetrading_pp_geo_zone_id == $geo_zone['geo_zone_id']) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -229,12 +229,12 @@
               <select name="securetrading_pp_status" id="securetrading_pp_status" class="form-control">
                 <?php if ($securetrading_pp_status == 1) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <?php } ?>
                 <?php if ($securetrading_pp_status == 0) { ?>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="0">{{ text_disabled }}</option>
                 <?php } ?>
               </select>

@@ -1,7 +1,7 @@
 <?php $translation_rows = 0; ?>
-<?php foreach ($translations as $translation) { ?>
+{% for translation in translations %}
 <fieldset>
-  <legend><?php echo $translation['key']; ?></legend>
+  <legend>{{ translation.key }}</legend>
   <div class="table-responsive">
   <table id="translation" class="table table-bordered table-hover">
     <thead>
@@ -12,8 +12,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><textarea class="form-control" disabled="disabled"><?php echo $translation['default']; ?></textarea></td>
-        <td><textarea name="translation[{{ translation_row }}][value]" class="form-control"><?php echo $translation['value']; ?></textarea></td>
+        <td><textarea class="form-control" disabled="disabled">{{ translation.default }}</textarea></td>
+        <td><textarea name="translation[{{ translation_row }}][value]" class="form-control">{{ translation.value }}</textarea></td>
       </tr>
     </tbody>
   </table>

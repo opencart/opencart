@@ -34,7 +34,7 @@
 								<?php if ($fraudlabspro_status) { ?>
 								<option value="1" selected="selected">{{ text_enabled }}</option>
 								<option value="0">{{ text_disabled }}</option>
-								<?php } else { ?>
+								{% else %}
 								<option value="1">{{ text_enabled }}</option>
 								<option value="0" selected="selected">{{ text_disabled }}</option>
 								<?php } ?>
@@ -60,11 +60,11 @@
 						<label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
 						<div class="col-sm-10">
 							<select name="fraudlabspro_order_status_id" id="input-order-status" class="form-control">
-								<?php foreach ($order_statuses as $order_status) { ?>
+								{% for order_status in order_statuses %}
 								<?php if ($order_status['order_status_id'] == $fraudlabspro_order_status_id) { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-								<?php } else { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+								<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+								{% else %}
+								<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 								<?php } ?>
 								<?php } ?>
 							</select>
@@ -76,11 +76,11 @@
 							<label class="col-sm-2 control-label" for="input-fraud-review-status"><span data-toggle="tooltip" title="{{ help_review_status }}">{{ entry_review_status }}</span></label>
 							<div class="col-sm-10">
 								<select name="fraudlabspro_review_status_id" id="input-fraud-review-status" class="form-control">
-									<?php foreach ($order_statuses as $order_status) { ?>
+									{% for order_status in order_statuses %}
 									<?php if ($order_status['order_status_id'] == $fraudlabspro_review_status_id) { ?>
-									<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-									<?php } else { ?>
-									<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+									<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+									{% else %}
+									<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 									<?php } ?>
 									<?php } ?>
 								</select>
@@ -90,11 +90,11 @@
 							<label class="col-sm-2 control-label" for="input-fraud-approve-status"><span data-toggle="tooltip" title="{{ help_approve_status }}">{{ entry_approve_status }}</span></label>
 							<div class="col-sm-10">
 								<select name="fraudlabspro_approve_status_id" id="input-fraud-approve-status" class="form-control">
-									<?php foreach ($order_statuses as $order_status) { ?>
+									{% for order_status in order_statuses %}
 									<?php if ($order_status['order_status_id'] == $fraudlabspro_approve_status_id) { ?>
-									<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-									<?php } else { ?>
-									<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+									<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+									{% else %}
+									<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 									<?php } ?>
 									<?php } ?>
 								</select>
@@ -104,11 +104,11 @@
 							<label class="col-sm-2 control-label" for="input-fraud-reject-status"><span data-toggle="tooltip" title="{{ help_reject_status }}">{{ entry_reject_status }}</span></label>
 							<div class="col-sm-10">
 								<select name="fraudlabspro_reject_status_id" id="input-fraud-reject-status" class="form-control">
-								<?php foreach ($order_statuses as $order_status) { ?>
+								{% for order_status in order_statuses %}
 								<?php if ($order_status['order_status_id'] == $fraudlabspro_reject_status_id) { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-								<?php } else { ?>
-								<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+								<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+								{% else %}
+								<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 								<?php } ?>
 								<?php } ?>
 								</select>

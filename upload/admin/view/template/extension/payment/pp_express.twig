@@ -110,7 +110,7 @@
                     <?php if ($pp_express_test) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -124,7 +124,7 @@
                     <?php if ($pp_express_debug) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -135,10 +135,10 @@
                 <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
                 <div class="col-sm-10">
                   <select name="pp_express_currency" id="input-currency" class="form-control">
-                    <?php foreach ($currencies as $currency) { ?>
+                    {% for currency in currencies %}
                     <?php if ($currency == $pp_express_currency) { ?>
                     <option value="{{ currency }}" selected="selected">{{ currency }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="{{ currency }}">{{ currency }}</option>
                     <?php } ?>
                     <?php } ?>
@@ -152,7 +152,7 @@
                     <?php if ($pp_express_recurring_cancel) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -165,12 +165,12 @@
                   <select name="pp_express_transaction" id="input-transaction" class="form-control">
                     <?php if ($pp_express_transaction == 'sale') { ?>
                     <option value="Sale" selected="selected">{{ text_sale }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="Sale">{{ text_sale }}</option>
                     <?php } ?>
                     <?php if ($pp_express_transaction == 'Authorization') { ?>
                     <option value="Authorization" selected="selected">{{ text_authorization }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="Authorization">{{ text_authorization }}</option>
                     <?php } ?>
                   </select>
@@ -187,11 +187,11 @@
                 <div class="col-sm-10">
                   <select name="pp_express_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
-                    <?php foreach ($geo_zones as $geo_zone) { ?>
+                    {% for geo_zone in geo_zones %}
                     <?php if ($geo_zone['geo_zone_id'] == $pp_express_geo_zone_id) { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -204,7 +204,7 @@
                     <?php if ($pp_express_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -223,11 +223,11 @@
                 <label class="col-sm-2 control-label" for="input-canceled-reversal-status">{{ entry_canceled_reversal_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_canceled_reversal_status_id" id="input-canceled-reversal-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_canceled_reversal_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -237,11 +237,11 @@
                 <label class="col-sm-2 control-label" for="input-completed-status">{{ entry_completed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_completed_status_id" id="input-completed-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_completed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -251,11 +251,11 @@
                 <label class="col-sm-2 control-label" for="input-denied-status">{{ entry_denied_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_denied_status_id" id="input-denied-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_denied_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -265,11 +265,11 @@
                 <label class="col-sm-2 control-label" for="input-expired-status">{{ entry_expired_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_expired_status_id" id="input-expired-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_expired_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -279,11 +279,11 @@
                 <label class="col-sm-2 control-label" for="input-failed-status">{{ entry_failed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_failed_status_id" id="input-failed-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_failed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -293,11 +293,11 @@
                 <label class="col-sm-2 control-label" for="input-pending-status">{{ entry_pending_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_pending_status_id" id="input-pending-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_pending_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -307,11 +307,11 @@
                 <label class="col-sm-2 control-label" for="input-processed-status">{{ entry_processed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_processed_status_id" id="input-processed-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_processed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -321,11 +321,11 @@
                 <label class="col-sm-2 control-label" for="input-refunded-status">{{ entry_refunded_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_refunded_status_id" id="input-refunded-status"class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_refunded_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -335,11 +335,11 @@
                 <label class="col-sm-2 control-label" for="input-reversed-status">{{ entry_reversed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_reversed_status_id" id="input-reversed-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_reversed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -349,11 +349,11 @@
                 <label class="col-sm-2 control-label" for="input-voided-status">{{ entry_voided_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_voided_status_id" id="input-voided-status" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_express_voided_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -368,7 +368,7 @@
                     <?php if ($pp_express_allow_note) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>

@@ -43,9 +43,9 @@
                   <option value="0">{{ text_all_status }}</option>
                   <?php foreach ($order_statuses as $order_status) { ?>
                   <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -68,13 +68,13 @@
               <?php if ($products) { ?>
               <?php foreach ($products as $product) { ?>
               <tr>
-                <td class="text-left"><?php echo $product['name']; ?></td>
-                <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-right"><?php echo $product['quantity']; ?></td>
-                <td class="text-right"><?php echo $product['total']; ?></td>
+                <td class="text-left">{{ product.name }}</td>
+                <td class="text-left">{{ product.model }}</td>
+                <td class="text-right">{{ product.quantity }}</td>
+                <td class="text-right">{{ product.total }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="4">{{ text_no_results }}</td>
               </tr>

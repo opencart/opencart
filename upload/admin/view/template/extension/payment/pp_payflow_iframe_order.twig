@@ -4,7 +4,7 @@
     <td>{{ entry_capture_status }}: </td>
     <td id="capture-status"><?php if ($complete) { ?>
       {{ text_complete }}
-      <?php } else { ?>
+      {% else %}
       {{ text_incomplete }}
       <?php } ?></td>
   </tr>
@@ -12,7 +12,7 @@
     <td>{{ entry_capture }}</td>
     <td id="complete-entry"><?php if ($complete) { ?>
       -
-      <?php } else { ?>
+      {% else %}
       {{ entry_complete_capture }}
       <input type="checkbox" name="capture-complete" value="1" />
       <br />
@@ -24,7 +24,7 @@
     <td>{{ entry_void }}</td>
     <td id="reauthorise-entry"><?php if ($complete) { ?>
       -
-      <?php } else { ?>
+      {% else %}
       <a class="btn btn-primary" id="button-void" onclick="doVoid()">{{ button_void }}</a>
       <?php } ?></td>
   </tr>
@@ -41,14 +41,14 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($transactions as $transaction) { ?>
+          {% for transaction in transactions %}
           <tr>
-            <td class="text-left"><?php echo $transaction['transaction_reference']; ?></td>
-            <td class="text-left"><?php echo $transaction['transaction_type']; ?></td>
+            <td class="text-left">{{ transaction.transaction_reference }}</td>
+            <td class="text-left">{{ transaction.transaction_type }}</td>
             <td class="text-left"><?php echo number_format($transaction['amount'], 2); ?></td>
-            <td class="text-left"><?php echo $transaction['time']; ?></td>
+            <td class="text-left">{{ transaction.time }}</td>
             <td class="text-left"><?php foreach ($transaction['actions'] as $action) { ?>
-              [<a href="<?php echo $action['href']; ?>"><?php echo $action['title']; ?></a>]
+              [<a href="{{ action.href }}">{{ action.title }}</a>]
               <?php } ?></td>
           </tr>
           <?php } ?>

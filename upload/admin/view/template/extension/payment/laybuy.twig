@@ -100,9 +100,9 @@
 			    <div class="col-sm-10">
 			      <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="category" class="form-control" />
 				  <div id="laybuy-category" class="well well-sm" style="height: 150px; overflow: auto;">
-				    <?php foreach ($categories as $category) { ?>
-				      <div id="category<?php echo $category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category['name']; ?>
-					    <input type="hidden" name="laybuy_category[]" value="<?php echo $category['category_id']; ?>" />
+				    {% for category in categories %}
+				      <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
+					    <input type="hidden" name="laybuy_category[]" value="{{ category.category_id }}" />
 					  </div>
 				    <?php } ?>
 				  </div>
@@ -119,9 +119,9 @@
 			    <div class="col-sm-10">
 			      <input type="text" name="customer_group" value="" placeholder="{{ entry_customer_group }}" id="customer-group" class="form-control" />
 				  <div id="laybuy-customer-group" class="well well-sm" style="height: 150px; overflow: auto;">
-				    <?php foreach ($customer_groups as $customer_group) { ?>
-				      <div id="customer-group<?php echo $customer_group['customer_group_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $customer_group['name']; ?>
-					    <input type="hidden" name="laybuy_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+				    {% for customer_group in customer_groups %}
+				      <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fa fa-minus-circle"></i> {{ customer_group.name }}
+					    <input type="hidden" name="laybuy_customer_group[]" value="{{ customer_group.customer_group_id }}" />
 					  </div>
 				    <?php } ?>
 				  </div>
@@ -134,7 +134,7 @@
                     <?php if ($laybuy_logging) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -151,11 +151,11 @@
                 <label class="col-sm-2 control-label" for="input-laybuy-order-status-pending"><span data-toggle="tooltip" title="{{ help_order_status_pending }}">{{ entry_order_status_pending }}</span></label>
                 <div class="col-sm-10">
                   <select name="laybuy_order_status_id_pending" id="input-laybuy-order-status-pending" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $laybuy_order_status_id_pending) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                     <?php } ?>
                   </select>
@@ -165,11 +165,11 @@
                 <label class="col-sm-2 control-label" for="input-laybuy-order-status-canceled"><span data-toggle="tooltip" title="{{ help_order_status_canceled }}">{{ entry_order_status_canceled }}</span></label>
                 <div class="col-sm-10">
                   <select name="laybuy_order_status_id_canceled" id="input-laybuy-order-status-canceled" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $laybuy_order_status_id_canceled) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                     <?php } ?>
                   </select>
@@ -179,11 +179,11 @@
                 <label class="col-sm-2 control-label" for="input-laybuy-order-status-processing"><span data-toggle="tooltip" title="{{ help_order_status_processing }}">{{ entry_order_status_processing }}</span></label>
                 <div class="col-sm-10">
                   <select name="laybuy_order_status_id_processing" id="input-laybuy-order-status-processing" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $laybuy_order_status_id_processing) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       <?php } ?>
                     <?php } ?>
                   </select>
@@ -206,11 +206,11 @@
 			    <div class="col-sm-10">
 			      <select name="laybuy_geo_zone" id="input-laybuy-geo-zone" class="form-control">
 				    <option value="0">{{ text_all_zones }}</option>
-				    <?php foreach ($geo_zones as $geo_zone) { ?>
+				    {% for geo_zone in geo_zones %}
                     <?php if ($geo_zone['geo_zone_id'] == $laybuy_geo_zone) { ?>
-				        <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-					  <?php } else { ?>
-				        <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+				        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+					  {% else %}
+				        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
     			      <?php } ?>
 				    <?php } ?>
 				  </select>
@@ -223,7 +223,7 @@
                     <?php if ($laybuy_status) { ?>
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -271,11 +271,11 @@
 	                  <label class="control-label" for="input-status">{{ entry_status }}</label>
 	                  <select name="filter_status" id="input-status" class="form-control" />
 	                    <option value="*"></option>
-	                    <?php foreach ($transaction_statuses as $transaction_status) { ?>
+	                    {% for transaction_status in transaction_statuses %}
 					      <?php if ($transaction_status['status_id'] == $filter_status) { ?>
-					        <option value="<?php echo $transaction_status['status_id']; ?>" selected="selected"><?php echo $transaction_status['status_name']; ?></option>
-					      <?php } else { ?>
-					        <option value="<?php echo $transaction_status['status_id']; ?>"><?php echo $transaction_status['status_name']; ?></option>
+					        <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
+					      {% else %}
+					        <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
 				   	      <?php } ?>
 					    <?php } ?>
 	                  </select>
@@ -305,52 +305,52 @@
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                       <td class="text-left"><?php if ($sort == 'lt.order_id') { ?>
                         <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_order_id }}">{{ column_order_id }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'customer') { ?>
                         <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_customer }}">{{ column_customer }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.amount') { ?>
                         <a href="{{ sort_amount }}" class="{{ order|lower }}">{{ column_amount }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_amount }}">{{ column_amount }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.downpayment') { ?>
                         <a href="{{ sort_dp_percent }}" class="{{ order|lower }}">{{ column_dp_percent }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_dp_percent }}">{{ column_dp_percent }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.months') { ?>
                         <a href="{{ sort_months }}" class="{{ order|lower }}">{{ column_months }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_months }}">{{ column_months }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.downpayment_amount') { ?>
                         <a href="{{ sort_dp_amount }}" class="{{ order|lower }}">{{ column_dp_amount }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_dp_amount }}">{{ column_dp_amount }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.first_payment_due') { ?>
                         <a href="{{ sort_first_payment }}" class="{{ order|lower }}">{{ column_first_payment }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_first_payment }}">{{ column_first_payment }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.last_payment_due') { ?>
                         <a href="{{ sort_last_payment }}" class="{{ order|lower }}">{{ column_last_payment }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_last_payment }}">{{ column_last_payment }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.status') { ?>
                         <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_status }}">{{ column_status }}</a>
                         <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'lt.date_added') { ?>
                         <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-                        <?php } else { ?>
+                        {% else %}
                         <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
                         <?php } ?></td>
                       <td class="text-right">{{ column_action }}</td>
@@ -358,31 +358,31 @@
                   </thead>
                   <tbody>
                     <?php if ($reports) { ?>
-                    <?php foreach ($reports as $report) { ?>
+                    {% for report in reports %}
                     <tr>
                       <td class="text-center"><?php if (in_array($report['id'], $selected)) { ?>
-                        <input type="checkbox" name="selected[]" value="<?php echo $report['id']; ?>" checked="checked" />
-                        <?php } else { ?>
-                        <input type="checkbox" name="selected[]" value="<?php echo $report['id']; ?>" />
+                        <input type="checkbox" name="selected[]" value="{{ report.id }}" checked="checked" />
+                        {% else %}
+                        <input type="checkbox" name="selected[]" value="{{ report.id }}" />
                         <?php } ?></td>
-                      <td class="text-left"><a href="<?php echo $report['order_url']; ?>"><?php echo $report['order_id']; ?></a></td>
+                      <td class="text-left"><a href="{{ report.order_url }}">{{ report.order_id }}</a></td>
 					  <?php if ($report['customer_url']) { ?>
-                        <td class="text-left"><a href="<?php echo $report['customer_url']; ?>"><?php echo $report['customer_name']; ?></a></td>
-					  <?php } else { ?>
-                        <td class="text-left"><?php echo $report['customer_name']; ?></td>
+                        <td class="text-left"><a href="{{ report.customer_url }}">{{ report.customer_name }}</a></td>
+					  {% else %}
+                        <td class="text-left">{{ report.customer_name }}</td>
 					  <?php } ?>
-                      <td class="text-left"><?php echo $report['amount']; ?></td>
+                      <td class="text-left">{{ report.amount }}</td>
                       <td class="text-left"><?php echo $report['dp_percent'] . '%'; ?></td>
-                      <td class="text-left"><?php echo $report['months']; ?></td>
-                      <td class="text-left"><?php echo $report['dp_amount']; ?></td>
-                      <td class="text-left"><?php echo $report['first_payment']; ?></td>
-                      <td class="text-left"><?php echo $report['last_payment']; ?></td>
-                      <td class="text-left"><?php echo $report['status']; ?></td>
-                      <td class="text-left"><?php echo $report['date_added']; ?></td>
-                      <td class="text-right"><a href="<?php echo $report['view']; ?>" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                      <td class="text-left">{{ report.months }}</td>
+                      <td class="text-left">{{ report.dp_amount }}</td>
+                      <td class="text-left">{{ report.first_payment }}</td>
+                      <td class="text-left">{{ report.last_payment }}</td>
+                      <td class="text-left">{{ report.status }}</td>
+                      <td class="text-left">{{ report.date_added }}</td>
+                      <td class="text-right"><a href="{{ report.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
                     </tr>
                     <?php } ?>
-                    <?php } else { ?>
+                    {% else %}
                     <tr>
                       <td class="text-center" colspan="12">{{ text_no_results }}</td>
                     </tr>

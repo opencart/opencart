@@ -20,8 +20,8 @@
           <div class="form-group">
             <label class="control-label" for="marketplace-select">{{ text_choose_marketplace }}</label>
             <select name="marketplace_select" id="marketplace-select" class="form-control">
-              <?php foreach ($marketplaces as $marketplace) { ?>
-              <option value="<?php echo $marketplace['link']; ?>" <?php if ($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>><?php echo $marketplace['name']; ?></option>
+              {% for marketplace in marketplaces %}
+              <option value="{{ marketplace.link }}" <?php if ($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>>{{ marketplace.name }}</option>
               <?php } ?>
             </select>
           </div>
@@ -31,7 +31,7 @@
         <div class="col-sm-12">
           <?php if (in_array($marketplace_code, $marketplaces_processing)) { ?>
           <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
-          <?php } else { ?>
+          {% else %}
           <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings']; ?>">{{ button_load }}</a> </div>
           <?php } ?>
         </div>
@@ -49,7 +49,7 @@
                   <th class="text-center" colspan="3">{{ text_local }}</th>
                 </tr>
                 <tr>
-                  <th class="text-center"><input type="checkbox" id="master-checkbox" value="<?php echo $marketplace['code']; ?>"/></th>
+                  <th class="text-center"><input type="checkbox" id="master-checkbox" value="{{ marketplace.code }}"/></th>
                   <th class="text-left">{{ column_asin }}</th>
                   <th class="text-left">{{ column_sku }}</th>
                   <th class="text-center">{{ column_quantity }}</th>
@@ -61,26 +61,26 @@
               </thead>
               <tbody>
                 <?php $row = 0; ?>
-                <?php foreach ($unlinked_products as $product) { ?>
+                {% for product in unlinked_products %}
                 <?php $row++ ?>
                 <?php if (empty($product['sku']) || $product['quantity'] < 1) { ?>
                   <tr class="warning">
                     <td class="text-center"> - </td>
-                <?php } else { ?>
+                {% else %}
                   <tr class="success">
-                    <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-<?php echo $marketplace['code']; ?>"/></td>
+                    <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-{{ marketplace.code }}"/></td>
                 <?php } ?>
 
-                  <td class="text-left"><a href="<?php echo $product['href_amazon']; ?>" target="_blank"><?php echo $product['asin']; ?></a></td>
-                  <td class="text-left"><?php echo $product['amazon_sku']; ?></td>
-                  <td class="text-center"><?php echo $product['amazon_quantity']; ?></td>
-                  <td class="text-right"><?php echo $product['amazon_price']; ?></td>
-                  <td class="text-left"><a href="<?php echo $product['href_product']; ?>" target="_blank"><?php echo $product['name']; ?></a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
-                  <td class="text-left"><?php echo $product['sku']; ?></td>
-                  <td class="text-center"><?php echo $product['quantity']; ?></td>
-                  <input type="hidden" name="link[{{ row }}][amazon_sku]" value="<?php echo $product['amazon_sku']; ?>"/>
-                  <input type="hidden" name="link[{{ row }}][product_id]" value="<?php echo $product['product_id']; ?>"/>
-                  <input type="hidden" name="link[{{ row }}][sku]" value="<?php echo $product['var']; ?>"/>
+                  <td class="text-left"><a href="{{ product.href_amazon }}" target="_blank">{{ product.asin }}</a></td>
+                  <td class="text-left">{{ product.amazon_sku }}</td>
+                  <td class="text-center">{{ product.amazon_quantity }}</td>
+                  <td class="text-right">{{ product.amazon_price }}</td>
+                  <td class="text-left"><a href="{{ product.href_product }}" target="_blank">{{ product.name }}</a><?php echo (!empty($product['combination']) ? '<br />' . $product['combination'] : ''); ?></td>
+                  <td class="text-left">{{ product.sku }}</td>
+                  <td class="text-center">{{ product.quantity }}</td>
+                  <input type="hidden" name="link[{{ row }}][amazon_sku]" value="{{ product.amazon_sku }}"/>
+                  <input type="hidden" name="link[{{ row }}][product_id]" value="{{ product.product_id }}"/>
+                  <input type="hidden" name="link[{{ row }}][sku]" value="{{ product.var }}"/>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -100,7 +100,7 @@
         <?php } ?>
       </div>
     </form>
-    <?php } else { ?>
+    {% else %}
     <div class="warning">{{ error_bulk_link_permission }}</div>
     <?php } ?>
   </div>

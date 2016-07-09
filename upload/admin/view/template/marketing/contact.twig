@@ -26,7 +26,7 @@
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
                 <?php foreach ($stores as $store) { ?>
-                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                <option value="{{ store.store_id }}">{{ store.name }}</option>
                 <?php } ?>
               </select>
             </div>
@@ -50,7 +50,7 @@
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
                 <?php foreach ($customer_groups as $customer_group) { ?>
-                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                 <?php } ?>
               </select>
             </div>

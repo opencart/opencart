@@ -59,7 +59,7 @@
                     <?php if ($status) { ?>
                     <option value="0">{{ text_disabled }}</option>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <option value="1">{{ text_enabled }}</option>
                     <?php } ?>
@@ -83,7 +83,7 @@
                     <?php $ip_row = 0; ?>
                     <?php foreach ($api_ips as $api_ip) { ?>
                     <tr id="ip-row{{ ip_row }}">
-                      <td class="text-left"><input type="text" name="api_ip[]" value="<?php echo $api_ip['ip']; ?>" placeholder="{{ entry_ip }}" class="form-control" /></td>
+                      <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip.ip }}" placeholder="{{ entry_ip }}" class="form-control" /></td>
                       <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     <?php $ip_row++; ?>
@@ -113,14 +113,14 @@
                   <?php if ($api_sessions) { ?>
                   <?php foreach ($api_sessions as $api_session) { ?>
                   <tr>
-                    <td class="text-left"><?php echo $api_session['token']; ?></td>
-                    <td class="text-left"><?php echo $api_session['ip']; ?></td>
-                    <td class="text-left"><?php echo $api_session['date_added']; ?></td>
-                    <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
-                    <td class="text-right"><button type="button" value="<?php echo $api_session['api_session_id']; ?>" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-left">{{ api_session.token }}</td>
+                    <td class="text-left">{{ api_session.ip }}</td>
+                    <td class="text-left">{{ api_session.date_added }}</td>
+                    <td class="text-left">{{ api_session.date_modified }}</td>
+                    <td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php } ?>
-                  <?php } else { ?>
+                  {% else %}
                   <tr>
                     <td class="text-center" colspan="5">{{ text_no_results }}</td>
                   </tr>

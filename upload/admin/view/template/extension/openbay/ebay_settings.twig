@@ -39,7 +39,7 @@
                   <?php if ($ebay_status) { ?>
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   <option value="0">{{ text_disabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   <?php } ?>
@@ -96,7 +96,7 @@
                     <?php if ($ebay_enditems) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -110,7 +110,7 @@
                     <?php if ($ebay_relistitems) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -124,7 +124,7 @@
                     <?php if ($ebay_disable_nostock) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -138,7 +138,7 @@
                     <?php if ($ebay_logging) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -149,7 +149,7 @@
                 <label class="col-sm-2 control-label" for="entry-default-currency"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_currency }}">{{ entry_currency }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_def_currency" id="entry-default-currency" class="form-control">
-                    <?php foreach ($currency_list as $currency) { ?>
+                    {% for currency in currency_list %}
                     <?php echo '<option value="'.$currency['code'].'"'.($ebay_def_currency == $currency['code'] ? ' selected="selected"' : '').'>'.$currency['title'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -162,7 +162,7 @@
                     <?php if ($ebay_stock_allocate) { ?>
                     <option value="1" selected="selected">{{ text_allocate_2 }}</option>
                     <option value="0">{{ text_allocate_1 }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_allocate_2 }}</option>
                     <option value="0" selected="selected">{{ text_allocate_1 }}</option>
                     <?php } ?>
@@ -182,7 +182,7 @@
                     <?php if ($ebay_create_date) { ?>
                     <option value="1" selected="selected">{{ text_create_date_1 }}</option>
                     <option value="0">{{ text_create_date_0 }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_create_date_1 }}</option>
                     <option value="0" selected="selected">{{ text_create_date_0 }}</option>
                     <?php } ?>
@@ -238,7 +238,7 @@
                     <?php if ($ebay_update_notify) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -252,7 +252,7 @@
                     <?php if ($ebay_confirm_notify) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -266,7 +266,7 @@
                     <?php if ($ebay_confirmadmin_notify) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -280,7 +280,7 @@
                     <?php if ($ebay_email_brand_disable) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -303,7 +303,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
                     <?php if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_import_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -314,7 +314,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
                     <?php if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_paid_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -325,7 +325,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
                     <?php if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_shipped_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -336,7 +336,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
                     <?php if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_cancelled_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -347,7 +347,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
                     <?php if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_partial_refund_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -358,7 +358,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
                     <?php if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; } ?>
-                    <?php foreach ($order_statuses as $status) { ?>
+                    {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_refunded_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
@@ -386,7 +386,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_duration" id="entry-duration" class="form-control">
                     <?php if (!empty($durations)) { ?>
-                      <?php foreach ($durations as $key => $duration) { ?>
+                      {% for key => $duration in durations %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
                       <?php } ?>
                     <?php } ?>
@@ -398,7 +398,7 @@
                 <div class="col-sm-10">
                   <select name="ebay_measurement" id="entry-measurement" class="form-control">
                     <?php if (!empty($measurement_types)) { ?>
-                      <?php foreach ($measurement_types as $key => $type) { ?>
+                      {% for key => $type in measurement_types %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
                       <?php } ?>
                     <?php } ?>
@@ -427,9 +427,9 @@
                   <?php foreach($payment_options as $payment){ ?>
                   <div class="checkbox">
                     <label>
-                      <input type="hidden" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="0" />
-                      <input type="checkbox" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
-                      <?php echo $payment['local_name']; ?> </label>
+                      <input type="hidden" name="ebay_payment_types[{{ payment.ebay_name }}]" value="0" />
+                      <input type="checkbox" name="ebay_payment_types[{{ payment.ebay_name }}]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
+                      {{ payment.local_name }} </label>
                   </div>
                   <?php } ?>
                 </div>
@@ -441,7 +441,7 @@
                     <?php if ($ebay_payment_immediate) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>

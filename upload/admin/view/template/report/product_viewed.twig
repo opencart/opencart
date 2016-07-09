@@ -41,13 +41,13 @@
               <?php if ($products) { ?>
               <?php foreach ($products as $product) { ?>
               <tr>
-                <td class="text-left"><?php echo $product['name']; ?></td>
-                <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-right"><?php echo $product['viewed']; ?></td>
-                <td class="text-right"><?php echo $product['percent']; ?></td>
+                <td class="text-left">{{ product.name }}</td>
+                <td class="text-left">{{ product.model }}</td>
+                <td class="text-right">{{ product.viewed }}</td>
+                <td class="text-right">{{ product.percent }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="4">{{ text_no_results }}</td>
               </tr>

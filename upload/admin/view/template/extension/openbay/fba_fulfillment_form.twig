@@ -29,49 +29,49 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-seller-fulfillment-order-id">{{ entry_seller_fulfillment_order_id }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="seller_fulfillment_order_id" value="<?php echo $response['seller_fulfillment_order_id']; ?>" placeholder="{{ entry_seller_fulfillment_order_id }}" id="input-seller-fulfillment-order-id" class="form-control disabled" />
+                <input disabled type="text" name="seller_fulfillment_order_id" value="{{ response.seller_fulfillment_order_id }}" placeholder="{{ entry_seller_fulfillment_order_id }}" id="input-seller-fulfillment-order-id" class="form-control disabled" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-order-id">{{ entry_displayable_order_id }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_order_id" value="<?php echo $response['displayable_order_id']; ?>" placeholder="{{ entry_displayable_order_id }}" id="input-displayable-order-id" class="form-control" />
+                <input disabled type="text" name="displayable_order_id" value="{{ response.displayable_order_id }}" placeholder="{{ entry_displayable_order_id }}" id="input-displayable-order-id" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-date">{{ entry_displayable_date }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_date" value="<?php echo $response['displayable_order_date_time']; ?>" placeholder="{{ entry_displayable_date }}" id="input-displayable-date" class="form-control" />
+                <input disabled type="text" name="displayable_date" value="{{ response.displayable_order_date_time }}" placeholder="{{ entry_displayable_date }}" id="input-displayable-date" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-comment">{{ entry_displayable_comment }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_comment" value="<?php echo $response['displayable_order_comment']; ?>" placeholder="{{ entry_displayable_comment }}" id="input-displayable-comment" class="form-control" />
+                <input disabled type="text" name="displayable_comment" value="{{ response.displayable_order_comment }}" placeholder="{{ entry_displayable_comment }}" id="input-displayable-comment" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping-speed-category">{{ entry_shipping_speed_category }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="shipping_speed_category" value="<?php echo $response['shipping_speed_category']; ?>" placeholder="{{ entry_shipping_speed_category }}" id="input-shipping-speed-category" class="form-control" />
+                <input disabled type="text" name="shipping_speed_category" value="{{ response.shipping_speed_category }}" placeholder="{{ entry_shipping_speed_category }}" id="input-shipping-speed-category" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fulfillment-policy">{{ entry_fulfillment_policy }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="fulfillment_policy" value="<?php echo $response['fulfillment_policy']; ?>" placeholder="{{ entry_fulfillment_policy }}" id="input-fulfillment-policy" class="form-control" />
+                <input disabled type="text" name="fulfillment_policy" value="{{ response.fulfillment_policy }}" placeholder="{{ entry_fulfillment_policy }}" id="input-fulfillment-policy" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fulfillment-order-status">{{ entry_fulfillment_order_status }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="fulfillment_order_status" value="<?php echo $response['fulfillment_order_status']; ?>" placeholder="{{ entry_fulfillment_order_status }}" id="input-fulfillment-order-status" class="form-control" />
+                <input disabled type="text" name="fulfillment_order_status" value="{{ response.fulfillment_order_status }}" placeholder="{{ entry_fulfillment_order_status }}" id="input-fulfillment-order-status" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-notification-email-list">{{ entry_notification_email_list }}</label>
               <div class="col-sm-10">
-                <input disabled type="text" name="notification_email_list" value="<?php echo $response['notification_email_list']; ?>" placeholder="{{ entry_notification_email_list }}" id="input-notification-email-list" class="form-control" />
+                <input disabled type="text" name="notification_email_list" value="{{ response.notification_email_list }}" placeholder="{{ entry_notification_email_list }}" id="input-notification-email-list" class="form-control" />
               </div>
             </div>
           </fieldset>
@@ -93,13 +93,13 @@
                 <tbody>
                   <?php foreach ($response['items'] as $item) { ?>
                     <tr>
-                      <td class="text-left"><?php echo $item['seller_sku']; ?></td>
-                      <td class="text-left"><?php echo $item['seller_fulfillment_order_item_id']; ?></td>
-                      <td class="text-left"><?php echo $item['quantity']; ?></td>
-                      <td class="text-left"><?php echo $item['cancelled_quantity']; ?></td>
-                      <td class="text-left"><?php echo $item['unfulfillable_quantity']; ?></td>
-                      <td class="text-left"><?php echo $item['estimated_ship_date_time']; ?></td>
-                      <td class="text-left"><?php echo $item['estimated_arrival_date_time']; ?></td>
+                      <td class="text-left">{{ item.seller_sku }}</td>
+                      <td class="text-left">{{ item.seller_fulfillment_order_item_id }}</td>
+                      <td class="text-left">{{ item.quantity }}</td>
+                      <td class="text-left">{{ item.cancelled_quantity }}</td>
+                      <td class="text-left">{{ item.unfulfillable_quantity }}</td>
+                      <td class="text-left">{{ item.estimated_ship_date_time }}</td>
+                      <td class="text-left">{{ item.estimated_arrival_date_time }}</td>
                     </tr>
                   <?php } ?>
                 </tbody>

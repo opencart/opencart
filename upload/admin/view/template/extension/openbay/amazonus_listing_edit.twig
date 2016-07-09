@@ -46,17 +46,17 @@
       </thead>
       <tbody>
         <?php if (!empty($product_links)) { ?>
-          <?php foreach ($product_links as $link) { ?>
+          {% for link in product_links %}
             <tr>
-              <td class="text-left"><?php echo $link['product_name']; ?></td>
-              <td class="text-left"><?php echo $link['sku']; ?></td>
-              <td class="text-left"><?php echo $link['model']; ?></td>
-              <td class="text-left"><?php echo $link['combination']; ?></td>
-              <td class="text-left"><?php echo $link['var']; ?></td>
-              <td class="text-left"><?php echo $link['amazonus_sku']; ?></td>
+              <td class="text-left">{{ link.product_name }}</td>
+              <td class="text-left">{{ link.sku }}</td>
+              <td class="text-left">{{ link.model }}</td>
+              <td class="text-left">{{ link.combination }}</td>
+              <td class="text-left">{{ link.var }}</td>
+              <td class="text-left">{{ link.amazonus_sku }}</td>
             </tr>
             <?php } ?>
-          <?php } else { ?>
+          {% else %}
             <tr>
               <td colspan="6" class="text-center">{{ text_no_results }}</td>
             </tr>

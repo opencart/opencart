@@ -52,9 +52,9 @@
               <select name="skrill_order_status_id" id="input-order-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $skrill_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -66,9 +66,9 @@
               <select name="skrill_pending_status_id" id="input-pending-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $skrill_pending_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -80,9 +80,9 @@
               <select name="skrill_canceled_status_id" id="input-canceled-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $skrill_canceled_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -94,9 +94,9 @@
               <select name="skrill_failed_status_id" id="input-failed-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $skrill_failed_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -108,9 +108,9 @@
               <select name="skrill_chargeback_status_id" id="input-chargeback-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $skrill_chargeback_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -123,9 +123,9 @@
                 <option value="0">{{ text_all_zones }}</option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php if ($geo_zone['geo_zone_id'] == $skrill_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -138,7 +138,7 @@
                 <?php if ($skrill_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

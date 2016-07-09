@@ -37,12 +37,12 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'id.title') { ?>
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'i.sort_order') { ?>
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -50,11 +50,11 @@
               </thead>
               <tbody>
                 <?php if ($informations) { ?>
-                <?php foreach ($informations as $information) { ?>
+                {% for information in informations %}
                 <tr>
                   <td class="text-center"><?php if (in_array($information['information_id'], $selected)) { ?>
                     <input type="checkbox" name="selected[]" value="{{ information.information_id }}" checked="checked" />
-                    <?php } else { ?>
+                    {% else %}
                     <input type="checkbox" name="selected[]" value="{{ information.information_id }}" />
                     <?php } ?></td>
                   <td class="text-left">{{ information.title }}</td>
@@ -62,7 +62,7 @@
                   <td class="text-right"><a href="{{ information.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>

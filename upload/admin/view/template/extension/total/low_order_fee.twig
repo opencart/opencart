@@ -44,9 +44,9 @@
                 <option value="0">{{ text_none }}</option>
                 <?php foreach ($tax_classes as $tax_class) { ?>
                 <?php if ($tax_class['tax_class_id'] == $low_order_fee_tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                {% else %}
+                <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -59,7 +59,7 @@
                 <?php if ($low_order_fee_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

@@ -9,11 +9,11 @@
     </thead>
     <tbody>
       <?php if ($rewards) { ?>
-      <?php foreach ($rewards as $reward) { ?>
+      {% for reward in rewards %}
       <tr>
-        <td class="text-left"><?php echo $reward['date_added']; ?></td>
-        <td class="text-left"><?php echo $reward['description']; ?></td>
-        <td class="text-right"><?php echo $reward['points']; ?></td>
+        <td class="text-left">{{ reward.date_added }}</td>
+        <td class="text-left">{{ reward.description }}</td>
+        <td class="text-right">{{ reward.points }}</td>
       </tr>
       <?php } ?>
       <tr>
@@ -21,7 +21,7 @@
         <td class="text-right"><b>{{ text_balance }}</b></td>
         <td class="text-right">{{ balance }}</td>
       </tr>
-      <?php } else { ?>
+      {% else %}
       <tr>
         <td class="text-center" colspan="3">{{ text_no_results }}</td>
       </tr>

@@ -49,12 +49,12 @@
               <select name="type" id="input-type" class="form-control">
                 <?php if ($type == 'P') { ?>
                 <option value="P" selected="selected">{{ text_percent }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="P">{{ text_percent }}</option>
                 <?php } ?>
                 <?php if ($type == 'F') { ?>
                 <option value="F" selected="selected">{{ text_amount }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="F">{{ text_amount }}</option>
                 <?php } ?>
               </select>
@@ -67,11 +67,11 @@
               <div class="checkbox">
                 <label>
                   <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
-                  <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                  <?php echo $customer_group['name']; ?>
-                  <?php } else { ?>
-                  <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                  <?php echo $customer_group['name']; ?>
+                  <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
+                  {{ customer_group.name }}
+                  {% else %}
+                  <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" />
+                  {{ customer_group.name }}
                   <?php } ?>
                 </label>
               </div>
@@ -84,9 +84,9 @@
               <select name="geo_zone_id" id="input-geo-zone" class="form-control">
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php  if ($geo_zone['geo_zone_id'] == $geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>

@@ -37,7 +37,7 @@
 					<option value="PwA" >{{ text_pwa_button }}</option>
 					<option value="Pay" >{{ text_pay_button }}</option>
 					<option value="A" selected="selected">{{ text_a_button }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="PwA" selected="selected">{{ text_pwa_button }}</option>
 					<option value="Pay" >{{ text_pay_button }}</option>
 					<option value="A">{{ text_a_button }}</option>
@@ -57,7 +57,7 @@
 					<option value="Gold" >{{ text_gold_button }}</option>
 					<option value="DarkGray">{{ text_darkgray_button }}</option>
 					<option value="LightGray" selected="selected">{{ text_lightgray_button }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="Gold" selected="selected">{{ text_gold_button }}</option>
 					<option value="DarkGray">{{ text_darkgray_button }}</option>
 					<option value="LightGray">{{ text_lightgray_button }}</option>
@@ -84,7 +84,7 @@
 					<option value="medium">{{ text_medium_button }}</option>
 					<option value="large">{{ text_large_button }}</option>
 					<option value="x-large" selected="selected">{{ text_x_large_button }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="small">{{ text_small_button }}</option>
 					<option value="medium" selected="selected">{{ text_medium_button }}</option>
 					<option value="large">{{ text_large_button }}</option>
@@ -100,7 +100,7 @@
 				<?php if ($amazon_pay_status) { ?>
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="1">{{ text_enabled }}</option>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
 				<?php } ?>

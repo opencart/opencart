@@ -44,7 +44,7 @@
                 <?php if ($parcelforce_48_display_weight) { ?>
                 <input type="radio" name="parcelforce_48_display_weight" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_weight" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -53,7 +53,7 @@
                 <?php if (!$parcelforce_48_display_weight) { ?>
                 <input type="radio" name="parcelforce_48_display_weight" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_weight" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -67,7 +67,7 @@
                 <?php if ($parcelforce_48_display_insurance) { ?>
                 <input type="radio" name="parcelforce_48_display_insurance" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_insurance" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -76,7 +76,7 @@
                 <?php if (!$parcelforce_48_display_insurance) { ?>
                 <input type="radio" name="parcelforce_48_display_insurance" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_insurance" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -90,7 +90,7 @@
                 <?php if ($parcelforce_48_display_time) { ?>
                 <input type="radio" name="parcelforce_48_display_time" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_time" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -99,7 +99,7 @@
                 <?php if (!$parcelforce_48_display_time) { ?>
                 <input type="radio" name="parcelforce_48_display_time" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="parcelforce_48_display_time" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -113,9 +113,9 @@
                 <option value="0">{{ text_none }}</option>
                 <?php foreach ($tax_classes as $tax_class) { ?>
                 <?php if ($tax_class['tax_class_id'] == $parcelforce_48_tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                {% else %}
+                <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -128,9 +128,9 @@
                 <option value="0">{{ text_all_zones }}</option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php if ($geo_zone['geo_zone_id'] == $parcelforce_48_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -143,7 +143,7 @@
                 <?php if ($parcelforce_48_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

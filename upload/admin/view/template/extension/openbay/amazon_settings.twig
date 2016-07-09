@@ -29,7 +29,7 @@
                 <?php if ($openbay_amazon_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>
@@ -61,7 +61,7 @@
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
               <?php } else if (!$API_auth) { ?>
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_auth_error }}</span></h4>
-              <?php } else { ?>
+              {% else %}
               <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> {{ text_api_ok }}</span></h4>
               <?php } ?>
             </div>
@@ -79,13 +79,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-product" title="{{ help_entry_marketplace_default }}">{{ entry_marketplace_default }}</span></label>
             <div class="col-sm-10">
-              <?php foreach ($marketplaces as $marketplace) { ?>
+              {% for marketplace in marketplaces %}
               <?php if ($marketplace['code'] == $openbay_amazon_default_listing_marketplace) { ?>
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" checked="checked" />'; ?>
-              <?php } else { ?>
+              {% else %}
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" />'; ?>
               <?php } ?>
-              <label for="p_code_<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
+              <label for="p_code_{{ marketplace.code }}">{{ marketplace.name }}</label>
               <br />
               <?php } ?>
             </div>
@@ -95,10 +95,10 @@
             <div class="col-sm-10">
               <select name="openbay_amazon_listing_default_condition" id="entry-default-condition" class="form-control">
                 <option></option>
-                <?php foreach ($conditions as $value => $condition) { ?>
+                {% for value => $condition in conditions %}
                 <?php if ($value == $openbay_amazon_listing_default_condition) { ?>
                 <option selected="selected" value="{{ value }}">{{ condition }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="{{ value }}">{{ condition }}</option>
                 <?php } ?>
                 <?php } ?>
@@ -109,16 +109,16 @@
         <div class="tab-pane" id="tab-orders">
           <fieldset>
             <legend>{{ text_order_statuses }}</legend>
-            <?php foreach ($amazon_order_statuses as $key => $amazon_order_status) { ?>
+            {% for key => $amazon_order_status in amazon_order_statuses %}
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name']; ?></label>
+              <label class="col-sm-2 control-label">{{ amazon_order_status.name }}</label>
               <div class="col-sm-10">
                 <select name="openbay_amazon_order_status_{{ key }}" class="form-control">
-                  <?php foreach ($order_statuses as $order_status) { ?>
+                  {% for order_status in order_statuses %}
                   <?php if ($amazon_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                  <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -128,13 +128,13 @@
           </fieldset>
           <fieldset>
             <legend>{{ text_marketplaces }}</legend>
-            <?php foreach ($marketplaces as $marketplace) { ?>
+            {% for marketplace in marketplaces %}
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="code-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name']; ?></label>
+              <label class="col-sm-2 control-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
               <div class="col-sm-10">
                 <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
-                <?php } else { ?>
+                {% else %}
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
                 <?php } ?>
               </div>
@@ -158,7 +158,7 @@
                   <?php foreach($customer_groups as $customer_group) { ?>
                   <?php if ($openbay_amazon_order_customer_group == $customer_group['customer_group_id']) { ?>
                   <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
-                  <?php } else { ?>
+                  {% else %}
                   <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
                   <?php } ?>
                   <?php } ?>
@@ -172,7 +172,7 @@
                   <?php if ($openbay_amazon_notify_admin) { ?>
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   <option value="0">{{ text_no }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_yes }}</option>
                   <option value="0" selected="selected">{{ text_no }}</option>
                   <?php } ?>

@@ -7,7 +7,7 @@
     <div class="col-sm-11">
       <select name="data[international][calculated][service_id][{{ key }}]" class="form-control">
         <?php foreach($data['international']['flat']['types']['service'] as $service_key => $service_type) { ?>
-        <option value="{{ service_key }}" <?php if ($service_key == $service) { echo ' selected'; } ?>><?php echo $service_type['description']; ?></option>
+        <option value="{{ service_key }}" <?php if ($service_key == $service) { echo ' selected'; } ?>>{{ service_type.description }}</option>
         <?php } ?>
       </select>
     </div>
@@ -22,7 +22,7 @@
       </label>
       <?php foreach($zones as $zone) { ?>
       <label class="checkbox-inline">
-        <input type="checkbox" name="data[international][calculated][shipto][{{ key }}][]" value="<?php echo $zone['shipping_location']; ?>" <?php echo isset($data['international']['calculated']['shipto'][$key]) && in_array($zone['shipping_location'], $data['international']['calculated']['shipto'][$key]) ? 'checked="checked"' : ''; ?> /> <?php echo $zone['description']; ?>
+        <input type="checkbox" name="data[international][calculated][shipto][{{ key }}][]" value="{{ zone.shipping_location }}" <?php echo isset($data['international']['calculated']['shipto'][$key]) && in_array($zone['shipping_location'], $data['international']['calculated']['shipto'][$key]) ? 'checked="checked"' : ''; ?> /> {{ zone.description }}
       </label>
       <?php } ?>
     </div>

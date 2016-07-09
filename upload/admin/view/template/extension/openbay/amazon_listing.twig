@@ -18,7 +18,7 @@
     <?php if ($listing_errors) { ?>
     <div class="alert alert-danger">
       <ul>
-        <?php foreach ($listing_errors as $listing_error) { ?>
+        {% for listing_error in listing_errors %}
         <li><i class="fa fa-exclamation-circle"></i> {{ listing_error }}</li>
         <?php } ?>
       </ul>
@@ -44,7 +44,7 @@
               <label class="radio-inline">
                 <?php if ($default_marketplace == $id) { ?>
                 <input type="radio" name="marketplace" id="marketplace_{{ id }}" value="{{ id }}" checked="checked" />
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="marketplace" id="marketplace_{{ id }}" value="{{ id }}" />
                 <?php } ?>
                 {{ name }} </label>
@@ -101,10 +101,10 @@
                   <label class="col-sm-2 control-label" for="condition">{{ entry_condition }}</label>
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
-                      <?php foreach ($conditions as $value => $title) { ?>
+                      {% for value => $title in conditions %}
                       <?php if ($value == $default_condition) { ?>
                       <option selected="selected" value="{{ value }}">{{ title }}</option>
-                      <?php } else { ?>
+                      {% else %}
                       <option value="{{ value }}">{{ title }}</option>
                       <?php } ?>
                       <?php } ?>

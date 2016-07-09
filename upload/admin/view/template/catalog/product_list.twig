@@ -59,12 +59,12 @@
                   <option value="*"></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <?php } ?>
                   <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="0">{{ text_disabled }}</option>
                   <?php } ?>
                 </select>
@@ -75,12 +75,12 @@
                   <option value="*"></option>
                   <?php if ($filter_image) { ?>
                   <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <?php } ?>
                   <?php if (!$filter_image && !is_null($filter_image)) { ?>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-                  <?php } else { ?>
+                  {% else %}
                   <option value="0">{{ text_disabled }}</option>
                   <?php } ?>
                 </select>
@@ -98,27 +98,27 @@
                   <td class="text-center">{{ column_image }}</td>
                   <td class="text-left"><?php if ($sort == 'pd.name') { ?>
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'p.model') { ?>
                     <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_model }}">{{ column_model }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'p.price') { ?>
                     <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_price }}">{{ column_price }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
                     <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_quantity }}">{{ column_quantity }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'p.status') { ?>
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -126,38 +126,38 @@
               </thead>
               <tbody>
                 <?php if ($products) { ?>
-                <?php foreach ($products as $product) { ?>
+                {% for product in products %}
                 <tr>
                   <td class="text-center"><?php if (in_array($product['product_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
                     <?php } ?></td>
                   <td class="text-center"><?php if ($product['image']) { ?>
-                    <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
-                    <?php } else { ?>
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
+                    {% else %}
                     <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $product['name']; ?></td>
-                  <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-left">{{ product.name }}</td>
+                  <td class="text-left">{{ product.model }}</td>
                   <td class="text-right"><?php if ($product['special']) { ?>
-                    <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                    <div class="text-danger"><?php echo $product['special']; ?></div>
-                    <?php } else { ?>
-                    <?php echo $product['price']; ?>
+                    <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
+                    <div class="text-danger">{{ product.special }}</div>
+                    {% else %}
+                    {{ product.price }}
                     <?php } ?></td>
                   <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
-                    <span class="label label-warning"><?php echo $product['quantity']; ?></span>
+                    <span class="label label-warning">{{ product.quantity }}</span>
                     <?php } elseif ($product['quantity'] <= 5) { ?>
-                    <span class="label label-danger"><?php echo $product['quantity']; ?></span>
-                    <?php } else { ?>
-                    <span class="label label-success"><?php echo $product['quantity']; ?></span>
+                    <span class="label label-danger">{{ product.quantity }}</span>
+                    {% else %}
+                    <span class="label label-success">{{ product.quantity }}</span>
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $product['status']; ?></td>
-                  <td class="text-right"><a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ product.status }}</td>
+                  <td class="text-right"><a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>

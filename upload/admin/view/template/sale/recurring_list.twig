@@ -48,9 +48,9 @@
                 <select name="filter_status" id="input-status" class="form-control">
                   <?php foreach ($recurring_statuses as $recurring_status) { ?>
                   <?php if ($filter_status == $recurring_status['value']) { ?>
-                  <option value="<?php echo $recurring_status['value']; ?>" selected="selected"><?php echo $recurring_status['text']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $recurring_status['value']; ?>"><?php echo $recurring_status['text']; ?></option>
+                  <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
+                  {% else %}
+                  <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -80,32 +80,32 @@
                 <tr>
                   <td class="text-right"><?php if ($sort == 'or.order_recurring_id') { ?>
                     <a href="{{ sort_order_recurring }}" class="{{ order|lower }}">{{ column_order_recurring_id }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_order_recurring }}">{{ column_order_recurring_id }}</a>
                     <?php }  ?></td>
                   <td class="text-right"><?php if ($sort == 'or.order_id') { ?>
                     <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_order }}">{{ column_order_id }}</a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.reference') { ?>
                     <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_reference }}">{{ column_reference }}</a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'customer') { ?>
                     <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_customer }}">{{ column_customer }}</a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.status') { ?>
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php }  ?></td>
                   <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
                     <?php }  ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -115,19 +115,19 @@
                 <?php if ($recurrings) { ?>
                   <?php foreach ($recurrings as $recurring) { ?>
                   <tr>
-                    <td class="text-right"><?php echo $recurring['order_recurring_id']; ?></td>
-                    <td class="text-right"><?php echo $recurring['order_id']; ?></td>
-                    <td class="text-left"><?php echo $recurring['reference']; ?></td>
-                    <td class="text-left"><?php echo $recurring['customer']; ?></td>
-                    <td class="text-left"><?php echo $recurring['status']; ?></td>
-                    <td class="text-left"><?php echo $recurring['date_added']; ?></td>
+                    <td class="text-right">{{ recurring.order_recurring_id }}</td>
+                    <td class="text-right">{{ recurring.order_id }}</td>
+                    <td class="text-left">{{ recurring.reference }}</td>
+                    <td class="text-left">{{ recurring.customer }}</td>
+                    <td class="text-left">{{ recurring.status }}</td>
+                    <td class="text-left">{{ recurring.date_added }}</td>
                     <td class="text-right">
-                      <a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                      <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
+                      <a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                      <a href="{{ recurring.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
                     </td>
                   </tr>
                   <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="7">{{ text_no_results }}</td>
                 </tr>

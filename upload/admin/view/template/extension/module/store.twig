@@ -32,7 +32,7 @@
                 <?php if ($store_admin) { ?>
                 <input type="radio" name="store_admin" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="store_admin" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -41,7 +41,7 @@
                 <?php if (!$store_admin) { ?>
                 <input type="radio" name="store_admin" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="store_admin" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -55,7 +55,7 @@
                 <?php if ($store_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

@@ -37,17 +37,17 @@
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'title') { ?>
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'unit') { ?>
                     <a href="{{ sort_unit }}" class="{{ order|lower }}">{{ column_unit }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_unit }}">{{ column_unit }}</a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'value') { ?>
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
-                    <?php } else { ?>
+                    {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
                     <?php } ?></td>
                   <td class="text-right">{{ column_action }}</td>
@@ -58,17 +58,17 @@
                 <?php foreach ($length_classes as $length_class) { ?>
                 <tr>
                   <td class="text-center"><?php if (in_array($length_class['length_class_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $length_class['title']; ?></td>
-                  <td class="text-left"><?php echo $length_class['unit']; ?></td>
-                  <td class="text-right"><?php echo $length_class['value']; ?></td>
-                  <td class="text-right"><a href="<?php echo $length_class['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ length_class.title }}</td>
+                  <td class="text-left">{{ length_class.unit }}</td>
+                  <td class="text-right">{{ length_class.value }}</td>
+                  <td class="text-right"><a href="{{ length_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
-                <?php } else { ?>
+                {% else %}
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>
                 </tr>

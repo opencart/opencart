@@ -48,16 +48,16 @@
             <td class="text-center" colspan="6">{{ text_empty }}</td>
           </tr>
         <?php } ?>
-        <?php foreach ($table_data as $ref => $row) { ?>
+        {% for ref => $row in table_data %}
           <tr>
             <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ ref }}</td>
-            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['status']; ?></td>
-            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>
-            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_updated']; ?></td>
+            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.status }}</td>
+            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.date_requested }}</td>
+            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.date_updated }}</td>
             <?php foreach ($row['data'] as $dataRow) { ?>
               <tr>
-                <td class="text-center"><?php echo $dataRow['sku']; ?></td>
-                <td class="text-center"><?php echo $dataRow['stock']; ?></td>
+                <td class="text-center">{{ dataRow.sku }}</td>
+                <td class="text-center">{{ dataRow.stock }}</td>
               </tr>
             <?php } ?>
           </tr>

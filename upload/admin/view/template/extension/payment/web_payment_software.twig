@@ -49,12 +49,12 @@
               <select name="web_payment_software_mode" id="input-mode" class="form-control">
                 <?php if ($web_payment_software_mode == 'live') { ?>
                 <option value="live" selected="selected">{{ text_live }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
                 <?php if ($web_payment_software_mode == 'test') { ?>
                 <option value="test" selected="selected">{{ text_test }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="test">{{ text_test }}</option>
                 <?php } ?>
               </select>
@@ -66,12 +66,12 @@
               <select name="web_payment_software_method" id="input-method" class="form-control">
                 <?php if ($web_payment_software_method == 'authorization') { ?>
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="authorization">{{ text_authorization }}</option>
                 <?php } ?>
                 <?php if ($web_payment_software_method == 'capture') { ?>
                 <option value="capture" selected="selected">{{ text_capture }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="capture">{{ text_capture }}</option>
                 <?php } ?>
               </select>
@@ -89,9 +89,9 @@
               <select name="web_payment_software_order_status_id" id="input-order-status" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $web_payment_software_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -104,9 +104,9 @@
                 <option value="0">{{ text_all_zones }}</option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php if ($geo_zone['geo_zone_id'] == $web_payment_software_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -119,7 +119,7 @@
                 <?php if ($web_payment_software_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

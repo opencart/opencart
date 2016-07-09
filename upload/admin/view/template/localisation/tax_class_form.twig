@@ -59,30 +59,30 @@
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
                     <?php foreach ($tax_rates as $tax_rate) { ?>
                     <?php  if ($tax_rate['tax_rate_id'] == $tax_rule['tax_rate_id']) { ?>
-                    <option value="<?php echo $tax_rate['tax_rate_id']; ?>" selected="selected"><?php echo $tax_rate['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo $tax_rate['name']; ?></option>
+                    <option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
+                    {% else %}
+                    <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-control">
                     <?php  if ($tax_rule['based'] == 'shipping') { ?>
                     <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="shipping">{{ text_shipping }}</option>
                     <?php } ?>
                     <?php  if ($tax_rule['based'] == 'payment') { ?>
                     <option value="payment" selected="selected">{{ text_payment }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="payment">{{ text_payment }}</option>
                     <?php } ?>
                     <?php  if ($tax_rule['based'] == 'store') { ?>
                     <option value="store" selected="selected">{{ text_store }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="store">{{ text_store }}</option>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="<?php echo $tax_rule['priority']; ?>" placeholder="{{ entry_priority }}" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $tax_rule_row++; ?>
@@ -106,7 +106,7 @@ function addRule() {
 	html  = '<tr id="tax-rule-row' + tax_rule_row + '">';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
     <?php foreach ($tax_rates as $tax_rate) { ?>
-    html += '    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo addslashes($tax_rate['name']); ?></option>';
+    html += '    <option value="{{ tax_rate.tax_rate_id }}"><?php echo addslashes($tax_rate['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';

@@ -77,7 +77,7 @@
                 <?php if ($fedex_test) { ?>
                 <input type="radio" name="fedex_test" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_test" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -86,7 +86,7 @@
                 <?php if (!$fedex_test) { ?>
                 <input type="radio" name="fedex_test" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_test" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -101,11 +101,11 @@
                 <div class="checkbox">
                   <label>
                     <?php if (in_array($service['value'], $fedex_service)) { ?>
-                    <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" checked="checked" />
-                    <?php echo $service['text']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" />
-                    <?php echo $service['text']; ?>
+                    <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" checked="checked" />
+                    {{ service.text }}
+                    {% else %}
+                    <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" />
+                    {{ service.text }}
                     <?php } ?>
                   </label>
                 </div>
@@ -138,9 +138,9 @@
               <select name="fedex_length_class_id" id="input-length-class" class="form-control">
                 <?php foreach ($length_classes as $length_class) { ?>
                 <?php if ($length_class['length_class_id'] == $fedex_length_class_id) { ?>
-                <option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
+                <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
+                {% else %}
+                <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -152,27 +152,27 @@
               <select name="fedex_dropoff_type" id="input-dropoff-type" class="form-control">
                 <?php if ($fedex_dropoff_type == 'REGULAR_PICKUP') { ?>
                 <option value="REGULAR_PICKUP" selected="selected">{{ text_regular_pickup }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="REGULAR_PICKUP">{{ text_regular_pickup }}</option>
                 <?php } ?>
                 <?php if ($fedex_dropoff_type == 'REQUEST_COURIER') { ?>
                 <option value="REQUEST_COURIER" selected="selected">{{ text_request_courier }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="REQUEST_COURIER">{{ text_request_courier }}</option>
                 <?php } ?>
                 <?php if ($fedex_dropoff_type == 'DROP_BOX') { ?>
                 <option value="DROP_BOX" selected="selected">{{ text_drop_box }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="DROP_BOX">{{ text_drop_box }}</option>
                 <?php } ?>
                 <?php if ($fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER') { ?>
                 <option value="BUSINESS_SERVICE_CENTER" selected="selected">{{ text_business_service_center }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="BUSINESS_SERVICE_CENTER">{{ text_business_service_center }}</option>
                 <?php } ?>
                 <?php if ($fedex_dropoff_type == 'STATION') { ?>
                 <option value="STATION" selected="selected">{{ text_station }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="STATION">{{ text_station }}</option>
                 <?php } ?>
               </select>
@@ -184,37 +184,37 @@
               <select name="fedex_packaging_type" id="input-packaging-type" class="form-control">
                 <?php if ($fedex_packaging_type == 'FEDEX_ENVELOPE') { ?>
                 <option value="FEDEX_ENVELOPE" selected="selected">{{ text_fedex_envelope }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_ENVELOPE">{{ text_fedex_envelope }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'FEDEX_PAK') { ?>
                 <option value="FEDEX_PAK" selected="selected">{{ text_fedex_pak }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_PAK">{{ text_fedex_pak }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'FEDEX_BOX') { ?>
                 <option value="FEDEX_BOX" selected="selected">{{ text_fedex_box }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_BOX">{{ text_fedex_box }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'FEDEX_TUBE') { ?>
                 <option value="FEDEX_TUBE" selected="selected">{{ text_fedex_tube }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_TUBE">{{ text_fedex_tube }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'FEDEX_10KG_BOX') { ?>
                 <option value="FEDEX_10KG_BOX" selected="selected">{{ text_fedex_10kg_box }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_10KG_BOX">{{ text_fedex_10kg_box }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'FEDEX_25KG_BOX') { ?>
                 <option value="FEDEX_25KG_BOX" selected="selected">{{ text_fedex_25kg_box }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="FEDEX_25KG_BOX">{{ text_fedex_25kg_box }}</option>
                 <?php } ?>
                 <?php if ($fedex_packaging_type == 'YOUR_PACKAGING') { ?>
                 <option value="YOUR_PACKAGING" selected="selected">{{ text_your_packaging }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="YOUR_PACKAGING">{{ text_your_packaging }}</option>
                 <?php } ?>
               </select>
@@ -226,12 +226,12 @@
               <select name="fedex_rate_type" id="input-rate-type" class="form-control">
                 <?php if ($fedex_rate_type == 'LIST') { ?>
                 <option value="LIST" selected="selected">{{ text_list_rate }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="LIST">{{ text_list_rate }}</option>
                 <?php } ?>
                 <?php if ($fedex_rate_type == 'ACCOUNT') { ?>
                 <option value="ACCOUNT" selected="selected">{{ text_account_rate }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="ACCOUNT">{{ text_account_rate }}</option>
                 <?php } ?>
               </select>
@@ -244,7 +244,7 @@
                 <?php if ($fedex_display_time) { ?>
                 <input type="radio" name="fedex_display_time" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_display_time" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -253,7 +253,7 @@
                 <?php if (!$fedex_display_time) { ?>
                 <input type="radio" name="fedex_display_time" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_display_time" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -267,7 +267,7 @@
                 <?php if ($fedex_display_weight) { ?>
                 <input type="radio" name="fedex_display_weight" value="1" checked="checked" />
                 {{ text_yes }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_display_weight" value="1" />
                 {{ text_yes }}
                 <?php } ?>
@@ -276,7 +276,7 @@
                 <?php if (!$fedex_display_weight) { ?>
                 <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
                 {{ text_no }}
-                <?php } else { ?>
+                {% else %}
                 <input type="radio" name="fedex_display_weight" value="0" />
                 {{ text_no }}
                 <?php } ?>
@@ -289,9 +289,9 @@
               <select name="fedex_weight_class_id" id="input-weight-class" class="form-control">
                 <?php foreach ($weight_classes as $weight_class) { ?>
                 <?php if ($weight_class['weight_class_id'] == $fedex_weight_class_id) { ?>
-                <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                {% else %}
+                <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -304,9 +304,9 @@
                 <option value="0">{{ text_none }}</option>
                 <?php foreach ($tax_classes as $tax_class) { ?>
                 <?php if ($tax_class['tax_class_id'] == $fedex_tax_class_id) { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                {% else %}
+                <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -319,9 +319,9 @@
                 <option value="0">{{ text_all_zones }}</option>
                 <?php foreach ($geo_zones as $geo_zone) { ?>
                 <?php if ($geo_zone['geo_zone_id'] == $fedex_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -334,7 +334,7 @@
                 <?php if ($fedex_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

@@ -2,7 +2,7 @@
   <tr>
 	<td>{{ column_order_id }}</td>
 	<td>
-		<?php echo $transaction['order_id']; ?>
+		{{ transaction.order_id }}
 		<?php if ($cancel_action) { ?>
 		<a class="btn btn-primary button-command" data-type="cancel">{{ button_cancel }}</a>
 		<?php } ?>
@@ -10,22 +10,22 @@
   </tr>
   <tr>
 	<td>{{ column_reference }}</td>
-	<td><?php echo $transaction['reference']; ?></td>
+	<td>{{ transaction.reference }}</td>
   </tr>
   <tr>
 	<td>{{ column_status }}</td>
-	<td><?php echo $transaction['status']; ?></td>
+	<td>{{ transaction.status }}</td>
   </tr>
   <tr>
 	<td>{{ column_merchant_reference_1 }}</td>
 	<td>
 		<?php if ($merchant_reference_action) { ?>
 		<div class="col-sm-2">
-			<input class="form-control" type="text" name="merchant_reference_1" value="<?php echo $transaction['merchant_reference_1']; ?>" />
+			<input class="form-control" type="text" name="merchant_reference_1" value="{{ transaction.merchant_reference_1 }}" />
 		</div>
 		<a class="btn btn-primary button-command" data-type="merchant_reference">{{ button_update }}</a>
-		<?php } else { ?>
-		<?php echo $transaction['merchant_reference_1']; ?>
+		{% else %}
+		{{ transaction.merchant_reference_1 }}
 		<?php } ?>
 	</td>
   </tr>
@@ -40,8 +40,8 @@
 		  </tr>
 		</thead>
 		<tr>
-		  <td><?php echo $transaction['billing_address_formatted']; ?></td>
-		  <td><?php echo $transaction['shipping_address_formatted']; ?></td>
+		  <td>{{ transaction.billing_address_formatted }}</td>
+		  <td>{{ transaction.shipping_address_formatted }}</td>
 		</tr>
 		<?php if ($address_action) { ?>
 		<tr>
@@ -77,16 +77,16 @@
 		<tbody>
 			<?php foreach ($transaction['order_lines'] as $order_line) { ?>
 			  <tr>
-				<td><?php echo $order_line['reference']; ?></td>
-				<td><?php echo $order_line['type']; ?></td>
-				<td><?php echo $order_line['quantity']; ?></td>
-				<td><?php echo $order_line['quantity_unit']; ?></td>
-				<td><?php echo $order_line['name']; ?></td>
-				<td><?php echo $order_line['total_amount']; ?></td>
-				<td><?php echo $order_line['unit_price']; ?></td>
-				<td><?php echo $order_line['total_discount_amount']; ?></td>
-				<td><?php echo $order_line['tax_rate']; ?></td>
-				<td><?php echo $order_line['total_tax_amount']; ?></td>
+				<td>{{ order_line.reference }}</td>
+				<td>{{ order_line.type }}</td>
+				<td>{{ order_line.quantity }}</td>
+				<td>{{ order_line.quantity_unit }}</td>
+				<td>{{ order_line.name }}</td>
+				<td>{{ order_line.total_amount }}</td>
+				<td>{{ order_line.unit_price }}</td>
+				<td>{{ order_line.total_discount_amount }}</td>
+				<td>{{ order_line.tax_rate }}</td>
+				<td>{{ order_line.total_tax_amount }}</td>
 			  </tr>
 		  <?php } ?>
 		</tbody>
@@ -95,12 +95,12 @@
   </tr>
   <tr>
 	<td>{{ column_amount }}</td>
-	<td><?php echo $transaction['amount']; ?></td>
+	<td>{{ transaction.amount }}</td>
   </tr>
   <tr>
 	<td>{{ column_authorization_remaining }}</td>
 	<td>
-	  <?php echo $transaction['authorization_remaining']; ?>
+	  {{ transaction.authorization_remaining }}
 	  <?php if ($release_authorization_action) { ?>
 	  <a class="btn btn-primary button-command" data-type="release_authorization">{{ button_release_authorization }}</a>
 	  <?php } ?>
@@ -110,7 +110,7 @@
   <tr>
 	<td>{{ column_authorization_expiry }}</td>
 	<td>
-		<?php echo $transaction['authorization_expiry']; ?>
+		{{ transaction.authorization_expiry }}
 		<?php if ($extend_authorization_action) { ?>
 		<a class="btn btn-primary button-command" data-type="extend_authorization">{{ button_extend_authorization }}</a>
 		<?php } ?>
@@ -132,20 +132,20 @@
 		  </thead>
 		  <tbody>
 			<?php if ($captures) { ?>
-			<?php foreach ($captures as $capture) { ?>
+			{% for capture in captures %}
 			<tr>
-			  <td><?php echo $capture['capture_id']; ?></td>
-			  <td><?php echo $capture['date_added']; ?></td>
-			  <td><?php echo $capture['amount']; ?></td>
-			  <td><?php echo $capture['reference']; ?></td>
+			  <td>{{ capture.capture_id }}</td>
+			  <td>{{ capture.date_added }}</td>
+			  <td>{{ capture.amount }}</td>
+			  <td>{{ capture.reference }}</td>
 			  <td>
-				<a class="btn btn-primary button-command" data-type="trigger_send_out" data-id="<?php echo $capture['capture_id']; ?>">{{ button_trigger_send_out }}</a>
-				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-shipping-info-<?php echo $capture['capture_id']; ?>">{{ button_edit_shipping_info }}</a>
-				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-billing-address-<?php echo $capture['capture_id']; ?>">{{ button_edit_billing_address }}</a>
+				<a class="btn btn-primary button-command" data-type="trigger_send_out" data-id="{{ capture.capture_id }}">{{ button_trigger_send_out }}</a>
+				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-shipping-info-{{ capture.capture_id }}">{{ button_edit_shipping_info }}</a>
+				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-billing-address-{{ capture.capture_id }}">{{ button_edit_billing_address }}</a>
 			  </td>
 			</tr>
 			<?php } ?>
-			<?php } else { ?>
+			{% else %}
 			<tr>
 			  <td class="text-center" colspan="4">{{ text_no_capture }}</td>
 			</tr>
@@ -175,10 +175,10 @@
 		  </thead>
 		  <tbody>
 			<?php if ($refunds) { ?>
-			<?php foreach ($refunds as $refund) { ?>
+			{% for refund in refunds %}
 			<tr>
-			  <td><?php echo $refund['date_added']; ?></td>
-			  <td><?php echo $refund['amount']; ?></td>
+			  <td>{{ refund.date_added }}</td>
+			  <td>{{ refund.amount }}</td>
 			</tr>
 			<?php } ?>
 			<?php } ?>
@@ -411,146 +411,146 @@
   </div>
 </div>
 
-<?php foreach ($captures as $capture) { ?>
-<div class="modal fade" id="capture-shipping-info-<?php echo $capture['capture_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="capture-shipping-info-<?php echo $capture['capture_id']; ?>-title" style="">
+{% for capture in captures %}
+<div class="modal fade" id="capture-shipping-info-{{ capture.capture_id }}" tabindex="-1" role="dialog" aria-labelledby="capture-shipping-info-{{ capture.capture_id }}-title" style="">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="capture-shipping-info-<?php echo $capture['capture_id']; ?>-title"><?php echo $capture['shipping_info_title']; ?></h4>
+        <h4 class="modal-title" id="capture-shipping-info-{{ capture.capture_id }}-title">{{ capture.shipping_info_title }}</h4>
       </div>
       <div class="modal-body">
 		<table class="table table-bordered shipping-info-data">
 		  <tbody>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['shipping_company']; ?></td>
+			  <td>{{ shipping_info.shipping_company }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['shipping_method']; ?></td>
+			  <td>{{ shipping_info.shipping_method }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['tracking_number']; ?></td>
+			  <td>{{ shipping_info.tracking_number }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['tracking_uri']; ?></td>
+			  <td>{{ shipping_info.tracking_uri }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['return_shipping_company']; ?></td>
+			  <td>{{ shipping_info.return_shipping_company }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['return_tracking_number']; ?></td>
+			  <td>{{ shipping_info.return_tracking_number }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
 			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
-			  <td><?php echo $shipping_info['return_tracking_uri']; ?></td>
+			  <td>{{ shipping_info.return_tracking_uri }}</td>
 			  <?php } ?>
 			</tr>
 		  </tbody>
 		  <tfoot>
 			<tr>
 			  <td colspan="<?php echo count($capture['shipping_info']) + 1; ?>"></td>
-			  <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-<?php echo $capture['capture_id']; ?>');" data-toggle="tooltip" title="{{ button_add_shipping_info }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+			  <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-{{ capture.capture_id }}');" data-toggle="tooltip" title="{{ button_add_shipping_info }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
 			</tr>
 		  </tfoot>
 		</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
-        <button type="button" class="btn btn-primary button-command" data-type="capture_shipping_info" data-id="<?php echo $capture['capture_id']; ?>" data-modal="#capture-shipping-info-<?php echo $capture['capture_id']; ?>">{{ button_update }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="capture_shipping_info" data-id="{{ capture.capture_id }}" data-modal="#capture-shipping-info-{{ capture.capture_id }}">{{ button_update }}</button>
       </div>
     </div>
   </div>
 </div>
-<div class="modal fade" id="capture-billing-address-<?php echo $capture['capture_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="capture-billing-address-<?php echo $capture['capture_id']; ?>-title" style="">
+<div class="modal fade" id="capture-billing-address-{{ capture.capture_id }}" tabindex="-1" role="dialog" aria-labelledby="capture-billing-address-{{ capture.capture_id }}-title" style="">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ button_close }}"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="capture-billing-address-<?php echo $capture['capture_id']; ?>-title"><?php echo $capture['billing_address_title']; ?></h4>
+        <h4 class="modal-title" id="capture-billing-address-{{ capture.capture_id }}-title">{{ capture.billing_address_title }}</h4>
       </div>
       <div class="modal-body form-horizontal">
 		<div class="form-group">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-title">{{ column_title }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-title">{{ column_title }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="title" value="<?php echo $capture['billing_address']['title']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-title" class="form-control" />
+			<input type="text" name="title" value="<?php echo $capture['billing_address']['title']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-title" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-given-name">{{ column_given_name }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-given-name">{{ column_given_name }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="given_name" value="<?php echo $capture['billing_address']['given_name']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-given-name" class="form-control" />
+			<input type="text" name="given_name" value="<?php echo $capture['billing_address']['given_name']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-given-name" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-family-name">{{ column_family_name }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-family-name">{{ column_family_name }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="family_name" value="<?php echo $capture['billing_address']['family_name']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-family-name" class="form-control" />
+			<input type="text" name="family_name" value="<?php echo $capture['billing_address']['family_name']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-family-name" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-street-address">{{ column_street_address }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-street-address">{{ column_street_address }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="street_address" value="<?php echo $capture['billing_address']['street_address']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-street-address" class="form-control" />
+			<input type="text" name="street_address" value="<?php echo $capture['billing_address']['street_address']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-street-address" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-street-address2">{{ column_street_address2 }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-street-address2">{{ column_street_address2 }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="street_address2" value="<?php echo $capture['billing_address']['street_address2']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-street-address2" class="form-control" />
+			<input type="text" name="street_address2" value="<?php echo $capture['billing_address']['street_address2']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-street-address2" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-city">{{ column_city }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-city">{{ column_city }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="city" value="<?php echo $capture['billing_address']['city']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-city" class="form-control" />
+			<input type="text" name="city" value="<?php echo $capture['billing_address']['city']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-city" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-postal-code">{{ column_postal_code }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-postal-code">{{ column_postal_code }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="postal_code" value="<?php echo $capture['billing_address']['postal_code']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-postal-code" class="form-control" />
+			<input type="text" name="postal_code" value="<?php echo $capture['billing_address']['postal_code']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-postal-code" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-region">{{ column_region }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-region">{{ column_region }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="region" value="<?php echo $capture['billing_address']['region']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-region" class="form-control" />
+			<input type="text" name="region" value="<?php echo $capture['billing_address']['region']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-region" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-country">{{ column_country }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-country">{{ column_country }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="country" value="<?php echo $capture['billing_address']['country']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-country" class="form-control" />
+			<input type="text" name="country" value="<?php echo $capture['billing_address']['country']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-country" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-email">{{ column_email }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-email">{{ column_email }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="email" value="<?php echo $capture['billing_address']['email']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-email" class="form-control" />
+			<input type="text" name="email" value="<?php echo $capture['billing_address']['email']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-email" class="form-control" />
 		  </div>
 		</div>
 		<div class="form-group required">
-		  <label class="col-sm-2 control-label" for="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-phone">{{ column_phone }}</label>
+		  <label class="col-sm-2 control-label" for="input-capture-billing-address-{{ capture.capture_id }}-phone">{{ column_phone }}</label>
 		  <div class="col-sm-10">
-			<input type="text" name="phone" value="<?php echo $capture['billing_address']['phone']; ?>" id="input-capture-billing-address-<?php echo $capture['capture_id']; ?>-phone" class="form-control" />
+			<input type="text" name="phone" value="<?php echo $capture['billing_address']['phone']; ?>" id="input-capture-billing-address-{{ capture.capture_id }}-phone" class="form-control" />
 		  </div>
 		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
-        <button type="button" class="btn btn-primary button-command" data-type="capture_billing_address" data-id="<?php echo $capture['capture_id']; ?>" data-modal="#capture-billing-address-<?php echo $capture['capture_id']; ?>">{{ button_update }}</button>
+        <button type="button" class="btn btn-primary button-command" data-type="capture_billing_address" data-id="{{ capture.capture_id }}" data-modal="#capture-billing-address-{{ capture.capture_id }}">{{ button_update }}</button>
       </div>
     </div>
   </div>
@@ -660,7 +660,7 @@ function addShippingInfo(id) {
 	$(id + ' .shipping-info-data tbody tr:nth-child(1)').append('<td><div class="col-sm-12"><input class="form-control" type="text" name="shipping_info[' + shipping_info_row + '][shipping_company]" value="" data-id="' + shipping_info_row + '" placeholder="{{ entry_shipping_company }}" /></div></td>');
 
     html = '  <td><div class="col-sm-12"><select name="shipping_info[' + shipping_info_row + '][shipping_method]" class="form-control">';
-    <?php foreach ($allowed_shipping_methods as $shipping_method) { ?>
+    {% for shipping_method in allowed_shipping_methods %}
     html += '    <option value="{{ shipping_method }}"><?php echo addslashes($shipping_method); ?></option>';
     <?php } ?>
     html += '  </select></div></td>';

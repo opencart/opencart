@@ -25,8 +25,8 @@
               <div class="list-group-item">
                 <select name="store_id" class="form-control">
                   <option value="0">{{ text_default }}</option>
-                  <?php foreach ($stores as $store) { ?>
-                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  {% for store in stores %}
+                  <option value="{{ store.store_id }}">{{ store.name }}</option>
                   <?php } ?>
                 </select>
               </div>

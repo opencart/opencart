@@ -18,8 +18,8 @@
         <?php if ($errors) { ?>
         <div class="alert alert-danger">
             <ul>
-                <?php foreach ($errors as $listing_error) { ?>
-                <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error['message']; ?></li>
+                {% for listing_error in errors %}
+                <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>
                 <?php } ?>
             </ul>
         </div>
@@ -62,7 +62,7 @@
                             <select name="category_selector" id="category_selector" class="form-control">
                                 <option value=""></option>
                                 <?php foreach($amazonus_categories as $category) {  ?>
-                                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template']; ?>"><?php echo $category['friendly_name']; ?></option>
+                                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
                                 <?php } ?>
                             </select>
                         </div>

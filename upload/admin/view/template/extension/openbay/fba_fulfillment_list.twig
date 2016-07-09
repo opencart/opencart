@@ -62,15 +62,15 @@
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>
-              <?php } else { ?>
-                <?php foreach ($fulfillments as $fulfillment) { ?>
+              {% else %}
+                {% for fulfillment in fulfillments %}
                   <tr>
-                    <td class="text-left"><?php echo $fulfillment['seller_fulfillment_order_id']; ?></td>
-                    <td class="text-left"><?php echo $fulfillment['displayable_order_id']; ?></td>
-                    <td class="text-left"><?php echo $fulfillment['displayable_order_date_time']; ?></td>
-                    <td class="text-left"><?php echo $fulfillment['shipping_speed_category']; ?></td>
-                    <td class="text-left"><?php echo $fulfillment['fulfillment_order_status']; ?></td>
-                    <td class="text-right"><a href="<?php echo $fulfillment['edit']; ?>" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-left">{{ fulfillment.seller_fulfillment_order_id }}</td>
+                    <td class="text-left">{{ fulfillment.displayable_order_id }}</td>
+                    <td class="text-left">{{ fulfillment.displayable_order_date_time }}</td>
+                    <td class="text-left">{{ fulfillment.shipping_speed_category }}</td>
+                    <td class="text-left">{{ fulfillment.fulfillment_order_status }}</td>
+                    <td class="text-right"><a href="{{ fulfillment.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                 <?php } ?>
               <?php } ?>

@@ -44,7 +44,7 @@
                     <?php if (in_array($permission, $access)) { ?>
                     <input type="checkbox" name="permission[access][]" value="{{ permission }}" checked="checked" />
                     {{ permission }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="checkbox" name="permission[access][]" value="{{ permission }}" />
                     {{ permission }}
                     <?php } ?>
@@ -64,7 +64,7 @@
                     <?php if (in_array($permission, $modify)) { ?>
                     <input type="checkbox" name="permission[modify][]" value="{{ permission }}" checked="checked" />
                     {{ permission }}
-                    <?php } else { ?>
+                    {% else %}
                     <input type="checkbox" name="permission[modify][]" value="{{ permission }}" />
                     {{ permission }}
                     <?php } ?>

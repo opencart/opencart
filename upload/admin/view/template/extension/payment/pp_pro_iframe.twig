@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <?php if (isset($error['error_warning'])) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
@@ -36,7 +36,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_user" value="{{ pp_pro_iframe_user }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
                   <?php if (isset($error['username'])) { ?>
-                  <div class="text-danger"><?php echo $error['username']; ?></div>
+                  <div class="text-danger">{{ error.username }}</div>
                   <?php } ?>
                 </div>
               </div>
@@ -45,7 +45,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_password" value="{{ pp_pro_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
                   <?php if (isset($error['password'])) { ?>
-                  <div class="text-danger"><?php echo $error['password']; ?></div>
+                  <div class="text-danger">{{ error.password }}</div>
                   <?php } ?>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_sig" value="{{ pp_pro_iframe_sig }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
                   <?php if (isset($error['signature'])) { ?>
-                  <div class="text-danger"><?php echo $error['signature']; ?></div>
+                  <div class="text-danger">{{ error.signature }}</div>
                   <?php } ?>
                 </div>
               </div>
@@ -65,7 +65,7 @@
                     <?php if ($pp_pro_iframe_test) { ?>
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
                     <?php } ?>
@@ -79,7 +79,7 @@
                     <?php if ($pp_pro_iframe_debug) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -93,7 +93,7 @@
                     <?php if ($pp_pro_iframe_transaction_method == 'authorization') { ?>
                     <option value="sale">{{ text_sale }}</option>
                     <option value="authorization" selected="selected">{{ text_authorization }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="sale" selected="selected">{{ text_sale }}</option>
                     <option value="authorization">{{ text_authorization }}</option>
                     <?php } ?>
@@ -107,7 +107,7 @@
                     <?php if ($pp_pro_iframe_checkout_method == 'iframe') { ?>
                     <option value="iframe" selected="selected">{{ text_iframe }}</option>
                     <option value="redirect">{{ text_redirect }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="iframe">{{ text_iframe }}</option>
                     <option value="redirect" selected="selected">{{ text_redirect }}</option>
                     <?php } ?>
@@ -139,11 +139,11 @@
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
-                    <?php foreach ($geo_zones as $geo_zone) { ?>
+                    {% for geo_zone in geo_zones %}
                     <?php if ($geo_zone['geo_zone_id'] == $pp_pro_iframe_geo_zone_id) { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -156,7 +156,7 @@
                     <?php if ($pp_pro_iframe_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -169,11 +169,11 @@
                 <label class="col-sm-2 control-label">{{ entry_canceled_reversal_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_canceled_reversal_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_canceled_reversal_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -183,11 +183,11 @@
                 <label class="col-sm-2 control-label">{{ entry_completed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_completed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_completed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -197,11 +197,11 @@
                 <label class="col-sm-2 control-label">{{ entry_denied_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_denied_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_denied_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -211,11 +211,11 @@
                 <label class="col-sm-2 control-label">{{ entry_expired_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_expired_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_expired_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -225,11 +225,11 @@
                 <label class="col-sm-2 control-label">{{ entry_failed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_failed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_failed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -239,11 +239,11 @@
                 <label class="col-sm-2 control-label">{{ entry_pending_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_pending_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_pending_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -253,11 +253,11 @@
                 <label class="col-sm-2 control-label">{{ entry_processed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_processed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_processed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -267,11 +267,11 @@
                 <label class="col-sm-2 control-label">{{ entry_refunded_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_refunded_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_refunded_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -281,11 +281,11 @@
                 <label class="col-sm-2 control-label">{{ entry_reversed_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_reversed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_reversed_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -295,11 +295,11 @@
                 <label class="col-sm-2 control-label">{{ entry_voided_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_voided_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $pp_pro_iframe_voided_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>

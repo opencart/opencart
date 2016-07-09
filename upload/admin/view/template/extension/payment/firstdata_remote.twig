@@ -102,7 +102,7 @@
                     <?php if ($firstdata_remote_debug) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -120,11 +120,11 @@
                 <div class="col-sm-10">
                   <select name="firstdata_remote_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
-                    <?php foreach ($geo_zones as $geo_zone) { ?>
+                    {% for geo_zone in geo_zones %}
                     <?php if ($geo_zone['geo_zone_id'] == $firstdata_remote_geo_zone_id) { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    {% else %}
+                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -137,7 +137,7 @@
                     <?php if ($firstdata_remote_status) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -156,11 +156,11 @@
                 <label class="col-sm-2 control-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_success_settled_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -170,11 +170,11 @@
                 <label class="col-sm-2 control-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_success_unsettled_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -184,11 +184,11 @@
                 <label class="col-sm-2 control-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
+                    {% for order_status in order_statuses %}
                     <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_decline_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -218,7 +218,7 @@
                     <?php if ($firstdata_remote_card_storage) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
-                    <?php } else { ?>
+                    {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                     <?php } ?>
@@ -228,15 +228,15 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_cards_accepted }}</label>
                 <div class="col-sm-10">
-                  <?php foreach ($cards as $card) { ?>
+                  {% for card in cards %}
                   <div class="checkbox">
                     <label>
                       <?php if (in_array($card['value'], $firstdata_remote_cards_accepted)) { ?>
-                      <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="<?php echo $card['value']; ?>" checked="checked" />
-                      <?php echo $card['text']; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="<?php echo $card['value']; ?>" />
-                      <?php echo $card['text']; ?>
+                      <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="{{ card.value }}" checked="checked" />
+                      {{ card.text }}
+                      {% else %}
+                      <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="{{ card.value }}" />
+                      {{ card.text }}
                       <?php } ?>
                     </label>
                   </div>

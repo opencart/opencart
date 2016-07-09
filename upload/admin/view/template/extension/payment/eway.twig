@@ -32,7 +32,7 @@
 				<?php if ($eway_paymode == 'iframe') { ?>
 					<option value="iframe" selected="selected">{{ text_iframe }}</option>
 					<option value="transparent">{{ text_transparent }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="iframe">{{ text_iframe }}</option>
 					<option value="transparent" selected="selected">{{ text_transparent }}</option>
 				<?php } ?>
@@ -46,7 +46,7 @@
 				<?php if ($eway_test) { ?>
 					<option value="1" selected="selected">{{ text_yes }}</option>
 					<option value="0">{{ text_no }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="1">{{ text_yes }}</option>
 					<option value="0" selected="selected">{{ text_no }}</option>
 				<?php } ?>
@@ -78,7 +78,7 @@
 				<?php if ($eway_status) { ?>
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="1">{{ text_enabled }}</option>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
 				<?php } ?>
@@ -92,7 +92,7 @@
 				<?php if ($eway_transaction_method == 'auth') { ?>
 					<option value="payment">{{ text_sale }}</option>
 					<option value="auth" selected="selected">{{ text_authorisation }}</option>
-				<?php } else { ?>
+				{% else %}
 					<option value="payment" selected="selected">{{ text_sale }}</option>
 					<option value="auth">{{ text_authorisation }}</option>
 				<?php } ?>
@@ -140,10 +140,10 @@
             <div class="col-sm-10">
               <select name="eway_standard_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-				<?php foreach ($geo_zones as $geo_zone) { ?><?php if ($geo_zone['geo_zone_id'] == $eway_standard_geo_zone_id) { ?>
-						<option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+				{% for geo_zone) { ?><?php if ($geo_zone['geo_zone_id'] == $eway_standard_geo_zone_id in geo_zones %}
+						<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+					{% else %}
+						<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
 					<?php } ?><?php } ?>
               </select>
             </div>
@@ -152,10 +152,10 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="eway_order_status_id" id="input-order-status" class="form-control">
-				<?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_id) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+				{% for order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_id in order_statuses %}
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?><?php } ?>
               </select>
             </div>
@@ -164,10 +164,10 @@
             <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
             <div class="col-sm-10">
               <select name="eway_order_status_refunded_id" id="input-order-status-refund" class="form-control">
-				<?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_refunded_id) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+				{% for order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_refunded_id in order_statuses %}
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?><?php } ?>
               </select>
             </div>
@@ -176,10 +176,10 @@
             <label class="col-sm-2 control-label" for="input-order-status-auth">{{ entry_order_status_auth }}</label>
             <div class="col-sm-10">
               <select name="eway_order_status_auth_id" id="input-order-status-auth" class="form-control">
-				<?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_auth_id) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+				{% for order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_auth_id in order_statuses %}
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?><?php } ?>
 			  </select>
             </div>
@@ -188,10 +188,10 @@
             <label class="col-sm-2 control-label" for="input-order-status-fraud">{{ entry_order_status_fraud }}</label>
             <div class="col-sm-10">
               <select name="eway_order_status_fraud_id" id="input-order-status-fraud" class="form-control">
-				<?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_fraud_id) { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-						<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+				{% for order_status) { ?><?php if ($order_status['order_status_id'] == $eway_order_status_fraud_id in order_statuses %}
+						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+					{% else %}
+						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
 					<?php } ?><?php } ?>
 			  </select>
             </div>

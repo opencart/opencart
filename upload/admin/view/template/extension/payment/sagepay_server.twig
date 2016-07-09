@@ -40,17 +40,17 @@
               <select name="sagepay_server_test" id="input-test" class="form-control">
                 <?php if ($sagepay_server_test == 'sim') { ?>
                 <option value="sim" selected="selected">{{ text_sim }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="sim">{{ text_sim }}</option>
                 <?php } ?>
                 <?php if ($sagepay_server_test == 'test') { ?>
                 <option value="test" selected="selected">{{ text_test }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="test">{{ text_test }}</option>
                 <?php } ?>
                 <?php if ($sagepay_server_test == 'live') { ?>
                 <option value="live" selected="selected">{{ text_live }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
               </select>
@@ -62,17 +62,17 @@
               <select name="sagepay_server_transaction" id="input-transaction" class="form-control">
                 <?php if ($sagepay_server_transaction == 'PAYMENT') { ?>
                 <option value="PAYMENT" selected="selected">{{ text_payment }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="PAYMENT">{{ text_payment }}</option>
                 <?php } ?>
                 <?php if ($sagepay_server_transaction == 'DEFERRED') { ?>
                 <option value="DEFERRED" selected="selected">{{ text_defered }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="DEFERRED">{{ text_defered }}</option>
                 <?php } ?>
 				<?php if ($sagepay_server_transaction == 'AUTHENTICATE') { ?>
                 <option value="AUTHENTICATE" selected="selected">{{ text_authenticate }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="AUTHENTICATE">{{ text_authenticate }}</option>
                 <?php } ?>
               </select>
@@ -91,7 +91,7 @@
                 <?php if ($sagepay_server_card) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>
@@ -102,11 +102,11 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="sagepay_server_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $sagepay_server_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                {% else %}
+                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -117,11 +117,11 @@
             <div class="col-sm-10">
               <select name="sagepay_server_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $sagepay_server_geo_zone_id) { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -134,7 +134,7 @@
                 <?php if ($sagepay_server_debug) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>
@@ -148,7 +148,7 @@
                 <?php if ($sagepay_server_status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

@@ -71,15 +71,15 @@
               <?php if ($searches) { ?>
               <?php foreach ($searches as $search) { ?>
               <tr>
-                <td class="text-left"><?php echo $search['keyword']; ?></td>
-                <td class="text-left"><?php echo $search['products']; ?></td>
-                <td class="text-left"><?php echo $search['category']; ?></td>
-                <td class="text-left"><?php echo $search['customer']; ?></td>
-                <td class="text-left"><?php echo $search['ip']; ?></td>
-                <td class="text-left"><?php echo $search['date_added']; ?></td>
+                <td class="text-left">{{ search.keyword }}</td>
+                <td class="text-left">{{ search.products }}</td>
+                <td class="text-left">{{ search.category }}</td>
+                <td class="text-left">{{ search.customer }}</td>
+                <td class="text-left">{{ search.ip }}</td>
+                <td class="text-left">{{ search.date_added }}</td>
               </tr>
               <?php } ?>
-              <?php } else { ?>
+              {% else %}
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>
               </tr>

@@ -38,11 +38,11 @@
             <label class="col-sm-2 control-label" for="input-banner">{{ entry_banner }}</label>
             <div class="col-sm-10">
               <select name="banner_id" id="input-banner" class="form-control">
-                <?php foreach ($banners as $banner) { ?>
+                {% for banner in banners %}
                 <?php if ($banner['banner_id'] == $banner_id) { ?>
-                <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>
+                <option value="{{ banner.banner_id }}" selected="selected">{{ banner.name }}</option>
+                {% else %}
+                <option value="{{ banner.banner_id }}">{{ banner.name }}</option>
                 <?php } ?>
                 <?php } ?>
               </select>
@@ -73,7 +73,7 @@
                 <?php if ($status) { ?>
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                <?php } else { ?>
+                {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 <?php } ?>

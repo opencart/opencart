@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <?php if ($google_base_categories) { ?>
+    {% if google_base_categories %}
     {% for google_base_category in google_base_categories %}
     <tr>
       <td class="text-left">{{ google_base_category.google_base_category }}</td>

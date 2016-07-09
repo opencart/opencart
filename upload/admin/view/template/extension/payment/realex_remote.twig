@@ -38,7 +38,7 @@
                 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="realex_remote_merchant_id" value="{{ realex_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
-                  <?php if ($error_merchant_id) { ?>
+                  {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
                   <?php } ?>
                 </div>
@@ -47,7 +47,7 @@
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="realex_remote_secret" value="{{ realex_remote_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
-                  <?php if ($error_secret) { ?>
+                  {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
                   <?php } ?>
                 </div>
@@ -77,7 +77,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="realex_remote_debug" id="input-debug" class="form-control">
-                    <?php if ($realex_remote_debug) { ?>
+                    {% if realex_remote_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -91,7 +91,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="realex_remote_status" id="input-status" class="form-control">
-                    <?php if ($realex_remote_status) { ?>
+                    {% if realex_remote_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -105,7 +105,7 @@
                 <label class="col-sm-2 control-label" for="input-card"><span data-toggle="tooltip" title="{{ help_card_data_status }}">{{ entry_card_data_status }}</span></label>
                 <div class="col-sm-10">
                   <select name="realex_remote_card_data_status" id="input-card" class="form-control">
-                    <?php if ($realex_remote_card_data_status) { ?>
+                    {% if realex_remote_card_data_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -281,7 +281,7 @@
                 <label class="col-sm-2 control-label" for="input-tss-check">{{ entry_tss_check }}</label>
                 <div class="col-sm-10">
                   <select name="realex_remote_tss_check" id="input-tss-check" class="form-control">
-                    <?php if ($realex_remote_tss_check) { ?>
+                    {% if realex_remote_tss_check %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -295,7 +295,7 @@
                 <label class="col-sm-2 control-label" for="input-3d">{{ entry_3d }}</label>
                 <div class="col-sm-10">
                   <select name="realex_remote_3d" id="input-3d" class="form-control">
-                    <?php if ($realex_remote_3d) { ?>
+                    {% if realex_remote_3d %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -309,7 +309,7 @@
                 <label class="col-sm-2 control-label" for="input-liability"><span data-toggle="tooltip" title="{{ help_liability }}">{{ entry_liability_shift }}</span></label>
                 <div class="col-sm-10">
                   <select name="realex_remote_liability" id="input-liability" class="form-control">
-                    <?php if ($realex_remote_liability) { ?>
+                    {% if realex_remote_liability %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}

@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <?php if ($histories) { ?>
+      {% if histories %}
       {% for history in histories %}
       <tr>
         <td class="text-left">{{ history.store }}</td>

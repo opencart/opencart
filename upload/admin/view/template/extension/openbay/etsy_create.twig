@@ -18,11 +18,11 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_create }}</h3>
       </div>
       <div class="panel-body">
-        <?php if ($error_variant) { ?>
+        {% if error_variant %}
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_variant }}</div>
         {% else %}
           <div id="page-listing">
-            <?php if ($error_warning) { ?>
+            {% if error_warning %}
               <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
             <?php } ?>
             <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
@@ -80,7 +80,7 @@
                     <label class="col-sm-2 control-label" for="input-who-made">{{ entry_who_made }}</label>
                     <div class="col-sm-10">
                       <select name="who_made" id="input-who-made" class="form-control">
-                        <?php foreach ($setting['who_made'] as $value) { ?>
+                        {% for who_made in setting.who_made %}
                         <option value="{{ value }}">{{ value }}</option>
                         <?php } ?>
                       </select>
@@ -90,7 +90,7 @@
                     <label class="col-sm-2 control-label" for="input-when-made">{{ entry_when_made }}</label>
                     <div class="col-sm-10">
                       <select name="when_made" id="input-when-made" class="form-control">
-                        <?php foreach ($setting['when_made'] as $value) { ?>
+                        {% for when_made in setting.when_made %}
                         <option value="{{ value }}">{{ value }}</option>
                         <?php } ?>
                       </select>
@@ -100,7 +100,7 @@
                     <label class="col-sm-2 control-label" for="input-state">{{ entry_state }}</label>
                     <div class="col-sm-10">
                       <select name="state" id="input-state" class="form-control">
-                        <?php foreach ($setting['state'] as $value) { ?>
+                        {% for state in setting.state %}
                         <option value="{{ value }}">{{ value }}</option>
                         <?php } ?>
                       </select>
@@ -147,7 +147,7 @@
                     <label class="col-sm-2 control-label" for="input-recipient">{{ entry_recipient }}</label>
                     <div class="col-sm-10">
                       <select name="recipient" id="input-recipient" class="form-control">
-                        <?php foreach ($setting['recipient'] as $value) { ?>
+                        {% for recipient in setting.recipient %}
                         <option value="{{ value }}">{{ value }}</option>
                         <?php } ?>
                       </select>
@@ -157,7 +157,7 @@
                     <label class="col-sm-2 control-label" for="input-occasion">{{ entry_occasion }}</label>
                     <div class="col-sm-10">
                       <select name="occasion" id="input-occasion" class="form-control">
-                        <?php foreach ($setting['occasion'] as $value) { ?>
+                        {% for occasion in setting.occasion %}
                         <option value="{{ value }}">{{ value }}</option>
                         <?php } ?>
                       </select>
@@ -235,8 +235,8 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <?php $image_row = 0; ?>
-                      <?php foreach ($product['product_images'] as $product_image) { ?>
+                      {% image_row = 0 %}
+                      {% for product_images in product.product_images %}
                       <tr>
                         <td class="text-left"><input type="checkbox" name="product_image[{{ image_row }}][image_url]" value="{{ product_image.image_url }}" class="product-image" checked="checked" /></td>
                         <td class="text-left"><a href="" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" /></a></td>

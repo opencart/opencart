@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
     <div class="panel panel-default">
@@ -36,7 +36,7 @@
               <label class="col-sm-2 control-label" for="ebay-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="ebay_status" id="ebay-status" class="form-control">
-                  <?php if ($ebay_status) { ?>
+                  {% if ebay_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   <option value="0">{{ text_disabled }}</option>
                   {% else %}
@@ -93,7 +93,7 @@
                 <label class="col-sm-2 control-label" for="ebay-enditems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_end_items }}">{{ entry_end_items }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_enditems" id="ebay-enditems" class="form-control">
-                    <?php if ($ebay_enditems) { ?>
+                    {% if ebay_enditems %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -107,7 +107,7 @@
                 <label class="col-sm-2 control-label" for="entry-relistitems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_relist_items }}">{{ entry_relist_items }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_relistitems" id="entry-relistitems" class="form-control">
-                    <?php if ($ebay_relistitems) { ?>
+                    {% if ebay_relistitems %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -121,7 +121,7 @@
                 <label class="col-sm-2 control-label" for="entry-disable-nostock"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_disable_soldout }}">{{ entry_disable_soldout }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_disable_nostock" id="entry-disable-nostock" class="form-control">
-                    <?php if ($ebay_disable_nostock) { ?>
+                    {% if ebay_disable_nostock %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -135,7 +135,7 @@
                 <label class="col-sm-2 control-label" for="ebay_logging">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_logging" id="ebay_logging" class="form-control">
-                    <?php if ($ebay_logging) { ?>
+                    {% if ebay_logging %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -159,7 +159,7 @@
                 <label class="col-sm-2 control-label" for="entry-stock-allocate"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_stock_allocate }}">{{ entry_stock_allocate }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_stock_allocate" id="entry-stock-allocate" class="form-control">
-                    <?php if ($ebay_stock_allocate) { ?>
+                    {% if ebay_stock_allocate %}
                     <option value="1" selected="selected">{{ text_allocate_2 }}</option>
                     <option value="0">{{ text_allocate_1 }}</option>
                     {% else %}
@@ -179,7 +179,7 @@
                 <label class="col-sm-2 control-label" for="entry-create-date"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_create_date }}">{{ entry_create_date }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_create_date" id="entry-create-date" class="form-control">
-                    <?php if ($ebay_create_date) { ?>
+                    {% if ebay_create_date %}
                     <option value="1" selected="selected">{{ text_create_date_1 }}</option>
                     <option value="0">{{ text_create_date_0 }}</option>
                     {% else %}
@@ -235,7 +235,7 @@
                 <label class="col-sm-2 control-label" for="entry-update-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_order_update }}">{{ entry_notify_order_update }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_update_notify" id="entry-update-notify" class="form-control">
-                    <?php if ($ebay_update_notify) { ?>
+                    {% if ebay_update_notify %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -249,7 +249,7 @@
                 <label class="col-sm-2 control-label" for="entry-confirm-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_buyer }}">{{ entry_notify_buyer }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirm_notify" id="entry-confirm-notify" class="form-control">
-                    <?php if ($ebay_confirm_notify) { ?>
+                    {% if ebay_confirm_notify %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -263,7 +263,7 @@
                 <label class="col-sm-2 control-label" for="entry-confirm-admin-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_admin }}">{{ entry_notify_admin }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirmadmin_notify" id="entry-confirm-admin-notify" class="form-control">
-                    <?php if ($ebay_confirmadmin_notify) { ?>
+                    {% if ebay_confirmadmin_notify %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -277,7 +277,7 @@
                 <label class="col-sm-2 control-label" for="ebay_email_brand_disable">{{ entry_brand_disable }}</label>
                 <div class="col-sm-10">
                   <select name="ebay_email_brand_disable" id="ebay_email_brand_disable" class="form-control">
-                    <?php if ($ebay_email_brand_disable) { ?>
+                    {% if ebay_email_brand_disable %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -438,7 +438,7 @@
                 <label class="col-sm-2 control-label" for="entry-payment-immediate"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_payment_immediate }}">{{ entry_payment_immediate }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_payment_immediate" id="entry-payment-immediate" class="form-control">
-                    <?php if ($ebay_payment_immediate) { ?>
+                    {% if ebay_payment_immediate %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}

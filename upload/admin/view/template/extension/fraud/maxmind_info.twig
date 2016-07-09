@@ -1,299 +1,299 @@
 <table class="table table-bordered">
-  <?php if ($country_match) { ?>
+  {% if country_match %}
   <tr>
     <td>{{ text_country_match }}</td>
     <td>{{ country_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($country_code) { ?>
+  {% if country_code %}
   <tr>
     <td>{{ text_country_code }}</td>
     <td>{{ country_code }}</td>
   </tr>
   <?php } ?>
-  <?php if ($high_risk_country) { ?>
+  {% if high_risk_country %}
   <tr>
     <td>{{ text_high_risk_country }}</td>
     <td>{{ high_risk_country }}</td>
   </tr>
   <?php } ?>
-  <?php if ($distance) { ?>
+  {% if distance %}
   <tr>
     <td>{{ text_distance }}</td>
     <td>{{ distance }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_region) { ?>
+  {% if ip_region %}
   <tr>
     <td>{{ text_ip_region }}</td>
     <td>{{ ip_region }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_city) { ?>
+  {% if ip_city %}
   <tr>
     <td>{{ text_ip_city }}</td>
     <td>{{ ip_city }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_latitude) { ?>
+  {% if ip_latitude %}
   <tr>
     <td>{{ text_ip_latitude }}</td>
     <td>{{ ip_latitude }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_longitude) { ?>
+  {% if ip_longitude %}
   <tr>
     <td>{{ text_ip_longitude }}</td>
     <td>{{ ip_longitude }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_isp) { ?>
+  {% if ip_isp %}
   <tr>
     <td>{{ text_ip_isp }}</td>
     <td>{{ ip_isp }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_org) { ?>
+  {% if ip_org %}
   <tr>
     <td>{{ text_ip_org }}</td>
     <td>{{ ip_org }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_asnum) { ?>
+  {% if ip_asnum %}
   <tr>
     <td>{{ text_ip_asnum }}</td>
     <td>{{ ip_asnum }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_user_type) { ?>
+  {% if ip_user_type %}
   <tr>
     <td>{{ text_ip_user_type }}</td>
     <td>{{ ip_user_type }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_country_confidence) { ?>
+  {% if ip_country_confidence %}
   <tr>
     <td>{{ text_ip_country_confidence }}</td>
     <td>{{ ip_country_confidence }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_region_confidence) { ?>
+  {% if ip_region_confidence %}
   <tr>
     <td>{{ text_ip_region_confidence }}</td>
     <td>{{ ip_region_confidence }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_city_confidence) { ?>
+  {% if ip_city_confidence %}
   <tr>
     <td>{{ text_ip_city_confidence }}</td>
     <td>{{ ip_city_confidence }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_postal_confidence) { ?>
+  {% if ip_postal_confidence %}
   <tr>
     <td>{{ text_ip_postal_confidence }}</td>
     <td>{{ ip_postal_confidence }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_postal_code) { ?>
+  {% if ip_postal_code %}
   <tr>
     <td>{{ text_ip_postal_code }}</td>
     <td>{{ ip_postal_code }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_accuracy_radius) { ?>
+  {% if ip_accuracy_radius %}
   <tr>
     <td>{{ text_ip_accuracy_radius }}</td>
     <td>{{ ip_accuracy_radius }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_net_speed_cell) { ?>
+  {% if ip_net_speed_cell %}
   <tr>
     <td>{{ text_ip_net_speed_cell }}</td>
     <td>{{ ip_net_speed_cell }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_metro_code) { ?>
+  {% if ip_metro_code %}
   <tr>
     <td>{{ text_ip_metro_code }}</td>
     <td>{{ ip_metro_code }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_area_code) { ?>
+  {% if ip_area_code %}
   <tr>
     <td>{{ text_ip_area_code }}</td>
     <td>{{ ip_area_code }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_time_zone) { ?>
+  {% if ip_time_zone %}
   <tr>
     <td>{{ text_ip_time_zone }}</td>
     <td>{{ ip_time_zone }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_region_name) { ?>
+  {% if ip_region_name %}
   <tr>
     <td>{{ text_ip_region_name }}</td>
     <td>{{ ip_region_name }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_domain) { ?>
+  {% if ip_domain %}
   <tr>
     <td>{{ text_ip_domain }}</td>
     <td>{{ ip_domain }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_country_name) { ?>
+  {% if ip_country_name %}
   <tr>
     <td>{{ text_ip_country_name }}</td>
     <td>{{ ip_country_name }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_continent_code) { ?>
+  {% if ip_continent_code %}
   <tr>
     <td>{{ text_ip_continent_code }}</td>
     <td>{{ ip_continent_code }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ip_corporate_proxy) { ?>
+  {% if ip_corporate_proxy %}
   <tr>
     <td>{{ text_ip_corporate_proxy }}</td>
     <td>{{ ip_corporate_proxy }}</td>
   </tr>
   <?php } ?>
-  <?php if ($anonymous_proxy) { ?>
+  {% if anonymous_proxy %}
   <tr>
     <td>{{ text_anonymous_proxy }}</td>
     <td>{{ anonymous_proxy }}</td>
   </tr>
   <?php } ?>
-  <?php if ($proxy_score) { ?>
+  {% if proxy_score %}
   <tr>
     <td>{{ text_proxy_score }}</td>
     <td>{{ proxy_score }}</td>
   </tr>
   <?php } ?>
-  <?php if ($is_trans_proxy) { ?>
+  {% if is_trans_proxy %}
   <tr>
     <td>{{ text_is_trans_proxy }}</td>
     <td>{{ is_trans_proxy }}</td>
   </tr>
   <?php } ?>
-  <?php if ($free_mail) { ?>
+  {% if free_mail %}
   <tr>
     <td>{{ text_free_mail }}</td>
     <td>{{ free_mail }}</td>
   </tr>
   <?php } ?>
-  <?php if ($carder_email) { ?>
+  {% if carder_email %}
   <tr>
     <td>{{ text_carder_email }}</td>
     <td>{{ carder_email }}</td>
   </tr>
   <?php } ?>
-  <?php if ($high_risk_username) { ?>
+  {% if high_risk_username %}
   <tr>
     <td>{{ text_high_risk_username }}</td>
     <td>{{ high_risk_username }}</td>
   </tr>
   <?php } ?>
-  <?php if ($high_risk_password) { ?>
+  {% if high_risk_password %}
   <tr>
     <td>{{ text_high_risk_password }}</td>
     <td>{{ high_risk_password }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_match) { ?>
+  {% if bin_match %}
   <tr>
     <td>{{ text_bin_match }}</td>
     <td>{{ bin_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_country) { ?>
+  {% if bin_country %}
   <tr>
     <td>{{ text_bin_country }}</td>
     <td>{{ bin_country }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_name_match) { ?>
+  {% if bin_name_match %}
   <tr>
     <td>{{ text_bin_name_match }}</td>
     <td>{{ bin_name_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_name) { ?>
+  {% if bin_name %}
   <tr>
     <td>{{ text_bin_name }}</td>
     <td>{{ bin_name }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_phone_match) { ?>
+  {% if bin_phone_match %}
   <tr>
     <td>{{ text_bin_phone_match }}</td>
     <td>{{ bin_phone_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($bin_phone) { ?>
+  {% if bin_phone %}
   <tr>
     <td>{{ text_bin_phone }}</td>
     <td>{{ bin_phone }}</td>
   </tr>
   <?php } ?>
-  <?php if ($customer_phone_in_billing_location) { ?>
+  {% if customer_phone_in_billing_location %}
   <tr>
     <td>{{ text_customer_phone_in_billing_location }}</td>
     <td>{{ customer_phone_in_billing_location }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ship_forward) { ?>
+  {% if ship_forward %}
   <tr>
     <td>{{ text_ship_forward }}</td>
     <td>{{ ship_forward }}</td>
   </tr>
   <?php } ?>
-  <?php if ($city_postal_match) { ?>
+  {% if city_postal_match %}
   <tr>
     <td>{{ text_city_postal_match }}</td>
     <td>{{ city_postal_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($ship_city_postal_match) { ?>
+  {% if ship_city_postal_match %}
   <tr>
     <td>{{ text_ship_city_postal_match }}</td>
     <td>{{ ship_city_postal_match }}</td>
   </tr>
   <?php } ?>
-  <?php if ($score) { ?>
+  {% if score %}
   <tr>
     <td>{{ text_score }}</td>
     <td>{{ score }}</td>
   </tr>
   <?php } ?>
-  <?php if ($explanation) { ?>
+  {% if explanation %}
   <tr>
     <td>{{ text_explanation }}</td>
     <td>{{ explanation }}</td>
   </tr>
   <?php } ?>
-  <?php if ($risk_score) { ?>
+  {% if risk_score %}
   <tr>
     <td>{{ text_risk_score }}</td>
     <td>{{ risk_score }}</td>
   </tr>
   <?php } ?>
-  <?php if ($queries_remaining) { ?>
+  {% if queries_remaining %}
   <tr>
     <td>{{ text_queries_remaining }}</td>
     <td>{{ queries_remaining }}</td>
   </tr>
   <?php } ?>
-  <?php if ($maxmind_id) { ?>
+  {% if maxmind_id %}
   <tr>
     <td>{{ text_maxmind_id }}</td>
     <td>{{ maxmind_id }}</td>
   </tr>
   <?php } ?>
-  <?php if ($error) { ?>
+  {% if error %}
   <tr>
     <td>{{ text_error }}</td>
     <td>{{ error }}</td>

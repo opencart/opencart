@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
               <input type="text" name="liqpay_merchant" value="{{ liqpay_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
-              <?php if ($error_merchant) { ?>
+              {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-signature">{{ entry_signature }}</label>
             <div class="col-sm-10">
               <input type="text" name="liqpay_signature" value="{{ liqpay_signature }}" placeholder="{{ entry_signature }}" id="input-signature" class="form-control" />
-              <?php if ($error_signature) { ?>
+              {% if error_signature %}
               <div class="text-danger">{{ error_signature }}</div>
               <?php } ?>
             </div>
@@ -47,12 +47,12 @@
             <label class="col-sm-2 control-label" for="input-type">{{ entry_type }}</label>
             <div class="col-sm-10">
               <select name="liqpay_type" id="input-type" class="form-control">
-                <?php if ($liqpay_type == 'liqpay') { ?>
+                {% if liqpay_type == 'liqpay' %}
                 <option value="liqpay" selected="selected">{{ text_pay }}</option>
                 {% else %}
                 <option value="liqpay">{{ text_pay }}</option>
                 <?php } ?>
-                <?php if ($liqpay_type == 'card') { ?>
+                {% if liqpay_type == 'card' %}
                 <option value="card" selected="selected">{{ text_card }}</option>
                 {% else %}
                 <option value="card">{{ text_card }}</option>
@@ -99,7 +99,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="liqpay_status" id="input-status" class="form-control">
-                <?php if ($liqpay_status) { ?>
+                {% if liqpay_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

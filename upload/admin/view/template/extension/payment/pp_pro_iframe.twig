@@ -62,7 +62,7 @@
                 <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_test" id="input-live-demo" class="form-control">
-                    <?php if ($pp_pro_iframe_test) { ?>
+                    {% if pp_pro_iframe_test %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -76,7 +76,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_debug" id="input-debug" class="form-control">
-                    <?php if ($pp_pro_iframe_debug) { ?>
+                    {% if pp_pro_iframe_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -90,7 +90,7 @@
                 <label class="col-sm-2 control-label" for="input-trans-method">{{ entry_transaction_method }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_transaction_method" id="input-trans-method" class="form-control">
-                    <?php if ($pp_pro_iframe_transaction_method == 'authorization') { ?>
+                    {% if pp_pro_iframe_transaction_method == 'authorization' %}
                     <option value="sale">{{ text_sale }}</option>
                     <option value="authorization" selected="selected">{{ text_authorization }}</option>
                     {% else %}
@@ -104,7 +104,7 @@
                 <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="{{ help_checkout_method }}">{{ entry_checkout_method }}</span></label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_checkout_method" id="input-checkout-method" class="form-control">
-                    <?php if ($pp_pro_iframe_checkout_method == 'iframe') { ?>
+                    {% if pp_pro_iframe_checkout_method == 'iframe' %}
                     <option value="iframe" selected="selected">{{ text_iframe }}</option>
                     <option value="redirect">{{ text_redirect }}</option>
                     {% else %}
@@ -153,7 +153,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_status" id="input-status" class="form-control">
-                    <?php if ($pp_pro_iframe_status) { ?>
+                    {% if pp_pro_iframe_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}

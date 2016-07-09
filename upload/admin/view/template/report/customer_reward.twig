@@ -60,8 +60,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($customers) { ?>
-              <?php foreach ($customers as $customer) { ?>
+              {% if customers %}
+              {% for customer in customers %}
               <tr>
                 <td class="text-left">{{ customer.customer }}</td>
                 <td class="text-left">{{ customer.email }}</td>

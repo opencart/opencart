@@ -20,7 +20,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <?php if ($success) { ?>
+    {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -43,7 +43,7 @@
             <label class="col-sm-2 control-label">{{ entry_export }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($tables as $table) { ?>
+                {% for table in tables %}
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" />

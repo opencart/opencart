@@ -35,17 +35,17 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
+                  <td class="text-left">{% if sort == 'name' %}
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'iso_code_2') { ?>
+                  <td class="text-left">{% if sort == 'iso_code_2' %}
                     <a href="{{ sort_iso_code_2 }}" class="{{ order|lower }}">{{ column_iso_code_2 }}</a>
                     {% else %}
                     <a href="{{ sort_iso_code_2 }}">{{ column_iso_code_2 }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'iso_code_3') { ?>
+                  <td class="text-left">{% if sort == 'iso_code_3' %}
                     <a href="{{ sort_iso_code_3 }}" class="{{ order|lower }}">{{ column_iso_code_3 }}</a>
                     {% else %}
                     <a href="{{ sort_iso_code_3 }}">{{ column_iso_code_3 }}</a>
@@ -54,10 +54,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($countries) { ?>
-                <?php foreach ($countries as $country) { ?>
+                {% if countries %}
+                {% for country in countries %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($country['country_id'], $selected)) { ?>
+                  <td class="text-center">{% if country.country_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ country.country_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ country.country_id }}" />

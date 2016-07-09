@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -63,7 +63,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+                {% if status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

@@ -29,7 +29,7 @@
 			<label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="cardinity_key" value="{{ cardinity_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
-			  <?php if ($error_key) { ?>
+			  {% if error_key %}
 			  <div class="text-danger">{{ error_key }}</div>
 			  <?php } ?>
 			</div>
@@ -38,7 +38,7 @@
 			<label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="cardinity_secret" value="{{ cardinity_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
-			  <?php if ($error_secret) { ?>
+			  {% if error_secret %}
 			  <div class="text-danger">{{ error_secret }}</div>
 			  <?php } ?>
 			</div>
@@ -47,7 +47,7 @@
 			<label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
 			<div class="col-sm-10">
 			  <select name="cardinity_debug" id="input-debug" class="form-control">
-				<?php if ($cardinity_debug) { ?>
+				{% if cardinity_debug %}
 				<option value="1" selected="selected">{{ text_enabled }}</option>
 				<option value="0">{{ text_disabled }}</option>
 				{% else %}
@@ -96,7 +96,7 @@
 			<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
 			<div class="col-sm-10">
 			  <select name="cardinity_status" id="input-status" class="form-control">
-				<?php if ($cardinity_status) { ?>
+				{% if cardinity_status %}
 				<option value="1" selected="selected">{{ text_enabled }}</option>
 				<option value="0">{{ text_disabled }}</option>
 				{% else %}

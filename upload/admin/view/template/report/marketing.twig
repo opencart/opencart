@@ -41,7 +41,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_order_status_id" id="input-status" class="form-control">
                   <option value="0">{{ text_all_status }}</option>
-                  <?php foreach ($order_statuses as $order_status) { ?>
+                  {% for order_status in order_statuses %}
                   <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                   {% else %}
@@ -66,8 +66,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($marketings) { ?>
-              <?php foreach ($marketings as $marketing) { ?>
+              {% if marketings %}
+              {% for marketing in marketings %}
               <tr>
                 <td class="text-left">{{ marketing.campaign }}</td>
                 <td class="text-left">{{ marketing.code }}</td>

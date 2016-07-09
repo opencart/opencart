@@ -36,7 +36,7 @@
             <div class="col-sm-10">
               <select name="free_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $free_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -50,7 +50,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="free_status" id="input-status" class="form-control">
-                <?php if ($free_status) { ?>
+                {% if free_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

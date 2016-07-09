@@ -39,7 +39,7 @@
                 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="globalpay_merchant_id" value="{{ globalpay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
-                  <?php if ($error_merchant_id) { ?>
+                  {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
                   <?php } ?>
                 </div>
@@ -48,7 +48,7 @@
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="globalpay_secret" value="{{ globalpay_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
-                  <?php if ($error_secret) { ?>
+                  {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
                   <?php } ?>
                 </div>
@@ -63,7 +63,7 @@
                 <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_live_demo" id="input-live-demo" class="form-control">
-                    <?php if ($globalpay_live_demo) { ?>
+                    {% if globalpay_live_demo %}
                     <option value="1" selected="selected">{{ text_live }}</option>
                     <option value="0">{{ text_demo }}</option>
                     {% else %}
@@ -92,7 +92,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="globalpay_debug" id="input-debug" class="form-control">
-                    <?php if ($globalpay_debug) { ?>
+                    {% if globalpay_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -106,7 +106,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_status" id="input-status" class="form-control">
-                    <?php if ($globalpay_status) { ?>
+                    {% if globalpay_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -285,7 +285,7 @@
                 <label class="col-sm-2 control-label" for="input-card-select"><span data-toggle="tooltip" title="{{ help_card_select }}">{{ entry_card_select }}</span></label>
                 <div class="col-sm-10">
                   <select name="globalpay_card_select" id="input-card-select" class="form-control">
-                    <?php if ($globalpay_card_select) { ?>
+                    {% if globalpay_card_select %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -299,7 +299,7 @@
                 <label class="col-sm-2 control-label" for="input-tss-check">{{ entry_tss_check }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_tss_check" id="input-tss-check" class="form-control">
-                    <?php if ($globalpay_tss_check) { ?>
+                    {% if globalpay_tss_check %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -315,7 +315,7 @@
                 <label class="col-sm-2 control-label" for="input-live-url">{{ entry_live_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="globalpay_live_url" value="{{ globalpay_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control" />
-                  <?php if ($error_live_url) { ?>
+                  {% if error_live_url %}
                   <div class="text-danger">{{ error_live_url }}</div>
                   <?php } ?>
                 </div>
@@ -324,7 +324,7 @@
                 <label class="col-sm-2 control-label" for="input-demo-url">{{ entry_demo_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="globalpay_demo_url" value="{{ globalpay_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control" />
-                  <?php if ($error_demo_url) { ?>
+                  {% if error_demo_url %}
                   <div class="text-danger">{{ error_demo_url }}</div>
                   <?php } ?>
                 </div>

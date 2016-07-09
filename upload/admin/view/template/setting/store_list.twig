@@ -41,10 +41,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($stores) { ?>
-                <?php foreach ($stores as $store) { ?>
+                {% if stores %}
+                {% for store in stores %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($store['store_id'], $selected)) { ?>
+                  <td class="text-center">{% if store.store_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ store.store_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ store.store_id }}" />

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="auspost_postcode" value="{{ auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4" />
-              <?php if ($error_postcode) { ?>
+              {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-standard">{{ entry_standard }}</label>
             <div class="col-sm-10">
               <select name="auspost_standard" id="input-standard" class="form-control">
-                <?php if ($auspost_standard) { ?>
+                {% if auspost_standard %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -52,7 +52,7 @@
             <label class="col-sm-2 control-label" for="input-express">{{ entry_express }}</label>
             <div class="col-sm-10">
               <select name="auspost_express" id="input-express" class="form-control">
-                <?php if ($auspost_express) { ?>
+                {% if auspost_express %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -66,7 +66,7 @@
             <label class="col-sm-2 control-label" for="input-display-time"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
             <div class="col-sm-10">
               <select name="auspost_display_time" id="input-display-time" class="form-control">
-                <?php if ($auspost_display_time) { ?>
+                {% if auspost_display_time %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -80,7 +80,7 @@
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
             <div class="col-sm-10">
               <select name="auspost_weight_class_id" id="input-weight-class" class="form-control">
-                <?php foreach ($weight_classes as $weight_class) { ?>
+                {% for weight_class in weight_classes %}
                 <?php if ($weight_class['weight_class_id'] == $auspost_weight_class_id) { ?>
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
@@ -95,7 +95,7 @@
             <div class="col-sm-10">
               <select name="auspost_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
-                <?php foreach ($tax_classes as $tax_class) { ?>
+                {% for tax_class in tax_classes %}
                 <?php if ($tax_class['tax_class_id'] == $auspost_tax_class_id) { ?>
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
@@ -110,7 +110,7 @@
             <div class="col-sm-10">
               <select name="auspost_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $auspost_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -124,7 +124,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="auspost_status" id="input-status" class="form-control">
-                <?php if ($auspost_status) { ?>
+                {% if auspost_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

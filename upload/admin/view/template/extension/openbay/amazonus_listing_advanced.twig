@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <?php if ($has_listing_errors) { ?>
+                {% if has_listing_errors %}
                 <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
                 <?php } ?>
                 <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="container-fluid">
-        <?php if ($errors) { ?>
+        {% if errors %}
         <div class="alert alert-danger">
             <ul>
                 {% for listing_error in errors %}
@@ -24,7 +24,7 @@
             </ul>
         </div>
         <?php } ?>
-        <?php if ($success) { ?>
+        {% if success %}
         <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
         <?php } ?>
         <ul class="nav nav-tabs" id="tabs">

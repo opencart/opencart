@@ -31,7 +31,7 @@
                 <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
                 <div class="col-sm-10">
                   <select name="store_id" id="input-store" class="form-control">
-                    <?php foreach ($stores as $store) { ?>
+                    {% for store in stores %}
                     <?php if ($store['store_id'] == $store_id) { ?>
                     <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
                     {% else %}
@@ -45,7 +45,7 @@
                 <label class="col-sm-2 control-label" for="input-currency">{{ entry_currency }}</label>
                 <div class="col-sm-10">
                   <select name="currency" id="input-currency" class="form-control">
-                    <?php foreach ($currencies as $currency) { ?>
+                    {% for currency in currencies %}
                     <?php if ($currency['code'] == $currency_code) { ?>
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
                     {% else %}
@@ -66,7 +66,7 @@
                 <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
                 <div class="col-sm-10">
                   <select name="customer_group_id" id="input-customer-group" class="form-control">
-                    <?php foreach ($customer_groups as $customer_group) { ?>
+                    {% for customer_group in customer_groups %}
                     <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
                     <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                     {% else %}
@@ -106,7 +106,7 @@
                   <input type="text" name="fax" value="{{ fax }}" id="input-fax" class="form-control" />
                 </div>
               </div>
-              <?php foreach ($custom_fields as $custom_field) { ?>
+              {% for custom_field in custom_fields %}
               <?php if ($custom_field['location'] == 'account') { ?>
               <?php if ($custom_field['type'] == 'select') { ?>
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
@@ -114,7 +114,7 @@
                 <div class="col-sm-10">
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
@@ -130,7 +130,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="radio">
                       <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                       <label>
@@ -152,7 +152,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="checkbox">
                       <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
                       <label>
@@ -251,12 +251,12 @@
                   </thead>
                   <tbody id="cart">
                     <?php if ($order_products || $order_vouchers) { ?>
-                    <?php $product_row = 0; ?>
-                    <?php foreach ($order_products as $order_product) { ?>
+                    {% product_row = 0 %}
+                    {% for order_product in order_products %}
                     <tr>
                       <td class="text-left">{{ order_product.name }}<br />
                         <input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}" />
-                        <?php foreach ($order_product['option'] as $option) { ?>
+                        {% for option in order_product.option %}
                         - <small>{{ option.name }}: {{ option.value }}</small><br />
                         <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
                         <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" />
@@ -277,8 +277,8 @@
                     </tr>
                     <?php $product_row++; ?>
                     <?php } ?>
-                    <?php $voucher_row = 0; ?>
-                    <?php foreach ($order_vouchers as $order_voucher) { ?>
+                    {% voucher_row = 0 %}
+                    {% for order_voucher in order_vouchers %}
                     <tr>
                       <td class="text-left">{{ order_voucher.description }}
                         <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}" />
@@ -365,7 +365,7 @@
                       <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                       <div class="col-sm-10">
                         <select name="voucher_theme_id" id="input-theme" class="form-control">
-                          <?php foreach ($voucher_themes as $voucher_theme) { ?>
+                          {% for voucher_theme in voucher_themes %}
                           <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                           <?php } ?>
                         </select>
@@ -405,7 +405,7 @@
                 <div class="col-sm-10">
                   <select name="payment_address" id="input-payment-address" class="form-control">
                     <option value="0" selected="selected">{{ text_none }}</option>
-                    <?php foreach ($addresses as $address) { ?>
+                    {% for address in addresses %}
                     <option value="{{ address.address_id }}"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
                     <?php } ?>
                   </select>
@@ -458,7 +458,7 @@
                 <div class="col-sm-10">
                   <select name="country_id" id="input-payment-country" class="form-control">
                     <option value="">{{ text_select }}</option>
-                    <?php foreach ($countries as $country) { ?>
+                    {% for country in countries %}
                     <?php if ($country['country_id'] == $payment_country_id) { ?>
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
@@ -475,7 +475,7 @@
                   </select>
                 </div>
               </div>
-              <?php foreach ($custom_fields as $custom_field) { ?>
+              {% for custom_field in custom_fields %}
               <?php if ($custom_field['location'] == 'address') { ?>
               <?php if ($custom_field['type'] == 'select') { ?>
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
@@ -483,7 +483,7 @@
                 <div class="col-sm-10">
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
@@ -499,7 +499,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="radio">
                       <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
                       <label>
@@ -521,7 +521,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="checkbox">
                       <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']])) { ?>
                       <label>
@@ -616,7 +616,7 @@
                 <div class="col-sm-10">
                   <select name="shipping_address" id="input-shipping-address" class="form-control">
                     <option value="0" selected="selected">{{ text_none }}</option>
-                    <?php foreach ($addresses as $address) { ?>
+                    {% for address in addresses %}
                     <option value="{{ address.address_id }}"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
                     <?php } ?>
                   </select>
@@ -669,7 +669,7 @@
                 <div class="col-sm-10">
                   <select name="country_id" id="input-shipping-country" class="form-control">
                     <option value="">{{ text_select }}</option>
-                    <?php foreach ($countries as $country) { ?>
+                    {% for country in countries %}
                     <?php if ($country['country_id'] == $shipping_country_id) { ?>
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
@@ -686,7 +686,7 @@
                   </select>
                 </div>
               </div>
-              <?php foreach ($custom_fields as $custom_field) { ?>
+              {% for custom_field in custom_fields %}
               <?php if ($custom_field['location'] == 'address') { ?>
               <?php if ($custom_field['type'] == 'select') { ?>
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
@@ -694,7 +694,7 @@
                 <div class="col-sm-10">
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <?php if (isset($ashipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
@@ -710,7 +710,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="radio">
                       <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
                       <label>
@@ -732,7 +732,7 @@
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                    {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="checkbox">
                       <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field[$custom_field['custom_field_id']])) { ?>
                       <label>
@@ -848,7 +848,7 @@
                     <div class="input-group">
                       <select name="shipping_method" id="input-shipping-method" class="form-control">
                         <option value="">{{ text_select }}</option>
-                        <?php if ($shipping_code) { ?>
+                        {% if shipping_code %}
                         <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
                         <?php } ?>
                       </select>
@@ -863,7 +863,7 @@
                     <div class="input-group">
                       <select name="payment_method" id="input-payment-method" class="form-control">
                         <option value="">{{ text_select }}</option>
-                        <?php if ($payment_code) { ?>
+                        {% if payment_code %}
                         <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
                         <?php } ?>
                       </select>
@@ -906,7 +906,7 @@
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
-                      <?php foreach ($order_statuses as $order_status) { ?>
+                      {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $order_status_id) { ?>
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}

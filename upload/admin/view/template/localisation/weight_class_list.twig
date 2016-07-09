@@ -35,17 +35,17 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'title') { ?>
+                  <td class="text-left">{% if sort == 'title' %}
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'unit') { ?>
+                  <td class="text-left">{% if sort == 'unit' %}
                     <a href="{{ sort_unit }}" class="{{ order|lower }}">{{ column_unit }}</a>
                     {% else %}
                     <a href="{{ sort_unit }}">{{ column_unit }}</a>
                     <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'value') { ?>
+                  <td class="text-right">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
@@ -54,10 +54,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($weight_classes) { ?>
-                <?php foreach ($weight_classes as $weight_class) { ?>
+                {% if weight_classes %}
+                {% for weight_class in weight_classes %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($weight_class['weight_class_id'], $selected)) { ?>
+                  <td class="text-center">{% if weight_class.weight_class_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}" />

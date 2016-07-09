@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="fedex_key" value="{{ fedex_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
-              <?php if ($error_key) { ?>
+              {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="fedex_password" value="{{ fedex_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-              <?php if ($error_password) { ?>
+              {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <input type="text" name="fedex_account" value="{{ fedex_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control" />
-              <?php if ($error_account) { ?>
+              {% if error_account %}
               <div class="text-danger">{{ error_account }}</div>
               <?php } ?>
             </div>
@@ -56,7 +56,7 @@
             <label class="col-sm-2 control-label" for="input-meter">{{ entry_meter }}</label>
             <div class="col-sm-10">
               <input type="text" name="fedex_meter" value="{{ fedex_meter }}" placeholder="{{ entry_meter }}" id="input-meter" class="form-control" />
-              <?php if ($error_meter) { ?>
+              {% if error_meter %}
               <div class="text-danger">{{ error_meter }}</div>
               <?php } ?>
             </div>
@@ -65,7 +65,7 @@
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="fedex_postcode" value="{{ fedex_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
-              <?php if ($error_postcode) { ?>
+              {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               <?php } ?>
             </div>
@@ -74,7 +74,7 @@
             <label class="col-sm-2 control-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($fedex_test) { ?>
+                {% if fedex_test %}
                 <input type="radio" name="fedex_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -97,10 +97,10 @@
             <label class="col-sm-2 control-label">{{ entry_service }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($services as $service) { ?>
+                {% for service in services %}
                 <div class="checkbox">
                   <label>
-                    <?php if (in_array($service['value'], $fedex_service)) { ?>
+                    {% if service.value in fedex_service %}
                     <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" checked="checked" />
                     {{ service.text }}
                     {% else %}
@@ -127,7 +127,7 @@
                   <input type="text" name="fedex_height" value="{{ fedex_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
                 </div>
               </div>
-              <?php if ($error_dimension) { ?>
+              {% if error_dimension %}
               <div class="text-danger">{{ error_dimension }}</div>
               <?php } ?>
             </div>
@@ -136,7 +136,7 @@
             <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="{{ help_length_class }}">{{ entry_length_class }}</span></label>
             <div class="col-sm-10">
               <select name="fedex_length_class_id" id="input-length-class" class="form-control">
-                <?php foreach ($length_classes as $length_class) { ?>
+                {% for length_class in length_classes %}
                 <?php if ($length_class['length_class_id'] == $fedex_length_class_id) { ?>
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
@@ -150,27 +150,27 @@
             <label class="col-sm-2 control-label" for="input-dropoff-type">{{ entry_dropoff_type }}</label>
             <div class="col-sm-10">
               <select name="fedex_dropoff_type" id="input-dropoff-type" class="form-control">
-                <?php if ($fedex_dropoff_type == 'REGULAR_PICKUP') { ?>
+                {% if fedex_dropoff_type == 'REGULAR_PICKUP' %}
                 <option value="REGULAR_PICKUP" selected="selected">{{ text_regular_pickup }}</option>
                 {% else %}
                 <option value="REGULAR_PICKUP">{{ text_regular_pickup }}</option>
                 <?php } ?>
-                <?php if ($fedex_dropoff_type == 'REQUEST_COURIER') { ?>
+                {% if fedex_dropoff_type == 'REQUEST_COURIER' %}
                 <option value="REQUEST_COURIER" selected="selected">{{ text_request_courier }}</option>
                 {% else %}
                 <option value="REQUEST_COURIER">{{ text_request_courier }}</option>
                 <?php } ?>
-                <?php if ($fedex_dropoff_type == 'DROP_BOX') { ?>
+                {% if fedex_dropoff_type == 'DROP_BOX' %}
                 <option value="DROP_BOX" selected="selected">{{ text_drop_box }}</option>
                 {% else %}
                 <option value="DROP_BOX">{{ text_drop_box }}</option>
                 <?php } ?>
-                <?php if ($fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER') { ?>
+                {% if fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER' %}
                 <option value="BUSINESS_SERVICE_CENTER" selected="selected">{{ text_business_service_center }}</option>
                 {% else %}
                 <option value="BUSINESS_SERVICE_CENTER">{{ text_business_service_center }}</option>
                 <?php } ?>
-                <?php if ($fedex_dropoff_type == 'STATION') { ?>
+                {% if fedex_dropoff_type == 'STATION' %}
                 <option value="STATION" selected="selected">{{ text_station }}</option>
                 {% else %}
                 <option value="STATION">{{ text_station }}</option>
@@ -182,37 +182,37 @@
             <label class="col-sm-2 control-label" for="input-packaging-type">{{ entry_packaging_type }}</label>
             <div class="col-sm-10">
               <select name="fedex_packaging_type" id="input-packaging-type" class="form-control">
-                <?php if ($fedex_packaging_type == 'FEDEX_ENVELOPE') { ?>
+                {% if fedex_packaging_type == 'FEDEX_ENVELOPE' %}
                 <option value="FEDEX_ENVELOPE" selected="selected">{{ text_fedex_envelope }}</option>
                 {% else %}
                 <option value="FEDEX_ENVELOPE">{{ text_fedex_envelope }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'FEDEX_PAK') { ?>
+                {% if fedex_packaging_type == 'FEDEX_PAK' %}
                 <option value="FEDEX_PAK" selected="selected">{{ text_fedex_pak }}</option>
                 {% else %}
                 <option value="FEDEX_PAK">{{ text_fedex_pak }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'FEDEX_BOX') { ?>
+                {% if fedex_packaging_type == 'FEDEX_BOX' %}
                 <option value="FEDEX_BOX" selected="selected">{{ text_fedex_box }}</option>
                 {% else %}
                 <option value="FEDEX_BOX">{{ text_fedex_box }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'FEDEX_TUBE') { ?>
+                {% if fedex_packaging_type == 'FEDEX_TUBE' %}
                 <option value="FEDEX_TUBE" selected="selected">{{ text_fedex_tube }}</option>
                 {% else %}
                 <option value="FEDEX_TUBE">{{ text_fedex_tube }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'FEDEX_10KG_BOX') { ?>
+                {% if fedex_packaging_type == 'FEDEX_10KG_BOX' %}
                 <option value="FEDEX_10KG_BOX" selected="selected">{{ text_fedex_10kg_box }}</option>
                 {% else %}
                 <option value="FEDEX_10KG_BOX">{{ text_fedex_10kg_box }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'FEDEX_25KG_BOX') { ?>
+                {% if fedex_packaging_type == 'FEDEX_25KG_BOX' %}
                 <option value="FEDEX_25KG_BOX" selected="selected">{{ text_fedex_25kg_box }}</option>
                 {% else %}
                 <option value="FEDEX_25KG_BOX">{{ text_fedex_25kg_box }}</option>
                 <?php } ?>
-                <?php if ($fedex_packaging_type == 'YOUR_PACKAGING') { ?>
+                {% if fedex_packaging_type == 'YOUR_PACKAGING' %}
                 <option value="YOUR_PACKAGING" selected="selected">{{ text_your_packaging }}</option>
                 {% else %}
                 <option value="YOUR_PACKAGING">{{ text_your_packaging }}</option>
@@ -224,12 +224,12 @@
             <label class="col-sm-2 control-label" for="input-rate-type">{{ entry_rate_type }}</label>
             <div class="col-sm-10">
               <select name="fedex_rate_type" id="input-rate-type" class="form-control">
-                <?php if ($fedex_rate_type == 'LIST') { ?>
+                {% if fedex_rate_type == 'LIST' %}
                 <option value="LIST" selected="selected">{{ text_list_rate }}</option>
                 {% else %}
                 <option value="LIST">{{ text_list_rate }}</option>
                 <?php } ?>
-                <?php if ($fedex_rate_type == 'ACCOUNT') { ?>
+                {% if fedex_rate_type == 'ACCOUNT' %}
                 <option value="ACCOUNT" selected="selected">{{ text_account_rate }}</option>
                 {% else %}
                 <option value="ACCOUNT">{{ text_account_rate }}</option>
@@ -241,7 +241,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($fedex_display_time) { ?>
+                {% if fedex_display_time %}
                 <input type="radio" name="fedex_display_time" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -264,7 +264,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_weight }}">{{ entry_display_weight }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($fedex_display_weight) { ?>
+                {% if fedex_display_weight %}
                 <input type="radio" name="fedex_display_weight" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -287,7 +287,7 @@
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
             <div class="col-sm-10">
               <select name="fedex_weight_class_id" id="input-weight-class" class="form-control">
-                <?php foreach ($weight_classes as $weight_class) { ?>
+                {% for weight_class in weight_classes %}
                 <?php if ($weight_class['weight_class_id'] == $fedex_weight_class_id) { ?>
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
@@ -302,7 +302,7 @@
             <div class="col-sm-10">
               <select name="fedex_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
-                <?php foreach ($tax_classes as $tax_class) { ?>
+                {% for tax_class in tax_classes %}
                 <?php if ($tax_class['tax_class_id'] == $fedex_tax_class_id) { ?>
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
@@ -317,7 +317,7 @@
             <div class="col-sm-10">
               <select name="fedex_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $fedex_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -331,7 +331,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="fedex_status" id="input-status" class="form-control">
-                <?php if ($fedex_status) { ?>
+                {% if fedex_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

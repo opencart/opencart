@@ -86,7 +86,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control" />
                   <input type="hidden" name="parent_id" value="{{ parent_id }}" />
-                  <?php if ($error_parent) { ?>
+                  {% if error_parent %}
                   <div class="text-danger">{{ error_parent }}</div>
                   <?php } ?>
                 </div>
@@ -122,7 +122,7 @@
                     {% for store in stores %}
                     <div class="checkbox">
                       <label>
-                        <?php if (in_array($store['store_id'], $category_store)) { ?>
+                        {% if store.store_id in category_store %}
                         <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" checked="checked" />
                         {{ store.name }}
                         {% else %}
@@ -139,7 +139,7 @@
                 <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-                  <?php if ($error_keyword) { ?>
+                  {% if error_keyword %}
                   <div class="text-danger">{{ error_keyword }}</div>
                   <?php } ?>
                 </div>
@@ -155,7 +155,7 @@
                 <div class="col-sm-10">
                   <div class="checkbox">
                     <label>
-                      <?php if ($top) { ?>
+                      {% if top %}
                       <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
                       {% else %}
                       <input type="checkbox" name="top" value="1" id="input-top" />
@@ -180,7 +180,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-                    <?php if ($status) { ?>
+                    {% if status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}

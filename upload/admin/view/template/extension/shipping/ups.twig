@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-key"><span data-toggle="tooltip" title="{{ help_key }}">{{ entry_key }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_key" value="{{ ups_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
-              <?php if ($error_key) { ?>
+              {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-username"><span data-toggle="tooltip" title="{{ help_username }}">{{ entry_username }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_username" value="{{ ups_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
-              <?php if ($error_username) { ?>
+              {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_password" value="{{ ups_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-              <?php if ($error_password) { ?>
+              {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               <?php } ?>
             </div>
@@ -56,7 +56,7 @@
             <label class="col-sm-2 control-label" for="input-pickup"><span data-toggle="tooltip" title="{{ help_pickup }}">{{ entry_pickup }}</span></label>
             <div class="col-sm-10">
               <select name="ups_pickup" id="input-pickup" class="form-control">
-                <?php foreach ($pickups as $pickup) { ?>
+                {% for pickup in pickups %}
                 <?php if ($pickup['value'] == $ups_pickup) { ?>
                 <option value="{{ pickup.value }}" selected="selected">{{ pickup.text }}</option>
                 {% else %}
@@ -70,7 +70,7 @@
             <label class="col-sm-2 control-label" for="input-packaging"><span data-toggle="tooltip" title="{{ help_packaging }}">{{ entry_packaging }}</span></label>
             <div class="col-sm-10">
               <select name="ups_packaging" id="input-packaging" class="form-control">
-                <?php foreach ($packages as $package) { ?>
+                {% for package in packages %}
                 <?php if ($package['value'] == $ups_packaging) { ?>
                 <option value="{{ package.value }}" selected="selected">{{ package.text }}</option>
                 {% else %}
@@ -84,7 +84,7 @@
             <label class="col-sm-2 control-label" for="input-classification"><span data-toggle="tooltip" title="{{ help_classification }}">{{ entry_classification }}</span></label>
             <div class="col-sm-10">
               <select name="ups_classification" id="input-classification" class="form-control">
-                <?php foreach ($classifications as $classification) { ?>
+                {% for classification in classifications %}
                 <?php if ($classification['value'] == $ups_classification) { ?>
                 <option value="{{ classification.value }}" selected="selected">{{ classification.text }}</option>
                 {% else %}
@@ -98,7 +98,7 @@
             <label class="col-sm-2 control-label" for="input-origin"><span data-toggle="tooltip" title="{{ help_origin }}">{{ entry_origin }}</span></label>
             <div class="col-sm-10">
               <select name="ups_origin" id="input-origin" class="form-control">
-                <?php foreach ($origins as $origin) { ?>
+                {% for origin in origins %}
                 <?php if ($origin['value'] == $ups_origin) { ?>
                 <option value="{{ origin.value }}" selected="selected">{{ origin.text }}</option>
                 {% else %}
@@ -112,7 +112,7 @@
             <label class="col-sm-2 control-label" for="input-city"><span data-toggle="tooltip" title="{{ help_city }}">{{ entry_city }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_city" value="{{ ups_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
-              <?php if ($error_city) { ?>
+              {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
               <?php } ?>
             </div>
@@ -121,7 +121,7 @@
             <label class="col-sm-2 control-label" for="input-state"><span data-toggle="tooltip" title="{{ help_state }}">{{ entry_state }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_state" value="{{ ups_state }}" placeholder="{{ entry_state }}" id="input-state" class="form-control" maxlength="2" />
-              <?php if ($error_state) { ?>
+              {% if error_state %}
               <div class="text-danger">{{ error_state }}</div>
               <?php } ?>
             </div>
@@ -130,7 +130,7 @@
             <label class="col-sm-2 control-label" for="input-country"><span data-toggle="tooltip" title="{{ help_country }}">{{ entry_country }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="ups_country" value="{{ ups_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control" maxlength="2" />
-              <?php if ($error_country) { ?>
+              {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
               <?php } ?>
             </div>
@@ -145,7 +145,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($ups_test) { ?>
+                {% if ups_test %}
                 <input type="radio" name="ups_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -168,7 +168,7 @@
             <label class="col-sm-2 control-label" for="input-quote-type"><span data-toggle="tooltip" title="{{ help_quote_type }}">{{ entry_quote_type }}</span></label>
             <div class="col-sm-10">
               <select name="ups_quote_type" id="input-quote-type" class="form-control">
-                <?php foreach ($quote_types as $quote_type) { ?>
+                {% for quote_type in quote_types %}
                 <?php if ($quote_type['value'] == $ups_quote_type) { ?>
                 <option value="{{ quote_type.value }}" selected="selected">{{ quote_type.text }}</option>
                 {% else %}
@@ -185,7 +185,7 @@
                 <div id="US">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_01) { ?>
+                      {% if ups_us_01 %}
                       <input type="checkbox" name="ups_us_01" value="1" checked="checked" />
                       {{ text_next_day_air }}
                       {% else %}
@@ -196,7 +196,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_02) { ?>
+                      {% if ups_us_02 %}
                       <input type="checkbox" name="ups_us_02" value="1" checked="checked" />
                       {{ text_2nd_day_air }}
                       {% else %}
@@ -207,7 +207,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_03) { ?>
+                      {% if ups_us_03 %}
                       <input type="checkbox" name="ups_us_03" value="1" checked="checked" />
                       {{ text_ground }}
                       {% else %}
@@ -218,7 +218,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_07) { ?>
+                      {% if ups_us_07 %}
                       <input type="checkbox" name="ups_us_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
@@ -229,7 +229,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_08) { ?>
+                      {% if ups_us_08 %}
                       <input type="checkbox" name="ups_us_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
@@ -240,7 +240,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_11) { ?>
+                      {% if ups_us_11 %}
                       <input type="checkbox" name="ups_us_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
@@ -251,7 +251,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_12) { ?>
+                      {% if ups_us_12 %}
                       <input type="checkbox" name="ups_us_12" value="1" checked="checked" />
                       {{ text_3_day_select }}
                       {% else %}
@@ -262,7 +262,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_13) { ?>
+                      {% if ups_us_13 %}
                       <input type="checkbox" name="ups_us_13" value="1" checked="checked" />
                       {{ text_next_day_air_saver }}
                       {% else %}
@@ -273,7 +273,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_14) { ?>
+                      {% if ups_us_14 %}
                       <input type="checkbox" name="ups_us_14" value="1" checked="checked" />
                       {{ text_next_day_air_early_am }}
                       {% else %}
@@ -284,7 +284,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_54) { ?>
+                      {% if ups_us_54 %}
                       <input type="checkbox" name="ups_us_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -295,7 +295,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_59) { ?>
+                      {% if ups_us_59 %}
                       <input type="checkbox" name="ups_us_59" value="1" checked="checked" />
                       {{ text_2nd_day_air_am }}
                       {% else %}
@@ -306,7 +306,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_us_65) { ?>
+                      {% if ups_us_65 %}
                       <input type="checkbox" name="ups_us_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -319,7 +319,7 @@
                 <div id="PR">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_01) { ?>
+                      {% if ups_pr_01 %}
                       <input type="checkbox" name="ups_pr_01" value="1" checked="checked" />
                       {{ text_next_day_air }}
                       {% else %}
@@ -330,7 +330,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_02) { ?>
+                      {% if ups_pr_02 %}
                       <input type="checkbox" name="ups_pr_02" value="1" checked="checked" />
                       {{ text_2nd_day_air }}
                       {% else %}
@@ -341,7 +341,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_03) { ?>
+                      {% if ups_pr_03 %}
                       <input type="checkbox" name="ups_pr_03" value="1" checked="checked" />
                       {{ text_ground }}
                       {% else %}
@@ -352,7 +352,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_07) { ?>
+                      {% if ups_pr_07 %}
                       <input type="checkbox" name="ups_pr_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
@@ -363,7 +363,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_08) { ?>
+                      {% if ups_pr_08 %}
                       <input type="checkbox" name="ups_pr_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
@@ -374,7 +374,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_14) { ?>
+                      {% if ups_pr_14 %}
                       <input type="checkbox" name="ups_pr_14" value="1" checked="checked" />
                       {{ text_next_day_air_early_am }}
                       {% else %}
@@ -385,7 +385,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_54) { ?>
+                      {% if ups_pr_54 %}
                       <input type="checkbox" name="ups_pr_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -396,7 +396,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_pr_65) { ?>
+                      {% if ups_pr_65 %}
                       <input type="checkbox" name="ups_pr_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -409,7 +409,7 @@
                 <div id="CA">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_01) { ?>
+                      {% if ups_ca_01 %}
                       <input type="checkbox" name="ups_ca_01" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
@@ -420,7 +420,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_02) { ?>
+                      {% if ups_ca_02 %}
                       <input type="checkbox" name="ups_ca_02" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
@@ -431,7 +431,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_07) { ?>
+                      {% if ups_ca_07 %}
                       <input type="checkbox" name="ups_ca_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
@@ -442,7 +442,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_08) { ?>
+                      {% if ups_ca_08 %}
                       <input type="checkbox" name="ups_ca_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
@@ -453,7 +453,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_11) { ?>
+                      {% if ups_ca_11 %}
                       <input type="checkbox" name="ups_ca_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
@@ -464,7 +464,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_12) { ?>
+                      {% if ups_ca_12 %}
                       <input type="checkbox" name="ups_ca_12" value="1" checked="checked" />
                       {{ text_3_day_select }}
                       {% else %}
@@ -475,7 +475,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_13) { ?>
+                      {% if ups_ca_13 %}
                       <input type="checkbox" name="ups_ca_13" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -486,7 +486,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_14) { ?>
+                      {% if ups_ca_14 %}
                       <input type="checkbox" name="ups_ca_14" value="1" checked="checked" />
                       {{ text_express_early_am }}
                       {% else %}
@@ -497,7 +497,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_54) { ?>
+                      {% if ups_ca_54 %}
                       <input type="checkbox" name="ups_ca_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -508,7 +508,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_ca_65) { ?>
+                      {% if ups_ca_65 %}
                       <input type="checkbox" name="ups_ca_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -521,7 +521,7 @@
                 <div id="MX">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_mx_07) { ?>
+                      {% if ups_mx_07 %}
                       <input type="checkbox" name="ups_mx_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
@@ -532,7 +532,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_mx_08) { ?>
+                      {% if ups_mx_08 %}
                       <input type="checkbox" name="ups_mx_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
@@ -543,7 +543,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_mx_54) { ?>
+                      {% if ups_mx_54 %}
                       <input type="checkbox" name="ups_mx_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -554,7 +554,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_mx_65) { ?>
+                      {% if ups_mx_65 %}
                       <input type="checkbox" name="ups_mx_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -567,7 +567,7 @@
                 <div id="EU">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_07) { ?>
+                      {% if ups_eu_07 %}
                       <input type="checkbox" name="ups_eu_07" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
@@ -578,7 +578,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_08) { ?>
+                      {% if ups_eu_08 %}
                       <input type="checkbox" name="ups_eu_08" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
@@ -589,7 +589,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_11) { ?>
+                      {% if ups_eu_11 %}
                       <input type="checkbox" name="ups_eu_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
@@ -600,7 +600,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_54) { ?>
+                      {% if ups_eu_54 %}
                       <input type="checkbox" name="ups_eu_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -611,7 +611,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_65) { ?>
+                      {% if ups_eu_65 %}
                       <input type="checkbox" name="ups_eu_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -622,7 +622,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_82) { ?>
+                      {% if ups_eu_82 %}
                       <input type="checkbox" name="ups_eu_82" value="1" checked="checked" />
                       {{ text_today_standard }}
                       {% else %}
@@ -633,7 +633,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_83) { ?>
+                      {% if ups_eu_83 %}
                       <input type="checkbox" name="ups_eu_83" value="1" checked="checked" />
                       {{ text_today_dedicated_courier }}
                       {% else %}
@@ -644,7 +644,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_84) { ?>
+                      {% if ups_eu_84 %}
                       <input type="checkbox" name="ups_eu_84" value="1" checked="checked" />
                       {{ text_today_intercity }}
                       {% else %}
@@ -655,7 +655,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_85) { ?>
+                      {% if ups_eu_85 %}
                       <input type="checkbox" name="ups_eu_85" value="1" checked="checked" />
                       {{ text_today_express }}
                       {% else %}
@@ -666,7 +666,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_eu_86) { ?>
+                      {% if ups_eu_86 %}
                       <input type="checkbox" name="ups_eu_86" value="1" checked="checked" />
                       {{ text_today_express_saver }}
                       {% else %}
@@ -679,7 +679,7 @@
                 <div id="other">
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_other_07) { ?>
+                      {% if ups_other_07 %}
                       <input type="checkbox" name="ups_other_07" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
@@ -690,7 +690,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_other_08) { ?>
+                      {% if ups_other_08 %}
                       <input type="checkbox" name="ups_other_08" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
@@ -701,7 +701,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_other_11) { ?>
+                      {% if ups_other_11 %}
                       <input type="checkbox" name="ups_other_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
@@ -712,7 +712,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_other_54) { ?>
+                      {% if ups_other_54 %}
                       <input type="checkbox" name="ups_other_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
@@ -723,7 +723,7 @@
                   </div>
                   <div class="checkbox">
                     <label>
-                      <?php if ($ups_other_65) { ?>
+                      {% if ups_other_65 %}
                       <input type="checkbox" name="ups_other_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
@@ -740,7 +740,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($ups_insurance) { ?>
+                {% if ups_insurance %}
                 <input type="radio" name="ups_insurance" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -763,7 +763,7 @@
             <label class="col-sm-2 control-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($ups_display_weight) { ?>
+                {% if ups_display_weight %}
                 <input type="radio" name="ups_display_weight" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -786,7 +786,7 @@
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
             <div class="col-sm-10">
               <select name="ups_weight_class_id" id="input-weight-class" class="form-control">
-                <?php foreach ($weight_classes as $weight_class) { ?>
+                {% for weight_class in weight_classes %}
                 <?php if ($weight_class['weight_class_id'] == $ups_weight_class_id) { ?>
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
@@ -800,7 +800,7 @@
             <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="{{ help_length_class }}">{{ entry_length_class }}</span></label>
             <div class="col-sm-10">
               <select name="ups_length_class_id" id="input-length-class" class="form-control">
-                <?php foreach ($length_classes as $length_class) { ?>
+                {% for length_class in length_classes %}
                 <?php if ($length_class['length_class_id'] == $ups_length_class_id) { ?>
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
@@ -824,7 +824,7 @@
                   <input type="text" name="ups_height" value="{{ ups_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
                 </div>
               </div>
-              <?php if ($error_dimension) { ?>
+              {% if error_dimension %}
               <div class="text-danger">{{ error_dimension }}</div>
               <?php } ?>
             </div>
@@ -834,7 +834,7 @@
             <div class="col-sm-10">
               <select name="ups_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
-                <?php foreach ($tax_classes as $tax_class) { ?>
+                {% for tax_class in tax_classes %}
                 <?php if ($tax_class['tax_class_id'] == $ups_tax_class_id) { ?>
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
@@ -849,7 +849,7 @@
             <div class="col-sm-10">
               <select name="ups_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $ups_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -863,7 +863,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="ups_status" id="input-status" class="form-control">
-                <?php if ($ups_status) { ?>
+                {% if ups_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -883,7 +883,7 @@
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
               <select name="ups_debug" id="input-debug" class="form-control">
-                <?php if ($ups_debug) { ?>
+                {% if ups_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

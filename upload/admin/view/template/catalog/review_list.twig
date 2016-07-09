@@ -46,7 +46,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_status) { ?>
+                  {% if filter_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
@@ -105,10 +105,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($reviews) { ?>
+                {% if reviews %}
                 {% for review in reviews %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($review['review_id'], $selected)) { ?>
+                  <td class="text-center">{% if review.review_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ review.review_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ review.review_id }}" />

@@ -29,7 +29,7 @@
             <div class="col-sm-2">
               <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <li><a href="#tab-geo-zone{{ geo_zone.geo_zone_id }}" data-toggle="tab">{{ geo_zone.name }}</a></li>
                 <?php } ?>
               </ul>
@@ -42,7 +42,7 @@
                     <div class="col-sm-10">
                       <select name="weight_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
-                        <?php foreach ($tax_classes as $tax_class) { ?>
+                        {% for tax_class in tax_classes %}
                         <?php if ($tax_class['tax_class_id'] == $weight_tax_class_id) { ?>
                         <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                         {% else %}
@@ -56,7 +56,7 @@
                     <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="weight_status" id="input-status" class="form-control">
-                        <?php if ($weight_status) { ?>
+                        {% if weight_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -73,7 +73,7 @@
                     </div>
                   </div>
                 </div>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <div class="tab-pane" id="tab-geo-zone{{ geo_zone.geo_zone_id }}">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-rate{{ geo_zone.geo_zone_id }}"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>

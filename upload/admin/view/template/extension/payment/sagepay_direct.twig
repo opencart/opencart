@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-vendor">{{ entry_vendor }}</label>
             <div class="col-sm-10">
               <input type="text" name="sagepay_direct_vendor" value="{{ sagepay_direct_vendor }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control" />
-              <?php if ($error_vendor) { ?>
+              {% if error_vendor %}
               <div class="text-danger">{{ error_vendor }}</div>
               <?php } ?>
             </div>
@@ -38,17 +38,17 @@
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
               <select name="sagepay_direct_test" id="input-test" class="form-control">
-                <?php if ($sagepay_direct_test == 'sim') { ?>
+                {% if sagepay_direct_test == 'sim' %}
                 <option value="sim" selected="selected">{{ text_sim }}</option>
                 {% else %}
                 <option value="sim">{{ text_sim }}</option>
                 <?php } ?>
-                <?php if ($sagepay_direct_test == 'test') { ?>
+                {% if sagepay_direct_test == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
                 <?php } ?>
-                <?php if ($sagepay_direct_test == 'live') { ?>
+                {% if sagepay_direct_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
@@ -60,17 +60,17 @@
             <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="{{ help_transaction }}">{{ entry_transaction }}</span></label>
             <div class="col-sm-10">
               <select name="sagepay_direct_transaction" id="input-transaction" class="form-control">
-                <?php if ($sagepay_direct_transaction == 'PAYMENT') { ?>
+                {% if sagepay_direct_transaction == 'PAYMENT' %}
                 <option value="PAYMENT" selected="selected">{{ text_payment }}</option>
                 {% else %}
                 <option value="PAYMENT">{{ text_payment }}</option>
                 <?php } ?>
-                <?php if ($sagepay_direct_transaction == 'DEFERRED') { ?>
+                {% if sagepay_direct_transaction == 'DEFERRED' %}
                 <option value="DEFERRED" selected="selected">{{ text_defered }}</option>
                 {% else %}
                 <option value="DEFERRED">{{ text_defered }}</option>
                 <?php } ?>
-				<?php if ($sagepay_direct_transaction == 'AUTHENTICATE') { ?>
+				{% if sagepay_direct_transaction == 'AUTHENTICATE' %}
                 <option value="AUTHENTICATE" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTHENTICATE">{{ text_authenticate }}</option>
@@ -88,7 +88,7 @@
             <label class="col-sm-2 control-label" for="input-card">{{ entry_card }}</label>
             <div class="col-sm-10">
               <select name="sagepay_direct_card" id="input-card" class="form-control">
-                <?php if ($sagepay_direct_card) { ?>
+                {% if sagepay_direct_card %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -131,7 +131,7 @@
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
               <select name="sagepay_direct_debug" id="input-debug" class="form-control">
-                <?php if ($sagepay_direct_debug) { ?>
+                {% if sagepay_direct_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -145,7 +145,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="sagepay_direct_status" id="input-status" class="form-control">
-                <?php if ($sagepay_direct_status) { ?>
+                {% if sagepay_direct_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -175,7 +175,7 @@
               <input type="text" name="sagepay_direct_cron_job_url" value="{{ sagepay_direct_cron_job_url }}" placeholder="{{ entry_cron_job_url }}" id="input-cron-job-url" class="form-control" />
             </div>
           </div>
-          <?php if ($sagepay_direct_last_cron_job_run) { ?>
+          {% if sagepay_direct_last_cron_job_run %}
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_last_cron_job_run }}</label>
             <div class="col-sm-10">{{ sagepay_direct_last_cron_job_run }}</div>

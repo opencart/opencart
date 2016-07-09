@@ -46,11 +46,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-<?php if ($target) { ?>
+{% if target %}
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
-	<?php if ($thumb) { ?>
+	{% if thumb %}
 	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
@@ -99,11 +99,11 @@ $('#button-search').on('click', function(e) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
 
-	<?php if ($thumb) { ?>
+	{% if thumb %}
 	url += '&thumb=' + '{{ thumb }}';
 	<?php } ?>
 
-	<?php if ($target) { ?>
+	{% if target %}
 	url += '&target=' + '{{ target }}';
 	<?php } ?>
 

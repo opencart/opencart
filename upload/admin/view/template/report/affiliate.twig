@@ -55,8 +55,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($affiliates) { ?>
-              <?php foreach ($affiliates as $affiliate) { ?>
+              {% if affiliates %}
+              {% for affiliate in affiliates %}
               <tr>
                 <td class="text-left">{{ affiliate.affiliate }}</td>
                 <td class="text-left">{{ affiliate.email }}</td>

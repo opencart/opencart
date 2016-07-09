@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <title>{{ title }}</title>
 <base href="{{ base }}" />
-<?php if ($description) { ?>
+{% if description %}
 <meta name="description" content="{{ description }}" />
 <?php } ?>
-<?php if ($keywords) { ?>
+{% if keywords %}
 <meta name="keywords" content="{{ keywords }}" />
 <?php } ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -34,13 +34,13 @@
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
   <div class="navbar-header">
-    <?php if ($logged) { ?>
+    {% if logged %}
     <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
     <?php } ?>
     <a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
-  <?php if ($logged) { ?>
+  {% if logged %}
   <ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if($alerts > 0) { ?><span class="label label-danger pull-left">{{ alerts }}</span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{% if alerts > 0 %} <span class="label label-danger pull-left">{{ alerts }}</span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
         <li class="dropdown-header">{{ text_order }}</li>
         <li><a href="{{ processing_status }}" style="display: block; overflow: auto;"><span class="label label-warning pull-right">{{ processing_status_total }}</span>{{ text_processing_status }}</a></li>

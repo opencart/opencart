@@ -68,8 +68,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($searches) { ?>
-              <?php foreach ($searches as $search) { ?>
+              {% if searches %}
+              {% for search in searches %}
               <tr>
                 <td class="text-left">{{ search.keyword }}</td>
                 <td class="text-left">{{ search.products }}</td>

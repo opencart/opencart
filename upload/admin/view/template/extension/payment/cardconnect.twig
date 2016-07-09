@@ -14,12 +14,12 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -40,7 +40,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-merchant-id"><span data-toggle="tooltip" title="{{ help_merchant_id }}">{{ entry_merchant_id }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="cardconnect_merchant_id" value="{{ cardconnect_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-cardconnect-merchant-id" class="form-control" />
-				  <?php if ($error_cardconnect_merchant_id) { ?>
+				  {% if error_cardconnect_merchant_id %}
               	    <div class="text-danger">{{ error_cardconnect_merchant_id }}</div>
                   <?php } ?>
 			    </div>
@@ -49,7 +49,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-api-username"><span data-toggle="tooltip" title="{{ help_api_username }}">{{ entry_api_username }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="cardconnect_api_username" value="{{ cardconnect_api_username }}" placeholder="{{ entry_api_username }}" id="input-cardconnect-api-username" class="form-control" />
-				  <?php if ($error_cardconnect_api_username) { ?>
+				  {% if error_cardconnect_api_username %}
               	    <div class="text-danger">{{ error_cardconnect_api_username }}</div>
                   <?php } ?>
 			    </div>
@@ -58,7 +58,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-api-password"><span data-toggle="tooltip" title="{{ help_api_password }}">{{ entry_api_password }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="cardconnect_api_password" value="{{ cardconnect_api_password }}" placeholder="{{ entry_api_password }}" id="input-cardconnect-api-password" class="form-control" />
-				  <?php if ($error_cardconnect_api_password) { ?>
+				  {% if error_cardconnect_api_password %}
               	    <div class="text-danger">{{ error_cardconnect_api_password }}</div>
                   <?php } ?>
 			    </div>
@@ -67,7 +67,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-token"><span data-toggle="tooltip" title="{{ help_token }}">{{ entry_token }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="cardconnect_token" value="{{ cardconnect_token }}" placeholder="{{ entry_token }}" id="input-cardconnect-token" class="form-control" />
-				  <?php if ($error_cardconnect_token) { ?>
+				  {% if error_cardconnect_token %}
               	    <div class="text-danger">{{ error_cardconnect_token }}</div>
                   <?php } ?>
 			    </div>
@@ -76,12 +76,12 @@
                 <label class="col-sm-2 control-label" for="input-cardconnect-transaction"><span data-toggle="tooltip" title="{{ help_transaction }}">{{ entry_transaction }}</span></label>
                 <div class="col-sm-10">
                   <select name="cardconnect_transaction" id="input-cardconnect-transaction" class="form-control">
-                    <?php if ($cardconnect_transaction == 'payment') { ?>
+                    {% if cardconnect_transaction == 'payment' %}
                     <option value="payment" selected="selected">{{ text_payment }}</option>
                     {% else %}
                     <option value="payment">{{ text_payment }}</option>
                     <?php } ?>
-                    <?php if ($cardconnect_transaction == 'authorize') { ?>
+                    {% if cardconnect_transaction == 'authorize' %}
                     <option value="authorize" selected="selected">{{ text_authorize }}</option>
                     {% else %}
                     <option value="authorize">{{ text_authorize }}</option>
@@ -93,7 +93,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-site"><span data-toggle="tooltip" title="{{ help_site }}">{{ entry_site }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="cardconnect_site" value="{{ cardconnect_site }}" placeholder="{{ entry_site }}" id="input-cardconnect-site" class="form-control" />
-				  <?php if ($error_cardconnect_site) { ?>
+				  {% if error_cardconnect_site %}
               	    <div class="text-danger">{{ error_cardconnect_site }}</div>
                   <?php } ?>
 			    </div>
@@ -102,12 +102,12 @@
                 <label class="col-sm-2 control-label" for="input-cardconnect-environment">{{ entry_environment }}</label>
                 <div class="col-sm-10">
                   <select name="cardconnect_environment" id="input-cardconnect-environment" class="form-control">
-                    <?php if ($cardconnect_environment == 'live') { ?>
+                    {% if cardconnect_environment == 'live' %}
                     <option value="live" selected="selected">{{ text_live }}</option>
                     {% else %}
                     <option value="live">{{ text_live }}</option>
                     <?php } ?>
-                    <?php if ($cardconnect_environment == 'test') { ?>
+                    {% if cardconnect_environment == 'test' %}
                     <option value="test" selected="selected">{{ text_test }}</option>
                     {% else %}
                     <option value="test">{{ text_test }}</option>
@@ -119,7 +119,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-store-cards"><span data-toggle="tooltip" title="{{ help_store_cards }}">{{ entry_store_cards }}</span></label>
 			    <div class="col-sm-10">
 		          <select name="cardconnect_store_cards" id="input-cardconnect-store-cards" class="form-control">
-                    <?php if ($cardconnect_store_cards) { ?>
+                    {% if cardconnect_store_cards %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -133,7 +133,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-echeck"><span data-toggle="tooltip" title="{{ help_echeck }}">{{ entry_echeck }}</span></label>
 			    <div class="col-sm-10">
 		          <select name="cardconnect_echeck" id="input-cardconnect-echeck" class="form-control">
-                    <?php if ($cardconnect_echeck) { ?>
+                    {% if cardconnect_echeck %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -168,7 +168,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-status">{{ entry_status }}</label>
 			    <div class="col-sm-10">
 		          <select name="cardconnect_status" id="input-cardconnect-status" class="form-control">
-                    <?php if ($cardconnect_status) { ?>
+                    {% if cardconnect_status %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -182,7 +182,7 @@
 			    <label class="col-sm-2 control-label" for="input-cardconnect-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
 			    <div class="col-sm-10">
 		          <select name="cardconnect_logging" id="input-cardconnect-logging" class="form-control">
-                    <?php if ($cardconnect_logging) { ?>
+                    {% if cardconnect_logging %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}

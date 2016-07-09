@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($bulk_listing_status) { ?>
+    {% if bulk_listing_status %}
       <div class="well">
         <div class="row">
           <div class="col-sm-12 text-right"><a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> {{ button_search }}</a> </div>
@@ -46,7 +46,7 @@
                 <?php if ($product['matches'] > 0) { ?>
                 <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
                 <?php echo $text_dont_list ?><br/>
-                <?php foreach ($product['search_results'] as $search_result) { ?>
+                {% for search_results in product.search_results %}
                 <?php if (!$checked) { ?>
                 <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
                 <?php $checked = true; ?>

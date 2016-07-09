@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-address">{{ entry_address }}</label>
             <div class="col-sm-10">
               <textarea type="text" name="address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ address }}</textarea>
-              <?php if ($error_address) { ?>
+              {% if error_address %}
               <div class="text-danger">{{ error_address }}</div>
               <?php } ?>
             </div>
@@ -53,7 +53,7 @@
             <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              <?php if ($error_telephone) { ?>
+              {% if error_telephone %}
               <div class="text-danger">{{ error_telephone }}</div>
               <?php  } ?>
             </div>

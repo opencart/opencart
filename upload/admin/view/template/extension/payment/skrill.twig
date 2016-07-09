@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="skrill_email" value="{{ skrill_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              <?php if ($error_email) { ?>
+              {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -50,7 +50,7 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $skrill_order_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -64,7 +64,7 @@
             <label class="col-sm-2 control-label" for="input-pending-status">{{ entry_pending_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_pending_status_id" id="input-pending-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $skrill_pending_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -78,7 +78,7 @@
             <label class="col-sm-2 control-label" for="input-canceled-status">{{ entry_canceled_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_canceled_status_id" id="input-canceled-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $skrill_canceled_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -92,7 +92,7 @@
             <label class="col-sm-2 control-label" for="input-failed-status">{{ entry_failed_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_failed_status_id" id="input-failed-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $skrill_failed_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -106,7 +106,7 @@
             <label class="col-sm-2 control-label" for="input-chargeback-status">{{ entry_chargeback_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_chargeback_status_id" id="input-chargeback-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $skrill_chargeback_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -121,7 +121,7 @@
             <div class="col-sm-10">
               <select name="skrill_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $skrill_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -135,7 +135,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="skrill_status" id="input-status" class="form-control">
-                <?php if ($skrill_status) { ?>
+                {% if skrill_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

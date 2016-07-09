@@ -31,7 +31,7 @@
               <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="{{ help_directory }}">{{ entry_directory }}</span></label>
               <div class="col-sm-10">
                 <select name="theme_default_directory" id="input-directory" class="form-control">
-                  <?php foreach ($directories as $directory) { ?>
+                  {% for directory in directories %}
                   <?php if ($directory == $theme_default_directory) { ?>
                   <option value="{{ directory }}" selected="selected">{{ directory }}</option>
                   {% else %}
@@ -45,7 +45,7 @@
               <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="theme_default_status" id="input-status" class="form-control">
-                  <?php if ($theme_default_status) { ?>
+                  {% if theme_default_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   <option value="0">{{ text_disabled }}</option>
                   {% else %}
@@ -62,7 +62,7 @@
               <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="{{ help_product_limit }}">{{ entry_product_limit }}</span></label>
               <div class="col-sm-10">
                 <input type="text" name="theme_default_product_limit" value="{{ theme_default_product_limit }}" placeholder="{{ entry_product_limit }}" id="input-catalog-limit" class="form-control" />
-                <?php if ($error_product_limit) { ?>
+                {% if error_product_limit %}
                 <div class="text-danger">{{ error_product_limit }}</div>
                 <?php } ?>
               </div>
@@ -71,7 +71,7 @@
               <label class="col-sm-2 control-label" for="input-description-limit"><span data-toggle="tooltip" title="{{ help_product_description_length }}">{{ entry_product_description_length }}</span></label>
               <div class="col-sm-10">
                 <input type="text" name="theme_default_product_description_length" value="{{ theme_default_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control" />
-                <?php if ($error_product_description_length) { ?>
+                {% if error_product_description_length %}
                 <div class="text-danger">{{ error_product_description_length }}</div>
                 <?php } ?>
               </div>
@@ -90,7 +90,7 @@
                     <input type="text" name="theme_default_image_category_height" value="{{ theme_default_image_category_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_category) { ?>
+                {% if error_image_category %}
                 <div class="text-danger">{{ error_image_category }}</div>
                 <?php } ?>
               </div>
@@ -106,7 +106,7 @@
                     <input type="text" name="theme_default_image_thumb_height" value="{{ theme_default_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_thumb) { ?>
+                {% if error_image_thumb %}
                 <div class="text-danger">{{ error_image_thumb }}</div>
                 <?php } ?>
               </div>
@@ -122,7 +122,7 @@
                     <input type="text" name="theme_default_image_popup_height" value="{{ theme_default_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_popup) { ?>
+                {% if error_image_popup %}
                 <div class="text-danger">{{ error_image_popup }}</div>
                 <?php } ?>
               </div>
@@ -138,7 +138,7 @@
                     <input type="text" name="theme_default_image_product_height" value="{{ theme_default_image_product_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_product) { ?>
+                {% if error_image_product %}
                 <div class="text-danger">{{ error_image_product }}</div>
                 <?php } ?>
               </div>
@@ -154,7 +154,7 @@
                     <input type="text" name="theme_default_image_additional_height" value="{{ theme_default_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_additional) { ?>
+                {% if error_image_additional %}
                 <div class="text-danger">{{ error_image_additional }}</div>
                 <?php } ?>
               </div>
@@ -170,7 +170,7 @@
                     <input type="text" name="theme_default_image_related_height" value="{{ theme_default_image_related_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_related) { ?>
+                {% if error_image_related %}
                 <div class="text-danger">{{ error_image_related }}</div>
                 <?php } ?>
               </div>
@@ -186,7 +186,7 @@
                     <input type="text" name="theme_default_image_compare_height" value="{{ theme_default_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_compare) { ?>
+                {% if error_image_compare %}
                 <div class="text-danger">{{ error_image_compare }}</div>
                 <?php } ?>
               </div>
@@ -202,7 +202,7 @@
                     <input type="text" name="theme_default_image_wishlist_height" value="{{ theme_default_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_wishlist) { ?>
+                {% if error_image_wishlist %}
                 <div class="text-danger">{{ error_image_wishlist }}</div>
                 <?php } ?>
               </div>
@@ -218,7 +218,7 @@
                     <input type="text" name="theme_default_image_cart_height" value="{{ theme_default_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_cart) { ?>
+                {% if error_image_cart %}
                 <div class="text-danger">{{ error_image_cart }}</div>
                 <?php } ?>
               </div>
@@ -234,7 +234,7 @@
                     <input type="text" name="theme_default_image_location_height" value="{{ theme_default_image_location_height }}" placeholder="{{ entry_height }}" class="form-control" />
                   </div>
                 </div>
-                <?php if ($error_image_location) { ?>
+                {% if error_image_location %}
                 <div class="text-danger">{{ error_image_location }}</div>
                 <?php } ?>
               </div>

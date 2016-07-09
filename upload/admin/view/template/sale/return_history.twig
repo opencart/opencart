@@ -1,7 +1,7 @@
-<?php if ($error) { ?>
+{% if error %}
 <div class="alert alert-danger">{{ error }}</div>
 <?php } ?>
-<?php if ($success) { ?>
+{% if success %}
 <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
@@ -16,8 +16,8 @@
     </tr>
   </thead>
   <tbody>
-    <?php if ($histories) { ?>
-    <?php foreach ($histories as $history) { ?>
+    {% if histories %}
+    {% for history in histories %}
     <tr>
       <td class="text-left">{{ history.date_added }}</td>
       <td class="text-left">{{ history.comment }}</td>

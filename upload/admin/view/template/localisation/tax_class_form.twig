@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-title">{{ entry_title }}</label>
             <div class="col-sm-10">
               <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control" />
-              <?php if ($error_title) { ?>
+              {% if error_title %}
               <div class="text-danger">{{ error_title }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
             <div class="col-sm-10">
               <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control" />
-              <?php if ($error_description) { ?>
+              {% if error_description %}
               <div class="text-danger">{{ error_description }}</div>
               <?php } ?>
             </div>
@@ -53,11 +53,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php $tax_rule_row = 0; ?>
-              <?php foreach ($tax_rules as $tax_rule) { ?>
+              {% tax_rule_row = 0 %}
+              {% for tax_rule in tax_rules %}
               <tr id="tax-rule-row{{ tax_rule_row }}">
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
-                    <?php foreach ($tax_rates as $tax_rate) { ?>
+                    {% for tax_rate in tax_rates %}
                     <?php  if ($tax_rate['tax_rate_id'] == $tax_rule['tax_rate_id']) { ?>
                     <option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
                     {% else %}
@@ -105,7 +105,7 @@ var tax_rule_row = {{ tax_rule_row }};
 function addRule() {
 	html  = '<tr id="tax-rule-row' + tax_rule_row + '">';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
-    <?php foreach ($tax_rates as $tax_rate) { ?>
+    {% for tax_rate in tax_rates %}
     html += '    <option value="{{ tax_rate.tax_rate_id }}"><?php echo addslashes($tax_rate['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php  } ?>
             </div>
@@ -38,10 +38,10 @@
             <label class="col-sm-2 control-label">{{ entry_access }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($permissions as $permission) { ?>
+                {% for permission in permissions %}
                 <div class="checkbox">
                   <label>
-                    <?php if (in_array($permission, $access)) { ?>
+                    {% for permission in access %}
                     <input type="checkbox" name="permission[access][]" value="{{ permission }}" checked="checked" />
                     {{ permission }}
                     {% else %}
@@ -58,10 +58,10 @@
             <label class="col-sm-2 control-label">{{ entry_modify }}</label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
-                <?php foreach ($permissions as $permission) { ?>
+                {% for permission in permissions %}
                 <div class="checkbox">
                   <label>
-                    <?php if (in_array($permission, $modify)) { ?>
+                    {% for permission in modify %}
                     <input type="checkbox" name="permission[modify][]" value="{{ permission }}" checked="checked" />
                     {{ permission }}
                     {% else %}

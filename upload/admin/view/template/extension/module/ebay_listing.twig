@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
             <div class="col-sm-10">
               <select name="ebay_listing_description" id="input-description" class="form-control">
-                <?php if ($ebay_listing_description) { ?>
+                {% if ebay_listing_description %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -67,7 +67,7 @@
             <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
             <div class="col-sm-10">
               <input type="text" name="ebay_listing_width" value="{{ ebay_listing_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
-              <?php if ($error_width) { ?>
+              {% if error_width %}
               <div class="text-danger">{{ error_width }}</div>
               <?php } ?>
             </div>
@@ -76,7 +76,7 @@
             <label class="col-sm-2 control-label" for="input-height">{{ entry_height }}</label>
             <div class="col-sm-10">
               <input type="text" name="ebay_listing_height" value="{{ ebay_listing_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
-              <?php if ($error_height) { ?>
+              {% if error_height %}
               <div class="text-danger">{{ error_height }}</div>
               <?php } ?>
             </div>
@@ -85,12 +85,12 @@
             <label class="col-sm-2 control-label" for="input-sort">{{ entry_sort }}</label>
             <div class="col-sm-10">
               <select name="ebay_listing_sort" id="input-sort" class="form-control">
-                <?php if ($ebay_listing_sort == 'StartTimeNewest') { ?>
+                {% if ebay_listing_sort == 'StartTimeNewest' %}
                 <option value="StartTimeNewest" selected>{{ text_latest }}</option>
                 {% else %}
                 <option value="StartTimeNewest">{{ text_latest }}</option>
                 <?php } ?>
-                <?php if ($ebay_listing_sort == 'random') { ?>
+                {% if ebay_listing_sort == 'random' %}
                 <option value="random" selected>{{ text_random }}</option>
                 {% else %}
                 <option value="random">{{ text_random }}</option>
@@ -116,7 +116,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="ebay_listing_status" id="input-status" class="form-control">
-                <?php if ($ebay_listing_status) { ?>
+                {% if ebay_listing_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

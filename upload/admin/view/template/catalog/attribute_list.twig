@@ -40,7 +40,7 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'attribute_group') { ?>
+                  <td class="text-left">{% if sort == 'attribute_group' %}
                     <a href="{{ sort_attribute_group }}" class="{{ order|lower }}">{{ column_attribute_group }}</a>
                     {% else %}
                     <a href="{{ sort_attribute_group }}">{{ column_attribute_group }}</a>
@@ -54,10 +54,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($attributes) { ?>
+                {% if attributes %}
                 {% for attribute in attributes %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($attribute['attribute_id'], $selected)) { ?>
+                  <td class="text-center">{% if attribute.attribute_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}" />

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -52,7 +52,7 @@
                 {% for store in stores %}
                 <div class="checkbox">
                   <label>
-                    <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
+                    {% if store.store_id in manufacturer_store %}
                     <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" />
                     {{ store.name }}
                     {% else %}
@@ -69,7 +69,7 @@
             <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-              <?php if ($error_keyword) { ?>
+              {% if error_keyword %}
               <div class="text-danger">{{ error_keyword }}</div>
               <?php } ?>
             </div>

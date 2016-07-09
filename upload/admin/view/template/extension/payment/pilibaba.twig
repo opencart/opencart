@@ -14,12 +14,12 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -31,7 +31,7 @@
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pilibaba" class="form-horizontal">
 		  <ul class="nav nav-tabs">
-		    <?php if ($show_register) { ?>
+		    {% if show_register %}
 		      <li class="active" id="li-tab-register"><a href="#tab-register" data-toggle="tab">{{ tab_register }}</a></li>
 		      <li id="li-tab-settings"><a href="#tab-settings" data-toggle="tab">{{ tab_settings }}</a></li>
 			{% else %}
@@ -89,11 +89,11 @@
 			  <a class="button btn btn-primary col-sm-offset-2" id="button-register">{{ button_register }}</a> <span class="btn btn-primary col-sm-offset-2" id="img_loading_register" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
 			</div>
 		    <div class="tab-pane <?php if (!$show_register) { echo 'active'; } ?>" id="tab-settings">
-		      <?php if ($error_weight) { ?>
+		      {% if error_weight %}
                 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
 			  <?php } ?>
 
-		      <?php if ($notice_email) { ?>
+		      {% if notice_email %}
 				<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ notice_email }}</div>
 			  <?php } ?>
 
@@ -101,7 +101,7 @@
                 <label class="col-sm-2 control-label" for="input-pilibaba-merchant-number"><span data-toggle="tooltip" title="{{ help_merchant_number }}">{{ entry_merchant_number }}</span></label>
                 <div class="col-sm-10">
 			    <input type="text" name="pilibaba_merchant_number" value="{{ pilibaba_merchant_number }}" placeholder="{{ entry_merchant_number }}" id="input-pilibaba-merchant-number" class="form-control" />
-			    <?php if ($error_pilibaba_merchant_number) { ?>
+			    {% if error_pilibaba_merchant_number %}
                   <div class="text-danger">{{ error_pilibaba_merchant_number }}</div>
                 <?php } ?>
 		        </div>
@@ -110,7 +110,7 @@
 		        <label class="col-sm-2 control-label" for="input-pilibaba-secret-key"><span data-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span></label>
 			    <div class="col-sm-10">
 			    <input type="text" name="pilibaba_secret_key" value="{{ pilibaba_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-pilibaba-secret-key" class="form-control" />
-			    <?php if ($error_pilibaba_secret_key) { ?>
+			    {% if error_pilibaba_secret_key %}
                   <div class="text-danger">{{ error_pilibaba_secret_key }}</div>
                 <?php } ?>
 			    </div>
@@ -119,12 +119,12 @@
                 <label class="col-sm-2 control-label" for="input-pilibaba-environment">{{ entry_environment }}</label>
                 <div class="col-sm-10">
                   <select name="pilibaba_environment" id="input-pilibaba-environment" class="form-control">
-                    <?php if ($pilibaba_environment == 'live') { ?>
+                    {% if pilibaba_environment == 'live' %}
                     <option value="live" selected="selected">{{ text_live }}</option>
                     {% else %}
                     <option value="live">{{ text_live }}</option>
                     <?php } ?>
-                    <?php if ($pilibaba_environment == 'test') { ?>
+                    {% if pilibaba_environment == 'test' %}
                     <option value="test" selected="selected">{{ text_test }}</option>
                     {% else %}
                     <option value="test">{{ text_test }}</option>
@@ -136,7 +136,7 @@
 		        <label class="col-sm-2 control-label" for="input-pilibaba-shipping-fee"><span data-toggle="tooltip" title="{{ help_shipping_fee }}">{{ entry_shipping_fee }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="pilibaba_shipping_fee" value="{{ pilibaba_shipping_fee }}" placeholder="{{ entry_shipping_fee }} (e.g. 4.99)" id="input-pilibaba-shipping-fee" class="form-control" />
-			      <?php if ($error_pilibaba_shipping_fee) { ?>
+			      {% if error_pilibaba_shipping_fee %}
                     <div class="text-danger">{{ error_pilibaba_shipping_fee }}</div>
                   <?php } ?>
 			    </div>
@@ -159,7 +159,7 @@
 		        <label class="col-sm-2 control-label" for="input-pilibaba-status">{{ entry_status }}</label>
 		        <div class="col-sm-10">
 		          <select name="pilibaba_status" id="input-pilibaba-status" class="form-control">
-                    <?php if ($pilibaba_status) { ?>
+                    {% if pilibaba_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -173,7 +173,7 @@
 		        <label class="col-sm-2 control-label" for="input-pilibaba-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
 			    <div class="col-sm-10">
 		          <select name="pilibaba_logging" id="input-pilibaba-logging" class="form-control">
-                    <?php if ($pilibaba_logging) { ?>
+                    {% if pilibaba_logging %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}

@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <?php if ($ips) { ?>
+      {% if ips %}
       {% for ip in ips %}
       <tr>
         <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-login">{{ entry_login }}</label>
             <div class="col-sm-10">
               <input type="text" name="authorizenet_aim_login" value="{{ authorizenet_aim_login }}" placeholder="{{ entry_login }}" id="input-login" class="form-control" />
-              <?php if ($error_login) { ?>
+              {% if error_login %}
               <div class="text-danger">{{ error_login }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="authorizenet_aim_key" value="{{ authorizenet_aim_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
-              <?php if ($error_key) { ?>
+              {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               <?php } ?>
             </div>
@@ -53,12 +53,12 @@
             <label class="col-sm-2 control-label" for="input-server">{{ entry_server }}</label>
             <div class="col-sm-10">
               <select name="authorizenet_aim_server" id="input-server" class="form-control">
-                <?php if ($authorizenet_aim_server == 'live') { ?>
+                {% if authorizenet_aim_server == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
-                <?php if ($authorizenet_aim_server == 'test') { ?>
+                {% if authorizenet_aim_server == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
@@ -70,12 +70,12 @@
             <label class="col-sm-2 control-label" for="input-mode">{{ entry_mode }}</label>
             <div class="col-sm-10">
               <select name="authorizenet_aim_mode" id="input-mode" class="form-control">
-                <?php if ($authorizenet_aim_mode == 'live') { ?>
+                {% if authorizenet_aim_mode == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
-                <?php if ($authorizenet_aim_mode == 'test') { ?>
+                {% if authorizenet_aim_mode == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
@@ -87,12 +87,12 @@
             <label class="col-sm-2 control-label" for="input-method">{{ entry_method }}</label>
             <div class="col-sm-10">
               <select name="authorizenet_aim_method" id="input-method" class="form-control">
-                <?php if ($authorizenet_aim_method == 'authorization') { ?>
+                {% if authorizenet_aim_method == 'authorization' %}
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
                 {% else %}
                 <option value="authorization">{{ text_authorization }}</option>
                 <?php } ?>
-                <?php if ($authorizenet_aim_method == 'capture') { ?>
+                {% if authorizenet_aim_method == 'capture' %}
                 <option value="capture" selected="selected">{{ text_capture }}</option>
                 {% else %}
                 <option value="capture">{{ text_capture }}</option>
@@ -139,7 +139,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="authorizenet_aim_status" id="input-status" class="form-control">
-                <?php if ($authorizenet_aim_status) { ?>
+                {% if authorizenet_aim_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

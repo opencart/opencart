@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="entry-vender"><span data-toggle="tooltip" title="{{ help_vendor }}">{{ entry_vendor }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_vendor" value="{{ pp_payflow_iframe_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vender" class="form-control"/>
-              <?php if ($error_vendor) { ?>
+              {% if error_vendor %}
               <div class="text-danger">{{ error_vendor }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="entry-user"><span data-toggle="tooltip" title="{{ help_user }}">{{ entry_user }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_user" value="{{ pp_payflow_iframe_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
-              <?php if ($error_user) { ?>
+              {% if error_user %}
               <div class="text-danger">{{ error_user }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="entry-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_password" value="{{ pp_payflow_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
-              <?php if ($error_password) { ?>
+              {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               <?php } ?>
             </div>
@@ -56,7 +56,7 @@
             <label class="col-sm-2 control-label" for="entry-partner"><span data-toggle="tooltip" title="{{ help_partner }}">{{ entry_partner }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_partner" value="{{ pp_payflow_iframe_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>
-              <?php if ($error_partner) { ?>
+              {% if error_partner %}
               <div class="text-danger">{{ error_partner }}</div>
               <?php } ?>
             </div>
@@ -65,7 +65,7 @@
             <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_test" id="input-live-demo" class="form-control">
-                <?php if ($pp_payflow_iframe_test) { ?>
+                {% if pp_payflow_iframe_test %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -79,7 +79,7 @@
             <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_transaction_method" id="input-transaction" class="form-control">
-                <?php if ($pp_payflow_iframe_transaction_method == 'authorization') { ?>
+                {% if pp_payflow_iframe_transaction_method == 'authorization' %}
                 <option value="sale">{{ text_sale }}</option>
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
                 {% else %}
@@ -93,7 +93,7 @@
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_debug" id="input-debug" class="form-control">
-                <?php if ($pp_payflow_iframe_debug) { ?>
+                {% if pp_payflow_iframe_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -107,7 +107,7 @@
             <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="{{ help_checkout_method }}">{{ entry_checkout_method }}</span></label>
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_checkout_method" id="input-checkout-method" class="form-control">
-                <?php if ($pp_payflow_iframe_checkout_method == 'iframe') { ?>
+                {% if pp_payflow_iframe_checkout_method == 'iframe' %}
                 <option value="iframe" selected="selected">{{ text_iframe }}</option>
                 <option value="redirect">{{ text_redirect }}</option>
                 {% else %}
@@ -162,7 +162,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="pp_payflow_iframe_status" id="input-status" class="form-control">
-                <?php if ($pp_payflow_iframe_status) { ?>
+                {% if pp_payflow_iframe_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

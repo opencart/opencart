@@ -57,7 +57,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_status) { ?>
+                  {% if filter_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
@@ -73,7 +73,7 @@
                 <label class="control-label" for="input-image">{{ entry_image }}</label>
                 <select name="filter_image" id="input-image" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_image) { ?>
+                  {% if filter_image %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
@@ -125,22 +125,22 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($products) { ?>
+                {% if products %}
                 {% for product in products %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($product['product_id'], $selected)) { ?>
+                  <td class="text-center">{% if product.product_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
                     <?php } ?></td>
-                  <td class="text-center"><?php if ($product['image']) { ?>
+                  <td class="text-center">{% if product.image %}
                     <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
                     {% else %}
                     <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
                     <?php } ?></td>
                   <td class="text-left">{{ product.name }}</td>
                   <td class="text-left">{{ product.model }}</td>
-                  <td class="text-right"><?php if ($product['special']) { ?>
+                  <td class="text-right">{% if product.special %}
                     <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
                     <div class="text-danger">{{ product.special }}</div>
                     {% else %}

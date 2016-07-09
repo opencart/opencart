@@ -50,7 +50,7 @@
                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_weight }}">{{ entry_display_weight }}</span></label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <?php if ($royal_mail_display_weight) { ?>
+                        {% if royal_mail_display_weight %}
                         <input type="radio" name="royal_mail_display_weight" value="1" checked="checked" />
                         {{ text_yes }}
                         {% else %}
@@ -73,7 +73,7 @@
                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_insurance }}">{{ entry_display_insurance }}</span></label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <?php if ($royal_mail_display_insurance) { ?>
+                        {% if royal_mail_display_insurance %}
                         <input type="radio" name="royal_mail_display_insurance" value="1" checked="checked" />
                         {{ text_yes }}
                         {% else %}
@@ -96,7 +96,7 @@
                     <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_weight_class_id" id="input-weight-class" class="form-control">
-                        <?php foreach ($weight_classes as $weight_class) { ?>
+                        {% for weight_class in weight_classes %}
                         <?php if ($weight_class['weight_class_id'] == $royal_mail_weight_class_id) { ?>
                         <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                         {% else %}
@@ -111,7 +111,7 @@
                     <div class="col-sm-10">
                       <select name="royal_mail_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
-                        <?php foreach ($tax_classes as $tax_class) { ?>
+                        {% for tax_class in tax_classes %}
                         <?php if ($tax_class['tax_class_id'] == $royal_mail_tax_class_id) { ?>
                         <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                         {% else %}
@@ -126,7 +126,7 @@
                     <div class="col-sm-10">
                       <select name="royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
-                        <?php foreach ($geo_zones as $geo_zone) { ?>
+                        {% for geo_zone in geo_zones %}
                         <?php if ($geo_zone['geo_zone_id'] == $royal_mail_geo_zone_id) { ?>
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                         {% else %}
@@ -140,7 +140,7 @@
                     <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_status" id="input-status" class="form-control">
-                        <?php if ($royal_mail_status) { ?>
+                        {% if royal_mail_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -174,7 +174,7 @@
                     <label class="col-sm-2 control-label" for="input-special-delivery-500-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_special_delivery_500_status" id="input-special-delivery-500-status" class="form-control">
-                        <?php if ($royal_mail_special_delivery_500_status) { ?>
+                        {% if royal_mail_special_delivery_500_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -202,7 +202,7 @@
                     <label class="col-sm-2 control-label" for="input-special-delivery-1000-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_special_delivery_1000_status" id="input-special-delivery-1000-status" class="form-control">
-                        <?php if ($royal_mail_special_delivery_1000_status) { ?>
+                        {% if royal_mail_special_delivery_1000_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -230,7 +230,7 @@
                     <label class="col-sm-2 control-label" for="input-special-delivery-2500-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_special_delivery_2500_status" id="input-special-delivery-2500-status" class="form-control">
-                        <?php if ($royal_mail_special_delivery_2500_status) { ?>
+                        {% if royal_mail_special_delivery_2500_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -252,7 +252,7 @@
                     <label class="col-sm-2 control-label" for="input-1st-class-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
-                        <?php if ($royal_mail_1st_class_signed_status) { ?>
+                        {% if royal_mail_1st_class_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -274,7 +274,7 @@
                     <label class="col-sm-2 control-label" for="input-2nd-class-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
-                        <?php if ($royal_mail_2nd_class_signed_status) { ?>
+                        {% if royal_mail_2nd_class_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -296,7 +296,7 @@
                     <label class="col-sm-2 control-label" for="input-input-1st-class-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_1st_class_standard_status" id="input-input-1st-class-standard-status" class="form-control">
-                        <?php if ($royal_mail_1st_class_standard_status) { ?>
+                        {% if royal_mail_1st_class_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -318,7 +318,7 @@
                     <label class="col-sm-2 control-label" for="input-2nd-class-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_2nd_class_standard_status" id="input-2nd-class-standard-status" class="form-control">
-                        <?php if ($royal_mail_2nd_class_standard_status) { ?>
+                        {% if royal_mail_2nd_class_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -352,7 +352,7 @@
                     <label class="col-sm-2 control-label" for="input-international-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_international_standard_status" id="input-international-standard-status" class="form-control">
-                        <?php if ($royal_mail_international_standard_status) { ?>
+                        {% if royal_mail_international_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -387,7 +387,7 @@
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_international_tracked_signed_status" id="input-international-tracked-signed-status" class="form-control">
-                        <?php if ($royal_mail_international_tracked_signed_status) { ?>
+                        {% if royal_mail_international_tracked_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -428,7 +428,7 @@
                     <label class="col-sm-2 control-label" for="input-international-tracked-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_international_tracked_status" id="input-international-tracked-status" class="form-control">
-                        <?php if ($royal_mail_international_tracked_status) { ?>
+                        {% if royal_mail_international_tracked_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -463,7 +463,7 @@
                     <label class="col-sm-2 control-label" for="input-international-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_international_signed_status" id="input-international-signed-status" class="form-control">
-                        <?php if ($royal_mail_international_signed_status) { ?>
+                        {% if royal_mail_international_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -485,7 +485,7 @@
                     <label class="col-sm-2 control-label" for="input-international-economy-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="royal_mail_international_economy_status" id="input-international-economy-status" class="form-control">
-                        <?php if ($royal_mail_international_economy_status) { ?>
+                        {% if royal_mail_international_economy_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}

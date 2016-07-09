@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-author">{{ entry_author }}</label>
             <div class="col-sm-10">
               <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
-              <?php if ($error_author) { ?>
+              {% if error_author %}
               <div class="text-danger">{{ error_author }}</div>
               <?php } ?>
             </div>
@@ -39,7 +39,7 @@
             <div class="col-sm-10">
               <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
               <input type="hidden" name="product_id" value="{{ product_id }}" />
-              <?php if ($error_product) { ?>
+              {% if error_product %}
               <div class="text-danger">{{ error_product }}</div>
               <?php } ?>
             </div>
@@ -48,7 +48,7 @@
             <label class="col-sm-2 control-label" for="input-text">{{ entry_text }}</label>
             <div class="col-sm-10">
               <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
-              <?php if ($error_text) { ?>
+              {% if error_text %}
               <div class="text-danger">{{ error_text }}</div>
               <?php } ?>
             </div>
@@ -101,7 +101,7 @@
                 5
                 <?php } ?>
               </label>
-              <?php if ($error_rating) { ?>
+              {% if error_rating %}
               <div class="text-danger">{{ error_rating }}</div>
               <?php } ?>
             </div>
@@ -121,7 +121,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+                {% if status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

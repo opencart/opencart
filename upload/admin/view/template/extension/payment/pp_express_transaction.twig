@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <?php if ($transactions) { ?>
+    {% if transactions %}
       <?php foreach($transactions as $transaction) { ?>
       <tr>
         <td class="text-left">{{ transaction.transaction_id }}</td>
@@ -21,7 +21,7 @@
         <td class="text-left">{{ transaction.pending_reason }}</td>
         <td class="text-left">{{ transaction.date_added }}</td>
         <td class="text-left">
-          <?php if ($transaction['transaction_id']) { ?>
+          {% if transaction.transaction_id %}
             <a href="{{ transaction.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
             <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
               <a href="{{ transaction.refund }}" data-toggle="tooltip" title="{{ button_refund }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;

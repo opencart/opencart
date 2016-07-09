@@ -15,12 +15,12 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -41,7 +41,7 @@
 			    <label class="col-sm-2 control-label" for="input-laybuys-membership-id"><span data-toggle="tooltip" title="{{ help_membership_id }}">{{ entry_membership_id }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="laybuys_membership_id" value="{{ laybuys_membership_id }}" placeholder="{{ entry_membership_id }}" id="input-laybuys-membership-id" class="form-control" />
-				  <?php if ($error_laybuys_membership_id) { ?>
+				  {% if error_laybuys_membership_id %}
               	    <div class="text-danger">{{ error_laybuys_membership_id }}</div>
                   <?php } ?>
 			    </div>
@@ -50,7 +50,7 @@
 			    <label class="col-sm-2 control-label" for="input-laybuy-token"><span data-toggle="tooltip" title="{{ help_token }}">{{ entry_token }}</span></label>
 			    <div class="col-sm-10">
 			      <input type="text" name="laybuy_token" value="{{ laybuy_token }}" placeholder="{{ entry_token }}" id="input-laybuy-token" class="form-control" />
-				  <?php if ($error_laybuy_token) { ?>
+				  {% if error_laybuy_token %}
               	    <div class="text-danger">{{ error_laybuy_token }}</div>
                   <?php } ?>
 			    </div>
@@ -65,7 +65,7 @@
                       <option value="40" <?php if ($laybuy_min_deposit == '40') { echo 'selected="selected"'; } ?> >40%</option>
                       <option value="50" <?php if ($laybuy_min_deposit == '50') { echo 'selected="selected"'; } ?> >50%</option>
 			      </select>
-				  <?php if ($error_laybuy_min_deposit) { ?>
+				  {% if error_laybuy_min_deposit %}
               	    <div class="text-danger">{{ error_laybuy_min_deposit }}</div>
                   <?php } ?>
 			    </div>
@@ -131,7 +131,7 @@
 			    <label class="col-sm-2 control-label" for="input-laybuy-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
 			    <div class="col-sm-10">
 		          <select name="laybuy_logging" id="input-laybuy-logging" class="form-control">
-                    <?php if ($laybuy_logging) { ?>
+                    {% if laybuy_logging %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -220,7 +220,7 @@
 			    <label class="col-sm-2 control-label" for="input-laybuy-status">{{ entry_status }}</label>
 			    <div class="col-sm-10">
 		          <select name="laybuy_status" id="input-laybuy-status" class="form-control">
-                    <?php if ($laybuy_status) { ?>
+                    {% if laybuy_status %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -308,7 +308,7 @@
                         {% else %}
                         <a href="{{ sort_order_id }}">{{ column_order_id }}</a>
                         <?php } ?></td>
-                      <td class="text-left"><?php if ($sort == 'customer') { ?>
+                      <td class="text-left">{% if sort == 'customer' %}
                         <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
                         {% else %}
                         <a href="{{ sort_customer }}">{{ column_customer }}</a>
@@ -357,16 +357,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if ($reports) { ?>
+                    {% if reports %}
                     {% for report in reports %}
                     <tr>
-                      <td class="text-center"><?php if (in_array($report['id'], $selected)) { ?>
+                      <td class="text-center">{% if report.id in selected %}
                         <input type="checkbox" name="selected[]" value="{{ report.id }}" checked="checked" />
                         {% else %}
                         <input type="checkbox" name="selected[]" value="{{ report.id }}" />
                         <?php } ?></td>
                       <td class="text-left"><a href="{{ report.order_url }}">{{ report.order_id }}</a></td>
-					  <?php if ($report['customer_url']) { ?>
+					  {% if report.customer_url %}
                         <td class="text-left"><a href="{{ report.customer_url }}">{{ report.customer_name }}</a></td>
 					  {% else %}
                         <td class="text-left">{{ report.customer_name }}</td>

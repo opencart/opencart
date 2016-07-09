@@ -53,8 +53,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($coupons) { ?>
-              <?php foreach ($coupons as $coupon) { ?>
+              {% if coupons %}
+              {% for coupon in coupons %}
               <tr>
                 <td class="text-left">{{ coupon.name }}</td>
                 <td class="text-left">{{ coupon.code }}</td>

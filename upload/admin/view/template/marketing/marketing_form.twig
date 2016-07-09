@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -44,7 +44,7 @@
             <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
-              <?php if ($error_code) { ?>
+              {% if error_code %}
               <div class="text-danger">{{ error_code }}</div>
               <?php } ?>
             </div>

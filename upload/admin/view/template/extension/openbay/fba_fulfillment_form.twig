@@ -91,7 +91,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($response['items'] as $item) { ?>
+                  {% for items in response.items %}
                     <tr>
                       <td class="text-left">{{ item.seller_sku }}</td>
                       <td class="text-left">{{ item.seller_fulfillment_order_item_id }}</td>

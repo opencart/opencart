@@ -25,7 +25,7 @@
 			  <label class="col-sm-2 control-label" for="input-service-key">{{ entry_service_key }}</label>
 			  <div class="col-sm-10">
 				<input type="text" name="worldpay_service_key" value="{{ worldpay_service_key }}" placeholder="{{ entry_service_key }}" id="input-service-key" class="form-control" />
-				<?php if ($error_service_key) { ?>
+				{% if error_service_key %}
 					<div class="text-danger">{{ error_service_key }}</div>
 				<?php } ?>
 			  </div>
@@ -34,7 +34,7 @@
 			  <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
 			  <div class="col-sm-10">
 				<input type="text" name="worldpay_client_key" value="{{ worldpay_client_key }}" placeholder="{{ entry_client_key }}" id="input-client-key" class="form-control" />
-				<?php if ($error_client_key) { ?>
+				{% if error_client_key %}
 					<div class="text-danger">{{ error_client_key }}</div>
 				<?php } ?>
 			  </div>
@@ -49,7 +49,7 @@
 			  <label class="col-sm-2 control-label" for="input-card">{{ entry_card }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_card" id="input-card" class="form-control">
-				  <?php if ($worldpay_card) { ?>
+				  {% if worldpay_card %}
 					  <option value="1" selected="selected">{{ text_enabled }}</option>
 					  <option value="0">{{ text_disabled }}</option>
 				  {% else %}
@@ -81,7 +81,7 @@
 				</div>
 			  </div>
 			</div>
-			<?php if ($worldpay_last_cron_job_run) { ?>
+			{% if worldpay_last_cron_job_run %}
 				<div class="form-group">
 				  <label class="col-sm-2 control-label" for="input-cron-job-last-run">{{ entry_last_cron_job_run }}</label>
 				  <div class="col-sm-10">
@@ -93,7 +93,7 @@
 			  <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_order_status_id" id="input-order-status" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_order_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -108,7 +108,7 @@
 			  <div class="col-sm-10">
 				<select name="worldpay_geo_zone_id" id="input-geo-zone" class="form-control">
 				  <option value="0">{{ text_all_zones }}</option>
-				  <?php foreach ($geo_zones as $geo_zone) { ?>
+				  {% for geo_zone in geo_zones %}
 					  <?php if ($geo_zone['geo_zone_id'] == $worldpay_geo_zone_id) { ?>
 						  <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 					  {% else %}
@@ -122,7 +122,7 @@
 			  <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_debug" id="input-debug" class="form-control">
-				  <?php if ($worldpay_debug) { ?>
+				  {% if worldpay_debug %}
 					  <option value="1" selected="selected">{{ text_enabled }}</option>
 					  <option value="0">{{ text_disabled }}</option>
 				  {% else %}
@@ -137,7 +137,7 @@
 			  <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_status" id="input-status" class="form-control">
-				  <?php if ($worldpay_status) { ?>
+				  {% if worldpay_status %}
 					  <option value="1" selected="selected">{{ text_enabled }}</option>
 					  <option value="0">{{ text_disabled }}</option>
 				  {% else %}
@@ -159,7 +159,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_success_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_success_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_success_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -173,7 +173,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_failed_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_failed_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_failed_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -187,7 +187,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_settled_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_settled_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_settled_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -201,7 +201,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_refunded_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_refunded_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_refunded_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -215,7 +215,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_partially_refunded_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_partially_refunded_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_partially_refunded_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -229,7 +229,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_charged_back_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_charged_back_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_charged_back_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -243,7 +243,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_information_requested_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_information_requested_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_information_requested_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -257,7 +257,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_information_supplied_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_information_supplied_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_information_supplied_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}
@@ -271,7 +271,7 @@
 			  <label class="col-sm-2 control-label">{{ entry_chargeback_reversed_status }}</label>
 			  <div class="col-sm-10">
 				<select name="worldpay_entry_chargeback_reversed_status_id" class="form-control">
-				  <?php foreach ($order_statuses as $order_status) { ?>
+				  {% for order_status in order_statuses %}
 					  <?php if ($order_status['order_status_id'] == $worldpay_entry_chargeback_reversed_status_id) { ?>
 						  <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					  {% else %}

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="sagepay_us_merchant_id" value="{{ sagepay_us_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
-              <?php if ($error_merchant_id) { ?>
+              {% if error_merchant_id %}
               <div class="text-danger">{{ error_merchant_id }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-merchant-key">{{ entry_merchant_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="sagepay_us_merchant_key" value="{{ sagepay_us_merchant_key }}" placeholder="{{ entry_merchant_key }}" id="input-merchant-key" class="form-control" />
-              <?php if ($error_merchant_key) { ?>
+              {% if error_merchant_key %}
               <div class="text-danger">{{ error_merchant_key }}</div>
               <?php } ?>
             </div>
@@ -82,7 +82,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="sagepay_us_status" id="input-status" class="form-control">
-                <?php if ($sagepay_us_status) { ?>
+                {% if sagepay_us_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

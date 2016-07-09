@@ -36,7 +36,7 @@
                 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_merchant_id" value="{{ firstdata_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
-                  <?php if ($error_merchant_id) { ?>
+                  {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
                   <?php } ?>
                 </div>
@@ -45,7 +45,7 @@
                 <label class="col-sm-2 control-label" for="input-user-id">{{ entry_user_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_user_id" value="{{ firstdata_remote_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
-                  <?php if ($error_user_id) { ?>
+                  {% if error_user_id %}
                   <div class="text-danger">{{ error_user_id }}</div>
                   <?php } ?>
                 </div>
@@ -54,7 +54,7 @@
                 <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="firstdata_remote_password" value="{{ firstdata_remote_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
-                  <?php if ($error_password) { ?>
+                  {% if error_password %}
                   <div class="text-danger">{{ error_password }}</div>
                   <?php } ?>
                 </div>
@@ -63,7 +63,7 @@
                 <label class="col-sm-2 control-label" for="input-certificate-path"><span data-toggle="tooltip" title="{{ help_certificate }}">{{ entry_certificate_path }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_certificate" value="{{ firstdata_remote_certificate }}" placeholder="{{ entry_certificate_path }}" id="input-certificate-path" class="form-control"/>
-                  <?php if ($error_certificate) { ?>
+                  {% if error_certificate %}
                   <div class="text-danger">{{ error_certificate }}</div>
                   <?php } ?>
                 </div>
@@ -72,7 +72,7 @@
                 <label class="col-sm-2 control-label" for="input-key-path">{{ entry_certificate_key_path }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_key" value="{{ firstdata_remote_key }}" placeholder="{{ entry_certificate_key_path }}" id="input-key-path" class="form-control"/>
-                  <?php if ($error_key) { ?>
+                  {% if error_key %}
                   <div class="text-danger">{{ error_key }}</div>
                   <?php } ?>
                 </div>
@@ -81,7 +81,7 @@
                 <label class="col-sm-2 control-label" for="input-key-pw">{{ entry_certificate_key_pw }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_key_pw" value="{{ firstdata_remote_key_pw }}" placeholder="{{ entry_certificate_key_pw }}" id="input-key-pw" class="form-control"/>
-                  <?php if ($error_key_pw) { ?>
+                  {% if error_key_pw %}
                   <div class="text-danger">{{ error_key_pw }}</div>
                   <?php } ?>
                 </div>
@@ -90,7 +90,7 @@
                 <label class="col-sm-2 control-label" for="input-ca-path">{{ entry_certificate_ca_path }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_remote_ca" value="{{ firstdata_remote_ca }}" placeholder="{{ entry_certificate_ca_path }}" id="input-ca-path" class="form-control"/>
-                  <?php if ($error_ca) { ?>
+                  {% if error_ca %}
                   <div class="text-danger">{{ error_ca }}</div>
                   <?php } ?>
                 </div>
@@ -99,7 +99,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_debug" id="input-debug" class="form-control">
-                    <?php if ($firstdata_remote_debug) { ?>
+                    {% if firstdata_remote_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -134,7 +134,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_status" id="input-status" class="form-control">
-                    <?php if ($firstdata_remote_status) { ?>
+                    {% if firstdata_remote_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -204,7 +204,7 @@
                     <option value="0">{{ text_settle_delayed }}</option>
                     <option value="1" selected="selected">{{ text_settle_auto }}</option>
                     <?php } ?>
-                    <?php if ($firstdata_remote_auto_settle) { ?>
+                    {% if firstdata_remote_auto_settle %}
                     <option value="0" selected="selected">{{ text_settle_delayed }}</option>
                     <option value="1">{{ text_settle_auto }}</option>
                     <?php } ?>
@@ -215,7 +215,7 @@
                 <label class="col-sm-2 control-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_remote_card_storage" id="input-card-store" class="form-control">
-                    <?php if ($firstdata_remote_card_storage) { ?>
+                    {% if firstdata_remote_card_storage %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -231,7 +231,7 @@
                   {% for card in cards %}
                   <div class="checkbox">
                     <label>
-                      <?php if (in_array($card['value'], $firstdata_remote_cards_accepted)) { ?>
+                      {% if card.value in firstdata_remote_cards_accepted %}
                       <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="{{ card.value }}" checked="checked" />
                       {{ card.text }}
                       {% else %}

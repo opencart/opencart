@@ -58,7 +58,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($bluepay_hosted_order['transactions'] as $transaction) { ?>
+          {% for transaction in bluepay_hosted_order.transactions %}
           <tr>
             <td class="text-left">{{ transaction.date_added }}</td>
             <td class="text-left">{{ transaction.type }}</td>

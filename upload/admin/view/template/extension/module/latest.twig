@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -44,7 +44,7 @@
             <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
             <div class="col-sm-10">
               <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
-              <?php if ($error_width) { ?>
+              {% if error_width %}
               <div class="text-danger">{{ error_width }}</div>
               <?php } ?>
             </div>
@@ -53,7 +53,7 @@
             <label class="col-sm-2 control-label" for="input-height">{{ entry_height }}</label>
             <div class="col-sm-10">
               <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
-              <?php if ($error_height) { ?>
+              {% if error_height %}
               <div class="text-danger">{{ error_height }}</div>
               <?php } ?>
             </div>
@@ -62,7 +62,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+                {% if status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

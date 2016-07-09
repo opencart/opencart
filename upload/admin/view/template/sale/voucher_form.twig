@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <?php if ($voucher_id) { ?>
+        {% if voucher_id %}
         <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
         <?php } ?>
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
@@ -30,7 +30,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-voucher" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <?php if ($voucher_id) { ?>
+            {% if voucher_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             <?php } ?>
           </ul>
@@ -40,7 +40,7 @@
                 <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
-                  <?php if ($error_code) { ?>
+                  {% if error_code %}
                   <div class="text-danger">{{ error_code }}</div>
                   <?php } ?>
                 </div>
@@ -49,7 +49,7 @@
                 <label class="col-sm-2 control-label" for="input-from-name">{{ entry_from_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control" />
-                  <?php if ($error_from_name) { ?>
+                  {% if error_from_name %}
                   <div class="text-danger">{{ error_from_name }}</div>
                   <?php } ?>
                 </div>
@@ -58,7 +58,7 @@
                 <label class="col-sm-2 control-label" for="input-from-email">{{ entry_from_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control" />
-                  <?php if ($error_from_email) { ?>
+                  {% if error_from_email %}
                   <div class="text-danger">{{ error_from_email }}</div>
                   <?php } ?>
                 </div>
@@ -67,7 +67,7 @@
                 <label class="col-sm-2 control-label" for="input-to-name">{{ entry_to_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control" />
-                  <?php if ($error_to_name) { ?>
+                  {% if error_to_name %}
                   <div class="text-danger">{{ error_to_name }}</div>
                   <?php } ?>
                 </div>
@@ -76,7 +76,7 @@
                 <label class="col-sm-2 control-label" for="input-to-email">{{ entry_to_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control" />
-                  <?php if ($error_to_email) { ?>
+                  {% if error_to_email %}
                   <div class="text-danger">{{ error_to_email }}</div>
                   <?php } ?>
                 </div>
@@ -85,7 +85,7 @@
                 <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                 <div class="col-sm-10">
                   <select name="voucher_theme_id" id="input-theme" class="form-control">
-                    <?php foreach ($voucher_themes as $voucher_theme) { ?>
+                    {% for voucher_theme in voucher_themes %}
                     <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
                     <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
                     {% else %}
@@ -105,7 +105,7 @@
                 <label class="col-sm-2 control-label" for="input-amount">{{ entry_amount }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control" />
-                  <?php if ($error_amount) { ?>
+                  {% if error_amount %}
                   <div class="text-danger">{{ error_amount }}</div>
                   <?php } ?>
                 </div>
@@ -114,7 +114,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-                    <?php if ($status) { ?>
+                    {% if status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -125,7 +125,7 @@
                 </div>
               </div>
             </div>
-            <?php if ($voucher_id) { ?>
+            {% if voucher_id %}
             <div class="tab-pane" id="tab-history">
               <div id="history"></div>
             </div>
@@ -135,7 +135,7 @@
       </div>
     </div>
   </div>
-  <?php if ($voucher_id) { ?>
+  {% if voucher_id %}
   <script type="text/javascript"><!--
 $('#button-send').on('click', function() {
 	$.ajax({

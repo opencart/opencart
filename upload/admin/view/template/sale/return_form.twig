@@ -27,7 +27,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <?php if ($return_id) { ?>
+            {% if return_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             <?php } ?>
           </ul>
@@ -39,7 +39,7 @@
                 <label class="col-sm-2 control-label" for="input-order-id">{{ entry_order_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
-                  <?php if ($error_order_id) { ?>
+                  {% if error_order_id %}
                   <div class="text-danger">{{ error_order_id }}</div>
                   <?php } ?>
                 </div>
@@ -65,7 +65,7 @@
                 <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-                  <?php if ($error_firstname) { ?>
+                  {% if error_firstname %}
                   <div class="text-danger">{{ error_firstname }}</div>
                   <?php } ?>
                 </div>
@@ -74,7 +74,7 @@
                 <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-                  <?php if ($error_lastname) { ?>
+                  {% if error_lastname %}
                   <div class="text-danger">{{ error_lastname }}</div>
                   <?php } ?>
                 </div>
@@ -83,7 +83,7 @@
                 <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-                  <?php if ($error_email) { ?>
+                  {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
                   <?php  } ?>
                 </div>
@@ -92,7 +92,7 @@
                 <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-                  <?php if ($error_telephone) { ?>
+                  {% if error_telephone %}
                   <div class="text-danger">{{ error_telephone }}</div>
                   <?php  } ?>
                 </div>
@@ -105,7 +105,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
                   <input type="hidden" name="product_id" value="{{ product_id }}" />
-                  <?php if ($error_product) { ?>
+                  {% if error_product %}
                   <div class="text-danger">{{ error_product }}</div>
                   <?php  } ?>
                 </div>
@@ -114,7 +114,7 @@
                 <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-                  <?php if ($error_model) { ?>
+                  {% if error_model %}
                   <div class="text-danger">{{ error_model }}</div>
                   <?php  } ?>
                 </div>
@@ -129,7 +129,7 @@
                 <label class="col-sm-2 control-label" for="input-return-reason">{{ entry_return_reason }}</label>
                 <div class="col-sm-10">
                   <select name="return_reason_id" id="input-return-reason" class="form-control">
-                    <?php foreach ($return_reasons as $return_reason) { ?>
+                    {% for return_reason in return_reasons %}
                     <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
                     <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
                     {% else %}
@@ -143,7 +143,7 @@
                 <label class="col-sm-2 control-label" for="input-opened">{{ entry_opened }}</label>
                 <div class="col-sm-10">
                   <select name="opened" id="input-opened" class="form-control">
-                    <?php if ($opened) { ?>
+                    {% if opened %}
                     <option value="1" selected="selected">{{ text_opened }}</option>
                     <option value="0">{{ text_unopened }}</option>
                     {% else %}
@@ -164,7 +164,7 @@
                 <div class="col-sm-10">
                   <select name="return_action_id" id="input-return-action" class="form-control">
                     <option value="0"></option>
-                    <?php foreach ($return_actions as $return_action) { ?>
+                    {% for return_action in return_actions %}
                     <?php if ($return_action['return_action_id'] == $return_action_id) { ?>
                     <option value="{{ return_action.return_action_id }}" selected="selected"> {{ return_action.name }}</option>
                     {% else %}
@@ -179,7 +179,7 @@
                 <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <div class="col-sm-10">
                   <select name="return_status_id" id="input-return-status" class="form-control">
-                    <?php foreach ($return_statuses as $return_status) { ?>
+                    {% for return_status in return_statuses %}
                     <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}
@@ -192,7 +192,7 @@
               <?php } ?>
             </fieldset>
           </div>
-          <?php if ($return_id) { ?>
+          {% if return_id %}
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
             <br />
@@ -202,7 +202,7 @@
                 <label class="col-sm-2 control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <div class="col-sm-10">
                   <select name="return_status_id" id="input-return-status" class="form-control">
-                    <?php foreach ($return_statuses as $return_status) { ?>
+                    {% for return_status in return_statuses %}
                     <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}

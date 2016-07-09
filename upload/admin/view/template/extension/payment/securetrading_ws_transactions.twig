@@ -13,8 +13,8 @@
         </tr>
     </thead>
     <tbody>
-        <?php if ($transactions) { ?>
-            <?php foreach ($transactions as $transaction) { ?>
+        {% if transactions %}
+            {% for transaction in transactions %}
             
             <tr>
                 <td class="left"><a href="{{ transaction.order_href }}" target="_blank">{{ transaction.order_id }}</a></td>

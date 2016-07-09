@@ -35,32 +35,32 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
+                  <td class="text-left">{% if sort == 'name' %}
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'code') { ?>
+                  <td class="text-left">{% if sort == 'code' %}
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'discount') { ?>
+                  <td class="text-right">{% if sort == 'discount' %}
                     <a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
                     {% else %}
                     <a href="{{ sort_discount }}">{{ column_discount }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'date_start') { ?>
+                  <td class="text-left">{% if sort == 'date_start' %}
                     <a href="{{ sort_date_start }}" class="{{ order|lower }}">{{ column_date_start }}</a>
                     {% else %}
                     <a href="{{ sort_date_start }}">{{ column_date_start }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'date_end') { ?>
+                  <td class="text-left">{% if sort == 'date_end' %}
                     <a href="{{ sort_date_end }}" class="{{ order|lower }}">{{ column_date_end }}</a>
                     {% else %}
                     <a href="{{ sort_date_end }}">{{ column_date_end }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'status') { ?>
+                  <td class="text-left">{% if sort == 'status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
@@ -69,10 +69,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($coupons) { ?>
-                <?php foreach ($coupons as $coupon) { ?>
+                {% if coupons %}
+                {% for coupon in coupons %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($coupon['coupon_id'], $selected)) { ?>
+                  <td class="text-center">{% if coupon.coupon_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" />

@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="container-fluid">
-        <?php if ($error_warning) { ?>
+        {% if error_warning %}
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
@@ -36,7 +36,7 @@
                         <label class="col-sm-2 control-label" for="divido_status"><span data-toggle="tooltip" title="{{ help_status }}">{{ entry_status }}</span></label>
                         <div class="col-sm-10">
                             <select name="divido_status" id="divido_status" class="form-control">
-                                <?php if ($divido_status) { ?>
+                                {% if divido_status %}
                                 <option value="1" selected="selected">{{ text_enabled }}</option>
                                 <option value="0">{{ text_disabled }}</option>
                                 {% else %}

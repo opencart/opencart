@@ -8,8 +8,8 @@
       </tr>
     </thead>
     <tbody>
-      <?php if ($transactions) { ?>
-      <?php foreach ($transactions as $transaction) { ?>
+      {% if transactions %}
+      {% for transaction in transactions %}
       <tr>
         <td class="text-left">{{ transaction.date_added }}</td>
         <td class="text-left">{{ transaction.description }}</td>

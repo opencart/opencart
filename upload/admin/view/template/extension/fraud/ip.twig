@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button class="close" data-dismiss="alert" type="button">&times;</button>
     </div>
@@ -49,7 +49,7 @@
               <label class="col-sm-2 control-label" for="input-status"> {{ entry_status }} </label>
               <div class="col-sm-10">
                 <select class="form-control" id="input-status" name="ip_status">
-                  <?php if ($ip_status) { ?>
+                  {% if ip_status %}
                   <option selected="selected" value="1"> {{ text_enabled }} </option>
                   <option value="0"> {{ text_disabled }} </option>
                   {% else %}

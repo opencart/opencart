@@ -11,10 +11,10 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
     <?php } ?>
   </div>
@@ -53,7 +53,7 @@
           </tr>
         </thead>
         <tbody>
-        <?php if ($profiles) { ?>{% for profile in profiles %}
+        {% if profiles %}{% for profile in profiles %}
         <tr>
           <td class="text-left"><?php if ($profile['default'] == 1){ echo '<strong>['.$text_profile_default.'] </strong>'; } echo $profile['name'];?></td>
           <td class="text-left"><?php echo $types[$profile['type']]['name']; ?></td>

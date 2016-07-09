@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
               <input type="text" name="paypoint_merchant" value="{{ paypoint_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
-              <?php if ($error_merchant) { ?>
+              {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               <?php } ?>
             </div>
@@ -44,17 +44,17 @@
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
               <select name="paypoint_test" id="input-test" class="form-control">
-                <?php if ($paypoint_test == 'live') { ?>
+                {% if paypoint_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
-                <?php if ($paypoint_test == 'successful') { ?>
+                {% if paypoint_test == 'successful' %}
                 <option value="successful" selected="selected">{{ text_successful }}</option>
                 {% else %}
                 <option value="successful">{{ text_successful }}</option>
                 <?php } ?>
-                <?php if ($paypoint_test == 'fail') { ?>
+                {% if paypoint_test == 'fail' %}
                 <option value="fail" selected="selected">{{ text_fail }}</option>
                 {% else %}
                 <option value="fail">{{ text_fail }}</option>
@@ -101,7 +101,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="paypoint_status" id="input-status" class="form-control">
-                <?php if ($paypoint_status) { ?>
+                {% if paypoint_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

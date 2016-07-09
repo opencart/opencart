@@ -49,10 +49,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($customer_groups) { ?>
+                {% if customer_groups %}
                 {% for customer_group in customer_groups %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($customer_group['customer_group_id'], $selected)) { ?>
+                  <td class="text-center">{% if customer_group.customer_group_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ customer_group.customer_group_id }}" />

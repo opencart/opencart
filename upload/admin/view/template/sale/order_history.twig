@@ -9,8 +9,8 @@
       </tr>
     </thead>
     <tbody>
-      <?php if ($histories) { ?>
-      <?php foreach ($histories as $history) { ?>
+      {% if histories %}
+      {% for history in histories %}
       <tr>
         <td class="text-left">{{ history.date_added }}</td>
         <td class="text-left">{{ history.comment }}</td>

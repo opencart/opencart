@@ -60,7 +60,7 @@
                 <label class="control-label" for="input-return-status">{{ entry_return_status }}</label>
                 <select name="filter_return_status_id" id="input-return-status" class="form-control">
                   <option value="*"></option>
-                  <?php foreach ($return_statuses as $return_status) { ?>
+                  {% for return_status in return_statuses %}
                   <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
                   <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                   {% else %}
@@ -107,7 +107,7 @@
                     {% else %}
                     <a href="{{ sort_order_id }}">{{ column_order_id }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'customer') { ?>
+                  <td class="text-left">{% if sort == 'customer' %}
                     <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
                     {% else %}
                     <a href="{{ sort_customer }}">{{ column_customer }}</a>
@@ -122,7 +122,7 @@
                     {% else %}
                     <a href="{{ sort_model }}">{{ column_model }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'status') { ?>
+                  <td class="text-left">{% if sort == 'status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
@@ -141,10 +141,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($returns) { ?>
-                <?php foreach ($returns as $return) { ?>
+                {% if returns %}
+                {% for return in returns %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($return['return_id'], $selected)) { ?>
+                  <td class="text-center">{% if return.return_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ return.return_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ return.return_id }}" />

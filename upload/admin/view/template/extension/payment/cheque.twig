@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-payable">{{ entry_payable }}</label>
             <div class="col-sm-10">
               <input type="text" name="cheque_payable" value="{{ cheque_payable }}" placeholder="{{ entry_payable }}" id="input-payable" class="form-control" />
-              <?php if ($error_payable) { ?>
+              {% if error_payable %}
               <div class="text-danger">{{ error_payable }}</div>
               <?php } ?>
             </div>
@@ -73,7 +73,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="cheque_status" id="input-status" class="form-control">
-                <?php if ($cheque_status) { ?>
+                {% if cheque_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

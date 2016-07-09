@@ -32,7 +32,7 @@
             <label class="col-sm-2 control-label" for="input-code">{{ entry_code }}</label>
             <div class="col-sm-10">
               <textarea name="google_analytics_code" rows="5" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ google_analytics_code }}</textarea>
-              <?php if ($error_code) { ?>
+              {% if error_code %}
               <div class="text-danger">{{ error_code }}</div>
               <?php } ?>
             </div>
@@ -41,7 +41,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="google_analytics_status" id="input-status" class="form-control">
-                <?php if ($google_analytics_status) { ?>
+                {% if google_analytics_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

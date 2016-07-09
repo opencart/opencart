@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-auth-id">{{ entry_auth_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="perpetual_payments_auth_id" value="{{ perpetual_payments_auth_id }}" placeholder="{{ entry_auth_id }}" id="input-auth-id" class="form-control" />
-              <?php if ($error_auth_id) { ?>
+              {% if error_auth_id %}
               <div class="text-danger">{{ error_auth_id }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-auth-pass">{{ entry_auth_pass }}</label>
             <div class="col-sm-10">
               <input type="text" name="perpetual_payments_auth_pass" value="{{ perpetual_payments_auth_pass }}" placeholder="{{ entry_auth_pass }}" id="input-auth-pass" class="form-control" />
-              <?php if ($error_auth_pass) { ?>
+              {% if error_auth_pass %}
               <div class="text-danger">{{ error_auth_pass }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($perpetual_payments_test) { ?>
+                {% if perpetual_payments_test %}
                 <input type="radio" name="perpetual_payments_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -105,7 +105,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="perpetual_payments_status" id="input-status" class="form-control">
-                <?php if ($perpetual_payments_status) { ?>
+                {% if perpetual_payments_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

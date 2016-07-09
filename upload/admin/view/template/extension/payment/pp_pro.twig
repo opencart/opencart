@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_username" value="{{ pp_pro_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
-              <?php if ($error_username) { ?>
+              {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_password" value="{{ pp_pro_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
-              <?php if ($error_password) { ?>
+              {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_signature" value="{{ pp_pro_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
-              <?php if ($error_signature) { ?>
+              {% if error_signature %}
               <div class="text-danger">{{ error_signature }}</div>
               <?php } ?>
             </div>
@@ -56,7 +56,7 @@
             <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <select name="pp_pro_test" id="input-live-demo" class="form-control">
-                <?php if ($pp_pro_test) { ?>
+                {% if pp_pro_test %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -89,7 +89,7 @@
                 {% else %}
                 <option value="0">{{ text_authorization }}</option>
                 <?php } ?>
-                <?php if ($pp_pro_transaction) { ?>
+                {% if pp_pro_transaction %}
                 <option value="1" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="1">{{ text_sale }}</option>
@@ -128,7 +128,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="pp_pro_status" id="input-status" class="form-control">
-                <?php if ($pp_pro_status) { ?>
+                {% if pp_pro_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

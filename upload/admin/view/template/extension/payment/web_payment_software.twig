@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-login">{{ entry_login }}</label>
             <div class="col-sm-10">
               <input type="text" name="web_payment_software_merchant_name" value="{{ web_payment_software_merchant_name }}" placeholder="{{ entry_login }}" id="input-login" class="form-control" />
-              <?php if ($error_login) { ?>
+              {% if error_login %}
               <div class="text-danger">{{ error_login }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="web_payment_software_merchant_key" value="{{ web_payment_software_merchant_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
-              <?php if ($error_key) { ?>
+              {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               <?php } ?>
             </div>
@@ -47,12 +47,12 @@
             <label class="col-sm-2 control-label" for="input-mode">{{ entry_mode }}</label>
             <div class="col-sm-10">
               <select name="web_payment_software_mode" id="input-mode" class="form-control">
-                <?php if ($web_payment_software_mode == 'live') { ?>
+                {% if web_payment_software_mode == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 <?php } ?>
-                <?php if ($web_payment_software_mode == 'test') { ?>
+                {% if web_payment_software_mode == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
@@ -64,12 +64,12 @@
             <label class="col-sm-2 control-label" for="input-method">{{ entry_method }}</label>
             <div class="col-sm-10">
               <select name="web_payment_software_method" id="input-method" class="form-control">
-                <?php if ($web_payment_software_method == 'authorization') { ?>
+                {% if web_payment_software_method == 'authorization' %}
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
                 {% else %}
                 <option value="authorization">{{ text_authorization }}</option>
                 <?php } ?>
-                <?php if ($web_payment_software_method == 'capture') { ?>
+                {% if web_payment_software_method == 'capture' %}
                 <option value="capture" selected="selected">{{ text_capture }}</option>
                 {% else %}
                 <option value="capture">{{ text_capture }}</option>
@@ -87,7 +87,7 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="web_payment_software_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $web_payment_software_order_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -102,7 +102,7 @@
             <div class="col-sm-10">
               <select name="web_payment_software_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $web_payment_software_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -116,7 +116,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="web_payment_software_status" id="input-status" class="form-control">
-                <?php if ($web_payment_software_status) { ?>
+                {% if web_payment_software_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

@@ -37,7 +37,7 @@
                 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_merchant_id" value="{{ firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
-                  <?php if ($error_merchant_id) { ?>
+                  {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
                   <?php } ?>
                 </div>
@@ -46,7 +46,7 @@
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
                   <input type="password" name="firstdata_secret" value="{{ firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
-                  <?php if ($error_secret) { ?>
+                  {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
                   <?php } ?>
                 </div>
@@ -55,7 +55,7 @@
                 <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_live_demo" id="input-live-demo" class="form-control">
-                    <?php if ($firstdata_live_demo) { ?>
+                    {% if firstdata_live_demo %}
                     <option value="1" selected="selected">{{ text_live }}</option>
                     <option value="0">{{ text_demo }}</option>
                     {% else %}
@@ -84,7 +84,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="firstdata_debug" id="input-debug" class="form-control">
-                    <?php if ($firstdata_debug) { ?>
+                    {% if firstdata_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -98,7 +98,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_status" id="input-status" class="form-control">
-                    <?php if ($firstdata_status) { ?>
+                    {% if firstdata_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -195,7 +195,7 @@
                 <label class="col-sm-2 control-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
                   <select name="firstdata_card_storage" id="input-card-store" class="form-control">
-                    <?php if ($firstdata_card_storage) { ?>
+                    {% if firstdata_card_storage %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -211,7 +211,7 @@
                 <label class="col-sm-2 control-label" for="input-live-url">{{ entry_live_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_live_url" value="{{ firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
-                  <?php if ($error_live_url) { ?>
+                  {% if error_live_url %}
                   <div class="text-danger">{{ error_live_url }}</div>
                   <?php } ?>
                 </div>
@@ -220,7 +220,7 @@
                 <label class="col-sm-2 control-label" for="input-demo-url">{{ entry_demo_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="firstdata_demo_url" value="{{ firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>
-                  <?php if ($error_demo_url) { ?>
+                  {% if error_demo_url %}
                   <div class="text-danger">{{ error_demo_url }}</div>
                   <?php } ?>
                 </div>

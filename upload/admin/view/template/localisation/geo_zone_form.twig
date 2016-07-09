@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
             <div class="col-sm-10">
               <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control" />
-              <?php if ($error_description) { ?>
+              {% if error_description %}
               <div class="text-danger">{{ error_description }}</div>
               <?php } ?>
             </div>
@@ -52,11 +52,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php $zone_to_geo_zone_row = 0; ?>
-              <?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
+              {% zone_to_geo_zone_row = 0 %}
+              {% for zone_to_geo_zone in zone_to_geo_zones %}
               <tr id="zone-to-geo-zone-row{{ zone_to_geo_zone_row }}">
                 <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" onchange="country(this, '{{ zone_to_geo_zone_row }}', '{{ zone_to_geo_zone.zone_id }}');">
-                    <?php foreach ($countries as $country) { ?>
+                    {% for country in countries %}
                     <?php  if ($country['country_id'] == $zone_to_geo_zone['country_id']) { ?>
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
@@ -88,7 +88,7 @@ var zone_to_geo_zone_row = {{ zone_to_geo_zone_row }};
 function addGeoZone() {
 	html  = '<tr id="zone-to-geo-zone-row' + zone_to_geo_zone_row + '">';
 	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-control" onchange="country(this, \'' + zone_to_geo_zone_row + '\', \'0\');">';
-	<?php foreach ($countries as $country) { ?>
+	{% for country in countries %}
 	html += '    <option value="{{ country.country_id }}"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>   
 	html += '</select></td>';

@@ -36,7 +36,7 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="klarna_checkout_debug" id="input-debug" class="form-control">
-                    <?php if ($klarna_checkout_debug) { ?>
+                    {% if klarna_checkout_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -84,7 +84,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="klarna_checkout_status" id="input-status" class="form-control">
-                    <?php if ($klarna_checkout_status) { ?>
+                    {% if klarna_checkout_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -96,7 +96,7 @@
               </div>
             </div>
 			<div class="tab-pane" id="tab-account">
-			  <?php if ($error_account_warning) { ?>
+			  {% if error_account_warning %}
 			  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_warning }}</div>
 			  <?php } ?>
 			  <table id="account" class="table table-striped table-bordered table-hover">
@@ -113,7 +113,7 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <?php $account_row = 0; ?>
+				  {% account_row = 0 %}
 				  {% for key => $account in klarna_checkout_account %}
 				  <tr id="account-row{{ account_row }}">
 					<td class="text-left">

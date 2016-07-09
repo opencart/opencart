@@ -13,7 +13,7 @@
 	</div>
   </div>
   <div class="container-fluid">
-	<?php if ($error_warning) { ?>
+	{% if error_warning %}
 		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
@@ -76,7 +76,7 @@
 					<?php } ?>
 				<?php } ?>
 			  </select>
-			  <?php if ($error_curreny) { ?>
+			  {% if error_curreny %}
 				  <div class="text-danger">{{ error_curreny }}</div>
 			  <?php } ?>
 			</div>
@@ -85,7 +85,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-merchant-id">{{ entry_merchant_id }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_merchant_id" value="{{ amazon_login_pay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="amazon-login-pay-merchant-id" class="form-control" />
-			  <?php if ($error_merchant_id) { ?>
+			  {% if error_merchant_id %}
 				  <div class="text-danger">{{ error_merchant_id }}</div>
 			  <?php } ?>
 			</div>
@@ -94,7 +94,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-access-key">{{ entry_access_key }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_access_key" value="{{ amazon_login_pay_access_key }}" placeholder="{{ entry_access_key }}" id="amazon-login-pay-access-key" class="form-control" />
-			  <?php if ($error_access_key) { ?>
+			  {% if error_access_key %}
 				  <div class="text-danger">{{ error_access_key }}</div>
 			  <?php } ?>
 			</div>
@@ -103,7 +103,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-access-secret">{{ entry_access_secret }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_access_secret" value="{{ amazon_login_pay_access_secret }}" placeholder="{{ entry_access_secret }}" id="amazon-login-pay-access-secret" class="form-control" />
-			  <?php if ($error_access_secret) { ?>
+			  {% if error_access_secret %}
 				  <div class="text-danger">{{ error_access_secret }}</div>
 			  <?php } ?>
 			</div>
@@ -112,7 +112,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-client-id">{{ entry_client_id }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_client_id" value="{{ amazon_login_pay_client_id }}" placeholder="{{ entry_client_id }}" id="amazon-login-pay-client-id" class="form-control" />
-			  <?php if ($error_client_id) { ?>
+			  {% if error_client_id %}
 				  <div class="text-danger">{{ error_client_id }}</div>
 			  <?php } ?>
 			</div>
@@ -121,7 +121,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-client-secret">{{ entry_client_secret }}</label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_client_secret" value="{{ amazon_login_pay_client_secret }}" placeholder="{{ entry_client_secret }}" id="amazon-login-pay-client-secret" class="form-control" />
-			  <?php if ($error_client_secret) { ?>
+			  {% if error_client_secret %}
 				  <div class="text-danger">{{ error_client_secret }}</div>
 			  <?php } ?>
 			</div>
@@ -130,12 +130,12 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-test">{{ entry_login_pay_test }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_test" id="amazon-login-pay-test" class="form-control">
-				<?php if ($amazon_login_pay_test == 'sandbox') { ?>
+				{% if amazon_login_pay_test == 'sandbox' %}
 					<option value="sandbox" selected="selected">{{ text_sandbox }}</option>
 				{% else %}
 					<option value="sandbox">{{ text_sandbox }}</option>
 				<?php } ?>
-				<?php if ($amazon_login_pay_test == 'live') { ?>
+				{% if amazon_login_pay_test == 'live' %}
 					<option value="live" selected="selected">{{ text_live }}</option>
 				{% else %}
 					<option value="live">{{ text_live }}</option>
@@ -147,12 +147,12 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-mode"><span data-toggle="tooltip" title="{{ help_pay_mode }}">{{ entry_login_pay_mode }}</span></label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_mode" id="amazon-login-pay-mode" class="form-control">
-				<?php if ($amazon_login_pay_mode == 'payment') { ?>
+				{% if amazon_login_pay_mode == 'payment' %}
 					<option value="payment" selected="selected">{{ text_payment }}</option>
 				{% else %}
 					<option value="payment">{{ text_payment }}</option>
 				<?php } ?>
-				<?php if ($amazon_login_pay_mode == 'auth') { ?>
+				{% if amazon_login_pay_mode == 'auth' %}
 					<option value="auth" selected="selected">{{ text_auth }}</option>
 				{% else %}
 					<option value="auth">{{ text_auth }}</option>
@@ -164,12 +164,12 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-checkout"><span data-toggle="tooltip" title="{{ help_checkout }}">{{ entry_checkout }}</span></label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_checkout" id="amazon-login-checkout-mode" class="form-control">
-				<?php if ($amazon_login_pay_checkout == 'account') { ?>
+				{% if amazon_login_pay_checkout == 'account' %}
 					<option value="account" selected="selected">{{ text_account }}</option>
 				{% else %}
 					<option value="account">{{ text_account }}</option>
 				<?php } ?>
-				<?php if ($amazon_login_pay_checkout == 'guest') { ?>
+				{% if amazon_login_pay_checkout == 'guest' %}
 					<option value="guest" selected="selected">{{ text_guest }}</option>
 				{% else %}
 					<option value="guest">{{ text_guest }}</option>
@@ -224,7 +224,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-minimum-total"><span data-toggle="tooltip" title="{{ help_minimum_total }}">{{ text_minimum_total }}</span></label>
 			<div class="col-sm-10">
 			  <input type="text" name="amazon_login_pay_minimum_total" value="{{ amazon_login_pay_minimum_total }}" placeholder="{{ text_minimum_total }}" id="amazon-login-pay-minimum-total" class="form-control" />
-			  <?php if ($error_minimum_total) { ?>
+			  {% if error_minimum_total %}
 				  <div class="text-danger">{{ error_minimum_total }}</div>
 			  <?php } ?>
 			</div>
@@ -252,7 +252,7 @@
 			<label class="col-sm-2 control-label" for="amazon-login-pay-input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_debug" id="amazon-login-pay-input-debug" class="form-control">
-				<?php if ($amazon_login_pay_debug) { ?>
+				{% if amazon_login_pay_debug %}
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
 				{% else %}

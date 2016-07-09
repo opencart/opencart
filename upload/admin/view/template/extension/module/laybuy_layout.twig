@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-laybuy-layout-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="laybuy_layout_status" id="input-laybuy-layout-status" class="form-control">
-                <?php if ($laybuy_layout_status) { ?>
+                {% if laybuy_layout_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

@@ -1,5 +1,5 @@
 <h2>{{ text_payment_info }}</h2>
-<?php if ($transaction) { ?>
+{% if transaction %}
 <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction" class="form-horizontal">
 <ul class="nav nav-tabs">
  <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
@@ -143,7 +143,7 @@
 			</tr>
 		  </thead>
 		  <tbody>
-		  <?php foreach ($transaction['report'] as $report) { ?>
+		  {% for report in transaction.report %}
 		    <?php if ($report['instalment'] == '0') { ?>
 		      <tr>
 			    <td>{{ text_downpayment }}</td>

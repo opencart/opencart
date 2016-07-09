@@ -52,7 +52,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_approval }}">{{ entry_approval }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($approval) { ?>
+                {% if approval %}
                 <input type="radio" name="approval" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}

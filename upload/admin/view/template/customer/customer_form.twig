@@ -27,7 +27,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <?php if ($customer_id) { ?>
+            {% if customer_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
             <li><a href="#tab-reward" data-toggle="tab">{{ tab_reward }}</a></li>
@@ -69,7 +69,7 @@
                         <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-                          <?php if ($error_firstname) { ?>
+                          {% if error_firstname %}
                           <div class="text-danger">{{ error_firstname }}</div>
                           <?php } ?>
                         </div>
@@ -78,7 +78,7 @@
                         <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-                          <?php if ($error_lastname) { ?>
+                          {% if error_lastname %}
                           <div class="text-danger">{{ error_lastname }}</div>
                           <?php } ?>
                         </div>
@@ -87,7 +87,7 @@
                         <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-                          <?php if ($error_email) { ?>
+                          {% if error_email %}
                           <div class="text-danger">{{ error_email }}</div>
                           <?php  } ?>
                         </div>
@@ -96,7 +96,7 @@
                         <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-                          <?php if ($error_telephone) { ?>
+                          {% if error_telephone %}
                           <div class="text-danger">{{ error_telephone }}</div>
                           <?php  } ?>
                         </div>
@@ -115,7 +115,7 @@
                         <div class="col-sm-10">
                           <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                             <option value="">{{ text_select }}</option>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                             <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                             {% else %}
@@ -134,7 +134,7 @@
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <div class="radio">
                               <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
                               <label>
@@ -159,7 +159,7 @@
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <div class="checkbox">
                               <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
                               <label>
@@ -264,7 +264,7 @@
                         <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
                         <div class="col-sm-10">
                           <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off" />
-                          <?php if ($error_password) { ?>
+                          {% if error_password %}
                           <div class="text-danger">{{ error_password }}</div>
                           <?php  } ?>
                         </div>
@@ -273,7 +273,7 @@
                         <label class="col-sm-2 control-label" for="input-confirm">{{ entry_confirm }}</label>
                         <div class="col-sm-10">
                           <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" autocomplete="off" id="input-confirm" class="form-control" />
-                          <?php if ($error_confirm) { ?>
+                          {% if error_confirm %}
                           <div class="text-danger">{{ error_confirm }}</div>
                           <?php  } ?>
                         </div>
@@ -282,7 +282,7 @@
                         <label class="col-sm-2 control-label" for="input-newsletter">{{ entry_newsletter }}</label>
                         <div class="col-sm-10">
                           <select name="newsletter" id="input-newsletter" class="form-control">
-                            <?php if ($newsletter) { ?>
+                            {% if newsletter %}
                             <option value="1" selected="selected">{{ text_enabled }}</option>
                             <option value="0">{{ text_disabled }}</option>
                             {% else %}
@@ -296,7 +296,7 @@
                         <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                         <div class="col-sm-10">
                           <select name="status" id="input-status" class="form-control">
-                            <?php if ($status) { ?>
+                            {% if status %}
                             <option value="1" selected="selected">{{ text_enabled }}</option>
                             <option value="0">{{ text_disabled }}</option>
                             {% else %}
@@ -310,7 +310,7 @@
                         <label class="col-sm-2 control-label" for="input-approved">{{ entry_approved }}</label>
                         <div class="col-sm-10">
                           <select name="approved" id="input-approved" class="form-control">
-                            <?php if ($approved) { ?>
+                            {% if approved %}
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
                             {% else %}
@@ -324,7 +324,7 @@
                         <label class="col-sm-2 control-label" for="input-safe">{{ entry_safe }}</label>
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
-                            <?php if ($safe) { ?>
+                            {% if safe %}
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
                             {% else %}
@@ -432,7 +432,7 @@
                         <div class="col-sm-10">
                           <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                             <option value="">{{ text_select }}</option>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address['custom_field'][$custom_field['custom_field_id']]) { ?>
                             <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                             {% else %}
@@ -451,7 +451,7 @@
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <div class="radio">
                               <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $address['custom_field'][$custom_field['custom_field_id']]) { ?>
                               <label>
@@ -476,7 +476,7 @@
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
-                            <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+                            {% for custom_field_value in custom_field.custom_field_value %}
                             <div class="checkbox">
                               <?php if (isset($address['custom_field'][$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $address['custom_field'][$custom_field['custom_field_id']])) { ?>
                               <label>
@@ -596,7 +596,7 @@
                 </div>
               </div>
             </div>
-            <?php if ($customer_id) { ?>
+            {% if customer_id %}
             <div class="tab-pane" id="tab-history">
               <div id="history"></div>
               <br />
@@ -752,7 +752,7 @@ function addAddress() {
 	html += '  		  <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">';
 	html += '  			<option value="">{{ text_select }}</option>';
 
-	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+	{% for custom_field_value in custom_field.custom_field_value %}
 	html += '  			<option value="{{ custom_field_value.custom_field_value_id }}"><?php echo addslashes($custom_field_value['name']); ?></option>';
 	<?php } ?>
 
@@ -767,7 +767,7 @@ function addAddress() {
 	html += '  		<div class="col-sm-10">';
 	html += '  		  <div>';
 
-	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+	{% for custom_field_value in custom_field.custom_field_value %}
 	html += '  			<div class="radio"><label><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
 	<?php } ?>
 
@@ -782,7 +782,7 @@ function addAddress() {
 	html += '		<div class="col-sm-10">';
 	html += '		  <div>';
 
-	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+	{% for custom_field_value in custom_field.custom_field_value %}
 	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
 	<?php } ?>
 

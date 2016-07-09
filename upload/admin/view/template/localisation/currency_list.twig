@@ -35,22 +35,22 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'title') { ?>
+                  <td class="text-left">{% if sort == 'title' %}
                     <a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
                     {% else %}
                     <a href="{{ sort_title }}">{{ column_title }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'code') { ?>
+                  <td class="text-left">{% if sort == 'code' %}
                     <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'value') { ?>
+                  <td class="text-right">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'date_modified') { ?>
+                  <td class="text-left">{% if sort == 'date_modified' %}
                     <a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
                     {% else %}
                     <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
@@ -59,10 +59,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($currencies) { ?>
-                <?php foreach ($currencies as $currency) { ?>
+                {% if currencies %}
+                {% for currency in currencies %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($currency['currency_id'], $selected)) { ?>
+                  <td class="text-center">{% if currency.currency_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" />

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-rate">{{ entry_rate }}</label>
             <div class="col-sm-10">
               <input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control" />
-              <?php if ($error_rate) { ?>
+              {% if error_rate %}
               <div class="text-danger">{{ error_rate }}</div>
               <?php } ?>
             </div>
@@ -47,12 +47,12 @@
             <label class="col-sm-2 control-label" for="input-type">{{ entry_type }}</label>
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-control">
-                <?php if ($type == 'P') { ?>
+                {% if type == 'P' %}
                 <option value="P" selected="selected">{{ text_percent }}</option>
                 {% else %}
                 <option value="P">{{ text_percent }}</option>
                 <?php } ?>
-                <?php if ($type == 'F') { ?>
+                {% if type == 'F' %}
                 <option value="F" selected="selected">{{ text_amount }}</option>
                 {% else %}
                 <option value="F">{{ text_amount }}</option>
@@ -63,10 +63,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
-              <?php foreach ($customer_groups as $customer_group) { ?>
+              {% for customer_group in customer_groups %}
               <div class="checkbox">
                 <label>
-                  <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
+                  {% if customer_group.customer_group_id in tax_rate_customer_group %}
                   <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
                   {{ customer_group.name }}
                   {% else %}
@@ -82,7 +82,7 @@
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="geo_zone_id" id="input-geo-zone" class="form-control">
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php  if ($geo_zone['geo_zone_id'] == $geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}

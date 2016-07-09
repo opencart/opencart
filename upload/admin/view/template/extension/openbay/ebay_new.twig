@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
     <div class="panel panel-default">
@@ -64,7 +64,7 @@
                   <p>
                     <input type="radio" name="popular" value="" id="popular_default" checked />
                     <strong>{{ text_none }}</strong></p>
-                  <?php foreach ($product['popular_cats'] as $cat) { ?>
+                  {% for cat in product.popular_cats %}
                   <p>
                     <input type="radio" name="popular" value="{{ cat.CategoryID }}" class="popular-category" />
                     {{ cat.breadcrumb }}</p>
@@ -276,7 +276,7 @@
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
                         <?php if (is_array($product['profiles_theme'])) { ?>
-                        <?php foreach ($product['profiles_theme'] as $profile) { ?>
+                        {% for profiles_theme in product.profiles_theme %}
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } ?>
                         <?php } ?>
@@ -291,7 +291,7 @@
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
                     <?php if (is_array($product['templates']) && !empty($product['templates'])) { ?>
-                    <?php foreach ($product['templates'] as $template) { ?>
+                    {% for templates in product.templates %}
                     <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
                     <?php } ?>
                     <?php } ?>
@@ -367,7 +367,7 @@
                     </thead>
                     <tbody>
                       <?php $i = 0; $i_valid = null; ?>
-                      <?php foreach ($product['product_images'] as $img) { ?>
+                      {% for product_images in product.product_images %}
                       <tr>
                         <td class="text-center"><img src="{{ img.preview }}" class="img-thumbnail" /></td>
                         <td class="text-center"><?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
@@ -414,11 +414,11 @@
               <div class="form-group option-group-img-tr" style="display:none;">
                 <label class="col-sm-2 control-label">{{ text_option_images_choice }}</label>
                 <div class="col-sm-10">
-                  <?php foreach ($product['option_groups'] as $option_group) { ?>
+                  {% for option_groups in product.option_groups %}
                   <div id="option-group-img-{{ option_group.option_id }}" class="option-group-img">
                     <div class="table-responsive">
                       <table class="table table-striped table-bordered table-hover">
-                        <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
+                        {% for option_group_choice in option_group.product_option_value %}
                         <tr>
                           <td>{{ option_group_choice.name }}</td>
                           <td><input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][name]" value="{{ option_group_choice.name }}"/>
@@ -580,7 +580,7 @@
                 <label class="col-sm-2 control-label">{{ entry_payment }}</label>
                 <div class="col-sm-10">
                   <?php $paypal = false; ?>
-                  <?php foreach ($product['payments'] as $payment) { ?>
+                  {% for payments in product.payments %}
                   <?php if ($payment['ebay_name'] == 'PayPal') { ?>
                   <?php $paypal = true; ?>
                   {% else %}
@@ -644,7 +644,7 @@
                 <label class="col-sm-2 control-label">{{ entry_despatch_country }}</label>
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
-                    <?php foreach ($setting['countries'] as $country) { ?>
+                    {% for countries in setting.countries %}
                     <option value="<?php echo $country['code'];?>"><?php echo $country['name'];?></option>
                     <?php } ?>
                   </select>
@@ -654,7 +654,7 @@
                 <label class="col-sm-2 control-label">{{ entry_despatch_time }}</label>
                 <div class="col-sm-10">
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
-                    <?php foreach ($setting['dispatch_times'] as $dis) { ?>
+                    {% for dispatch_times in setting.dispatch_times %}
                     <option value="<?php echo $dis['DispatchTimeMax'];?>"><?php echo $dis['Description'];?></option>
                     <?php } ?>
                   </select>
@@ -850,7 +850,7 @@
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_unit }}</label>
                     <select name="package[unit]" class="form-control" id="measure-unit">
-                      <?php foreach ($setting['measurement_types'] as $measurement_key => $measurement_value) { ?>
+                      {% for measurement_types in setting.measurement_types %}
                       <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
                       <?php } ?>
                     </select>
@@ -875,7 +875,7 @@
                   <div class="col-sm-3">
                     <label class="control-label">{{ text_package }}</label>
                     <select name="package[package]" class="form-control">
-                      <?php foreach ($setting['package_type'] as $package) { ?>
+                      {% for package_type in setting.package_type %}
                       <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
                       <?php } ?>
                     </select>
@@ -933,7 +933,7 @@
                 <label class="col-sm-2 control-label">{{ text_return_accepted }}</label>
                 <div class="col-sm-10">
                   <select name="returns_accepted" id="returns_accepted" class="form-control">
-                    <?php foreach ($setting['returns']['accepted'] as $v) { ?>
+                    {% for v in setting.returns']['accepted %}
                     <option value="{{ v.ReturnsAcceptedOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
@@ -945,7 +945,7 @@
                 <label class="col-sm-2 control-label">{{ text_return_days }}</label>
                 <div class="col-sm-10">
                   <select name="returns_within" id="returns_within" class="form-control">
-                    <?php foreach ($setting['returns']['within'] as $v) { ?>
+                    {% for v in setting.returns']['within %}
                     <option value="{{ v.ReturnsWithinOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
@@ -957,7 +957,7 @@
                 <label class="col-sm-2 control-label">{{ text_return_scosts }}</label>
                 <div class="col-sm-10">
                   <select name="returns_shipping" id="returns_shipping" class="form-control">
-                    <?php foreach ($setting['returns']['paidby'] as $v) { ?>
+                    {% for v in setting.returns.paidby %}
                     <option value="{{ v.ShippingCostPaidByOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
@@ -969,7 +969,7 @@
                 <label class="col-sm-2 control-label">{{ text_return_type }}</label>
                 <div class="col-sm-10">
                   <select name="returns_option" id="returns_option" class="form-control">
-                    <?php foreach ($setting['returns']['refund'] as $v) { ?>
+                    {% for v in setting.returns.refund %}
                     <option value="{{ v.RefundOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
@@ -989,7 +989,7 @@
                 <label class="col-sm-2 control-label">{{ text_return_restock }}</label>
                 <div class="col-sm-10">
                   <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
-                    <?php foreach ($setting['returns']['restocking_fee'] as $v) { ?>
+                    {% for v in setting.returns.restocking_fee %}
                     <option value="{{ v.RestockingFeeValueOption }}">{{ v.Description }}</option>
                     <?php } ?>
                   </select>
@@ -1866,7 +1866,7 @@
           html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="Worldwide" />';
           html += ' {{ text_shipping_worldwide }}';
           html += '</label>';
-        <?php foreach ($data['shipping_international_zones'] as $zone) { ?>
+        {% for shipping_international_zones in data.shipping_international_zones %}
             html += '<label class="checkbox-inline">';
             html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="{{ zone.shipping_location }}" />';
             html += ' {{ zone.description }}';

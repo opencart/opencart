@@ -50,10 +50,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($recurrings) { ?>
+                {% if recurrings %}
                 {% for recurring in recurrings %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($recurring['recurring_id'], $selected)) { ?>
+                  <td class="text-center">{% if recurring.recurring_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" />

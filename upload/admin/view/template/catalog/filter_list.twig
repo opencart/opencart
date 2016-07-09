@@ -49,10 +49,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($filters) { ?>
+                {% if filters %}
                 {% for filter in filters %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($filter['filter_group_id'], $selected)) { ?>
+                  <td class="text-center">{% if filter.filter_group_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ filter.filter_group_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ filter.filter_group_id }}" />

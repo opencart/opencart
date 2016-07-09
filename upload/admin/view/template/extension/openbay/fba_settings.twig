@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
     <div class="panel panel-default">
@@ -49,7 +49,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_status">{{ text_status }}</label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_status" id="openbay_fba_status" class="form-control">
-                    <?php if ($openbay_fba_status) { ?>
+                    {% if openbay_fba_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -63,7 +63,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_debug_log"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_debug_log }}">{{ entry_debug_log }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_debug_log" id="openbay_fba_debug_log" class="form-control">
-                    <?php if ($openbay_fba_debug_log) { ?>
+                    {% if openbay_fba_debug_log %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -77,7 +77,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_send_orders"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_send_orders }}">{{ entry_send_orders }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_send_orders" id="openbay_fba_send_orders" class="form-control">
-                    <?php if ($openbay_fba_send_orders) { ?>
+                    {% if openbay_fba_send_orders %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -91,7 +91,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_only_fill_complete"><span data-toggle="tooltip" data-container="#tab-content" title="{{ help_only_fill_complete }}">{{ entry_only_fill_complete }}</span></label>
                 <div class="col-sm-10">
                   <select name="openbay_fba_only_fill_complete" id="openbay_fba_only_fill_complete" class="form-control">
-                    <?php if ($openbay_fba_only_fill_complete) { ?>
+                    {% if openbay_fba_only_fill_complete %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}

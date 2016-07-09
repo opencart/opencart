@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="entry-client_id">{{ entry_client_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="pp_login_client_id" value="{{ pp_login_client_id }}" placeholder="{{ entry_client_id }}" id="entry-client_id" class="form-control"/>
-              <?php if ($error_client_id) { ?>
+              {% if error_client_id %}
               <div class="text-danger">{{ error_client_id }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="entry-secret">{{ entry_secret }}</label>
             <div class="col-sm-10">
               <input type="text" name="pp_login_secret" value="{{ pp_login_secret }}" placeholder="{{ entry_secret }}" id="entry-secret" class="form-control"/>
-              <?php if ($error_secret) { ?>
+              {% if error_secret %}
               <div class="text-danger">{{ error_secret }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="entry-sandbox"><span data-toggle="tooltip" title="{{ help_sandbox }}">{{ entry_sandbox }}</span></label>
             <div class="col-sm-10">
               <select name="pp_login_sandbox" id="entry-sandbox" class="form-control">
-                <?php if ($pp_login_sandbox) { ?>
+                {% if pp_login_sandbox %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -61,7 +61,7 @@
             <label class="col-sm-2 control-label" for="input-loggin"><span data-toggle="tooltip" title="{{ help_debug_logging }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
               <select name="pp_login_debug" id="input-logging" class="form-control">
-                <?php if ($pp_login_debug) { ?>
+                {% if pp_login_debug %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -89,7 +89,7 @@
             <label class="col-sm-2 control-label" for="input-button_colour">{{ entry_button }}</label>
             <div class="col-sm-10">
               <select name="pp_login_button_colour" id="input-button_colour" class="form-control">
-                <?php if ($pp_login_button_colour == 'blue') { ?>
+                {% if pp_login_button_colour == 'blue' %}
                 <option value="blue" selected="selected">{{ text_button_blue }}</option>
                 <option value="grey">{{ text_button_grey }}</option>
                 {% else %}
@@ -103,7 +103,7 @@
             <label class="col-sm-2 control-label" for="input-seamless"><span data-toggle="tooltip" title="{{ help_seamless }}">{{ entry_seamless }}</span></label>
             <div class="col-sm-10">
               <select name="pp_login_seamless" id="input-logging" class="form-control">
-                <?php if ($pp_login_seamless) { ?>
+                {% if pp_login_seamless %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -141,7 +141,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="pp_login_status" id="input-status" class="form-control">
-                <?php if ($pp_login_status) { ?>
+                {% if pp_login_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

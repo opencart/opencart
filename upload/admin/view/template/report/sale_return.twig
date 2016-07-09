@@ -40,7 +40,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-group">{{ entry_group }}</label>
                 <select name="filter_group" id="input-group" class="form-control">
-                  <?php foreach ($groups as $group) { ?>
+                  {% for group in groups %}
                   <?php if ($group['value'] == $filter_group) { ?>
                   <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
                   {% else %}
@@ -53,7 +53,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_return_status_id" id="input-status" class="form-control">
                   <option value="0">{{ text_all_status }}</option>
-                  <?php foreach ($return_statuses as $return_status) { ?>
+                  {% for return_status in return_statuses %}
                   <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
                   <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                   {% else %}
@@ -76,8 +76,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($returns) { ?>
-              <?php foreach ($returns as $return) { ?>
+              {% if returns %}
+              {% for return in returns %}
               <tr>
                 <td class="text-left">{{ return.date_start }}</td>
                 <td class="text-left">{{ return.date_end }}</td>

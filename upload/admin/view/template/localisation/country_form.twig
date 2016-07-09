@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              <?php if ($error_name) { ?>
+              {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
               <?php } ?>
             </div>
@@ -56,7 +56,7 @@
             <label class="col-sm-2 control-label">{{ entry_postcode_required }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($postcode_required) { ?>
+                {% if postcode_required %}
                 <input type="radio" name="postcode_required" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -79,7 +79,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+                {% if status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

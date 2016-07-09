@@ -42,12 +42,12 @@
             <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
             <div class="col-sm-10">
               <select name="location" id="input-location" class="form-control">
-                <?php if ($location == 'account') { ?>
+                {% if location == 'account' %}
                 <option value="account" selected="selected">{{ text_account }}</option>
                 {% else %}
                 <option value="account">{{ text_account }}</option>
                 <?php } ?>
-                <?php if ($location == 'address') { ?>
+                {% if location == 'address' %}
                 <option value="address" selected="selected">{{ text_address }}</option>
                 {% else %}
                 <option value="address">{{ text_address }}</option>
@@ -60,53 +60,53 @@
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-control">
                 <optgroup label="{{ text_choose }}">
-                <?php if ($type == 'select') { ?>
+                {% if type == 'select' %}
                 <option value="select" selected="selected">{{ text_select }}</option>
                 {% else %}
                 <option value="select">{{ text_select }}</option>
                 <?php } ?>
-                <?php if ($type == 'radio') { ?>
+                {% if type == 'radio' %}
                 <option value="radio" selected="selected">{{ text_radio }}</option>
                 {% else %}
                 <option value="radio">{{ text_radio }}</option>
                 <?php } ?>
-                <?php if ($type == 'checkbox') { ?>
+                {% if type == 'checkbox' %}
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
                 {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_input }}">
-                <?php if ($type == 'text') { ?>
+                {% if type == 'text' %}
                 <option value="text" selected="selected">{{ text_text }}</option>
                 {% else %}
                 <option value="text">{{ text_text }}</option>
                 <?php } ?>
-                <?php if ($type == 'textarea') { ?>
+                {% if type == 'textarea' %}
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
                 {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_file }}">
-                <?php if ($type == 'file') { ?>
+                {% if type == 'file' %}
                 <option value="file" selected="selected">{{ text_file }}</option>
                 {% else %}
                 <option value="file">{{ text_file }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_date }}">
-                <?php if ($type == 'date') { ?>
+                {% if type == 'date' %}
                 <option value="date" selected="selected">{{ text_date }}</option>
                 {% else %}
                 <option value="date">{{ text_date }}</option>
                 <?php } ?>
-                <?php if ($type == 'time') { ?>
+                {% if type == 'time' %}
                 <option value="time" selected="selected">{{ text_time }}</option>
                 {% else %}
                 <option value="time">{{ text_time }}</option>
                 <?php } ?>
-                <?php if ($type == 'datetime') { ?>
+                {% if type == 'datetime' %}
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
                 {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
@@ -130,11 +130,11 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
-              <?php $customer_group_row = 0; ?>
+              {% customer_group_row = 0 %}
               {% for customer_group in customer_groups %}
               <div class="checkbox">
                 <label>
-                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_customer_group)) { ?>
+                  {% if customer_group.customer_group_id in custom_field_customer_group %}
                   <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" checked="checked" />
                   {{ customer_group.name }}
                   {% else %}
@@ -150,11 +150,11 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_required }}</label>
             <div class="col-sm-10">
-              <?php $customer_group_row = 0; ?>
+              {% customer_group_row = 0 %}
               {% for customer_group in customer_groups %}
               <div class="checkbox">
                 <label>
-                  <?php if (in_array($customer_group['customer_group_id'], $custom_field_required)) { ?>
+                  {% if customer_group.customer_group_id in custom_field_required %}
                   <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" checked="checked" />
                   {{ customer_group.name }}
                   {% else %}
@@ -171,7 +171,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+                {% if status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -196,7 +196,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php $custom_field_value_row = 0; ?>
+              {% custom_field_value_row = 0 %}
               {% for custom_field_value in custom_field_values %}
               <tr id="custom-field-value-row{{ custom_field_value_row }}">
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}" />

@@ -21,7 +21,7 @@
       <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_bulk }}</h3>
     </div>
     <div class="panel-body" id="page-listing">
-      <?php $i = 0; ?>
+      {% i = 0 %}
       <?php if (!isset($error_fail)) { ?>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
           <div class="well">
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <?php if ($products) { ?>
+          {% if products %}
             {% for product in products %}
               <div class="well listingBox" id="p_row_{{ i }}">
                 <input type="hidden" class="product_id openbay_data_{{ i }}" name="product_id" value="{{ i }}" />

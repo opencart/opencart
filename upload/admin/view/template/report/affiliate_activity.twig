@@ -59,8 +59,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($activities) { ?>
-              <?php foreach ($activities as $activity) { ?>
+              {% if activities %}
+              {% for activity in activities %}
               <tr>
                 <td class="text-left">{{ activity.comment }}</td>
                 <td class="text-left">{{ activity.ip }}</td>

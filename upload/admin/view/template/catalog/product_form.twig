@@ -99,7 +99,7 @@
                 <label class="col-sm-2 control-label" for="input-model">{{ entry_model }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
-                  <?php if ($error_model) { ?>
+                  {% if error_model %}
                   <div class="text-danger">{{ error_model }}</div>
                   <?php } ?>
                 </div>
@@ -183,7 +183,7 @@
                 <label class="col-sm-2 control-label" for="input-subtract">{{ entry_subtract }}</label>
                 <div class="col-sm-10">
                   <select name="subtract" id="input-subtract" class="form-control">
-                    <?php if ($subtract) { ?>
+                    {% if subtract %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -211,7 +211,7 @@
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($shipping) { ?>
+                    {% if shipping %}
                     <input type="radio" name="shipping" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
@@ -234,7 +234,7 @@
                 <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
-                  <?php if ($error_keyword) { ?>
+                  {% if error_keyword %}
                   <div class="text-danger">{{ error_keyword }}</div>
                   <?php } ?>
                 </div>
@@ -303,7 +303,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-                    <?php if ($status) { ?>
+                    {% if status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -372,7 +372,7 @@
                     {% for store in stores %}
                     <div class="checkbox">
                       <label>
-                        <?php if (in_array($store['store_id'], $product_store)) { ?>
+                        {% if store.store_id in product_store %}
                         <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" />
                         {{ store.name }}
                         {% else %}
@@ -423,7 +423,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $attribute_row = 0; ?>
+                    {% attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                     <tr id="attribute-row{{ attribute_row }}">
                       <td class="text-left" style="width: 40%;"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control" />
@@ -451,7 +451,7 @@
               <div class="row">
                 <div class="col-sm-2">
                   <ul class="nav nav-pills nav-stacked" id="option">
-                    <?php $option_row = 0; ?>
+                    {% option_row = 0 %}
                     {% for product_option in product_options %}
                     <li><a href="#tab-option{{ option_row }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-option{{ option_row }}\']').parent().remove(); $('#tab-option{{ option_row }}').remove(); $('#option a:first').tab('show');"></i> {{ product_option.name }}</a></li>
                     <?php $option_row++; ?>
@@ -463,8 +463,8 @@
                 </div>
                 <div class="col-sm-10">
                   <div class="tab-content">
-                    <?php $option_row = 0; ?>
-                    <?php $option_value_row = 0; ?>
+                    {% option_row = 0 %}
+                    {% option_value_row = 0 %}
                     {% for product_option in product_options %}
                     <div class="tab-pane" id="tab-option{{ option_row }}">
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}" />
@@ -475,7 +475,7 @@
                         <label class="col-sm-2 control-label" for="input-required{{ option_row }}">{{ entry_required }}</label>
                         <div class="col-sm-10">
                           <select name="product_option[{{ option_row }}][required]" id="input-required{{ option_row }}" class="form-control">
-                            <?php if ($product_option['required']) { ?>
+                            {% if product_option.required %}
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
                             {% else %}
@@ -560,7 +560,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <?php foreach ($product_option['product_option_value'] as $product_option_value) { ?>
+                            {% for product_option_value in product_option.product_option_value %}
                             <tr id="option-value-row{{ option_value_row }}">
                               <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" class="form-control">
                                   <?php if (isset($option_values[$product_option['option_id']])) { ?>
@@ -576,7 +576,7 @@
                                 <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}" /></td>
                               <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
                               <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" class="form-control">
-                                  <?php if ($product_option_value['subtract']) { ?>
+                                  {% if product_option_value.subtract %}
                                   <option value="1" selected="selected">{{ text_yes }}</option>
                                   <option value="0">{{ text_no }}</option>
                                   {% else %}
@@ -662,7 +662,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $recurring_row = 0; ?>
+                    {% recurring_row = 0 %}
                     {% for product_recurring in product_recurrings %}
 
                     <tr id="recurring-row{{ recurring_row }}">
@@ -713,7 +713,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $discount_row = 0; ?>
+                    {% discount_row = 0 %}
                     {% for product_discount in product_discounts %}
                     <tr id="discount-row{{ discount_row }}">
                       <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
@@ -766,7 +766,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $special_row = 0; ?>
+                    {% special_row = 0 %}
                     {% for product_special in product_specials %}
                     <tr id="special-row{{ special_row }}">
                       <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
@@ -830,7 +830,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $image_row = 0; ?>
+                    {% image_row = 0 %}
                     {% for product_image in product_images %}
                     <tr id="image-row{{ image_row }}">
                       <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}" /></td>

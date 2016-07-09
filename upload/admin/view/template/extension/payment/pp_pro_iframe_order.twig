@@ -59,7 +59,7 @@
             <td class="text-left">{{ transaction.payment_status }}</td>
             <td class="text-left">{{ transaction.pending_reason }}</td>
             <td class="text-left">{{ transaction.date_added }}</td>
-            <td class="text-left"><?php if ($transaction['transaction_id']) { ?>
+            <td class="text-left">{% if transaction.transaction_id %}
               <a href="{{ transaction.view }}">{{ text_view }}</a>
               <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
               &nbsp;<a href="{{ transaction.refund }}">{{ text_refund }}</a>

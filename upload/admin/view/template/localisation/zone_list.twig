@@ -54,10 +54,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($zones) { ?>
-                <?php foreach ($zones as $zone) { ?>
+                {% if zones %}
+                {% for zone in zones %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($zone['zone_id'], $selected)) { ?>
+                  <td class="text-center">{% if zone.zone_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" />

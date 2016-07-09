@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="container-fluid">
-	<?php if ($error_warning) { ?>
+	{% if error_warning %}
 		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
@@ -35,7 +35,7 @@
 				<div class="col-sm-10">
 				  <input type="text" name="g2apay_username" value="{{ g2apay_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
 				  <span class="help-block">{{ help_username }}</span>
-				  <?php if ($error_username) { ?>
+				  {% if error_username %}
 					  <div class="text-danger">{{ error_username }}</div>
 				  <?php } ?>
 				</div>
@@ -44,7 +44,7 @@
 				<label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
 				<div class="col-sm-10">
 				  <input type="text" name="g2apay_secret" value="{{ g2apay_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
-				  <?php if ($error_secret) { ?>
+				  {% if error_secret %}
 					  <div class="text-danger">{{ error_secret }}</div>
 				  <?php } ?>
 				</div>
@@ -53,7 +53,7 @@
 				<label class="col-sm-2 control-label" for="input-api-hash">{{ entry_api_hash }}</label>
 				<div class="col-sm-10">
 				  <input type="text" name="g2apay_api_hash" value="{{ g2apay_api_hash }}" placeholder="{{ entry_api_hash }}" id="input-api-hash" class="form-control" />
-				  <?php if ($error_api_hash) { ?>
+				  {% if error_api_hash %}
 					  <div class="text-danger">{{ error_api_hash }}</div>
 				  <?php } ?>
 				</div>
@@ -62,7 +62,7 @@
 				<label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_environment" class="form-control" id="input-environment">
-					<?php if ($g2apay_environment) { ?>
+					{% if g2apay_environment %}
 						<option value="1" selected="selected">{{ g2apay_environment_live }}</option>
 						<option value="0">{{ g2apay_environment_test }}</option>
 					{% else %}
@@ -111,7 +111,7 @@
 				<label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_debug" id="input-debug" class="form-control">
-					<?php if ($g2apay_debug) { ?>
+					{% if g2apay_debug %}
 						<option value="1" selected="selected">{{ text_enabled }}</option>
 						<option value="0">{{ text_disabled }}</option>
 					{% else %}
@@ -126,7 +126,7 @@
 				<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
 				<div class="col-sm-10">
 				  <select name="g2apay_status" id="input-status" class="form-control">
-					<?php if ($g2apay_status) { ?>
+					{% if g2apay_status %}
 						<option value="1" selected="selected">{{ text_enabled }}</option>
 						<option value="0">{{ text_disabled }}</option>
 					{% else %}

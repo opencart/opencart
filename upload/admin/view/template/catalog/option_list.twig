@@ -49,10 +49,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($options) { ?>
+                {% if options %}
                 {% for option in options %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($option['option_id'], $selected)) { ?>
+                  <td class="text-center">{% if option.option_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ option.option_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ option.option_id }}" />

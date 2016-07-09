@@ -1,8 +1,8 @@
 <div class="tile">
   <div class="tile-heading">{{ heading_title }} <span class="pull-right">
-    <?php if ($percentage > 0) { ?>
+    {% if percentage > 0 %} 
     <i class="fa fa-caret-up"></i>
-    <?php } elseif ($percentage < 0) { ?>
+    {% elseif percentage < 0 %}
     <i class="fa fa-caret-down"></i>
     <?php } ?>
     {{ percentage }}%</span></div>

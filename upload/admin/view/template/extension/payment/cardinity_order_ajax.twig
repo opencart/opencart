@@ -1,4 +1,4 @@
-<?php if ($payment) { ?>
+{% if payment %}
 <table class="table table-bordered">
   <tr>
 	<td>{{ column_refund_history }}</td>
@@ -13,7 +13,7 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<?php if ($refunds) { ?>
+			{% if refunds %}
 			{% for refund in refunds %}
 			<tr>
 			  <td>{{ refund.date_added }}</td>
@@ -43,7 +43,7 @@
 		  <tbody>
 			<tr>
 			  <td>
-				  <?php if ($refund_action) { ?>
+				  {% if refund_action %}
 				  <label class="control-label">Amount:</label>
 				  <input id="refund-amount" text="text" name="refund_amount" value="{{ max_refund_amount }}" />
 				  <label class="control-label">Description:</label>
@@ -67,7 +67,7 @@ Unable to find transaction for this order.
 $('.button-command').on('click', function() {
 	var confirm_text = '';
 
-	<?php if ($symbol_left) { ?>
+	{% if symbol_left %}
 	confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#refund-amount').val();
 	<?php } elseif($symbol_right) { ?>
 	confirm_text = '{{ text_confirm_refund }} ' + $('#refund-amount').val() + '{{ symbol_right }}';

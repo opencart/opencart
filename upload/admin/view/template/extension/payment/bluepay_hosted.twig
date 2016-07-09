@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-account-name">{{ entry_account_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="bluepay_hosted_account_name" value="{{ bluepay_hosted_account_name }}" placeholder="{{ entry_account_name }}" id="input-account-name" class="form-control" />
-              <?php if ($error_account_name) { ?>
+              {% if error_account_name %}
               <div class="text-danger">{{ error_account_name }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-account-id">{{ entry_account_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="bluepay_hosted_account_id" value="{{ bluepay_hosted_account_id }}" placeholder="{{ entry_account_id }}" id="input-account-id" class="form-control" />
-              <?php if ($error_account_id) { ?>
+              {% if error_account_id %}
               <div class="text-danger">{{ error_account_id }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label" for="bluepay_hosted_secret_key">{{ entry_secret_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="bluepay_hosted_secret_key" value="{{ bluepay_hosted_secret_key }}" placeholder="{{ entry_secret_key }}" id="bluepay_hosted_secret_key" class="form-control" />
-              <?php if ($error_secret_key) { ?>
+              {% if error_secret_key %}
               <div class="text-danger">{{ error_secret_key }}</div>
               <?php } ?>
             </div>
@@ -56,12 +56,12 @@
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_test" id="input-test" class="form-control">
-                <?php if ($bluepay_hosted_test == 'test') { ?>
+                {% if bluepay_hosted_test == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
                 <?php } ?>
-                <?php if ($bluepay_hosted_test == 'live') { ?>
+                {% if bluepay_hosted_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
@@ -73,12 +73,12 @@
             <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="{{ help_transaction }}">{{ entry_transaction }}</span></label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_transaction" id="input-transaction" class="form-control">
-                <?php if ($bluepay_hosted_transaction == 'SALE') { ?>
+                {% if bluepay_hosted_transaction == 'SALE' %}
                 <option value="SALE" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="SALE">{{ text_sale }}</option>
                 <?php } ?>
-                <?php if ($bluepay_hosted_transaction == 'AUTH') { ?>
+                {% if bluepay_hosted_transaction == 'AUTH' %}
                 <option value="AUTH" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTH">{{ text_authenticate }}</option>
@@ -90,7 +90,7 @@
             <label class="col-sm-2 control-label" for="input-amex">{{ entry_card_amex }}</label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_amex" id="input-amex" class="form-control">
-                <?php if ($bluepay_hosted_amex) { ?>
+                {% if bluepay_hosted_amex %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -104,7 +104,7 @@
             <label class="col-sm-2 control-label" for="input-discover">{{ entry_card_discover }}</label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_discover" id="input-discover" class="form-control">
-                <?php if ($bluepay_hosted_discover) { ?>
+                {% if bluepay_hosted_discover %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -153,7 +153,7 @@
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_debug" id="input-debug" class="form-control">
-                <?php if ($bluepay_hosted_debug) { ?>
+                {% if bluepay_hosted_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -167,7 +167,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="bluepay_hosted_status" id="input-status" class="form-control">
-                <?php if ($bluepay_hosted_status) { ?>
+                {% if bluepay_hosted_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

@@ -81,10 +81,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($marketings) { ?>
-                <?php foreach ($marketings as $marketing) { ?>
+                {% if marketings %}
+                {% for marketing in marketings %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($marketing['marketing_id'], $selected)) { ?>
+                  <td class="text-center">{% if marketing.marketing_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}" />

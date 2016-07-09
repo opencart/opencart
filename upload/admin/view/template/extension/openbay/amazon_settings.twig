@@ -26,7 +26,7 @@
             <label class="col-sm-2 control-label" for="amazon-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="openbay_amazon_status" id="amazon-status" class="form-control">
-                <?php if ($openbay_amazon_status) { ?>
+                {% if openbay_amazon_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -132,7 +132,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="code-{{ marketplace.code }}">{{ marketplace.name }}</label>
               <div class="col-sm-10">
-                <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
+                {% if marketplace.id in marketplace_ids %}
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
                 {% else %}
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
@@ -169,7 +169,7 @@
               <label class="col-sm-2 control-label" for="entry-notify-admin">{{ entry_notify_admin }}</label>
               <div class="col-sm-10">
                 <select name="openbay_amazon_notify_admin" id="entry-notify-admin" class="form-control">
-                  <?php if ($openbay_amazon_notify_admin) { ?>
+                  {% if openbay_amazon_notify_admin %}
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   <option value="0">{{ text_no }}</option>
                   {% else %}

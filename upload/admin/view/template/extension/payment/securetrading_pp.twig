@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_site_reference">{{ entry_site_reference }}</label>
             <div class="col-sm-10">
               <input type="text" name="securetrading_pp_site_reference" value="{{ securetrading_pp_site_reference }}" placeholder="{{ entry_site_reference }}" id="securetrading_pp_site_reference" class="form-control" />
-              <?php if ($error_site_reference) { ?>
+              {% if error_site_reference %}
               <div class="text-danger">{{ error_site_reference }}</div>
               <?php } ?>
             </div>
@@ -73,7 +73,7 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_notification_password">{{ entry_notification_password }}</label>
             <div class="col-sm-10">
               <input type="text" name="securetrading_pp_notification_password" value="{{ securetrading_pp_notification_password }}" placeholder="{{ entry_notification_password }}" id="securetrading_pp_site_security_password" class="form-control" />
-              <?php if ($error_notification_password) { ?>
+              {% if error_notification_password %}
               <div class="text-danger">{{ error_notification_password }}</div>
               <?php } ?>
             </div>
@@ -96,7 +96,7 @@
               {% for key => $value in cards %}
               <div class="checkbox">
                 <label>
-                  <?php if (in_array($key, $securetrading_pp_cards_accepted)) { ?>
+                  {% for key in securetrading_pp_cards_accepted %}
                   <input type="checkbox" checked="checked" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
                   {% else %}
                   <input type="checkbox" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
@@ -104,7 +104,7 @@
                   {{ value }} </label>
               </div>
               <?php } ?>
-              <?php if ($error_cards_accepted) { ?>
+              {% if error_cards_accepted %}
               <div class="text-danger">{{ error_cards_accepted }}</div>
               <?php } ?>
             </div>

@@ -69,10 +69,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($tax_rates) { ?>
-                <?php foreach ($tax_rates as $tax_rate) { ?>
+                {% if tax_rates %}
+                {% for tax_rate in tax_rates %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($tax_rate['tax_rate_id'], $selected)) { ?>
+                  <td class="text-center">{% if tax_rate.tax_rate_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" />

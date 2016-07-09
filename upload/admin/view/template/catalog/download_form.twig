@@ -46,7 +46,7 @@
                 <span class="input-group-btn">
                 <button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                 </span> </div>
-              <?php if ($error_filename) { ?>
+              {% if error_filename %}
               <div class="text-danger">{{ error_filename }}</div>
               <?php } ?>
             </div>
@@ -55,7 +55,7 @@
             <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="{{ help_mask }}">{{ entry_mask }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control" />
-              <?php if ($error_mask) { ?>
+              {% if error_mask %}
               <div class="text-danger">{{ error_mask }}</div>
               <?php } ?>
             </div>

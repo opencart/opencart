@@ -49,10 +49,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($downloads) { ?>
+                {% if downloads %}
                 {% for download in downloads %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($download['download_id'], $selected)) { ?>
+                  <td class="text-center">{% if download.download_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ download.download_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ download.download_id }}" />

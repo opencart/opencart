@@ -58,7 +58,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($sagepay_direct_order['transactions'] as $transaction) { ?>
+          {% for transaction in sagepay_direct_order.transactions %}
           <tr>
             <td class="text-left">{{ transaction.date_added }}</td>
             <td class="text-left">{{ transaction.type }}</td>

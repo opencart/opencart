@@ -46,7 +46,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <?php foreach ($recurring_statuses as $recurring_status) { ?>
+                  {% for recurring_status in recurring_statuses %}
                   <?php if ($filter_status == $recurring_status['value']) { ?>
                   <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
                   {% else %}
@@ -93,7 +93,7 @@
                     {% else %}
                     <a href="{{ sort_reference }}">{{ column_reference }}</a>
                     <?php }  ?></td>
-                  <td class="text-left"><?php if ($sort == 'customer') { ?>
+                  <td class="text-left">{% if sort == 'customer' %}
                     <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
                     {% else %}
                     <a href="{{ sort_customer }}">{{ column_customer }}</a>
@@ -112,8 +112,8 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($recurrings) { ?>
-                  <?php foreach ($recurrings as $recurring) { ?>
+                {% if recurrings %}
+                  {% for recurring in recurrings %}
                   <tr>
                     <td class="text-right">{{ recurring.order_recurring_id }}</td>
                     <td class="text-right">{{ recurring.order_id }}</td>

@@ -50,7 +50,7 @@
                 <?php } ?>
                 <?php } ?>
               </select>
-              <?php if ($error_attribute_group) { ?>
+              {% if error_attribute_group %}
               <div class="text-danger">{{ error_attribute_group }}</div>
               <?php } ?>
             </div>

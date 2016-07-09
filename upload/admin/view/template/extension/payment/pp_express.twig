@@ -43,7 +43,7 @@
                 <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_username" value="{{ pp_express_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control" />
-                  <?php if ($error_username) { ?>
+                  {% if error_username %}
                   <div class="text-danger">{{ error_username }}</div>
                   <?php } ?>
                 </div>
@@ -52,7 +52,7 @@
                 <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_password" value="{{ pp_express_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control" />
-                  <?php if ($error_password) { ?>
+                  {% if error_password %}
                   <div class="text-danger">{{ error_password }}</div>
                   <?php } ?>
                 </div>
@@ -61,7 +61,7 @@
                 <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_signature" value="{{ pp_express_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control" />
-                  <?php if ($error_signature) { ?>
+                  {% if error_signature %}
                   <div class="text-danger">{{ error_signature }}</div>
                   <?php } ?>
                 </div>
@@ -70,7 +70,7 @@
                 <label class="col-sm-2 control-label" for="entry-sandbox-username">{{ entry_sandbox_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_sandbox_username" value="{{ pp_express_sandbox_username }}" placeholder="{{ entry_sandbox_username }}" id="entry-sandbox-username" class="form-control" />
-                  <?php if ($error_sandbox_username) { ?>
+                  {% if error_sandbox_username %}
                   <div class="text-danger">{{ error_sandbox_username }}</div>
                   <?php } ?>
                 </div>
@@ -79,7 +79,7 @@
                 <label class="col-sm-2 control-label" for="entry-sandbox-password">{{ entry_sandbox_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_sandbox_password" value="{{ pp_express_sandbox_password }}" placeholder="{{ entry_sandbox_password }}" id="entry-sandbox-password" class="form-control" />
-                  <?php if ($error_sandbox_password) { ?>
+                  {% if error_sandbox_password %}
                   <div class="text-danger">{{ error_sandbox_password }}</div>
                   <?php } ?>
                 </div>
@@ -88,7 +88,7 @@
                 <label class="col-sm-2 control-label" for="entry-sandbox-signature">{{ entry_sandbox_signature }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_sandbox_signature" value="{{ pp_express_sandbox_signature }}" placeholder="{{ entry_sandbox_signature }}" id="entry-sandbox-signature" class="form-control" />
-                  <?php if ($error_sandbox_signature) { ?>
+                  {% if error_sandbox_signature %}
                   <div class="text-danger">{{ error_sandbox_signature }}</div>
                   <?php } ?>
                 </div>
@@ -107,7 +107,7 @@
                 <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_test" id="input-test" class="form-control">
-                    <?php if ($pp_express_test) { ?>
+                    {% if pp_express_test %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -121,7 +121,7 @@
                 <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_debug" id="input-debug" class="form-control">
-                    <?php if ($pp_express_debug) { ?>
+                    {% if pp_express_debug %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -149,7 +149,7 @@
                 <label class="col-sm-2 control-label" for="input-recurring-cancel">{{ entry_recurring_cancel }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_recurring_cancel" id="input-recurring-cancel" class="form-control">
-                    <?php if ($pp_express_recurring_cancel) { ?>
+                    {% if pp_express_recurring_cancel %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -163,12 +163,12 @@
                 <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_transaction" id="input-transaction" class="form-control">
-                    <?php if ($pp_express_transaction == 'sale') { ?>
+                    {% if pp_express_transaction == 'sale' %}
                     <option value="Sale" selected="selected">{{ text_sale }}</option>
                     {% else %}
                     <option value="Sale">{{ text_sale }}</option>
                     <?php } ?>
-                    <?php if ($pp_express_transaction == 'Authorization') { ?>
+                    {% if pp_express_transaction == 'Authorization' %}
                     <option value="Authorization" selected="selected">{{ text_authorization }}</option>
                     {% else %}
                     <option value="Authorization">{{ text_authorization }}</option>
@@ -201,7 +201,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_status" id="input-status" class="form-control">
-                    <?php if ($pp_express_status) { ?>
+                    {% if pp_express_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -365,7 +365,7 @@
                 <label class="col-sm-2 control-label" for="input-notes">{{ entry_allow_notes }}</label>
                 <div class="col-sm-10">
                   <select name="pp_express_allow_note" id="input-notes" class="form-control">
-                    <?php if ($pp_express_allow_note) { ?>
+                    {% if pp_express_allow_note %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}

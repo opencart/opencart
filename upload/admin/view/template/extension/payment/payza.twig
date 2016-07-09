@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
               <input type="text" name="payza_merchant" value="{{ payza_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
-              <?php if ($error_merchant) { ?>
+              {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-security">{{ entry_security }}</label>
             <div class="col-sm-10">
               <input type="text" name="payza_security" value="{{ payza_security }}" placeholder="{{ entry_security }}" id="input-security" class="form-control" />
-              <?php if ($error_security) { ?>
+              {% if error_security %}
               <div class="text-danger">{{ error_security }}</div>
               <?php } ?>
             </div>
@@ -88,7 +88,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="payza_status" id="input-status" class="form-control">
-                <?php if ($payza_status) { ?>
+                {% if payza_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

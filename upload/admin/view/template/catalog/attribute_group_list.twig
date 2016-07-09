@@ -49,10 +49,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($attribute_groups) { ?>
+                {% if attribute_groups %}
                 {% for attribute_group in attribute_groups %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($attribute_group['attribute_group_id'], $selected)) { ?>
+                  <td class="text-center">{% if attribute_group.attribute_group_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ attribute_group.attribute_group_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ attribute_group.attribute_group_id }}" />

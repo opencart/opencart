@@ -57,7 +57,7 @@
                     {% else %}
                     <a href="{{ sort_amount }}">{{ column_amount }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'theme') { ?>
+                  <td class="text-left">{% if sort == 'theme' %}
                     <a href="{{ sort_theme }}" class="{{ order|lower }}">{{ column_theme }}</a>
                     {% else %}
                     <a href="{{ sort_theme }}">{{ column_theme }}</a>
@@ -76,10 +76,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($vouchers) { ?>
-                <?php foreach ($vouchers as $voucher) { ?>
+                {% if vouchers %}
+                {% for voucher in vouchers %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($voucher['voucher_id'], $selected)) { ?>
+                  <td class="text-center">{% if voucher.voucher_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}" />
@@ -92,7 +92,7 @@
                   <td class="text-left">{{ voucher.status }}</td>
                   <td class="text-left">{{ voucher.date_added }}</td>
                   <td class="text-right">
-                  <?php if ($voucher['order']) { ?>
+                  {% if voucher.order %}
                   <a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
                   <?php } ?>
                   <a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>

@@ -59,7 +59,7 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_status) { ?>
+                  {% if filter_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
@@ -77,7 +77,7 @@
                 <label class="control-label" for="input-approved">{{ entry_approved }}</label>
                 <select name="filter_approved" id="input-approved" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_approved) { ?>
+                  {% if filter_approved %}
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   {% else %}
                   <option value="1">{{ text_yes }}</option>
@@ -113,7 +113,7 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
+                  <td class="text-left">{% if sort == 'name' %}
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
@@ -123,7 +123,7 @@
                     {% else %}
                     <a href="{{ sort_email }}">{{ column_email }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'customer_group') { ?>
+                  <td class="text-left">{% if sort == 'customer_group' %}
                     <a href="{{ sort_customer_group }}" class="{{ order|lower }}">{{ column_customer_group }}</a>
                     {% else %}
                     <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>
@@ -147,10 +147,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($customers) { ?>
+                {% if customers %}
                 {% for customer in customers %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($customer['customer_id'], $selected)) { ?>
+                  <td class="text-center">{% if customer.customer_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" />
@@ -161,7 +161,7 @@
                   <td class="text-left">{{ customer.status }}</td>
                   <td class="text-left">{{ customer.ip }}</td>
                   <td class="text-left">{{ customer.date_added }}</td>
-                  <td class="text-right"><?php if ($customer['approve']) { ?>
+                  <td class="text-right">{% if customer.approve %}
                     <a href="{{ customer.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
@@ -175,7 +175,7 @@
                         <?php } ?>
                       </ul>
                     </div>
-                    <?php if ($customer['unlock']) { ?>
+                    {% if customer.unlock %}
                     <a href="{{ customer.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>

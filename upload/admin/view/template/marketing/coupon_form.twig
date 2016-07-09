@@ -27,7 +27,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <?php if ($coupon_id) { ?>
+            {% if coupon_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             <?php } ?>
           </ul>
@@ -37,7 +37,7 @@
                 <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-                  <?php if ($error_name) { ?>
+                  {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
                   <?php } ?>
                 </div>
@@ -46,7 +46,7 @@
                 <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
-                  <?php if ($error_code) { ?>
+                  {% if error_code %}
                   <div class="text-danger">{{ error_code }}</div>
                   <?php } ?>
                 </div>
@@ -55,12 +55,12 @@
                 <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
                 <div class="col-sm-10">
                   <select name="type" id="input-type" class="form-control">
-                    <?php if ($type == 'P') { ?>
+                    {% if type == 'P' %}
                     <option value="P" selected="selected">{{ text_percent }}</option>
                     {% else %}
                     <option value="P">{{ text_percent }}</option>
                     <?php } ?>
-                    <?php if ($type == 'F') { ?>
+                    {% if type == 'F' %}
                     <option value="F" selected="selected">{{ text_amount }}</option>
                     {% else %}
                     <option value="F">{{ text_amount }}</option>
@@ -84,7 +84,7 @@
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logged }}">{{ entry_logged }}</span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($logged) { ?>
+                    {% if logged %}
                     <input type="radio" name="logged" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
@@ -107,7 +107,7 @@
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($shipping) { ?>
+                    {% if shipping %}
                     <input type="radio" name="shipping" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
@@ -131,7 +131,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
                   <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
-                    <?php foreach ($coupon_product as $coupon_product) { ?>
+                    {% for coupon_product in coupon_product %}
                     <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
                       <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
                     </div>
@@ -144,7 +144,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
                   <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                    <?php foreach ($coupon_category as $coupon_category) { ?>
+                    {% for coupon_category in coupon_category %}
                     <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
                       <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
                     </div>
@@ -188,7 +188,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-                    <?php if ($status) { ?>
+                    {% if status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -199,7 +199,7 @@
                 </div>
               </div>
             </div>
-            <?php if ($coupon_id) { ?>
+            {% if coupon_id %}
             <div class="tab-pane" id="tab-history">
               <div id="history"></div>
             </div>
@@ -267,7 +267,7 @@ $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script>
-  <?php if ($coupon_id) { ?>
+  {% if coupon_id %}
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();

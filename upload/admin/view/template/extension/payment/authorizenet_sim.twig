@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
               <input type="text" name="authorizenet_sim_merchant" value="{{ authorizenet_sim_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
-              <?php if ($error_merchant) { ?>
+              {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <input type="text" name="authorizenet_sim_key" value="{{ authorizenet_sim_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
-              <?php if ($error_key) { ?>
+              {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               <?php } ?>
             </div>
@@ -59,7 +59,7 @@
             <label class="col-sm-2 control-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($authorizenet_sim_test) { ?>
+                {% if authorizenet_sim_test %}
                 <input type="radio" name="authorizenet_sim_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -117,7 +117,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="authorizenet_sim_status" id="input-status" class="form-control">
-                <?php if ($authorizenet_sim_status) { ?>
+                {% if authorizenet_sim_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

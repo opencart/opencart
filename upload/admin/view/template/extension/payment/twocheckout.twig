@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <input type="text" name="twocheckout_account" value="{{ twocheckout_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control" />
-              <?php if ($error_account) { ?>
+              {% if error_account %}
               <div class="text-danger">{{ error_account }}</div>
               <?php } ?>
             </div>
@@ -38,7 +38,7 @@
             <label class="col-sm-2 control-label" for="input-secret"><span data-toggle="tooltip" title="{{ help_secret }}">{{ entry_secret }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="twocheckout_secret" value="{{ twocheckout_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
-              <?php if ($error_secret) { ?>
+              {% if error_secret %}
               <div class="text-danger">{{ error_secret }}</div>
               <?php } ?>
             </div>
@@ -47,7 +47,7 @@
             <label class="col-sm-2 control-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($twocheckout_test) { ?>
+                {% if twocheckout_test %}
                 <input type="radio" name="twocheckout_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -70,7 +70,7 @@
             <label class="col-sm-2 control-label">{{ entry_display }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($twocheckout_display) { ?>
+                {% if twocheckout_display %}
                 <input type="radio" name="twocheckout_display" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -99,7 +99,7 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="twocheckout_order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
+                {% for order_status in order_statuses %}
                 <?php if ($order_status['order_status_id'] == $twocheckout_order_status_id) { ?>
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
@@ -114,7 +114,7 @@
             <div class="col-sm-10">
               <select name="twocheckout_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
-                <?php foreach ($geo_zones as $geo_zone) { ?>
+                {% for geo_zone in geo_zones %}
                 <?php if ($geo_zone['geo_zone_id'] == $twocheckout_geo_zone_id) { ?>
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
@@ -128,7 +128,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="twocheckout_status" id="input-status" class="form-control">
-                <?php if ($twocheckout_status) { ?>
+                {% if twocheckout_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

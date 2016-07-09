@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($bulk_linking_status) { ?>
+    {% if bulk_linking_status %}
     <div class="alert alert-info">{{ text_load_listings }}</div>
     <div class="well">
       <div class="row">
@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <?php if (in_array($marketplace_code, $marketplaces_processing)) { ?>
+          {% for marketplace_code in marketplaces_processing %}
           <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
           {% else %}
           <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings']; ?>">{{ button_load }}</a> </div>
@@ -40,7 +40,7 @@
     <form id="bulk-link-form" class="form-horizontal">
       <div id="text-{{ marketplace_code }}">
         <?php if (!in_array($marketplace_code, $marketplaces_processing)) { ?>
-          <?php if ($unlinked_products) { ?>
+          {% if unlinked_products %}
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -60,7 +60,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php $row = 0; ?>
+                {% row = 0 %}
                 {% for product in unlinked_products %}
                 <?php $row++ ?>
                 <?php if (empty($product['sku']) || $product['quantity'] < 1) { ?>

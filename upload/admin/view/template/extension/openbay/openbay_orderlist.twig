@@ -46,7 +46,7 @@
                 <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
                 <select name="filter_order_status_id" id="input-order-status" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_order_status_id == '0') { ?>
+                  {% if filter_order_status_id == '0' %}
                   <option value="0" selected="selected">{{ text_missing }}</option>
                   {% else %}
                   <option value="0">{{ text_missing }}</option>
@@ -118,17 +118,17 @@
                   {% else %}
                   <a href="{{ sort_order }}">{{ column_order_id }}</a>
                   <?php } ?></th>
-                <th class="text-left"><?php if ($sort == 'customer') { ?>
+                <th class="text-left">{% if sort == 'customer' %}
                   <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
                   {% else %}
                   <a href="{{ sort_customer }}">{{ column_customer }}</a>
                   <?php } ?></th>
-                <th class="text-left"><?php if ($sort == 'status') { ?>
+                <th class="text-left">{% if sort == 'status' %}
                   <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                   {% else %}
                   <a href="{{ sort_status }}">{{ column_status }}</a>
                   <?php } ?></th>
-                <th class="text-left"><?php if ($sort == 'channel') { ?>
+                <th class="text-left">{% if sort == 'channel' %}
                   <a href="{{ sort_channel }}" class="{{ order|lower }}">{{ column_channel }}</a>
                   {% else %}
                   <a href="{{ sort_channel }}">{{ column_channel }}</a>
@@ -142,11 +142,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($orders) { ?>
+              {% if orders %}
                 {% for order in orders %}
                 <tr>
                   <td style="text-align: center;">
-                    <?php if ($order['selected']) { ?>
+                    {% if order.selected %}
                       <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked" />
                     {% else %}
                       <input type="checkbox" name="selected[]" value="{{ order.order_id }}" />

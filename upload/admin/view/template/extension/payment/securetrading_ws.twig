@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<?php if ($error_warning) { ?>
+		{% if error_warning %}
 			<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
@@ -28,7 +28,7 @@
 						<label class="col-sm-2 control-label" for="securetrading_ws_site_reference">{{ entry_site_reference }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="securetrading_ws_site_reference" value="{{ securetrading_ws_site_reference }}" placeholder="{{ entry_site_reference }}" id="securetrading_ws_site_reference" class="form-control" />
-							<?php if ($error_site_reference) { ?>
+							{% if error_site_reference %}
 								<div class="text-danger">{{ error_site_reference }}</div>
 							<?php } ?>
 						</div>
@@ -37,7 +37,7 @@
 						<label class="col-sm-2 control-label" for="securetrading_ws_username">{{ entry_username }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="securetrading_ws_username" value="{{ securetrading_ws_username }}" placeholder="{{ entry_username }}" id="securetrading_ws_username" class="form-control" />
-							<?php if ($error_username) { ?>
+							{% if error_username %}
 								<div class="text-danger">{{ error_username }}</div>
 							<?php } ?>
 						</div>
@@ -46,7 +46,7 @@
 						<label class="col-sm-2 control-label" for="securetrading_ws_password">{{ entry_password }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="securetrading_ws_password" value="{{ securetrading_ws_password }}" placeholder="{{ entry_password }}" id="securetrading_ws_password" class="form-control" />
-							<?php if ($error_password) { ?>
+							{% if error_password %}
 								<div class="text-danger">{{ error_password }}</div>
 							<?php } ?>
 						</div>
@@ -71,7 +71,7 @@
 							{% for key => $value in cards %}
 								<div class="checkbox">
 									<label>
-										<?php if (in_array($key, $securetrading_ws_cards_accepted)) { ?>
+										{% for key in securetrading_ws_cards_accepted %}
 											<input type="checkbox" checked="checked" name="securetrading_ws_cards_accepted[]" value="{{ key }}" />
 										{% else %}
 											<input type="checkbox" name="securetrading_ws_cards_accepted[]" value="{{ key }}" />
@@ -80,7 +80,7 @@
 									</label>
 								</div>
 							<?php } ?>
-							<?php if ($error_cards_accepted) { ?>
+							{% if error_cards_accepted %}
 								<div class="text-danger">{{ error_cards_accepted }}</div>
 							<?php } ?>
 						</div>
@@ -171,7 +171,7 @@
 						<label class="col-sm-2 control-label" for="securetrading_ws_refunded_order_status_id">{{ entry_refunded_order_status }}</label>
 						<div class="col-sm-10">
 							<select name="securetrading_ws_refunded_order_status_id" id="securetrading_ws_refunded_order_status_id" class="form-control">
-								<?php foreach ($order_statuses as $order_status) { ?>
+								{% for order_status in order_statuses %}
 									<?php if ($order_status['order_status_id'] == $securetrading_ws_refunded_order_status_id) { ?>
 										<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
@@ -185,7 +185,7 @@
 						<label class="col-sm-2 control-label" for="securetrading_ws_authorisation_reversed_order_status_id">{{ entry_authorisation_reversed_order_status }}</label>
 						<div class="col-sm-10">
 							<select name="securetrading_ws_authorisation_reversed_order_status_id" id="securetrading_ws_authorisation_reversed_order_status_id" class="form-control">
-								<?php foreach ($order_statuses as $order_status) { ?>
+								{% for order_status in order_statuses %}
 									<?php if ($order_status['order_status_id'] == $securetrading_ws_authorisation_reversed_order_status_id) { ?>
 										<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
@@ -204,7 +204,7 @@
 								{% else %}
 									<option value="0">{{ text_all_geo_zones }}</option>
 								<?php } ?>
-								<?php foreach ($geo_zones as $geo_zone) { ?>
+								{% for geo_zone in geo_zones %}
 									<?php if ($securetrading_ws_geo_zone_id == $geo_zone['geo_zone_id']) { ?>
 										<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 									{% else %}
@@ -239,7 +239,7 @@
 					</div>
 				</form>
 			</div>
-			<?php if ($myst_status) { ?>
+			{% if myst_status %}
 				<div class="tab-pane" id="tab-myst">
 					<div class="well">
 						<form id="transaction-form">
@@ -249,7 +249,7 @@
 										<label class="control-label" for="hour-from">{{ entry_hour }}</label>
 										<div class="input-group">
 											<select name="hour_from" id="hour-from" class="form-control">
-												<?php foreach ($hours as $hour) { ?>
+												{% for hour in hours %}
 													<option value="{{ hour }}">{{ hour }}</option>
 												<?php } ?>
 											</select>
@@ -261,7 +261,7 @@
 										<label class="control-label" for="minute-from">{{ entry_minute }}</label>
 										<div class="input-group">
 											<select name="minute_from" id="minute-from" class="form-control">
-												<?php foreach ($minutes as $minute) { ?>
+												{% for minute in minutes %}
 													<option value="{{ minute }}">{{ minute }}</option>
 												<?php } ?>
 											</select>
@@ -284,7 +284,7 @@
 										<label class="control-label" for="hour-to">{{ entry_hour }}</label>
 										<div class="input-group">
 											<select name="hour_to" id="hour-to" class="form-control">
-												<?php foreach ($hours as $hour) { ?>
+												{% for hour in hours %}
 													<option value="{{ hour }}">{{ hour }}</option>
 												<?php } ?>
 											</select>
@@ -296,7 +296,7 @@
 										<label class="control-label" for="minute-to">{{ entry_minute }}</label>
 										<div class="input-group">
 											<select name="minute_to" id="minute-to" class="form-control">
-												<?php foreach ($minutes as $minute) { ?>
+												{% for minute in minutes %}
 													<option value="{{ minute }}">{{ minute }}</option>
 												<?php } ?>
 											</select>
@@ -334,7 +334,7 @@
 									<div class="form-group">
 										<label class="control-label" for="currency">{{ entry_currency }}</label>
 										<select name="currency[]" id="currency" multiple class="form-control" style="height: 150px">
-											<?php foreach ($currencies as $currency) { ?>
+											{% for currency in currencies %}
 												<option selected="selected" value="{{ currency.code }}">{{ currency.title }}</option>
 											<?php } ?>
 										</select>

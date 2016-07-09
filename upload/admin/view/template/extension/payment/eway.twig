@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">
-	<?php if ($error_warning) { ?>
+	{% if error_warning %}
 		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-paymode">{{ entry_paymode }}</label>
             <div class="col-sm-10">
               <select name="eway_paymode" id="input-test" class="form-control">
-				<?php if ($eway_paymode == 'iframe') { ?>
+				{% if eway_paymode == 'iframe' %}
 					<option value="iframe" selected="selected">{{ text_iframe }}</option>
 					<option value="transparent">{{ text_transparent }}</option>
 				{% else %}
@@ -43,7 +43,7 @@
             <label class="col-sm-2 control-label" for="input-test"><span data-toggle="tooltip" title="{{ help_testmode }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <select name="eway_test" id="input-test" class="form-control">
-				<?php if ($eway_test) { ?>
+				{% if eway_test %}
 					<option value="1" selected="selected">{{ text_yes }}</option>
 					<option value="0">{{ text_no }}</option>
 				{% else %}
@@ -57,7 +57,7 @@
             <label class="col-sm-2 control-label" for="input-username"><span data-toggle="tooltip" title="{{ help_username }}">{{ entry_username }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="eway_username" value="{{ eway_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
-			  <?php if ($error_username) { ?>
+			  {% if error_username %}
 				  <div class="text-danger">{{ error_username }}</div>
 			  <?php } ?>
             </div>
@@ -66,7 +66,7 @@
             <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
               <input type="password" name="eway_password" value="{{ eway_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
-			  <?php if ($error_password) { ?>
+			  {% if error_password %}
 				  <div class="text-danger">{{ error_password }}</div>
 			  <?php } ?>
             </div>
@@ -75,7 +75,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="eway_status" id="input-status" class="form-control">
-				<?php if ($eway_status) { ?>
+				{% if eway_status %}
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
 				{% else %}
@@ -89,7 +89,7 @@
             <label class="col-sm-2 control-label" for="input-transaction-method"><span data-toggle="tooltip" title="{{ help_transaction_method }}">{{ entry_transaction_method }}</span></label>
             <div class="col-sm-10">
               <select name="eway_transaction_method" id="input-transaction-method" class="form-control">
-				<?php if ($eway_transaction_method == 'auth') { ?>
+				{% if eway_transaction_method == 'auth' %}
 					<option value="payment">{{ text_sale }}</option>
 					<option value="auth" selected="selected">{{ text_authorisation }}</option>
 				{% else %}
@@ -130,7 +130,7 @@
                 <input type="hidden" name="eway_payment_type[masterpass]" value="0" />
                 <input type='checkbox' name='eway_payment_type[masterpass]' value='1' <?php echo (isset($eway_payment_type['masterpass']) && $eway_payment_type['masterpass'] == 1 ? 'checked="checked"' : '') ?> /> MasterPass
               </p>
-			  <?php if ($error_payment_type) { ?>
+			  {% if error_payment_type %}
 				  <div class="text-danger">{{ error_payment_type }}</div>
 			  <?php } ?>
             </div>

@@ -43,53 +43,53 @@
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-control">
                 <optgroup label="{{ text_choose }}">
-                <?php if ($type == 'select') { ?>
+                {% if type == 'select' %}
                 <option value="select" selected="selected">{{ text_select }}</option>
                 {% else %}
                 <option value="select">{{ text_select }}</option>
                 <?php } ?>
-                <?php if ($type == 'radio') { ?>
+                {% if type == 'radio' %}
                 <option value="radio" selected="selected">{{ text_radio }}</option>
                 {% else %}
                 <option value="radio">{{ text_radio }}</option>
                 <?php } ?>
-                <?php if ($type == 'checkbox') { ?>
+                {% if type == 'checkbox' %}
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
                 {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_input }}">
-                <?php if ($type == 'text') { ?>
+                {% if type == 'text' %}
                 <option value="text" selected="selected">{{ text_text }}</option>
                 {% else %}
                 <option value="text">{{ text_text }}</option>
                 <?php } ?>
-                <?php if ($type == 'textarea') { ?>
+                {% if type == 'textarea' %}
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
                 {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_file }}">
-                <?php if ($type == 'file') { ?>
+                {% if type == 'file' %}
                 <option value="file" selected="selected">{{ text_file }}</option>
                 {% else %}
                 <option value="file">{{ text_file }}</option>
                 <?php } ?>
                 </optgroup>
                 <optgroup label="{{ text_date }}">
-                <?php if ($type == 'date') { ?>
+                {% if type == 'date' %}
                 <option value="date" selected="selected">{{ text_date }}</option>
                 {% else %}
                 <option value="date">{{ text_date }}</option>
                 <?php } ?>
-                <?php if ($type == 'time') { ?>
+                {% if type == 'time' %}
                 <option value="time" selected="selected">{{ text_time }}</option>
                 {% else %}
                 <option value="time">{{ text_time }}</option>
                 <?php } ?>
-                <?php if ($type == 'datetime') { ?>
+                {% if type == 'datetime' %}
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
                 {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
@@ -114,7 +114,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php $option_value_row = 0; ?>
+              {% option_value_row = 0 %}
               {% for option_value in option_values %}
               <tr id="option-value-row{{ option_value_row }}">
                 <td class="text-left"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}" />

@@ -59,10 +59,10 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($custom_fields) { ?>
+                {% if custom_fields %}
                 {% for custom_field in custom_fields %}
                 <tr>
-                  <td class="text-center"><?php if (in_array($custom_field['custom_field_id'], $selected)) { ?>
+                  <td class="text-center">{% if custom_field.custom_field_id in selected %}
                     <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" checked="checked" />
                     {% else %}
                     <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" />

@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="nochex_email" value="{{ nochex_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-              <?php if ($error_email) { ?>
+              {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
               <?php } ?>
             </div>
@@ -38,12 +38,12 @@
             <label class="col-sm-2 control-label" for="input-account">{{ entry_account }}</label>
             <div class="col-sm-10">
               <select name="nochex_account" id="input-account" class="form-control">
-                <?php if ($nochex_account == 'seller') { ?>
+                {% if nochex_account == 'seller' %}
                 <option value="seller" selected="selected">{{ text_seller }}</option>
                 {% else %}
                 <option value="seller">{{ text_seller }}</option>
                 <?php } ?>
-                <?php if ($nochex_account == 'merchant') { ?>
+                {% if nochex_account == 'merchant' %}
                 <option value="merchant" selected="selected">{{ text_merchant }}</option>
                 {% else %}
                 <option value="merchant">{{ text_merchant }}</option>
@@ -55,7 +55,7 @@
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
               <input type="text" name="nochex_merchant" value="{{ nochex_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
-              <?php if ($error_merchant) { ?>
+              {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               <?php } ?>
             </div>
@@ -64,7 +64,7 @@
             <label class="col-sm-2 control-label">{{ entry_template }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($nochex_template) { ?>
+                {% if nochex_template %}
                 <input type="radio" name="nochex_template" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -87,7 +87,7 @@
             <label class="col-sm-2 control-label">{{ entry_test }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($nochex_test) { ?>
+                {% if nochex_test %}
                 <input type="radio" name="nochex_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
@@ -145,7 +145,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="nochex_status" id="input-status" class="form-control">
-                <?php if ($nochex_status) { ?>
+                {% if nochex_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

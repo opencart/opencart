@@ -1,11 +1,11 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-  <?php if ($error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php if ($menus) { ?>
+        {% if menus %}
         {% for menu in menus %}
         <tr>
           <td class="text-left" colspan="2"><b>{{ menu.name }}</b></td>
@@ -30,8 +30,8 @@
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             <?php } ?></td>
         </tr>
-        <?php if ($menu['installed']) { ?>
-        <?php foreach ($menu['store'] as $store) { ?>
+        {% if menu.installed %}
+        {% for store in menu.store %}
         <tr>
           <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
           <td class="text-left">{{ store.status }}</td>

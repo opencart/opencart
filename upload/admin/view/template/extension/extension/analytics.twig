@@ -1,11 +1,11 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-  <?php if ($error_warning) { ?>
+  {% if error_warning %}
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php if ($success) { ?>
+  {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php if ($extensions) { ?>
+        {% if extensions %}
         {% for extension in extensions %}
         <tr>
           <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
@@ -31,8 +31,8 @@
             <?php } ?></td>
         </tr>
         <?php } ?>
-        <?php if ($extension['installed']) { ?>
-        <?php foreach ($extension['store'] as $store) { ?>
+        {% if extension.installed %}
+        {% for store in extension.store %}
         <tr>
           <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
           <td class="text-left">{{ store.status }}</td>

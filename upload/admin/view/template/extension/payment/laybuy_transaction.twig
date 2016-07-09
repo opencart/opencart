@@ -13,12 +13,12 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -28,7 +28,7 @@
         <h3 class="panel-title"><i class="fa fa-info-circle"></i> {{ text_transaction_details }}</h3>
       </div>
       <div class="panel-body">
-        <?php if ($transaction) { ?>
+        {% if transaction %}
         <form action="" method="post" enctype="multipart/form-data" id="form-laybuy-transaction" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
@@ -172,7 +172,7 @@
               </tr>
               </thead>
               <tbody>
-              <?php foreach ($transaction['report'] as $report) { ?>
+              {% for report in transaction.report %}
                 <?php if ($report['instalment'] == '0') { ?>
                   <tr>
                   <td>{{ text_downpayment }}</td>

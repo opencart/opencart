@@ -14,7 +14,7 @@
 	</div>
   </div>
   <div class="container-fluid">
-	<?php if ($error_warning) { ?>
+	{% if error_warning %}
 		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
@@ -29,11 +29,11 @@
 			<label class="col-sm-2 control-label" for="input-button-type">{{ entry_button_type }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_pay_button_type" id="input-button-type" class="form-control">
-				<?php if ($amazon_pay_button_type == 'Pay') { ?>
+				{% if amazon_pay_button_type == 'Pay' %}
 					<option value="PwA" >{{ text_pwa_button }}</option>
 					<option value="Pay" selected="selected">{{ text_pay_button }}</option>
 					<option value="A">{{ text_a_button }}</option>
-				<?php } elseif ($amazon_pay_button_type == 'A') { ?>
+				{% elseif amazon_pay_button_type == 'A' %}
 					<option value="PwA" >{{ text_pwa_button }}</option>
 					<option value="Pay" >{{ text_pay_button }}</option>
 					<option value="A" selected="selected">{{ text_a_button }}</option>
@@ -49,11 +49,11 @@
 			<label class="col-sm-2 control-label" for="input-button-colour">{{ entry_button_colour }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_pay_button_colour" id="input-button-colour" class="form-control">
-				<?php if ($amazon_pay_button_colour == 'DarkGray') { ?>
+				{% if amazon_pay_button_colour == 'DarkGray' %}
 					<option value="Gold" >{{ text_gold_button }}</option>
 					<option value="DarkGray" selected="selected">{{ text_darkgray_button }}</option>
 					<option value="LightGray">{{ text_lightgray_button }}</option>
-				<?php } elseif ($amazon_pay_button_colour == 'LightGray') { ?>
+				{% elseif amazon_pay_button_colour == 'LightGray' %}
 					<option value="Gold" >{{ text_gold_button }}</option>
 					<option value="DarkGray">{{ text_darkgray_button }}</option>
 					<option value="LightGray" selected="selected">{{ text_lightgray_button }}</option>
@@ -69,17 +69,17 @@
 			<label class="col-sm-2 control-label" for="input-button-size">{{ entry_button_size }}</label>
 			<div class="col-sm-10">
 			  <select name="amazon_pay_button_size" id="input-button-size" class="form-control">
-				<?php if ($amazon_pay_button_size == 'small') { ?>
+				{% if amazon_pay_button_size == 'small' %}
 					<option value="small" selected="selected">{{ text_small_button }}</option>
 					<option value="medium">{{ text_medium_button }}</option>
 					<option value="large" selected="selected">{{ text_large_button }}</option>
 					<option value="x-large">{{ text_x_large_button }}</option>
-				<?php } elseif ($amazon_pay_button_size == 'large') { ?>
+				{% elseif amazon_pay_button_size == 'large' %}
 					<option value="small" >{{ text_small_button }}</option>
 					<option value="medium">{{ text_medium_button }}</option>
 					<option value="large" selected="selected">{{ text_large_button }}</option>
 					<option value="x-large">{{ text_x_large_button }}</option>
-				<?php } elseif ($amazon_pay_button_size == 'x-large') { ?>
+				{% elseif amazon_pay_button_size == 'x-large' %}
 					<option value="small">{{ text_small_button }}</option>
 					<option value="medium">{{ text_medium_button }}</option>
 					<option value="large">{{ text_large_button }}</option>
@@ -97,7 +97,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="amazon_pay_status" id="input-status" class="form-control">
-				<?php if ($amazon_pay_status) { ?>
+				{% if amazon_pay_status %}
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
 				{% else %}

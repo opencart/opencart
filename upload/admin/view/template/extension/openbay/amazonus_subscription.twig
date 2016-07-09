@@ -62,7 +62,7 @@
                 <tr>
                   <td class="text-right"><b>{{ text_bulk_listing }}:</b></td>
                   <td class="text-left">
-                    <?php if ($user_plan['bulk_listing']) { ?>
+                    {% if user_plan.bulk_listing %}
                     {{ text_allowed }}
                     {% else %}
                     {{ text_not_allowed }}
@@ -102,7 +102,7 @@
                   <td class="text-left">{{ plan.description }}</td>
                   <td class="text-left">{{ plan.order_frequency }}</td>
                   <td class="text-left">{{ plan.product_listings }}</td>
-                  <td class="text-left"><?php if ($plan['bulk_listing']) { ?>
+                  <td class="text-left">{% if plan.bulk_listing %}
                     {{ text_allowed }}
                     {% else %}
                     {{ text_not_allowed }}
@@ -112,7 +112,7 @@
                 <?php } ?>
               </tbody>
             </table>
-            <?php if ($link_change_plan) { ?>
+            {% if link_change_plan %}
             <div class="pull-right"> <a href="{{ link_change_plan }}" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> {{ button_change_plan }}</a> </div>
             <?php } ?>
           </div>

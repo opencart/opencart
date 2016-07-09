@@ -36,7 +36,7 @@
                 <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-                  <?php if ($error_name) { ?>
+                  {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
                   <?php } ?>
                 </div>
@@ -47,7 +47,7 @@
                   <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control">{{ key }}</textarea>
                   <br />
                   <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> {{ button_generate }}</button>
-                  <?php if ($error_key) { ?>
+                  {% if error_key %}
                   <div class="text-danger">{{ error_key }}</div>
                   <?php } ?>
                 </div>
@@ -56,7 +56,7 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
-                    <?php if ($status) { ?>
+                    {% if status %}
                     <option value="0">{{ text_disabled }}</option>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     {% else %}
@@ -80,8 +80,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $ip_row = 0; ?>
-                    <?php foreach ($api_ips as $api_ip) { ?>
+                    {% ip_row = 0 %}
+                    {% for api_ip in api_ips %}
                     <tr id="ip-row{{ ip_row }}">
                       <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip.ip }}" placeholder="{{ entry_ip }}" class="form-control" /></td>
                       <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -110,8 +110,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if ($api_sessions) { ?>
-                  <?php foreach ($api_sessions as $api_session) { ?>
+                  {% if api_sessions %}
+                  {% for api_session in api_sessions %}
                   <tr>
                     <td class="text-left">{{ api_session.token }}</td>
                     <td class="text-left">{{ api_session.ip }}</td>

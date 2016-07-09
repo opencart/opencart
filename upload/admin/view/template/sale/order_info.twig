@@ -32,7 +32,7 @@
                 <td><button data-toggle="tooltip" title="{{ text_payment_method }}" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                 <td>{{ payment_method }}</td>
               </tr>
-              <?php if ($shipping_method) { ?>
+              {% if shipping_method %}
               <tr>
                 <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
                 <td>{{ shipping_method }}</td>
@@ -50,7 +50,7 @@
           <table class="table">
             <tr>
               <td style="width: 1%;"><button data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
-              <td><?php if ($customer) { ?>
+              <td>{% if customer %}
                 <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
                 {% else %}
                 {{ firstname }} {{ lastname }}
@@ -102,11 +102,11 @@
               </tr>
               <tr>
                 <td>{{ text_affiliate }}
-                  <?php if ($affiliate) { ?>
+                  {% if affiliate %}
                   (<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
                   <?php } ?></td>
                 <td class="text-right">{{ commission }}</td>
-                <td class="text-center"><?php if ($affiliate) { ?>
+                <td class="text-center">{% if affiliate %}
                   <?php if (!$commission_total) { ?>
                   <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
@@ -130,7 +130,7 @@
           <thead>
             <tr>
               <td style="width: 50%;" class="text-left">{{ text_payment_address }}</td>
-              <?php if ($shipping_method) { ?>
+              {% if shipping_method %}
               <td style="width: 50%;" class="text-left">{{ text_shipping_address }}</td>
               <?php } ?>
             </tr>
@@ -138,7 +138,7 @@
           <tbody>
             <tr>
               <td class="text-left">{{ payment_address }}</td>
-              <?php if ($shipping_method) { ?>
+              {% if shipping_method %}
               <td class="text-left">{{ shipping_address }}</td>
               <?php } ?>
             </tr>
@@ -155,10 +155,10 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($products as $product) { ?>
+            {% for product in products %}
             <tr>
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-                <?php foreach ($product['option'] as $option) { ?>
+                {% for option in product.option %}
                 <br />
                 <?php if ($option['type'] != 'file') { ?>
                 &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
@@ -172,7 +172,7 @@
               <td class="text-right">{{ product.total }}</td>
             </tr>
             <?php } ?>
-            <?php foreach ($vouchers as $voucher) { ?>
+            {% for voucher in vouchers %}
             <tr>
               <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
               <td class="text-left"></td>
@@ -181,7 +181,7 @@
               <td class="text-right">{{ voucher.amount }}</td>
             </tr>
             <?php } ?>
-            <?php foreach ($totals as $total) { ?>
+            {% for total in totals %}
             <tr>
               <td colspan="4" class="text-right">{{ total.title }}</td>
               <td class="text-right">{{ total.text }}</td>
@@ -189,7 +189,7 @@
             <?php } ?>
           </tbody>
         </table>
-        <?php if ($comment) { ?>
+        {% if comment %}
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -213,7 +213,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
           <li><a href="#tab-additional" data-toggle="tab">{{ tab_additional }}</a></li>
-          <?php foreach ($tabs as $tab) { ?>
+          {% for tab in tabs %}
           <li><a href="#tab-{{ tab.code }}" data-toggle="tab">{{ tab.title }}</a></li>
           <?php } ?>
         </ul>
@@ -228,7 +228,7 @@
                   <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
-                      <?php foreach ($order_statuses as $order_statuses) { ?>
+                      {% for order_statuses in order_statuses %}
                       <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
                       <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
                       {% else %}
@@ -263,7 +263,7 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-additional">
-            <?php if ($account_custom_fields) { ?>
+            {% if account_custom_fields %}
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -272,7 +272,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($account_custom_fields as $custom_field) { ?>
+                  {% for custom_field in account_custom_fields %}
                   <tr>
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
@@ -282,7 +282,7 @@
               </table>
             </div>
             <?php } ?>
-            <?php if ($payment_custom_fields) { ?>
+            {% if payment_custom_fields %}
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -291,7 +291,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($payment_custom_fields as $custom_field) { ?>
+                  {% for custom_field in payment_custom_fields %}
                   <tr>
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
@@ -310,7 +310,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+                  {% for custom_field in shipping_custom_fields %}
                   <tr>
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
@@ -332,7 +332,7 @@
                     <td>{{ text_ip }}</td>
                     <td>{{ ip }}</td>
                   </tr>
-                  <?php if ($forwarded_ip) { ?>
+                  {% if forwarded_ip %}
                   <tr>
                     <td>{{ text_forwarded_ip }}</td>
                     <td>{{ forwarded_ip }}</td>
@@ -350,7 +350,7 @@
               </table>
             </div>
           </div>
-          <?php foreach ($tabs as $tab) { ?>
+          {% for tab in tabs %}
           <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
           <?php } ?>
         </div>

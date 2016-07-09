@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php $filter_row = 0; ?>
+              {% filter_row = 0 %}
               {% for filter in filters %}
               <tr id="filter-row{{ filter_row }}">
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}" />

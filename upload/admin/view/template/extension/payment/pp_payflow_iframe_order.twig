@@ -2,7 +2,7 @@
 <table class="table table-striped table-bordered">
   <tr>
     <td>{{ entry_capture_status }}: </td>
-    <td id="capture-status"><?php if ($complete) { ?>
+    <td id="capture-status">{% if complete %}
       {{ text_complete }}
       {% else %}
       {{ text_incomplete }}
@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td>{{ entry_capture }}</td>
-    <td id="complete-entry"><?php if ($complete) { ?>
+    <td id="complete-entry">{% if complete %}
       -
       {% else %}
       {{ entry_complete_capture }}
@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td>{{ entry_void }}</td>
-    <td id="reauthorise-entry"><?php if ($complete) { ?>
+    <td id="reauthorise-entry">{% if complete %}
       -
       {% else %}
       <a class="btn btn-primary" id="button-void" onclick="doVoid()">{{ button_void }}</a>
@@ -47,7 +47,7 @@
             <td class="text-left">{{ transaction.transaction_type }}</td>
             <td class="text-left"><?php echo number_format($transaction['amount'], 2); ?></td>
             <td class="text-left">{{ transaction.time }}</td>
-            <td class="text-left"><?php foreach ($transaction['actions'] as $action) { ?>
+            <td class="text-left">{% for action in transaction.actions %}
               [<a href="{{ action.href }}">{{ action.title }}</a>]
               <?php } ?></td>
           </tr>

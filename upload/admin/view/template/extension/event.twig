@@ -34,27 +34,27 @@
             <thead>
               <tr>
                 <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                <td class="text-left"><?php if ($sort == 'code') { ?>
+                <td class="text-left">{% if sort == 'code' %}
                   <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
                   {% else %}
                   <a href="{{ sort_code }}">{{ column_code }}</a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'trigger') { ?>
+                <td class="text-left">{% if sort == 'trigger' %}
                   <a href="{{ sort_trigger }}" class="{{ order|lower }}">{{ column_trigger }}</a>
                   {% else %}
                   <a href="{{ sort_trigger }}">{{ column_trigger }}</a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'action') { ?>
+                <td class="text-left">{% if sort == 'action' %}
                   <a href="{{ sort_action }}" class="{{ order|lower }}">{{ column_action }}</a>
                   {% else %}
                   <a href="{{ sort_action }}">{{ column_action }}</a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'status') { ?>
+                <td class="text-left">{% if sort == 'status' %}
                   <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                   {% else %}
                   <a href="{{ sort_status }}">{{ column_status }}</a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'date_added') { ?>
+                <td class="text-left">{% if sort == 'date_added' %}
                   <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                   {% else %}
                   <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
@@ -63,10 +63,10 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($events) { ?>
+              {% if events %}
               {% for event in events %}
               <tr>
-                <td class="text-center"><?php if (in_array($event['event_id'], $selected)) { ?>
+                <td class="text-center">{% if event.event_id in selected %}
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" checked="checked" />
                   {% else %}
                   <input type="checkbox" name="selected[]" value="{{ event.event_id }}" />

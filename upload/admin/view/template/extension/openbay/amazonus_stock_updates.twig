@@ -54,7 +54,7 @@
             <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.status }}</td>
             <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.date_requested }}</td>
             <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ row.date_updated }}</td>
-            <?php foreach ($row['data'] as $dataRow) { ?>
+            {% for dataRow in row.data %}
               <tr>
                 <td class="text-center">{{ dataRow.sku }}</td>
                 <td class="text-center">{{ dataRow.stock }}</td>

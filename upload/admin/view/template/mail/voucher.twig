@@ -33,13 +33,13 @@ a img {
 </head>
 <body>
 <div id="container">
-  <?php if ($image) { ?>
+  {% if image %}
   <div style="float: right; margin-left: 20px;"><a href="{{ store_url }}" title="{{ store_name }}"><img src="{{ image }}" alt="{{ store_name }}" /></a></div>
   <?php } ?>
   <div>
     <p>{{ text_greeting }}</p>
     <p>{{ text_from }}</p>
-    <?php if ($message) { ?>
+    {% if message %}
     <p>{{ text_message }}</p>
     <p>{{ message }}</p>
     <?php } ?>

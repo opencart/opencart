@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <?php if ($has_listing_errors) { ?>
+        {% if has_listing_errors %}
         <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
         <?php } ?>
         <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($errors) { ?>
+    {% if errors %}
     <div class="alert alert-danger">
       <ul>
         {% for listing_error in errors %}
@@ -25,7 +25,7 @@
       </ul>
     </div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
     <?php } ?>
     <ul class="nav nav-tabs" id="tabs">
@@ -63,9 +63,9 @@
               {% for mp in marketplaces %}
               <label class="radio-inline">
                 <?php if ($saved_marketplaces === false) { ?>
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
                 {% else %}
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
                 <?php } ?>
                 {{ mp.name }} </label>
               <?php } ?>

@@ -3,7 +3,7 @@
 	<td>{{ column_order_id }}</td>
 	<td>
 		{{ transaction.order_id }}
-		<?php if ($cancel_action) { ?>
+		{% if cancel_action %}
 		<a class="btn btn-primary button-command" data-type="cancel">{{ button_cancel }}</a>
 		<?php } ?>
 	</td>
@@ -19,7 +19,7 @@
   <tr>
 	<td>{{ column_merchant_reference_1 }}</td>
 	<td>
-		<?php if ($merchant_reference_action) { ?>
+		{% if merchant_reference_action %}
 		<div class="col-sm-2">
 			<input class="form-control" type="text" name="merchant_reference_1" value="{{ transaction.merchant_reference_1 }}" />
 		</div>
@@ -43,7 +43,7 @@
 		  <td>{{ transaction.billing_address_formatted }}</td>
 		  <td>{{ transaction.shipping_address_formatted }}</td>
 		</tr>
-		<?php if ($address_action) { ?>
+		{% if address_action %}
 		<tr>
 		  <td>
 			<a class="btn btn-primary" data-toggle="modal" data-target="#billing_address">{{ button_edit }}</a>
@@ -75,7 +75,7 @@
 		  </tr>
 		</thead>
 		<tbody>
-			<?php foreach ($transaction['order_lines'] as $order_line) { ?>
+			{% for order_line in transaction.order_lines %}
 			  <tr>
 				<td>{{ order_line.reference }}</td>
 				<td>{{ order_line.type }}</td>
@@ -101,17 +101,17 @@
 	<td>{{ column_authorization_remaining }}</td>
 	<td>
 	  {{ transaction.authorization_remaining }}
-	  <?php if ($release_authorization_action) { ?>
+	  {% if release_authorization_action %}
 	  <a class="btn btn-primary button-command" data-type="release_authorization">{{ button_release_authorization }}</a>
 	  <?php } ?>
 	</td>
   </tr>
-  <?php if ($transaction['authorization_expiry']) { ?>
+  {% if transaction.authorization_expiry %}
   <tr>
 	<td>{{ column_authorization_expiry }}</td>
 	<td>
 		{{ transaction.authorization_expiry }}
-		<?php if ($extend_authorization_action) { ?>
+		{% if extend_authorization_action %}
 		<a class="btn btn-primary button-command" data-type="extend_authorization">{{ button_extend_authorization }}</a>
 		<?php } ?>
 	</td>
@@ -131,7 +131,7 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<?php if ($captures) { ?>
+			{% if captures %}
 			{% for capture in captures %}
 			<tr>
 			  <td>{{ capture.capture_id }}</td>
@@ -151,7 +151,7 @@
 			</tr>
 			<?php } ?>
 		  </tbody>
-		  <?php if ($capture_action) { ?>
+		  {% if capture_action %}
 		  <tfoot>
 			<tr>
 			  <td colspan="4"></td>
@@ -174,7 +174,7 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<?php if ($refunds) { ?>
+			{% if refunds %}
 			{% for refund in refunds %}
 			<tr>
 			  <td>{{ refund.date_added }}</td>
@@ -183,7 +183,7 @@
 			<?php } ?>
 			<?php } ?>
 		  </tbody>
-		  <?php if ($refund_action) { ?>
+		  {% if refund_action %}
 		  <tfoot>
 			<tr>
 			  <td colspan="2"></td>
@@ -571,17 +571,17 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 	} else if (type === 'capture') {
 		data = $('#input-capture-amount').val();
 
-		<?php if ($symbol_left) { ?>
+		{% if symbol_left %}
 		confirm_text = '{{ text_confirm_capture }} ' + '{{ symbol_left }}' + $('#input-capture-amount').val();
-		<?php } elseif ($symbol_right) { ?>
+		{% elseif symbol_right %}
 		confirm_text = '{{ text_confirm_capture }} ' + $('#input-capture-amount').val() + '{{ symbol_right }}';
 		<?php } ?>
 	} else if (type === 'refund') {
 		data = $('#input-refund-amount').val();
 
-		<?php if ($symbol_left) { ?>
+		{% if symbol_left %}
 		confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#input-refund-amount').val();
-		<?php } elseif ($symbol_right) { ?>
+		{% elseif symbol_right %}
 		confirm_text = '{{ text_confirm_refund }} ' + $('#input-refund-amount').val() + '{{ symbol_right }}';
 		<?php } ?>
 	} else if (type === 'extend_authorization') {

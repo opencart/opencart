@@ -30,7 +30,7 @@
               </tr>
               <tr>
                 <td>{{ text_recurring_name }}</td>
-                <td><?php if ($recurring) { ?>
+                <td>{% if recurring %}
                   <a href="{{ recurring }}">{{ recurring_name }}</a>
                   {% else %}
                   {{ recurring_name }}
@@ -65,7 +65,7 @@
               </tr>
               <tr>
                 <td>{{ text_customer }}</td>
-                <td><?php if ($customer) { ?>
+                <td>{% if customer %}
                   <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
                   {% else %}
                   {{ firstname }} {{ lastname }}
@@ -123,8 +123,8 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($transactions) { ?>
-            <?php foreach ($transactions as $transaction) { ?>
+            {% if transactions %}
+            {% for transaction in transactions %}
             <tr>
               <td class="text-left">{{ transaction.date_added }}</td>
               <td class="text-right">{{ transaction.amount }}</td>

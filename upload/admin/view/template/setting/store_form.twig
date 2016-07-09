@@ -44,7 +44,7 @@
                 <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_url); ?>">{{ entry_url }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control" />
-                  <?php if ($error_url) { ?>
+                  {% if error_url %}
                   <div class="text-danger">{{ error_url }}</div>
                   <?php } ?>
                 </div>
@@ -59,7 +59,7 @@
                 <label class="col-sm-2 control-label" for="input-meta-title">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control" />
-                  <?php if ($error_meta_title) { ?>
+                  {% if error_meta_title %}
                   <div class="text-danger">{{ error_meta_title }}</div>
                   <?php } ?>
                 </div>
@@ -80,7 +80,7 @@
                 <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
-                    <?php foreach ($themes as $theme) { ?>
+                    {% for theme in themes %}
                     <?php if ($theme['value'] == $config_theme) { ?>
                     <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
                     {% else %}
@@ -95,7 +95,7 @@
                 <label class="col-sm-2 control-label" for="input-layout">{{ entry_layout }}</label>
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-control">
-                    <?php foreach ($layouts as $layout) { ?>
+                    {% for layout in layouts %}
                     <?php if ($layout['layout_id'] == $config_layout_id) { ?>
                     <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                     {% else %}
@@ -111,7 +111,7 @@
                 <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-                  <?php if ($error_name) { ?>
+                  {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
                   <?php } ?>
                 </div>
@@ -120,7 +120,7 @@
                 <label class="col-sm-2 control-label" for="input-owner">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" />
-                  <?php if ($error_owner) { ?>
+                  {% if error_owner %}
                   <div class="text-danger">{{ error_owner }}</div>
                   <?php } ?>
                 </div>
@@ -129,7 +129,7 @@
                 <label class="col-sm-2 control-label" for="input-address">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
-                  <?php if ($error_address) { ?>
+                  {% if error_address %}
                   <div class="text-danger">{{ error_address }}</div>
                   <?php } ?>
                 </div>
@@ -144,7 +144,7 @@
                 <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-                  <?php if ($error_email) { ?>
+                  {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
                   <?php } ?>
                 </div>
@@ -153,7 +153,7 @@
                 <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-                  <?php if ($error_telephone) { ?>
+                  {% if error_telephone %}
                   <div class="text-danger">{{ error_telephone }}</div>
                   <?php } ?>
                 </div>
@@ -182,14 +182,14 @@
                   <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
                 </div>
               </div>
-              <?php if ($locations) { ?>
+              {% if locations %}
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_location }}">{{ entry_location }}</span></label>
                 <div class="col-sm-10">
-                  <?php foreach ($locations as $location) { ?>
+                  {% for location in locations %}
                   <div class="checkbox">
                     <label>
-                      <?php if (in_array($location['location_id'], $config_location)) { ?>
+                      {% if location.location_id in config_location %}
                       <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" />
                       {{ location.name }}
                       {% else %}
@@ -208,7 +208,7 @@
                 <label class="col-sm-2 control-label" for="input-country">{{ entry_country }}</label>
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-control">
-                    <?php foreach ($countries as $country) { ?>
+                    {% for country in countries %}
                     <?php if ($country['country_id'] == $config_country_id) { ?>
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
@@ -229,7 +229,7 @@
                 <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">
-                    <?php foreach ($languages as $language) { ?>
+                    {% for language in languages %}
                     <?php if ($language['code'] == $config_language) { ?>
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
@@ -243,7 +243,7 @@
                 <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-control">
-                    <?php foreach ($currencies as $currency) { ?>
+                    {% for currency in currencies %}
                     <?php if ($currency['code'] == $config_currency) { ?>
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
                     {% else %}
@@ -261,7 +261,7 @@
                   <label class="col-sm-2 control-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_tax) { ?>
+                      {% if config_tax %}
                       <input type="radio" name="config_tax" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -323,7 +323,7 @@
                   <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
                   <div class="col-sm-10">
                     <select name="config_customer_group_id" id="input-customer-group" class="form-control">
-                      <?php foreach ($customer_groups as $customer_group) { ?>
+                      {% for customer_group in customer_groups %}
                       <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
                       <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                       {% else %}
@@ -336,10 +336,10 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_customer_group_display }}">{{ entry_customer_group_display }}</span></label>
                   <div class="col-sm-10">
-                    <?php foreach ($customer_groups as $customer_group) { ?>
+                    {% for customer_group in customer_groups %}
                     <div class="checkbox">
                       <label>
-                        <?php if (in_array($customer_group['customer_group_id'], $config_customer_group_display)) { ?>
+                        {% if customer_group.customer_group_id in config_customer_group_display %}
                         <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" />
                         {{ customer_group.name }}
                         {% else %}
@@ -349,7 +349,7 @@
                       </label>
                     </div>
                     <?php } ?>
-                    <?php if ($error_customer_group_display) { ?>
+                    {% if error_customer_group_display %}
                     <div class="text-danger">{{ error_customer_group_display }}</div>
                     <?php } ?>
                   </div>
@@ -358,7 +358,7 @@
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_customer_price }}">{{ entry_customer_price }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_customer_price) { ?>
+                      {% if config_customer_price %}
                       <input type="radio" name="config_customer_price" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -382,7 +382,7 @@
                   <div class="col-sm-10">
                     <select name="config_account_id" id="input-account" class="form-control">
                       <option value="0">{{ text_none }}</option>
-                      <?php foreach ($informations as $information) { ?>
+                      {% for information in informations %}
                       <?php if ($information['information_id'] == $config_account_id) { ?>
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
@@ -399,7 +399,7 @@
                   <label class="col-sm-2 control-label">{{ entry_cart_weight }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_cart_weight) { ?>
+                      {% if config_cart_weight %}
                       <input type="radio" name="config_cart_weight" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -422,7 +422,7 @@
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_checkout_guest }}">{{ entry_checkout_guest }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_checkout_guest) { ?>
+                      {% if config_checkout_guest %}
                       <input type="radio" name="config_checkout_guest" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -446,7 +446,7 @@
                   <div class="col-sm-10">
                     <select name="config_checkout_id" id="input-checkout" class="form-control">
                       <option value="0">{{ text_none }}</option>
-                      <?php foreach ($informations as $information) { ?>
+                      {% for information in informations %}
                       <?php if ($information['information_id'] == $config_checkout_id) { ?>
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
@@ -460,7 +460,7 @@
                   <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
                   <div class="col-sm-10">
                     <select name="config_order_status_id" id="input-order-status" class="form-control">
-                      <?php foreach ($order_statuses as $order_status) { ?>
+                      {% for order_status in order_statuses %}
                       <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
@@ -477,7 +477,7 @@
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_stock_display }}">{{ entry_stock_display }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_stock_display) { ?>
+                      {% if config_stock_display %}
                       <input type="radio" name="config_stock_display" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -500,7 +500,7 @@
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_stock_checkout }}">{{ entry_stock_checkout }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_stock_checkout) { ?>
+                      {% if config_stock_checkout %}
                       <input type="radio" name="config_stock_checkout" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
@@ -540,7 +540,7 @@
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_secure }}">{{ entry_secure }}</span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($config_secure) { ?>
+                    {% if config_secure %}
                     <input type="radio" name="config_secure" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}

@@ -3,10 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <?php if ($link_amazon_eu_bulk) { ?>
+        {% if link_amazon_eu_bulk %}
           <a class="btn btn-primary" href="{{ link_amazon_eu_bulk }}"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_amazon_eu_bulk }}</a>
         <?php } ?>
-        <?php if ($link_amazon_us_bulk) { ?>
+        {% if link_amazon_us_bulk %}
           <a class="btn btn-primary" href="{{ link_amazon_us_bulk }}"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_amazon_us_bulk }}</a>
         <?php } ?>
         <?php  if ($link_ebay_bulk) { ?>
@@ -22,10 +22,10 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
     <?php } ?>
     <div class="panel panel-default">
@@ -59,11 +59,11 @@
                 <label class="control-label" for="filter_marketplace">{{ entry_status_marketplace }}</label>
                 <select name="filter_marketplace" id="filter_marketplace" class="form-control">
                   <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>>{{ text_status_all }}</option>
-                  <?php if ($marketplace_statuses['ebay']) { ?>
+                  {% if marketplace_statuses.ebay %}
                   <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>>{{ text_status_ebay_active }}</option>
                   <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>>{{ text_status_ebay_inactive }}</option>
                   <?php } ?>
-                  <?php if ($marketplace_statuses['amazon']) { ?>
+                  {% if marketplace_statuses.amazon %}
                   <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>>{{ text_status_amazoneu_saved }}</option>
                   <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>>{{ text_status_amazoneu_processing }}</option>
                   <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>>{{ text_status_amazoneu_active }}</option>
@@ -72,7 +72,7 @@
                   <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>>{{ text_status_amazoneu_linked }}</option>
                   <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>>{{ text_status_amazoneu_notlinked }}</option>
                   <?php } ?>
-                  <?php if ($marketplace_statuses['amazonus']) { ?>
+                  {% if marketplace_statuses.amazonus %}
                   <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>>{{ text_status_amazonus_saved }}</option>
                   <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>>{{ text_status_amazonus_processing }}</option>
                   <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>>{{ text_status_amazonus_active }}</option>
@@ -87,7 +87,7 @@
                 <label class="control-label">{{ entry_status }}</label>
                 <select name="filter_status" class="form-control">
                   <option value="*"></option>
-                  <?php if ($filter_status) { ?>
+                  {% if filter_status %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
@@ -187,14 +187,14 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($products) { ?>
+            {% if products %}
               {% for product in products %}
                 <tr>
                   <td class="text-center">
                     <input type="checkbox" name="selected[]" value="{{ product.product_id }}" />
                   </td>
                   <td class="text-center">
-                    <?php if ($product['image']) { ?>
+                    {% if product.image %}
                       <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" />
                       {% else %}
                       <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
@@ -203,7 +203,7 @@
                   <td class="text-left"><a href="{{ product.edit }}">{{ product.name }}</a></td>
                   <td class="text-left">{{ product.model }}</td>
                   <td class="text-left">
-                    <?php if ($product['special']) { ?>
+                    {% if product.special %}
                       <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
                       <div class="text-danger">{{ product.special }}</div>
                     {% else %}
@@ -226,7 +226,7 @@
                   </td>
                   <td class="text-left">{{ product.status }}</td>
                   <td>
-                    <?php foreach ($product['markets'] as $market) { ?>
+                    {% for markets in product.markets %}
                       <?php if ($market['status'] == 1) { ?>
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
                       <?php } elseif ($market['status'] == 2) { ?>

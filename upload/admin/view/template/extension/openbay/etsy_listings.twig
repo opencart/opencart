@@ -11,10 +11,10 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($success) { ?>
+    {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
     <?php } ?>
-    <?php if ($error_warning) { ?>
+    {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
     <?php } ?>
     <div class="panel panel-default">
@@ -77,7 +77,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($listings) { ?>
+              {% if listings %}
               {% for listing in listings %}
               <tr>
                 <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>

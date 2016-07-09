@@ -29,7 +29,7 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="basic_captcha_status" id="input-status" class="form-control">
-                <?php if ($basic_captcha_status) { ?>
+                {% if basic_captcha_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

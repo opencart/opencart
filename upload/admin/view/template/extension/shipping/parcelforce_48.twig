@@ -112,7 +112,7 @@
               <select name="parcelforce_48_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                <?php if ($tax_class['tax_class_id'] == $parcelforce_48_tax_class_id) { ?>
+                {% if tax_class.tax_class_id == parcelforce_48_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -127,7 +127,7 @@
               <select name="parcelforce_48_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                <?php if ($geo_zone['geo_zone_id'] == $parcelforce_48_geo_zone_id) { ?>
+                {% if geo_zone.geo_zone_id == parcelforce_48_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>

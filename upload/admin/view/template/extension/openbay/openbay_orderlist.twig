@@ -52,7 +52,7 @@
                   <option value="0">{{ text_missing }}</option>
                   <?php } ?>
                   {% for order_status in order_statuses %}
-                  <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+                  {% if order_status.order_status_id == filter_order_status_id %}
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                   {% else %}
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -67,7 +67,7 @@
                 <select name="filter_channel" id="input-channel" class="form-control">
                   <option value=""></option>
                   {% for channel in channels %}
-                  <?php if ($channel['module'] == $filter_channel) { ?>
+                  {% if channel.module == filter_channel %}
                   <option value="{{ channel.module }}" selected="selected">{{ channel.title }}</option>
                   <?php } else {  ?>
                   <option value="{{ channel.module }}">{{ channel.title }}</option>
@@ -113,7 +113,7 @@
             <thead>
               <tr>
                 <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
-                <th class="text-left"><?php if ($sort == 'o.order_id') { ?>
+                <th class="text-left">{% if sort == 'o.order_id' %}
                   <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a>
                   {% else %}
                   <a href="{{ sort_order }}">{{ column_order_id }}</a>
@@ -133,7 +133,7 @@
                   {% else %}
                   <a href="{{ sort_channel }}">{{ column_channel }}</a>
                   <?php } ?></th>
-                <th class="text-left"><?php if ($sort == 'o.date_added') { ?>
+                <th class="text-left">{% if sort == 'o.date_added' %}
                   <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                   {% else %}
                   <a href="{{ sort_date_added }}">{{ column_date_added }}</a>

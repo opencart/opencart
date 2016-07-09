@@ -97,7 +97,7 @@
                     <div class="col-sm-10">
                       <select name="royal_mail_weight_class_id" id="input-weight-class" class="form-control">
                         {% for weight_class in weight_classes %}
-                        <?php if ($weight_class['weight_class_id'] == $royal_mail_weight_class_id) { ?>
+                        {% if weight_class.weight_class_id == royal_mail_weight_class_id %}
                         <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                         {% else %}
                         <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -112,7 +112,7 @@
                       <select name="royal_mail_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                        <?php if ($tax_class['tax_class_id'] == $royal_mail_tax_class_id) { ?>
+                        {% if tax_class.tax_class_id == royal_mail_tax_class_id %}
                         <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                         {% else %}
                         <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -127,7 +127,7 @@
                       <select name="royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
                         {% for geo_zone in geo_zones %}
-                        <?php if ($geo_zone['geo_zone_id'] == $royal_mail_geo_zone_id) { ?>
+                        {% if geo_zone.geo_zone_id == royal_mail_geo_zone_id %}
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                         {% else %}
                         <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>

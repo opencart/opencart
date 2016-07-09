@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              {% tax_rule_row = 0 %}
+              {% set tax_rule_row = 0 %}
               {% for tax_rule in tax_rules %}
               <tr id="tax-rule-row{{ tax_rule_row }}">
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
@@ -85,7 +85,7 @@
                 <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
-              <?php $tax_rule_row++; ?>
+              {% set tax_rule_row = tax_rule_row + 1 %}
               <?php } ?>
             </tbody>
             <tfoot>

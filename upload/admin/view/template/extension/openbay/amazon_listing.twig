@@ -40,7 +40,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <?php foreach ($marketplaces as $id => $name) {?>
+              {% for id, name in marketplaces %}
               <label class="radio-inline">
                 <?php if ($default_marketplace == $id) { ?>
                 <input type="radio" name="marketplace" id="marketplace_{{ id }}" value="{{ id }}" checked="checked" />

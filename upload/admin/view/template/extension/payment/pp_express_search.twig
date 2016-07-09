@@ -109,7 +109,7 @@
                 <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" class="form-control" />
                 <br />
                 <select name="currency_code" class="form-control">
-                  <?php foreach($currency_codes as $code) { ?>
+                  {% for code in currency_codes %}
                   <option <?php if ($code == $default_currency) { echo 'selected'; } ?>>{{ code }}</option>
                   <?php } ?>
                 </select>

@@ -361,7 +361,7 @@
                   html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="Worldwide" />';
                   html += ' {{ text_shipping_worldwide }}';
                 html += '</label>';
-                <?php foreach($shipping_international_zones as $zone) { ?>
+                {% for zone in shipping_international_zones %}
                   html += '<label class="checkbox-inline">';
                     html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="{{ zone.shipping_location }}" />';
                     html += ' {{ zone.description }}';

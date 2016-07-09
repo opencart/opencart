@@ -173,7 +173,7 @@
                     <select name="country_id" id="input-country" class="form-control">
                       <option value="">{{ text_select }}</option>
                       {% for country in countries %}
-                      <?php if ($country['country_id'] == $country_id) { ?>
+                      {% if country.country_id == country_id %}
                       <option value="{{ country.country_id }}" selected="selected"> {{ country.name }} </option>
                       {% else %}
                       <option value="{{ country.country_id }}">{{ country.name }}</option>

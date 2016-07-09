@@ -229,7 +229,7 @@
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-control">
                       {% for order_statuses in order_statuses %}
-                      <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
+                      {% if order_statuses.order_status_id == order_status_id %}
                       <option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
                       {% else %}
                       <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>

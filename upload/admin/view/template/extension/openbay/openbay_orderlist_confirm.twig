@@ -43,7 +43,7 @@
               </td>
               <td class="text-left">{{ order.date_added }}</td>
               <td class="text-left">
-                <?php if ($order['channel'] == 'eBay') { ?>
+                {% if order.channel == 'eBay' %}
                   <?php if ($change_order_status_id == $ebay_status_shipped_id) { ?>
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
@@ -59,7 +59,7 @@
                     </div>
                   <?php } ?>
                 <?php } ?>
-                <?php if ($order['channel'] == 'Amazon EU') { ?>
+                {% if order.channel == 'Amazon EU' %}
                   <?php if ($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
@@ -80,7 +80,7 @@
                     </div>
                   <?php } ?>
                 <?php } ?>
-                <?php if ($order['channel'] == 'Amazon US') { ?>
+                {% if order.channel == 'Amazon US' %}
                   <?php if ($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
                   <div class="form-group">
                     <label class="control-label">{{ entry_carrier }}</label>

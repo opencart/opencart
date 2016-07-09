@@ -114,7 +114,7 @@
               </tr>
             </thead>
             <tbody>
-              {% option_value_row = 0 %}
+              {% set option_value_row = 0 %}
               {% for option_value in option_values %}
               <tr id="option-value-row{{ option_value_row }}">
                 <td class="text-left"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}" />
@@ -131,7 +131,7 @@
                 <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
-              <?php $option_value_row++; ?>
+              {% set option_value_row = option_value_row + 1 %}
               <?php } ?>
             </tbody>
             <tfoot>

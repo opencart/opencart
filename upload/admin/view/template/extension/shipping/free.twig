@@ -37,7 +37,7 @@
               <select name="free_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                <?php if ($geo_zone['geo_zone_id'] == $free_geo_zone_id) { ?>
+                {% if geo_zone.geo_zone_id == free_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>

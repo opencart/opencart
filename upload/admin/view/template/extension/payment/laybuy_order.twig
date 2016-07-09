@@ -144,7 +144,7 @@
 		  </thead>
 		  <tbody>
 		  {% for report in transaction.report %}
-		    <?php if ($report['instalment'] == '0') { ?>
+		    {% if report.instalment == '0' %}
 		      <tr>
 			    <td>{{ text_downpayment }}</td>
 			    <td>{{ report.amount }}</td>

@@ -78,17 +78,17 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-right"><?php if ($sort == 'or.order_recurring_id') { ?>
+                  <td class="text-right">{% if sort == 'or.order_recurring_id' %}
                     <a href="{{ sort_order_recurring }}" class="{{ order|lower }}">{{ column_order_recurring_id }}</a>
                     {% else %}
                     <a href="{{ sort_order_recurring }}">{{ column_order_recurring_id }}</a>
                     <?php }  ?></td>
-                  <td class="text-right"><?php if ($sort == 'or.order_id') { ?>
+                  <td class="text-right">{% if sort == 'or.order_id' %}
                     <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a>
                     {% else %}
                     <a href="{{ sort_order }}">{{ column_order_id }}</a>
                     <?php }  ?></td>
-                  <td class="text-left"><?php if ($sort == 'or.reference') { ?>
+                  <td class="text-left">{% if sort == 'or.reference' %}
                     <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a>
                     {% else %}
                     <a href="{{ sort_reference }}">{{ column_reference }}</a>
@@ -98,12 +98,12 @@
                     {% else %}
                     <a href="{{ sort_customer }}">{{ column_customer }}</a>
                     <?php }  ?></td>
-                  <td class="text-left"><?php if ($sort == 'or.status') { ?>
+                  <td class="text-left">{% if sort == 'or.status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php }  ?></td>
-                  <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
+                  <td class="text-left">{% if sort == 'or.date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>

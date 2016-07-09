@@ -61,7 +61,7 @@
 						<div class="col-sm-10">
 							<select name="fraudlabspro_order_status_id" id="input-order-status" class="form-control">
 								{% for order_status in order_statuses %}
-								<?php if ($order_status['order_status_id'] == $fraudlabspro_order_status_id) { ?>
+								{% if order_status.order_status_id == fraudlabspro_order_status_id %}
 								<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 								{% else %}
 								<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -77,7 +77,7 @@
 							<div class="col-sm-10">
 								<select name="fraudlabspro_review_status_id" id="input-fraud-review-status" class="form-control">
 									{% for order_status in order_statuses %}
-									<?php if ($order_status['order_status_id'] == $fraudlabspro_review_status_id) { ?>
+									{% if order_status.order_status_id == fraudlabspro_review_status_id %}
 									<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
 									<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -91,7 +91,7 @@
 							<div class="col-sm-10">
 								<select name="fraudlabspro_approve_status_id" id="input-fraud-approve-status" class="form-control">
 									{% for order_status in order_statuses %}
-									<?php if ($order_status['order_status_id'] == $fraudlabspro_approve_status_id) { ?>
+									{% if order_status.order_status_id == fraudlabspro_approve_status_id %}
 									<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
 									<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -105,7 +105,7 @@
 							<div class="col-sm-10">
 								<select name="fraudlabspro_reject_status_id" id="input-fraud-reject-status" class="form-control">
 								{% for order_status in order_statuses %}
-								<?php if ($order_status['order_status_id'] == $fraudlabspro_reject_status_id) { ?>
+								{% if order_status.order_status_id == fraudlabspro_reject_status_id %}
 								<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 								{% else %}
 								<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

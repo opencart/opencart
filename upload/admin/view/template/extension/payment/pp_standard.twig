@@ -97,7 +97,7 @@
                   <select name="pp_standard_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
                     {% for geo_zone in geo_zones %}
-                    <?php if ($geo_zone['geo_zone_id'] == $pp_standard_geo_zone_id) { ?>
+                    {% if geo_zone.geo_zone_id == pp_standard_geo_zone_id %}
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                     {% else %}
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -133,7 +133,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_canceled_reversal_status_id" id="input-canceled-reversal-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_canceled_reversal_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_canceled_reversal_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -147,7 +147,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_completed_status_id" id="input-completed-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_completed_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_completed_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -161,7 +161,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_denied_status_id" id="input-denied-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_denied_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_denied_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -175,7 +175,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_expired_status_id" id="input-expired-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_expired_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_expired_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -189,7 +189,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_failed_status_id" id="input-failed-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_failed_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_failed_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -203,7 +203,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_pending_status_id" id="input-pending-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_pending_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_pending_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -217,7 +217,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_processed_status_id" id="input-processed-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_processed_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_processed_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -231,7 +231,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_refunded_status_id" id="input-refunded-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_refunded_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_refunded_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -245,7 +245,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_reversed_status_id" id="input-reversed-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_reversed_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_reversed_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -259,7 +259,7 @@
                 <div class="col-sm-10">
                   <select name="pp_standard_voided_status_id" id="input-void-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $pp_standard_voided_status_id) { ?>
+                    {% if order_status.order_status_id == pp_standard_voided_status_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

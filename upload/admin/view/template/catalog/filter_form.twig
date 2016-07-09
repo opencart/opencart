@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              {% filter_row = 0 %}
+              {% set filter_row = 0 %}
               {% for filter in filters %}
               <tr id="filter-row{{ filter_row }}">
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}" />
@@ -68,7 +68,7 @@
                 <td class="text-right"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#filter-row{{ filter_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
-              <?php $filter_row++; ?>
+              {% set filter_row = filter_row + 1 %}
               <?php } ?>
             </tbody>
             <tfoot>

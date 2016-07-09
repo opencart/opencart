@@ -76,7 +76,7 @@
             <div class="col-sm-10">
               <select name="pp_login_customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
-                <?php if ($customer_group['customer_group_id'] == $pp_login_customer_group_id) { ?>
+                {% if customer_group.customer_group_id == pp_login_customer_group_id %}
                 <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                 {% else %}
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>

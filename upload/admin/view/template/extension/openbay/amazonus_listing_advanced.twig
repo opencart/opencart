@@ -43,7 +43,7 @@
                                 <?php if (!empty($options)) { ?>
                                 <select id="openstock_selector" name="optionVar" class="form-control">
                                     <?php $option_selected = false; ?>
-                                    <?php foreach($options as $option) { ?>
+                                    {% for option in options %}
                                     <?php if (!empty($option['sku'])) { ?>
                                     <option <?php if ($variation == $option['sku']) { echo "selected='selected'"; $option_selected = true; } ?> value="<?php echo  $option['sku']?>"><?php echo $option['combination']?></option>
                                     <?php } ?>

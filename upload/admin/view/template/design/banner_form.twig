@@ -55,7 +55,7 @@
             <?php } ?>
           </ul>
           <div class="tab-content">
-            {% image_row = 0 %}
+            {% set image_row = 0 %}
             {% for language in languages %}
             <div class="tab-pane" id="language{{ language.language_id }}">
               <table id="images{{ language.language_id }}" class="table table-striped table-bordered table-hover">
@@ -82,7 +82,7 @@
                     <td class="text-right" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
                     <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}, .tooltip').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
-                  <?php $image_row++; ?>
+                  {% set image_row = image_row + 1 %}
                   <?php } ?>
                   <?php } ?>
                 </tbody>

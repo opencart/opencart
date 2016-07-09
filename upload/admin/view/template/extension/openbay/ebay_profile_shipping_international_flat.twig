@@ -20,7 +20,7 @@
           <label class="checkbox-inline">
             <input type="checkbox" name="data[international][flat][shipto][{{ key }}][]" value="Worldwide" <?php echo isset($data['international']['flat']['shipto'][$key]) && in_array('Worldwide', $data['international']['flat']['shipto'][$key]) ? 'checked="checked"' : '' ?> /> {{ text_shipping_worldwide }}
           </label>
-          <?php foreach($zones as $zone) { ?>
+          {% for zone in zones %}
           <label class="checkbox-inline">
             <input type="checkbox" name="data[international][flat][shipto][{{ key }}][]" value="{{ zone.shipping_location }}" <?php echo isset($data['international']['flat']['shipto'][$key]) && in_array($zone['shipping_location'], $data['international']['flat']['shipto'][$key]) ? 'checked="checked"' : ''; ?> /> {{ zone.description }}
           </label>

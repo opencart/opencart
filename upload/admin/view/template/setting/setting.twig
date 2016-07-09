@@ -68,7 +68,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     {% for theme in themes %}
-                    <?php if ($theme['value'] == $config_theme) { ?>
+                    {% if theme.value == config_theme %}
                     <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
                     {% else %}
                     <option value="{{ theme.value }}">{{ theme.text }}</option>
@@ -83,7 +83,7 @@
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-control">
                     {% for layout in layouts %}
-                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                    {% if layout.layout_id == config_layout_id %}
                     <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                     {% else %}
                     <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
@@ -196,7 +196,7 @@
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-control">
                     {% for country in countries %}
-                    <?php if ($country['country_id'] == $config_country_id) { ?>
+                    {% if country.country_id == config_country_id %}
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
                     <option value="{{ country.country_id }}">{{ country.name }}</option>
@@ -217,7 +217,7 @@
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">
                     {% for language in languages %}
-                    <?php if ($language['code'] == $config_language) { ?>
+                    {% if language.code == config_language %}
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
                     <option value="{{ language.code }}">{{ language.name }}</option>
@@ -231,7 +231,7 @@
                 <div class="col-sm-10">
                   <select name="config_admin_language" id="input-admin-language" class="form-control">
                     {% for language in languages %}
-                    <?php if ($language['code'] == $config_admin_language) { ?>
+                    {% if language.code == config_admin_language %}
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
                     <option value="{{ language.code }}">{{ language.name }}</option>
@@ -245,7 +245,7 @@
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-control">
                     {% for currency in currencies %}
-                    <?php if ($currency['code'] == $config_currency) { ?>
+                    {% if currency.code == config_currency %}
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
                     {% else %}
                     <option value="{{ currency.code }}">{{ currency.title }}</option>
@@ -282,7 +282,7 @@
                 <div class="col-sm-10">
                   <select name="config_length_class_id" id="input-length-class" class="form-control">
                     {% for length_class in length_classes %}
-                    <?php if ($length_class['length_class_id'] == $config_length_class_id) { ?>
+                    {% if length_class.length_class_id == config_length_class_id %}
                     <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                     {% else %}
                     <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
@@ -296,7 +296,7 @@
                 <div class="col-sm-10">
                   <select name="config_weight_class_id" id="input-weight-class" class="form-control">
                     {% for weight_class in weight_classes %}
-                    <?php if ($weight_class['weight_class_id'] == $config_weight_class_id) { ?>
+                    {% if weight_class.weight_class_id == config_weight_class_id %}
                     <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                     {% else %}
                     <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -550,7 +550,7 @@
                   <div class="col-sm-10">
                     <select name="config_customer_group_id" id="input-customer-group" class="form-control">
                       {% for customer_group in customer_groups %}
-                      <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
+                      {% if customer_group.customer_group_id == config_customer_group_id %}
                       <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                       {% else %}
                       <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -618,7 +618,7 @@
                     <select name="config_account_id" id="input-account" class="form-control">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
-                      <?php if ($information['information_id'] == $config_account_id) { ?>
+                      {% if information.information_id == config_account_id %}
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
@@ -688,7 +688,7 @@
                     <select name="config_checkout_id" id="input-checkout" class="form-control">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
-                      <?php if ($information['information_id'] == $config_checkout_id) { ?>
+                      {% if information.information_id == config_checkout_id %}
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
@@ -702,7 +702,7 @@
                   <div class="col-sm-10">
                     <select name="config_order_status_id" id="input-order-status" class="form-control">
                       {% for order_status in order_statuses %}
-                      <?php if ($order_status['order_status_id'] == $config_order_status_id) { ?>
+                      {% if order_status.order_status_id == config_order_status_id %}
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -762,7 +762,7 @@
                   <div class="col-sm-10">
                     <select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
                       {% for order_status in order_statuses %}
-                      <?php if ($order_status['order_status_id'] == $config_fraud_status_id) { ?>
+                      {% if order_status.order_status_id == config_fraud_status_id %}
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -777,7 +777,7 @@
                     <select name="config_api_id" id="input-api" class="form-control">
                       <option value="0">{{ text_none }}</option>
                       {% for api in apis %}
-                      <?php if ($api['api_id'] == $config_api_id) { ?>
+                      {% if api.api_id == config_api_id %}
                       <option value="{{ api.api_id }}" selected="selected">{{ api.name }}</option>
                       {% else %}
                       <option value="{{ api.api_id }}">{{ api.name }}</option>
@@ -919,7 +919,7 @@
                     <select name="config_affiliate_id" id="input-affiliate" class="form-control">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
-                      <?php if ($information['information_id'] == $config_affiliate_id) { ?>
+                      {% if information.information_id == config_affiliate_id %}
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
@@ -937,7 +937,7 @@
                     <select name="config_return_id" id="input-return" class="form-control">
                       <option value="0">{{ text_none }}</option>
                       {% for information in informations %}
-                      <?php if ($information['information_id'] == $config_return_id) { ?>
+                      {% if information.information_id == config_return_id %}
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
@@ -951,7 +951,7 @@
                   <div class="col-sm-10">
                     <select name="config_return_status_id" id="input-return-status" class="form-control">
                       {% for return_status in return_statuses %}
-                      <?php if ($return_status['return_status_id'] == $config_return_status_id) { ?>
+                      {% if return_status.return_status_id == config_return_status_id %}
                       <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                       {% else %}
                       <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
@@ -969,7 +969,7 @@
                     <select name="config_captcha" id="input-captcha" class="form-control">
                       <option value="">{{ text_none }}</option>
                       {% for captcha in captchas %}
-                      <?php if ($captcha['value'] == $config_captcha) { ?>
+                      {% if captcha.value == config_captcha %}
                       <option value="{{ captcha.value }}" selected="selected">{{ captcha.text }}</option>
                       {% else %}
                       <option value="{{ captcha.value }}">{{ captcha.text }}</option>

@@ -17,7 +17,7 @@
     </div>
     {% endif %}
     <?php if (!empty($error)) { ?>
-      <?php foreach($error as $error_message) { ?>
+      {% for error_message in error %}
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>
       <?php } ?>
     <?php } ?>

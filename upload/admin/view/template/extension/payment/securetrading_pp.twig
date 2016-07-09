@@ -153,7 +153,7 @@
             <div class="col-sm-10">
               <select name="securetrading_pp_order_status_id" id="securetrading_pp_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
-                <?php if ($order_status['order_status_id'] == $securetrading_pp_order_status_id) { ?>
+                {% if order_status.order_status_id == securetrading_pp_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -167,7 +167,7 @@
             <div class="col-sm-10">
               <select name="securetrading_pp_declined_order_status_id" id="securetrading_pp_declined_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
-                <?php if ($order_status['order_status_id'] == $securetrading_pp_declined_order_status_id) { ?>
+                {% if order_status.order_status_id == securetrading_pp_declined_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -181,7 +181,7 @@
             <div class="col-sm-10">
               <select name="securetrading_pp_refunded_order_status_id" id="securetrading_pp_refunded_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
-                <?php if ($order_status['order_status_id'] == $securetrading_pp_refunded_order_status_id) { ?>
+                {% if order_status.order_status_id == securetrading_pp_refunded_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -195,7 +195,7 @@
             <div class="col-sm-10">
               <select name="securetrading_pp_authorisation_reversed_order_status_id" id="securetrading_pp_authorisation_reversed_order_status_id" class="form-control">
                 {% for order_status in order_statuses %}
-                <?php if ($order_status['order_status_id'] == $securetrading_pp_authorisation_reversed_order_status_id) { ?>
+                {% if order_status.order_status_id == securetrading_pp_authorisation_reversed_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

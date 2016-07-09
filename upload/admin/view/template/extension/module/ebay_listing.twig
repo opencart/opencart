@@ -102,8 +102,8 @@
             <label class="col-sm-2 control-label" for="input-site">{{ entry_site }}</label>
             <div class="col-sm-10">
               <select name="ebay_listing_site" id="input-site" class="form-control">
-                <?php foreach($sites as $site) { ?>
-                <?php if ($site['value'] == $ebay_listing_site) { ?>
+                {% for site in sites %}
+                {% if site.value == ebay_listing_site %}
                 <option value="{{ site.value }}" selected>{{ site.text }}</option>
                 {% else %}
                 <option value="{{ site.value }}">{{ site.text }}</option>

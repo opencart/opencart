@@ -38,7 +38,7 @@
               <div class="list-group-item">
                 <select name="language_id" class="form-control">
                   {% for language in languages %}
-                  <?php if ($language['language_id'] == $language_id) { ?>
+                  {% if language.language_id == language_id %}
                   <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
                   {% else %}
                   <option value="{{ language.language_id }}">{{ language.name }}</option>

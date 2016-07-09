@@ -47,7 +47,7 @@
                       <div class="input-group category-select-group"> <span class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
                         <select name="eBayStoreCatId" class="form-control">
                           <option disabled selected>{{ text_select }}</option>
-                          <?php foreach ($product['store_cats'] as $key => $cat) { ?>
+                          {% for key, cat in product['store_cats'] %}
                           <option value="{{ key }}">{{ cat }}</option>
                           <?php } ?>
                         </select>
@@ -389,7 +389,7 @@
                           -
                           <?php } ?></td>
                       </tr>
-                      <?php $i++; ?>
+                      {% set i = i + 1 %}
                       <?php } ?>
                     </tbody>
                   </table>
@@ -581,7 +581,7 @@
                 <div class="col-sm-10">
                   <?php $paypal = false; ?>
                   {% for payments in product.payments %}
-                  <?php if ($payment['ebay_name'] == 'PayPal') { ?>
+                  {% if payment.ebay_name == 'PayPal' %}
                   <?php $paypal = true; ?>
                   {% else %}
                   <p>

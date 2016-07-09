@@ -80,13 +80,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% ip_row = 0 %}
+                    {% set ip_row = 0 %}
                     {% for api_ip in api_ips %}
                     <tr id="ip-row{{ ip_row }}">
                       <td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip.ip }}" placeholder="{{ entry_ip }}" class="form-control" /></td>
                       <td class="text-left"><button type="button" onclick="$('#ip-row{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
-                    <?php $ip_row++; ?>
+                    {% set ip_row = ip_row + 1 %}
                     <?php } ?>
                   </tbody>
                   <tfoot>

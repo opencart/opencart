@@ -130,7 +130,7 @@
                 <div class="col-sm-10">
                   <select name="return_reason_id" id="input-return-reason" class="form-control">
                     {% for return_reason in return_reasons %}
-                    <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
+                    {% if return_reason.return_reason_id == return_reason_id %}
                     <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
                     {% else %}
                     <option value="{{ return_reason.return_reason_id }}">{{ return_reason.name }}</option>
@@ -165,7 +165,7 @@
                   <select name="return_action_id" id="input-return-action" class="form-control">
                     <option value="0"></option>
                     {% for return_action in return_actions %}
-                    <?php if ($return_action['return_action_id'] == $return_action_id) { ?>
+                    {% if return_action.return_action_id == return_action_id %}
                     <option value="{{ return_action.return_action_id }}" selected="selected"> {{ return_action.name }}</option>
                     {% else %}
                     <option value="{{ return_action.return_action_id }}">{{ return_action.name }}</option>
@@ -180,7 +180,7 @@
                 <div class="col-sm-10">
                   <select name="return_status_id" id="input-return-status" class="form-control">
                     {% for return_status in return_statuses %}
-                    <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
+                    {% if return_status.return_status_id == return_status_id %}
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}
                     <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
@@ -203,7 +203,7 @@
                 <div class="col-sm-10">
                   <select name="return_status_id" id="input-return-status" class="form-control">
                     {% for return_status in return_statuses %}
-                    <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
+                    {% if return_status.return_status_id == return_status_id %}
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}
                     <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>

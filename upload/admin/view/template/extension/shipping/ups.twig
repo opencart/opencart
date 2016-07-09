@@ -57,7 +57,7 @@
             <div class="col-sm-10">
               <select name="ups_pickup" id="input-pickup" class="form-control">
                 {% for pickup in pickups %}
-                <?php if ($pickup['value'] == $ups_pickup) { ?>
+                {% if pickup.value == ups_pickup %}
                 <option value="{{ pickup.value }}" selected="selected">{{ pickup.text }}</option>
                 {% else %}
                 <option value="{{ pickup.value }}">{{ pickup.text }}</option>
@@ -71,7 +71,7 @@
             <div class="col-sm-10">
               <select name="ups_packaging" id="input-packaging" class="form-control">
                 {% for package in packages %}
-                <?php if ($package['value'] == $ups_packaging) { ?>
+                {% if package.value == ups_packaging %}
                 <option value="{{ package.value }}" selected="selected">{{ package.text }}</option>
                 {% else %}
                 <option value="{{ package.value }}">{{ package.text }}</option>
@@ -85,7 +85,7 @@
             <div class="col-sm-10">
               <select name="ups_classification" id="input-classification" class="form-control">
                 {% for classification in classifications %}
-                <?php if ($classification['value'] == $ups_classification) { ?>
+                {% if classification.value == ups_classification %}
                 <option value="{{ classification.value }}" selected="selected">{{ classification.text }}</option>
                 {% else %}
                 <option value="{{ classification.value }}">{{ classification.text }}</option>
@@ -99,7 +99,7 @@
             <div class="col-sm-10">
               <select name="ups_origin" id="input-origin" class="form-control">
                 {% for origin in origins %}
-                <?php if ($origin['value'] == $ups_origin) { ?>
+                {% if origin.value == ups_origin %}
                 <option value="{{ origin.value }}" selected="selected">{{ origin.text }}</option>
                 {% else %}
                 <option value="{{ origin.value }}">{{ origin.text }}</option>
@@ -169,7 +169,7 @@
             <div class="col-sm-10">
               <select name="ups_quote_type" id="input-quote-type" class="form-control">
                 {% for quote_type in quote_types %}
-                <?php if ($quote_type['value'] == $ups_quote_type) { ?>
+                {% if quote_type.value == ups_quote_type %}
                 <option value="{{ quote_type.value }}" selected="selected">{{ quote_type.text }}</option>
                 {% else %}
                 <option value="{{ quote_type.value }}">{{ quote_type.text }}</option>
@@ -787,7 +787,7 @@
             <div class="col-sm-10">
               <select name="ups_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
-                <?php if ($weight_class['weight_class_id'] == $ups_weight_class_id) { ?>
+                {% if weight_class.weight_class_id == ups_weight_class_id %}
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -801,7 +801,7 @@
             <div class="col-sm-10">
               <select name="ups_length_class_id" id="input-length-class" class="form-control">
                 {% for length_class in length_classes %}
-                <?php if ($length_class['length_class_id'] == $ups_length_class_id) { ?>
+                {% if length_class.length_class_id == ups_length_class_id %}
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
                 <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
@@ -835,7 +835,7 @@
               <select name="ups_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                <?php if ($tax_class['tax_class_id'] == $ups_tax_class_id) { ?>
+                {% if tax_class.tax_class_id == ups_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -850,7 +850,7 @@
               <select name="ups_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                <?php if ($geo_zone['geo_zone_id'] == $ups_geo_zone_id) { ?>
+                {% if geo_zone.geo_zone_id == ups_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>

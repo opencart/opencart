@@ -235,13 +235,13 @@
                       </tr>
                       </thead>
                       <tbody>
-                      {% image_row = 0 %}
+                      {% set image_row = 0 %}
                       {% for product_images in product.product_images %}
                       <tr>
                         <td class="text-left"><input type="checkbox" name="product_image[{{ image_row }}][image_url]" value="{{ product_image.image_url }}" class="product-image" checked="checked" /></td>
                         <td class="text-left"><a href="" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" /></a></td>
                       </tr>
-                      <?php $image_row++; ?>
+                      {% set image_row = image_row + 1 %}
                       <?php } ?>
                       </tbody>
                     </table>

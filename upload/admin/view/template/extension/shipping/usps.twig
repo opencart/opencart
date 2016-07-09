@@ -480,7 +480,7 @@
             <div class="col-sm-10">
               <select name="usps_size" id="input-size" class="form-control">
                 {% for size in sizes %}
-                <?php if ($size['value'] == $usps_size) { ?>
+                {% if size.value == usps_size %}
                 <option value="{{ size.value }}" selected="selected">{{ size.text }}</option>
                 {% else %}
                 <option value="{{ size.value }}">{{ size.text }}</option>
@@ -494,7 +494,7 @@
             <div class="col-sm-10">
               <select name="usps_container" id="input-container" class="form-control">
                 {% for container in containers %}
-                <?php if ($container['value'] == $usps_container) { ?>
+                {% if container.value == usps_container %}
                 <option value="{{ container.value }}" selected="selected">{{ container.text }}</option>
                 {% else %}
                 <option value="{{ container.value }}">{{ container.text }}</option>
@@ -587,7 +587,7 @@
             <div class="col-sm-10">
               <select name="usps_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
-                <?php if ($weight_class['weight_class_id'] == $usps_weight_class_id) { ?>
+                {% if weight_class.weight_class_id == usps_weight_class_id %}
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -602,7 +602,7 @@
               <select name="usps_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                <?php if ($tax_class['tax_class_id'] == $usps_tax_class_id) { ?>
+                {% if tax_class.tax_class_id == usps_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -617,7 +617,7 @@
               <select name="usps_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                <?php if ($geo_zone['geo_zone_id'] == $usps_geo_zone_id) { ?>
+                {% if geo_zone.geo_zone_id == usps_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>

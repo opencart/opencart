@@ -423,37 +423,37 @@
 		<table class="table table-bordered shipping-info-data">
 		  <tbody>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.shipping_company }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.shipping_method }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.tracking_number }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.tracking_uri }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_shipping_company }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_tracking_number }}</td>
 			  <?php } ?>
 			</tr>
 			<tr>
-			  <?php foreach ($capture['shipping_info'] as $key => $shipping_info) { ?>
+			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_tracking_uri }}</td>
 			  <?php } ?>
 			</tr>

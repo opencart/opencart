@@ -47,7 +47,7 @@
                 <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                   <option value="*"></option>
                   {% for customer_group in customer_groups %}
-                  <?php if ($customer_group['customer_group_id'] == $filter_customer_group_id) { ?>
+                  {% if customer_group.customer_group_id == filter_customer_group_id %}
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                   {% else %}
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -118,7 +118,7 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'c.email') { ?>
+                  <td class="text-left">{% if sort == 'c.email' %}
                     <a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>
                     {% else %}
                     <a href="{{ sort_email }}">{{ column_email }}</a>
@@ -128,17 +128,17 @@
                     {% else %}
                     <a href="{{ sort_customer_group }}">{{ column_customer_group }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'c.status') { ?>
+                  <td class="text-left">{% if sort == 'c.status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'c.ip') { ?>
+                  <td class="text-left">{% if sort == 'c.ip' %}
                     <a href="{{ sort_ip }}" class="{{ order|lower }}">{{ column_ip }}</a>
                     {% else %}
                     <a href="{{ sort_ip }}">{{ column_ip }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'c.date_added') { ?>
+                  <td class="text-left">{% if sort == 'c.date_added' %}
                     <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>

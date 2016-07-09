@@ -13,7 +13,7 @@
   </div>
 </div>
 <div class="container-fluid">
-  <?php foreach($error_warning as $warning) { ?>
+  {% for warning in error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}</div>
   <?php } ?>
   <div class="panel panel-default">
@@ -21,7 +21,7 @@
       <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_bulk }}</h3>
     </div>
     <div class="panel-body" id="page-listing">
-      {% i = 0 %}
+      {% set i = 0 %}
       <?php if (!isset($error_fail)) { ?>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
           <div class="well">
@@ -347,7 +347,7 @@
           </div>
         </div>
       {% else %}
-        <?php foreach($error_fail as $fail) { ?>
+        {% for fail in error_fail %}
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ fail }}</div>
         <?php } ?>
       <?php } ?>

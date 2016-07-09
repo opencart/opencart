@@ -35,22 +35,22 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'cfd.name') { ?>
+                  <td class="text-left">{% if sort == 'cfd.name' %}
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'cf.location') { ?>
+                  <td class="text-left">{% if sort == 'cf.location' %}
                     <a href="{{ sort_location }}" class="{{ order|lower }}">{{ column_location }}</a>
                     {% else %}
                     <a href="{{ sort_location }}">{{ column_location }}</a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'cf.type') { ?>
+                  <td class="text-left">{% if sort == 'cf.type' %}
                     <a href="{{ sort_type }}" class="{{ order|lower }}">{{ column_type }}</a>
                     {% else %}
                     <a href="{{ sort_type }}">{{ column_type }}</a>
                     <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'cf.sort_order') { ?>
+                  <td class="text-right">{% if sort == 'cf.sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>

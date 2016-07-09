@@ -43,7 +43,7 @@
               <select name="handling_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                <?php if ($tax_class['tax_class_id'] == $handling_tax_class_id) { ?>
+                {% if tax_class.tax_class_id == handling_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>

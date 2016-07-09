@@ -60,7 +60,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% row = 0 %}
+                {% set row = 0 %}
                 {% for product in unlinked_products %}
                 <?php $row++ ?>
                 <?php if (empty($product['sku']) || $product['quantity'] < 1) { ?>

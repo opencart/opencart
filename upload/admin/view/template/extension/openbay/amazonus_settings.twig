@@ -123,7 +123,7 @@
             <label class="col-sm-2 control-label" for="entry-customer-group"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_customer_group }}">{{ entry_customer_group }}</span></label>
             <div class="col-sm-10">
               <select name="openbay_amazonus_order_customer_group" id="entry-customer-group" class="form-control">
-                <?php foreach($customer_groups as $customer_group) { ?>
+                {% for customer_group in customer_groups %}
                 <?php if ($openbay_amazonus_order_customer_group == $customer_group['customer_group_id']) { ?>
                 <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
                 {% else %}
@@ -151,7 +151,7 @@
             <label class="col-sm-2 control-label" for="entry-default-shipping"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_default_shipping }}">{{ entry_default_shipping }}</span></label>
             <div class="col-sm-10">
               <select name="openbay_amazonus_default_carrier" id="entry-default-shipping" class="form-control">
-                <?php foreach($carriers as $carrier) { ?>
+                {% for carrier in carriers %}
                 <?php echo '<option'.($carrier == $openbay_amazonus_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
                 <?php } ?>
               </select>

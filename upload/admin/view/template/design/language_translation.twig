@@ -1,4 +1,4 @@
-{% translation_rows = 0 %}
+{% set translation_rows = 0 %}
 {% for translation in translations %}
 <fieldset>
   <legend>{{ translation.key }}</legend>
@@ -19,7 +19,7 @@
   </table>
 </fieldset>
 </div>
-<?php $translation_rows++; ?>
+{% set translation_rows = translation_rows + 1 %}
 <?php } ?>
 <div class="pull-right">
   <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>

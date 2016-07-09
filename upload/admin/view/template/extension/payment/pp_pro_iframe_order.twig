@@ -51,7 +51,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach($transactions as $transaction) { ?>
+          {% for transaction in transactions %}
           <tr>
             <td class="text-left">{{ transaction.transaction_id }}</td>
             <td class="text-left">{{ transaction.amount }}</td>

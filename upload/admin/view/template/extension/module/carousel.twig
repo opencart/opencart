@@ -39,7 +39,7 @@
             <div class="col-sm-10">
               <select name="banner_id" id="input-banner" class="form-control">
                 {% for banner in banners %}
-                <?php if ($banner['banner_id'] == $banner_id) { ?>
+                {% if banner.banner_id == banner_id %}
                 <option value="{{ banner.banner_id }}" selected="selected">{{ banner.name }}</option>
                 {% else %}
                 <option value="{{ banner.banner_id }}">{{ banner.name }}</option>

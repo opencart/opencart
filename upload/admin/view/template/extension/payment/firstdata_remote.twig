@@ -121,7 +121,7 @@
                   <select name="firstdata_remote_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
                     {% for geo_zone in geo_zones %}
-                    <?php if ($geo_zone['geo_zone_id'] == $firstdata_remote_geo_zone_id) { ?>
+                    {% if geo_zone.geo_zone_id == firstdata_remote_geo_zone_id %}
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                     {% else %}
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -157,7 +157,7 @@
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_success_settled_id) { ?>
+                    {% if order_status.order_status_id == firstdata_remote_order_status_success_settled_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -171,7 +171,7 @@
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_success_unsettled_id) { ?>
+                    {% if order_status.order_status_id == firstdata_remote_order_status_success_unsettled_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -185,7 +185,7 @@
                 <div class="col-sm-10">
                   <select name="firstdata_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
                     {% for order_status in order_statuses %}
-                    <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_decline_id) { ?>
+                    {% if order_status.order_status_id == firstdata_remote_order_status_decline_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

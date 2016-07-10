@@ -22,7 +22,7 @@
             <div class="input-group">
               <select name="type" class="form-control">
                 {% for category in categories %}
-                <?php if ($type == $category['code']) { ?>
+                {% if type == category.code %}
                 <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
                 {% else %}
                 <option value="{{ category.href }}">{{ category.text }}</option>

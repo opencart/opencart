@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -45,8 +44,7 @@
                 <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
-              <div class="tab-content">
-                {% for language in languages %}
+              <div class="tab-content"> {% for language in languages %}
                 <div class="tab-pane" id="language{{ language.language_id }}">
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
@@ -54,8 +52,7 @@
                       <input type="text" name="product_description[{{ language.language_id }}][name]" value="{% if product_description[language.language_id] %} {{ product_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
                       {% if error_name[language.language_id] %}
                       <div class="text-danger">{{ error_name[language.language_id] }}</div>
-                      {% endif %}
-                    </div>
+                      {% endif %} </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
@@ -69,8 +66,7 @@
                       <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{% if product_description[language.language_id] %} {{ product_description[language.language_id].meta_title }} {% endif %}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
                       {% if error_meta_title[language.language_id] %}
                       <div class="text-danger">{{ error_meta_title[language.language_id] }}</div>
-                      {% endif %}
-                    </div>
+                      {% endif %} </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
@@ -91,8 +87,7 @@
                     </div>
                   </div>
                 </div>
-                {% endfor %}
-              </div>
+                {% endfor %} </div>
             </div>
             <div class="tab-pane" id="tab-data">
               <div class="form-group required">
@@ -101,8 +96,7 @@
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
                   {% if error_model %}
                   <div class="text-danger">{{ error_model }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
@@ -157,13 +151,19 @@
                 <div class="col-sm-10">
                   <select name="tax_class_id" id="input-tax-class" class="form-control">
                     <option value="0">{{ text_none }}</option>
+                    
                     {% for tax_class in tax_classes %}
                     {% if tax_class.tax_class_id == tax_class_id %}
+                    
                     <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                    
                     {% endif %}
                     {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -183,13 +183,19 @@
                 <label class="col-sm-2 control-label" for="input-subtract">{{ entry_subtract }}</label>
                 <div class="col-sm-10">
                   <select name="subtract" id="input-subtract" class="form-control">
+                    
                     {% if subtract %}
+                    
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
+                    
                     {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -197,37 +203,39 @@
                 <label class="col-sm-2 control-label" for="input-stock-status"><span data-toggle="tooltip" title="{{ help_stock_status }}">{{ entry_stock_status }}</span></label>
                 <div class="col-sm-10">
                   <select name="stock_status_id" id="input-stock-status" class="form-control">
+                    
                     {% for stock_status in stock_statuses %}
                     {% if stock_status.stock_status_id == stock_status_id %}
+                    
                     <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                    
                     {% endif %}
                     {% endfor %}
+                  
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
-                    {% if shipping %}
+                  <label class="radio-inline"> {% if shipping %}
                     <input type="radio" name="shipping" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
                     <input type="radio" name="shipping" value="1" />
                     {{ text_yes }}
-                    {% endif %}
-                  </label>
-                  <label class="radio-inline">
-                    {% if not $shipping %}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not shipping %}
                     <input type="radio" name="shipping" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
                     <input type="radio" name="shipping" value="0" />
                     {{ text_no }}
-                    {% endif %}
-                  </label>
+                    {% endif %} </label>
                 </div>
               </div>
               <div class="form-group">
@@ -236,8 +244,7 @@
                   <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
                   {% if error_keyword %}
                   <div class="text-danger">{{ error_keyword }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-date-available">{{ entry_date_available }}</label>
@@ -269,13 +276,19 @@
                 <label class="col-sm-2 control-label" for="input-length-class">{{ entry_length_class }}</label>
                 <div class="col-sm-10">
                   <select name="length_class_id" id="input-length-class" class="form-control">
+                    
                     {% for length_class in length_classes %}
                     {% if length_class.length_class_id == length_class_id %}
+                    
                     <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
+                    
                     {% endif %}
                     {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -289,13 +302,19 @@
                 <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
                 <div class="col-sm-10">
                   <select name="weight_class_id" id="input-weight-class" class="form-control">
+                    
                     {% for weight_class in weight_classes %}
                     {% if weight_class.weight_class_id == weight_class_id %}
+                    
                     <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                    
                     {% endif %}
                     {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -303,13 +322,19 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
+                    
                     {% if status %}
+                    
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
+                    
                     {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -332,26 +357,22 @@
                 <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
-                  <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for product_category in product_categories %}
+                  <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_category in product_categories %}
                     <div id="product-category{{ product_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ product_category.name }}
                       <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}" />
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="{{ help_filter }}">{{ entry_filter }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control" />
-                  <div id="product-filter" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for product_filter in product_filters %}
+                  <div id="product-filter" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_filter in product_filters %}
                     <div id="product-filter{{ product_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ product_filter.name }}
                       <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}" />
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
@@ -359,56 +380,47 @@
                 <div class="col-sm-10">
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
                     <div class="checkbox">
-                      <label>
-                        {%  if 0 in product_store %}
+                      <label> {%  if 0 in product_store %}
                         <input type="checkbox" name="product_store[]" value="0" checked="checked" />
                         {{ text_default }}
                         {% else %}
                         <input type="checkbox" name="product_store[]" value="0" />
                         {{ text_default }}
-                        {% endif %}
-                      </label>
+                        {% endif %} </label>
                     </div>
                     {% for store in stores %}
                     <div class="checkbox">
-                      <label>
-                        {% if store.store_id in product_store %}
+                      <label> {% if store.store_id in product_store %}
                         <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" />
                         {{ store.name }}
                         {% else %}
                         <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" />
                         {{ store.name }}
-                        {% endif %}
-                      </label>
+                        {% endif %} </label>
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="{{ help_download }}">{{ entry_download }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control" />
-                  <div id="product-download" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for product_download in product_downloads %}
+                  <div id="product-download" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_download in product_downloads %}
                     <div id="product-download{{ product_download.download_id }}"><i class="fa fa-minus-circle"></i> {{ product_download.name }}
                       <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}" />
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-related"><span data-toggle="tooltip" title="{{ help_related }}">{{ entry_related }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control" />
-                  <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for product_related in product_relateds %}
+                  <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;"> {% for product_related in product_relateds %}
                     <div id="product-related{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
                       <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
             </div>
@@ -423,21 +435,23 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set attribute_row = 0 %}
-                    {% for product_attribute in product_attributes %}
-                    <tr id="attribute-row{{ attribute_row }}">
-                      <td class="text-left" style="width: 40%;"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control" />
-                        <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" /></td>
-                      <td class="text-left">{% for language in languages %}
-                        <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                          <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
-                        </div>
-                        {% endfor %}</td>
-                      <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set attribute_row = attribute_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                  
+                  {% set attribute_row = 0 %}
+                  {% for product_attribute in product_attributes %}
+                  <tr id="attribute-row{{ attribute_row }}">
+                    <td class="text-left" style="width: 40%;"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control" />
+                      <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" /></td>
+                    <td class="text-left">{% for language in languages %}
+                      <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                        <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{% if product_attribute.product_attribute_description[language.language_id] %} {{ product_attribute.product_attribute_description[language.language_id].text }} {% endif %}</textarea>
+                      </div>
+                      {% endfor %}</td>
+                    <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set attribute_row = attribute_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
@@ -462,8 +476,7 @@
                   </ul>
                 </div>
                 <div class="col-sm-10">
-                  <div class="tab-content">
-                    {% set option_row = 0 %}
+                  <div class="tab-content"> {% set option_row = 0 %}
                     {% set option_value_row = 0 %}
                     {% for product_option in product_options %}
                     <div class="tab-pane" id="tab-option{{ option_row }}">
@@ -475,13 +488,19 @@
                         <label class="col-sm-2 control-label" for="input-required{{ option_row }}">{{ entry_required }}</label>
                         <div class="col-sm-10">
                           <select name="product_option[{{ option_row }}][required]" id="input-required{{ option_row }}" class="form-control">
+                            
                             {% if product_option.required %}
+                            
                             <option value="1" selected="selected">{{ text_yes }}</option>
                             <option value="0">{{ text_no }}</option>
+                            
                             {% else %}
+                            
                             <option value="1">{{ text_yes }}</option>
                             <option value="0" selected="selected">{{ text_no }}</option>
+                            
                             {% endif %}
+                          
                           </select>
                         </div>
                       </div>
@@ -545,7 +564,7 @@
                         </div>
                       </div>
                       {% endif %}
-                      {% if product_option.type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type == 'image' %}
+                      {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
                       <div class="table-responsive">
                         <table id="option-value{{ option_row }}" class="table table-striped table-bordered table-hover">
                           <thead>
@@ -560,76 +579,120 @@
                             </tr>
                           </thead>
                           <tbody>
-                            {% for product_option_value in product_option.product_option_value %}
-                            <tr id="option-value-row{{ option_value_row }}">
-                              <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" class="form-control">
+                          
+                          {% for product_option_value in product_option.product_option_value %}
+                          <tr id="option-value-row{{ option_value_row }}">
+                            <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" class="form-control">
+                                
                                   {% if option_values[product_option.option_id] %}
                                  
                                   {% for option_value in option_values[product_option.option_id] %}
                                   
                                   {% if option_value.option_value_id == product_option_value.option_value_id %}
-                                  <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>
+                                  
+                                <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>
+                                
                                   {% else %}
-                                  <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
+                                  
+                                <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
+                                
                                   {% endif %}
                                   {% endfor %}
                                   {% endif %}
-                                </select>
-                                <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}" /></td>
-                              <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
-                              <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" class="form-control">
+                                
+                              </select>
+                              <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}" /></td>
+                            <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
+                            <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" class="form-control">
+                                
                                   {% if product_option_value.subtract %}
-                                  <option value="1" selected="selected">{{ text_yes }}</option>
-                                  <option value="0">{{ text_no }}</option>
+                                  
+                                <option value="1" selected="selected">{{ text_yes }}</option>
+                                <option value="0">{{ text_no }}</option>
+                                
                                   {% else %}
-                                  <option value="1">{{ text_yes }}</option>
-                                  <option value="0" selected="selected">{{ text_no }}</option>
+                                  
+                                <option value="1">{{ text_yes }}</option>
+                                <option value="0" selected="selected">{{ text_no }}</option>
+                                
                                   {% endif %}
-                                </select></td>
-                              <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
+                                
+                              </select></td>
+                            <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
+                                
                                   {% if product_option_value.price_prefix == '+' %}
-                                  <option value="+" selected="selected">+</option>
+                                  
+                                <option value="+" selected="selected">+</option>
+                                
                                   {% else %}
-                                  <option value="+">+</option>
+                                  
+                                <option value="+">+</option>
+                                
                                   {% endif %}
                                   {% if product_option_value.price_prefix == '-' %}
-                                  <option value="-" selected="selected">-</option>
+                                  
+                                <option value="-" selected="selected">-</option>
+                                
                                   {% else %}
-                                  <option value="-">-</option>
+                                  
+                                <option value="-">-</option>
+                                
                                   {% endif %}
-                                </select>
-                                <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
-                              <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
+                                
+                              </select>
+                              <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
+                            <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
+                                
                                   {% if product_option_value.points_prefix == '+' %}
-                                  <option value="+" selected="selected">+</option>
+                                  
+                                <option value="+" selected="selected">+</option>
+                                
                                   {% else %}
-                                  <option value="+">+</option>
+                                  
+                                <option value="+">+</option>
+                                
                                   {% endif %}
                                   {% if product_option_value.points_prefix == '-' %}
-                                  <option value="-" selected="selected">-</option>
+                                  
+                                <option value="-" selected="selected">-</option>
+                                
                                   {% else %}
-                                  <option value="-">-</option>
+                                  
+                                <option value="-">-</option>
+                                
                                   {% endif %}
-                                </select>
-                                <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}" placeholder="{{ entry_points }}" class="form-control" /></td>
-                              <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
+                                
+                              </select>
+                              <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}" placeholder="{{ entry_points }}" class="form-control" /></td>
+                            <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
+                                
                                   {% if product_option_value.weight_prefix == '+' %}
-                                  <option value="+" selected="selected">+</option>
+                                  
+                                <option value="+" selected="selected">+</option>
+                                
                                   {% else %}
-                                  <option value="+">+</option>
+                                  
+                                <option value="+">+</option>
+                                
                                   {% endif %}
                                   {% if product_option_value.weight_prefix == '-' %}
-                                  <option value="-" selected="selected">-</option>
+                                  
+                                <option value="-" selected="selected">-</option>
+                                
                                   {% else %}
-                                  <option value="-">-</option>
+                                  
+                                <option value="-">-</option>
+                                
                                   {% endif %}
-                                </select>
-                                <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}" placeholder="{{ entry_weight }}" class="form-control" /></td>
-                              <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                            </tr>
-                            {% set option_value_row = option_value_row + 1 %}
-                            {% endfor %}
-                          </tbody>
+                                
+                              </select>
+                              <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}" placeholder="{{ entry_weight }}" class="form-control" /></td>
+                            <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                          </tr>
+                          {% set option_value_row = option_value_row + 1 %}
+                          {% endfor %}
+                            </tbody>
+                          
                           <tfoot>
                             <tr>
                               <td colspan="6"></td>
@@ -639,17 +702,19 @@
                         </table>
                       </div>
                       <select id="option-values{{ option_row }}" style="display: none;">
+                        
                         {% if option_values[product_option.option_id] %}
                         {% for option_value in option_values[product_option.option_id] %}
+                        
                         <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
+                        
                         {% endfor %}
                         {% endif %}
+                      
                       </select>
-                      {% endif %}
-                    </div>
+                      {% endif %} </div>
                     {% set option_row = option_row + 1 %}
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
             </div>
@@ -664,33 +729,46 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set recurring_row = 0 %}
-                    {% for product_recurring in product_recurrings %}
-
-                    <tr id="recurring-row{{ recurring_row }}">
-                      <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
+                  
+                  {% set recurring_row = 0 %}
+                  {% for product_recurring in product_recurrings %}
+                  <tr id="recurring-row{{ recurring_row }}">
+                    <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
+                        
                           {% for recurring in recurrings %}
                           {% if recurring.recurring_id == product_recurring.recurring_id %}
-                          <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
+                          
+                        <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
+                        
                           {% else %}
-                          <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                          
+                        <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                        
                           {% endif %}
                           {% endfor %}
-                        </select></td>
-                      <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
+                        
+                      </select></td>
+                    <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
+                        
                           {% for customer_group in customer_groups %}
                           {% if customer_group.customer_group_id == product_recurring.customer_group_id %}
-                          <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                        
                           {% else %}
-                          <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                        
                           {% endif %}
                           {% endfor %}
-                        </select></td>
-                      <td class="text-left"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set recurring_row = recurring_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                        
+                      </select></td>
+                    <td class="text-left"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set recurring_row = recurring_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
@@ -715,36 +793,44 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set discount_row = 0 %}
-                    {% for product_discount in product_discounts %}
-                    <tr id="discount-row{{ discount_row }}">
-                      <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
+                  
+                  {% set discount_row = 0 %}
+                  {% for product_discount in product_discounts %}
+                  <tr id="discount-row{{ discount_row }}">
+                    <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
+                        
                           {% for customer_group in customer_groups %}
                           {% if customer_group.customer_group_id == product_discount.customer_group_id %}
-                          <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                        
                           {% else %}
-                          <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                        
                           {% endif %}
                           {% endfor %}
-                        </select></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
-                      <td class="text-left" style="width: 20%;"><div class="input-group date">
-                          <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                      <td class="text-left" style="width: 20%;"><div class="input-group date">
-                          <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                      <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set discount_row = discount_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                        
+                      </select></td>
+                    <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
+                    <td class="text-left" style="width: 20%;"><div class="input-group date">
+                        <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left" style="width: 20%;"><div class="input-group date">
+                        <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set discount_row = discount_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td colspan="6"></td>
@@ -768,35 +854,43 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set special_row = 0 %}
-                    {% for product_special in product_specials %}
-                    <tr id="special-row{{ special_row }}">
-                      <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
+                  
+                  {% set special_row = 0 %}
+                  {% for product_special in product_specials %}
+                  <tr id="special-row{{ special_row }}">
+                    <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
+                        
                           {% for customer_group in customer_groups %}
                           {% if customer_group.customer_group_id == product_special.customer_group_id %}
-                          <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                        
                           {% else %}
-                          <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                          
+                        <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                        
                           {% endif %}
                           {% endfor %}
-                        </select></td>
-                      <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
-                      <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
-                      <td class="text-left" style="width: 20%;"><div class="input-group date">
-                          <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                      <td class="text-left" style="width: 20%;"><div class="input-group date">
-                          <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                      <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set special_row = special_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                        
+                      </select></td>
+                    <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
+                    <td class="text-left" style="width: 20%;"><div class="input-group date">
+                        <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left" style="width: 20%;"><div class="input-group date">
+                        <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set special_row = special_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td colspan="5"></td>
@@ -814,11 +908,11 @@
                       <td class="text-left">{{ entry_image }}</td>
                     </tr>
                   </thead>
-                  
                   <tbody>
                     <tr>
-                      <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="image" value="{{ image }}" id="input-image" /></td>
-                  </tr>
+                      <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                        <input type="hidden" name="image" value="{{ image }}" id="input-image" /></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -832,16 +926,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% set image_row = 0 %}
-                    {% for product_image in product_images %}
-                    <tr id="image-row{{ image_row }}">
-                      <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}" /></td>
-                      <td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
-                      <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-                    {% set image_row = image_row + 1 %}
-                    {% endfor %}
-                  </tbody>
+                  
+                  {% set image_row = 0 %}
+                  {% for product_image in product_images %}
+                  <tr id="image-row{{ image_row }}">
+                    <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                      <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}" /></td>
+                    <td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
+                    <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set image_row = image_row + 1 %}
+                  {% endfor %}
+                    </tbody>
+                  
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
@@ -867,13 +964,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for customer_group in customer_groups %}
-                    <tr>
-                      <td class="text-left">{{ customer_group.name }}</td>
-                      <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{% if product_reward[customer_group.customer_group_id] %} {{ product_reward[customer_group.customer_group_id].points }} {% endif %}" class="form-control" /></td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
+                  
+                  {% for customer_group in customer_groups %}
+                  <tr>
+                    <td class="text-left">{{ customer_group.name }}</td>
+                    <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{% if product_reward[customer_group.customer_group_id] %} {{ product_reward[customer_group.customer_group_id].points }} {% endif %}" class="form-control" /></td>
+                  </tr>
+                  {% endfor %}
+                    </tbody>
+                  
                 </table>
               </div>
             </div>
@@ -891,31 +990,44 @@
                       <td class="text-left">{{ text_default }}</td>
                       <td class="text-left"><select name="product_layout[0]" class="form-control">
                           <option value=""></option>
+                          
                           {% for layout in layouts %}
                           {% if product_layout[0] and product_layout[0] == layout.layout_id %}
+                          
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                          
                           {% else %}
+                          
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                          
                           {% endif %}
                           {% endfor %}
+                        
                         </select></td>
                     </tr>
-                    {% for store in stores %}
-                    <tr>
-                      <td class="text-left">{{ store.name }}</td>
-                      <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
-                          <option value=""></option>
+                  {% for store in stores %}
+                  <tr>
+                    <td class="text-left">{{ store.name }}</td>
+                    <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
+                        <option value=""></option>
+                        
                           {% for layout in layouts %}
                           {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
-                          <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                          
+                        <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                        
                           {% else %}
-                          <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                          
+                        <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                        
                           {% endif %}
                           {% endfor %}
-                        </select></td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
+                        
+                      </select></td>
+                  </tr>
+                  {% endfor %}
+                    </tbody>
+                  
                 </table>
               </div>
             </div>
@@ -926,7 +1038,7 @@
   </div>
   <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({
@@ -1070,7 +1182,7 @@ $('input[name=\'related\']').autocomplete({
 $('#product-related').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var attribute_row = {{ attribute_row }};
 
@@ -1119,7 +1231,7 @@ function attributeautocomplete(attribute_row) {
 $('#attribute tbody tr').each(function(index, element) {
 	attributeautocomplete(index);
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var option_row = {{ option_row }};
 
@@ -1260,7 +1372,7 @@ $('input[name=\'option\']').autocomplete({
 		option_row++;
 	}
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var option_value_row = {{ option_value_row }};
 
@@ -1297,7 +1409,7 @@ function addOptionValue(option_row) {
 
 	option_value_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var discount_row = {{ discount_row }};
 
@@ -1305,7 +1417,7 @@ function addDiscount() {
 	html  = '<tr id="discount-row' + discount_row + '">';
     html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
     {% for customer_group in customer_groups %}
-    html += '    <option value="{{ customer_group.customer_group_id }}"><?php echo addslashes($customer_group['name']); ?></option>';
+    html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
     {% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
@@ -1324,7 +1436,7 @@ function addDiscount() {
 
 	discount_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var special_row = {{ special_row }};
 
@@ -1332,7 +1444,7 @@ function addSpecial() {
 	html  = '<tr id="special-row' + special_row + '">';
     html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
     {% for customer_group in customer_groups %}
-    html += '      <option value="{{ customer_group.customer_group_id }}"><?php echo addslashes($customer_group['name']); ?></option>';
+    html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
     {% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
@@ -1350,7 +1462,7 @@ function addSpecial() {
 
 	special_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var image_row = {{ image_row }};
 
@@ -1365,7 +1477,7 @@ function addImage() {
 
 	image_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 var recurring_row = {{ recurring_row }};
 
@@ -1394,7 +1506,7 @@ function addRecurring() {
 	
 	recurring_row++;
 }
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -1408,9 +1520,9 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');
 //--></script></div>
-{{ footer }}
+{{ footer }} 

@@ -221,7 +221,6 @@
                           <option value=""></option>
                           {% for layout in layouts %}
                           {% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %}
-                          {% if status %}
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>

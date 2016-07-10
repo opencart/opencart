@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               <select name="dashboard_map_width" id="input-width" class="form-control">
                 {% for column in columns %}
-                <?php if ($column == $dashboard_map_width) { ?>
+                {% if column == dashboard_map_width %}
                 <option value="{{ column }}" selected="selected">{{ column }}</option>
                 {% else %}
                 <option value="{{ column }}">{{ column }}</option>

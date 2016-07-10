@@ -114,7 +114,7 @@
             <div class="col-sm-10">
               <select name="securetrading_pp_settle_status" id="securetrading_pp_settle_status" class="form-control">
                 {% for key => $value in settlement_statuses %}
-                <?php if ($key == $securetrading_pp_settle_status) { ?>
+                {% if key == securetrading_pp_settle_status %}
                 <option value="{{ key }}" selected="selected">{{ value }}</option>
                 {% else %}
                 <option value="{{ key }}">{{ value }}</option>
@@ -133,7 +133,7 @@
                 <option value="0">{{ text_process_immediately }}</option>
                 <?php } ?>
                 <?php for ($i = 1; $i < 8; $i++) { ?>
-                <?php if ($i == $securetrading_pp_settle_due_date) { ?>
+                {% if i == securetrading_pp_settle_due_date %}
                 <option value="{{ i }}" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 {% else %}
                 <option value="{{ i }}"><?php echo sprintf($text_wait_x_days, $i); ?></option>

@@ -44,7 +44,7 @@
               <td class="text-left">{{ order.date_added }}</td>
               <td class="text-left">
                 {% if order.channel == 'eBay' %}
-                  <?php if ($change_order_status_id == $ebay_status_shipped_id) { ?>
+                  {% if change_order_status_id == ebay_status_shipped_id %}
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control">
@@ -60,7 +60,7 @@
                   <?php } ?>
                 <?php } ?>
                 {% if order.channel == 'Amazon EU' %}
-                  <?php if ($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
+                  {% if change_order_status_id == openbay_amazon_order_status_shipped %}
                     <div class="form-group">
                       <label class="control-label">{{ entry_carrier }}</label>
                       <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
@@ -81,7 +81,7 @@
                   <?php } ?>
                 <?php } ?>
                 {% if order.channel == 'Amazon US' %}
-                  <?php if ($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
+                  {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
                   <div class="form-group">
                     <label class="control-label">{{ entry_carrier }}</label>
                     <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">

@@ -99,7 +99,7 @@
               <select name="condition" class="form-control" id="input-condition">
                 <option value=""></option>
                 {% for value, name in conditions %}
-                <?php if ($value == $default_condition) { ?>
+                {% if value == default_condition %}
                 <option selected="selected" value="{{ value }}">{{ name }}</option>
                 {% else %}
                 <option value="{{ value }}">{{ name }}</option>

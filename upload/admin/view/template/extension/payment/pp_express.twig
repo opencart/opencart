@@ -136,7 +136,7 @@
                 <div class="col-sm-10">
                   <select name="pp_express_currency" id="input-currency" class="form-control">
                     {% for currency in currencies %}
-                    <?php if ($currency == $pp_express_currency) { ?>
+                    {% if currency == pp_express_currency %}
                     <option value="{{ currency }}" selected="selected">{{ currency }}</option>
                     {% else %}
                     <option value="{{ currency }}">{{ currency }}</option>

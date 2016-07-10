@@ -55,7 +55,7 @@
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_payment_region" id="amazon-login-pay-payment_region" class="form-control">
 				{% for payment_region_code => $payment_region_name in payment_regions %}
-					<?php if ($payment_region_code == $amazon_login_pay_payment_region) { ?>
+					{% if payment_region_code == amazon_login_pay_payment_region %}
 						<option value="{{ payment_region_code }}" selected="selected">{{ payment_region_name }}</option>
 					{% else %}
 						<option value="{{ payment_region_code }}">{{ payment_region_name }}</option>
@@ -69,7 +69,7 @@
 			<div class="col-sm-10">
 			  <select name="amazon_login_pay_language" id="amazon-login-pay-language" class="form-control">
 				{% for language_code => $language_name in languages %}
-					<?php if ($language_code == $amazon_login_pay_language) { ?>
+					{% if language_code == amazon_login_pay_language %}
 						<option value="{{ language_code }}" selected="selected">{{ language_name }}</option>
 					{% else %}
 						<option value="{{ language_code }}">{{ language_name }}</option>
@@ -291,7 +291,7 @@
 			  <select name="amazon_login_pay_declined_code" id="amazon-login-pay-declined_code" class="form-control">
 				<option value="">{{ text_amazon_no_declined }}</option>
 				{% for declined_code in declined_codes %}
-					<?php if ($amazon_login_pay_declined_code == $declined_code) { ?>
+					{% if amazon_login_pay_declined_code == declined_code %}
 						<option value="{{ declined_code }}" selected="selected">{{ declined_code }}</option>
 					{% else %}
 						<option value="{{ declined_code }}">{{ declined_code }}</option>

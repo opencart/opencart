@@ -82,7 +82,7 @@
               <select name="openbay_amazonus_listing_default_condition" id="entry-default-condition" class="form-control">
                 <option></option>
                 {% for value, condition in conditions %}
-                <?php if ($value == $openbay_amazonus_listing_default_condition) { ?>
+                {% if value == openbay_amazonus_listing_default_condition %}
                 <option selected="selected" value="{{ value }}">{{ condition }}</option>
                 {% else %}
                 <option value="{{ value }}">{{ condition }}</option>

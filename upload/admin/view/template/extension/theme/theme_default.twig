@@ -32,12 +32,12 @@
               <div class="col-sm-10">
                 <select name="theme_default_directory" id="input-directory" class="form-control">
                   {% for directory in directories %}
-                  <?php if ($directory == $theme_default_directory) { ?>
+                  {% if directory == theme_default_directory %}
                   <option value="{{ directory }}" selected="selected">{{ directory }}</option>
                   {% else %}
                   <option value="{{ directory }}">{{ directory }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -51,7 +51,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
             </div>
@@ -64,7 +64,7 @@
                 <input type="text" name="theme_default_product_limit" value="{{ theme_default_product_limit }}" placeholder="{{ entry_product_limit }}" id="input-catalog-limit" class="form-control" />
                 {% if error_product_limit %}
                 <div class="text-danger">{{ error_product_limit }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -73,7 +73,7 @@
                 <input type="text" name="theme_default_product_description_length" value="{{ theme_default_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control" />
                 {% if error_product_description_length %}
                 <div class="text-danger">{{ error_product_description_length }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
           </fieldset>
@@ -92,7 +92,7 @@
                 </div>
                 {% if error_image_category %}
                 <div class="text-danger">{{ error_image_category }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -108,7 +108,7 @@
                 </div>
                 {% if error_image_thumb %}
                 <div class="text-danger">{{ error_image_thumb }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -124,7 +124,7 @@
                 </div>
                 {% if error_image_popup %}
                 <div class="text-danger">{{ error_image_popup }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -140,7 +140,7 @@
                 </div>
                 {% if error_image_product %}
                 <div class="text-danger">{{ error_image_product }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -156,7 +156,7 @@
                 </div>
                 {% if error_image_additional %}
                 <div class="text-danger">{{ error_image_additional }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -172,7 +172,7 @@
                 </div>
                 {% if error_image_related %}
                 <div class="text-danger">{{ error_image_related }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -188,7 +188,7 @@
                 </div>
                 {% if error_image_compare %}
                 <div class="text-danger">{{ error_image_compare }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -204,7 +204,7 @@
                 </div>
                 {% if error_image_wishlist %}
                 <div class="text-danger">{{ error_image_wishlist }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -220,7 +220,7 @@
                 </div>
                 {% if error_image_cart %}
                 <div class="text-danger">{{ error_image_cart }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
             <div class="form-group required">
@@ -236,7 +236,7 @@
                 </div>
                 {% if error_image_location %}
                 <div class="text-danger">{{ error_image_location }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
           </fieldset>

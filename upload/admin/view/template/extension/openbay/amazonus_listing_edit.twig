@@ -45,7 +45,7 @@
       </tr>
       </thead>
       <tbody>
-        <?php if (!empty($product_links)) { ?>
+        {% if product_links %}
           {% for link in product_links %}
             <tr>
               <td class="text-left">{{ link.product_name }}</td>

@@ -85,7 +85,7 @@
                   <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
                   {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
-                  <?php  } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -94,7 +94,7 @@
                   <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
                   {% if error_telephone %}
                   <div class="text-danger">{{ error_telephone }}</div>
-                  <?php  } ?>
+                  {% endif %}
                 </div>
               </div>
             </fieldset>
@@ -107,7 +107,7 @@
                   <input type="hidden" name="product_id" value="{{ product_id }}" />
                   {% if error_product %}
                   <div class="text-danger">{{ error_product }}</div>
-                  <?php  } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -116,7 +116,7 @@
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
                   {% if error_model %}
                   <div class="text-danger">{{ error_model }}</div>
-                  <?php  } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -169,8 +169,8 @@
                     <option value="{{ return_action.return_action_id }}" selected="selected"> {{ return_action.name }}</option>
                     {% else %}
                     <option value="{{ return_action.return_action_id }}">{{ return_action.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -184,12 +184,12 @@
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}
                     <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
             </fieldset>
           </div>
           {% if return_id %}
@@ -207,8 +207,8 @@
                     <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                     {% else %}
                     <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -229,7 +229,7 @@
               </div>
             </fieldset>
           </div>
-          <?php } ?>
+          {% endif %}
         </form>
       </div>
     </div>

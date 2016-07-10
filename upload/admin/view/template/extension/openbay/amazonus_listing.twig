@@ -86,7 +86,7 @@
                   <label class="col-sm-2 control-label" for="condition">{{ entry_condition }}</label>
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
-                      {% for value => $title in conditions %}
+                      {% for value, title in conditions %}
                       <?php if ($value == $default_condition) { ?>
                       <option selected="selected" value="{{ value }}">{{ title }}</option>
                       {% else %}

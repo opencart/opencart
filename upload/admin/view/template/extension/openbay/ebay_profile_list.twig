@@ -13,10 +13,10 @@
   <div class="container-fluid">
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-    <?php } ?>
+    {% endif %}
   </div>
   <div class="container-fluid">
     <div class="panel panel-default">
@@ -32,9 +32,11 @@
               <div class="form-group">
                 <div class="input-group">
                   <select name="type"class="form-control">
-                    <?php foreach($types as $key => $val){ ?>
+                    {% for key, val in types %}
+                      
+                      
                       <option value="{{ key }}">{{ val.name }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                   <a data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> {{ button_add }}</a>
                 </div>
@@ -53,7 +55,8 @@
           </tr>
         </thead>
         <tbody>
-        {% if profiles %}{% for profile in profiles %}
+        {% if profiles %}
+        {% for profile in profiles %}
         <tr>
           <td class="text-left"><?php if ($profile['default'] == 1){ echo '<strong>['.$text_profile_default.'] </strong>'; } echo $profile['name'];?></td>
           <td class="text-left"><?php echo $types[$profile['type']]['name']; ?></td>
@@ -63,11 +66,12 @@
             <a href="{{ profile.link_delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
           </td>
         </tr>
-        <?php } ?>{% else %}
+        {% endfor %}
+        {% else %}
         <tr>
           <td class="text-center" colspan="4">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
         </tbody>
       </table>
     </div>

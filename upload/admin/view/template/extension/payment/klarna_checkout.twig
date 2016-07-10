@@ -314,7 +314,7 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 
-<?php if (empty($klarna_checkout_account)) { ?>
+{% if not klarna_checkout_account %}
 $(document).ready(function() {
 	addAccount();
 });

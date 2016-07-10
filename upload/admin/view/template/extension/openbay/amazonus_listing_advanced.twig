@@ -40,7 +40,7 @@
                             <p> <a href="{{ listing_url }}">{{ listing_name }}
                                 <?php if (!empty($options)) { echo " : "; } ?>
                             </a>
-                                <?php if (!empty($options)) { ?>
+                                {% if options %}
                                 <select id="openstock_selector" name="optionVar" class="form-control">
                                     <?php $option_selected = false; ?>
                                     {% for option in options %}
@@ -61,7 +61,7 @@
                         <div class="col-sm-4">
                             <select name="category_selector" id="category_selector" class="form-control">
                                 <option value=""></option>
-                                <?php foreach($amazonus_categories as $category) {  ?>
+                                {% for category in amazonus_categories %}
                                 <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
                                 <?php } ?>
                             </select>
@@ -100,7 +100,7 @@ $(document).ready(function(){
         redirectOption($('#openstock_selector').val(), 'advanced');
     });
 
-    <?php if (empty($amazonus_categories)) { ?>
+    {% if not amazonus_categories %}
         $("#advanced_table").html("");
         $(".content").prepend('<div id="warning" class="alert alert-danger">{{ error_connecting }}</div>');
         return;

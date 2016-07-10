@@ -56,7 +56,7 @@
             </tr>
           </thead>
           <tbody id="show-linked-items">
-            <?php if (!empty($items)) { ?>
+            {% if items %}
               {% for id => $item in items %}
                 <tr id="row-{{ item.etsy_listing_id }}">
                   <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>

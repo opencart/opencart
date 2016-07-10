@@ -79,7 +79,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php if (empty($orders)) { ?>
+              {% if not orders %}
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>

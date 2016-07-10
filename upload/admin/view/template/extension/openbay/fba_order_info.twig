@@ -158,7 +158,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($fulfillments)) { ?>
+                {% if fulfillments %}
                   {% for fulfillment in fulfillments %}
                     <tr>
                       <td class="text-left">{{ fulfillment.fba_order_fulfillment_id }}</td>

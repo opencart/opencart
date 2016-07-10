@@ -75,14 +75,14 @@
 											<input type="checkbox" checked="checked" name="securetrading_ws_cards_accepted[]" value="{{ key }}" />
 										{% else %}
 											<input type="checkbox" name="securetrading_ws_cards_accepted[]" value="{{ key }}" />
-										<?php } ?>
+										{% endfor %}
 										{{ value }}
 									</label>
 								</div>
-							<?php } ?>
+							{% endfor %}
 							{% if error_cards_accepted %}
 								<div class="text-danger">{{ error_cards_accepted }}</div>
-							<?php } ?>
+							{% endif %}
 						</div>
 					</div>
 					<div class="form-group">
@@ -94,8 +94,8 @@
 										<option value="{{ key }}" selected="selected">{{ value }}</option>
 									{% else %}
 										<option value="{{ key }}">{{ value }}</option>
-									<?php } ?>
-								<?php } ?>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
 					</div>
@@ -107,14 +107,14 @@
 									<option value="0" selected="selected">{{ text_process_immediately }}</option>
 								{% else %}
 									<option value="0">{{ text_process_immediately }}</option>
-								<?php } ?>
+								{% endif %}
 								<?php for ($i = 1; $i < 8; $i++) { ?>
 									<?php if ($i == $securetrading_ws_settle_due_date) { ?>
-										<option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+										<option value="{{ i }}" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
 									{% else %}
-										<option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i); ?></option>
-									<?php } ?>
-								<?php } ?>
+										<option value="{{ i }}"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
 					</div>
@@ -148,8 +148,8 @@
 										<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
 										<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-									<?php } ?>
-								<?php } ?>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
 					</div>
@@ -162,8 +162,8 @@
 										<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 									{% else %}
 										<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-									<?php } ?>
-								<?php } ?>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
 					</div>

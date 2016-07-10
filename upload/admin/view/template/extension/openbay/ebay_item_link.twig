@@ -107,7 +107,7 @@
             <td class="text-left" colspan="9" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_text_loading_items }}</a></td>
           </tr>
           <tbody style="display:none;" id="show-linked-items">
-            {% for id => $item in linked_items %}
+            {% for id, item in linked_items %}
               <input type="hidden" name="ebay_qty_{{ id }}" value="" id="ebay-qty-{{ id }}" />
               <input type="hidden" name="store_qty_{{ id }}" value="{{ item.qty }}" id="store-qty-{{ id }}" />
               <input type="hidden" name="reserve_qty_{{ id }}" value="{{ item.reserve }}" id="reserve-qty-{{ id }}" />

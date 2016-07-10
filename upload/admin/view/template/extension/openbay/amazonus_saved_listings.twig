@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <?php if (!empty($saved_products)) { ?>
+            {% if saved_products %}
             <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_upload }}</a>
             <?php } ?>
           </div>
@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php if (!empty($saved_products)) { ?>
+        {% if saved_products %}
         {% for saved_product in saved_products %}
         <tr>
           <td class="text-left">{{ saved_product.product_name }}</td>

@@ -134,9 +134,9 @@
                 <?php } ?>
                 <?php for ($i = 1; $i < 8; $i++) { ?>
                 <?php if ($i == $securetrading_pp_settle_due_date) { ?>
-                <option value="<?php echo $i ?>" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+                <option value="{{ i }}" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 {% else %}
-                <option value="<?php echo $i ?>"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+                <option value="{{ i }}"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 <?php } ?>
                 <?php } ?>
               </select>

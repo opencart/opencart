@@ -131,7 +131,7 @@
               htmlInj += '<td></td>';
             }else{
               htmlInj += '<td>';
-              htmlInj += '<a href="https://uk.openbaypro.com/account/live/subscription_setup.php?plan_id='+val.user_plan_id+'&subscriber_id=<?php echo $obp_token;?>" class="btn btn-primary" target="_BLANK"><i class="fa fa-arrow-right fa-lg"></i> {{ button_plan_change }}</a>';
+              htmlInj += '<a href="https://uk.openbaypro.com/account/live/subscription_setup.php?plan_id='+val.user_plan_id+'&subscriber_id={{ obp_token }}" class="btn btn-primary" target="_BLANK"><i class="fa fa-arrow-right fa-lg"></i> {{ button_plan_change }}</a>';
               htmlInj += '</td>';
             }
           }

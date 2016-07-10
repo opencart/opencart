@@ -122,7 +122,7 @@
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" />
                   {% if error_owner %}
                   <div class="text-danger">{{ error_owner }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -131,7 +131,7 @@
                   <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
                   <div class="text-danger">{{ error_address }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -146,7 +146,7 @@
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
                   {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -155,7 +155,7 @@
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
                   {% if error_telephone %}
                   <div class="text-danger">{{ error_telephone }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -195,13 +195,13 @@
                       {% else %}
                       <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" />
                       {{ location.name }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
@@ -213,8 +213,8 @@
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
                     <option value="{{ country.country_id }}">{{ country.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -234,8 +234,8 @@
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
                     <option value="{{ language.code }}">{{ language.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -248,8 +248,8 @@
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
                     {% else %}
                     <option value="{{ currency.code }}">{{ currency.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -267,7 +267,7 @@
                       {% else %}
                       <input type="radio" name="config_tax" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_tax %}
@@ -276,7 +276,7 @@
                       {% else %}
                       <input type="radio" name="config_tax" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>

@@ -81,7 +81,7 @@
             <div class="col-sm-10">
               <select name="openbay_amazonus_listing_default_condition" id="entry-default-condition" class="form-control">
                 <option></option>
-                {% for value => $condition in conditions %}
+                {% for value, condition in conditions %}
                 <?php if ($value == $openbay_amazonus_listing_default_condition) { ?>
                 <option selected="selected" value="{{ value }}">{{ condition }}</option>
                 {% else %}
@@ -94,7 +94,7 @@
         </div>
         <div class="tab-pane" id="tab-orders">
           <h4>{{ text_order_statuses }}</h4>
-          {% for key => $amazonus_order_status in amazonus_order_statuses %}
+          {% for key, amazonus_order_status in amazonus_order_statuses %}
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ amazonus_order_status.name }}</label>
             <div class="col-sm-10">
@@ -115,7 +115,7 @@
             <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="{{ help_import_tax }}">{{ entry_import_tax }}</span></label>
             <div class="col-sm-10">
               <div class="input-group col-xs-2">
-                <input type="text" name="openbay_amazonus_order_tax" value="<?php echo $openbay_amazonus_order_tax;?>" id="entry-import-tax" class="form-control" placeholder="{{ entry_import_tax }}" />
+                <input type="text" name="openbay_amazonus_order_tax" value="{{ openbay_amazonus_order_tax }}" id="entry-import-tax" class="form-control" placeholder="{{ entry_import_tax }}" />
                 <span class="input-group-addon">%</span> </div>
             </div>
           </div>

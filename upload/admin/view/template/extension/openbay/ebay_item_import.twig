@@ -61,7 +61,7 @@
 </div>
 <script type="text/javascript"><!--
   $('#button-import').bind('click', function() {
-    var answer = confirm("<?php echo $text_import_confirm;?>");
+    var answer = confirm("{{ text_import_confirm }}");
 
     if (answer) {
       var note_import = 0;

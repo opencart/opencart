@@ -59,7 +59,7 @@
               <div class="col-sm-10">
                 <select name="data[ebay_template_id]" class="form-control">
                   <option value="None">None</option>
-                  <?php foreach($templates as $template){ ?>
+                  {% for template in templates %}
                   <?php echo '<option value="'.$template['template_id'].'"'.(($template['template_id'] == $data['ebay_template_id'])?' selected':'').'>'.$template['name'].'</option>'; ?>
                   <?php } ?>
                 </select>

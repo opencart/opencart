@@ -5,7 +5,7 @@
       <div class="pull-right">
         {% if has_listing_errors %}
         <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
-        <?php } ?>
+        {% endif %}
         <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1>{{ text_title_advanced }}</h1>
       <ul class="breadcrumb">
@@ -21,13 +21,13 @@
       <ul>
         {% for listing_error in errors %}
         <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>
-        <?php } ?>
+        {% endfor %}
       </ul>
     </div>
-    <?php } ?>
+    {% endif %}
     {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-    <?php } ?>
+    {% endif %}
     <ul class="nav nav-tabs" id="tabs">
       <li class="active"><a href="#page-main" data-toggle="tab">{{ tab_main }}</a></li>
     </ul>
@@ -41,19 +41,19 @@
               <p> <a href="{{ listing_url }}">{{ listing_name }}
                 <?php if (!empty($options)) { echo " : "; } ?>
                 </a>
-                <?php if (!empty($options)) { ?>
+                {% if options %}
                 <select id="openstock_selector" name="optionVar" class="form-control">
                   <?php $option_selected = false; ?>
                   {% for option in options %}
                     <?php if (!empty($option['sku'])) { ?>
                       <option <?php if ($variation == $option['sku']) { echo "selected='selected'"; $option_selected = true; } ?> value="<?php echo  $option['sku']?>"><?php echo $option['combination']?></option>
-                    <?php } ?>
-                  <?php } ?>
+                    {% endif %}
+                  {% endfor %}
                   <?php if ($option_selected == false) { ?>
                     <option selected="selected"></option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
-                <?php }?>
+                {% endif %}
               </p>
             </div>
           </div>
@@ -63,12 +63,12 @@
               {% for mp in marketplaces %}
               <label class="radio-inline">
                 <?php if ($saved_marketplaces === false) { ?>
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in default_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
                 {% else %}
-                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
-                <?php } ?>
+                <input class="marketplace_ids" id="adv_marketplace_{{ mp.code }}" {% if mp.id in saved_marketplaces %} checked="checked" {% endif %} type="radio" name="marketplace_ids[]" value="{{ mp.id }}">
+                {% endif %}
                 {{ mp.name }} </label>
-              <?php } ?>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group required">
@@ -76,9 +76,9 @@
             <div class="col-sm-4">
               <select name="category_selector" id="category_selector" class="form-control">
                 <option value=""></option>
-                <?php foreach($amazon_categories as $category) {  ?>
+                {% for category in amazon_categories %}
                 <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
-                <?php } ?>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -115,11 +115,11 @@ $(document).ready(function(){
         redirectOption($('#openstock_selector').val(), 'advanced');
     });
 
-    <?php if (empty($amazon_categories)) { ?>
+    {% if not amazon_categories %}
         $("#advanced_table").html("");
         $(".content").prepend('<div id="warning" class="alert alert-danger">{{ error_connecting }}</div>');
         return;
-    <?php } ?>
+    {% endif %}
 
     $(".fields_advanced :input").bind('change', function() {
         update_form(this, 'advanced');

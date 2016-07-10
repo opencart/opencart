@@ -17,7 +17,7 @@
   <div class="container-fluid">
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
@@ -55,7 +55,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -69,7 +69,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -83,7 +83,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -113,8 +113,8 @@
                 <div class="col-sm-10">
                   <select name="openbay_fba_fulfill_policy" id="openbay_fba_fulfill_policy" class="form-control ftpsetting">
                     {% for code => $fulfillment_policy_option in fulfillment_policy %}
-                    <option value="<?php echo $code;?>" <?php echo ($openbay_fba_fulfill_policy == $code ? 'selected="selected"' : '') ?>>{{ fulfillment_policy_option }}</option>
-                    <?php } ?>
+                    <option value="{{ code }}" <?php echo ($openbay_fba_fulfill_policy == $code ? 'selected="selected"' : '') ?>>{{ fulfillment_policy_option }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -123,8 +123,8 @@
                 <div class="col-sm-10">
                   <select name="openbay_fba_shipping_speed" id="openbay_fba_shipping_speed" class="form-control ftpsetting">
                     {% for code => $shipping_speed_option in shipping_speed %}
-                      <option value="<?php echo $code;?>" <?php echo ($openbay_fba_shipping_speed == $code ? 'selected="selected"' : '') ?>>{{ shipping_speed_option }}</option>
-                    <?php } ?>
+                      <option value="{{ code }}" <?php echo ($openbay_fba_shipping_speed == $code ? 'selected="selected"' : '') ?>>{{ shipping_speed_option }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -134,7 +134,7 @@
                   <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
                     {% for status in order_statuses %}
                     <option value="{{ status.order_status_id }}" <?php echo ($openbay_fba_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>>{{ status.name }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>

@@ -172,7 +172,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="entry-created-hours"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_created_hours }}">{{ entry_created_hours }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="ebay_created_hours" value="<?php echo $ebay_created_hours;?>" placeholder="{{ entry_created_hours }}" id="entry-created-hours" class="form-control" />
+                  <input type="text" name="ebay_created_hours" value="{{ ebay_created_hours }}" placeholder="{{ entry_created_hours }}" id="entry-created-hours" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
@@ -385,7 +385,7 @@
                 <label class="col-sm-2 control-label" for="entry-duration"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_duration }}">{{ entry_duration }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_duration" id="entry-duration" class="form-control">
-                    <?php if (!empty($durations)) { ?>
+                    {% if durations %}
                       {% for key => $duration in durations %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
                       <?php } ?>
@@ -397,7 +397,7 @@
                 <label class="col-sm-2 control-label" for="entry-measurement"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_measurement }}">{{ entry_measurement }}</span></label>
                 <div class="col-sm-10">
                   <select name="ebay_measurement" id="entry-measurement" class="form-control">
-                    <?php if (!empty($measurement_types)) { ?>
+                    {% if measurement_types %}
                       {% for key => $type in measurement_types %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
                       <?php } ?>
@@ -418,20 +418,20 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="ebay_payment_paypal_address">{{ text_payment_paypal_add }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="ebay_payment_paypal_address" value="<?php echo $ebay_payment_paypal_address;?>" placeholder="{{ text_payment_paypal_add }}" id="ebay_payment_paypal_address" class="form-control" />
+                  <input type="text" name="ebay_payment_paypal_address" value="{{ ebay_payment_paypal_address }}" placeholder="{{ text_payment_paypal_add }}" id="ebay_payment_paypal_address" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_payment_types }}</label>
                 <div class="col-sm-10">
-                  <?php foreach($payment_options as $payment){ ?>
+                  {% for payment in payment_options %}
                   <div class="checkbox">
                     <label>
                       <input type="hidden" name="ebay_payment_types[{{ payment.ebay_name }}]" value="0" />
                       <input type="checkbox" name="ebay_payment_types[{{ payment.ebay_name }}]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
                       {{ payment.local_name }} </label>
                   </div>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
               <div class="form-group">
@@ -444,7 +444,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -462,7 +462,7 @@
                 <label class="col-sm-2 control-label" for="entry-tax"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_tax }}">{{ entry_tax }}</span></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
-                    <input type="text" name="ebay_tax" value="<?php echo $ebay_tax;?>" id="entry-tax" class="form-control" />
+                    <input type="text" name="ebay_tax" value="{{ ebay_tax }}" id="entry-tax" class="form-control" />
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>

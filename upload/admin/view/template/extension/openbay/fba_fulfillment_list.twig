@@ -58,7 +58,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php if (empty($fulfillments)) { ?>
+              {% if not fulfillments %}
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>
                 </tr>

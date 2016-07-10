@@ -32,7 +32,7 @@
           {% for marketplace_code in marketplaces_processing %}
           <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
           {% else %}
-          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings']; ?>">{{ button_load }}</a> </div>
+          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="{{ marketplaces[marketplace_code].href_load_listings }}">{{ button_load }}</a> </div>
           <?php } ?>
         </div>
       </div>

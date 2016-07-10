@@ -44,7 +44,7 @@
                     {% for address in addresses %}
                     <li><a href="#tab-address{{ address_row }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('#address a:first').tab('show'); $('#address a[href=\'#tab-address{{ address_row }}\']').parent().remove(); $('#tab-address{{ address_row }}').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                     {% set address_row = address_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                     <li id="address-add"><a onclick="addAddress();"><i class="fa fa-plus-circle"></i> {{ button_address_add }}</a></li>
                   </ul>
                 </div>
@@ -61,7 +61,7 @@
                             {% else %}
                             <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                             {% endif %}
-                            <?php } ?>
+                            {% endif %}
                           </select>
                         </div>
                       </div>
@@ -121,7 +121,7 @@
                             {% else %}
                             <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
                             {% endif %}
-                            <?php } ?>
+                            {% endfor %}
                           </select>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -144,9 +144,9 @@
                               <label>
                                 <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
                                 {{ custom_field_value.name }}</label>
-                              <?php } ?>
+                              {% endif %}
                             </div>
-                            <?php } ?>
+                            {% endfor %}
                           </div>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -169,13 +169,13 @@
                               <label>
                                 <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
                                 {{ custom_field_value.name }}</label>
-                              <?php } ?>
+                              {% endif %}
                             </div>
-                            <?php } ?>
+                            {% endfor %}
                           </div>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -183,10 +183,10 @@
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %} {{ account_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -194,10 +194,10 @@
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
+                          <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{% if account_custom_field[custom_field.custom_field_id] %} {{ account_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}</textarea>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -209,7 +209,7 @@
                           <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field{{ custom_field.custom_field_id }}" />
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -218,13 +218,13 @@
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group date">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %} {{ account_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -233,13 +233,13 @@
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group time">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %} {{ account_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
@@ -248,18 +248,18 @@
                         <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group datetime">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %} {{ account_custom_field[custom_field.custom_field_id] }} {% else %} {{ custom_field.value }} {% endif %}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
                           {% if error_custom_field[custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
-                          <?php } ?>
+                          {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
                         <div class="col-sm-10">
@@ -330,7 +330,7 @@
                             {% else %}
                             <option value="1">{{ text_yes }}</option>
                             <option value="0" selected="selected">{{ text_no }}</option>
-                            <?php } ?>
+                            {% endif %}
                           </select>
                         </div>
                       </div>
@@ -353,7 +353,7 @@
                         <div class="col-sm-10">
                           <input type="text" name="address[{{ address_row }}][lastname]" value="{{ address.lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['lastname'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['lastname']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].lastname }}</div>
                           {% endif %}
                         </div>
                       </div>
@@ -368,7 +368,7 @@
                         <div class="col-sm-10">
                           <input type="text" name="address[{{ address_row }}][address_1]" value="{{ address.address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['address_1'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['address_1']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].address_1 }}</div>
                           {% endif %}
                         </div>
                       </div>
@@ -383,7 +383,7 @@
                         <div class="col-sm-10">
                           <input type="text" name="address[{{ address_row }}][city]" value="{{ address.city }}" placeholder="{{ entry_city }}" id="input-city{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['city'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['city']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].city }}</div>
                           {% endif %}
                         </div>
                       </div>
@@ -392,7 +392,7 @@
                         <div class="col-sm-10">
                           <input type="text" name="address[{{ address_row }}][postcode]" value="{{ address.postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode{{ address_row }}" class="form-control" />
                           <?php if (isset($error_address[$address_row]['postcode'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['postcode']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].postcode }}</div>
                           {% endif %}
                         </div>
                       </div>
@@ -410,7 +410,7 @@
                             <?php } ?>
                           </select>
                           <?php if (isset($error_address[$address_row]['country'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['country']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].country }}</div>
                           {% endif %}
                         </div>
                       </div>
@@ -420,14 +420,14 @@
                           <select name="address[{{ address_row }}][zone_id]" id="input-zone{{ address_row }}" class="form-control">
                           </select>
                           <?php if (isset($error_address[$address_row]['zone'])) { ?>
-                          <div class="text-danger"><?php echo $error_address[$address_row]['zone']; ?></div>
+                          <div class="text-danger">{{ error_address[address_row].zone }}</div>
                           {% endif %}
                         </div>
                       </div>
                       {% for custom_field in custom_fields %}
                       {% if custom_field.location == 'address' %}
                       {% if custom_field.type == 'select' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control">
@@ -438,7 +438,7 @@
                             {% else %}
                             <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
                             {% endif %}
-                            <?php } ?>
+                            {% endfor %}
                           </select>
                           {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
@@ -447,7 +447,7 @@
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'radio' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
@@ -463,16 +463,16 @@
                                 {{ custom_field_value.name }}</label>
                               {% endif %}
                             </div>
-                            <?php } ?>
+                            {% endfor %}
                           </div>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'checkbox' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div>
@@ -488,50 +488,50 @@
                                 {{ custom_field_value.name }}</label>
                               {% endif %}
                             </div>
-                            <?php } ?>
+                            {% endfor %}
                           </div>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'text' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'textarea' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <textarea name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'file' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
                           <input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'date' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group date">
@@ -539,14 +539,14 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'time' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group time">
@@ -554,14 +554,14 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% if custom_field.type == 'datetime' %}
-                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                      <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 control-label" for="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group datetime">
@@ -569,14 +569,14 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           {% endif %}
                         </div>
                       </div>
                       {% endif %}
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ entry_default }}</label>
                         <div class="col-sm-10">
@@ -591,7 +591,7 @@
                       </div>
                     </div>
                     {% set address_row = address_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -746,14 +746,14 @@ function addAddress() {
 	{% if custom_field.location == 'address' %}
 	{% if custom_field.type == 'select' %}
 
-	html += '  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name|e('js') }}</label>';
 	html += '  		<div class="col-sm-10">';
 	html += '  		  <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">';
 	html += '  			<option value="">{{ text_select }}</option>';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
-	html += '  			<option value="{{ custom_field_value.custom_field_value_id }}"><?php echo addslashes($custom_field_value['name']); ?></option>';
+	html += '  			<option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field.name|e('js') }}</option>';
 	{% endfor %}
 
 	html += '  		  </select>';
@@ -763,12 +763,12 @@ function addAddress() {
 
 	{% if custom_field.type == 'radio' %}
 	html += '  	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}">';
-	html += '  		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '  		<label class="col-sm-2 control-label">{{ custom_field.name|e('js') }}</label>';
 	html += '  		<div class="col-sm-10">';
 	html += '  		  <div>';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
-	html += '  			<div class="radio"><label><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
+	html += '  			<div class="radio"><label><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" /> {{ custom_field_value.name|e('js') }}</label></div>';
 	{% endfor %}
 
 	html += '		  </div>';
@@ -777,13 +777,13 @@ function addAddress() {
 	{% endif %}
 
 	{% if custom_field.type == 'checkbox' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
 	html += '		  <div>';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
-	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" /> <?php echo addslashes($custom_field_value['name']); ?></label></div>';
+	html += '			<div class="checkbox"><label><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" /> {{ custom_field_value.name|e('js') }}</label></div>';
 	{% endfor %}
 
 	html += '		  </div>';
@@ -792,26 +792,26 @@ function addAddress() {
 	{% endif %}
 
 	{% if custom_field.type == 'text' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" />';
+	html += '		  <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field_value.name|e('js') }}" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" />';
 	html += '		</div>';
 	html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'textarea' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <textarea name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control"><?php echo addslashes($custom_field['value']); ?></textarea>';
+	html += '		  <textarea name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field_value.name|e('js') }}" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value|e('js') }}</textarea>';
 	html += '		</div>';
 	html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'file' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label">{{ custom_field.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
 	html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>';
 	html += '		  <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value="" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" />';
@@ -820,28 +820,28 @@ function addAddress() {
 	{% endif %}
 
 	{% if custom_field.type == 'date' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'time' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'datetime' %}
-	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">';
-	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}"><?php echo addslashes($custom_field['name']); ?></label>';
+	html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+	html += '		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
+	html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
 	html += '		</div>';
 	html += '	  </div>';
 	{% endif %}

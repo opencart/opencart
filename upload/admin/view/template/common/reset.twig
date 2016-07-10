@@ -17,7 +17,7 @@
                   <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control" />
                   {% if error_password %}
                   <div class="text-danger">{{ error_password }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -26,7 +26,7 @@
                   <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control" />
                   {% if error_confirm %}
                   <div class="text-danger">{{ error_confirm }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="text-right">

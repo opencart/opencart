@@ -43,7 +43,7 @@
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
                 <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
-                <?php } ?>
+                {% endfor %}
               </ul>
               <div class="tab-content">
                 {% for language in languages %}
@@ -91,7 +91,7 @@
                     </div>
                   </div>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
             <div class="tab-pane" id="tab-data">
@@ -162,8 +162,8 @@
                     <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                     {% else %}
                     <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -189,7 +189,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -202,8 +202,8 @@
                     <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
                     {% else %}
                     <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -217,16 +217,16 @@
                     {% else %}
                     <input type="radio" name="shipping" value="1" />
                     {{ text_yes }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$shipping) { ?>
+                    {% if not $shipping %}
                     <input type="radio" name="shipping" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
                     <input type="radio" name="shipping" value="0" />
                     {{ text_no }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
               </div>
@@ -236,7 +236,7 @@
                   <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
                   {% if error_keyword %}
                   <div class="text-danger">{{ error_keyword }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -274,8 +274,8 @@
                     <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                     {% else %}
                     <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -294,8 +294,8 @@
                     <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                     {% else %}
                     <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -309,7 +309,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -337,7 +337,7 @@
                     <div id="product-category{{ product_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ product_category.name }}
                       <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -350,7 +350,7 @@
                     <div id="product-filter{{ product_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ product_filter.name }}
                       <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -366,7 +366,7 @@
                         {% else %}
                         <input type="checkbox" name="product_store[]" value="0" />
                         {{ text_default }}
-                        <?php } ?>
+                        {% endif %}
                       </label>
                     </div>
                     {% for store in stores %}
@@ -378,10 +378,10 @@
                         {% else %}
                         <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" />
                         {{ store.name }}
-                        <?php } ?>
+                        {% endif %}
                       </label>
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -394,7 +394,7 @@
                     <div id="product-download{{ product_download.download_id }}"><i class="fa fa-minus-circle"></i> {{ product_download.name }}
                       <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -407,7 +407,7 @@
                     <div id="product-related{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
                       <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -432,11 +432,11 @@
                         <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                           <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
                         </div>
-                        <?php } ?></td>
+                        {% endfor %}</td>
                       <td class="text-left"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     {% set attribute_row = attribute_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
@@ -455,7 +455,7 @@
                     {% for product_option in product_options %}
                     <li><a href="#tab-option{{ option_row }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-option{{ option_row }}\']').parent().remove(); $('#tab-option{{ option_row }}').remove(); $('#option a:first').tab('show');"></i> {{ product_option.name }}</a></li>
                     {% set option_row = option_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                     <li>
                       <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" class="form-control" />
                     </li>
@@ -481,7 +481,7 @@
                             {% else %}
                             <option value="1">{{ text_yes }}</option>
                             <option value="0" selected="selected">{{ text_no }}</option>
-                            <?php } ?>
+                            {% endif %}
                           </select>
                         </div>
                       </div>
@@ -492,7 +492,7 @@
                           <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-value{{ option_row }}" class="form-control" />
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type == 'textarea' %}
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-value{{ option_row }}">{{ entry_option_value }}</label>
@@ -500,7 +500,7 @@
                           <textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-value{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type == 'file' %}
                       <div class="form-group" style="display: none;">
                         <label class="col-sm-2 control-label" for="input-value{{ option_row }}">{{ entry_option_value }}</label>
@@ -508,7 +508,7 @@
                           <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-value{{ option_row }}" class="form-control" />
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type == 'date' %}
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-value{{ option_row }}">{{ entry_option_value }}</label>
@@ -520,7 +520,7 @@
                             </span></div>
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type == 'time' %}
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-value{{ option_row }}">{{ entry_option_value }}</label>
@@ -532,7 +532,7 @@
                             </span></div>
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type == 'datetime' %}
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-value{{ option_row }}">{{ entry_option_value }}</label>
@@ -544,7 +544,7 @@
                             </span></div>
                         </div>
                       </div>
-                      <?php } ?>
+                      {% endif %}
                       {% if product_option.type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type == 'image' %}
                       <div class="table-responsive">
                         <table id="option-value{{ option_row }}" class="table table-striped table-bordered table-hover">
@@ -569,9 +569,9 @@
                                   <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>
                                   {% else %}
                                   <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
-                                  <?php } ?>
-                                  <?php } ?>
-                                  <?php } ?>
+                                  {% endif %}
+                                  {% endfor %}
+                                  {% endif %}
                                 </select>
                                 <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}" /></td>
                               <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
@@ -582,19 +582,19 @@
                                   {% else %}
                                   <option value="1">{{ text_yes }}</option>
                                   <option value="0" selected="selected">{{ text_no }}</option>
-                                  <?php } ?>
+                                  {% endif %}
                                 </select></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
                                   <?php if ($product_option_value['price_prefix'] == '+') { ?>
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
-                                  <?php } ?>
+                                  {% endif %}
                                   <?php if ($product_option_value['price_prefix'] == '-') { ?>
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
-                                  <?php } ?>
+                                  {% endif %}
                                 </select>
                                 <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
@@ -602,12 +602,12 @@
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
-                                  <?php } ?>
+                                  {% endif %}
                                   <?php if ($product_option_value['points_prefix'] == '-') { ?>
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
-                                  <?php } ?>
+                                  {% endif %}
                                 </select>
                                 <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}" placeholder="{{ entry_points }}" class="form-control" /></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
@@ -615,18 +615,18 @@
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
-                                  <?php } ?>
+                                  {% endif %}
                                   <?php if ($product_option_value['weight_prefix'] == '-') { ?>
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
-                                  <?php } ?>
+                                  {% endif %}
                                 </select>
                                 <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}" placeholder="{{ entry_weight }}" class="form-control" /></td>
                               <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                             </tr>
                             {% set option_value_row = option_value_row + 1 %}
-                            <?php } ?>
+                            {% endfor %}
                           </tbody>
                           <tfoot>
                             <tr>
@@ -640,13 +640,13 @@
                         {% if option_values[product_option.option_id] %}
                         <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
                         <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
-                        <?php } ?>
-                        <?php } ?>
+                        {% endfor %}
+                        {% endif %}
                       </select>
-                      <?php } ?>
+                      {% endif %}
                     </div>
                     {% set option_row = option_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -672,8 +672,8 @@
                           <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
                           {% else %}
                           <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                       <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
                           {% for customer_group in customer_groups %}
@@ -681,13 +681,13 @@
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                       <td class="text-left"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     {% set recurring_row = recurring_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
@@ -722,8 +722,8 @@
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                       <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" /></td>
                       <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
@@ -741,7 +741,7 @@
                       <td class="text-left"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     {% set discount_row = discount_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
@@ -775,8 +775,8 @@
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                       <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
                       <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
@@ -793,7 +793,7 @@
                       <td class="text-left"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     {% set special_row = special_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
@@ -838,7 +838,7 @@
                       <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     {% set image_row = image_row + 1 %}
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
@@ -870,7 +870,7 @@
                       <td class="text-left">{{ customer_group.name }}</td>
                       <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" class="form-control" /></td>
                     </tr>
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -894,8 +894,8 @@
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                     </tr>
                     {% for store in stores %}
@@ -908,11 +908,11 @@
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                          <?php } ?>
-                          <?php } ?>
+                          {% endif %}
+                          {% endfor %}
                         </select></td>
                     </tr>
-                    <?php } ?>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -1078,7 +1078,7 @@ function addAttribute() {
 	html += '  <td class="text-left">';
 	{% for language in languages %}
 	html += '<div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><textarea name="product_attribute[' + attribute_row + '][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control"></textarea></div>';
-    <?php } ?>
+    {% endfor %}
 	html += '  </td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';
@@ -1304,7 +1304,7 @@ function addDiscount() {
     html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
     {% for customer_group in customer_groups %}
     html += '    <option value="{{ customer_group.customer_group_id }}"><?php echo addslashes($customer_group['name']); ?></option>';
-    <?php } ?>
+    {% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
@@ -1331,7 +1331,7 @@ function addSpecial() {
     html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
     {% for customer_group in customer_groups %}
     html += '      <option value="{{ customer_group.customer_group_id }}"><?php echo addslashes($customer_group['name']); ?></option>';
-    <?php } ?>
+    {% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
@@ -1373,14 +1373,14 @@ function addRecurring() {
 	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">>';
 	{% for recurring in recurrings %}
 	html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>';
-	<?php } ?>
+	{% endfor %}
 	html += '    </select>';
 	html += '  </td>';
 	html += '  <td class="left">';
 	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
 	{% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>';
-	<?php } ?>
+	{% endfor %}
 	html += '    <select>';
 	html += '  </td>';
 	html += '  <td class="left">';

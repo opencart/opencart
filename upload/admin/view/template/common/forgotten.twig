@@ -13,7 +13,7 @@
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
-            <?php } ?>
+            {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="input-email">{{ entry_email }}</label>

@@ -46,7 +46,7 @@
                     {% else %}
                     <input type="checkbox" name="manufacturer_store[]" value="0" />
                     {{ text_default }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
                 {% for store in stores %}
@@ -61,7 +61,7 @@
                     {% endif %}
                   </label>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
           </div>

@@ -34,8 +34,8 @@
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
-              <?php } ?>
-              <?php } ?>
+              {% endif %}
+              {% endfor %}
             </div>
           </div>
           <div class="form-group">
@@ -46,12 +46,12 @@
                 <option value="account" selected="selected">{{ text_account }}</option>
                 {% else %}
                 <option value="account">{{ text_account }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if location == 'address' %}
                 <option value="address" selected="selected">{{ text_address }}</option>
                 {% else %}
                 <option value="address">{{ text_address }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -64,53 +64,53 @@
                 <option value="select" selected="selected">{{ text_select }}</option>
                 {% else %}
                 <option value="select">{{ text_select }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'radio' %}
                 <option value="radio" selected="selected">{{ text_radio }}</option>
                 {% else %}
                 <option value="radio">{{ text_radio }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'checkbox' %}
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
                 {% else %}
                 <option value="checkbox">{{ text_checkbox }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_input }}">
                 {% if type == 'text' %}
                 <option value="text" selected="selected">{{ text_text }}</option>
                 {% else %}
                 <option value="text">{{ text_text }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'textarea' %}
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
                 {% else %}
                 <option value="textarea">{{ text_textarea }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_file }}">
                 {% if type == 'file' %}
                 <option value="file" selected="selected">{{ text_file }}</option>
                 {% else %}
                 <option value="file">{{ text_file }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_date }}">
                 {% if type == 'date' %}
                 <option value="date" selected="selected">{{ text_date }}</option>
                 {% else %}
                 <option value="date">{{ text_date }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'time' %}
                 <option value="time" selected="selected">{{ text_time }}</option>
                 {% else %}
                 <option value="time">{{ text_time }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if type == 'datetime' %}
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
                 {% else %}
                 <option value="datetime">{{ text_datetime }}</option>
-                <?php } ?>
+                {% endif %}
                 </optgroup>
               </select>
             </div>
@@ -140,11 +140,11 @@
                   {% else %}
                   <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" />
                   {{ customer_group.name }}
-                  <?php } ?>
+                  {% endif %}
                 </label>
               </div>
               {% set customer_group_row = customer_group_row + 1 %}
-              <?php } ?>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group">
@@ -160,11 +160,11 @@
                   {% else %}
                   <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" />
                   {{ customer_group.name }}
-                  <?php } ?>
+                  {% endif %}
                 </label>
               </div>
               {% set customer_group_row = customer_group_row + 1 %}
-              <?php } ?>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group">
@@ -177,7 +177,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -207,12 +207,12 @@
                   {% if error_custom_field_value[custom_field_value_row][language.language_id] %}
                   <div class="text-danger">{{ error_custom_field_value[custom_field_value_row][language.language_id] }}</div>
                   {% endif %}
-                  <?php } ?></td>
+                  {% endif %}</td>
                 <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
                 <td class="text-left"><button onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               {% set custom_field_value_row = custom_field_value_row + 1 %}
-              <?php } ?>
+              {% endfor %}
             </tbody>
             <tfoot>
               <tr>
@@ -272,7 +272,7 @@ function addCustomFieldValue() {
 	html += '    <div class="input-group">';
 	html += '      <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" class="form-control" />';
     html += '    </div>';
-	<?php } ?>
+	{% endfor %}
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

@@ -119,13 +119,13 @@
 					<td class="text-left">
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.merchant_id }}" />
 					  <?php if (isset($error_account[$key]['merchant_id'])) { ?>
-					  <div class="text-danger"><?php echo $error_account[$key]['merchant_id']; ?></div>
+					  <div class="text-danger">{{ error_account[key].merchant_id }}</div>
 					  <?php } ?>
 					</td>
 					<td class="text-left">
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.secret }}" />
 					  <?php if (isset($error_account[$key]['secret'])) { ?>
-					  <div class="text-danger"><?php echo $error_account[$key]['secret']; ?></div>
+					  <div class="text-danger">{{ error_account[key].secret }}</div>
 					  <?php } ?>
 					</td>
 					<td class="text-left">
@@ -164,7 +164,7 @@
 					<td class="text-left">
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="{{ account.locale }}" />
 					  <?php if (isset($error_account[$key]['locale'])) { ?>
-					  <div class="text-danger"><?php echo $error_account[$key]['locale']; ?></div>
+					  <div class="text-danger">{{ error_account[key].locale }}</div>
 					  <?php } ?>
 					</td>
 					<td class="text-left">

@@ -20,7 +20,7 @@
         </div>
       </div>
       <hr />
-      <?php foreach (array_chunk($images, 4) as $image) { ?>
+      {% foreach image in images|batch(4) %}
       <div class="row">
         {% for image in image %}
         <div class="col-sm-3 col-xs-6 text-center">
@@ -29,18 +29,18 @@
           <label>
             <input type="checkbox" name="path[]" value="{{ image.path }}" />
             {{ image.name }}</label>
-          <?php } ?>
+          {% endif %}
           {% if image.type == 'image' %}
           <a href="{{ image.href }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" /></a>
           <label>
             <input type="checkbox" name="path[]" value="{{ image.path }}" />
             {{ image.name }}</label>
-          <?php } ?>
+          {% endif %}
         </div>
-        <?php } ?>
+        {% endfor %}
       </div>
       <br />
-      <?php } ?>
+      {% endfor %}
     </div>
     <div class="modal-footer">{{ pagination }}</div>
   </div>
@@ -52,13 +52,13 @@ $('a.thumbnail').on('click', function(e) {
 
 	{% if thumb %}
 	$('#{{ thumb }}').find('img').attr('src', $(this).find('img').attr('src'));
-	<?php } ?>
+	{% endif %}
 
 	$('#{{ target }}').val($(this).parent().find('input').val());
 
 	$('#modal-image').modal('hide');
 });
-<?php } ?>
+{% endif %}
 
 $('a.directory').on('click', function(e) {
 	e.preventDefault();
@@ -101,11 +101,11 @@ $('#button-search').on('click', function(e) {
 
 	{% if thumb %}
 	url += '&thumb=' + '{{ thumb }}';
-	<?php } ?>
+	{% endif %}
 
 	{% if target %}
 	url += '&target=' + '{{ target }}';
-	<?php } ?>
+	{% endif %}
 
 	$('#modal-image').load(url);
 });

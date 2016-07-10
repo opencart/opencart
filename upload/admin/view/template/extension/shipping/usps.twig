@@ -549,7 +549,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$usps_display_time) { ?>
+                {% if not usps_display_time %}
                 <input type="radio" name="usps_display_time" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -572,7 +572,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$usps_display_weight) { ?>
+                {% if not usps_display_weight %}
                 <input type="radio" name="usps_display_weight" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

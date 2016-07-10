@@ -83,7 +83,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$fedex_test) { ?>
+                {% if not fedex_test %}
                 <input type="radio" name="fedex_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -250,7 +250,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$fedex_display_time) { ?>
+                {% if not fedex_display_time %}
                 <input type="radio" name="fedex_display_time" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -273,7 +273,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$fedex_display_weight) { ?>
+                {% if not fedex_display_weight %}
                 <input type="radio" name="fedex_display_weight" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

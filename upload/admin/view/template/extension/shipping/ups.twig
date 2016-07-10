@@ -154,7 +154,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$ups_test) { ?>
+                {% if not ups_test %}
                 <input type="radio" name="ups_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -749,7 +749,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$ups_insurance) { ?>
+                {% if not ups_insurance %}
                 <input type="radio" name="ups_insurance" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -772,7 +772,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$ups_display_weight) { ?>
+                {% if not ups_display_weight %}
                 <input type="radio" name="ups_display_weight" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

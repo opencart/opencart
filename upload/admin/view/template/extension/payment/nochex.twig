@@ -73,7 +73,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$nochex_template) { ?>
+                {% if not nochex_template %}
                 <input type="radio" name="nochex_template" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -96,7 +96,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$nochex_test) { ?>
+                {% if not nochex_test %}
                 <input type="radio" name="nochex_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

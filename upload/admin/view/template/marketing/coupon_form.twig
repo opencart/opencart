@@ -93,7 +93,7 @@
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$logged) { ?>
+                    {% if not logged %}
                     <input type="radio" name="logged" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
@@ -116,7 +116,7 @@
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$shipping) { ?>
+                    {% if not shipping %}
                     <input type="radio" name="shipping" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}

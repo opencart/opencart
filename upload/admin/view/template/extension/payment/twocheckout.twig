@@ -56,7 +56,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$twocheckout_test) { ?>
+                {% if not twocheckout_test %}
                 <input type="radio" name="twocheckout_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -79,7 +79,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$twocheckout_display) { ?>
+                {% if not twocheckout_display %}
                 <input type="radio" name="twocheckout_display" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

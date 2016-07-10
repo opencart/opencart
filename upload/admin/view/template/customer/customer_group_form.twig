@@ -61,7 +61,7 @@
                 {% endif %}
               </label>
               <label class="radio-inline">
-                <?php if (!$approval) { ?>
+                {% if not approval %}
                 <input type="radio" name="approval" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

@@ -267,7 +267,7 @@
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_currency_auto) { ?>
+                    {% if not config_currency_auto %}
                     <input type="radio" name="config_currency_auto" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
@@ -322,7 +322,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_product_count) { ?>
+                      {% if not config_product_count %}
                       <input type="radio" name="config_product_count" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -357,7 +357,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_review_status) { ?>
+                      {% if not config_review_status %}
                       <input type="radio" name="config_review_status" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -380,7 +380,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_review_guest) { ?>
+                      {% if not config_review_guest %}
                       <input type="radio" name="config_review_guest" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -427,7 +427,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_tax) { ?>
+                      {% if not config_tax %}
                       <input type="radio" name="config_tax" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -489,7 +489,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_customer_online) { ?>
+                      {% if not config_customer_online %}
                       <input type="radio" name="config_customer_online" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -512,7 +512,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_customer_activity) { ?>
+                      {% if not config_customer_activity %}
                       <input type="radio" name="config_customer_activity" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -535,7 +535,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_customer_search) { ?>
+                      {% if not config_customer_search %}
                       <input type="radio" name="config_customer_search" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -593,7 +593,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_customer_price) { ?>
+                      {% if not config_customer_price %}
                       <input type="radio" name="config_customer_price" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -649,7 +649,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_cart_weight) { ?>
+                      {% if not config_cart_weight %}
                       <input type="radio" name="config_cart_weight" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -672,7 +672,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_checkout_guest) { ?>
+                      {% if not config_checkout_guest %}
                       <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -802,7 +802,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_display) { ?>
+                      {% if not config_stock_display %}
                       <input type="radio" name="config_stock_display" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -825,7 +825,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_warning) { ?>
+                      {% if not config_stock_warning %}
                       <input type="radio" name="config_stock_warning" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -848,7 +848,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_checkout) { ?>
+                      {% if not config_stock_checkout %}
                       <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -874,7 +874,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_affiliate_approval) { ?>
+                      {% if not config_affiliate_approval %}
                       <input type="radio" name="config_affiliate_approval" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -897,7 +897,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_checkout) { ?>
+                      {% if not config_stock_checkout %}
                       <input type="radio" name="config_affiliate_auto" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1070,7 +1070,7 @@
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_ftp_status) { ?>
+                    {% if not config_ftp_status %}
                     <input type="radio" name="config_ftp_status" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
@@ -1184,7 +1184,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_maintenance) { ?>
+                      {% if not config_maintenance %}
                       <input type="radio" name="config_maintenance" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1207,7 +1207,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_seo_url) { ?>
+                      {% if not config_seo_url %}
                       <input type="radio" name="config_seo_url" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1245,7 +1245,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_secure) { ?>
+                      {% if not config_secure %}
                       <input type="radio" name="config_secure" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1268,7 +1268,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_password) { ?>
+                      {% if not config_password %}
                       <input type="radio" name="config_password" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1291,7 +1291,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_shared) { ?>
+                      {% if not config_shared %}
                       <input type="radio" name="config_shared" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1347,7 +1347,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_error_display) { ?>
+                      {% if not config_error_display %}
                       <input type="radio" name="config_error_display" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -1370,7 +1370,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_error_log) { ?>
+                      {% if not config_error_log %}
                       <input type="radio" name="config_error_log" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}

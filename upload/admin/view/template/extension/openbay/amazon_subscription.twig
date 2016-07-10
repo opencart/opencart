@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (!$user_plan) { ?>
+    {% if not user_plan %}
     <div class="row">
       <p>{{ text_register_invite }}</p>
       <p><a href="{{ link_register }}" class="btn btn-primary" target="_blank">{{ button_register }}</a></p>

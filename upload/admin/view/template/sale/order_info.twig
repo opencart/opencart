@@ -81,7 +81,7 @@
               <tr>
                 <td>{{ text_invoice }}</td>
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
-                <td style="width: 1%;" class="text-center"><?php if (!$invoice_no) { ?>
+                <td style="width: 1%;" class="text-center">{% if not invoice_no %}
                   <button id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
                   {% else %}
                   <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
@@ -91,7 +91,7 @@
                 <td>{{ text_reward }}</td>
                 <td class="text-right">{{ reward }}</td>
                 <td class="text-center"><?php if ($customer && $reward) { ?>
-                  <?php if (!$reward_total) { ?>
+                  {% if not reward_total %}
                   <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
                   <button id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
@@ -107,7 +107,7 @@
                   {% endif %}</td>
                 <td class="text-right">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
-                  <?php if (!$commission_total) { ?>
+                  {% if not commission_total %}
                   <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
                   <button id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>

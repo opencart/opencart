@@ -47,7 +47,7 @@
                 <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 <?php echo $text_dont_list ?><br/>
                 {% for search_results in product.search_results %}
-                <?php if (!$checked) { ?>
+                {% if not checked %}
                 <input class="amazon-listing" checked="checked" type="radio" name="products[{{ product.product_id }}]" value="{{ search_result.asin }}"/>
                 <?php $checked = true; ?>
                 {% else %}

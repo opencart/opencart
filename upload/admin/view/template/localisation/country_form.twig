@@ -65,7 +65,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$postcode_required) { ?>
+                {% if not postcode_required %}
                 <input type="radio" name="postcode_required" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

@@ -56,7 +56,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$paymate_test) { ?>
+                {% if not paymate_test %}
                 <input type="radio" name="paymate_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

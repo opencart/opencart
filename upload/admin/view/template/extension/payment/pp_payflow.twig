@@ -79,7 +79,7 @@
             <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
             <div class="col-sm-10">
               <select name="pp_payflow_transaction" id="input-transaction" class="form-control">
-                <?php if (!$pp_payflow_transaction) { ?>
+                {% if not pp_payflow_transaction %}
                 <option value="0" selected="selected">{{ text_authorization }}</option>
                 {% else %}
                 <option value="0">{{ text_authorization }}</option>

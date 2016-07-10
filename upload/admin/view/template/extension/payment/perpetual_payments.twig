@@ -56,7 +56,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$perpetual_payments_test) { ?>
+                {% if not perpetual_payments_test %}
                 <input type="radio" name="perpetual_payments_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

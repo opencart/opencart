@@ -27,7 +27,7 @@
     </div>
     <form id="bulk-link-form" class="form-horizontal">
       <div id="text-market">
-        <?php if (!$marketplace_processing) { ?>
+        {% if not marketplace_processing %}
         {% if unlinked_products %}
         <table class="table table-bordered table-hover">
           <thead>

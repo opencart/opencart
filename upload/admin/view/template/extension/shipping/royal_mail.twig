@@ -59,7 +59,7 @@
                         <?php } ?>
                       </label>
                       <label class="radio-inline">
-                        <?php if (!$royal_mail_display_weight) { ?>
+                        {% if not royal_mail_display_weight %}
                         <input type="radio" name="royal_mail_display_weight" value="0" checked="checked" />
                         {{ text_no }}
                         {% else %}
@@ -82,7 +82,7 @@
                         <?php } ?>
                       </label>
                       <label class="radio-inline">
-                        <?php if (!$royal_mail_display_insurance) { ?>
+                        {% if not royal_mail_display_insurance %}
                         <input type="radio" name="royal_mail_display_insurance" value="0" checked="checked" />
                         {{ text_no }}
                         {% else %}

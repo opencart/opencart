@@ -68,7 +68,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$authorizenet_sim_test) { ?>
+                {% if not authorizenet_sim_test %}
                 <input type="radio" name="authorizenet_sim_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

@@ -38,7 +38,7 @@
                 {% endif %}
               </label>
               <label class="radio-inline">
-                <?php if (!$store_admin) { ?>
+                {% if not store_admin %}
                 <input type="radio" name="store_admin" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

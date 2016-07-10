@@ -270,7 +270,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_tax) { ?>
+                      {% if not config_tax %}
                       <input type="radio" name="config_tax" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -367,7 +367,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_customer_price) { ?>
+                      {% if not config_customer_price %}
                       <input type="radio" name="config_customer_price" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -408,7 +408,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_cart_weight) { ?>
+                      {% if not config_cart_weight %}
                       <input type="radio" name="config_cart_weight" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -431,7 +431,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_checkout_guest) { ?>
+                      {% if not config_checkout_guest %}
                       <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -486,7 +486,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_display) { ?>
+                      {% if not config_stock_display %}
                       <input type="radio" name="config_stock_display" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -509,7 +509,7 @@
                       {% endif %}
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_checkout) { ?>
+                      {% if not config_stock_checkout %}
                       <input type="radio" name="config_stock_checkout" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}
@@ -549,7 +549,7 @@
                     {% endif %}
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_secure) { ?>
+                    {% if not config_secure %}
                     <input type="radio" name="config_secure" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}

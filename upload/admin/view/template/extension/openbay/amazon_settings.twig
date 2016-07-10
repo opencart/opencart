@@ -57,7 +57,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ text_api_status }}</label>
             <div class="col-sm-10">
-              <?php if (!$API_status) { ?>
+              {% if not API_status %}
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
               <?php } else if (!$API_auth) { ?>
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_auth_error }}</span></h4>

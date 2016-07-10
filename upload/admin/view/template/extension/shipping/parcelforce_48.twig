@@ -50,7 +50,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$parcelforce_48_display_weight) { ?>
+                {% if not parcelforce_48_display_weight %}
                 <input type="radio" name="parcelforce_48_display_weight" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -73,7 +73,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$parcelforce_48_display_insurance) { ?>
+                {% if not parcelforce_48_display_insurance %}
                 <input type="radio" name="parcelforce_48_display_insurance" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
@@ -96,7 +96,7 @@
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$parcelforce_48_display_time) { ?>
+                {% if not parcelforce_48_display_time %}
                 <input type="radio" name="parcelforce_48_display_time" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}

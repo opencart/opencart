@@ -62,7 +62,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
+                  {% if not filter_status %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -78,7 +78,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  <?php if (!$filter_image && !is_null($filter_image)) { ?>
+                  {% if not filter_image %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -146,9 +146,9 @@
                     {% else %}
                     {{ product.price }}
                     {% endif %}</td>
-                  <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
+                  <td class="text-right">{% if (product.quantity <= 0 %}
                     <span class="label label-warning">{{ product.quantity }}</span>
-                    <?php } elseif ($product['quantity'] <= 5) { ?>
+                    {% elseif (product.quantity <= 5 %}
                     <span class="label label-danger">{{ product.quantity }}</span>
                     {% else %}
                     <span class="label label-success">{{ product.quantity }}</span>

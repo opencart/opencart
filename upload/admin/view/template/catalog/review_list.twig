@@ -51,7 +51,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
+                  {% if not filter_status %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>

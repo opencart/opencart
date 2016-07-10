@@ -47,13 +47,13 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-merchant{{ country.code }}"><span data-toggle="tooltip" title="{{ help_merchant }}">{{ entry_merchant }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_account[{{ country.code }}][merchant]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['merchant'] : ''; ?>" placeholder="{{ entry_merchant }}" id="input-merchant{{ country.code }}" class="form-control" />
+                      <input type="text" name="klarna_account[{{ country.code }}][merchant]" value="{% if klarna_account[country.code] %} {{ klarna_account[country.code].merchant }} {% endif %}" placeholder="{{ entry_merchant }}" id="input-merchant{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-secret{{ country.code }}"><span data-toggle="tooltip" title="{{ help_secret }}">{{ entry_secret }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_account[{{ country.code }}][secret]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['secret'] : ''; ?>" placeholder="{{ entry_secret }}" id="input-secret{{ country.code }}" class="form-control" />
+                      <input type="text" name="klarna_account[{{ country.code }}][secret]" value="{% if klarna_account[country.code] %} {{ klarna_account[country.code].secret }} {% endif %}" placeholder="{{ entry_secret }}" id="input-secret{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
@@ -76,7 +76,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-total{{ country.code }}"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_account[{{ country.code }}][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
+                      <input type="text" name="klarna_account[{{ country.code }}][total]" value="{% if klarna_account[country.code] %} {{ klarna_account[country.code].total }} {% endif %}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
@@ -139,7 +139,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-sort-order{{ country.code }}">{{ entry_sort_order }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_account[{{ country.code }}][sort_order]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['sort_order'] : ''; ?>" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
+                      <input type="text" name="klarna_account[{{ country.code }}][sort_order]" value="{% if klarna_account[country.code] %} {{ klarna_account[country.code].sort_order }} {% endif %}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                 </div>

@@ -5,10 +5,10 @@
       <div class="pull-right">
         <?php if (isset($url_create_new)) { ?>
         <a href="{{ url_create_new }}" data-toggle="tooltip" title="{{ button_create_new_listing }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-        <?php } ?>
+        {% endif %}
         <?php if (isset($url_delete_links)) { ?>
         <a href="{{ url_delete_links }}" data-toggle="tooltip" title="{{ button_remove_links }}" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
-        <?php } ?>
+        {% endif %}
         <a href="{{ url_return }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1>{{ text_edit_heading }}</h1>
       <ul class="breadcrumb">
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -55,12 +55,12 @@
             <td class="text-left">{{ link.var }}</td>
             <td class="text-left">{{ link.amazon_sku }}</td>
           </tr>
-          <?php } ?>
+          {% endfor %}
         {% else %}
         <tr>
           <td colspan="6" class="text-center">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
       </tbody>
     </table>
   </div>

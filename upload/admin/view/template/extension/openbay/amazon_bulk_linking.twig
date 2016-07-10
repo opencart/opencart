@@ -62,7 +62,7 @@
               <tbody>
                 {% set row = 0 %}
                 {% for product in unlinked_products %}
-                <?php $row++ ?>
+                {% set row = row + 1 %}
                 <?php if (empty($product['sku']) || $product['quantity'] < 1) { ?>
                   <tr class="warning">
                     <td class="text-center"> - </td>

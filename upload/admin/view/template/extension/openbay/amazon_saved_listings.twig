@@ -19,7 +19,7 @@
           <div class="pull-right">
             {% if saved_products %}
             <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> {{ button_upload }}</a>
-            <?php } ?>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -47,12 +47,12 @@
             <a class="btn btn-danger" onclick="removeSaved('{{ saved_product.product_id }}', '{{ saved_product.var }}', this)" data-toggle="tooltip" data-original-title="{{ button_remove }}"><i class="fa fa-times-circle"></i></a>
           </td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% else %}
         <tr>
           <td colspan="5" class="text-center">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
       </tbody>
     </table>
   </div>

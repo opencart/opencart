@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_group }}" class="form-control" />
+                <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{% if filter_group_description[language.language_id] %} {{ filter_group_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_group }}" class="form-control" />
               </div>
               {% if error_group[language.language_id] %}
               <div class="text-danger">{{ error_group[language.language_id] }}</div>
@@ -59,10 +59,10 @@
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}" />
                   {% for language in languages %}
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                    <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
+                    <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{% if filter.filter_description[language.language_id] %} filter.filter_description[language.language_id].name {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
                   </div>
-                  <?php if (isset($error_filter[$filter_row][$language['language_id']])) { ?>
-                  <div class="text-danger"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></div>
+                  {% if error_filter[filter_row][language.language_id] %}
+                  <div class="text-danger">{{ error_filter[filter_row][language.language_id] }}</div>
                   {% endif %}
                   {% endfor %}</td>
                 <td class="text-right"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>

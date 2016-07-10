@@ -43,7 +43,7 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="information_description[{{ language.language_id }}][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control" />
+                      <input type="text" name="information_description[{{ language.language_id }}][title]" value="{% if information_description[language.language_id] %} {{ information_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control" />
                       {% if error_title[language.language_id] %}
                       <div class="text-danger">{{ error_title[language.language_id] }}</div>
                       {% endif %}
@@ -52,7 +52,7 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+                      <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote">{% if information_description[language.language_id] %} {{ information_description[language.language_id].description }} {% endif %}</textarea>
                       {% if error_description[language.language_id] %}
                       <div class="text-danger">{{ error_description[language.language_id] }}</div>
                       {% endif %}
@@ -61,7 +61,7 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="information_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
+                      <input type="text" name="information_description[{{ language.language_id }}][meta_title]" value="{% if information_description[language.language_id] %} {{ information_description[language.language_id].meta_title }} {% endif %}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
                       {% if error_meta_title[language.language_id] %}
                       <div class="text-danger">{{ error_meta_title[language.language_id] }}</div>
                       {% endif %}
@@ -70,13 +70,13 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="information_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                      <textarea name="information_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{% if information_description[language.language_id] %} {{ information_description[language.language_id].meta_description }} {% endif %}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-keyword{{ language.language_id }}">{{ entry_meta_keyword }}</label>
                     <div class="col-sm-10">
-                      <textarea name="information_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                      <textarea name="information_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{% if information_description[language.language_id] %} {{ information_description[language.language_id].meta_keyword }} {% endif %}</textarea>
                     </div>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
                     <div class="checkbox">
                       <label>
-                        <?php if (in_array(0, $information_store)) { ?>
+                        {%  if 0 in information_store %}
                         <input type="checkbox" name="information_store[]" value="0" checked="checked" />
                         {{ text_default }}
                         {% else %}
@@ -174,7 +174,7 @@
                       <td class="text-left"><select name="information_layout[0]" class="form-control">
                           <option value=""></option>
                           {% for layout in layouts %}
-                          <?php if (isset($information_layout[0]) && $information_layout[0] == $layout['layout_id']) { ?>
+                          {% if information_layout[0] and information_layout[0] == layout.layout_id %}
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
@@ -188,7 +188,7 @@
                       <td class="text-left"><select name="information_layout[{{ store.store_id }}]" class="form-control">
                           <option value=""></option>
                           {% for layout in layouts %}
-                          <?php if (isset($information_layout[$store['store_id']]) && $information_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                          {% if information_layout[store.store_id] and information_layout[store.store_id] == layout.layout_id %}
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>

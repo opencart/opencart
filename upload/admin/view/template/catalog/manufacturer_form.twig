@@ -40,7 +40,7 @@
               <div class="well well-sm" style="height: 150px; overflow: auto;">
                 <div class="checkbox">
                   <label>
-                    <?php if (in_array(0, $manufacturer_store)) { ?>
+                    {%  if 0 in manufacturer_store %}
                     <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
                     {{ text_default }}
                     {% else %}

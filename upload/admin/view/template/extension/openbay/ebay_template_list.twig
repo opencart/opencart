@@ -42,12 +42,12 @@
                 <a href="{{ template.link_delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
               </td>
             </tr>
-          <?php } ?>
+          {% endfor %}
         {% else %}
           <tr>
             <td class="text-center" colspan="2">{{ text_no_results }}</td>
           </tr>
-        <?php } ?>
+        {% endif %}
         </tbody>
       </table>
     </div>

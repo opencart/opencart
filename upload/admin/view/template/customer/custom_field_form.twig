@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" class="form-control" />
+                <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{% if custom_field_description[language.language_id] %} {{ custom_field_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
@@ -202,7 +202,7 @@
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}" />
                   {% for language in languages %}
                   <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                    <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="<?php echo isset($custom_field_value['custom_field_value_description'][$language['language_id']]) ? $custom_field_value['custom_field_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_custom_value }}" class="form-control" />
+                    <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{% if custom_field_value.custom_field_value_description[language.language_id] %} {{ custom_field_value.custom_field_value_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_custom_value }}" class="form-control" />
                   </div>
                   {% if error_custom_field_value[custom_field_value_row][language.language_id] %}
                   <div class="text-danger">{{ error_custom_field_value[custom_field_value_row][language.language_id] }}</div>

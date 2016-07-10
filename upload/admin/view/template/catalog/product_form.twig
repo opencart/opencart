@@ -51,7 +51,7 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="product_description[{{ language.language_id }}][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
+                      <input type="text" name="product_description[{{ language.language_id }}][name]" value="{% if product_description[language.language_id] %} {{ product_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control" />
                       {% if error_name[language.language_id] %}
                       <div class="text-danger">{{ error_name[language.language_id] }}</div>
                       {% endif %}
@@ -60,13 +60,13 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea>
+                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control summernote">{% if product_description[language.language_id] %} {{ product_description[language.language_id].description }} {% endif %}</textarea>
                     </div>
                   </div>
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
+                      <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{% if product_description[language.language_id] %} {{ product_description[language.language_id].meta_title }} {% endif %}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control" />
                       {% if error_meta_title[language.language_id] %}
                       <div class="text-danger">{{ error_meta_title[language.language_id] }}</div>
                       {% endif %}
@@ -75,19 +75,19 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                      <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{% if product_description[language.language_id] %} {{ product_description[language.language_id].meta_description }} {% endif %}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-keyword{{ language.language_id }}">{{ entry_meta_keyword }}</label>
                     <div class="col-sm-10">
-                      <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                      <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{% if product_description[language.language_id] %} {{ product_description[language.language_id].meta_keyword }} {% endif %}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-tag{{ language.language_id }}"><span data-toggle="tooltip" title="{{ help_tag }}">{{ entry_tag }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="product_description[{{ language.language_id }}][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control" />
+                      <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{% if product_description[language.language_id] %} {{ product_description[language.language_id].tag }} {% endif %}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -360,7 +360,7 @@
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
                     <div class="checkbox">
                       <label>
-                        <?php if (in_array(0, $product_store)) { ?>
+                        {%  if 0 in product_store %}
                         <input type="checkbox" name="product_store[]" value="0" checked="checked" />
                         {{ text_default }}
                         {% else %}
@@ -564,8 +564,10 @@
                             <tr id="option-value-row{{ option_value_row }}">
                               <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" class="form-control">
                                   {% if option_values[product_option.option_id] %}
-                                  <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
-                                  <?php if ($option_value['option_value_id'] == $product_option_value['option_value_id']) { ?>
+                                 
+                                  {% for option_value in option_values[product_option.option_id] %}
+                                  
+                                  {% if option_value.option_value_id == product_option_value.option_value_id %}
                                   <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>
                                   {% else %}
                                   <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
@@ -585,12 +587,12 @@
                                   {% endif %}
                                 </select></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
-                                  <?php if ($product_option_value['price_prefix'] == '+') { ?>
+                                  {% if product_option_value.price_prefix == '+' %}
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
                                   {% endif %}
-                                  <?php if ($product_option_value['price_prefix'] == '-') { ?>
+                                  {% if product_option_value.price_prefix == '-' %}
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
@@ -598,12 +600,12 @@
                                 </select>
                                 <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}" placeholder="{{ entry_price }}" class="form-control" /></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
-                                  <?php if ($product_option_value['points_prefix'] == '+') { ?>
+                                  {% if product_option_value.points_prefix == '+' %}
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
                                   {% endif %}
-                                  <?php if ($product_option_value['points_prefix'] == '-') { ?>
+                                  {% if product_option_value.points_prefix == '-' %}
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
@@ -611,12 +613,12 @@
                                 </select>
                                 <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}" placeholder="{{ entry_points }}" class="form-control" /></td>
                               <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
-                                  <?php if ($product_option_value['weight_prefix'] == '+') { ?>
+                                  {% if product_option_value.weight_prefix == '+' %}
                                   <option value="+" selected="selected">+</option>
                                   {% else %}
                                   <option value="+">+</option>
                                   {% endif %}
-                                  <?php if ($product_option_value['weight_prefix'] == '-') { ?>
+                                  {% if product_option_value.weight_prefix == '-' %}
                                   <option value="-" selected="selected">-</option>
                                   {% else %}
                                   <option value="-">-</option>
@@ -638,7 +640,7 @@
                       </div>
                       <select id="option-values{{ option_row }}" style="display: none;">
                         {% if option_values[product_option.option_id] %}
-                        <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
+                        {% for option_value in option_values[product_option.option_id] %}
                         <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
                         {% endfor %}
                         {% endif %}
@@ -668,7 +670,7 @@
                     <tr id="recurring-row{{ recurring_row }}">
                       <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
                           {% for recurring in recurrings %}
-                          <?php if ($recurring['recurring_id'] == $product_recurring['recurring_id']) { ?>
+                          {% if recurring.recurring_id == product_recurring.recurring_id %}
                           <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
                           {% else %}
                           <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
@@ -677,7 +679,7 @@
                         </select></td>
                       <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
                           {% for customer_group in customer_groups %}
-                          <?php if ($customer_group['customer_group_id'] == $product_recurring['customer_group_id']) { ?>
+                          {% if customer_group.customer_group_id == product_recurring.customer_group_id %}
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -718,7 +720,7 @@
                     <tr id="discount-row{{ discount_row }}">
                       <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
                           {% for customer_group in customer_groups %}
-                          <?php if ($customer_group['customer_group_id'] == $product_discount['customer_group_id']) { ?>
+                          {% if customer_group.customer_group_id == product_discount.customer_group_id %}
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -771,7 +773,7 @@
                     <tr id="special-row{{ special_row }}">
                       <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
                           {% for customer_group in customer_groups %}
-                          <?php if ($customer_group['customer_group_id'] == $product_special['customer_group_id']) { ?>
+                          {% if customer_group.customer_group_id == product_special.customer_group_id %}
                           <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                           {% else %}
                           <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -868,7 +870,7 @@
                     {% for customer_group in customer_groups %}
                     <tr>
                       <td class="text-left">{{ customer_group.name }}</td>
-                      <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" class="form-control" /></td>
+                      <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{% if product_reward[customer_group.customer_group_id] %} {{ product_reward[customer_group.customer_group_id].points }} {% endif %}" class="form-control" /></td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -890,7 +892,7 @@
                       <td class="text-left"><select name="product_layout[0]" class="form-control">
                           <option value=""></option>
                           {% for layout in layouts %}
-                          <?php if (isset($product_layout[0]) && $product_layout[0] == $layout['layout_id']) { ?>
+                          {% if product_layout[0] and product_layout[0] == layout.layout_id %}
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
@@ -904,7 +906,7 @@
                       <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
                           <option value=""></option>
                           {% for layout in layouts %}
-                          <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                          {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
                           <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                           {% else %}
                           <option value="{{ layout.layout_id }}">{{ layout.name }}</option>

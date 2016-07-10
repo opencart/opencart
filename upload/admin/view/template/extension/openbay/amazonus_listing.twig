@@ -14,16 +14,16 @@
   <div class="container-fluid">
     {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     {% if listing_errors %}
     <div class="alert alert-danger">
       <ul>
         {% for listing_error in listing_errors %}
         <li><i class="fa fa-exclamation-circle"></i> {{ listing_error }}</li>
-        <?php } ?>
+        {% endfor %}
       </ul>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="panel-body" id="search-container">
       <div class="alert alert-danger" id="search-error" style="display:none;"></div>
       <div class="well">
@@ -87,12 +87,12 @@
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
                       {% for value, title in conditions %}
-                      <?php if ($value == $default_condition) { ?>
+                      {% if value == default_condition %}
                       <option selected="selected" value="{{ value }}">{{ title }}</option>
                       {% else %}
                       <option value="{{ value }}">{{ title }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>

@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="{{ entry_title }}" class="form-control" />
+                <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="{% if length_class_description[language.language_id] %} {{ length_class_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
               </div>
               {% if error_title[language.language_id] %}
               <div class="text-danger">{{ error_title[language.language_id] }}</div>
@@ -43,7 +43,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="{{ entry_unit }}" class="form-control" />
+                <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="{% if length_class_description[language.language_id] %} {{ length_class_description[language.language_id].unit }} {% endif %}" placeholder="{{ entry_unit }}" class="form-control" />
               </div>
               {% if error_unit[language.language_id] %}
               <div class="text-danger">{{ error_unit[language.language_id] }}</div>

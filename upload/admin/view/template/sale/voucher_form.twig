@@ -5,7 +5,7 @@
       <div class="pull-right">
         {% if voucher_id %}
         <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
-        <?php } ?>
+        {% endif %}
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -32,7 +32,7 @@
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if voucher_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
-            <?php } ?>
+            {% endif %}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -42,7 +42,7 @@
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
                   {% if error_code %}
                   <div class="text-danger">{{ error_code }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -51,7 +51,7 @@
                   <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control" />
                   {% if error_from_name %}
                   <div class="text-danger">{{ error_from_name }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -60,7 +60,7 @@
                   <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control" />
                   {% if error_from_email %}
                   <div class="text-danger">{{ error_from_email }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -69,7 +69,7 @@
                   <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control" />
                   {% if error_to_name %}
                   <div class="text-danger">{{ error_to_name }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -78,7 +78,7 @@
                   <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control" />
                   {% if error_to_email %}
                   <div class="text-danger">{{ error_to_email }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -90,8 +90,8 @@
                     <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
                     {% else %}
                     <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -107,7 +107,7 @@
                   <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control" />
                   {% if error_amount %}
                   <div class="text-danger">{{ error_amount }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -120,7 +120,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -129,7 +129,7 @@
             <div class="tab-pane" id="tab-history">
               <div id="history"></div>
             </div>
-            <?php } ?>
+            {% endif %}
           </div>
         </form>
       </div>
@@ -177,6 +177,6 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 
 $('#history').load('index.php?route=sale/voucher/history&token={{ token }}&voucher_id={{ voucher_id }}');
 //--></script>
-  <?php } ?>
+{% endif %}
 </div>
 {{ footer }}

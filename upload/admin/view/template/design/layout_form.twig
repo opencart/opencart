@@ -51,7 +51,7 @@
                   <td class="text-left"><select name="layout_route[{{ route_row }}][store_id]" class="form-control">
                       <option value="0">{{ text_default }}</option>
                       {% for store in stores %}
-                      <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
+                      {% if store.store_id == layout_route.store_id %}
                       <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
                       {% else %}
                       <option value="{{ store.store_id }}">{{ store.name }}</option>
@@ -160,14 +160,14 @@
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
-                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            {% if extension.code == layout_module.code %}
                             <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
                             {% else %}
                             <option value="{{ extension.code }}">{{ extension.name }}</option>
                             {% endif %}
                             {% else %}
                             {% for module in extension.module %}
-                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            {% if module.code == layout_module.code %}
                             <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
                             {% else %}
                             <option value="{{ module.code }}">{{ module.name }}</option>
@@ -226,14 +226,14 @@
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
-                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            {% if extension.code == layout_module.code %}
                             <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
                             {% else %}
                             <option value="{{ extension.code }}">{{ extension.name }}</option>
                             {% endif %}
                             {% else %}
                             {% for module in extension.module %}
-                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            {% if module.code == layout_module.code %}
                             <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
                             {% else %}
                             <option value="{{ module.code }}">{{ module.name }}</option>
@@ -294,14 +294,14 @@
                             {% for extension in extensions %}
                             <optgroup label="{{ extension.name }}">
                             {% if not extension.module %}
-                            <?php if ($extension['code'] == $layout_module['code']) { ?>
+                            {% if extension.code == layout_module.code %}
                             <option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
                             {% else %}
                             <option value="{{ extension.code }}">{{ extension.name }}</option>
                             {% endif %}
                             {% else %}
                             {% for module in extension.module %}
-                            <?php if ($module['code'] == $layout_module['code']) { ?>
+                            {% if module.code == layout_module.code %}
                             <option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
                             {% else %}
                             <option value="{{ module.code }}">{{ module.name }}</option>

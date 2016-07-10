@@ -70,11 +70,11 @@
                 </thead>
                 <tbody>
                   {% if banner_images[language.language_id] %}
-                  <?php foreach ($banner_images[$language['language_id']] as $banner_image) { ?>
+                  {% for banner_image in banner_images[language.language_id] %}
                   <tr id="image-row{{ image_row }}">
                     <td class="text-left"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control" />
-                      <?php if (isset($error_banner_image[$language['language_id']][$image_row])) { ?>
-                      <div class="text-danger"><?php echo $error_banner_image[$language['language_id']][$image_row]; ?></div>
+                      {% if error_banner_image[language.language_id][image_row] %}
+                      <div class="text-danger">{{ error_banner_image[language.language_id][image_row] }}</div>
                       {% endif %}</td>
                     <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control" /></td>
                     <td class="text-center"><a href="" id="thumb-image-{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ banner_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>

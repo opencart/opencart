@@ -19,10 +19,10 @@
     {% for row in rows %}
     <div class="row">
       {% for dashboard_1 in row %}
-      {% set class = 'col-lg-'|format(dashboard_1.width, ' col-md-3 col-sm-6') %}
+      {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-3 col-sm-6') %}
       {% for dashboard_2 in row %}
       {% if dashboard_2.width > 3 %}
-      {% set class = 'col-lg-'|format(dashboard_1.width, ' col-md-12 col-sm-12') %}
+      {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-12 col-sm-12') %}
       {% endif %}
       {% endfor %}
       <div class="{{ class }}">{{ dashboard_1.output }}</div>

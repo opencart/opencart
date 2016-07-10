@@ -91,13 +91,13 @@
                         {% else %}
                         <button type="button" class="btn btn-info" disabled="disabled"><i class="fa fa-link"></i></button>
                         {% endif %}
-                        <?php if (!$modification['enabled']) { ?>
+                        {% if not modification.enabled %}
                         <a href="{{ modification.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                         {% else %}
                         <a href="{{ modification.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                         {% endif %}</td>
                     </tr>
-                    <?php } ?>
+                    {% endfor %}
                     {% else %}
                     <tr>
                       <td class="text-center" colspan="7">{{ text_no_results }}</td>

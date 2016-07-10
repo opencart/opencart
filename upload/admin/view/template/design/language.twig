@@ -27,7 +27,7 @@
                   <option value="0">{{ text_default }}</option>
                   {% for store in stores %}
                   <option value="{{ store.store_id }}">{{ store.name }}</option>
-                  <?php } ?>
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -42,8 +42,8 @@
                   <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
                   {% else %}
                   <option value="{{ language.language_id }}">{{ language.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
             </div>

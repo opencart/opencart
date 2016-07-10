@@ -51,8 +51,8 @@
                   <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                   {% else %}
                   <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
               <div class="form-group">
@@ -63,12 +63,12 @@
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
-                  <?php } ?>
+                  {% endif %}
                   <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
             </div>
@@ -81,12 +81,12 @@
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   {% else %}
                   <option value="1">{{ text_yes }}</option>
-                  <?php } ?>
+                  {% endif %}
                   <?php if (!$filter_approved && !is_null($filter_approved)) { ?>
                   <option value="0" selected="selected">{{ text_no }}</option>
                   {% else %}
                   <option value="0">{{ text_no }}</option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
               <div class="form-group">
@@ -172,7 +172,7 @@
                         <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
                         {% for store in stores %}
                         <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
-                        <?php } ?>
+                        {% endfor %}
                       </ul>
                     </div>
                     {% if customer.unlock %}
@@ -182,7 +182,7 @@
                     {% endif %}
                     <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="8">{{ text_no_results }}</td>

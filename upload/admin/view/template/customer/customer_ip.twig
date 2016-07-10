@@ -14,12 +14,12 @@
         <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
         <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
         <td class="text-left">{{ ip.date_added }}</td>      </tr>
-      <?php } ?>
+      {% endfor %}
       {% else %}
       <tr>
         <td class="text-center" colspan="3">{{ text_no_results }}</td>
       </tr>
-      <?php } ?>
+      {% endif %}
     </tbody>
   </table>
 </div>

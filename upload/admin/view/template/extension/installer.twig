@@ -7,7 +7,7 @@
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         {% else %}
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        <?php } ?>
+        {% endif %}
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">

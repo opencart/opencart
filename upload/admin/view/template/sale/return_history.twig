@@ -1,11 +1,11 @@
 {% if error %}
 <div class="alert alert-danger">{{ error }}</div>
-<?php } ?>
+{% endif %}
 {% if success %}
 <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
-<?php } ?>
+{% endif %}
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -24,12 +24,12 @@
       <td class="text-left">{{ history.status }}</td>
       <td class="text-left">{{ history.notify }}</td>
     </tr>
-    <?php } ?>
+    {% endfor %}
     {% else %}
     <tr>
       <td class="text-center" colspan="4">{{ text_no_results }}</td>
     </tr>
-    <?php } ?>
+    {% endif %}
   </tbody>
 </table>
 <div class="row">

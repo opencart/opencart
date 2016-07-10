@@ -4,12 +4,12 @@
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endfor %}
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -24,7 +24,7 @@
         {% for menu in menus %}
         <tr>
           <td class="text-left" colspan="2"><b>{{ menu.name }}</b></td>
-          <td class="text-right"><?php if (!$menu['installed']) { ?>
+          <td class="text-right">{% if not menu.installed %}
             <a href="{{ menu.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             {% else %}
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>

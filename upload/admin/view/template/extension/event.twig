@@ -76,13 +76,13 @@
                 <td class="text-left">{{ event.action }}</td>
                 <td class="text-left">{{ event.status }}</td>
                 <td class="text-left">{{ event.date_added }}</td>
-                <td class="text-right"><?php if (!$event['enabled']) { ?>
+                <td class="text-right">{% if not event.enabled %}
                   <a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                   {% else %}
                   <a href="{{ event.disable }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>

@@ -31,7 +31,7 @@
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
               {% if error_name %}
               <div class="text-danger">{{ error_name }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -44,7 +44,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -52,7 +52,7 @@
           <ul class="nav nav-tabs" id="language">
             {% for language in languages %}
             <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
-            <?php } ?>
+            {% endfor %}
           </ul>
           <div class="tab-content">
             {% set image_row = 0 %}
@@ -75,7 +75,7 @@
                     <td class="text-left"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control" />
                       <?php if (isset($error_banner_image[$language['language_id']][$image_row])) { ?>
                       <div class="text-danger"><?php echo $error_banner_image[$language['language_id']][$image_row]; ?></div>
-                      <?php } ?></td>
+                      {% endif %}</td>
                     <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control" /></td>
                     <td class="text-center"><a href="" id="thumb-image-{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ banner_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                       <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image{{ image_row }}" /></td>
@@ -83,8 +83,8 @@
                     <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}, .tooltip').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   {% set image_row = image_row + 1 %}
-                  <?php } ?>
-                  <?php } ?>
+                  {% endfor %}
+                  {% endif %}
                 </tbody>
                 <tfoot>
                   <tr>
@@ -94,7 +94,7 @@
                 </tfoot>
               </table>
             </div>
-            <?php } ?>
+            {% endfor %}
           </div>
         </form>
       </div>

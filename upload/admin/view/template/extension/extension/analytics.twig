@@ -4,12 +4,12 @@
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -24,13 +24,13 @@
         {% for extension in extensions %}
         <tr>
           <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
-          <td class="text-right"><?php if (!$extension['installed']) { ?>
+          <td class="text-right">{% if not extension.installed %}
             <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             {% else %}
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-            <?php } ?></td>
+            {% endif %}</td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% if extension.installed %}
         {% for store in extension.store %}
         <tr>
@@ -38,13 +38,13 @@
           <td class="text-left">{{ store.status }}</td>
           <td class="text-right"><a href="{{ store.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
         </tr>
-        <?php } ?>
-        <?php } ?>
+        {% endfor %}
+        {% endif %}
         {% else %}
         <tr>
           <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
       </tbody>
     </table>
   </div>

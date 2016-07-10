@@ -13,12 +13,12 @@
         <td class="text-left">{{ history.date_added }}</td>
         <td class="text-left">{{ history.comment }}</td>
       </tr>
-      <?php } ?>
+      {% endfor %}
       {% else %}
       <tr>
         <td class="text-center" colspan="2">{{ text_no_results }}</td>
       </tr>
-      <?php } ?>
+      {% endif %}
     </tbody>
   </table>
 </div>

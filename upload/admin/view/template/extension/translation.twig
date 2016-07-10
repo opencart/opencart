@@ -8,7 +8,7 @@
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         {% else %}
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        <?php } ?>
+        {% endif %}
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -68,20 +68,20 @@
                       <div class="progress-bar progress-bar-info progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                       <?php } elseif ($translation['progress'] < 25) { ?>
                       <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      <?php } ?>
+                      {% endif %}
                     </div></td>
-                  <td class="text-right"><?php if (!$translation['installed']) { ?>
+                  <td class="text-right">{% if not translation.installed %}
                     <a href="{{ translation.install }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                     {% else %}
                     <a href="{{ translation.uninstall }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-                    <?php } ?></td>
+                    {% endif %}</td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>
-                <?php } ?>
+                {% endif %}
               </tbody>
             </table>
           </div>

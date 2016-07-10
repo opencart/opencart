@@ -26,8 +26,8 @@
                 <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
                 {% else %}
                 <option value="{{ category.href }}">{{ category.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
               <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
             </div>
@@ -111,6 +111,6 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	}
 });
 //--></script>
-  <?php } ?>
+  {% endif %}
 </div>
 {{ footer }} 

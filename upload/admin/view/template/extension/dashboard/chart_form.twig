@@ -34,8 +34,8 @@
                 <option value="{{ column }}" selected="selected">{{ column }}</option>
                 {% else %}
                 <option value="{{ column }}">{{ column }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>          
@@ -49,7 +49,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

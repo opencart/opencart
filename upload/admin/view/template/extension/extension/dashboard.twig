@@ -4,12 +4,12 @@
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   {% if success %}
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -33,19 +33,19 @@
             <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
             {% else %}
             <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
-            <?php } ?>
-            <?php if (!$extension['installed']) { ?>
+            {% endif %}
+            {% if not extension.installed %}
             <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             {% else %}
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-            <?php } ?></td>
+            {% endif %}</td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% else %}
         <tr>
           <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>
-        <?php } ?>
+        {% endif %}
       </tbody>
     </table>
   </div>

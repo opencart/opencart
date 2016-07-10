@@ -407,7 +407,7 @@
                             {% else %}
                             <option value="{{ country.country_id }}">{{ country.name }}</option>
                             {% endif %}
-                            <?php } ?>
+                            {% endfor %}
                           </select>
                           <?php if (isset($error_address[$address_row]['country'])) { ?>
                           <div class="text-danger">{{ error_address[address_row].country }}</div>
@@ -1157,7 +1157,7 @@ $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function
 	}
 });
 {% set address_row = address_row + 1 %}
-<?php } ?>
+{% endfor %}
 
 
 {% for address in addresses %}
@@ -1174,6 +1174,6 @@ $('#tab-customer .form-group[data-sort]').detach().each(function() {
 		$('#tab-customer .form-group:first').before(this);
 	}
 });
-<?php } ?>
+{% endfor %}
 //--></script></div>
 {{ footer }}

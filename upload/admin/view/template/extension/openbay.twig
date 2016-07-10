@@ -10,17 +10,16 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if success %}
+  <div class="container-fluid"> {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <?php if (!empty($error)) { ?>
-      {% for error_message in error %}
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>
-      <?php } ?>
-    <?php } ?>
+    {% if error %}
+    {% for error_message in error %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_message }}</div>
+    {% endfor %}
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_dashboard }}</h3>
@@ -39,20 +38,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for extension in extensions %}
-                    <tr>
-                      <td class="text-left">{{ extension.name }}</td>
-                      <td class="text-center">{{ extension.status }}</td>
-                      <td class="text-right">
-                        <?php if (!$extension['installed']) { ?>
-                          <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success" id="button-install-{{ extension.code }}"><i class="fa fa-plus-circle"></i></a>
-                        {% else %}
-                          <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" id="button-edit-{{ extension.code }}"><i class="fa fa-pencil"></i></a>
-                          <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ extension.uninstall }}' : false;" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger" id="button-uninstall-{{ extension.code }}"><i class="fa fa-minus-circle"></i></a>
-                        <?php } ?></td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
+                  
+                  {% for extension in extensions %}
+                  <tr>
+                    <td class="text-left">{{ extension.name }}</td>
+                    <td class="text-center">{{ extension.status }}</td>
+                    <td class="text-right"> {% if not extension.installed %} <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success" id="button-install-{{ extension.code }}"><i class="fa fa-plus-circle"></i></a> {% else %} <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" id="button-edit-{{ extension.code }}"><i class="fa fa-pencil"></i></a> <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ extension.uninstall }}' : false;" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger" id="button-uninstall-{{ extension.code }}"><i class="fa fa-minus-circle"></i></a> {% endif %}</td>
+                  </tr>
+                  {% endfor %}
+                    </tbody>
+                  
                 </table>
               </div>
             </div>

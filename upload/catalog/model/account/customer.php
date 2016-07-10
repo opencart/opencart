@@ -133,7 +133,7 @@ class ModelAccountCustomer extends Model {
 	public function getCustomerByToken($token) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE token = '" . $this->db->escape($token) . "' AND token != ''");
 
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET token = ''");
+        $this->db->query("UPDATE " . DB_PREFIX . "customer SET token = '' WHERE customer_id='".$query->row['customer_id']."'");
 
 		return $query->row;
 	}

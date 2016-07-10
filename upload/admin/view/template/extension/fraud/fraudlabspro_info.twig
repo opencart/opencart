@@ -12,7 +12,7 @@
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_status }}">{{ text_status }}</span></td>
-    <td id="flp_status"><span style="font-weight:bold; color:<?php if (strtolower($flp_status) == 'approve') echo '#5cb85c'; else if (strtolower($flp_status) == 'review') echo '#f0ad4e'; else echo '#d9534f'; ?>">{{ flp_status }}</span></td>
+    <td id="flp_status"><span style="font-weight:bold; color: {% if flp_status|lower == 'approve' %} #5cb85c {% elseif flp_status|lower == 'review' %} #f0ad4e {% else %} #d9534f {% endif %};">{{ flp_status }}</span></td>
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_ip_address }}">{{ text_ip_address }}</span></td>
@@ -84,7 +84,7 @@
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_credits }}">{{ text_credits }}</span></td>
-    <td><?php echo $flp_credits . ' ' . $text_flp_upgrade; ?></td>
+    <td>{{ flp_credits }} {{ text_flp_upgrade }}</td>
   </tr>
   <tr>
     <td><span data-toggle="tooltip" data-container="#tab-general" title="{{ help_message }}">{{ text_message }}</span></td>
@@ -92,8 +92,8 @@
   </tr>
   
   
-  <?php if (strtolower($flp_status) == 'review'){?>
-  <tr style="background-color:#eee;">
+  {% if flp_status == 'review' %}
+  <tr style="background-color: #eee;">
     <td id="flp_action" colspan="2">
       <form id="review-action" method="post">
 	<div align="center">

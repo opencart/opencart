@@ -43,7 +43,7 @@
                 <div id="featured-product{{ product.product_id }}"><i class="fa fa-minus-circle"></i> {{ product.name }}
                   <input type="hidden" name="product[]" value="{{ product.product_id }}" />
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
             </div>
           </div>

@@ -22,18 +22,18 @@
             <select name="marketplace_select" id="marketplace-select" class="form-control">
               {% for marketplace in marketplaces %}
               <option value="{{ marketplace.link }}" <?php if ($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>>{{ marketplace.name }}</option>
-              <?php } ?>
+              {% endfor %}
             </select>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
-          {% for marketplace_code in marketplaces_processing %}
+          {% if marketplace_code in marketplaces_processing %}
           <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> {{ text_loading }}</a> </div>
           {% else %}
           <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="{{ marketplaces[marketplace_code].href_load_listings }}">{{ button_load }}</a> </div>
-          <?php } ?>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@
                 {% else %}
                   <tr class="success">
                     <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-{{ marketplace.code }}"/></td>
-                <?php } ?>
+                {% endif %}
 
                   <td class="text-left"><a href="{{ product.href_amazon }}" target="_blank">{{ product.asin }}</a></td>
                   <td class="text-left">{{ product.amazon_sku }}</td>
@@ -82,7 +82,7 @@
                   <input type="hidden" name="link[{{ row }}][product_id]" value="{{ product.product_id }}"/>
                   <input type="hidden" name="link[{{ row }}][sku]" value="{{ product.var }}"/>
                 </tr>
-                <?php } ?>
+                {% endfor %}
               </tbody>
             </table>
             <div class="well">
@@ -96,13 +96,13 @@
               <div class="col-sm-6 text-left">{{ pagination }}</div>
               <div class="col-sm-6 text-right">{{ results }}</div>
             </div>
-          <?php } ?>
-        <?php } ?>
+          {% endif %}
+        {% endif %}
       </div>
     </form>
     {% else %}
     <div class="warning">{{ error_bulk_link_permission }}</div>
-    <?php } ?>
+    {% endif %}
   </div>
   <script type="text/javascript"><!--
   $('#button-load-listings').bind('click', function (e) {

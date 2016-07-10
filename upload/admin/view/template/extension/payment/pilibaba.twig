@@ -59,7 +59,7 @@
 			      	<option value="">Select Currency</option>
 			        {% for currency in currencies %}
 			        <option value="{{ currency }}">{{ currency }}</option>
-			        <?php } ?>
+			        {% endfor %}
 			      </select>
 			    </div>
 		      </div>
@@ -69,8 +69,8 @@
 			      <select name="pilibaba_warehouse" id="input-pilibaba-warehouse" class="form-control">
 			      	<option value="">Select Warehouse</option>
 			        {% for warehouse in warehouses %}
-			        <option value="{{ warehouse.id }}"><?php echo $warehouse['country'] . ' ' . $warehouse['city'] . ' ' . $warehouse['firstName'] . ' ' . $warehouse['lastName']; ?></option>
-			        <?php } ?>
+			        <option value="{{ warehouse.id }}">{{ warehouse.country }} {{ warehouse.city }} {{ warehouse.firstName }} {{ warehouse.lastName }}</option>
+			        {% endfor %}
 			        <option value="other">{{ text_other }}</option>
 			      </select>
 			    </div>
@@ -82,7 +82,7 @@
 			      	<option value="">Select Country</option>
 			        {% for country in countries %}
 			        <option value="{{ country.iso_code_3 }}">{{ country.name }}</option>
-			        <?php } ?>
+			        {% endfor %}
 			      </select>
 			    </div>
 		      </div>
@@ -151,7 +151,7 @@
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                     {% endif %}
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>

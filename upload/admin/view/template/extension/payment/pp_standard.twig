@@ -14,11 +14,11 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
+    {% if error.error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
@@ -37,7 +37,7 @@
                   <input type="text" name="pp_standard_email" value="{{ pp_standard_email }}" placeholder="{{ entry_email }}" id="entry-email" class="form-control"/>
                   {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">

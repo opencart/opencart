@@ -35,7 +35,7 @@
                 {% else %}
                 <input type="radio" name="store_admin" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 <?php if (!$store_admin) { ?>
@@ -44,7 +44,7 @@
                 {% else %}
                 <input type="radio" name="store_admin" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -58,7 +58,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

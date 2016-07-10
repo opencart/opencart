@@ -14,11 +14,11 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
+    {% if error.error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
@@ -31,7 +31,7 @@
               <input type="text" name="pp_login_client_id" value="{{ pp_login_client_id }}" placeholder="{{ entry_client_id }}" id="entry-client_id" class="form-control"/>
               {% if error_client_id %}
               <div class="text-danger">{{ error_client_id }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="pp_login_secret" value="{{ pp_login_secret }}" placeholder="{{ entry_secret }}" id="entry-secret" class="form-control"/>
               {% if error_secret %}
               <div class="text-danger">{{ error_secret }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -53,7 +53,7 @@
                 {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -67,7 +67,7 @@
                 {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -80,8 +80,8 @@
                 <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                 {% else %}
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -95,7 +95,7 @@
                 {% else %}
                 <option value="blue">{{ text_button_blue }}</option>
                 <option value="grey" selected="selected">{{ text_button_grey }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -109,7 +109,7 @@
                 {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -124,11 +124,11 @@
                   <option value="{{ locale.value }}" selected="selected">{{ locale.text }}</option>
                   {% else %}
                   <option value="{{ locale.value }}">{{ locale.text }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
-              <?php } ?>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group">
@@ -147,7 +147,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

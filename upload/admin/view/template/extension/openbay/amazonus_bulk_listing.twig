@@ -35,28 +35,28 @@
             <?php if (!empty($products)) { ?>
             {% for product in products %}
             <tr>
-              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
-              <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
-              <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-              <td class="text-right"><?php echo $product['model'] ?></td>
-              <td class="text-right"><?php echo $product['search_status'] ?></td>
+              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="{{ product.product_id }}"/></td>
+              <td class="text-center"><img src="{{ product.image }}"/></td>
+              <td class="text-left"><a href="{{ product.href }}" target="_blank">{{ product.name }}</a></td>
+              <td class="text-right">{{ product.model }}</td>
+              <td class="text-right">{{ product.search_status }}</td>
               <td class="text-right"><?php echo ($product['matches'] !== null ? $product['matches'] : '-'); ?></td>
-              <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
+              <td class="text-left" id="result-{{ product.product_id }}"><?php if ($product['matches'] !== null) { ?>
                 <?php $checked = false; ?>
                 <?php if ($product['matches'] > 0) { ?>
-                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 <?php echo $text_dont_list ?><br/>
                 {% for search_results in product.search_results %}
                 <?php if (!$checked) { ?>
-                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[{{ product.product_id }}]" value="{{ search_result.asin }}"/>
                 <?php $checked = true; ?>
                 {% else %}
-                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+                <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value="{{ search_result.asin }}"/>
                 <?php } ?>
-                <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
+                <a target="_blank" href="{{ search_result.href }}">{{ search_result.title }}</a><br/>
                 <?php } ?>
                 {% else %}
-                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+                <input class="amazon-listing" checked="checked" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 <?php echo $text_dont_list ?><br/>
                 <?php } ?>
                 <?php } ?></td>

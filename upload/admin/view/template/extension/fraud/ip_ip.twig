@@ -17,12 +17,12 @@
         <td class="text-left">{{ ip.date_added }}</td>
         <td class="text-right"><button type="button" value="{{ ip.ip }}" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
       </tr>
-      <?php } ?>
+      {% endfor %}
       {% else %}
       <tr>
         <td class="text-center" colspan="4">{{ text_no_results }}</td>
       </tr>
-      <?php } ?>
+      {% endif %}
     </tbody>
   </table>
 </div>

@@ -156,9 +156,9 @@
 				    <option value="0">{{ text_all_zones }}</option>
 				    {% for geo_zone in geo_zones %}
                     {% if geo_zone.geo_zone_id == cardconnect_geo_zone %}
-				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>" selected="selected"><?php echo $geo_zone['name'] ?></option>
+				        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 					  {% else %}
-				        <option value="<?php echo $geo_zone['geo_zone_id'] ?>"><?php echo $geo_zone['name'] ?></option>
+				        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
     			      <?php } ?>
 				    <?php } ?>
 				  </select>

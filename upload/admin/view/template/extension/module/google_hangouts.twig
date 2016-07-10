@@ -31,7 +31,7 @@
               <textarea name="google_hangouts_code" rows="5" id="input-code" class="form-control">{{ google_hangouts_code }}</textarea>
               {% if error_code %}
               <div class="text-danger">{{ error_code }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -44,7 +44,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

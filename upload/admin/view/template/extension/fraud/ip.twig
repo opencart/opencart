@@ -18,7 +18,7 @@
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button class="close" data-dismiss="alert" type="button">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
@@ -40,8 +40,8 @@
                   <option selected="selected" value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                   {% else %}
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -55,7 +55,7 @@
                   {% else %}
                   <option value="1"> {{ text_enabled }} </option>
                   <option selected="selected" value="0"> {{ text_disabled }} </option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
             </div>

@@ -60,7 +60,7 @@
                   <option value=""<?php echo (is_null($filter_status) ? ' selected' : '') ?>>{{ text_option_all }}</option>
                   {% for option_key => $option in status_options %}
                     <option value="{{ option_key }}"<?php echo (!is_null($filter_status) && ($filter_status == $option_key) ? ' selected' : '') ?>>{{ option }}</option>
-                  <?php } ?>
+                  {% endfor %}
                 </select>
               </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -92,8 +92,8 @@
                     <td class="text-center">{{ order.fba_item_count }}</td>
                     <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
-                <?php } ?>
-              <?php } ?>
+                {% endfor %}
+              {% endif %}
             </tbody>
           </table>
         </div>

@@ -42,7 +42,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -61,8 +61,8 @@
 					<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					{% else %}
 					<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					<?php } ?>
-					<?php } ?>
+					{% endif %}
+					{% endfor %}
 				  </select>
 				</div>
 			  </div>
@@ -75,8 +75,8 @@
 					<option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
 					{% else %}
 					<option value="{{ information.information_id }}">{{ information.title }}</option>
-					<?php } ?>
-					<?php } ?>
+					{% endif %}
+					{% endfor %}
 				  </select>
 				</div>
 			  </div>
@@ -90,7 +90,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -98,7 +98,7 @@
 			<div class="tab-pane" id="tab-account">
 			  {% if error_account_warning %}
 			  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_account_warning }}</div>
-			  <?php } ?>
+			  {% endif %}
 			  <table id="account" class="table table-striped table-bordered table-hover">
 				<thead>
 				  <tr>
@@ -120,13 +120,13 @@
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.merchant_id }}" />
 					  {% if error_account[key].merchant_id %}
 					  <div class="text-danger">{{ error_account[key].merchant_id }}</div>
-					  <?php } ?>
+					  {% endif %}
 					</td>
 					<td class="text-left">
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.secret }}" />
 					  {% if error_account[key].secret %}
 					  <div class="text-danger">{{ error_account[key].secret }}</div>
-					  <?php } ?>
+					  {% endif %}
 					</td>
 					<td class="text-left">
 					  <select name="klarna_checkout_account[{{ account_row }}][environment]" class="form-control">
@@ -136,7 +136,7 @@
 						{% else %}
 						<option value="test" selected="selected">{{ text_test }}</option>
 						<option value="live">{{ text_live }}</option>
-						<?php } ?>
+						{% endif %}
 					  </select>
 					</td>
 					<td class="text-left">
@@ -146,8 +146,8 @@
 						<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
 						{% else %}
 						<option value="{{ country.country_id }}">{{ country.name }}</option>
-						<?php } ?>
-						<?php } ?>
+						{% endif %}
+						{% endfor %}
 					  </select>
 					</td>
 					<td class="text-left">
@@ -157,15 +157,15 @@
 						<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
 						{% else %}
 						<option value="{{ currency.code }}">{{ currency.title }}</option>
-						<?php } ?>
-						<?php } ?>
+						{% endif %}
+						{% endfor %}
 					  </select>
 					</td>
 					<td class="text-left">
 					  <input type="text" name="klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="{{ account.locale }}" />
 					  {% if error_account[key].locale %}
 					  <div class="text-danger">{{ error_account[key].locale }}</div>
-					  <?php } ?>
+					  {% endif %}
 					</td>
 					<td class="text-left">
 					  <select name="klarna_checkout_account[{{ account_row }}][api]" class="form-control klarna-checkout-api">
@@ -174,14 +174,14 @@
 						<option value="{{ api_location.code }}" selected="selected">{{ api_location.name }}</option>
 						{% else %}
 						<option value="{{ api_location.code }}">{{ api_location.name }}</option>
-						<?php } ?>
-						<?php } ?>
+						{% endif %}
+						{% endfor %}
 					  </select>
 					</td>
 					<td class="text-left"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
 				  </tr>
 				  {% set account_row = account_row + 1 %}
-				  <?php } ?>
+				  {% endfor %}
 				</tbody>
 				<tfoot>
 				  <tr>
@@ -235,7 +235,7 @@
 <script type="text/javascript"><!--
 $('.klarna-checkout-api').on('change', function() {
 	if ($(this).val() === 'EU') {
-		alert('<?php echo addslashes($help_api); ?>');
+		alert('{{ help_api|escape('js') }}');
 	}
 });
 
@@ -318,7 +318,7 @@ $('.date').datetimepicker({
 $(document).ready(function() {
 	addAccount();
 });
-<?php } ?>
+{% endif %}
 
 var account_row = {{ account_row }};
 
@@ -332,19 +332,19 @@ function addAccount() {
 	html += '  </select>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][country]" class="form-control">';
 	{% for country in countries %}
-	html += '    <option value="{{ country.country_id }}"><?php echo addslashes($country['name']); ?></option>';
-	<?php } ?>
+	html += '    <option value="{{ country.country_id }}">{{ country.name }}</option>';
+	{% endfor %}
 	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';
 	{% for currency in currencies %}
 	html += '    <option value="{{ currency.code }}">{{ currency.title }}</option>';
-	<?php } ?>
+	{% endfor %}
 	html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="klarna_checkout_account[' + account_row + '][locale]" placeholder="{{ entry_locale }}" class="form-control" value="" /></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][api]" class="form-control">';
 	{% for api_location in api_locations %}
 	html += '    <option value="{{ api_location.code }}">{{ api_location.name }}</option>';
-	<?php } ?>
+	{% endfor %}
 	html += '  </select></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';

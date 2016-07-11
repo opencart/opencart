@@ -24,8 +24,8 @@
 			  <input type="text" width="10" id="capture-amount" value="{{ amazon_login_pay_order.total }}"/>
 			  <a class="button btn btn-primary" id="button-capture">{{ button_capture }}</a>
 			  <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-		  <?php } ?>
-	  <?php } ?>
+		  {% endif %}
+	  {% endfor %}
 	</td>
   </tr>
   <tr>
@@ -38,8 +38,8 @@
 		  <?php if ($amazon_login_pay_order['total_captured'] == 0 && $amazon_login_pay_order['refund_status'] != 1) { ?>
 		  <a class="button btn btn-primary" id="button-cancel">{{ button_cancel }}</a>
 		  <span class="btn btn-primary" id="loading-cancel" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-		  <?php } ?>
-	  <?php } ?>
+		  {% endif %}
+	  {% endif %}
 	</td>
   </tr>
   <tr>
@@ -49,15 +49,15 @@
 		  <span class="refund_text">{{ text_yes }}</span>
 	  {% else %}
 		  <span class="refund_text">{{ text_no }}</span>&nbsp;&nbsp;
-		  <?php if ($amazon_login_pay_order['total_captured'] > 0 && $amazon_login_pay_order['cancel_status'] == 0) { ?>
+		  {% if amazon_login_pay_order.total_captured > 0 and amazon_login_pay_order.cancel_status == 0 %}
 			  <input type="text" width="10" id="refund-amount" />
 			  <a class="button btn btn-primary" id="button-refund">{{ button_refund }}</a>
 		  {% else %}
-			  <input type="text" width="10" id="refund-amount" style="display:none;"/>
-			  <a class="button btn btn-primary" id="button-refund" style="display:none;">{{ button_refund }}</a>
-		  <?php } ?>
-		  <span class="btn btn-primary" id="loading-refund" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-	  <?php } ?>
+			  <input type="text" width="10" id="refund-amount" style="display: none;"/>
+			  <a class="button btn btn-primary" id="button-refund" style="display: none;">{{ button_refund }}</a>
+		  {% endif %}
+		  <span class="btn btn-primary" id="loading-refund" style="display: none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+	  {% endif %}
 	</td>
   </tr>
   <tr>
@@ -86,7 +86,7 @@
 				<td class="text-left">{{ transaction.amazon_refund_id }}</td>
 				<td class="text-left">{{ transaction.amount }}</td>
 			  </tr>
-		  <?php } ?>
+		  {% endfor %}
 		</tbody>
 	  </table>
 	</td>

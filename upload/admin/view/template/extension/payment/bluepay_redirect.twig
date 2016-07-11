@@ -68,12 +68,12 @@
                 <option value="SALE" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="SALE">{{ text_sale }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if bluepay_redirect_transaction == 'AUTH' %}
                 <option value="AUTH" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTH">{{ text_authenticate }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

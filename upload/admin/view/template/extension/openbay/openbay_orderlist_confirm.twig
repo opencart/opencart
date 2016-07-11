@@ -50,15 +50,15 @@
                       <select name="carrier[{{ order.order_id }}]" class="form-control">
                         <?php foreach($market_options['ebay']['carriers'] as $carrier) { ?>
                           <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>>{{ carrier.description }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                     <div class="form-group">
                       <label class="control-label">{{ entry_tracking_no }}</label>
                       <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                     </div>
-                  <?php } ?>
-                <?php } ?>
+                  {% endif %}
+                {% endif %}
                 {% if order.channel == 'Amazon EU' %}
                   {% if change_order_status_id == openbay_amazon_order_status_shipped %}
                     <div class="form-group">
@@ -66,7 +66,7 @@
                       <select name="carrier[{{ order.order_id }}]" class="form-control amazon_carrier" id="amazon_carrier_{{ order.order_id }}">
                         <?php foreach($market_options['amazon']['carriers'] as $courier) { ?>
                         <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
-                        <?php } ?>
+                        {% endfor %}
                         <option value="other">{{ text_other }}</option>
                       </select>
                     </div>
@@ -78,8 +78,8 @@
                       <label class="control-label">{{ entry_tracking_no }}</label>
                       <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                     </div>
-                  <?php } ?>
-                <?php } ?>
+                  {% endif %}
+                {% endif %}
                 {% if order.channel == 'Amazon US' %}
                   {% if change_order_status_id == openbay_amazonus_order_status_shipped %}
                   <div class="form-group">
@@ -87,7 +87,7 @@
                     <select name="carrier[{{ order.order_id }}]" class="form-control amazonus_carrier" id="amazonus_carrier_{{ order.order_id }}">
                       <?php foreach($market_options['amazonus']['carriers'] as $courier) { ?>
                         <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
-                      <?php } ?>
+                      {% endfor %}
                       <option value="other">{{ text_other }}</option>
                     </select>
                   </div>
@@ -99,14 +99,14 @@
                     <label class="control-label">{{ entry_tracking_no }}</label>
                     <input type="text" name="tracking[{{ order.order_id }}]" value="" placeholder="{{ entry_tracking_no }}" class="form-control" />
                   </div>
-                  <?php } ?>
-                <?php } ?>
+                  {% endif %}
+                {% endif %}
               </td>
               <td class="text-left"><textarea name="comments[{{ order.order_id }}]" class="form-control" rows="3"></textarea></td>
               <td class="text-center"><input type="hidden" name="notify[{{ order.order_id }}]" value="0"/>
               <input type="checkbox" name="notify[{{ order.order_id }}]" class="notify_checkbox" value="1"/></td>
             </tr>
-          <?php } ?>
+          {% endfor %}
         </tbody>
       </table>
     </form>

@@ -65,7 +65,7 @@
             <td class="text-left"><a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="{{ transaction.retref }}">{{ button_inquire }}</a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
             <td class="text-left"><a class="button btn btn-primary button-void btn-xs" data-void-retref="{{ transaction.retref }}">{{ button_void }}</a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
           </tr>
-          <?php } ?>
+          {% endfor %}
         </tbody>
       </table></td>
   </tr>

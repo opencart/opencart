@@ -2,9 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,8 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -46,18 +43,28 @@
                 <label class="control-label" for="input-order-status">{{ entry_order_status }}</label>
                 <select name="filter_order_status_id" id="input-order-status" class="form-control">
                   <option value="*"></option>
+                  
                   {% if filter_order_status_id == '0' %}
+                  
                   <option value="0" selected="selected">{{ text_missing }}</option>
+                  
                   {% else %}
+                  
                   <option value="0">{{ text_missing }}</option>
-                  <?php } ?>
+                  
+                  {% endif %}
                   {% for order_status in order_statuses %}
                   {% if order_status.order_status_id == filter_order_status_id %}
+                  
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  
                   {% else %}
+                  
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  
+                  {% endif %}
+                  {% endfor %}
+                
                 </select>
               </div>
             </div>
@@ -66,13 +73,19 @@
                 <label class="control-label" for="input-channel">{{ entry_order_channel }}</label>
                 <select name="filter_channel" id="input-channel" class="form-control">
                   <option value=""></option>
+                  
                   {% for channel in channels %}
                   {% if channel.module == filter_channel %}
+                  
                   <option value="{{ channel.module }}" selected="selected">{{ channel.title }}</option>
-                  <?php } else {  ?>
+                  
+                  {% else %}
+                  
                   <option value="{{ channel.module }}">{{ channel.title }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  
+                  {% endif %}
+                  {% endfor %}
+                
                 </select>
               </div>
             </div>
@@ -92,81 +105,64 @@
           </div>
         </div>
         <form action="{{ link_update }}" method="post" id="order-update-form">
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <div class="input-group">
-                  <select name="change_order_status_id" class="form-control">
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="input-group">
+                    <select name="change_order_status_id" class="form-control">
+                      
                     {% for order_status in order_statuses %}
+                      
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                  </select>
-                  <a data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary input-group-addon" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i> {{ button_status }}</a>
+                      
+                    {% endfor %}
+                  
+                    </select>
+                    <a data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary input-group-addon" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i> {{ button_status }}</a> </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
-                <th class="text-left">{% if sort == 'o.order_id' %}
-                  <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a>
-                  {% else %}
-                  <a href="{{ sort_order }}">{{ column_order_id }}</a>
-                  {% endif %}</th>
-                <th class="text-left">{% if sort == 'customer' %}
-                  <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a>
-                  {% else %}
-                  <a href="{{ sort_customer }}">{{ column_customer }}</a>
-                  {% endif %}</th>
-                <th class="text-left">{% if sort == 'status' %}
-                  <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-                  {% else %}
-                  <a href="{{ sort_status }}">{{ column_status }}</a>
-                  {% endif %}</th>
-                <th class="text-left">{% if sort == 'channel' %}
-                  <a href="{{ sort_channel }}" class="{{ order|lower }}">{{ column_channel }}</a>
-                  {% else %}
-                  <a href="{{ sort_channel }}">{{ column_channel }}</a>
-                  {% endif %}</th>
-                <th class="text-left">{% if sort == 'o.date_added' %}
-                  <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-                  {% else %}
-                  <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-                  {% endif %}</th>
-                <th class="text-right">{{ column_action }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% if orders %}
-                {% for order in orders %}
+              <thead>
                 <tr>
-                  <td style="text-align: center;">
-                    {% if order.selected %}
-                      <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked" />
-                    {% else %}
-                      <input type="checkbox" name="selected[]" value="{{ order.order_id }}" />
-                    {% endif %}
-                  </td>
-                  <td class="text-left">{{ order.order_id }}</td>
-                  <td class="text-left">{{ order.customer }}</td>
-                  <td class="text-left">{{ order.status }}</td>
-                  <td class="text-left">{{ order.channel }}</td>
-                  <td class="text-left">{{ order.date_added }}</td>
-                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                  <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
+                  <th class="text-left">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</th>
+                  <th class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</th>
+                  <th class="text-left">{% if sort == 'status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</th>
+                  <th class="text-left">{% if sort == 'channel' %} <a href="{{ sort_channel }}" class="{{ order|lower }}">{{ column_channel }}</a> {% else %} <a href="{{ sort_channel }}">{{ column_channel }}</a> {% endif %}</th>
+                  <th class="text-left">{% if sort == 'o.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</th>
+                  <th class="text-right">{{ column_action }}</th>
                 </tr>
-                <?php } ?>
+              </thead>
+              <tbody>
+              
+              {% if orders %}
+              {% for order in orders %}
+              <tr>
+                <td style="text-align: center;"> {% if order.selected %}
+                  <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked" />
+                  {% else %}
+                  <input type="checkbox" name="selected[]" value="{{ order.order_id }}" />
+                  {% endif %} </td>
+                <td class="text-left">{{ order.order_id }}</td>
+                <td class="text-left">{{ order.customer }}</td>
+                <td class="text-left">{{ order.status }}</td>
+                <td class="text-left">{{ order.channel }}</td>
+                <td class="text-left">{{ order.date_added }}</td>
+                <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              </tr>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>
               </tr>
               {% endif %}
-            </tbody>
-          </table>
+                </tbody>
+              
+            </table>
           </div>
         </form>
         <div class="row">
@@ -213,7 +209,7 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
   $('input[name=\'filter_customer\']').autocomplete({
     'source': function(request, response) {
@@ -234,12 +230,12 @@ $('#button-filter').on('click', function() {
       $('input[name=\'filter_customer\']').val(item['label']);
     }
   });
-//--></script>
+//--></script> 
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
   $('.date').datetimepicker({
     pickTime: false
   });
-//--></script>
+//--></script> 
 {{ footer }}

@@ -5,7 +5,7 @@
 		{{ transaction.order_id }}
 		{% if cancel_action %}
 		<a class="btn btn-primary button-command" data-type="cancel">{{ button_cancel }}</a>
-		<?php } ?>
+		{% endif %}
 	</td>
   </tr>
   <tr>
@@ -26,7 +26,7 @@
 		<a class="btn btn-primary button-command" data-type="merchant_reference">{{ button_update }}</a>
 		{% else %}
 		{{ transaction.merchant_reference_1 }}
-		<?php } ?>
+		{% endif %}
 	</td>
   </tr>
   <tr>
@@ -52,7 +52,7 @@
 			<a class="btn btn-primary" data-toggle="modal" data-target="#shipping_address">{{ button_edit }}</a>
 		  </td>
 		</tr>
-		<?php } ?>
+		{% endif %}
 	  </table>
 	</td>
   </tr>
@@ -88,7 +88,7 @@
 				<td>{{ order_line.tax_rate }}</td>
 				<td>{{ order_line.total_tax_amount }}</td>
 			  </tr>
-		  <?php } ?>
+		  {% endfor %}
 		</tbody>
 	  </table>
 	</td>
@@ -103,7 +103,7 @@
 	  {{ transaction.authorization_remaining }}
 	  {% if release_authorization_action %}
 	  <a class="btn btn-primary button-command" data-type="release_authorization">{{ button_release_authorization }}</a>
-	  <?php } ?>
+	  {% endif %}
 	</td>
   </tr>
   {% if transaction.authorization_expiry %}
@@ -113,10 +113,10 @@
 		{{ transaction.authorization_expiry }}
 		{% if extend_authorization_action %}
 		<a class="btn btn-primary button-command" data-type="extend_authorization">{{ button_extend_authorization }}</a>
-		<?php } ?>
+		{% endif %}
 	</td>
   </tr>
-  <?php } ?>
+  {% endif %}
   <tr>
 	<td>{{ column_capture }}</td>
 	<td>
@@ -144,12 +144,12 @@
 				<a class="btn btn-primary" data-toggle="modal" data-target="#capture-billing-address-{{ capture.capture_id }}">{{ button_edit_billing_address }}</a>
 			  </td>
 			</tr>
-			<?php } ?>
+			{% endfor %}
 			{% else %}
 			<tr>
 			  <td class="text-center" colspan="4">{{ text_no_capture }}</td>
 			</tr>
-			<?php } ?>
+			{% endif %}
 		  </tbody>
 		  {% if capture_action %}
 		  <tfoot>
@@ -158,7 +158,7 @@
 			  <td class="text-left"><a class="btn btn-primary" data-toggle="modal" data-target="#capture">{{ button_new_capture }}</a></td>
 			</tr>
 		  </tfoot>
-		  <?php } ?>
+		  {% endif %}
 		</table>
 	</td>
   </tr>
@@ -180,8 +180,8 @@
 			  <td>{{ refund.date_added }}</td>
 			  <td>{{ refund.amount }}</td>
 			</tr>
-			<?php } ?>
-			<?php } ?>
+			{% endfor %}
+			{% endif %}
 		  </tbody>
 		  {% if refund_action %}
 		  <tfoot>
@@ -192,7 +192,7 @@
 			  </td>
 			</tr>
 		  </tfoot>
-		  <?php } ?>
+		  {% endif %}
 		</table>
 	</td>
   </tr>
@@ -575,7 +575,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 		confirm_text = '{{ text_confirm_capture }} ' + '{{ symbol_left }}' + $('#input-capture-amount').val();
 		{% elseif symbol_right %}
 		confirm_text = '{{ text_confirm_capture }} ' + $('#input-capture-amount').val() + '{{ symbol_right }}';
-		<?php } ?>
+		{% endif %}
 	} else if (type === 'refund') {
 		data = $('#input-refund-amount').val();
 
@@ -583,7 +583,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 		confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#input-refund-amount').val();
 		{% elseif symbol_right %}
 		confirm_text = '{{ text_confirm_refund }} ' + $('#input-refund-amount').val() + '{{ symbol_right }}';
-		<?php } ?>
+		{% endif %}
 	} else if (type === 'extend_authorization') {
 		confirm_text = '{{ text_confirm_extend_authorization }}';
 	} else if (type === 'merchant_reference') {
@@ -662,7 +662,7 @@ function addShippingInfo(id) {
     html = '  <td><div class="col-sm-12"><select name="shipping_info[' + shipping_info_row + '][shipping_method]" class="form-control">';
     {% for shipping_method in allowed_shipping_methods %}
     html += '    <option value="{{ shipping_method }}"><?php echo addslashes($shipping_method); ?></option>';
-    <?php } ?>
+    {% endfor %}
     html += '  </select></div></td>';
 
 	$(id + ' .shipping-info-data tbody tr:nth-child(2)').append(html);

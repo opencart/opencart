@@ -21,12 +21,12 @@
 			  <td>{{ refund.status }}</td>
 			  <td>{{ refund.description }}</td>
 			</tr>
-			<?php } ?>
+			{% endfor %}
 			{% else %}
 			<tr>
 			  <td class="text-center" colspan="3">{{ text_no_refund }}</td>
 			</tr>
-			<?php } ?>
+			{% endif %}
 		  </tbody>
 		</table>
 	</td>
@@ -51,7 +51,7 @@
 				  <a class="btn btn-primary button-command" data-type="refund">{{ button_refund }}</a>
 				  {% else %}
 				  {{ text_na }}
-				  <?php } ?>
+				  {% endif %}
 			  </td>
 			</tr>
 		  </tbody>
@@ -61,7 +61,7 @@
 </table>
 {% else %}
 Unable to find transaction for this order.
-<?php } ?>
+{% endif %}
 
 <script type="text/javascript"><!--
 $('.button-command').on('click', function() {
@@ -69,9 +69,9 @@ $('.button-command').on('click', function() {
 
 	{% if symbol_left %}
 	confirm_text = '{{ text_confirm_refund }} ' + '{{ symbol_left }}' + $('#refund-amount').val();
-	<?php } elseif($symbol_right) { ?>
+	{% elseif symbol_right %}
 	confirm_text = '{{ text_confirm_refund }} ' + $('#refund-amount').val() + '{{ symbol_right }}';
-	<?php } ?>
+	{% endif %}
 
 	if (confirm(confirm_text)) {
 		$.ajax({

@@ -47,7 +47,7 @@
           <tr>
             <td class="text-center" colspan="6">{{ text_empty }}</td>
           </tr>
-        <?php } ?>
+        {% endif %}
         {% for ref, row in table_data %}
           <tr>
             <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>">{{ ref }}</td>
@@ -59,9 +59,9 @@
                 <td class="text-center">{{ dataRow.sku }}</td>
                 <td class="text-center">{{ dataRow.stock }}</td>
               </tr>
-            <?php } ?>
+            {% endfor %}
           </tr>
-        <?php } ?>
+        {% endfor %}
       </tbody>
     </table>
   </div>

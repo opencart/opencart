@@ -32,7 +32,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -59,11 +59,11 @@
             <div class="col-sm-10">
               {% if not API_status %}
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_error }}</span></h4>
-              <?php } else if (!$API_auth) { ?>
+              {% } elseif not API_auth %}
               <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> {{ text_api_auth_error }}</span></h4>
               {% else %}
               <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> {{ text_api_ok }}</span></h4>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -84,10 +84,10 @@
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" checked="checked" />'; ?>
               {% else %}
               <?php echo '<input id="p_code_'.$marketplace['code'].'" type="radio" name="openbay_amazon_default_listing_marketplace" value="'.$marketplace['code'].'" />'; ?>
-              <?php } ?>
+              {% endif %}
               <label for="p_code_{{ marketplace.code }}">{{ marketplace.name }}</label>
               <br />
-              <?php } ?>
+              {% endfor %}
             </div>
           </div>
           <div class="form-group">
@@ -136,10 +136,10 @@
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
                 {% else %}
                 <?php echo '<input id="code-'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
-                <?php } ?>
+                {% endif %}
               </div>
             </div>
-            <?php } ?>
+            {% endfor %}
           </fieldset>
           <fieldset>
             <legend>{{ text_other }}</legend>
@@ -160,8 +160,8 @@
                   <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
                   {% else %}
                   <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -175,7 +175,7 @@
                   {% else %}
                   <option value="1">{{ text_yes }}</option>
                   <option value="0" selected="selected">{{ text_no }}</option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
             </div>
@@ -185,7 +185,7 @@
                 <select name="openbay_amazon_default_carrier" id="entry-default-shipping" class="form-control">
                   {% for carrier in carriers %}
                   <?php echo '<option'.($carrier == $openbay_amazon_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
-                  <?php } ?>
+                  {% endfor %}
                 </select>
               </div>
             </div>

@@ -31,7 +31,7 @@
               <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
               {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -43,8 +43,8 @@
                 <option value="{{ user_group.user_group_id }}" selected="selected">{{ user_group.name }}</option>
                 {% else %}
                 <option value="{{ user_group.user_group_id }}">{{ user_group.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -54,7 +54,7 @@
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
               {% if error_firstname %}
               <div class="text-danger">{{ error_firstname }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -63,7 +63,7 @@
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
               {% if error_lastname %}
               <div class="text-danger">{{ error_lastname }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -72,7 +72,7 @@
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
               {% if error_email %}
               <div class="text-danger">{{ error_email }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">

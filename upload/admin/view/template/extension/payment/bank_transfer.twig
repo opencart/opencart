@@ -32,12 +32,12 @@
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <textarea name="bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
               </div>
-              <?php if (${'error_bank' . $language['language_id']}) { ?>
-              <div class="text-danger"><?php echo ${'error_bank' . $language['language_id']}; ?></div>
-              <?php } ?>
+              {% if ${'error_bank' . $language['language_id']} %}
+              <div class="text-danger">{{ ${'error_bank' . $language['language_id']} }}</div>
+              {% endif %}
             </div>
           </div>
-          <?php } ?>
+          {% endfor %}
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
@@ -53,8 +53,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -68,8 +68,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

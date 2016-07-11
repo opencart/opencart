@@ -31,7 +31,7 @@
               <input type="text" name="ups_key" value="{{ ups_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -191,7 +191,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_01" value="1" />
                       {{ text_next_day_air }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -202,7 +202,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_02" value="1" />
                       {{ text_2nd_day_air }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -213,7 +213,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_03" value="1" />
                       {{ text_ground }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -224,7 +224,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_07" value="1" />
                       {{ text_worldwide_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -235,7 +235,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_08" value="1" />
                       {{ text_worldwide_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -246,7 +246,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_11" value="1" />
                       {{ text_standard }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -257,7 +257,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_12" value="1" />
                       {{ text_3_day_select }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -268,7 +268,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_13" value="1" />
                       {{ text_next_day_air_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -279,7 +279,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_14" value="1" />
                       {{ text_next_day_air_early_am }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -290,7 +290,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -301,7 +301,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_59" value="1" />
                       {{ text_2nd_day_air_am }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -312,7 +312,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_us_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -325,7 +325,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_01" value="1" />
                       {{ text_next_day_air }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -336,7 +336,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_02" value="1" />
                       {{ text_2nd_day_air }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -347,7 +347,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_03" value="1" />
                       {{ text_ground }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -358,7 +358,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_07" value="1" />
                       {{ text_worldwide_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -369,7 +369,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_08" value="1" />
                       {{ text_worldwide_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -380,7 +380,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_14" value="1" />
                       {{ text_next_day_air_early_am }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -391,7 +391,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -402,7 +402,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_pr_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -415,7 +415,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_01" value="1" />
                       {{ text_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -426,7 +426,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_02" value="1" />
                       {{ text_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -437,7 +437,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_07" value="1" />
                       {{ text_worldwide_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -448,7 +448,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_08" value="1" />
                       {{ text_worldwide_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -459,7 +459,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_11" value="1" />
                       {{ text_standard }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -470,7 +470,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_12" value="1" />
                       {{ text_3_day_select }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -481,7 +481,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_13" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -492,7 +492,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_14" value="1" />
                       {{ text_express_early_am }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -503,7 +503,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -514,7 +514,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_ca_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -527,7 +527,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_mx_07" value="1" />
                       {{ text_worldwide_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -538,7 +538,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_mx_08" value="1" />
                       {{ text_worldwide_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -549,7 +549,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_mx_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -560,7 +560,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_mx_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -573,7 +573,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_07" value="1" />
                       {{ text_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -584,7 +584,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_08" value="1" />
                       {{ text_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -595,7 +595,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_11" value="1" />
                       {{ text_standard }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -606,7 +606,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -617,7 +617,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -628,7 +628,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_82" value="1" />
                       {{ text_today_standard }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -639,7 +639,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_83" value="1" />
                       {{ text_today_dedicated_courier }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -650,7 +650,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_84" value="1" />
                       {{ text_today_intercity }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -661,7 +661,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_85" value="1" />
                       {{ text_today_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -672,7 +672,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_eu_86" value="1" />
                       {{ text_today_express_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -685,7 +685,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_other_07" value="1" />
                       {{ text_express }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -696,7 +696,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_other_08" value="1" />
                       {{ text_expedited }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -707,7 +707,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_other_11" value="1" />
                       {{ text_standard }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -718,7 +718,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_other_54" value="1" />
                       {{ text_worldwide_express_plus }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
@@ -729,7 +729,7 @@
                       {% else %}
                       <input type="checkbox" name="ups_other_65" value="1" />
                       {{ text_saver }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -746,7 +746,7 @@
                 {% else %}
                 <input type="radio" name="ups_insurance" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not ups_insurance %}
@@ -755,7 +755,7 @@
                 {% else %}
                 <input type="radio" name="ups_insurance" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -769,7 +769,7 @@
                 {% else %}
                 <input type="radio" name="ups_display_weight" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not ups_display_weight %}
@@ -778,7 +778,7 @@
                 {% else %}
                 <input type="radio" name="ups_display_weight" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -791,8 +791,8 @@
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -805,8 +805,8 @@
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
                 <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -826,7 +826,7 @@
               </div>
               {% if error_dimension %}
               <div class="text-danger">{{ error_dimension }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -839,8 +839,8 @@
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -854,8 +854,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -869,7 +869,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -889,7 +889,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

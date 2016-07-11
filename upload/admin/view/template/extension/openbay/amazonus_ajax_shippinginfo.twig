@@ -7,7 +7,7 @@
         <select name="carrier_id" id="carrier-id" class="form-control openbay-data">
           {% for carrier in couriers %}
             <option <?php if (isset($order_info['carrier_id']) && $order_info['carrier_id'] == $carrier){ echo ' selected'; } ?>>{{ carrier }}</option>
-          <?php } ?>
+          {% endfor %}
         </select>
       </div>
     </div>

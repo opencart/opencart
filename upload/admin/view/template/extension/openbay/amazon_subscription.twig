@@ -66,7 +66,7 @@
                     {{ text_allowed }}
                     {% else %}
                     {{ text_not_allowed }}
-                    <?php } ?>
+                    {% endif %}
                   </td>
                 </tr>
                 <tr>
@@ -106,20 +106,20 @@
                     {{ text_allowed }}
                     {% else %}
                     {{ text_not_allowed }}
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-left">&pound;{{ plan.price }}</td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
               </tbody>
             </table>
             {% if link_change_plan %}
             <div class="pull-right"> <a href="{{ link_change_plan }}" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> {{ button_change_plan }}</a> </div>
-            <?php } ?>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
-    <?php } ?>
+    {% endif %}
   </div>
 </div>
 {{ footer }}

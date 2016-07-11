@@ -17,7 +17,7 @@
   <div class="container-fluid">
     {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_manage }}</h3>
@@ -61,13 +61,13 @@
                     <select name="data[returns_accepted]" class="form-control">
                       <?php foreach($setting['returns']['accepted'] as $v) { ?>
                         <option value="{{ v.ReturnsAcceptedOption }}" <?php if ($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
               {% else %}
                 <input type="hidden" name="data[returns_accepted]" value="" />
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['within'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_days }}</label>
@@ -76,13 +76,13 @@
                   <select name="data[returns_within]" class="form-control">
                     <?php foreach($setting['returns']['within'] as $v) { ?>
                     <option value="{{ v.ReturnsWithinOption }}" <?php if ($data['returns_within'] == $v['ReturnsWithinOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
               <input type="hidden" name="data[returns_within]" value="" />
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['paidby'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_costs }}</label>
@@ -91,13 +91,13 @@
                   <select name="data[returns_shipping]" class="form-control">
                     <?php foreach($setting['returns']['paidby'] as $v) { ?>
                     <option value="{{ v.ShippingCostPaidByOption }}" <?php if ($data['returns_shipping'] == $v['ShippingCostPaidByOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
               <input type="hidden" name="data[returns_shipping]" value="" />
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['refund'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_type }}</label>
@@ -106,13 +106,13 @@
                   <select name="data[returns_option]" class="form-control">
                     <?php foreach($setting['returns']['refund'] as $v) { ?>
                     <option value="{{ v.RefundOption }}" <?php if ($data['returns_option'] == $v['RefundOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
               <input type="hidden" name="data[returns_option]" value="" />
-              <?php } ?>
+              {% endif %}
               <?php if ($setting['returns']['description'] == true) { ?>
                 <?php if (!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
                 <div class="form-group">
@@ -123,7 +123,7 @@
                 </div>
               {% else %}
                 <input type="hidden" name="data[returns_policy]" value="" />
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_returns_restock }}</label>
@@ -132,13 +132,13 @@
                   <select name="data[returns_restocking_fee]" class="form-control">
                     <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
                     <option value="{{ v.RestockingFeeValueOption }}" <?php if ($data['returns_restocking_fee'] == $v['RestockingFeeValueOption']){ echo'selected'; } ?>>{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
               {% else %}
               <input type="hidden" name="data[returns_restocking_fee]" value="" />
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
         </form>

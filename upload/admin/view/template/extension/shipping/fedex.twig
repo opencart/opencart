@@ -31,7 +31,7 @@
               <input type="text" name="fedex_key" value="{{ fedex_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="fedex_password" value="{{ fedex_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -49,7 +49,7 @@
               <input type="text" name="fedex_account" value="{{ fedex_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control" />
               {% if error_account %}
               <div class="text-danger">{{ error_account }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -58,7 +58,7 @@
               <input type="text" name="fedex_meter" value="{{ fedex_meter }}" placeholder="{{ entry_meter }}" id="input-meter" class="form-control" />
               {% if error_meter %}
               <div class="text-danger">{{ error_meter }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -67,7 +67,7 @@
               <input type="text" name="fedex_postcode" value="{{ fedex_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
               {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -80,7 +80,7 @@
                 {% else %}
                 <input type="radio" name="fedex_test" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not fedex_test %}
@@ -89,7 +89,7 @@
                 {% else %}
                 <input type="radio" name="fedex_test" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -106,10 +106,10 @@
                     {% else %}
                     <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" />
                     {{ service.text }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
               <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a></div>
           </div>
@@ -129,7 +129,7 @@
               </div>
               {% if error_dimension %}
               <div class="text-danger">{{ error_dimension }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -141,8 +141,8 @@
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
                 <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -154,27 +154,27 @@
                 <option value="REGULAR_PICKUP" selected="selected">{{ text_regular_pickup }}</option>
                 {% else %}
                 <option value="REGULAR_PICKUP">{{ text_regular_pickup }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_dropoff_type == 'REQUEST_COURIER' %}
                 <option value="REQUEST_COURIER" selected="selected">{{ text_request_courier }}</option>
                 {% else %}
                 <option value="REQUEST_COURIER">{{ text_request_courier }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_dropoff_type == 'DROP_BOX' %}
                 <option value="DROP_BOX" selected="selected">{{ text_drop_box }}</option>
                 {% else %}
                 <option value="DROP_BOX">{{ text_drop_box }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_dropoff_type == 'BUSINESS_SERVICE_CENTER' %}
                 <option value="BUSINESS_SERVICE_CENTER" selected="selected">{{ text_business_service_center }}</option>
                 {% else %}
                 <option value="BUSINESS_SERVICE_CENTER">{{ text_business_service_center }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_dropoff_type == 'STATION' %}
                 <option value="STATION" selected="selected">{{ text_station }}</option>
                 {% else %}
                 <option value="STATION">{{ text_station }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -186,37 +186,37 @@
                 <option value="FEDEX_ENVELOPE" selected="selected">{{ text_fedex_envelope }}</option>
                 {% else %}
                 <option value="FEDEX_ENVELOPE">{{ text_fedex_envelope }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'FEDEX_PAK' %}
                 <option value="FEDEX_PAK" selected="selected">{{ text_fedex_pak }}</option>
                 {% else %}
                 <option value="FEDEX_PAK">{{ text_fedex_pak }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'FEDEX_BOX' %}
                 <option value="FEDEX_BOX" selected="selected">{{ text_fedex_box }}</option>
                 {% else %}
                 <option value="FEDEX_BOX">{{ text_fedex_box }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'FEDEX_TUBE' %}
                 <option value="FEDEX_TUBE" selected="selected">{{ text_fedex_tube }}</option>
                 {% else %}
                 <option value="FEDEX_TUBE">{{ text_fedex_tube }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'FEDEX_10KG_BOX' %}
                 <option value="FEDEX_10KG_BOX" selected="selected">{{ text_fedex_10kg_box }}</option>
                 {% else %}
                 <option value="FEDEX_10KG_BOX">{{ text_fedex_10kg_box }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'FEDEX_25KG_BOX' %}
                 <option value="FEDEX_25KG_BOX" selected="selected">{{ text_fedex_25kg_box }}</option>
                 {% else %}
                 <option value="FEDEX_25KG_BOX">{{ text_fedex_25kg_box }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_packaging_type == 'YOUR_PACKAGING' %}
                 <option value="YOUR_PACKAGING" selected="selected">{{ text_your_packaging }}</option>
                 {% else %}
                 <option value="YOUR_PACKAGING">{{ text_your_packaging }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -228,12 +228,12 @@
                 <option value="LIST" selected="selected">{{ text_list_rate }}</option>
                 {% else %}
                 <option value="LIST">{{ text_list_rate }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if fedex_rate_type == 'ACCOUNT' %}
                 <option value="ACCOUNT" selected="selected">{{ text_account_rate }}</option>
                 {% else %}
                 <option value="ACCOUNT">{{ text_account_rate }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -247,7 +247,7 @@
                 {% else %}
                 <input type="radio" name="fedex_display_time" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not fedex_display_time %}
@@ -256,7 +256,7 @@
                 {% else %}
                 <input type="radio" name="fedex_display_time" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -270,7 +270,7 @@
                 {% else %}
                 <input type="radio" name="fedex_display_weight" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not fedex_display_weight %}
@@ -279,7 +279,7 @@
                 {% else %}
                 <input type="radio" name="fedex_display_weight" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -292,8 +292,8 @@
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -307,8 +307,8 @@
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -322,8 +322,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -337,7 +337,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

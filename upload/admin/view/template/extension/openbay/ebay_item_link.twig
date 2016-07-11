@@ -117,7 +117,7 @@
               <tr id="row-{{ id }}">
                 <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>
                 <td class="text-center"><a href="{{ item.link_ebay }}" target="_BLANK">{{ id }}</a></td>
-                <?php if ($item['options'] == 0) { ?>
+                {%if item.options == 0 %}
                   <td class="text-center">{{ item.allocated }}</td>
                   <td class="text-center">{{ item.qty }}</td>
                   <td class="text-center">{{ item.reserve }}</td>
@@ -129,11 +129,11 @@
                   <td></td>
                   <td id="text-qty-{{ id }}" class="text-center"></td>
                   <td class="text-center" align="center"><span class="label label-success">{{ text_yes }}</span></td>
-                <?php } ?>
+                {% endif %}
                 <td class="text-center" id="text-status-{{ id }}"></td>
                 <td class="text-center"><div class="pull-right" id="text-buttons-{{ id }}"></div></td>
               </tr>
-            <?php } ?>
+            {% endfor %}
           </tbody>
         </table>
         <div class="pagination">{{ pagination }}</div>

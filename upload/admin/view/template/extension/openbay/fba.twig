@@ -13,7 +13,7 @@
   <div class="container-fluid">
     {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="row">
       <div class="col-md-3 text-center">
         <div class="well"> <a href="{{ link_settings }}"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-wrench fa-stack-1x"></i> </span>
@@ -45,7 +45,7 @@
           </a>
         </div>
       </div>
-      <?php } ?>
+      {% endif %}
     </div>
   </div>
 </div>

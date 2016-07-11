@@ -5,7 +5,7 @@
             <div class="pull-right">
                 {% if has_listing_errors %}
                 <a href="{{ url_remove_errors }}" data-toggle="tooltip" title="{{ button_remove_error }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>
-                <?php } ?>
+                {% endif %}
                 <a href="{{ cancel_url }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
             <h1>{{ text_title_advanced }}</h1>      <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -20,13 +20,13 @@
             <ul>
                 {% for listing_error in errors %}
                 <li><i class="fa fa-exclamation-circle"></i> {{ listing_error.message }}</li>
-                <?php } ?>
+                {% endfor %}
             </ul>
         </div>
-        <?php } ?>
+        {% endif %}
         {% if success %}
         <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-        <?php } ?>
+        {% endif %}
         <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#page-main" data-toggle="tab">{{ tab_main }}</a></li>
         </ul>
@@ -46,13 +46,13 @@
                                     {% for option in options %}
                                     <?php if (!empty($option['sku'])) { ?>
                                     <option <?php if ($variation == $option['sku']) { echo "selected='selected'"; $option_selected = true; } ?> value="<?php echo  $option['sku']?>"><?php echo $option['combination']?></option>
-                                    <?php } ?>
-                                    <?php } ?>
+                                    {% endif %}
+                                    {% endfor %}
                                     <?php if ($option_selected == false) { ?>
                                     <option selected="selected"></option>
-                                    <?php } ?>
+                                    {% endif %}
                                 </select>
-                                <?php }?>
+                                {% endif %}
                             </p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                 <option value=""></option>
                                 {% for category in amazonus_categories %}
                                 <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="{{ category.template }}">{{ category.friendly_name }}</option>
-                                <?php } ?>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ $(document).ready(function(){
         $("#advanced_table").html("");
         $(".content").prepend('<div id="warning" class="alert alert-danger">{{ error_connecting }}</div>');
         return;
-    <?php } ?>
+    {% endif %}
 
     $(".fields_advanced :input").bind('change', function() {
         update_form(this, 'advanced');

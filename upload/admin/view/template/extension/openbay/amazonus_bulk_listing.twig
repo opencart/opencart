@@ -41,32 +41,32 @@
               <td class="text-right">{{ product.model }}</td>
               <td class="text-right">{{ product.search_status }}</td>
               <td class="text-right"><?php echo ($product['matches'] !== null ? $product['matches'] : '-'); ?></td>
-              <td class="text-left" id="result-{{ product.product_id }}"><?php if ($product['matches'] !== null) { ?>
-                <?php $checked = false; ?>
-                <?php if ($product['matches'] > 0) { ?>
+              <td class="text-left" id="result-{{ product.product_id }}">{% if product.matches !== null %}
+                {% set checked = false %}
+                {% if product.matches > 0 %}
                 <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 {{ text_dont_list }}<br/>
                 {% for search_results in product.search_results %}
                 {% if not checked %}
                 <input class="amazon-listing" checked="checked" type="radio" name="products[{{ product.product_id }}]" value="{{ search_result.asin }}"/>
-                <?php $checked = true; ?>
+                {% set cchecked = true %}
                 {% else %}
                 <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value="{{ search_result.asin }}"/>
-                <?php } ?>
+                {% endif %}
                 <a target="_blank" href="{{ search_result.href }}">{{ search_result.title }}</a><br/>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <input class="amazon-listing" checked="checked" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 {{ text_dont_list }}<br/>
-                <?php } ?>
-                <?php } ?></td>
+                {% endif %}
+                {% endif %}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
             {% else %}
             <tr>
               <td colspan="7" class="text-center">{{ text_no_results }}</td>
             </tr>
-            <?php } ?>
+            {% endif %}
           </tbody>
         </table>
       </form>
@@ -86,8 +86,8 @@
                 <option selected="selected" value="{{ value }}">{{ name }}</option>
                 {% else %}
                 <option value="{{ value }}">{{ name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -116,7 +116,7 @@
       </div>
     {% else %}
       <div class="warning">{{ error_bulk_listing_permission }}</div>
-    <?php } ?>
+    {% endif %}
   </div>
 </div>
 <script type="text/javascript"><!--

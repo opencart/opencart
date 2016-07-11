@@ -30,7 +30,7 @@
             <li><a href="#tab-payment" data-toggle="tab">{{ tab_payment }}</a></li>
             {% if affiliate_id %}
             <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
-            <?php } ?>
+            {% endif %}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -115,7 +115,7 @@
                       {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
-                      <?php } ?>
+                      {% endif %}
                     </select>
                   </div>
                 </div>
@@ -178,7 +178,7 @@
                       {% else %}
                       <option value="{{ country.country_id }}">{{ country.name }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                     {% if error_country %}
                     <div class="text-danger">{{ error_country }}</div>
@@ -219,7 +219,7 @@
                       <input type="radio" name="payment" value="cheque" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="cheque" />
-                      <?php } ?>
+                      {% endif %}
                       {{ text_cheque }}</label>
                   </div>
                   <div class="radio">
@@ -228,7 +228,7 @@
                       <input type="radio" name="payment" value="paypal" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="paypal" />
-                      <?php } ?>
+                      {% endif %}
                       {{ text_paypal }}</label>
                   </div>
                   <div class="radio">
@@ -237,7 +237,7 @@
                       <input type="radio" name="payment" value="bank" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="bank" />
-                      <?php } ?>
+                      {% endif %}
                       {{ text_bank }}</label>
                   </div>
                 </div>
@@ -249,7 +249,7 @@
                     <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
                     {% if error_cheque %}
                     <div class="text-danger">{{ error_cheque }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -260,7 +260,7 @@
                     <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
                     {% if error_paypal %}
                     <div class="text-danger">{{ error_paypal }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -289,7 +289,7 @@
                     <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
                     {% if error_bank_account_name %}
                     <div class="text-danger">{{ error_bank_account_name }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group required">
@@ -298,7 +298,7 @@
                     <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
                     {% if error_bank_account_number %}
                     <div class="text-danger">{{ error_bank_account_number }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -323,7 +323,7 @@
                 <button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_transaction_add }}</button>
               </div>
             </div>
-            <?php } ?>
+            {% endif %}
           </div>
         </form>
       </div>

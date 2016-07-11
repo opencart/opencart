@@ -48,7 +48,7 @@
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control" />
                   {% if error_meta_title %}
                   <div class="text-danger">{{ error_meta_title }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -72,8 +72,8 @@
                     <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
                     {% else %}
                     <option value="{{ theme.value }}">{{ theme.text }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                   <br />
                   <img src="" alt="" id="theme" class="img-thumbnail" /></div>
@@ -87,8 +87,8 @@
                     <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                     {% else %}
                     <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -100,7 +100,7 @@
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
                   {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -109,7 +109,7 @@
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" />
                   {% if error_owner %}
                   <div class="text-danger">{{ error_owner }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -118,7 +118,7 @@
                   <textarea name="config_address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
                   <div class="text-danger">{{ error_address }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -133,7 +133,7 @@
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
                   {% if error_email %}
                   <div class="text-danger">{{ error_email }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -142,7 +142,7 @@
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
                   {% if error_telephone %}
                   <div class="text-danger">{{ error_telephone }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -182,13 +182,13 @@
                       {% else %}
                       <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" />
                       {{ location.name }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
@@ -200,8 +200,8 @@
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
                     <option value="{{ country.country_id }}">{{ country.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -221,8 +221,8 @@
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
                     <option value="{{ language.code }}">{{ language.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -235,8 +235,8 @@
                     <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
                     {% else %}
                     <option value="{{ language.code }}">{{ language.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -249,8 +249,8 @@
                     <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
                     {% else %}
                     <option value="{{ currency.code }}">{{ currency.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -264,7 +264,7 @@
                     {% else %}
                     <input type="radio" name="config_currency_auto" value="1" />
                     {{ text_yes }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                   <label class="radio-inline">
                     {% if not config_currency_auto %}
@@ -273,7 +273,7 @@
                     {% else %}
                     <input type="radio" name="config_currency_auto" value="0" />
                     {{ text_no }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
               </div>
@@ -286,8 +286,8 @@
                     <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                     {% else %}
                     <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -300,8 +300,8 @@
                     <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                     {% else %}
                     <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -319,7 +319,7 @@
                       {% else %}
                       <input type="radio" name="config_product_count" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_product_count %}
@@ -328,7 +328,7 @@
                       {% else %}
                       <input type="radio" name="config_product_count" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -338,7 +338,7 @@
                     <input type="text" name="config_limit_admin" value="{{ config_limit_admin }}" placeholder="{{ entry_limit_admin }}" id="input-admin-limit" class="form-control" />
                     {% if error_limit_admin %}
                     <div class="text-danger">{{ error_limit_admin }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
@@ -354,7 +354,7 @@
                       {% else %}
                       <input type="radio" name="config_review_status" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_review_status %}
@@ -363,7 +363,7 @@
                       {% else %}
                       <input type="radio" name="config_review_status" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -377,7 +377,7 @@
                       {% else %}
                       <input type="radio" name="config_review_guest" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                     {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_review_guest %}
@@ -386,7 +386,7 @@
                       {% else %}
                       <input type="radio" name="config_review_guest" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -486,7 +486,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_online" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_customer_online %}
@@ -495,7 +495,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_online" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -509,7 +509,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_activity" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_customer_activity %}
@@ -518,7 +518,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_activity" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -532,7 +532,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_search" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_customer_search %}
@@ -541,7 +541,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_search" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -554,8 +554,8 @@
                       <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
                       {% else %}
                       <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -571,13 +571,13 @@
                         {% else %}
                         <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" />
                         {{ customer_group.name }}
-                        <?php } ?>
+                        {% endif %}
                       </label>
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                     {% if error_customer_group_display %}
                     <div class="text-danger">{{ error_customer_group_display }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group">
@@ -590,7 +590,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_price" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_customer_price %}
@@ -599,7 +599,7 @@
                       {% else %}
                       <input type="radio" name="config_customer_price" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -609,7 +609,7 @@
                     <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control" />
                     {% if error_login_attempts %}
                     <div class="text-danger">{{ error_login_attempts }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group">
@@ -622,8 +622,8 @@
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -646,7 +646,7 @@
                       {% else %}
                       <input type="radio" name="config_cart_weight" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_cart_weight %}
@@ -655,7 +655,7 @@
                       {% else %}
                       <input type="radio" name="config_cart_weight" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -669,7 +669,7 @@
                       {% else %}
                       <input type="radio" name="config_checkout_guest" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_checkout_guest %}
@@ -678,7 +678,7 @@
                       {% else %}
                       <input type="radio" name="config_checkout_guest" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -692,8 +692,8 @@
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -706,8 +706,8 @@
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -724,14 +724,14 @@
                           {% else %}
                           <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" />
                           {{ order_status.name }}
-                          <?php } ?>
+                          {% endif %}
                         </label>
                       </div>
-                      <?php } ?>
+                      {% endfor %}
                     </div>
                     {% if error_processing_status %}
                     <div class="text-danger">{{ error_processing_status }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group">
@@ -747,14 +747,14 @@
                           {% else %}
                           <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" />
                           {{ order_status.name }}
-                          <?php } ?>
+                          {% endif %}
                         </label>
                       </div>
-                      <?php } ?>
+                      {% endfor %}
                     </div>
                     {% if error_complete_status %}
                     <div class="text-danger">{{ error_complete_status }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-group">
@@ -766,8 +766,8 @@
                       <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -781,8 +781,8 @@
                       <option value="{{ api.api_id }}" selected="selected">{{ api.name }}</option>
                       {% else %}
                       <option value="{{ api.api_id }}">{{ api.name }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -799,7 +799,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_display" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_stock_display %}
@@ -808,7 +808,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_display" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -822,7 +822,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_warning" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_stock_warning %}
@@ -831,7 +831,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_warning" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -845,7 +845,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_checkout" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_stock_checkout %}
@@ -854,7 +854,7 @@
                       {% else %}
                       <input type="radio" name="config_stock_checkout" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -871,7 +871,7 @@
                       {% else %}
                       <input type="radio" name="config_affiliate_approval" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_affiliate_approval %}
@@ -880,7 +880,7 @@
                       {% else %}
                       <input type="radio" name="config_affiliate_approval" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -894,7 +894,7 @@
                       {% else %}
                       <input type="radio" name="config_affiliate_auto" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_stock_checkout %}
@@ -903,7 +903,7 @@
                       {% else %}
                       <input type="radio" name="config_affiliate_auto" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -923,8 +923,8 @@
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -941,8 +941,8 @@
                       <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -955,8 +955,8 @@
                       <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                       {% else %}
                       <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -973,8 +973,8 @@
                       <option value="{{ captcha.value }}" selected="selected">{{ captcha.text }}</option>
                       {% else %}
                       <option value="{{ captcha.value }}">{{ captcha.text }}</option>
-                      <?php } ?>
-                      <?php } ?>
+                      {% endif %}
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -991,10 +991,10 @@
                           {% else %}
                           <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" />
                           {{ captcha_page.text }}
-                          <?php } ?>
+                          {% endif %}
                         </label>
                       </div>
-                      <?php } ?>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -1021,7 +1021,7 @@
                   <input type="text" name="config_ftp_hostname" value="{{ config_ftp_hostname }}" placeholder="{{ entry_ftp_hostname }}" id="input-ftp-host" class="form-control" />
                   {% if error_ftp_hostname %}
                   <div class="text-danger">{{ error_ftp_hostname }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -1030,7 +1030,7 @@
                   <input type="text" name="config_ftp_port" value="{{ config_ftp_port }}" placeholder="{{ entry_ftp_port }}" id="input-ftp-port" class="form-control" />
                   {% if error_ftp_port %}
                   <div class="text-danger">{{ error_ftp_port }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -1039,7 +1039,7 @@
                   <input type="text" name="config_ftp_username" value="{{ config_ftp_username }}" placeholder="{{ entry_ftp_username }}" id="input-ftp-username" class="form-control" />
                   {% if error_ftp_username %}
                   <div class="text-danger">{{ error_ftp_username }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -1048,7 +1048,7 @@
                   <input type="text" name="config_ftp_password" value="{{ config_ftp_password }}" placeholder="{{ entry_ftp_password }}" id="input-ftp-password" class="form-control" />
                   {% if error_ftp_password %}
                   <div class="text-danger">{{ error_ftp_password }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -1067,7 +1067,7 @@
                     {% else %}
                     <input type="radio" name="config_ftp_status" value="1" />
                     {{ text_yes }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                   <label class="radio-inline">
                     {% if not config_ftp_status %}
@@ -1076,7 +1076,7 @@
                     {% else %}
                     <input type="radio" name="config_ftp_status" value="0" />
                     {{ text_no }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
               </div>
@@ -1092,12 +1092,12 @@
                       <option value="mail" selected="selected">{{ text_mail }}</option>
                       {% else %}
                       <option value="mail">{{ text_mail }}</option>
-                      <?php } ?>
+                      {% endif %}
                       {% if config_mail_protocol == 'smtp' %}
                       <option value="smtp" selected="selected">{{ text_smtp }}</option>
                       {% else %}
                       <option value="smtp">{{ text_smtp }}</option>
-                      <?php } ?>
+                      {% endif %}
                     </select>
                   </div>
                 </div>
@@ -1153,10 +1153,10 @@
                           {% else %}
                           <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" />
                           {{ mail_alert.text }}
-                          <?php } ?>
+                          {% endif %}
                         </label>
                       </div>
-                      <?php } ?>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -1181,7 +1181,7 @@
                       {% else %}
                       <input type="radio" name="config_maintenance" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_maintenance %}
@@ -1190,7 +1190,7 @@
                       {% else %}
                       <input type="radio" name="config_maintenance" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1204,7 +1204,7 @@
                       {% else %}
                       <input type="radio" name="config_seo_url" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_seo_url %}
@@ -1213,7 +1213,7 @@
                       {% else %}
                       <input type="radio" name="config_seo_url" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1242,7 +1242,7 @@
                       {% else %}
                       <input type="radio" name="config_secure" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_secure %}
@@ -1251,7 +1251,7 @@
                       {% else %}
                       <input type="radio" name="config_secure" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1265,7 +1265,7 @@
                       {% else %}
                       <input type="radio" name="config_password" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_password %}
@@ -1274,7 +1274,7 @@
                       {% else %}
                       <input type="radio" name="config_password" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1288,7 +1288,7 @@
                       {% else %}
                       <input type="radio" name="config_shared" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_shared %}
@@ -1297,7 +1297,7 @@
                       {% else %}
                       <input type="radio" name="config_shared" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1307,7 +1307,7 @@
                     <textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
                     {% if error_encryption %}
                     <div class="text-danger">{{ error_encryption }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>
@@ -1344,7 +1344,7 @@
                       {% else %}
                       <input type="radio" name="config_error_display" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_error_display %}
@@ -1353,7 +1353,7 @@
                       {% else %}
                       <input type="radio" name="config_error_display" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1367,7 +1367,7 @@
                       {% else %}
                       <input type="radio" name="config_error_log" value="1" />
                       {{ text_yes }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                     <label class="radio-inline">
                       {% if not config_error_log %}
@@ -1376,7 +1376,7 @@
                       {% else %}
                       <input type="radio" name="config_error_log" value="0" />
                       {{ text_no }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
                 </div>
@@ -1386,7 +1386,7 @@
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control" />
                     {% if error_error_filename %}
                     <div class="text-danger">{{ error_error_filename }}</div>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </fieldset>

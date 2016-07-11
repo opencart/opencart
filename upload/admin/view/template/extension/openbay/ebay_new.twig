@@ -14,7 +14,7 @@
   <div class="container-fluid">
     {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_insert }}</h3>
@@ -49,14 +49,14 @@
                           <option disabled selected>{{ text_select }}</option>
                           {% for key, cat in product['store_cats'] %}
                           <option value="{{ key }}">{{ cat }}</option>
-                          <?php } ?>
+                          {% endfor %}
                         </select>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($product['popular_cats'])) { ?>
               <div class="form-group" id="category-popular-row">
                 <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="{{ help_category_popular }}">{{ entry_category_popular }}</span> </label>
@@ -68,12 +68,12 @@
                   <p>
                     <input type="radio" name="popular" value="{{ cat.CategoryID }}" class="popular-category" />
                     {{ cat.breadcrumb }}</p>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
               {% else %}
               <input type="hidden" name="popular" value="" />
-              <?php } ?>
+              {% endif %}
               <div class="form-group" id="category-selections-row">
                 <label class="col-sm-2 control-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
@@ -278,8 +278,8 @@
                         <?php if (is_array($product['profiles_theme'])) { ?>
                         {% for profiles_theme in product.profiles_theme %}
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                        <?php } ?>
-                        <?php } ?>
+                        {% endfor %}
+                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -293,8 +293,8 @@
                     <?php if (is_array($product['templates']) && !empty($product['templates'])) { ?>
                     {% for templates in product.templates %}
                     <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endfor %}
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -387,16 +387,16 @@
                           <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="{{ i }}" id="image-radio-{{ i }}" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
                           {% else %}
                           -
-                          <?php } ?></td>
+                          {% endif %}</td>
                       </tr>
                       {% set i = i + 1 %}
-                      <?php } ?>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
                 {% else %}
                 <div class="alert alert-danger">{{ text_images_none }}</div>
-                <?php } ?>
+                {% endif %}
               </div>
               <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
               <h2>{{ text_option_images }}</h2>
@@ -430,18 +430,18 @@
                                   <input type="hidden" name="option_image[{{ option_group.option_id }}][{{ option_group_choice.product_option_value_id }}][images][]" value="{{ option_group_choice.image }}"/></td>
                                 <td><button type="button" onclick="removeVariationImage({{ option_group.option_id }}, {{ option_group_choice.product_option_value_id }}, {{ x }});" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                               </tr>
-                              <?php } ?>
+                              {% endif %}
                               <input type="hidden" name="option_image_count_{{ option_group.option_id }}" id="option_image_count_{{ option_group.option_id }}" value="{{ x }}"/>
                             </table></td>
                         </tr>
-                        <?php } ?>
+                        {% endfor %}
                       </table>
                     </div>
                   </div>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
             </div>
             <div id="tab-listing-price" class="tab-pane">
               <div class="well well-lg">
@@ -452,9 +452,11 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_generic'])) { foreach ($product['profiles_generic'] as $profile) { ?>
+                        <?php if (is_array($product['profiles_generic'])) { 
+						 foreach ($product['profiles_generic'] as $profile) { ?>
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                        <?php } }?>
+                        {% endfor %}
+                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -550,7 +552,7 @@
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (empty($product['options'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_offers }}</label>
@@ -559,7 +561,7 @@
                   <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label"> <span title="" data-toggle="tooltip" data-original-title="{{ help_private }}">{{ entry_private }}</span> </label>
                 <div class="col-sm-10"> <span class="help-block">
@@ -588,8 +590,8 @@
                     <input type="checkbox" name="payments[{{ payment.ebay_name }}]" value="1"
                         <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/>
                     - {{ payment.local_name }}</p>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </div>
               </div>
               <?php if ($paypal == true) { ?>
@@ -603,7 +605,7 @@
                   </div>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_payment_instruction }}</label>
                 <div class="col-sm-10">
@@ -620,9 +622,11 @@
                     <div class="input-group"> <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def">{{ text_select }}</option>
-                        <?php if (is_array($product['profiles_shipping'])) { foreach ($product['profiles_shipping'] as $profile) { ?>
+                        <?php if (is_array($product['profiles_shipping'])) { 
+						foreach ($product['profiles_shipping'] as $profile) { ?>
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                        <?php } }?>
+                        {% endfor %}
+                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -646,7 +650,7 @@
                   <select name="country" id="country" class="form-control">
                     {% for countries in setting.countries %}
                     <option value="<?php echo $country['code'];?>"><?php echo $country['name'];?></option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                   <span class="help-block">{{ text_despatch_country_help }}</span> </div>
               </div>
@@ -656,7 +660,7 @@
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
                     {% for dispatch_times in setting.dispatch_times %}
                     <option value="<?php echo $dis['DispatchTimeMax'];?>"><?php echo $dis['Description'];?></option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -675,7 +679,7 @@
                   <input type="checkbox" name="eligible_for_pickup_dropoff" value="1" id="eligible_for_pickup_dropoff" />
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping_pickupinstore }}</label>
@@ -684,7 +688,7 @@
                   <input type="checkbox" name="eligible_for_pickup_instore" value="1" id="eligible_for_pickup_instore" />
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if ($setting['listing_restrictions']['global_shipping'] == 1) { ?>
               <div class="form-group" id="global_shipping_container">
                 <label class="col-sm-2 control-label">{{ entry_shipping_global_shipping }}</label>
@@ -693,7 +697,7 @@
                   <input type="checkbox" name="global_shipping" value="1" id="global_shipping" />
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping_cod }}</label>
@@ -701,7 +705,7 @@
                   <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping_type_nat }}</label>
                 <div class="col-sm-10">
@@ -852,7 +856,7 @@
                     <select name="package[unit]" class="form-control" id="measure-unit">
                       {% for measurement_types in setting.measurement_types %}
                       <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                   <div class="col-sm-6">
@@ -877,10 +881,10 @@
                     <select name="package[package]" class="form-control">
                       {% for package_type in setting.package_type %}
                       <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-3">
@@ -922,7 +926,7 @@
                         <option value="def">{{ text_select }}</option>
                         <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
                         <option value="{{ profile.ebay_profile_id }}">{{ profile.name }}</option>
-                        <?php } } ?>
+                        {% endif %}
                       </select>
                     </div>
                   </div>
@@ -935,11 +939,11 @@
                   <select name="returns_accepted" id="returns_accepted" class="form-control">
                     {% for v in setting.returns']['accepted %}
                     <option value="{{ v.ReturnsAcceptedOption }}">{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['within'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_days }}</label>
@@ -947,11 +951,11 @@
                   <select name="returns_within" id="returns_within" class="form-control">
                     {% for v in setting.returns']['within %}
                     <option value="{{ v.ReturnsWithinOption }}">{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['paidby'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_scosts }}</label>
@@ -959,11 +963,11 @@
                   <select name="returns_shipping" id="returns_shipping" class="form-control">
                     {% for v in setting.returns.paidby %}
                     <option value="{{ v.ShippingCostPaidByOption }}">{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['refund'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_type }}</label>
@@ -971,11 +975,11 @@
                   <select name="returns_option" id="returns_option" class="form-control">
                     {% for v in setting.returns.refund %}
                     <option value="{{ v.RefundOption }}">{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if ($setting['returns']['description'] == true) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_policy }}</label>
@@ -983,7 +987,7 @@
                   <textarea name="return_policy" class="form-control" rows="3" id="return_policy"></textarea>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ text_return_restock }}</label>
@@ -991,11 +995,11 @@
                   <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
                     {% for v in setting.returns.restocking_fee %}
                     <option value="{{ v.RestockingFeeValueOption }}">{{ v.Description }}</option>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
             </div>
             <div class="well">
               <div class="row">
@@ -1871,7 +1875,7 @@
             html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="{{ zone.shipping_location }}" />';
             html += ' {{ zone.description }}';
             html += '</label>';
-          <?php } ?>
+          {% endfor %}
           html += '</div>';
           html += '</div>';
         }
@@ -1989,7 +1993,7 @@
             err = 1;
             alert('{{ error_stock }}');
         }
-    <?php } ?>
+    {% endif %}
 
     if (err == 0) {
         $.ajax({
@@ -2401,22 +2405,22 @@
     <?php if ($product['profiles_returns_def'] > 0) { ?>
         $('#profile-return-input').val({{ product.profiles_returns_def }});
         profileReturnUpdate();
-    <?php } ?>
+    {% endif %}
 
     <?php if ($product['profiles_generic_def'] > 0) { ?>
         $('#profile-generic-input').val({{ product.profiles_generic_def }});
         profileGenericUpdate();
-    <?php } ?>
+    {% endif %}
 
     <?php if ($product['profiles_shipping_def'] > 0) { ?>
         $('#profile-shipping-input').val({{ product.profiles_shipping_def }});
         profileShippingUpdate();
-    <?php } ?>
+    {% endif %}
 
     <?php if ($product['profiles_theme_def'] > 0) { ?>
         $('#profile-theme-input').val({{ product.profiles_theme_def }});
         profileThemeUpdate();
-    <?php } ?>
+    {% endif %}
 
    // $('#description-field').summernote({height: 300});
   });

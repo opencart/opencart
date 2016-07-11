@@ -15,7 +15,7 @@
 <div class="container-fluid">
   {% for warning in error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ warning }}</div>
-  <?php } ?>
+  {% endif %}
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_bulk }}</h3>
@@ -329,10 +329,10 @@
                 </div>
               </div>
               <?php $i++;?>
-            <?php } ?>
+              {% endfor %}
           {% else %}
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ text_no_results }}</div>
-          <?php } ?>
+          {% endif %}
         </form>
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-loading" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog modal-lg">
@@ -349,8 +349,8 @@
       {% else %}
         {% for fail in error_fail %}
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ fail }}</div>
-        <?php } ?>
-      <?php } ?>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </div>

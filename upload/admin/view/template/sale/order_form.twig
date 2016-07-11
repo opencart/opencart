@@ -617,7 +617,7 @@
                   <select name="shipping_address" id="input-shipping-address" class="form-control">
                     <option value="0" selected="selected">{{ text_none }}</option>
                     {% for address in addresses %}
-                    <option value="{{ address.address_id }}"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
+                    <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
                     {% endfor %}
                   </select>
                 </div>

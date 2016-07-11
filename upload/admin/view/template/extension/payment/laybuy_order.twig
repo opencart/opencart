@@ -7,7 +7,7 @@
  <li class=""><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
  {% if transaction.status_id == 1 %}
  <li class=""><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
- <?php } ?>
+ {% endif %}
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="tab-reference">
@@ -160,8 +160,8 @@
 			    <td>{{ report.pp_trans_id }}</td>
 			    <td>{{ report.status }}</td>
 			  </tr>
-		    <?php } ?>
-		  <?php } ?>
+		    {% endif %}
+		  {% endfor %}
 		  </tbody>
 	    </table>
 	  </div>
@@ -195,8 +195,8 @@
 	 	                <option value="{{ percent }}" selected="selected">{{ percent }}%</option>
 	     	          {% else %}
 	 	                <option value="{{ percent }}">{{ percent }}%</option>
-		      <?php } ?>
-	        <?php } ?>
+		      {% endif %}
+	        {% endfor %}
 	   	  </select>
 	  	  <select name="MONTHS" id="months">
 	           {% for month in months %}
@@ -204,8 +204,8 @@
 	               <option value="{{ month.value }}" selected="selected">{{ month.label }}</option>
 		      {% else %}
 	               <option value="{{ month.value }}">{{ month.label }}</option>
-		      <?php } ?>
-	           <?php } ?>
+		      {% endif %}
+	          {% endfor %}
 	      </select>
 		  <div class="table-responsive">
 		    <table class="table table-striped table-responsive table-condensed" id="payment-table" style="margin-top:5px">
@@ -227,12 +227,12 @@
       </div>
     </div>
 </div>
-<?php } ?>
+{% endif %}>
 </div>
 </form>
 {% else %}
 {{ text_not_found }}
-<?php } ?>
+{% endif %}
 
 <style>
 #tab-laybuy h2 {

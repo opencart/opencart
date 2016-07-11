@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -39,10 +38,9 @@
               <ul class="nav nav-tabs" id="country">
                 {% for country in countries %}
                 <li><a href="#tab-{{ country.code }}" data-toggle="tab">{{ country.name }}</a></li>
-                <?php } ?>
+                {% endfor %}
               </ul>
-              <div class="tab-content">
-                {% for country in countries %}
+              <div class="tab-content"> {% for country in countries %}
                 <div class="tab-pane" id="tab-{{ country.code }}">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-merchant{{ country.code }}"><span data-toggle="tooltip" title="{{ help_merchant }}">{{ entry_merchant }}</span></label>
@@ -60,16 +58,24 @@
                     <label class="col-sm-2 control-label" for="input-server{{ country.code }}">{{ entry_server }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_account[{{ country.code }}][server]" id="input-server{{ country.code }}" class="form-control">
-                        <?php if (isset($klarna_account[$country['code']]) && $klarna_account[$country['code']]['server'] == 'live') { ?>
+                        {% if klarna_account[country.code] and klarna_account[country.code].server == 'live' %}
                         <option value="live" selected="selected">{{ text_live }}</option>
+                        
                         {% else %}
+                        
                         <option value="live">{{ text_live }}</option>
-                        <?php } ?>
-                        <?php if (isset($klarna_account[$country['code']]) && $klarna_account[$country['code']]['server'] == 'beta') { ?>
+                        
+                        {% endif %}
+                        
+                        {% if klarna_account[country.code] and klarna_account[country.code].server == 'beta' %}
                         <option value="beta" selected="selected">{{ text_beta }}</option>
+                        
                         {% else %}
+                        
                         <option value="beta">{{ text_beta }}</option>
-                        <?php } ?>
+                        
+                        {% endif %}
+                      
                       </select>
                     </div>
                   </div>
@@ -83,13 +89,19 @@
                     <label class="col-sm-2 control-label" for="input-pending-status{{ country.code }}">{{ entry_pending_status }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_account[{{ country.code }}][pending_status_id]" id="input-pending-status{{ country.code }}" class="form-control">
+                        
                         {% for order_status in order_statuses %}
-                        <?php if (isset($klarna_account[$country['code']]) && $order_status['order_status_id'] == $klarna_account[$country['code']]['pending_status_id']) { ?>
+                        
+                        {% if klarna_account[country.code] and order_status.order_status_id == klarna_account[country.code].pending_status_id) { ?>
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                        
                         {% else %}
+                        
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                        <?php } ?>
-                        <?php } ?>
+                        
+                        {% endif %}
+                        {% endfor %}
+                      
                       </select>
                     </div>
                   </div>
@@ -97,13 +109,19 @@
                     <label class="col-sm-2 control-label" for="input-accepted-status{{ country.code }}">{{ entry_accepted_status }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_account[{{ country.code }}][accepted_status_id]" id="input-accepted-status{{ country.code }}" class="form-control">
+                        
                         {% for order_status in order_statuses %}
-                        <?php if (isset($klarna_account[$country['code']]) && $order_status['order_status_id'] == $klarna_account[$country['code']]['accepted_status_id']) { ?>
+                        
+                        {% if klarna_account[country.code] and order_status.order_status_id == klarna_account[country.code].accepted_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                        
                         {% else %}
+                        
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                        <?php } ?>
-                        <?php } ?>
+                        
+                        {% endif %}
+                        {% endfor %}
+                      
                       </select>
                     </div>
                   </div>
@@ -112,13 +130,19 @@
                     <div class="col-sm-10">
                       <select name="klarna_account[{{ country.code }}][geo_zone_id]" id="input-geo-zone{{ country.code }}" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
+                        
                         {% for geo_zone in geo_zones %}
-                        <?php if (isset($klarna_account[$country['code']]) && $geo_zone['geo_zone_id'] == $klarna_account[$country['code']]['geo_zone_id']) {  ?>
+                        
+                        {% if klarna_account[country.code] and geo_zone.geo_zone_id == klarna_account[country.code].geo_zone_id %}
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                        
                         {% else %}
+                        
                         <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                        <?php } ?>
-                        <?php } ?>
+                        
+                        {% endif %}
+                        {% endfor %}
+                      
                       </select>
                     </div>
                   </div>
@@ -126,13 +150,17 @@
                     <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_account[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
-                        <?php if (isset($klarna_account[$country['code']]) && $klarna_account[$country['code']]['status']) { ?>
+                        {% if klarna_account[country.code] and klarna_account[country.code]['status']) { ?>
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
+                        
                         {% else %}
+                        
                         <option value="1">{{ text_enabled }}</option>
                         <option value="0" selected="selected">{{ text_disabled }}</option>
-                        <?php } ?>
+                        
+                        {% endif %}
+                      
                       </select>
                     </div>
                   </div>
@@ -143,8 +171,7 @@
                     </div>
                   </div>
                 </div>
-                <?php } ?>
-              </div>
+                {% endfor %} </div>
             </div>
             <div class="tab-pane" id="tab-log">
               <p>

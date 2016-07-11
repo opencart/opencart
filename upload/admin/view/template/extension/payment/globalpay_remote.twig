@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -40,8 +39,7 @@
                   <input type="text" name="globalpay_remote_merchant_id" value="{{ globalpay_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
                   {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
-                  <?php } ?>
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
@@ -49,8 +47,7 @@
                   <input type="password" name="globalpay_remote_secret" value="{{ globalpay_remote_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
                   {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
-                  <?php } ?>
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_rebate_password }}</label>
@@ -63,13 +60,19 @@
                 <div class="col-sm-10">
                   <select name="globalpay_remote_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
+                    
                     {% for geo_zone in geo_zones %}
                     {% if geo_zone.geo_zone_id == globalpay_remote_geo_zone_id %}
+                    
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -77,13 +80,19 @@
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_debug" id="input-debug" class="form-control">
+                    
                     {% if globalpay_remote_debug %}
+                    
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -91,13 +100,19 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_status" id="input-status" class="form-control">
+                    
                     {% if globalpay_remote_status %}
+                    
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -105,13 +120,19 @@
                 <label class="col-sm-2 control-label" for="input-card"><span data-toggle="tooltip" title="{{ help_card_data_status }}">{{ entry_card_data_status }}</span></label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_card_data_status" id="input-card" class="form-control">
+                    
                     {% if globalpay_remote_card_data_status %}
+                    
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -185,13 +206,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_success_settled_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -199,13 +226,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_success_unsettled_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -213,13 +246,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_decline_id" id="input-order-status-decline" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_decline_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -227,13 +266,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-decline-pending">{{ entry_status_decline_pending }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_decline_pending_id" id="input-order-status-decline-pending" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_decline_pending_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -241,13 +286,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-decline-stolen">{{ entry_status_decline_stolen }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_decline_stolen_id" id="input-order-status-decline-stolen" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_decline_stolen_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -255,13 +306,19 @@
                 <label class="col-sm-2 control-label" for="input-order-status-decline-bank">{{ entry_status_decline_bank }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_order_status_decline_bank_id" id="input-order-status-decline-bank" class="form-control">
+                    
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == globalpay_remote_order_status_decline_bank_id %}
+                    
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    
                     {% else %}
+                    
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
                   </select>
                 </div>
               </div>
@@ -281,13 +338,19 @@
                 <label class="col-sm-2 control-label" for="input-tss-check">{{ entry_tss_check }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_tss_check" id="input-tss-check" class="form-control">
+                    
                     {% if globalpay_remote_tss_check %}
+                    
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -295,13 +358,19 @@
                 <label class="col-sm-2 control-label" for="input-3d">{{ entry_3d }}</label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_3d" id="input-3d" class="form-control">
+                    
                     {% if globalpay_remote_3d %}
+                    
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -309,13 +378,19 @@
                 <label class="col-sm-2 control-label" for="input-liability"><span data-toggle="tooltip" title="{{ help_liability }}">{{ entry_liability_shift }}</span></label>
                 <div class="col-sm-10">
                   <select name="globalpay_remote_liability" id="input-liability" class="form-control">
+                    
                     {% if globalpay_remote_liability %}
+                    
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    
+                    {% endif %}
+                  
                   </select>
                 </div>
               </div>

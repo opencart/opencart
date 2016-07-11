@@ -38,7 +38,7 @@
                   <input type="text" name="firstdata_remote_merchant_id" value="{{ firstdata_remote_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -47,7 +47,7 @@
                   <input type="text" name="firstdata_remote_user_id" value="{{ firstdata_remote_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
                   {% if error_user_id %}
                   <div class="text-danger">{{ error_user_id }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -56,7 +56,7 @@
                   <input type="password" name="firstdata_remote_password" value="{{ firstdata_remote_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
                   {% if error_password %}
                   <div class="text-danger">{{ error_password }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -65,7 +65,7 @@
                   <input type="text" name="firstdata_remote_certificate" value="{{ firstdata_remote_certificate }}" placeholder="{{ entry_certificate_path }}" id="input-certificate-path" class="form-control"/>
                   {% if error_certificate %}
                   <div class="text-danger">{{ error_certificate }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -74,7 +74,7 @@
                   <input type="text" name="firstdata_remote_key" value="{{ firstdata_remote_key }}" placeholder="{{ entry_certificate_key_path }}" id="input-key-path" class="form-control"/>
                   {% if error_key %}
                   <div class="text-danger">{{ error_key }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -83,7 +83,7 @@
                   <input type="text" name="firstdata_remote_key_pw" value="{{ firstdata_remote_key_pw }}" placeholder="{{ entry_certificate_key_pw }}" id="input-key-pw" class="form-control"/>
                   {% if error_key_pw %}
                   <div class="text-danger">{{ error_key_pw }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -92,7 +92,7 @@
                   <input type="text" name="firstdata_remote_ca" value="{{ firstdata_remote_ca }}" placeholder="{{ entry_certificate_ca_path }}" id="input-ca-path" class="form-control"/>
                   {% if error_ca %}
                   <div class="text-danger">{{ error_ca }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -105,7 +105,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -125,8 +125,8 @@
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                     {% else %}
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -161,8 +161,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -175,8 +175,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -189,8 +189,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -203,11 +203,11 @@
                     {% if not firstdata_remote_auto_settle %}
                     <option value="0">{{ text_settle_delayed }}</option>
                     <option value="1" selected="selected">{{ text_settle_auto }}</option>
-                    <?php } ?>
+                    {% endif %}
                     {% if firstdata_remote_auto_settle %}
                     <option value="0" selected="selected">{{ text_settle_delayed }}</option>
                     <option value="1">{{ text_settle_auto }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -221,7 +221,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -237,10 +237,10 @@
                       {% else %}
                       <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="{{ card.value }}" />
                       {{ card.text }}
-                      <?php } ?>
+                      {% endif %}
                     </label>
                   </div>
-                  <?php } ?>
+                  {% endfor %}
                 </div>
               </div>
             </div>

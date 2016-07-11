@@ -43,7 +43,7 @@
 			      <input type="text" name="laybuys_membership_id" value="{{ laybuys_membership_id }}" placeholder="{{ entry_membership_id }}" id="input-laybuys-membership-id" class="form-control" />
 				  {% if error_laybuys_membership_id %}
               	    <div class="text-danger">{{ error_laybuys_membership_id }}</div>
-                  <?php } ?>
+                  {% endif %}
 			    </div>
 			  </div>
 			  <div class="form-group required">
@@ -52,7 +52,7 @@
 			      <input type="text" name="laybuy_token" value="{{ laybuy_token }}" placeholder="{{ entry_token }}" id="input-laybuy-token" class="form-control" />
 				  {% if error_laybuy_token %}
               	    <div class="text-danger">{{ error_laybuy_token }}</div>
-                  <?php } ?>
+                  {% endif %}
 			    </div>
 			  </div>
 		      <div class="form-group">
@@ -67,7 +67,7 @@
 			      </select>
 				  {% if error_laybuy_min_deposit %}
               	    <div class="text-danger">{{ error_laybuy_min_deposit }}</div>
-                  <?php } ?>
+                  {% endif %}
 			    </div>
 			  </div>
 		      <div class="form-group">
@@ -104,7 +104,7 @@
 				      <div id="category{{ category.category_id }}"><i class="fa fa-minus-circle"></i> {{ category.name }}
 					    <input type="hidden" name="laybuy_category[]" value="{{ category.category_id }}" />
 					  </div>
-				    <?php } ?>
+				    {% endfor %}
 				  </div>
 			    </div>
 			  </div>
@@ -123,7 +123,7 @@
 				      <div id="customer-group{{ customer_group.customer_group_id }}"><i class="fa fa-minus-circle"></i> {{ customer_group.name }}
 					    <input type="hidden" name="laybuy_customer_group[]" value="{{ customer_group.customer_group_id }}" />
 					  </div>
-				    <?php } ?>
+				    {% endfor %}
 				  </div>
 			    </div>
 			  </div>
@@ -137,7 +137,7 @@
                     {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
 			      </select>
 			    </div>
 			  </div>
@@ -156,8 +156,8 @@
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      <?php } ?>
-                    <?php } ?>
+                      {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -170,8 +170,8 @@
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      <?php } ?>
-                    <?php } ?>
+                      {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -184,8 +184,8 @@
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                      <?php } ?>
-                    <?php } ?>
+                      {% endif %}
+                   {% endfor %}
                   </select>
                 </div>
               </div>
@@ -208,11 +208,11 @@
 				    <option value="0">{{ text_all_zones }}</option>
 				    {% for geo_zone in geo_zones %}
                     {% if geo_zone.geo_zone_id == laybuy_geo_zone %}
-				        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-					  {% else %}
-				        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-    			      <?php } ?>
-				    <?php } ?>
+				    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+					{% else %}
+				    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+    			    {% endif %}
+				    {% endfor %}
 				  </select>
 			    </div>
 			  </div>
@@ -226,7 +226,7 @@
                     {% else %}
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
 			      </select>
 			    </div>
 			  </div>
@@ -276,8 +276,8 @@
 					        <option value="{{ transaction_status.status_id }}" selected="selected">{{ transaction_status.status_name }}</option>
 					      {% else %}
 					        <option value="{{ transaction_status.status_id }}">{{ transaction_status.status_name }}</option>
-				   	      <?php } ?>
-					    <?php } ?>
+				   	      {% endif %}
+					    {% endfor %}
 	                  </select>
 	                </div>
 	              </div>
@@ -381,7 +381,7 @@
                       <td class="text-left">{{ report.date_added }}</td>
                       <td class="text-right"><a href="{{ report.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
                     </tr>
-                    <?php } ?>
+                    {% endfor %}
                     {% else %}
                     <tr>
                       <td class="text-center" colspan="12">{{ text_no_results }}</td>

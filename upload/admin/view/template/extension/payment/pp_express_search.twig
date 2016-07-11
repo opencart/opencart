@@ -111,7 +111,7 @@
                 <select name="currency_code" class="form-control">
                   {% for code in currency_codes %}
                   <option <?php if ($code == $default_currency) { echo 'selected'; } ?>>{{ code }}</option>
-                  <?php } ?>
+                  {% endfor %}
                 </select>
               </div>
             </div>

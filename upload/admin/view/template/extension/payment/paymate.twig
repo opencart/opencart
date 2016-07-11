@@ -31,7 +31,7 @@
               <input type="text" name="paymate_username" value="{{ paymate_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
               {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="paymate_password" value="{{ paymate_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -53,7 +53,7 @@
                 {% else %}
                 <input type="radio" name="paymate_test" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not paymate_test %}
@@ -62,7 +62,7 @@
                 {% else %}
                 <input type="radio" name="paymate_test" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -81,8 +81,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -96,8 +96,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -111,7 +111,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

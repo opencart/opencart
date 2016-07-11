@@ -425,37 +425,37 @@
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.shipping_company }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.shipping_method }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.tracking_number }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.tracking_uri }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_shipping_company }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_tracking_number }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 			<tr>
 			  {% for key, shipping_info in capture.shipping_info %}
 			  <td>{{ shipping_info.return_tracking_uri }}</td>
-			  <?php } ?>
+			  {% endfor %}
 			</tr>
 		  </tbody>
 		  <tfoot>
@@ -555,7 +555,7 @@
     </div>
   </div>
 </div>
-<?php } ?>
+{% endfor %}
 
 <script type="text/javascript"><!--
 $(document).off('click', '.button-command').on('click', '.button-command', function() {

@@ -70,7 +70,7 @@
               <div class="col-sm-10">
                 <select name="data[country]" class="form-control" id="country">
                   <?php foreach($setting['countries'] as $country){ ?>
-                    <?php echo '<option value="'.$country['code'].'"'.(isset($data['country']) && $data['country'] == $country['code'] ? ' selected' : '').'>'.$country['name'].'</option>'; ?>
+                    <?php echo '<option value="'.country.code.'"'.(isset($data['country']) && $data['country'] == country.code ? ' selected' : '').'>'.$country['name'].'</option>'; ?>
                   {% endfor %}
                 </select>
               </div>

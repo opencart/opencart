@@ -31,7 +31,7 @@
               <input type="text" name="pp_payflow_iframe_vendor" value="{{ pp_payflow_iframe_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vender" class="form-control"/>
               {% if error_vendor %}
               <div class="text-danger">{{ error_vendor }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="pp_payflow_iframe_user" value="{{ pp_payflow_iframe_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
               {% if error_user %}
               <div class="text-danger">{{ error_user }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -49,7 +49,7 @@
               <input type="text" name="pp_payflow_iframe_password" value="{{ pp_payflow_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -58,7 +58,7 @@
               <input type="text" name="pp_payflow_iframe_partner" value="{{ pp_payflow_iframe_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>
               {% if error_partner %}
               <div class="text-danger">{{ error_partner }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -71,7 +71,7 @@
                 {% else %}
                 <option value="1">{{ text_yes }}</option>
                 <option value="0" selected="selected">{{ text_no }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -85,7 +85,7 @@
                 {% else %}
                 <option value="sale" selected="selected">{{ text_sale }}</option>
                 <option value="authorization">{{ text_authorization }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -99,7 +99,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -113,7 +113,7 @@
                 {% else %}
                 <option value="iframe">{{ text_iframe }}</option>
                 <option value="redirect" selected="selected">{{ text_redirect }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -126,8 +126,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -153,8 +153,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -168,7 +168,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

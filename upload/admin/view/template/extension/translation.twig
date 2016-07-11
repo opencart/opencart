@@ -62,11 +62,11 @@
                   <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" style="width: 48px; height: 48px;" /></td>
                   <td class="text-left">{{ translation.name }}</td>
                   <td class="text-left"><div class="progress">
-                      <?php if ($translation['progress'] > 75) { ?>
+                      {% if translation.progress > 75 %}
                       <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      <?php } elseif ($translation['progress'] > 25 && $translation['progress'] < 75) { ?>
+                      {% elseif translation.progress > 25 and translation.progress < 75 %}
                       <div class="progress-bar progress-bar-info progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      <?php } elseif ($translation['progress'] < 25) { ?>
+                      {% elseif translation.progress < 25 %}
                       <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                       {% endif %}
                     </div></td>

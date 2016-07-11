@@ -13,7 +13,7 @@
       <input type="text" name="eway_capture_amount" placeholder="{{ eway_order.uncaptured }}" id="eway-capture-amount" class="" />
         <a class="button btn btn-primary" id="btn-capture">{{ btn_capture }}</a>
         <span class="btn btn-primary" id="img-loading-capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
-        <?php } ?>
+        {% endif %}
   </td>
   </tr>
   <tr>
@@ -24,7 +24,7 @@
         <input type="text" name="eway_refund_amount" placeholder="{{ eway_order.unrefunded }}" id="eway-refund-amount" class="" />
         <a class="button btn btn-primary" id="btn-refund">{{ btn_refund }}</a>
         <span class="btn btn-primary" id="img-loading-refund" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
-      <?php } ?>
+      {% endif %}
     </td>
   </tr>
   <tr>
@@ -47,7 +47,7 @@
               <td class="text-left">{{ transaction.type }}</td>
               <td class="text-left">{{ transaction.amount }}</td>
             </tr>
-          <?php } ?>
+          {% endfor %}
         </tbody>
       </table>
     </td>

@@ -24,9 +24,8 @@
           <input type="text" width="10" id="capture-amount" value="{{ globalpay_order.total }}"/>
           <a class="button btn btn-primary" id="button-capture">{{ button_capture }}</a>
           <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-        <?php } ?>
-      <?php } ?>
-    </td>
+      {% endif %}
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ text_void_status }}</td>
@@ -37,7 +36,7 @@
         <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp;
         <a class="button btn btn-primary" id="button-void">{{ button_void }}</a>
         <span class="btn btn-primary" id="loading-void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
+      {% endif %}
     </td>
   </tr>
   <tr>
@@ -52,8 +51,8 @@
           <input type="text" width="10" id="rebate-amount" />
           <a class="button btn btn-primary" id="button-rebate">{{ button_rebate }}</a>
           <span class="btn btn-primary" id="loading-rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-        <?php } ?>
-      <?php } ?>
+        {% endif %}
+      {% endif %}
     </td>
   </tr>
   <tr>
@@ -74,7 +73,7 @@
               <td class="text-left">{{ transaction.type }}</td>
               <td class="text-left">{{ transaction.amount }}</td>
             </tr>
-          <?php } ?>
+          {% endfor %}
         </tbody>
       </table>
     </td>
@@ -153,9 +152,9 @@
               $('#button-capture').show();
               $('#capture-amount').val('0.00');
 
-              <?php if ($auto_settle == 2) { ?>
+              {% if auto_settle == 2 %}
                 $('#capture-amount').show();
-              <?php } ?>
+              {% endif %}
             }
 
             if (data.msg != '') {

@@ -120,7 +120,7 @@
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <select name="pp_login_locale[{{ language.language_id }}]" class="form-control">
                   {% for locale in locales %}
-                  <?php if (isset($pp_login_locale[$language['language_id']]) && $pp_login_locale[$language['language_id']] == $locale['value']) { ?>
+                  {% if pp_login_locale[language.language_id] and pp_login_locale[language.language_id] == locale.value %}
                   <option value="{{ locale.value }}" selected="selected">{{ locale.text }}</option>
                   {% else %}
                   <option value="{{ locale.value }}">{{ locale.text }}</option>

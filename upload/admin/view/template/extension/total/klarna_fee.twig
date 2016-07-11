@@ -51,7 +51,7 @@
                   <select name="klarna_fee[{{ country.code }}][tax_class_id]" id="input-tax-class{{ country.code }}" class="form-control">
                     <option value="0">{{ text_none }}</option>
                     {% for tax_class in tax_classes %}
-                    <?php if (isset($klarna_fee[$country['code']]) && $klarna_fee[$country['code']]['tax_class_id'] == $tax_class['tax_class_id']) { ?>
+                    <?php if (isset($klarna_fee[country.code]) && $klarna_fee[country.code]['tax_class_id'] == $tax_class['tax_class_id']) { ?>
                     <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                     {% else %}
                     <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -64,7 +64,7 @@
                 <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="klarna_fee[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
-                    <?php if (isset($klarna_fee[$country['code']]) && $klarna_fee[$country['code']]['status']) { ?>
+                    <?php if (isset($klarna_fee[country.code]) && $klarna_fee[country.code]['status']) { ?>
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}

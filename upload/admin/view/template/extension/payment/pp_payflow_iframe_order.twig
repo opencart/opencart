@@ -6,7 +6,7 @@
       {{ text_complete }}
       {% else %}
       {{ text_incomplete }}
-      <?php } ?></td>
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ entry_capture }}</td>
@@ -18,7 +18,7 @@
       <br />
       <input type="text" name="capture-amount" value="0.00" />
       <a class="btn btn-primary" id="button-capture" onclick="capture()">{{ button_capture }}</a>
-      <?php } ?></td>
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ entry_void }}</td>
@@ -26,7 +26,7 @@
       -
       {% else %}
       <a class="btn btn-primary" id="button-void" onclick="doVoid()">{{ button_void }}</a>
-      <?php } ?></td>
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ entry_transactions }}</td>
@@ -49,9 +49,9 @@
             <td class="text-left">{{ transaction.time }}</td>
             <td class="text-left">{% for action in transaction.actions %}
               [<a href="{{ action.href }}">{{ action.title }}</a>]
-              <?php } ?></td>
+              {% endfor %}</td>
           </tr>
-          <?php } ?>
+          {% endfor %}
         </tbody>
       </table></td>
   </tr>

@@ -22,7 +22,8 @@
           <tr>
             <td>{{ text_product_lines }}</td>
             <td><table class="table table-striped table-bordered">
-                <?php $i = 0;  foreach($lines as  $k => $v) { ?>
+                <?php $i = 0; ?>  
+				<?php foreach($lines as  $k => $v) { ?>
                 <?php if ($i == 0) { ?>
                 <thead>
                   <tr>
@@ -45,7 +46,7 @@
                     ?>
                   </tr>
                 </thead>
-                <?php } ?>
+                {% endif %}
                 <tr>
                   <?php
                 foreach($v as $k => $row) {
@@ -66,406 +67,406 @@
                 } $i++;
                 ?>
                 </tr>
-                <?php } ?>
+                {% endfor %}
               </table></td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.GIFTMESSAGE %}
           <tr>
             <td>{{ text_gift_msg }}</td>
             <td>{{ transaction.GIFTMESSAGE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.GIFTRECEIPTENABLE %}
           <tr>
             <td>{{ text_gift_receipt }}</td>
             <td>{{ transaction.GIFTRECEIPTENABLE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.GIFTWRAPNAME %}
           <tr>
             <td>{{ text_gift_wrap_name }}</td>
             <td>{{ transaction.GIFTWRAPNAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.GIFTWRAPAMOUNT %}
           <tr>
             <td>{{ text_gift_wrap_amt }}</td>
             <td>{{ transaction.GIFTWRAPAMOUNT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.BUYERMARKETINGEMAIL %}
           <tr>
             <td>{{ text_buyer_email_market }}</td>
             <td>{{ transaction.BUYERMARKETINGEMAIL }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SURVEYQUESTION %}
           <tr>
             <td>{{ text_survey_question }}</td>
             <td>{{ transaction.SURVEYQUESTION }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SURVEYCHOICESELECTED %}
           <tr>
             <td>{{ text_survey_chosen }}</td>
             <td>{{ transaction.SURVEYCHOICESELECTED }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.RECEIVERBUSINESS %}
           <tr>
             <td>{{ text_receiver_business }}</td>
             <td>{{ transaction.RECEIVERBUSINESS }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.RECEIVEREMAIL %}
           <tr>
             <td>{{ text_receiver_email }}</td>
             <td>{{ transaction.RECEIVEREMAIL }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.RECEIVERID %}
           <tr>
             <td>{{ text_receiver_id }}</td>
             <td>{{ transaction.RECEIVERID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.EMAIL %}
           <tr>
             <td>{{ text_buyer_email }}</td>
             <td>{{ transaction.EMAIL }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PAYERID %}
           <tr>
             <td>{{ text_payer_id }}</td>
             <td>{{ transaction.PAYERID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PAYERSTATUS %}
           <tr>
             <td>{{ text_payer_status }}</td>
             <td>{{ transaction.PAYERSTATUS }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.COUNTRYCODE %}
           <tr>
             <td>{{ text_country_code }}</td>
             <td>{{ transaction.COUNTRYCODE }}</td>
           </tr>
-          <?php } ?>
+          <{% endif %}
           {% if transaction.PAYERBUSINESS %}
           <tr>
             <td>{{ text_payer_business }}</td>
             <td>{{ transaction.PAYERBUSINESS }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SALUTATION %}
           <tr>
             <td>{{ text_payer_salute }}</td>
             <td>{{ transaction.SALUTATION }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.FIRSTNAME %}
           <tr>
             <td>{{ text_payer_firstname }}</td>
             <td>{{ transaction.FIRSTNAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.MIDDLENAME %}
           <tr>
             <td>{{ text_payer_middlename }}</td>
             <td>{{ transaction.MIDDLENAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.LASTNAME %}
           <tr>
             <td>{{ text_payer_lastname }}</td>
             <td>{{ transaction.LASTNAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SUFFIX %}
           <tr>
             <td>{{ text_payer_suffix }}</td>
             <td>{{ transaction.SUFFIX }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.ADDRESSOWNER %}
           <tr>
             <td>{{ text_address_owner }}</td>
             <td>{{ transaction.ADDRESSOWNER }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.ADDRESSSTATUS %}
           <tr>
             <td>{{ text_address_status }}</td>
             <td>{{ transaction.ADDRESSSTATUS }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYNAME %}
           <tr>
             <td>{{ text_ship_sec_name }}</td>
             <td>{{ transaction.SHIPTOSECONDARYNAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTONAME %}
           <tr>
             <td>{{ text_ship_name }}</td>
             <td>{{ transaction.SHIPTONAME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSTREET %}
           <tr>
             <td>{{ text_ship_street1 }}</td>
             <td>{{ transaction.SHIPTOSTREET }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYADDRESSLINE1 %}
           <tr>
             <td>{{ text_ship_sec_add1 }}</td>
             <td>{{ transaction.SHIPTOSECONDARYADDRESSLINE1 }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSTREET2 %}
           <tr>
             <td>{{ text_ship_street2 }}</td>
             <td>{{ transaction.SHIPTOSTREET2 }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYADDRESSLINE2 %}
           <tr>
             <td>{{ text_ship_sec_add2 }}</td>
             <td>{{ transaction.SHIPTOSECONDARYADDRESSLINE2 }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOCITY %}
           <tr>
             <td>{{ text_ship_city }}</td>
             <td>{{ transaction.SHIPTOCITY }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYCITY %}
           <tr>
             <td>{{ text_ship_sec_city }}</td>
             <td>{{ transaction.SHIPTOSECONDARYCITY }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSTATE %}
           <tr>
             <td>{{ text_ship_state }}</td>
             <td>{{ transaction.SHIPTOSTATE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYSTATE %}
           <tr>
             <td>{{ text_ship_sec_state }}</td>
             <td>{{ transaction.SHIPTOSECONDARYSTATE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOZIP %}
           <tr>
             <td>{{ text_ship_zip }}</td>
             <td>{{ transaction.SHIPTOZIP }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYZIP %}
           <tr>
             <td>{{ text_ship_sec_zip }}</td>
             <td>{{ transaction.SHIPTOSECONDARYZIP }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOCOUNTRYCODE %}
           <tr>
             <td>{{ text_ship_country }}</td>
             <td>{{ transaction.SHIPTOCOUNTRYCODE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYCOUNTRYCODE %}
           <tr>
             <td>{{ text_ship_sec_country }}</td>
             <td>{{ transaction.SHIPTOSECONDARYCOUNTRYCODE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOPHONENUM %}
           <tr>
             <td>{{ text_ship_phone }}</td>
             <td>{{ transaction.SHIPTOPHONENUM }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SHIPTOSECONDARYPHONENUM %}
           <tr>
             <td>{{ text_ship_sec_phone }}</td>
             <td>{{ transaction.SHIPTOSECONDARYPHONENUM }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.TRANSACTIONID %}
           <tr>
             <td>{{ text_trans_id }}</td>
             <td>{{ transaction.TRANSACTIONID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PARENTTRANSACTIONID %}
           <tr>
             <td>{{ text_parent_trans_id }}</td>
             <td><a href="<?php echo $view_link.'&transaction_id='.$transaction['PARENTTRANSACTIONID']; ?>">{{ transaction.PARENTTRANSACTIONID }}</a></td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.RECEIPTID %}
           <tr>
             <td>{{ text_receipt_id }}</td>
             <td>{{ transaction.RECEIPTID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.TRANSACTIONTYPE %}
           <tr>
             <td>{{ text_trans_type }}</td>
             <td>{{ transaction.TRANSACTIONTYPE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PAYMENTTYPE %}
           <tr>
             <td>{{ text_payment_type }}</td>
             <td>{{ transaction.PAYMENTTYPE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.ORDERTIME %}
           <tr>
             <td>{{ text_order_time }}</td>
             <td>{{ transaction.ORDERTIME }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.AMT %}
           <tr>
             <td>{{ text_amount }}</td>
             <td>{{ transaction.AMT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.CURRENCYCODE %}
           <tr>
             <td>{{ text_currency_code }}</td>
             <td>{{ transaction.CURRENCYCODE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.FEEAMT %}
           <tr>
             <td>{{ text_fee_amount }}</td>
             <td>{{ transaction.FEEAMT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SETTLEAMT %}
           <tr>
             <td>{{ text_settle_amount }}</td>
             <td>{{ transaction.SETTLEAMT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.TAXAMT %}
           <tr>
             <td>{{ text_tax_amount }}</td>
             <td>{{ transaction.TAXAMT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.EXCHANGERATE %}
           <tr>
             <td>{{ text_exchange }}</td>
             <td>{{ transaction.EXCHANGERATE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PAYMENTSTATUS %}
           <tr>
             <td>{{ text_payment_status }}</td>
             <td>{{ transaction.PAYMENTSTATUS }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PENDINGREASON %}
           <tr>
             <td>{{ text_pending_reason }}</td>
             <td>{{ transaction.PENDINGREASON }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.REASONCODE %}
           <tr>
             <td>{{ text_reason_code }}</td>
             <td>{{ transaction.REASONCODE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PROTECTIONELIGIBILITY %}
           <tr>
             <td>{{ text_protect_elig }}</td>
             <td>{{ transaction.PROTECTIONELIGIBILITY }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PROTECTIONELIGIBILITYTYPE %}
           <tr>
             <td>{{ text_protect_elig_type }}</td>
             <td>{{ transaction.PROTECTIONELIGIBILITYTYPE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.STOREID %}
           <tr>
             <td>{{ text_store_id }}</td>
             <td>{{ transaction.STOREID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.TERMINALID %}
           <tr>
             <td>{{ text_terminal_id }}</td>
             <td>{{ transaction.TERMINALID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.INVNUM %}
           <tr>
             <td>{{ text_invoice_number }}</td>
             <td>{{ transaction.INVNUM }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.CUSTOM %}
           <tr>
             <td>{{ text_custom }}</td>
             <td>{{ transaction.CUSTOM }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.NOTE %}
           <tr>
             <td>{{ text_note }}</td>
             <td>{{ transaction.NOTE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.SALESTAX %}
           <tr>
             <td>{{ text_sales_tax }}</td>
             <td>{{ transaction.SALESTAX }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.BUYERID %}
           <tr>
             <td>{{ text_buyer_id }}</td>
             <td>{{ transaction.BUYERID }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.CLOSINGDATE %}
           <tr>
             <td>{{ text_close_date }}</td>
             <td>{{ transaction.CLOSINGDATE }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.MULTIITEM %}
           <tr>
             <td>{{ text_multi_item }}</td>
             <td>{{ transaction.MULTIITEM }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.AMOUNT %}
           <tr>
             <td>{{ text_sub_amt }}</td>
             <td>{{ transaction.AMOUNT }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
           {% if transaction.PERIOD %}
           <tr>
             <td>{{ text_sub_period }}</td>
             <td>{{ transaction.PERIOD }}</td>
           </tr>
-          <?php } ?>
+          {% endif %}
         </table>
       </div>
     </div>

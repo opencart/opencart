@@ -39,7 +39,7 @@
                   <input type="text" name="firstdata_merchant_id" value="{{ firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -48,7 +48,7 @@
                   <input type="password" name="firstdata_secret" value="{{ firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
                   {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -90,7 +90,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -131,8 +131,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -145,8 +145,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -159,8 +159,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -173,8 +173,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -201,7 +201,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -213,7 +213,7 @@
                   <input type="text" name="firstdata_live_url" value="{{ firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
                   {% if error_live_url %}
                   <div class="text-danger">{{ error_live_url }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -222,7 +222,7 @@
                   <input type="text" name="firstdata_demo_url" value="{{ firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>
                   {% if error_demo_url %}
                   <div class="text-danger">{{ error_demo_url }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">

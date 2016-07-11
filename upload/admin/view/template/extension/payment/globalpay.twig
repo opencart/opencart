@@ -194,8 +194,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -208,8 +208,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -222,8 +222,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -236,8 +236,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -250,8 +250,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -264,8 +264,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -291,7 +291,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -305,7 +305,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -317,7 +317,7 @@
                   <input type="text" name="globalpay_live_url" value="{{ globalpay_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control" />
                   {% if error_live_url %}
                   <div class="text-danger">{{ error_live_url }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -326,7 +326,7 @@
                   <input type="text" name="globalpay_demo_url" value="{{ globalpay_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control" />
                   {% if error_demo_url %}
                   <div class="text-danger">{{ error_demo_url }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">

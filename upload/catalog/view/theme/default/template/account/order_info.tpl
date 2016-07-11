@@ -138,7 +138,6 @@
         </tbody>
       </table>
       <?php } ?>
-      <?php if ($histories) { ?>
       <h3><?php echo $text_history; ?></h3>
       <table class="table table-bordered table-hover">
         <thead>
@@ -164,7 +163,6 @@
           <?php } ?>
         </tbody>
       </table>
-      <?php } ?>
       <div class="buttons clearfix">
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>

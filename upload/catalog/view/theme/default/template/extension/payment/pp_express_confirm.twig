@@ -40,7 +40,7 @@
       <form action="{{ action_shipping }}" method="post" id="shipping_form">
         <div class="panel-body"> {% for shipping_method in shipping_methods %}
           <p><strong>{{ shipping_method.title }}</strong></p>
-          {% if !$shipping_method.error %}
+          {% if not shipping_method.error %}
           {% for quote in shipping_method.quote %}
           <div class="radio">
             <label> {% if quote.code == code or not code %}

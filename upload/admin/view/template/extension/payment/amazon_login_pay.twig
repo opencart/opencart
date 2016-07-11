@@ -26,7 +26,7 @@
 		<input type="hidden" value="{{ allowed_login_domain }}" name="allowedLoginDomains[]">
 		{% for login_redirect_url in login_redirect_urls %}
 			<input type="hidden" value="{{ login_redirect_url }}" name="loginRedirectURLs[]">
-		<?php } ?>
+		{% endfor %}
 		<input type="hidden" value="{{ store_name }}" name="storeDescription">
 		<input type="hidden" value="{{ amazon_login_pay_language }}" name="language">
 		<input type="hidden" value="{{ ipn_url }}" name="sandboxMerchantIPNURL">
@@ -59,8 +59,8 @@
 						<option value="{{ payment_region_code }}" selected="selected">{{ payment_region_name }}</option>
 					{% else %}
 						<option value="{{ payment_region_code }}">{{ payment_region_name }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>
@@ -73,12 +73,12 @@
 						<option value="{{ language_code }}" selected="selected">{{ language_name }}</option>
 					{% else %}
 						<option value="{{ language_code }}">{{ language_name }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			  {% if error_curreny %}
 				  <div class="text-danger">{{ error_curreny }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -87,7 +87,7 @@
 			  <input type="text" name="amazon_login_pay_merchant_id" value="{{ amazon_login_pay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="amazon-login-pay-merchant-id" class="form-control" />
 			  {% if error_merchant_id %}
 				  <div class="text-danger">{{ error_merchant_id }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -96,7 +96,7 @@
 			  <input type="text" name="amazon_login_pay_access_key" value="{{ amazon_login_pay_access_key }}" placeholder="{{ entry_access_key }}" id="amazon-login-pay-access-key" class="form-control" />
 			  {% if error_access_key %}
 				  <div class="text-danger">{{ error_access_key }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -105,7 +105,7 @@
 			  <input type="text" name="amazon_login_pay_access_secret" value="{{ amazon_login_pay_access_secret }}" placeholder="{{ entry_access_secret }}" id="amazon-login-pay-access-secret" class="form-control" />
 			  {% if error_access_secret %}
 				  <div class="text-danger">{{ error_access_secret }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -114,7 +114,7 @@
 			  <input type="text" name="amazon_login_pay_client_id" value="{{ amazon_login_pay_client_id }}" placeholder="{{ entry_client_id }}" id="amazon-login-pay-client-id" class="form-control" />
 			  {% if error_client_id %}
 				  <div class="text-danger">{{ error_client_id }}</div>
-			  <?php } ?>
+			 {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group required">
@@ -123,7 +123,7 @@
 			  <input type="text" name="amazon_login_pay_client_secret" value="{{ amazon_login_pay_client_secret }}" placeholder="{{ entry_client_secret }}" id="amazon-login-pay-client-secret" class="form-control" />
 			  {% if error_client_secret %}
 				  <div class="text-danger">{{ error_client_secret }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -134,12 +134,12 @@
 					<option value="sandbox" selected="selected">{{ text_sandbox }}</option>
 				{% else %}
 					<option value="sandbox">{{ text_sandbox }}</option>
-				<?php } ?>
+				{% endif %}
 				{% if amazon_login_pay_test == 'live' %}
 					<option value="live" selected="selected">{{ text_live }}</option>
 				{% else %}
 					<option value="live">{{ text_live }}</option>
-				<?php } ?>
+				{% endif %}
 			  </select>
 			</div>
 		  </div>
@@ -151,12 +151,12 @@
 					<option value="payment" selected="selected">{{ text_payment }}</option>
 				{% else %}
 					<option value="payment">{{ text_payment }}</option>
-				<?php } ?>
+				{% endif %}
 				{% if amazon_login_pay_mode == 'auth' %}
 					<option value="auth" selected="selected">{{ text_auth }}</option>
 				{% else %}
 					<option value="auth">{{ text_auth }}</option>
-				<?php } ?>
+				{% endif %}
 			  </select>
 			</div>
 		  </div>
@@ -168,12 +168,12 @@
 					<option value="account" selected="selected">{{ text_account }}</option>
 				{% else %}
 					<option value="account">{{ text_account }}</option>
-				<?php } ?>
+				{% endif %}
 				{% if amazon_login_pay_checkout == 'guest' %}
 					<option value="guest" selected="selected">{{ text_guest }}</option>
 				{% else %}
 					<option value="guest">{{ text_guest }}</option>
-				<?php } ?>
+				{% endif %}
 			  </select>
 			</div>
 		  </div>
@@ -187,8 +187,8 @@
 						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					{% else %}
 						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>
@@ -201,8 +201,8 @@
 						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 					{% else %}
 						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>
@@ -226,7 +226,7 @@
 			  <input type="text" name="amazon_login_pay_minimum_total" value="{{ amazon_login_pay_minimum_total }}" placeholder="{{ text_minimum_total }}" id="amazon-login-pay-minimum-total" class="form-control" />
 			  {% if error_minimum_total %}
 				  <div class="text-danger">{{ error_minimum_total }}</div>
-			  <?php } ?>
+			  {% endif %}
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -237,14 +237,14 @@
 					<option value="0" selected="selected">{{ text_all_geo_zones }}</option>
 				{% else %}
 					<option value="0">{{ text_all_geo_zones }}</option>
-				<?php } ?>
+				{% endif %}
 				{% for geo_zone in geo_zones %}
 					<?php if ($amazon_login_pay_geo_zone == $geo_zone['geo_zone_id']) { ?>
 						<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 					{% else %}
 						<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>
@@ -258,7 +258,7 @@
 				{% else %}
 					<option value="1">{{ text_enabled }}</option>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
-				<?php } ?>
+				{% endif %}
 			  </select>
 			</div>
 		  </div>
@@ -276,12 +276,12 @@
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 				{% else %}
 					<option value="1">{{ text_enabled }}</option>
-				<?php } ?>
+				{% endif %}
 				<?php if ($amazon_login_pay_status == 0) { ?>
 					<option value="0" selected="selected">{{ text_disabled }}</option>
 				{% else %}
 					<option value="0">{{ text_disabled }}</option>
-				<?php } ?>
+				{% endif %}
 			  </select>
 			</div>
 		  </div>
@@ -295,8 +295,8 @@
 						<option value="{{ declined_code }}" selected="selected">{{ declined_code }}</option>
 					{% else %}
 						<option value="{{ declined_code }}">{{ declined_code }}</option>
-					<?php } ?>
-				<?php } ?>
+					{% endif %}
+				{% endfor %}
 			  </select>
 			</div>
 		  </div>

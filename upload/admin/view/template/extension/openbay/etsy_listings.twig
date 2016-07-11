@@ -13,10 +13,10 @@
   <div class="container-fluid">
     {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
-    <?php } ?>
+    {% endif %}
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_listings }}</h3>
@@ -97,28 +97,28 @@
                 <td class="text-center"><i class="fa fa-minus"></i></td>
                 <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
                 <td class="text-center">{{ text_status_nolink }}</td>
-                <?php } ?>
+                {% endif %}
                   </td>
                 <td class="text-right"><?php if (in_array('activate_item', $listing['actions'])) { ?>
                   <button data-toggle="tooltip" title="{{ text_activate }}" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-plus"></i></button>
-                  <?php } ?>
+                  {% endif %}
                   <?php if (in_array('add_link', $listing['actions'])) { ?>
                   <button data-toggle="tooltip" title="{{ text_add_link }}" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="fa fa-link"></i></button>
-                  <?php } ?>
+                  {% endif %}
                   <?php if (in_array('delete_link', $listing['actions'])) { ?>
                   <button data-toggle="tooltip" title="{{ text_delete_link }}" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="fa fa-unlink"></i></button>
-                  <?php } ?>
+                  {% endif %}
                   <?php if (in_array('end_item', $listing['actions'])) { ?>
                   <button data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
                   <button data-toggle="tooltip" title="{{ text_deactivate }}" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-ban"></i></button>
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="8">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>

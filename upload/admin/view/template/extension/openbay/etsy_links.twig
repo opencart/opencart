@@ -62,19 +62,19 @@
                   <td class="text-left"><a href="{{ item.link_edit }}" target="_BLANK">{{ item.name }}</a></td>
                   <td class="text-center"><a href="{{ item.link_etsy }}" target="_BLANK">{{ item.etsy_item_id }}</a></td>
                   <td class="text-center">{{ item.quantity }}</td>
-                  <td class="text-center"><?php if ($item['status'] == 1) { ?>
+                  <td class="text-center">{% if item.status == 1 %}
                     <i class="fa fa-check" style="color: green;"></i>
                     {% else %}
                     <i class="fa fa-times" style="color: red;"></i>
-                    <?php } ?></td>
+                    {% endif %}</td>
                   <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-{{ item.etsy_listing_id }}" onclick="deleteLink('{{ item.etsy_listing_id }}')"><i class="fa fa-times"></i></button></td>
                 </tr>
-              <?php } ?>
+              {% endfor %}
             {% else %}
             <tr>
               <td colspan="5" class="text-center">{{ text_no_links }}</td>
             </tr>
-            <?php } ?>
+            {% endif %}
           </tbody>
         </table>
         </div>

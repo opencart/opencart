@@ -211,7 +211,7 @@
                     {% endif %}
                   </td>
                   <td class="text-right">
-                    <?php if ($product['has_option'] == 0) { ?>
+                    {% if product.has_option == 0 %}
                       <?php if ($product['quantity'] <= 0) { ?>
                         <span class="label label-danger">{{ product.quantity }}</span>
                       <?php } elseif ($product['quantity'] <= 5) { ?>
@@ -227,7 +227,7 @@
                   <td class="text-left">{{ product.status }}</td>
                   <td>
                     {% for markets in product.markets %}
-                      <?php if ($market['status'] == 1) { ?>
+                      {% if market.status == 1 %}
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-success">{{ market.name }}</a>
                       <?php } elseif ($market['status'] == 2) { ?>
                         <a href="{{ market.href }}" data-toggle="tooltip" title="{{ market.text }}" class="btn btn-block btn-sm btn-danger">{{ market.name }}</a>

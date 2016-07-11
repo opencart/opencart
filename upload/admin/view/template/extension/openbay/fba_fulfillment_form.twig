@@ -2,8 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -12,8 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -91,18 +89,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for items in response.items %}
-                    <tr>
-                      <td class="text-left">{{ item.seller_sku }}</td>
-                      <td class="text-left">{{ item.seller_fulfillment_order_item_id }}</td>
-                      <td class="text-left">{{ item.quantity }}</td>
-                      <td class="text-left">{{ item.cancelled_quantity }}</td>
-                      <td class="text-left">{{ item.unfulfillable_quantity }}</td>
-                      <td class="text-left">{{ item.estimated_ship_date_time }}</td>
-                      <td class="text-left">{{ item.estimated_arrival_date_time }}</td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
+                
+                {% for items in response.items %}
+                <tr>
+                  <td class="text-left">{{ item.seller_sku }}</td>
+                  <td class="text-left">{{ item.seller_fulfillment_order_item_id }}</td>
+                  <td class="text-left">{{ item.quantity }}</td>
+                  <td class="text-left">{{ item.cancelled_quantity }}</td>
+                  <td class="text-left">{{ item.unfulfillable_quantity }}</td>
+                  <td class="text-left">{{ item.estimated_ship_date_time }}</td>
+                  <td class="text-left">{{ item.estimated_arrival_date_time }}</td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
               </table>
             </div>
           </fieldset>
@@ -111,4 +111,4 @@
     </div>
   </div>
 </div>
-{{ footer }}
+{{ footer }} 

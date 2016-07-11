@@ -40,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach($eway_order['transactions'] as $transaction) { ?>
+          {% for transaction in eway_order.transactions %}
             <tr>
               <td class="text-left">{{ transaction.transaction_id }}</td>
               <td class="text-left">{{ transaction.created }}</td>

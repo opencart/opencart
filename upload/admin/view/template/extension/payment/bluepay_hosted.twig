@@ -31,7 +31,7 @@
               <input type="text" name="bluepay_hosted_account_name" value="{{ bluepay_hosted_account_name }}" placeholder="{{ entry_account_name }}" id="input-account-name" class="form-control" />
               {% if error_account_name %}
               <div class="text-danger">{{ error_account_name }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="bluepay_hosted_account_id" value="{{ bluepay_hosted_account_id }}" placeholder="{{ entry_account_id }}" id="input-account-id" class="form-control" />
               {% if error_account_id %}
               <div class="text-danger">{{ error_account_id }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -49,7 +49,7 @@
               <input type="text" name="bluepay_hosted_secret_key" value="{{ bluepay_hosted_secret_key }}" placeholder="{{ entry_secret_key }}" id="bluepay_hosted_secret_key" class="form-control" />
               {% if error_secret_key %}
               <div class="text-danger">{{ error_secret_key }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -60,12 +60,12 @@
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if bluepay_hosted_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -77,12 +77,12 @@
                 <option value="SALE" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="SALE">{{ text_sale }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if bluepay_hosted_transaction == 'AUTH' %}
                 <option value="AUTH" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTH">{{ text_authenticate }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -96,7 +96,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -110,7 +110,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -129,8 +129,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -144,8 +144,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -159,7 +159,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -173,7 +173,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

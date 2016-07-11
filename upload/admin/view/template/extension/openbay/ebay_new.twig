@@ -375,14 +375,14 @@
                           {% else %}
                           <?php if ($i_valid === null) { $i_valid = $i; } ?>
                           <span class="label label-success" data-toggle="tooltip" data-original-title="{{ text_ebay_imagesize_ok }}">{{ img.width }} x {{ img.height }}</span>
-                          <?php } ?></td>
+                          {% endif %}</td>
                         <td class="text-center"><input type="checkbox" id="imgUrl{{ i }}" name="img_tpl[{{ i }}]" value="{{ img.image }}" class="check-template-image" /></td>
                         <td class="text-center"><input type="hidden" name="img[{{ i }}]" value="null" />
                           <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
                           <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad({{ i }});" id="image-checkbox-{{ i }}" name="img[{{ i }}]" value="{{ img.image }}" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
                           {% else %}
                           -
-                          <?php } ?></td>
+                          {% endif %}</td>
                         <td class="text-center"><?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
                           <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="{{ i }}" id="image-radio-{{ i }}" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
                           {% else %}
@@ -2402,22 +2402,22 @@
     changeInternationalType();
     updateUnit();
 
-    <?php if ($product['profiles_returns_def'] > 0) { ?>
+    {% if product.profiles_returns_def > 0 %}
         $('#profile-return-input').val({{ product.profiles_returns_def }});
         profileReturnUpdate();
     {% endif %}
 
-    <?php if ($product['profiles_generic_def'] > 0) { ?>
+    {% if product.profiles_generic_def > 0 %}
         $('#profile-generic-input').val({{ product.profiles_generic_def }});
         profileGenericUpdate();
     {% endif %}
 
-    <?php if ($product['profiles_shipping_def'] > 0) { ?>
+    {% if product.profiles_shipping_def > 0 %}
         $('#profile-shipping-input').val({{ product.profiles_shipping_def }});
         profileShippingUpdate();
     {% endif %}
 
-    <?php if ($product['profiles_theme_def'] > 0) { ?>
+    {% if product.profiles_theme_def > 0 %}
         $('#profile-theme-input').val({{ product.profiles_theme_def }});
         profileThemeUpdate();
     {% endif %}

@@ -99,7 +99,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -185,7 +185,7 @@
                     {% else %}
                     <option value="1">{{ text_create_date_1 }}</option>
                     <option value="0" selected="selected">{{ text_create_date_0 }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -241,7 +241,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -283,7 +283,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -316,7 +316,7 @@
                     <?php if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_paid_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -327,7 +327,7 @@
                     <?php if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_shipped_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -338,7 +338,7 @@
                     <?php if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_cancelled_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -349,7 +349,7 @@
                     <?php if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_partial_refund_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -360,7 +360,7 @@
                     <?php if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_refunded_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -388,8 +388,8 @@
                     {% if durations %}
                       {% for key => $duration in durations %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
-                      <?php } ?>
-                    <?php } ?>
+                      {% endfor %}
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -400,8 +400,8 @@
                     {% if measurement_types %}
                       {% for key => $type in measurement_types %}
                         <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
-                      <?php } ?>
-                    <?php } ?>
+                      {% endfor %}
+                    {% endif %}
                   </select>
                 </div>
               </div>

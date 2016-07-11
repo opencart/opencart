@@ -2,9 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+      <div class="pull-right"> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,8 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -38,8 +35,7 @@
                   <input type="text" name="filter_date" value="{{ filter_date }}" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" id="input-date" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span>
-                </div>
+                  </span> </div>
               </div>
             </div>
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -58,23 +54,25 @@
               </tr>
             </thead>
             <tbody>
-              {% if not fulfillments %}
-                <tr>
-                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                </tr>
-              {% else %}
-                {% for fulfillment in fulfillments %}
-                  <tr>
-                    <td class="text-left">{{ fulfillment.seller_fulfillment_order_id }}</td>
-                    <td class="text-left">{{ fulfillment.displayable_order_id }}</td>
-                    <td class="text-left">{{ fulfillment.displayable_order_date_time }}</td>
-                    <td class="text-left">{{ fulfillment.shipping_speed_category }}</td>
-                    <td class="text-left">{{ fulfillment.fulfillment_order_status }}</td>
-                    <td class="text-right"><a href="{{ fulfillment.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-                  </tr>
-                <?php } ?>
-              <?php } ?>
-            </tbody>
+            
+            {% if not fulfillments %}
+            <tr>
+              <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            </tr>
+            {% else %}
+            {% for fulfillment in fulfillments %}
+            <tr>
+              <td class="text-left">{{ fulfillment.seller_fulfillment_order_id }}</td>
+              <td class="text-left">{{ fulfillment.displayable_order_id }}</td>
+              <td class="text-left">{{ fulfillment.displayable_order_date_time }}</td>
+              <td class="text-left">{{ fulfillment.shipping_speed_category }}</td>
+              <td class="text-left">{{ fulfillment.fulfillment_order_status }}</td>
+              <td class="text-right"><a href="{{ fulfillment.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+              </tbody>
+            
           </table>
         </div>
       </div>
@@ -99,12 +97,12 @@ $('#button-filter').on('click', function() {
 
   location = url;
 });
-//--></script>
+//--></script> 
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
 });
-//--></script>
+//--></script> 
 {{ footer }}

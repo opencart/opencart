@@ -24,7 +24,7 @@
           <div id="page-listing">
             {% if error_warning %}
               <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-            <?php } ?>
+            {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
               <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
@@ -82,7 +82,7 @@
                       <select name="who_made" id="input-who-made" class="form-control">
                         {% for who_made in setting.who_made %}
                         <option value="{{ value }}">{{ value }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -92,7 +92,7 @@
                       <select name="when_made" id="input-when-made" class="form-control">
                         {% for when_made in setting.when_made %}
                         <option value="{{ value }}">{{ value }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -102,7 +102,7 @@
                       <select name="state" id="input-state" class="form-control">
                         {% for state in setting.state %}
                         <option value="{{ value }}">{{ value }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -149,7 +149,7 @@
                       <select name="recipient" id="input-recipient" class="form-control">
                         {% for recipient in setting.recipient %}
                         <option value="{{ value }}">{{ value }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -159,7 +159,7 @@
                       <select name="occasion" id="input-occasion" class="form-control">
                         {% for occasion in setting.occasion %}
                         <option value="{{ value }}">{{ value }}</option>
-                        <?php } ?>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
@@ -242,11 +242,11 @@
                         <td class="text-left"><a href="" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" /></a></td>
                       </tr>
                       {% set image_row = image_row + 1 %}
-                      <?php } ?>
+                      {% endfor %}
                       </tbody>
                     </table>
                   </div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
                 <div class="well">
                   <div class="row">
@@ -268,7 +268,7 @@
             </div>
           </div>
         </div>
-        <?php } ?>
+        {% endif %}
       </div>
     </div>
   </div>

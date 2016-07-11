@@ -16,11 +16,11 @@
   <tr>
     <td>{{ text_capture_status }}</td>
     <td id="capture_status">
-      <?php if ($globalpay_order['capture_status'] == 1) { ?>
+      {% if globalpay_order.capture_status == 1 %}
         <span class="capture-text">{{ text_yes }}</span>
       {% else %}
         <span class="capture-text">{{ text_no }}</span>&nbsp;&nbsp;
-        <?php if ($globalpay_order['void_status'] == 0) { ?>
+        {% if globalpay_order.void_status == 0 %}
           <input type="text" width="10" id="capture-amount" value="{{ globalpay_order.total }}"/>
           <a class="button btn btn-primary" id="button-capture">{{ button_capture }}</a>
           <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
@@ -31,7 +31,7 @@
   <tr>
     <td>{{ text_void_status }}</td>
     <td id="void_status">
-      <?php if ($globalpay_order['void_status'] == 1) { ?>
+      {% if globalpay_order.void_status == 1 %}
         <span class="void_text">{{ text_yes }}</span>
       {% else %}
         <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp;
@@ -43,7 +43,7 @@
   <tr>
     <td>{{ text_rebate_status }}</td>
     <td id="rebate_status">
-      <?php if ($globalpay_order['rebate_status'] == 1) { ?>
+      {% if globalpay_order.rebate_status == 1 %}
         <span class="rebate_text">{{ text_yes }}</span>
       {% else %}
         <span class="rebate_text">{{ text_no }}</span>&nbsp;&nbsp;
@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach($globalpay_order['transactions'] as $transaction) { ?>
+          {% for transaction in globalpay_order.transactions %}
             <tr>
               <td class="text-left">{{ transaction.date_added }}</td>
               <td class="text-left">{{ transaction.type }}</td>

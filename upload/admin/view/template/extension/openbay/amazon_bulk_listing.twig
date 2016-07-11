@@ -60,7 +60,7 @@
               <td class="text-left" id="result-{{ product.product_id }}">
 			    <?php if ($product['matches'] !== null) { ?>
                 <?php $checked = false; ?>
-                <?php if ($product['matches'] > 0) { ?>
+                {% if product.matches == 1 %}
                 <input class="amazon-listing" type="radio" name="products[{{ product.product_id }}]" value=""/>
                 {{ text_dont_list }}<br/>
                 {% for search_results in product.search_results %}

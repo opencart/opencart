@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -31,8 +30,7 @@
               <input type="text" name="cheque_payable" value="{{ cheque_payable }}" placeholder="{{ entry_payable }}" id="input-payable" class="form-control" />
               {% if error_payable %}
               <div class="text-danger">{{ error_payable }}</div>
-              {% endif %}
-            </div>
+              {% endif %} </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
@@ -44,13 +42,19 @@
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="cheque_order_status_id" id="input-order-status" class="form-control">
+                
                 {% for order_status in order_statuses %}
                 {% if order_status.order_status_id == cheque_order_status_id %}
+                
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                
                 {% else %}
+                
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                
                 {% endif %}
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -59,13 +63,19 @@
             <div class="col-sm-10">
               <select name="cheque_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
+                
                 {% for geo_zone in geo_zones %}
                 {% if geo_zone.geo_zone_id == cheque_geo_zone_id %}
+                
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                
                 {% else %}
+                
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                
                 {% endif %}
                 {% endfor %}
+              
               </select>
             </div>
           </div>
@@ -73,13 +83,19 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="cheque_status" id="input-status" class="form-control">
+                
                 {% if cheque_status %}
+                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
+                
                 {% else %}
+                
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
+                
                 {% endif %}
+              
               </select>
             </div>
           </div>

@@ -15,11 +15,11 @@
   </tr>
   <tr>
     <td>{{ text_release_status }}</td>
-    <td id="release_status"><?php if ($bluepay_hosted_order['release_status'] == 1) { ?>
+    <td id="release_status">{% if bluepay_hosted_order.release_status == 1 %}
       <span class="release_text">{{ text_yes }}</span>
       {% else %}
       <span class="release_text">{{ text_no }}</span>&nbsp;&nbsp;
-      <?php if ($bluepay_hosted_order['void_status'] == 0) { ?>
+      {% if bluepay_hosted_order.void_status == 0 %}
       <input type="text" width="10" id="release_amount" value="{{ bluepay_hosted_order.total }}"/>
       <a class="button btn btn-primary" id="button-release">{{ button_release }}</a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       {% endif %}
@@ -27,7 +27,7 @@
   </tr>
   <tr>
     <td>{{ text_void_status }}</td>
-    <td id="void_status"><?php if ($bluepay_hosted_order['void_status'] == 1) { ?>
+    <td id="void_status">{% if bluepay_hosted_order.void_status == 1 %}
       <span class="void_text">{{ text_yes }}</span>
       <?php } elseif ($bluepay_hosted_order['void_status'] == 0 && $bluepay_hosted_order['release_status'] == 1 && $bluepay_hosted_order['rebate_status'] != 1) { ?>
       <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
@@ -37,7 +37,7 @@
   </tr>
   <tr>
     <td>{{ text_rebate_status }}</td>
-    <td id="rebate_status"><?php if ($bluepay_hosted_order['rebate_status'] == 1) { ?>
+    <td id="rebate_status">{% if bluepay_hosted_order.rebate_status == 1 %}
       <span class="rebate_text">{{ text_yes }}</span>
       {% else %}
       <span class="rebate_text">{{ text_no }}</span>&nbsp;&nbsp;

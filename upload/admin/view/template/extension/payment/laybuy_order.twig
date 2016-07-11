@@ -5,7 +5,7 @@
  <li class="active"><a href="#tab-reference" data-toggle="tab">{{ tab_reference }}</a></li>
  <li class=""><a href="#tab-customer" data-toggle="tab">{{ tab_customer }}</a></li>
  <li class=""><a href="#tab-payment-plan" data-toggle="tab">{{ tab_payment }}</a></li>
- <?php if ($transaction['status_id'] == 1) { ?>
+ {% if transaction.status_id == 1 %}
  <li class=""><a href="#tab-modify" data-toggle="tab">{{ tab_modify }}</a></li>
  <?php } ?>
 </ul>
@@ -167,7 +167,7 @@
 	  </div>
 	</div>
   </div>
-  <?php if ($transaction['status_id'] == 1) { ?>
+  {% if transaction.status_id == 1 %}
   <div class="tab-pane" id="tab-modify">
 	<div class="form-group">
 	  <label class="col-sm-2 control-label">{{ text_cancel_plan }}</label>

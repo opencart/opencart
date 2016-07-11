@@ -47,12 +47,12 @@
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
                   {% for recurring_status in recurring_statuses %}
-                  <?php if ($filter_status == $recurring_status['value']) { ?>
+                  {% if (filter_status == recurring_status.value %}
                   <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
                   {% else %}
                   <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
                   {% endif %}
-                  <?php } ?>
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -126,7 +126,7 @@
                       <a href="{{ recurring.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
                     </td>
                   </tr>
-                  <?php } ?>
+                  {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="7">{{ text_no_results }}</td>

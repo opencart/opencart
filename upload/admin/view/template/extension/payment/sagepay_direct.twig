@@ -31,7 +31,7 @@
               <input type="text" name="sagepay_direct_vendor" value="{{ sagepay_direct_vendor }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control" />
               {% if error_vendor %}
               <div class="text-danger">{{ error_vendor }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -42,17 +42,17 @@
                 <option value="sim" selected="selected">{{ text_sim }}</option>
                 {% else %}
                 <option value="sim">{{ text_sim }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if sagepay_direct_test == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if sagepay_direct_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -64,17 +64,17 @@
                 <option value="PAYMENT" selected="selected">{{ text_payment }}</option>
                 {% else %}
                 <option value="PAYMENT">{{ text_payment }}</option>
-                <?php } ?>
+                {% endif %}
                 {% if sagepay_direct_transaction == 'DEFERRED' %}
                 <option value="DEFERRED" selected="selected">{{ text_defered }}</option>
                 {% else %}
                 <option value="DEFERRED">{{ text_defered }}</option>
-                <?php } ?>
+                {% endif %}
 				{% if sagepay_direct_transaction == 'AUTHENTICATE' %}
                 <option value="AUTHENTICATE" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTHENTICATE">{{ text_authenticate }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -94,7 +94,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -107,8 +107,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -122,8 +122,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -137,7 +137,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -151,7 +151,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -180,7 +180,7 @@
             <label class="col-sm-2 control-label">{{ entry_last_cron_job_run }}</label>
             <div class="col-sm-10">{{ sagepay_direct_last_cron_job_run }}</div>
           </div>
-          <?php } ?>
+          {% endif %}
         </form>
       </div>
     </div>

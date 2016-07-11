@@ -78,12 +78,12 @@
                 <td class="text-left">{{ search.ip }}</td>
                 <td class="text-left">{{ search.date_added }}</td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>

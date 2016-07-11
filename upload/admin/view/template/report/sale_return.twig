@@ -45,8 +45,8 @@
                   <option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
                   {% else %}
                   <option value="{{ group.value }}">{{ group.text }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
               <div class="form-group">
@@ -58,8 +58,8 @@
                   <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                   {% else %}
                   <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -83,12 +83,12 @@
                 <td class="text-left">{{ return.date_end }}</td>
                 <td class="text-right">{{ return.returns }}</td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="3">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>

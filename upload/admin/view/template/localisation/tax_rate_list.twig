@@ -85,7 +85,7 @@
                   <td class="text-left">{{ tax_rate.date_modified }}</td>
                   <td class="text-right"><a href="{{ tax_rate.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="9">{{ text_no_results }}</td>

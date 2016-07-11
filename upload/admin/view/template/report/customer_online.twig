@@ -62,7 +62,7 @@
                   <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
                   {% endif %}</td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>

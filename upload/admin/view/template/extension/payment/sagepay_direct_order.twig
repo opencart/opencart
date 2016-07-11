@@ -22,8 +22,8 @@
       <?php if ($sagepay_direct_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="release_amount" value="{{ sagepay_direct_order.total }}"/>
       <a class="button btn btn-primary" id="button-release">{{ button_release }}</a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
-      <?php } ?></td>
+      {% endif %}
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ text_void_status }}</td>
@@ -33,7 +33,7 @@
       <span class="void_text">{{ text_no }}</span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       {% else %}
       <span class="void_text">{{ text_no }}</span>
-      <?php } ?></td>
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ text_rebate_status }}</td>
@@ -44,8 +44,8 @@
       <?php if ($sagepay_direct_order['total_released'] > 0 && $sagepay_direct_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="rebate_amount" />
       <a class="button btn btn-primary" id="button-rebate">{{ button_rebate }}</a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-      <?php } ?>
-      <?php } ?></td>
+      {% endif %}
+      {% endif %}</td>
   </tr>
   <tr>
     <td>{{ text_transactions }}:</td>
@@ -142,9 +142,9 @@
 							$('#button-release').show();
 							$('#release_amount').val(0.00);
 
-<?php if ($auto_settle == 2) { ?>
+							{% if auto_settle == 2 %}
 								$('#release_amount').show();
-<?php } ?>
+							{% endif %}
 						}
 
 						if (data.msg != '') {

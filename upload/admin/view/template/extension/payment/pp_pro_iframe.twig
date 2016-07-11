@@ -35,7 +35,7 @@
                 <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_user" value="{{ pp_pro_iframe_user }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
-                  <?php if (isset($error['username'])) { ?>
+                  {% if error.username %}
                   <div class="text-danger">{{ error.username }}</div>
                   <?php } ?>
                 </div>
@@ -44,7 +44,7 @@
                 <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_password" value="{{ pp_pro_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
-                  <?php if (isset($error['password'])) { ?>
+                  {% if error.password %}
                   <div class="text-danger">{{ error.password }}</div>
                   <?php } ?>
                 </div>
@@ -53,7 +53,7 @@
                 <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_sig" value="{{ pp_pro_iframe_sig }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
-                  <?php if (isset($error['signature'])) { ?>
+                  {% if error.signature %}
                   <div class="text-danger">{{ error.signature }}</div>
                   <?php } ?>
                 </div>

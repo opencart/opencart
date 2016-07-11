@@ -27,7 +27,7 @@
                 <option value="0">{{ text_default }}</option>
                 {% for store in stores %}
                 <option value="{{ store.store_id }}">{{ store.name }}</option>
-                <?php } ?>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <select name="customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
                 <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                <?php } ?>
+                {% endfor %}
               </select>
             </div>
           </div>

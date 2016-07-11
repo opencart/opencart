@@ -73,7 +73,7 @@
                   <td class="text-left">{{ currency.date_modified }}</td>
                   <td class="text-right"><a href="{{ currency.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="6">{{ text_no_results }}</td>

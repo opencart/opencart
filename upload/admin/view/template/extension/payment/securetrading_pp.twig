@@ -31,7 +31,7 @@
               <input type="text" name="securetrading_pp_site_reference" value="{{ securetrading_pp_site_reference }}" placeholder="{{ entry_site_reference }}" id="securetrading_pp_site_reference" class="form-control" />
               {% if error_site_reference %}
               <div class="text-danger">{{ error_site_reference }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -50,16 +50,16 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_site_security_status">{{ entry_site_security_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_site_security_status" id="securetrading_pp_status" class="form-control">
-                <?php if ($securetrading_pp_site_security_status == 1) { ?>
+                {% if securetrading_pp_site_security_status == 1 %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
-                <?php } ?>
-                <?php if ($securetrading_pp_site_security_status == 0) { ?>
+                {% endif %}
+                {% if securetrading_pp_site_security_status == 0 %}
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% else %}
                 <option value="0">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -75,7 +75,7 @@
               <input type="text" name="securetrading_pp_notification_password" value="{{ securetrading_pp_notification_password }}" placeholder="{{ entry_notification_password }}" id="securetrading_pp_site_security_password" class="form-control" />
               {% if error_notification_password %}
               <div class="text-danger">{{ error_notification_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -93,20 +93,20 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="securetrading_pp_cards_accepted">{{ entry_cards_accepted }}</label>
             <div class="col-sm-10">
-              {% for key => $value in cards %}
+              {% for key, value in cards %}
               <div class="checkbox">
                 <label>
-                  {% for key in securetrading_pp_cards_accepted %}
+                  {% if key in securetrading_pp_cards_accepted %}
                   <input type="checkbox" checked="checked" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
                   {% else %}
                   <input type="checkbox" name="securetrading_pp_cards_accepted[]" value="{{ key }}" />
-                  <?php } ?>
+                  {% endif %}
                   {{ value }} </label>
               </div>
-              <?php } ?>
+              {% endfor %}
               {% if error_cards_accepted %}
               <div class="text-danger">{{ error_cards_accepted }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -118,8 +118,8 @@
                 <option value="{{ key }}" selected="selected">{{ value }}</option>
                 {% else %}
                 <option value="{{ key }}">{{ value }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -127,18 +127,18 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_settle_due_date">{{ entry_settle_due_date }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_settle_due_date" id="securetrading_pp_settle_due_date" class="form-control">
-                <?php if ($securetrading_pp_settle_due_date == 0) { ?>
+                {% if securetrading_pp_settle_due_date == 0 %}
                 <option value="0" selected="selected">{{ text_process_immediately }}</option>
                 {% else %}
                 <option value="0">{{ text_process_immediately }}</option>
-                <?php } ?>
+                {% endif %}
                 <?php for ($i = 1; $i < 8; $i++) { ?>
                 {% if i == securetrading_pp_settle_due_date %}
                 <option value="{{ i }}" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
                 {% else %}
                 <option value="{{ i }}"><?php echo sprintf($text_wait_x_days, $i); ?></option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -157,8 +157,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -171,8 +171,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -185,8 +185,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -199,8 +199,8 @@
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -212,14 +212,14 @@
                 <option value="0" selected="selected">{{ text_all_geo_zones }}</option>
                 {% else %}
                 <option value="0">{{ text_all_geo_zones }}</option>
-                <?php } ?>
+                {% endif %}
                 {% for geo_zone in geo_zones %}
-                <?php if ($securetrading_pp_geo_zone_id == $geo_zone['geo_zone_id']) { ?>
+                {% if securetrading_pp_geo_zone_id == geo_zone.geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -227,16 +227,16 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_status" id="securetrading_pp_status" class="form-control">
-                <?php if ($securetrading_pp_status == 1) { ?>
+                {% if securetrading_pp_status == 1 %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
-                <?php } ?>
-                <?php if ($securetrading_pp_status == 0) { ?>
+                {% endif %}
+                {% if securetrading_pp_status == 0 %}
                 <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% else %}
                 <option value="0">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

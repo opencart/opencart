@@ -29,7 +29,7 @@
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if return_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
-            <?php } ?>
+            {% endif %}
           </ul>
           <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
@@ -41,7 +41,7 @@
                   <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
                   {% if error_order_id %}
                   <div class="text-danger">{{ error_order_id }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -67,7 +67,7 @@
                   <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
                   {% if error_firstname %}
                   <div class="text-danger">{{ error_firstname }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -76,7 +76,7 @@
                   <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
                   {% if error_lastname %}
                   <div class="text-danger">{{ error_lastname }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -134,8 +134,8 @@
                     <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
                     {% else %}
                     <option value="{{ return_reason.return_reason_id }}">{{ return_reason.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -149,7 +149,7 @@
                     {% else %}
                     <option value="1">{{ text_opened }}</option>
                     <option value="0" selected="selected">{{ text_unopened }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>

@@ -50,7 +50,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -76,12 +76,12 @@
                     <option value="0" selected="selected">{{ text_authorization }}</option>
                     {% else %}
                     <option value="0">{{ text_authorization }}</option>
-                    <?php } ?>
+                    {% endif %}
                     {% if pp_standard_transaction %}
                     <option value="1" selected="selected">{{ text_sale }}</option>
                     {% else %}
                     <option value="1">{{ text_sale }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -101,8 +101,8 @@
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                     {% else %}
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -116,7 +116,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -137,8 +137,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -151,8 +151,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -165,8 +165,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -179,8 +179,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -193,8 +193,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -207,8 +207,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -221,8 +221,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -235,8 +235,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -249,8 +249,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -263,8 +263,8 @@
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>

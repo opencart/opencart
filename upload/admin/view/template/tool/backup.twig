@@ -24,7 +24,7 @@
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
       <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
@@ -49,7 +49,7 @@
                     <input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" />
                     {{ table }}</label>
                 </div>
-                <?php } ?>
+                {% endfor %}
               </div>
               <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a></div>
           </div>

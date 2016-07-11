@@ -31,7 +31,7 @@
               <input type="text" name="auspost_postcode" value="{{ auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4" />
               {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -44,7 +44,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -58,7 +58,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -72,7 +72,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>
@@ -85,8 +85,8 @@
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -100,8 +100,8 @@
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -115,8 +115,8 @@
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -130,7 +130,7 @@
                 {% else %}
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                <?php } ?>
+                {% endif %}
               </select>
             </div>
           </div>

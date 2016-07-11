@@ -88,7 +88,7 @@
                   <td class="text-right">{{ upload.date_added }}</td>
                   <td class="text-right"><a href="{{ upload.download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fa fa-download"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="5">{{ text_no_results }}</td>

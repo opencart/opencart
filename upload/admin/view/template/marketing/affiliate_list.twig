@@ -51,7 +51,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
+                  {% if not filter_status %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -66,8 +66,8 @@
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   {% else %}
                   <option value="1">{{ text_yes }}</option>
-                 {% endif %}
-                  <?php if (!$filter_approved && !is_null($filter_approved)) { ?>
+                  {% endif %}
+                  {% if not filter_approved %}
                   <option value="0" selected="selected">{{ text_no }}</option>
                   {% else %}
                   <option value="0">{{ text_no }}</option>
@@ -146,7 +146,7 @@
                     {% endif %}                   
                     <a href="{{ affiliate.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="7">{{ text_no_results }}</td>

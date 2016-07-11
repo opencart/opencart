@@ -46,7 +46,7 @@
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control" />
                   {% if error_url %}
                   <div class="text-danger">{{ error_url }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -61,7 +61,7 @@
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control" />
                   {% if error_meta_title %}
                   <div class="text-danger">{{ error_meta_title }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -85,8 +85,8 @@
                     <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
                     {% else %}
                     <option value="{{ theme.value }}">{{ theme.text }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                   <br />
                   <img src="" alt="" id="theme" class="img-thumbnail" /></div>
@@ -100,8 +100,8 @@
                     <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
                     {% else %}
                     <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -113,7 +113,7 @@
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
                   {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -289,12 +289,12 @@
                       <option value="shipping" selected="selected">{{ text_shipping }}</option>
                       {% else %}
                       <option value="shipping">{{ text_shipping }}</option>
-                      <?php } ?>
+                      {% endif %}
                       {% if config_tax_default == 'payment' %}
                       <option value="payment" selected="selected">{{ text_payment }}</option>
                       {% else %}
                       <option value="payment">{{ text_payment }}</option>
-                      <?php } ?>
+                      {% endif %}
                     </select>
                   </div>
                 </div>
@@ -329,7 +329,7 @@
                       {% else %}
                       <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -348,7 +348,7 @@
                         {% endif %}
                       </label>
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                     {% if error_customer_group_display %}
                     <div class="text-danger">{{ error_customer_group_display }}</div>
                     {% endif %}
@@ -388,7 +388,7 @@
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -452,7 +452,7 @@
                       {% else %}
                       <option value="{{ information.information_id }}">{{ information.title }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -466,7 +466,7 @@
                       {% else %}
                       <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>

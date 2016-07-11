@@ -29,7 +29,7 @@
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             {% if coupon_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
-            <?php } ?>
+            {% endif %}
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -39,7 +39,7 @@
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
                   {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group required">
@@ -48,7 +48,7 @@
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
                   {% if error_code %}
                   <div class="text-danger">{{ error_code }}</div>
-                  <?php } ?>
+                  {% endif %}
                 </div>
               </div>
               <div class="form-group">
@@ -59,12 +59,12 @@
                     <option value="P" selected="selected">{{ text_percent }}</option>
                     {% else %}
                     <option value="P">{{ text_percent }}</option>
-                    <?php } ?>
+                    {% endif %}
                     {% if type == 'F' %}
                     <option value="F" selected="selected">{{ text_amount }}</option>
                     {% else %}
                     <option value="F">{{ text_amount }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -90,7 +90,7 @@
                     {% else %}
                     <input type="radio" name="logged" value="1" />
                     {{ text_yes }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                   <label class="radio-inline">
                     {% if not logged %}
@@ -99,7 +99,7 @@
                     {% else %}
                     <input type="radio" name="logged" value="0" />
                     {{ text_no }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
               </div>
@@ -113,7 +113,7 @@
                     {% else %}
                     <input type="radio" name="shipping" value="1" />
                     {{ text_yes }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                   <label class="radio-inline">
                     {% if not shipping %}
@@ -122,7 +122,7 @@
                     {% else %}
                     <input type="radio" name="shipping" value="0" />
                     {{ text_no }}
-                    <?php } ?>
+                    {% endif %}
                   </label>
                 </div>
               </div>
@@ -135,7 +135,7 @@
                     <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
                       <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
                     </div>
-                    <?php } ?>
+                   {% endfor %}
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@
                     <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
                       <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -194,7 +194,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -203,7 +203,7 @@
             <div class="tab-pane" id="tab-history">
               <div id="history"></div>
             </div>
-            <?php } ?>
+            {% endif %}
           </div>
         </form>
       </div>
@@ -267,7 +267,7 @@ $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script>
-  {% if coupon_id %}
+{% if coupon_id %}
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -277,7 +277,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 
 $('#history').load('index.php?route=marketing/coupon/history&token={{ token }}&coupon_id={{ coupon_id }}');
 //--></script>
-  <?php } ?>
+{% endif %}
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

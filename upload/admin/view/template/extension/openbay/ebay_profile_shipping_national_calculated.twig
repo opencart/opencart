@@ -10,7 +10,7 @@
       <select name="data[national][calculated][service_id][{{ key }}]" class="form-control">
         <?php foreach($data['national']['calculated']['types']['service'] as $service_key => $service_type) { ?>
         <option value="{{ service_key }}" <?php if ($service_key == $service) { echo ' selected'; } ?>>{{ service_type.description }}</option>
-        <?php } ?>
+        {% endfor %}
       </select>
     </div>
   </div>
@@ -20,5 +20,5 @@
     </div>
   </div>
 </div>
-<?php } ?>
-<?php } ?>
+{% endfor %}
+{% endif %}

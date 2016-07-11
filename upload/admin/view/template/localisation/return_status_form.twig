@@ -34,8 +34,8 @@
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
-              <?php } ?>
-              <?php } ?>
+              {% endif %}
+              {% endfor %}
             </div>
           </div>
         </form>

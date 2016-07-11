@@ -15,7 +15,7 @@
         <td class="text-left">{{ transaction.description }}</td>
         <td class="text-right">{{ transaction.amount }}</td>
       </tr>
-      <?php } ?>
+      {% endfor %}
       <tr>
         <td>&nbsp;</td>
         <td class="text-right"><b>{{ text_balance }}</b></td>
@@ -25,7 +25,7 @@
       <tr>
         <td class="text-center" colspan="3">{{ text_no_results }}</td>
       </tr>
-      <?php } ?>
+      {% endif %}
     </tbody>
   </table>
 </div>

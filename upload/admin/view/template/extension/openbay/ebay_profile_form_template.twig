@@ -61,7 +61,7 @@
                   <option value="None">None</option>
                   {% for template in templates %}
                   <?php echo '<option value="'.$template['template_id'].'"'.(($template['template_id'] == $data['ebay_template_id'])?' selected':'').'>'.$template['name'].'</option>'; ?>
-                  <?php } ?>
+                  {% endfor %}
                 </select>
                 <span class="help-block">{{ text_template_choose_help }}</span>
               </div>

@@ -28,7 +28,7 @@
           <ul class="nav nav-tabs" id="country">
             {% for country in countries %}
             <li><a href="#tab-{{ country.code }}" data-toggle="tab">{{ country.name }}</a></li>
-            <?php } ?>
+            {% endfor %}
           </ul>
           <div class="tab-content">
             {% for country in countries %}
@@ -55,8 +55,8 @@
                     <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                     {% else %}
                     <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -70,7 +70,7 @@
                     {% else %}
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -81,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <?php } ?>
+            {% endfor %}
           </div>
         </form>
       </div>

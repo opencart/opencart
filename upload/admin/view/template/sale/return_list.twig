@@ -65,8 +65,8 @@
                   <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
                   {% else %}
                   <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -159,7 +159,7 @@
                   <td class="text-left">{{ return.date_modified }}</td>
                   <td class="text-right"><a href="{{ return.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
-                <?php } ?>
+                {% endfor %}
                 {% else %}
                 <tr>
                   <td class="text-center" colspan="10">{{ text_no_results }}</td>

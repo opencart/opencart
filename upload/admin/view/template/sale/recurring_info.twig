@@ -34,7 +34,7 @@
                   <a href="{{ recurring }}">{{ recurring_name }}</a>
                   {% else %}
                   {{ recurring_name }}
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ text_recurring_description }}</td>
@@ -69,7 +69,7 @@
                   <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
                   {% else %}
                   {{ firstname }} {{ lastname }}
-                  <?php } ?></td>
+                  {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ text_email }}</td>
@@ -130,12 +130,12 @@
               <td class="text-right">{{ transaction.amount }}</td>
               <td class="text-left">{{ transaction.type }}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
             {% else %}
             <tr>
               <td class="text-center" colspan="7">{{ text_no_results }}</td>
             </tr>
-            <?php } ?>
+            {% endif %}
           </tbody>
         </table>
       </div>

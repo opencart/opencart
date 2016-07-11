@@ -50,8 +50,8 @@
                   <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                   {% else %}
                   <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  <?php } ?>
-                  <?php } ?>
+                  {% endif %}
+                  {% endfor %}
                 </select>
               </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
@@ -85,12 +85,12 @@
                 <td class="text-right">{{ customer.total }}</td>
                 <td class="text-right"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
-              <?php } ?>
+              {% endfor %}
               {% else %}
               <tr>
                 <td class="text-center" colspan="8">{{ text_no_results }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>

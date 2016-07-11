@@ -30,18 +30,18 @@
             <b>{{ text_telephone }}</b> {{ order.store_telephone }}<br />
             {% if order.store_fax %}
             <b>{{ text_fax }}</b> {{ order.store_fax }}<br />
-            <?php } ?>
+            {% endif %}
             <b>{{ text_email }}</b> {{ order.store_email }}<br />
             <b>{{ text_website }}</b> <a href="{{ order.store_url }}">{{ order.store_url }}</a></td>
           <td style="width: 50%;"><b>{{ text_date_added }}</b> {{ order.date_added }}<br />
             {% if order.invoice_no %}
             <b>{{ text_invoice_no }}</b> {{ order.invoice_no }}<br />
-            <?php } ?>
+            {% endif %}
             <b>{{ text_order_id }}</b> {{ order.order_id }}<br />
             <b>{{ text_payment_method }}</b> {{ order.payment_method }}<br />
             {% if order.shipping_method %}
             <b>{{ text_shipping_method }}</b> {{ order.shipping_method }}<br />
-            <?php } ?></td>
+            {% endif %}</td>
         </tr>
       </tbody>
     </table>
@@ -80,13 +80,13 @@
             {% for option in product.option %}
             <br />
             &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
-            <?php } ?></td>
+            {% endfor %}</td>
           <td>{{ product.model }}</td>
           <td class="text-right">{{ product.quantity }}</td>
           <td class="text-right">{{ product.price }}</td>
           <td class="text-right">{{ product.total }}</td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% for voucher in order.voucher %}
         <tr>
           <td>{{ voucher.description }}</td>
@@ -95,13 +95,13 @@
           <td class="text-right">{{ voucher.amount }}</td>
           <td class="text-right">{{ voucher.amount }}</td>
         </tr>
-        <?php } ?>
+        {% endfor %}
         {% for total in order.total %}
         <tr>
           <td class="text-right" colspan="4"><b>{{ total.title }}</b></td>
           <td class="text-right">{{ total.text }}</td>
         </tr>
-        <?php } ?>
+        {% endfor %}
       </tbody>
     </table>
     {% if order.comment %}
@@ -117,9 +117,9 @@
         </tr>
       </tbody>
     </table>
-    <?php } ?>
+    {% endif %}
   </div>
-  <?php } ?>
+  {% endfor %}
 </div>
 </body>
 </html>

@@ -37,7 +37,7 @@
                 <td><button data-toggle="tooltip" title="{{ text_shipping_method }}" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
                 <td>{{ shipping_method }}</td>
               </tr>
-              <?php } ?>
+              {% endif %}
             </tbody>
           </table>
         </div>
@@ -90,7 +90,7 @@
               <tr>
                 <td>{{ text_reward }}</td>
                 <td class="text-right">{{ reward }}</td>
-                <td class="text-center"><?php if ($customer && $reward) { ?>
+                <td class="text-center">{% if customer and reward %}
                   {% if not reward_total %}
                   <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
                   {% else %}
@@ -160,18 +160,18 @@
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
                 {% for option in product.option %}
                 <br />
-                <?php if ($option['type'] != 'file') { ?>
+                {% if ($option['type'] != 'file') { ?>
                 &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                 {% else %}
                 &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
                 {% endif %}
-                <?php } ?></td>
+                {% endif %}</td>
               <td class="text-left">{{ product.model }}</td>
               <td class="text-right">{{ product.quantity }}</td>
               <td class="text-right">{{ product.price }}</td>
               <td class="text-right">{{ product.total }}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
             {% for voucher in vouchers %}
             <tr>
               <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
@@ -180,13 +180,13 @@
               <td class="text-right">{{ voucher.amount }}</td>
               <td class="text-right">{{ voucher.amount }}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
             {% for total in totals %}
             <tr>
               <td colspan="4" class="text-right">{{ total.title }}</td>
               <td class="text-right">{{ total.text }}</td>
             </tr>
-            <?php } ?>
+            {% endfor %}
           </tbody>
         </table>
         {% if comment %}
@@ -202,7 +202,7 @@
             </tr>
           </tbody>
         </table>
-        <?php } ?>
+        {% endif %}
       </div>
     </div>
     <div class="panel panel-default">
@@ -215,7 +215,7 @@
           <li><a href="#tab-additional" data-toggle="tab">{{ tab_additional }}</a></li>
           {% for tab in tabs %}
           <li><a href="#tab-{{ tab.code }}" data-toggle="tab">{{ tab.title }}</a></li>
-          <?php } ?>
+          {% endfor %}
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-history">
@@ -234,7 +234,7 @@
                       {% else %}
                       <option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
                       {% endif %}
-                      <?php } ?>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -277,7 +277,7 @@
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
                   </tr>
-                  <?php } ?>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -296,12 +296,12 @@
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
                   </tr>
-                  <?php } ?>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
             {% endif %}
-            <?php if ($shipping_method && $shipping_custom_fields) { ?>
+            {% if shipping_method and shipping_custom_fields %}
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -315,11 +315,11 @@
                     <td>{{ custom_field.name }}</td>
                     <td>{{ custom_field.value }}</td>
                   </tr>
-                  <?php } ?>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>
-            <?php } ?>
+            {% endif %}
             <div class="table-responsive">
               <table class="table table-bordered">
                 <thead>
@@ -337,7 +337,7 @@
                     <td>{{ text_forwarded_ip }}</td>
                     <td>{{ forwarded_ip }}</td>
                   </tr>
-                  <?php } ?>
+                  {% endif %}
                   <tr>
                     <td>{{ text_user_agent }}</td>
                     <td>{{ user_agent }}</td>
@@ -352,7 +352,7 @@
           </div>
           {% for tab in tabs %}
           <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
-          <?php } ?>
+          {% endfor %}
         </div>
       </div>
     </div>

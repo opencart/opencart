@@ -463,8 +463,8 @@
                     <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
                     {% else %}
                     <option value="{{ country.country_id }}">{{ country.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -488,12 +488,12 @@
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               {% if custom_field.type == 'radio' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -531,9 +531,9 @@
                       <label>
                         <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
                         {{ custom_field_value.name }}</label>
-                      <?php } ?>
+                      {% endif %}
                     </div>
-                    <?php } ?>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -699,12 +699,12 @@
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              <?php } ?>
+              {% endif %}
               {% if custom_field.type == 'radio' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -720,7 +720,7 @@
                       <label>
                         <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
                         {{ custom_field_value.name }}</label>
-                      <?php } ?>
+                      {% endif %}
                     </div>
                     {% endfor %}
                   </div>

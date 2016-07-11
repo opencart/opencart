@@ -40,7 +40,7 @@
               <input type="text" name="ups_username" value="{{ ups_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
               {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -49,7 +49,7 @@
               <input type="text" name="ups_password" value="{{ ups_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -61,8 +61,8 @@
                 <option value="{{ pickup.value }}" selected="selected">{{ pickup.text }}</option>
                 {% else %}
                 <option value="{{ pickup.value }}">{{ pickup.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -75,8 +75,8 @@
                 <option value="{{ package.value }}" selected="selected">{{ package.text }}</option>
                 {% else %}
                 <option value="{{ package.value }}">{{ package.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+               {% endfor %}
               </select>
             </div>
           </div>
@@ -89,8 +89,8 @@
                 <option value="{{ classification.value }}" selected="selected">{{ classification.text }}</option>
                 {% else %}
                 <option value="{{ classification.value }}">{{ classification.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -103,8 +103,8 @@
                 <option value="{{ origin.value }}" selected="selected">{{ origin.text }}</option>
                 {% else %}
                 <option value="{{ origin.value }}">{{ origin.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -114,7 +114,7 @@
               <input type="text" name="ups_city" value="{{ ups_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
               {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -123,7 +123,7 @@
               <input type="text" name="ups_state" value="{{ ups_state }}" placeholder="{{ entry_state }}" id="input-state" class="form-control" maxlength="2" />
               {% if error_state %}
               <div class="text-danger">{{ error_state }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -132,7 +132,7 @@
               <input type="text" name="ups_country" value="{{ ups_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control" maxlength="2" />
               {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group">
@@ -151,7 +151,7 @@
                 {% else %}
                 <input type="radio" name="ups_test" value="1" />
                 {{ text_yes }}
-                <?php } ?>
+                {% endif %}
               </label>
               <label class="radio-inline">
                 {% if not ups_test %}
@@ -160,7 +160,7 @@
                 {% else %}
                 <input type="radio" name="ups_test" value="0" />
                 {{ text_no }}
-                <?php } ?>
+                {% endif %}
               </label>
             </div>
           </div>
@@ -173,8 +173,8 @@
                 <option value="{{ quote_type.value }}" selected="selected">{{ quote_type.text }}</option>
                 {% else %}
                 <option value="{{ quote_type.value }}">{{ quote_type.text }}</option>
-                <?php } ?>
-                <?php } ?>
+                {% endif %}
+                {% endfor %}
               </select>
             </div>
           </div>

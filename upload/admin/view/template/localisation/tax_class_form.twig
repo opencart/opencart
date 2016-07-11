@@ -31,7 +31,7 @@
               <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control" />
               {% if error_title %}
               <div class="text-danger">{{ error_title }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <div class="form-group required">
@@ -40,7 +40,7 @@
               <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control" />
               {% if error_description %}
               <div class="text-danger">{{ error_description }}</div>
-              <?php } ?>
+              {% endif %}
             </div>
           </div>
           <table id="tax-rule" class="table table-striped table-bordered table-hover">
@@ -62,31 +62,31 @@
                     <option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
                     {% else %}
                     <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name }}</option>
-                    <?php } ?>
-                    <?php } ?>
+                    {% endif %}
+                    {% endfor %}
                   </select></td>
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-control">
-                    <?php  if ($tax_rule['based'] == 'shipping') { ?>
+                    {% if tax_rule.based == 'shipping' %}
                     <option value="shipping" selected="selected">{{ text_shipping }}</option>
                     {% else %}
                     <option value="shipping">{{ text_shipping }}</option>
-                    <?php } ?>
-                    <?php  if ($tax_rule['based'] == 'payment') { ?>
+                    {% endif %}
+                     {% if tax_rule.based == 'payment' %}
                     <option value="payment" selected="selected">{{ text_payment }}</option>
                     {% else %}
                     <option value="payment">{{ text_payment }}</option>
-                    <?php } ?>
-                    <?php  if ($tax_rule['based'] == 'store') { ?>
+                    {% endif %}
+                    {% if tax_rule.based == 'store' %}
                     <option value="store" selected="selected">{{ text_store }}</option>
                     {% else %}
                     <option value="store">{{ text_store }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select></td>
                 <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               {% set tax_rule_row = tax_rule_row + 1 %}
-              <?php } ?>
+              {% endfor %}
             </tbody>
             <tfoot>
               <tr>
@@ -107,7 +107,7 @@ function addRule() {
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
     {% for tax_rate in tax_rates %}
     html += '    <option value="{{ tax_rate.tax_rate_id }}"><?php echo addslashes($tax_rate['name']); ?></option>';
-    <?php } ?>
+    {% endfor %}
     html += '  </select></td>';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';
     html += '    <option value="shipping">{{ text_shipping }}</option>';

@@ -17,7 +17,7 @@
   <div class="container-fluid">
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-    <?php } ?>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
@@ -42,7 +42,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   <option value="0" selected="selected">{{ text_disabled }}</option>
-                  <?php } ?>
+                  {% endif %}
                 </select>
               </div>
             </div>
@@ -113,7 +113,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -127,7 +127,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -141,7 +141,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -151,7 +151,7 @@
                   <select name="ebay_def_currency" id="entry-default-currency" class="form-control">
                     {% for currency in currency_list %}
                     <?php echo '<option value="'.$currency['code'].'"'.($ebay_def_currency == $currency['code'] ? ' selected="selected"' : '').'>'.$currency['title'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -165,7 +165,7 @@
                     {% else %}
                     <option value="1">{{ text_allocate_2 }}</option>
                     <option value="0" selected="selected">{{ text_allocate_1 }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -255,7 +255,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -269,7 +269,7 @@
                     {% else %}
                     <option value="1">{{ text_yes }}</option>
                     <option value="0" selected="selected">{{ text_no }}</option>
-                    <?php } ?>
+                    {% endif %}
                   </select>
                 </div>
               </div>
@@ -305,7 +305,7 @@
                     <?php if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; } ?>
                     {% for status in order_statuses %}
                     <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_import_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
-                    <?php } ?>
+                    {% endfor %}
                   </select>
                 </div>
               </div>

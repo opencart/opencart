@@ -13,4 +13,8 @@ class Log {
 	public function __destruct() {
 		fclose($this->handle);
 	}
+
+    public function truncate() {
+        ftruncate($this->handle, 0);
+    }
 }

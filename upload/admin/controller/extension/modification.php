@@ -393,6 +393,7 @@ class ControllerExtensionModification extends Controller {
 
 			// Log
 			$ocmod = new Log('ocmod.log');
+            $ocmod->truncate();
 			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files

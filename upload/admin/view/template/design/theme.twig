@@ -192,9 +192,9 @@ $('#path').on('click', 'a.file',function(e) {
 	var pos = $(node).attr('href').lastIndexOf('.');
 
 	if (pos != -1) {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace('/', '-').replace('_', '-');
+		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace(/\//g, '-').replace(/_/, '-');
 	} else {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace('/', '-').replace('_', '-');
+		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace(/\//g, '-').replace(/_/, '-');
 	}
 	
 	if (!$('#tab-' + tab_id).length) {

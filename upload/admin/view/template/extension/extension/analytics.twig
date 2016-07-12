@@ -30,7 +30,6 @@
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             {% endif %}</td>
         </tr>
-        {% endfor %}
         {% if extension.installed %}
         {% for store in extension.store %}
         <tr>
@@ -40,6 +39,7 @@
         </tr>
         {% endfor %}
         {% endif %}
+        {% endfor %}
         {% else %}
         <tr>
           <td class="text-center" colspan="3">{{ text_no_results }}</td>

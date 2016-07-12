@@ -79,7 +79,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		foreach ($languages as $language) {
 			if (isset($this->request->post['bank_transfer_bank' . $language['language_id']])) {
-				$data['bank_transfer_bank' . $language['language_id']] = $this->request->post['bank_transfer_bank' . $language['language_id']];
+				$data['bank_transfer_bank'][$language['language_id']] = $this->request->post['bank_transfer_bank' . $language['language_id']];
 			} else {
 				$data['bank_transfer_bank' . $language['language_id']] = $this->config->get('bank_transfer_bank' . $language['language_id']);
 			}

@@ -58,7 +58,7 @@
               <tr id="tax-rule-row{{ tax_rule_row }}">
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
                     {% for tax_rate in tax_rates %}
-                    <?php  if ($tax_rate['tax_rate_id'] == $tax_rule['tax_rate_id']) { ?>
+                    {% if tax_rate.tax_rate_id == tax_rule.tax_rate_id %}
                     <option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
                     {% else %}
                     <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name }}</option>

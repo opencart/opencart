@@ -89,7 +89,7 @@ function addGeoZone() {
 	html  = '<tr id="zone-to-geo-zone-row' + zone_to_geo_zone_row + '">';
 	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-control" onchange="country(this, \'' + zone_to_geo_zone_row + '\', \'0\');">';
 	{% for country in countries %}
-	html += '    <option value="{{ country.country_id }}"><?php echo addslashes($country['name']); ?></option>';
+	html += '    <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
 	{% endfor %}   
 	html += '</select></td>';
 	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control"><option value="0">{{ text_all_zones }}</option></select></td>';

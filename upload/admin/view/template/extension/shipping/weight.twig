@@ -86,6 +86,9 @@
                     <div class="col-sm-10">
                       <select name="weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-control">
                         <?php if (${'weight_' . $geo_zone['geo_zone_id'] . '_status'}) { ?>
+                        
+                        
+                        
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}

@@ -115,7 +115,7 @@
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
-                    <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
+                    {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
@@ -132,7 +132,7 @@
                   <div id="input-custom-field{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="radio">
-                      <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
+                      {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
                       <label>
                         <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                         {{ custom_field_value.name }}</label>
@@ -154,7 +154,7 @@
                   <div id="input-custom-field{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="checkbox">
-                      <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
+                      {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
                       <label>
                         <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                         {{ custom_field_value.name }}</label>
@@ -250,7 +250,7 @@
                     </tr>
                   </thead>
                   <tbody id="cart">
-                    {% if order_products or $order_vouchers %}
+                    {% if order_products or order_vouchers %}
                     {% set product_row = 0 %}
                     {% for order_product in order_products %}
                     <tr>
@@ -258,13 +258,13 @@
                         <input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}" />
                         {% for option in order_product.option %}
                         - <small>{{ option.name }}: {{ option.value }}</small><br />
-                        {% if option.type'] == 'select' || $option['type'] == 'radio' || $option['type == 'image' %}
+                        {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
                         <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" />
                         {% endif %}
                         {% if option.type == 'checkbox' %}
                         <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" />
                         {% endif %}
-                        {% if option.type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type == 'time' %}
+                        {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                         <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}" />
                         {% endif %}
                         {% endfor %}</td>
@@ -406,7 +406,7 @@
                   <select name="payment_address" id="input-payment-address" class="form-control">
                     <option value="0" selected="selected">{{ text_none }}</option>
                     {% for address in addresses %}
-                    <option value="{{ address.address_id }}"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
+                    <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -484,8 +484,7 @@
                   <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
-                    <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
-                    
+                    {% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %}
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
@@ -502,7 +501,7 @@
                   <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="radio">
-                      <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
+                      {% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %}
                       <label>
                         <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                         {{ custom_field_value.name }}</label>

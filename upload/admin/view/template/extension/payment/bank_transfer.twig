@@ -32,8 +32,8 @@
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <textarea name="bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
               </div>
-              {% if ${'error_bank' . $language['language_id']} %}
-              <div class="text-danger">{{ ${'error_bank' . $language['language_id']} }}</div>
+              {% if {'error_bank' . $language['language_id']} %}
+              <div class="text-danger">{{ 'error_bank' . $language['language_id']} }}</div>
               {% endif %}
             </div>
           </div>

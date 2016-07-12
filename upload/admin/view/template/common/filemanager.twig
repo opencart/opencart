@@ -20,7 +20,7 @@
         </div>
       </div>
       <hr />
-      {% foreach image in images|batch(4) %}
+      {% for image in images|batch(4) %}
       <div class="row">
         {% for image in image %}
         <div class="col-sm-3 col-xs-6 text-center">

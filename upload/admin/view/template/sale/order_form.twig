@@ -485,6 +485,7 @@
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
                     <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
+                    
                     <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                     {% else %}
                     <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
@@ -523,7 +524,7 @@
                   <div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                     <div class="checkbox">
-                      {% if $payment_custom_field[custom_field.custom_field_id] and in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']] %}
+                      {% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in payment_custom_field[custom_field.custom_field_id] %}
                       <label>
                         <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                         {{ custom_field_value.name }}</label>
@@ -1724,7 +1725,7 @@ $('#button-voucher-add').on('click', function() {
 				$('input[name=\'to_name\']').val('');
 				$('input[name=\'to_email\']').val('');
 				$('textarea[name=\'message\']').val('');
-				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');
+				$('input[name=\'amount\']').val('{{ voucher_min|escape('js') }}');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');

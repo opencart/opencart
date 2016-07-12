@@ -160,7 +160,7 @@
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
                 {% for option in product.option %}
                 <br />
-                {% if ($option['type'] != 'file') { ?>
+                {% if option.type != 'file' %}
                 &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
                 {% else %}
                 &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>

@@ -44,13 +44,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-callback"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_callback); ?>">{{ entry_callback }}</span></label>
+            <label class="col-sm-2 control-label" for="input-callback"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="{{ help_callback|escape('html') }}">{{ entry_callback }}</span></label>
             <div class="col-sm-10">
               <textarea rows="5" readonly id="input-callback" class="form-control">{{ callback }}</textarea>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-md5"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_md5); ?>">{{ entry_md5 }}</span></label>
+            <label class="col-sm-2 control-label" for="input-md5"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="{{ help_md5|escape('html') }}">{{ entry_md5 }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="authorizenet_sim_md5" value="{{ authorizenet_sim_md5 }}" placeholder="{{ entry_md5 }}" id="input-md5" class="form-control" />
             </div>

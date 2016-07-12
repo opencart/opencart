@@ -106,7 +106,7 @@ function addRule() {
 	html  = '<tr id="tax-rule-row' + tax_rule_row + '">';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
     {% for tax_rate in tax_rates %}
-    html += '    <option value="{{ tax_rate.tax_rate_id }}"><?php echo addslashes($tax_rate['name']); ?></option>';
+    html += '    <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name|escape('js') }}</option>';
     {% endfor %}
     html += '  </select></td>';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';

@@ -3467,7 +3467,7 @@ CREATE TABLE `oc_theme` (
   `theme` varchar(64) NOT NULL,
   `route` varchar(64) NOT NULL,
   `code` text NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`theme_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

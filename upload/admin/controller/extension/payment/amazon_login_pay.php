@@ -338,13 +338,12 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['declined_codes'] = array($this->language->get('text_amazon_invalid'), $this->language->get('text_amazon_rejected'), $this->language->get('text_amazon_timeout'));
 
-		//SIMPLE PATH
-
 		$data['unique_id'] = 'oc-' . str_replace(' ', '-', strtolower($this->config->get('config_name'))) . '_' . mt_rand();
 		$data['allowed_login_domain'] = html_entity_decode(HTTPS_CATALOG);
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_login/login';
 		$data['login_redirect_urls'][] = HTTPS_CATALOG . 'index.php?route=payment/amazon_pay/login';
 		$data['store_name'] = $this->config->get('config_name');
+		$data['simple_path_language'] = str_replace('-', '_', $data['amazon_login_pay_language']);
 
 		if ($data['amazon_login_pay_payment_region'] == 'USD') {
 			$data['registration_url'] = "https://sellercentral.amazon.com/hz/me/sp/redirect?ld=" . $ld;

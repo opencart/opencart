@@ -40,16 +40,16 @@
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
             <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_twig }}</div>
-            <div id="code" style="display: none;">
-              <ul class="nav nav-tabs">
-              </ul>
-              <div class="tab-content"></div>
-            </div>
             <div id="recent">
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
               </fieldset>
+            </div>            
+            <div id="code" style="display: none;">
+              <ul class="nav nav-tabs">
+              </ul>
+              <div class="tab-content"></div>
             </div>
           </div>
         </div>
@@ -62,49 +62,6 @@
   <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
   <script type="text/javascript"><!--
-$('#history').delegate('.pagination a', 'click', function(e) {
-	e.preventDefault();
-
-	$('#history').load(this.href);
-});
-
-$('#history').on('click', '.btn-danger', function(e) {
-	e.preventDefault();
-	
-	if (confirm('{{ text_confirm }}')) {
-		var node = this;
-
-		$.ajax({
-			url: $(node).attr('href'),
-			dataType: 'json',
-			beforeSend: function() {
-				$(node).button('loading');
-			},
-			complete: function() {
-				$(node).button('reset');
-			},
-			success: function(json) {
-				$('.alert').remove();
-				
-				if (json['error']) {
-					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-
-				if (json['success']) {
-					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-					$('#history').load('index.php?route=design/theme/history&token={{ token }}');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-});
-
-$('#history').load('index.php?route=design/theme/history&token={{ token }}');
-
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
 		url: 'index.php?route=design/theme/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val(),
@@ -183,19 +140,62 @@ $('#path').on('click', 'a.directory', function(e) {
 	});
 });
 
-$('#path').on('click', 'a.file',function(e) {
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=design/theme/history&token={{ token }}');
+
+$('#history').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	
+	if (confirm('{{ text_confirm }}')) {
+		var node = this;
+
+		$.ajax({
+			url: $(node).attr('href'),
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+				
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['success']) {
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('#history').load('index.php?route=design/theme/history&token={{ token }}');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+
+var editor = function(e) {
 	e.preventDefault();
 
 	var node = this;
 	
-	// Check if the file has an extension
-	var pos = $(node).attr('href').lastIndexOf('.');
+	// Create a unique ID for the tabs	
+	var string = $(node).attr('href')
+	var hash = 5381;
+	var i = string.length;
+	
+	while(i) hash = (hash * 33) ^ string.charCodeAt(--i)
 
-	if (pos != -1) {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace(/\//g, '-').replace(/_/, '-');
-	} else {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace(/\//g, '-').replace(/_/, '-');
-	}
+	tab_id = hash >>> 0;
 	
 	if (!$('#tab-' + tab_id).length) {
 		$.ajax({
@@ -214,7 +214,7 @@ $('#path').on('click', 'a.file',function(e) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('path').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
 
 					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';
@@ -223,7 +223,7 @@ $('#path').on('click', 'a.file',function(e) {
 					html += '  <br />';
 					html += '  <div class="pull-right">';
 					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
+					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
@@ -232,7 +232,7 @@ $('#path').on('click', 'a.file',function(e) {
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
 					
 					// Initialize codemirrror
-					var editor = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
+					var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
 						height: '500px',
 						lineNumbers: true,
@@ -240,7 +240,7 @@ $('#path').on('click', 'a.file',function(e) {
 						theme: 'monokai'
 					});
 
-					editor.setValue(json['code']);
+					codemirror.setValue(json['code']);
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -250,7 +250,10 @@ $('#path').on('click', 'a.file',function(e) {
 	} else {
 		$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
 	}
-});
+}
+
+$('#path').on('click', 'a.file', editor);
+$('#history').on('click', '.btn-primary', editor);
 
 $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 	e.preventDefault();
@@ -334,9 +337,9 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
-				var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
+				var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
 				
-				editor.setValue(json['code']);
+				codemirror.setValue(json['code']);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

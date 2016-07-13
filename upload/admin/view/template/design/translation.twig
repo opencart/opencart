@@ -55,18 +55,71 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-    
-              <div id="translation"></div>
-
+                      
+                          <fieldset>
+                <legend>{{ text_history }}</legend>
+  
+            <div id="translation"></div>
+            
+            
+                          <fieldset>
+                <legend>{{ text_history }}</legend>
+            <div id="history"></div>
+          </fieldset>
+          
+          
           </div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	
+	if (confirm('{{ text_confirm }}')) {
+		var node = this;
+
+		$.ajax({
+			url: $(node).attr('href'),
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+				
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['success']) {
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('#history').load('index.php?route=design/translation/history&token={{ token }}');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+
+$('#history').load('index.php?route=design/translation/history&token={{ token }}');
+
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/language/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
+		url: 'index.php?route=design/translation/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name="store_id"]').prop('disabled', true);
@@ -105,7 +158,7 @@ $('#path').on('click', 'a.directory', function(e) {
 	var node = this;
 
 	$.ajax({
-		url: 'index.php?route=design/language/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/translation/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -149,7 +202,7 @@ $('#path').on('click', 'a.file',function(e) {
 	
 	// Check if the file has an extension
 	$.ajax({
-		url: 'index.php?route=design/language/translation&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/translation/translation&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'html',
 		beforeSend: function() {
 			$(node).find('i').removeClass('fa-arrow-right');
@@ -172,7 +225,7 @@ $('#translation').on('click', '#button-save', function(e) {
 	var node = this;
 				
 	$.ajax({
-		url: 'index.php?route=design/language/save&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/translation/save&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: $('#translation input'),
 		dataType: 'json',

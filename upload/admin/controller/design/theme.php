@@ -96,7 +96,7 @@ class ControllerDesignTheme extends Controller {
 				'route'      => $result['route'],
 				'theme'      => $result['theme'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/theme/edit', 'token=' . $this->session->data['token'], true),
+				'edit'       => $this->url->link('design/theme/template', 'token=' . $this->session->data['token'], true),
 				'delete'     => $this->url->link('design/theme/delete', 'token=' . $this->session->data['token'] . '&theme_id=' . $result['theme_id'], true)
 			);			
 		}
@@ -174,7 +174,7 @@ class ControllerDesignTheme extends Controller {
 		if (!empty($this->request->get['path'])) {
 			$json['back'] = array(
 				'name' => $this->language->get('button_back'),
-				'path' => urlencode(substr($path, 0, strrpos($path, '/')))
+				'path' => urlencode(substr($path, 0, strrpos($path, '/'))),
 			);
 		}		
 		

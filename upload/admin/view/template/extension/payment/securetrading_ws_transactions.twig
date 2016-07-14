@@ -1,0 +1,38 @@
+<table class="transactions list">
+  <thead>
+    <tr>
+      <td class="left">{{ column_order_id }}</td>
+      <td class="left">{{ column_transaction_reference }}</td>
+      <td class="left">{{ column_customer }}</td>
+      <td class="left">{{ column_total }}</td>
+      <td class="left">{{ column_currency }}</td>
+      <td class="left">{{ column_settle_status }}</td>
+      <td class="left">{{ column_status }}</td>
+      <td class="left">{{ column_payment_type }}</td>
+      <td class="left">{{ column_type }}</td>
+    </tr>
+  </thead>
+  <tbody>
+  
+  {% if transactions %}
+  {% for transaction in transactions %}
+  <tr>
+    <td class="left"><a href="{{ transaction.order_href }}" target="_blank">{{ transaction.order_id }}</a></td>
+    <td class="left">{{ transaction.transaction_reference }}</td>
+    <td class="left">{{ transaction.customer }}</td>
+    <td class="left">{{ transaction.total }}</td>
+    <td class="left">{{ transaction.currency }}</td>
+    <td class="left">{{ transaction.settle_status }}</td>
+    <td class="left">{{ transaction.status }}</td>
+    <td class="left">{{ transaction.payment_type }}</td>
+    <td class="left">{{ transaction.type }}</td>
+  </tr>
+  {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan="9" class="center">{{ text_no_transactions }}</td>
+  </tr>
+  {% endif %}
+  </tbody>
+  
+</table>

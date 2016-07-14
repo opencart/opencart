@@ -18,6 +18,9 @@ $_['db_port']          = DB_PORT;
 // Session
 $_['session_autostart'] = false;
 
+// Template
+$_['template_type']         = 'twig';
+
 // Autoload Libraries
 $_['library_autoload'] = array(
 	'openbay'

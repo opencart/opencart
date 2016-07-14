@@ -15,6 +15,14 @@ $_['db_port']           = DB_PORT;
 // Session
 $_['session_autostart'] = true;
 
+/**
+ * Template Engine
+ *
+ * Twig : Template\Twig
+ * PHP : Template\PHP
+ **/
+$_['template_engine']  = 'Template\Twig';
+
 // Actions
 $_['action_pre_action'] = array(
 	'startup/startup',

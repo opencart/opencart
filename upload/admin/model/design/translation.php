@@ -1,5 +1,5 @@
 <?php
-class ModelDesignLanguage extends Model {
+class ModelDesignTranslation extends Model {
 	public function editTranslation($store_id, $language_id, $route, $data) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "translation  WHERE route = '" . $this->db->escape($route) . "'");
 
@@ -10,6 +10,16 @@ class ModelDesignLanguage extends Model {
 		}
 	}
 
+	public function deleteTranslation($translation_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE translation_id = '" . (int)$translation_id . "'");
+	}
+
+	public function getTranslations($store_id, $language_id, $route) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "translation WHERE store_id = '" . (int)$store_id . "' AND language_id = '" . (int)$language_id . "' AND route = '" . $this->db->escape($route) . "'");
+
+		return $query->rows;
+	}
+		
 	public function getTranslations($store_id, $language_id, $route) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "translation WHERE store_id = '" . (int)$store_id . "' AND language_id = '" . (int)$language_id . "' AND route = '" . $this->db->escape($route) . "'");
 

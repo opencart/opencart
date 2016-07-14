@@ -9,8 +9,8 @@ class ControllerEventTheme extends Controller {
 		if (substr($view, -3) == 'tpl') {
 			$view = substr($view, 0, -3);
 		}
-		
-		if ($this->config->get('config_theme') == 'theme_default') {
+
+        if ($this->config->get('config_theme') == 'theme_default') {
 			$theme = $this->config->get('theme_default_directory');
 		} else {
 			$theme = $this->config->get('config_theme');
@@ -22,15 +22,15 @@ class ControllerEventTheme extends Controller {
 			$view = 'default/template/' . $view;
 		}
 		
-		if (is_file(DIR_TEMPLATE . $view . '.tpl')) {
-			$view .= '.tpl'; 
-			
-			$this->config->set('template_type', 'php');
-		} elseif (is_file(DIR_TEMPLATE . $view . '.twig')) {
-			$view .= '.twig'; 
-			
-			$this->config->set('template_type', 'twig');
-		}
+//		if (is_file(DIR_TEMPLATE . $view . '.tpl')) {
+//			$view .= '.tpl';
+//
+//			$this->config->set('template_engine', 'Template\PHP');
+//		} elseif (is_file(DIR_TEMPLATE . $view . '.twig')) {
+//			$view .= '.twig';
+//
+//			$this->config->set('template_engine', 'Template\Twig');
+//		}
 		/*	
 		// If there is a theme override we should get it				
 		$this->load->model('design/theme');

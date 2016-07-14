@@ -4,6 +4,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		$this->load->model('extension/openbay/amazonus');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
+		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/amazonus_listing');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/amazonus_listing');
@@ -461,7 +462,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 			);
 		}
 
-		$data['delete_saved'] = $this->url->link('extension/openbay/amazon_product/deleteSaved', 'token=' . $this->session->data['token'], true);
+		$data['delete_saved'] = $this->url->link('extension/openbay/amazonus_product/deleteSaved', 'token=' . $this->session->data['token'], true);
 		$data['upload_saved'] = $this->url->link('extension/openbay/amazonus_product/uploadSaved', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -775,11 +776,13 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 				$page = 1;
 			}
 
-			$data['start'] = ($page - 1) * $this->config->get('config_limit_admin');
-			$data['limit'] = $this->config->get('config_limit_admin');
+			$filter = array();
 
-			$results = $this->model_extension_openbay_amazonus->getProductSearch($data);
-			$product_total = $this->model_extension_openbay_amazonus->getProductSearchTotal($data);
+			$filter['start'] = ($page - 1) * $this->config->get('config_limit_admin');
+			$filter['limit'] = $this->config->get('config_limit_admin');
+
+			$results = $this->model_extension_openbay_amazonus->getProductSearch($filter);
+			$product_total = $this->model_extension_openbay_amazonus->getProductSearchTotal($filter);
 
 			$data['products'] = array();
 

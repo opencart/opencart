@@ -134,12 +134,12 @@
                   <td class="text-right">{{ affiliate.balance }}</td>
                   <td class="text-left">{{ affiliate.status }}</td>
                   <td class="text-left">{{ affiliate.date_added }}</td>
-                  <td class="text-right"><?php if ($affiliate['approve']) { ?>
+                  <td class="text-right">{% if affiliate.approve %}
                     <a href="{{ affiliate.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     {% endif %}
-                    <?php if ($affiliate['unlock']) { ?>
+                    {% if affiliate.unlock %}
                     <a href="{{ affiliate.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
                     {% else %}
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>

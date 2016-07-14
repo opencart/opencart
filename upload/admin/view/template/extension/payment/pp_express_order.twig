@@ -94,7 +94,7 @@
 	});
 
 	$('#button-void').on('click', function() {
-		if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
+		if (confirm('{{ text_confirm_void|escape('js') }}')) {
 			$.ajax({
 				url: 'index.php?route=extension/payment/pp_express/void&token={{ token }}&order_id={{ order_id }}',
 				dataType: 'json',

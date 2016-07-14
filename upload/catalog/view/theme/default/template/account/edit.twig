@@ -102,7 +102,7 @@
                     {{ custom_field_value.name }}</label>
                   {% endif %}
                 </div>
-                {% endif %}
+                {% endfor %}
               </div>
               {% if error_custom_field[custom_field.custom_field_id] %}
               <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>

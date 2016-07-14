@@ -3,7 +3,7 @@
 {% endif %}
 {% if shipping_methods %}
 <p>{{ text_shipping_method }}</p>
-% for shipping_method in shipping_methods %}
+{% for shipping_method in shipping_methods %}
 <p><strong>{{ shipping_method.title }}</strong></p>
 {% if not shipping_method.error %}
 {% for quote in shipping_method.quote %}

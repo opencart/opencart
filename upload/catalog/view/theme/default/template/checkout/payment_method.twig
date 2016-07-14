@@ -3,9 +3,9 @@
 {% endif %}
 {% if payment_methods %}
 <p>{{ text_payment_method }}</p>
-% for payment_method in payment_methods %}
+{% for payment_method in payment_methods %}
 <div class="radio">
-  <label> {% if payment_method.code == code or not code %}
+  <label>{% if payment_method.code == code or not code %}
     {% set code = payment_method.code %}
     <input type="radio" name="payment_method" value="{{ payment_method.code }}" checked="checked" />
     {% else %}

@@ -661,7 +661,7 @@ function addShippingInfo(id) {
 
     html = '  <td><div class="col-sm-12"><select name="shipping_info[' + shipping_info_row + '][shipping_method]" class="form-control">';
     {% for shipping_method in allowed_shipping_methods %}
-    html += '    <option value="{{ shipping_method }}"><?php echo addslashes($shipping_method); ?></option>';
+    html += '    <option value="{{ shipping_method }}">{{ shipping_method|escape('js') }} </option>';
     {% endfor %}
     html += '  </select></div></td>';
 

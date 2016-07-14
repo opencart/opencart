@@ -601,39 +601,41 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {
 			$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
 
-			foreach ($directories as $directory) {
-				// Get a list of files ready to upload
-				$files = array();
+			if ($directories) {
+				foreach ($directories as $directory) {
+					// Get a list of files ready to upload
+					$files = array();
 
-				$path = array($directory);
+					$path = array($directory);
 
-				while (count($path) != 0) {
-					$next = array_shift($path);
+					while (count($path) != 0) {
+						$next = array_shift($path);
 
-					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-						$file = $next . '/' . $file;
+						// We have to use scandir function because glob will not pick up dot files.
+						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+							$file = $next . '/' . $file;
 
-						if (is_dir($file)) {
-							$path[] = $file;
+							if (is_dir($file)) {
+								$path[] = $file;
+							}
+
+							$files[] = $file;
 						}
-
-						$files[] = $file;
 					}
-				}
 
-				rsort($files);
+					rsort($files);
 
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
+					foreach ($files as $file) {
+						if (is_file($file)) {
+							unlink($file);
+						} elseif (is_dir($file)) {
+							rmdir($file);
+						}
 					}
-				}
 
-				if (file_exists($directory)) {
-					rmdir($directory);
+					if (file_exists($directory)) {
+						rmdir($directory);
+					}
 				}
 			}
 

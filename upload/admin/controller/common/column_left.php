@@ -241,10 +241,10 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}
 			
-			if ($this->user->hasPermission('access', 'design/language')) {
+			if ($this->user->hasPermission('access', 'design/translation')) {
 				$design[] = array(
 					'name'	   => $this->language->get('text_language_editor'),
-					'href'     => $this->url->link('design/language', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}

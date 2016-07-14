@@ -7,8 +7,8 @@ final class PHP {
 		$this->data[$key] = $value;
 	}
 	
-	public function render($template) {
-		$file = DIR_TEMPLATE . $template;
+	public function render($template, $registry) {
+		$file = DIR_TEMPLATE . $template . '.tpl';
 
 		if (is_file($file)) {
 			extract($this->data);

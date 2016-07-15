@@ -60,12 +60,12 @@
                     <label class="col-sm-2 control-label" for="input-server{{ country.code }}">{{ entry_server }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_invoice[{{ country.code }}][server]" id="input-server{{ country.code }}" class="form-control">
-                        <?php if (isset($klarna_invoice[country.code]) && $klarna_invoice[country.code]['server'] == 'live') { ?>
+                        {% if klarna_invoice[country.code] is defined and klarna_invoice[country.code].server == 'live' %}
                         <option value="live" selected="selected">{{ text_live }}</option>
                         {% else %}
                         <option value="live">{{ text_live }}</option>
                         {% endif %}
-                        <?php if (isset($klarna_invoice[country.code]) && $klarna_invoice[country.code]['server'] == 'beta') { ?>
+                        {% if klarna_invoice[country.code] is defined and klarna_invoice[country.code].server == 'beta' %}
                         <option value="beta" selected="selected">{{ text_beta }}</option>
                         {% else %}
                         <option value="beta">{{ text_beta }}</option>
@@ -84,7 +84,7 @@
                     <div class="col-sm-10">
                       <select name="klarna_invoice[{{ country.code }}][pending_status_id]" id="input-pending-status{{ country.code }}" class="form-control">
                         {% for order_status in order_statuses %}
-                        <?php if (isset($klarna_invoice[country.code]) && $order_status['order_status_id'] == $klarna_invoice[country.code]['pending_status_id']) { ?>
+                        {% if klarna_invoice[country.code] is defined and order_status.order_status_id == klarna_invoice[country.code].pending_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                         {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -98,7 +98,7 @@
                     <div class="col-sm-10">
                       <select name="klarna_invoice[{{ country.code }}][accepted_status_id]" id="input-accepted-status{{ country.code }}" class="form-control">
                         {% for order_status in order_statuses %}
-                        <?php if (isset($klarna_invoice[country.code]) && $order_status['order_status_id'] == $klarna_invoice[country.code]['accepted_status_id']) { ?>
+                        {% if klarna_invoice[country.code] is defined and order_status.order_status_id == klarna_invoice[country.code].accepted_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                         {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -113,7 +113,7 @@
                       <select name="klarna_invoice[{{ country.code }}][geo_zone_id]" id="input-geo-zone{{ country.code }}" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
                         {% for geo_zone in geo_zones %}
-                        <?php if (isset($klarna_invoice[country.code]) && $geo_zone['geo_zone_id'] == $klarna_invoice[country.code]['geo_zone_id']) {  ?>
+                        {% if klarna_invoice[country.code] is defined and geo_zone.geo_zone_id == klarna_invoice[country.code].geo_zone_id %}
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                         {% else %}
                         <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -126,7 +126,7 @@
                     <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                     <div class="col-sm-10">
                       <select name="klarna_invoice[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
-                        <?php if (isset($klarna_invoice[country.code]) && $klarna_invoice[country.code]['status']) { ?>
+                        {% if klarna_invoice[country.code] and klarna_invoice[country.code].status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -160,4 +160,4 @@
   <script type="text/javascript"><!--
 $('#country a:first').tab('show');
 //--></script> </div>
-{{ footer }} 
+{{ footer }}

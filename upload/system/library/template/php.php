@@ -14,7 +14,7 @@ final class PHP implements Template
 
     public function render($template)
     {
-        $file = DIR_TEMPLATE . $template . '.tpl';
+        $file = DIR_TEMPLATE . str_replace('.tpl', '', $template) . '.tpl';
 
         if (is_file($file)) {
             extract($this->data);

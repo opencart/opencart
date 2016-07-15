@@ -272,7 +272,7 @@ class ControllerInstallStep3 extends Controller {
 			}
 		} elseif ($this->request->post['db_driver'] == 'mpdo') {
 			try {
-				new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database'], $this->request->post['db_port']);
+				new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
 			} catch(Exception $e) {
 				$this->error['warning'] = $e->getMessage();
 			}

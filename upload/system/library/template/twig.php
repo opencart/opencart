@@ -83,9 +83,11 @@ final class Twig implements Template
 
             if ($this->getFileSystem()->exists($template)) {
                 $output = $this->getTwig()->render($template, $this->data);
+            } elseif ($this->getFileSystem()->exists(str_replace('.tpl', '', $template) . '.twig')) {
+                $output = $this->getTwig()->render(str_replace('.tpl', '', $template) . '.twig', $this->data);
             } else {
-                $template = str_replace('.tpl', '', $template) . '.twig';
-                $output = $this->getTwig()->render($template, $this->data);
+                $template = $this->getTwig()->createTemplate(html_entity_decode($template, ENT_QUOTES, 'UTF-8'));
+                $output = $template->render($this->data);
             }
 
             return $output;

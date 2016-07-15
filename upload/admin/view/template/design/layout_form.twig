@@ -383,7 +383,7 @@ function addModule(type) {
 	html += '      <option value="{{ extension.code }}">{{ extension.name|escape('js') }}</option>';
 	{% else %}
 	{% for module in extension.module %}
-	html += '      <option value="{{ module.code }}">{{ extension.name|escape('js') }}</option>';
+	html += '      <option value="{{ module.code }}">{{ module.name|escape('js') }}</option>';
 	{% endfor %}
 	{% endif %}
 	html += '    </optgroup>';

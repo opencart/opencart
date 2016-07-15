@@ -332,7 +332,7 @@ function addAccount() {
 	html += '  </select>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][country]" class="form-control">';
 	{% for country in countries %}
-	html += '    <option value="{{ country.country_id }}">{{ country.name }}</option>';
+	html += '    <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
 	{% endfor %}
 	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';

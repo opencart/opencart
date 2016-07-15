@@ -70,7 +70,7 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		// Trigger the pre events
+		// Trigger the pre intance template events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
 
 		if ($result) {
@@ -80,11 +80,14 @@ final class Loader {
 		if (!$output) {
             $template = new Template($this->registry->get('config')->get('template_engine'));
 
+            // Trigger the pre render view events
+            $this->registry->get('event')->trigger('view/render/before', array(&$template));
+
             foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
 		
-			$output = $template->render($route, $this->registry);
+			$output = $template->render($route);
 		}
 		
 		// Trigger the post events

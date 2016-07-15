@@ -1,37 +1,91 @@
 <?php
 namespace Template;
 
-final class Twig
+use Template\Interfaces\Template;
+
+final class Twig implements Template
 {
-    private $data = array();
+    /**
+     * @var \Twig_Loader_Filesystem
+     */
+    private $fileSystem;
+
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
+    /**
+     * @var array
+     */
+    private $data = [];
+
+
+    public function __construct()
+    {
+        $paths = [
+            DIR_TEMPLATE,
+        ];
+
+        $this->setFileSystem(new \Twig_Loader_Filesystem($paths));
+
+        //Set configs
+        $this->setTwig(new \Twig_Environment($this->fileSystem, [
+            'autoescape' => false
+        ]));
+    }
 
     public function set($key, $value)
     {
         $this->data[$key] = $value;
     }
 
-    public function render($template, $registry)
+    /**
+     * @return \Twig_Loader_Filesystem
+     */
+    public function getFileSystem()
+    {
+        return $this->fileSystem;
+    }
+
+    /**
+     * @param \Twig_Loader_Filesystem $fileSystem
+     */
+    public function setFileSystem($fileSystem)
+    {
+        $this->fileSystem = $fileSystem;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     */
+    public function setTwig($twig)
+    {
+        $this->twig = $twig;
+    }
+
+    /**
+     * Render template
+     * @param $template
+     * @return string
+     */
+    public function render($template)
     {
         try {
 
-            $paths = array(
-                DIR_TEMPLATE,
-            );
-
-            $fileSystem = new \Twig_Loader_Filesystem($paths);
-
-            //Set configs
-            $twig = new \Twig_Environment($fileSystem, array(
-                'autoescape' => false
-            ));
-
-            $registry->get('event')->trigger('library/template/twig/before', array(&$twig));
-
-            if ($fileSystem->exists($template)) {
-                $output = $twig->render($template, $this->data);
+            if ($this->getFileSystem()->exists($template)) {
+                $output = $this->getTwig()->render($template, $this->data);
             } else {
                 $template = str_replace('.tpl', '', $template) . '.twig';
-                $output = $twig->render($template, $this->data);
+                $output = $this->getTwig()->render($template, $this->data);
             }
 
             return $output;

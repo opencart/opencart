@@ -44,7 +44,7 @@ $_['action_pre_action'] = array(
 // Action Events
 $_['action_event'] = array(
 	'view/*/before'                         => 'event/theme',
-    'library/template/twig/before'          => 'event/twig',
+    'view/render/before'                    => 'event/template',
 	
 	'model/extension/analytics/*/before'    => 'event/compatibility/beforeModel',
 	'model/extension/captcha/*/before'      => 'event/compatibility/beforeModel',

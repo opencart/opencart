@@ -1890,9 +1890,7 @@ CREATE TABLE `oc_marketing` (
   PRIMARY KEY (`marketing_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- --------------------------------------------------------
-
---
+-- ------------
 -- Table structure for table `oc_menu`
 --
 
@@ -1936,6 +1934,8 @@ CREATE TABLE `oc_menu_module` (
   PRIMARY KEY (`menu_module_id`),
   KEY `menu_id` (`menu_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+----------------------------------------------
 
 --
 -- Table structure for table `oc_modification`
@@ -2257,7 +2257,8 @@ CREATE TABLE `oc_order_product` (
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
-  PRIMARY KEY (`order_product_id`)
+  PRIMARY KEY (`order_product_id`),
+  KEY `order_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -3466,7 +3467,8 @@ CREATE TABLE `oc_theme` (
   `store_id` int(11) NOT NULL,
   `theme` varchar(64) NOT NULL,
   `route` varchar(64) NOT NULL,
-  `code` text NOT NULL,
+  `code` mediumtext NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`theme_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3484,6 +3486,7 @@ CREATE TABLE `oc_translation` (
   `route` varchar(64) NOT NULL,
   `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`translation_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

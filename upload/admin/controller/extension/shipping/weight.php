@@ -69,15 +69,15 @@ class ControllerExtensionShippingWeight extends Controller {
 
 		foreach ($geo_zones as $geo_zone) {
 			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'])) {
-				$data['weight_' . $geo_zone['geo_zone_id'] . '_rate'] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'];
+				$data['weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'];
 			} else {
-				$data['weight_' . $geo_zone['geo_zone_id'] . '_rate'] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_rate');
+				$data['weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_rate');
 			}
 
 			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'])) {
-				$data['weight_' . $geo_zone['geo_zone_id'] . '_status'] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'];
+				$data['weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'];
 			} else {
-				$data['weight_' . $geo_zone['geo_zone_id'] . '_status'] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_status');
+				$data['weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_status');
 			}
 		}
 

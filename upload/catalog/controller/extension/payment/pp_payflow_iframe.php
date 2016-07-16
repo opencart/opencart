@@ -75,6 +75,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		$data['iframe_url'] = $payflow_url . '?' . http_build_query($iframe_params, '', "&");
 		$data['checkout_method'] = $this->config->get('pp_payflow_iframe_checkout_method');
 		$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['create'] = HTTPS_SERVER . 'index.php?route=extension/payment/pp_pro_iframe/create';
 
 		return $this->load->view('extension/payment/pp_payflow_iframe', $data);
 	}

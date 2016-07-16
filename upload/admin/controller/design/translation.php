@@ -7,12 +7,6 @@ class ControllerDesignTranslation extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -25,64 +19,50 @@ class ControllerDesignTranslation extends Controller {
 			'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['heading_title']    = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit']        = $this->language->get('text_edit');
-        $data['text_list']        = $this->language->get('text_list');
-		$data['text_no_results']  = $this->language->get('text_no_results');
-		$data['text_confirm']     = $this->language->get('text_confirm');
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_loading'] = $this->language->get('text_loading');		
+		$data['text_store'] = $this->language->get('text_store');
+		$data['text_language'] = $this->language->get('text_language');
+		$data['text_translation'] = $this->language->get('text_translation');
+		$data['text_default'] = $this->language->get('text_default');
+		$data['text_history'] = $this->language->get('text_history');
 
-		$data['column_flag']      = $this->language->get('column_flag');
-		$data['column_country']   = $this->language->get('column_country');
-		$data['column_progress']  = $this->language->get('column_progress');
-        $data['column_action']    = $this->language->get('column_action');
-
-		$data['button_install']   = $this->language->get('button_install');
-		$data['button_uninstall'] = $this->language->get('button_uninstall');
-		$data['button_refresh']   = $this->language->get('button_refresh');
-
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_reset'] = $this->language->get('button_reset');
+		
 		$data['token'] = $this->session->data['token'];
-
-		if (empty($this->session->data['translation'])) {
-			$this->refresh();
-		}
-
-		$data['translations'] = array();
-
-		if (!empty($this->session->data['translation'])) {
-			$translations = $this->session->data['translation'];
-		} else {
-			$translations = array();
-		}
-
-		$translation_total = count($translations);
-
-		$translations = array_splice($translations, ($page - 1) * 16, 16);
-
-		foreach ($translations as $translation) {
-			$data['translations'][] = array(
-				'name'      => $translation['name'],
-				'code'      => $translation['code'],
-				'progress'  => $translation['progress'],
-				'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
-				'install'   => $this->url->link('design/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'uninstall' => $this->url->link('design/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'installed' => '',
+		
+		$data['stores'] = array();
+		
+		$this->load->model('setting/store');
+					
+		$results = $this->model_setting_store->getStores();
+		
+		foreach ($results as $result) {
+			$data['stores'][] = array(
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $translation_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($translation_total - $this->config->get('config_limit_admin'))) ? $translation_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $translation_total, ceil($translation_total / $this->config->get('config_limit_admin')));
-
-		$data['refresh'] = $this->url->link('design/translation/refresh', 'token=' . $this->session->data['token'], true);
-
+		$data['languages'] = array();
+		
+		$this->load->model('localisation/language');
+					
+		$results = $this->model_localisation_language->getLanguages();
+		
+		foreach ($results as $result) {
+			$data['languages'][] = array(
+				'language_id' => $result['language_id'],
+				'name'        => $result['name']
+			);
+		}
+		
+		$data['language_id'] = $this->config->get('config_language_id');
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -90,266 +70,269 @@ class ControllerDesignTranslation extends Controller {
 		$this->response->setOutput($this->load->view('design/translation', $data));
 	}
 
-    public function refresh(){
-		$request = 'json=true';
-		//$curl = curl_init('https://api.crowdin.com/api/project/opencart/download/zh-CN.zip?key=a00e7b58c0790df4126273119b318db5');
+	public function history() {
+		$this->load->language('design/translation');
+		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_loading'] = $this->language->get('text_loading');
 
-        $curl = curl_init('https://api.crowdin.com/api/project/opencart/status?key=a00e7b58c0790df4126273119b318db5');
+		$data['column_store'] = $this->language->get('column_store');
+		$data['column_route'] = $this->language->get('column_route');
+		$data['column_language'] = $this->language->get('column_language');
+		$data['column_key'] = $this->language->get('column_key');
+		$data['column_action'] = $this->language->get('column_action');
 
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
 
-        $response = curl_exec($curl);
-
-        if (!$response) {
-            $this->log->write('API ERROR :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
-        }
-
-        $translations = json_decode($response, true);
-
-		curl_close($curl);
-
-		$this->session->data['translation'] = array();
-
-		foreach ($translations as $translation){
-			$this->session->data['translation'][] = array(
-				'name'     => $translation['name'],
-				'code'     => $translation['code'],
-				'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
-				'progress' => $translation['translated_progress']
-			);
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
 		}
-		$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'design/translation', 'token=' . $this->session->data['token'], true));
-	}
-
-	public function install() {
-	ini_set('max_execution_time', 300);
-	ini_set('auto_detect_line_endings', 1);
-	ini_set('default_socket_timeout', 5); // socket timeout, just in case
-
-	file_put_contents("translations.zip", file_get_contents("https://api.crowdin.com/api/project/opencart/download/" . $this->request->get['code'] . ".zip?key=a00e7b58c0790df4126273119b318db5"));
-
-	$this->unzip();
-	}
-
-	public function unzip() {
-		$this->load->language('extension/installer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Sanitize the filename
-		$file = DIR_APPLICATION . '/translations.zip';
-
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_APPLICATION)) != DIR_APPLICATION) {
-			$json['error'] = $this->language->get('error_file');
-		}
-
-		if (!$json) {
-			// Unzip the files
-			$zip = new ZipArchive();
-
-			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD);
-				$zip->close();
+		
+		$data['histories'] = array();
+		
+		$this->load->model('design/translation');
+		$this->load->model('setting/store');
+		
+		$results = $this->model_design_translation->getTranslations(($page - 1) * 10, 10);
+					
+		foreach ($results as $result) {
+			$store_info = $this->model_setting_store->getStore($result['store_id']);
+			
+			if ($store_info) {
+				$store = $store_info['name'];
 			} else {
-				$json['error'] = $this->language->get('error_unzip');
+				$store = '';
 			}
-
-			// Remove Zip
-			unlink($file);
-
+			
+			$data['histories'][] = array(
+				'store_id' => $result['store_id'],
+				'store'    => ($result['store_id'] ? $store : $this->language->get('text_default')),
+				'route'    => $result['route'],
+				'language' => $result['language'],
+				'key'      => $result['key'],
+				'edit'     => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'], true),
+				'delete'   => $this->url->link('design/translation/delete', 'token=' . $this->session->data['token'] . '&translation_id=' . $result['translation_id'], true)
+			);			
 		}
-		$this->ftp();
+		
+		$history_total = $this->model_design_translation->getTotalTranslations();
+
+		$pagination = new Pagination();
+		$pagination->total = $history_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('design/translation/history', 'token=' . $this->session->data['token'] . '&page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
+
+		$this->response->setOutput($this->load->view('design/translation_history', $data));
 	}
-
-	public function ftp() {
-		$this->load->language('extension/installer');
-
+	
+	public function path() {
+		$this->load->language('design/translation');
+		
 		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'design/translation')) {
-			$json['error'] = $this->language->get('error_permission');
+		
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
+		} else {
+			$store_id = 0;
+		}	
+		
+		if (isset($this->request->get['language_id'])) {
+			$language_id = $this->request->get['language_id'];			
+		} else {
+			$language_id = 0;
+		}
+						
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
 		}
 
-		// Check FTP status
-		if (!$this->config->get('config_ftp_status')) {
-			$json['error'] = $this->language->get('error_ftp_status');
-		}
+		$this->load->model('design/translation');
 
-		$directory = DIR_UPLOAD . '/2.0.0.x/';
-
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
-		if (!$json) {
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory . '*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			$language_path = "language/" . $this->request->get['code'];
-
-			if (!is_dir(DIR_APPLICATION . $language_path)) {
-				mkdir(DIR_APPLICATION . $language_path, 0755);
-			}
-
-			if (!is_dir(DIR_CATALOG . $language_path)) {
-				mkdir(DIR_CATALOG . $language_path, 0755);
-			}
-
-			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
-
-			if ($connection) {
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-
-				if ($login) {
-					if ($this->config->get('config_ftp_root')) {
-						$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-					} else {
-						$root = ftp_chdir($connection, '/');
-					}
-
-					if ($root) {
-						foreach ($files as $file) {
-							$destination = substr($file, strlen($directory));
-
-							// Upload everything in the upload directory
-							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
-							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($destination, 0, 5) == 'admin') {
-								$destination = basename(DIR_APPLICATION). "/" . $language_path . substr($destination, 5);
-
-							}
-
-							if (substr($destination, 0, 7) == 'catalog') {
-								$destination = basename(DIR_CATALOG). "/" . $language_path . substr($destination, 7);
-							}
-
-							if (substr($destination, 0, 5) == 'image') {
-								$destination = basename(DIR_IMAGE) . substr($destination, 5);
-							}
-
-							if (substr($destination, 0, 6) == 'system') {
-								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
-							}
-
-							if (is_dir($file)) {
-								$lists = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-
-								// Basename all the directories because on some servers they don't return the fulll paths.
-								$list_data = array();
-
-								foreach ($lists as $list) {
-									$list_data[] = basename($list);
-								}
-
-								if (!in_array(basename($destination), $list_data)) {
-									if (!ftp_mkdir($connection, $destination)) {
-										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
-									}
-								}
-							}
-
-							if (is_file($file)) {
-								if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
-									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
-								}
-							}
+		$this->load->model('localisation/language');
+					
+		$language_info = $this->model_localisation_language->getLanguage($language_id);
+		
+		if ($language_info && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'language/' . $language_info['code'] . '/' . $path)), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
+			$path_data = array();
+			
+			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
+			$files = glob(rtrim(DIR_CATALOG . 'language/{en-gb,' . $language_info['code'] . '}/' . $path, '/') . '/*', GLOB_BRACE);
+			
+			if ($files) {
+				foreach($files as $file) {
+					if (!in_array(basename($file), $path_data))  {
+						if (is_dir($file)) {
+							$json['directory'][] = array(
+								'name' => basename($file),
+								'path' => trim($path . '/' . basename($file), '/')
+							);
 						}
-					} else {
-						$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
+						
+						if (is_file($file) && (substr($file, -4) == '.php')) {
+							$translation_total = $this->model_design_language->getTotalTranslations($store_id, $language_id, trim($path . '/' . basename($file, '.php'), '/'));
+							
+							$json['file'][] = array(
+								'name' => basename($file, '.php') . ' (' . $translation_total . ')',
+								'path' => trim($path . '/' . basename($file, '.php'), '/')
+							);
+						}
+						
+						$path_data[] = basename($file);
 					}
-				} else {
-					$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
 				}
-
-				ftp_close($connection);
-			} else {
-				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 			}
 		}
 
-	echo "download success";
-
-		$this->remove();
+		if (!empty($this->request->get['path'])) {
+			$json['back'] = array(
+				'name' => $this->language->get('button_back'),
+				'path' => urlencode(substr($path, 0, strrpos($path, '/')))
+			);
+		}		
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
+	
+	public function translation() {
+		$this->load->language('design/translation');
+		
+		$data['text_loading'] = $this->language->get('text_loading');
 
-	public function remove() {
-		$this->load->language('extension/installer');
+		$data['entry_key'] = $this->language->get('entry_key');
+		$data['entry_default'] = $this->language->get('entry_default');
+		$data['entry_value'] = $this->language->get('entry_value');
+		
+		$data['button_save'] = $this->language->get('button_save');
+		
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
+		} else {
+			$store_id = 0;
+		}	
+		
+		if (isset($this->request->get['language_id'])) {
+			$language_id = $this->request->get['language_id'];			
+		} else {
+			$language_id = 0;
+		}
+		
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}	
+		
+		$data['translations'] = array();
+		
+		$this->load->model('localisation/language');
+					
+		$language_info = $this->model_localisation_language->getLanguage($language_id);
+		
+		$directory = DIR_CATALOG . 'language/';
+		
+		if ($language_info && is_file($directory . $language_info['code'] . '/' . $path . '.php') && (substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $path . '.php')), 0, strlen(DIR_CATALOG . 'language')) == DIR_CATALOG . 'language')) {
+			$translation_data = array();
+			
+			$this->load->model('design/translation');
+					
+			$results = $this->model_design_language->getTranslations($store_id, $language_id, $path);
+		
+			foreach ($results as $result) {
+				$translation_data[$result['key']] = $result['value'];
+			}			
+			
+			print_r($translation_data);
+			
+			$_ = array();
+						
+			include($directory . $language_info['code'] . '/' . $path . '.php');	
+			
+			foreach ($_ as $key => $value) {
+				$data['translations'][] = array(
+					'key'     => $key,
+					'default' => $value,
+					'value'   => isset($translation_data[$key]) ? $translation_data[$key] : ''
+				);
+			}
+		}
 
+		$this->response->setOutput($this->load->view('design/translation_translation', $data));
+	}		
+	
+	public function save() {
+		$this->load->language('design/translation');
+		
 		$json = array();
-
+		
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];			
+		} else {
+			$store_id = 0;
+		}
+			
+		if (isset($this->request->get['language_id'])) {
+			$language_id = $this->request->get['language_id'];			
+		} else {
+			$language_id = 0;
+		}		
+		
+		if (isset($this->request->get['path'])) {
+			$path = $this->request->get['path'];
+		} else {
+			$path = '';
+		}		
+			
+		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$directory = DIR_UPLOAD . '/2.0.0.x';
-
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
-		if (!$json) {
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory);
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-					$file = $next . '/' . $file;
-
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			if (file_exists($directory)) {
-				rmdir($directory);
-			}
-			$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'design/translation', 'token=' . $this->session->data['token'], true));
+		} else {
+			$this->load->model('design/translation');
+			
+			$this->model_design_language->editTranslation($store_id, $language_id, $path, $this->request->post);
+			
 			$json['success'] = $this->language->get('text_success');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function delete() {
+		$this->load->language('design/translation');
+		
+		$json = array();
+		
+		if (isset($this->request->get['translation_id'])) {
+			$translation_id = $this->request->get['translation_id'];			
+		} else {
+			$translation_id = 0;
+		}	
+	
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'design/translation')) {
+			$json['error'] = $this->language->get('error_permission');
+		} 
+		
+		if (!$json) { 		
+			$this->load->model('design/translation');
+		
+			$this->model_design_translation->deleteTranslation($translation_id);
 
+			$json['success'] = $this->language->get('text_success');
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

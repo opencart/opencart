@@ -88,7 +88,8 @@ class ControllerExtensionStore extends Controller {
 		$response = curl_exec($curl);
 		
 		echo $response;
-/*
+		
+		/*
 		curl_close($curl);
 
 		if (!$response) {
@@ -99,7 +100,7 @@ class ControllerExtensionStore extends Controller {
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));				
-	*/
+		*/
 	}
 	
 	public function info() {
@@ -202,13 +203,13 @@ class ControllerExtensionStore extends Controller {
 				
 		$response = curl_exec($curl);
 
-		curl_close($curl);
-
 		if (!$response) {
 			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
 		} else {
 			$json = json_decode($response);
 		}
+		
+		curl_close($curl);
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
@@ -364,20 +365,17 @@ class ControllerExtensionStore extends Controller {
 					$destination = basename(DIR_SYSTEM) . substr($destination, 6);
 				}
 
-				if (is_dir($file)) {
-					
-					
-					if (!in_array(basename($destination), $list_data)) {
-						if (!mkdir($connection, $destination)) {
-							$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
-						}
+				if (is_dir($file) && !is_dir($destination)) {
+					if (!mkdir($destination, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
 					}
-
-					if (is_file($file)) {
-						if (!rename($file, $destination)) {
-							$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
-						}
+				}
+			
+				if (is_file($file)) {
+					if (!rename($file, $destination)) {
+						$json['error'] = sprintf($this->language->get('error_file'), $file);
 					}
+				}
 			}
 		}
 

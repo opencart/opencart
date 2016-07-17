@@ -140,7 +140,7 @@ class ModelSaleVoucher extends Model {
 
 				$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
 
-				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
 				$data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
 				$data['text_message'] = $this->language->get('text_message');
 				$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);

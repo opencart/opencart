@@ -18,8 +18,13 @@ $_['db_port']          = DB_PORT;
 // Session
 $_['session_autostart'] = false;
 
-// Template
-$_['template_type']         = 'twig';
+/**
+ * Template Engine
+ *
+ * Twig : Template\Twig
+ * PHP : Template\PHP
+ **/
+$_['template_engine']  = 'Template\Twig';
 
 // Autoload Libraries
 $_['library_autoload'] = array(
@@ -39,6 +44,7 @@ $_['action_pre_action'] = array(
 // Action Events
 $_['action_event'] = array(
 	'view/*/before'                         => 'event/theme',
+    'view/render/before'                    => 'event/template',
 	
 	'model/extension/analytics/*/before'    => 'event/compatibility/beforeModel',
 	'model/extension/captcha/*/before'      => 'event/compatibility/beforeModel',

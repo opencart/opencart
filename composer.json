@@ -11,6 +11,7 @@
         "leafo/scssphp": "0.0.12",
         "divido/divido-php": ">=1.1.1",
         "klarna/kco_rest": "^2.2",
+        "twig/twig": "^1.24",
         "php": ">=5.4.0"
     }
 }

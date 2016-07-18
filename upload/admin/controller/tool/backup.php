@@ -60,15 +60,17 @@ class ControllerToolBackup extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (isset($this->request->files['import']['tmp_name'])) {
+		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
 			$filename = basename(html_entity_decode($this->request->files['import']['tmp_name'], ENT_QUOTES, 'UTF-8'));
+			
+			move_uploaded_file($this->request->files['import']['tmp_name'], sys_get_temp_dir() . '/' . $filename);
 		} elseif (isset($this->request->get['import'])) {
 			$filename = basename(html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
 		
-		if (!is_file(ini_get('upload_tmp_dir') . '/' . $filename) || substr(str_replace('\\', '/', realpath(ini_get('upload_tmp_dir') . '/' . $filename)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_file(sys_get_temp_dir() . '/' . $filename) || substr(str_replace('\\', '/', realpath(sys_get_temp_dir() . '/' . $filename)), 0, strlen(sys_get_temp_dir())) != str_replace('\\', '/', sys_get_temp_dir())) {
 			$json['error'] = $this->language->get('error_file');
 		}	
 		
@@ -81,8 +83,9 @@ class ControllerToolBackup extends Controller {
 		if (!$json) {
 			// We set $i so we can batch execute the queries rather than do them all at once.
 			$i = 0;
+			$start = false;
 			
-			$handle = fopen(ini_get('upload_tmp_dir') . '/' . $filename, 'r');
+			$handle = fopen(sys_get_temp_dir() . '/' . $filename, 'r');
 
 			fseek($handle, $position, SEEK_SET);
 			
@@ -110,13 +113,19 @@ class ControllerToolBackup extends Controller {
 
 			$position = ftell($handle);
 
-			$json['success'] = $this->language->get('text_success');
+			$size = filesize(sys_get_temp_dir() . '/' . $filename);
+
+			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
 			
 			if ($position && !feof($handle)) {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'token=' . $this->session->data['token'] . '&import=' . $filename . '&position=' . $position));
+			
+				fclose($handle);
+			} else {
+				fclose($handle);
+				
+				unlink(sys_get_temp_dir() . '/' . $filename);
 			}
-
-			fclose($handle);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

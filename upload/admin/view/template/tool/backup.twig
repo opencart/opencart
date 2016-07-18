@@ -88,8 +88,6 @@ $('#button-import').on('click', function() {
 				success: function(json) {
 					$('.alert').remove();
 					
-					console.log(json);
-					
 					if (json['error']) {
 						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
@@ -126,7 +124,7 @@ function next(url) {
 			}
 			
 			if (json['next']) {
-				//next(json['next']);
+				next(json['next']);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

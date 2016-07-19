@@ -120,7 +120,7 @@ class ControllerToolBackup extends Controller {
 			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
 			
 			if ($position && !feof($handle)) {
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'token=' . $this->session->data['token'] . '&import=' . $filename . '&position=' . $position));
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'token=' . $this->session->data['token'] . '&import=' . $filename . '&position=' . $position, true));
 			
 				fclose($handle);
 			} else {

@@ -127,6 +127,8 @@ class ControllerToolBackup extends Controller {
 				fclose($handle);
 				
 				unlink(ini_get('upload_tmp_dir') . '/' . $filename);
+
+				$this->cache->delete('*');
 			}
 		}
 

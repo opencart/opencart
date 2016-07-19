@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_store }}</td>
+        <td class="text-left">{{ column_route }}</td>
+        <td class="text-left">{{ column_theme }}</td>
+        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-right">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+    {% if histories %}
+    {% for history in histories %}
+    <tr>
+      <td class="text-left">{{ history.store }}
+      <input type="hidden" name="store_id" value="{{ history.store_id }}" /></td>
+      <td class="text-left">{{ history.route }}
+      <input type="hidden" name="path" value="{{ history.route }}" /></td>
+      <td class="text-left">{{ history.theme }}</td>
+      <td class="text-left">{{ history.date_added }}</td>
+      <td class="text-right"><a href="{{ history.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="{{ history.delete }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa fa fa-trash-o"></i></a></td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td class="text-center" colspan="5">{{ text_no_results }}</td>
+    </tr>
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

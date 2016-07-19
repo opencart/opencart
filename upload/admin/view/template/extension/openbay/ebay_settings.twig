@@ -1,0 +1,570 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
+        <input type="hidden" name="ebay_itm_link" value="{{ ebay_itm_link }}" />
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_api_info }}</a></li>
+          <li><a href="#tab-setup" data-toggle="tab">{{ tab_setup }}</a></li>
+          <li><a href="#tab-defaults" data-toggle="tab">{{ tab_defaults }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-general">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay-status">{{ entry_status }}</label>
+              <div class="col-sm-10">
+                <select name="ebay_status" id="ebay-status" class="form-control">
+                  {% if ebay_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                  {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay-token">{{ entry_token }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_token" value="{{ ebay_token }}" placeholder="{{ entry_token }}" id="ebay-token" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay-secret">{{ entry_secret }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_secret" value="{{ ebay_secret }}" placeholder="{{ entry_secret }}" id="ebay-secret" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay-string1">{{ entry_string1 }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_string1" value="{{ ebay_string1 }}" placeholder="{{ entry_string1 }}" id="ebay-string1" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay-string2">{{ entry_string2 }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_string2" value="{{ ebay_string2 }}" placeholder="{{ entry_string2 }}" id="ebay-string2" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{ text_api_status }}</label>
+              <div class="col-sm-10">
+                <h4><span id="api-status" class="label" style="display:none;"></span></h4>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{ text_api_other }}</label>
+              <div class="col-sm-10">
+                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_register }}</a></p>
+                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> {{ text_token_renew }}</a></p>
+                <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="fa fa-link"></i> {{ text_obp_detail_update }}</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-setup">
+            <fieldset>
+              <legend>{{ text_app_settings }}</legend>
+              <p>{{ text_application_settings }}</p>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay-enditems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_end_items }}">{{ entry_end_items }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_enditems" id="ebay-enditems" class="form-control">
+                    {% if ebay_enditems %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-relistitems"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_relist_items }}">{{ entry_relist_items }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_relistitems" id="entry-relistitems" class="form-control">
+                    {% if ebay_relistitems %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-disable-nostock"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_disable_soldout }}">{{ entry_disable_soldout }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_disable_nostock" id="entry-disable-nostock" class="form-control">
+                    {% if ebay_disable_nostock %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_logging">{{ entry_debug }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_logging" id="ebay_logging" class="form-control">
+                    {% if ebay_logging %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-default-currency"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_currency }}">{{ entry_currency }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_def_currency" id="entry-default-currency" class="form-control">
+                    {% for currency in currency_list %}
+                    <?php echo '<option value="'.$currency['code'].'"'.($ebay_def_currency == $currency['code'] ? ' selected="selected"' : '').'>'.$currency['title'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-stock-allocate"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_stock_allocate }}">{{ entry_stock_allocate }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_stock_allocate" id="entry-stock-allocate" class="form-control">
+                    {% if ebay_stock_allocate %}
+                    <option value="1" selected="selected">{{ text_allocate_2 }}</option>
+                    <option value="0">{{ text_allocate_1 }}</option>
+                    {% else %}
+                    <option value="1">{{ text_allocate_2 }}</option>
+                    <option value="0" selected="selected">{{ text_allocate_1 }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-created-hours"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_created_hours }}">{{ entry_created_hours }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="ebay_created_hours" value="{{ ebay_created_hours }}" placeholder="{{ entry_created_hours }}" id="entry-created-hours" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-create-date"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_create_date }}">{{ entry_create_date }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_create_date" id="entry-create-date" class="form-control">
+                    {% if ebay_create_date %}
+                    <option value="1" selected="selected">{{ text_create_date_1 }}</option>
+                    <option value="0">{{ text_create_date_0 }}</option>
+                    {% else %}
+                    <option value="1">{{ text_create_date_1 }}</option>
+                    <option value="0" selected="selected">{{ text_create_date_0 }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-time-offset"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_timezone_offset }}">{{ entry_timezone_offset }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_time_offset" id="entry-time-offset" class="form-control">
+                    <option value="-12"<?php if ($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
+                    <option value="-11"<?php if ($ebay_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
+                    <option value="-10"<?php if ($ebay_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
+                    <option value="-9"<?php if ($ebay_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
+                    <option value="-8"<?php if ($ebay_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
+                    <option value="-7"<?php if ($ebay_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
+                    <option value="-6"<?php if ($ebay_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
+                    <option value="-5"<?php if ($ebay_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
+                    <option value="-4"<?php if ($ebay_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
+                    <option value="-3"<?php if ($ebay_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
+                    <option value="-2"<?php if ($ebay_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
+                    <option value="-1"<?php if ($ebay_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
+                    <option value="0"<?php if ($ebay_time_offset == '0'){ echo ' selected';} ?>>0</option>
+                    <option value="+1"<?php if ($ebay_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
+                    <option value="+2"<?php if ($ebay_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
+                    <option value="+3"<?php if ($ebay_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
+                    <option value="+4"<?php if ($ebay_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
+                    <option value="+5"<?php if ($ebay_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
+                    <option value="+6"<?php if ($ebay_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
+                    <option value="+7"<?php if ($ebay_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
+                    <option value="+8"<?php if ($ebay_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
+                    <option value="+9"<?php if ($ebay_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
+                    <option value="+10"<?php if ($ebay_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
+                    <option value="+11"<?php if ($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
+                    <option value="+12"<?php if ($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-address-format"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_address_format }}">{{ entry_address_format }}</span></label>
+                <div class="col-sm-10">
+                  <textarea name="ebay_default_addressformat" class="form-control" rows="3" id="entry-address-format">{{ ebay_default_addressformat }}</textarea>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_notify_settings }}</legend>
+              <p>{{ text_notifications }}</p>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-update-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_order_update }}">{{ entry_notify_order_update }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_update_notify" id="entry-update-notify" class="form-control">
+                    {% if ebay_update_notify %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-confirm-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_buyer }}">{{ entry_notify_buyer }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_confirm_notify" id="entry-confirm-notify" class="form-control">
+                    {% if ebay_confirm_notify %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-confirm-admin-notify"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_notify_admin }}">{{ entry_notify_admin }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_confirmadmin_notify" id="entry-confirm-admin-notify" class="form-control">
+                    {% if ebay_confirmadmin_notify %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_email_brand_disable">{{ entry_brand_disable }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_email_brand_disable" id="ebay_email_brand_disable" class="form-control">
+                    {% if ebay_email_brand_disable %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_default_import }}</legend>
+              <p>{{ text_import_description }}</p>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_import_pending }}</label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="ebay_import_unpaid" value="0" />
+                  <input type="checkbox" name="ebay_import_unpaid" value="1" <?php if ($ebay_import_unpaid == 1){ echo 'checked="checked"'; } ?> />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_import_id">{{ entry_import_def_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
+                    <?php if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_import_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_paid_id">{{ entry_import_paid_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
+                    <?php if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_paid_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_shipped_id">{{ entry_import_shipped_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
+                    <?php if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_shipped_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_cancelled_id">{{ entry_import_cancelled_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
+                    <?php if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_cancelled_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_partial_refund_id">{{ entry_import_part_refund_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
+                    <?php if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_partial_refund_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_status_refunded_id">{{ entry_import_refund_id }}</label>
+                <div class="col-sm-10">
+                  <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
+                    <?php if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; } ?>
+                    {% for status in order_statuses %}
+                    <?php echo'<option value="'.$status['order_status_id'].'"'.($ebay_status_refunded_id == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_developer }}</legend>
+              <p>{{ text_developer_description }}</p>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="button-clear-locks">{{ entry_developer_locks }}</label>
+                <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-locks">{{ button_clear }}</a> </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="button-repair-links">{{ button_repair_links }}</label>
+                <div class="col-sm-10"> <a class="btn btn-primary" id="button-repair-links">{{ button_update }}</a> </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="tab-pane" id="tab-defaults">
+            <fieldset>
+              <legend>{{ text_listing }}</legend>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-duration"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_duration }}">{{ entry_duration }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_duration" id="entry-duration" class="form-control">
+                    {% if durations %}
+                      {% for key => $duration in durations %}
+                        <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
+                      {% endfor %}
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-measurement"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_measurement }}">{{ entry_measurement }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_measurement" id="entry-measurement" class="form-control">
+                    {% if measurement_types %}
+                      {% for key => $type in measurement_types %}
+                        <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
+                      {% endfor %}
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_payments }}</legend>
+              <p>{{ text_payments_description }}</p>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-payment-instruction"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_payment_instruction }}">{{ entry_payment_instruction }}</span></label>
+                <div class="col-sm-10">
+                  <textarea name="ebay_payment_instruction" class="form-control" rows="3" id="entry-payment-instruction">{{ ebay_payment_instruction }}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_payment_paypal_address">{{ text_payment_paypal_add }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="ebay_payment_paypal_address" value="{{ ebay_payment_paypal_address }}" placeholder="{{ text_payment_paypal_add }}" id="ebay_payment_paypal_address" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_payment_types }}</label>
+                <div class="col-sm-10">
+                  {% for payment in payment_options %}
+                  <div class="checkbox">
+                    <label>
+                      <input type="hidden" name="ebay_payment_types[{{ payment.ebay_name }}]" value="0" />
+                      <input type="checkbox" name="ebay_payment_types[{{ payment.ebay_name }}]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
+                      {{ payment.local_name }} </label>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-payment-immediate"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_payment_immediate }}">{{ entry_payment_immediate }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_payment_immediate" id="entry-payment-immediate" class="form-control">
+                    {% if ebay_payment_immediate %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="entry-tax-listing"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_listing_tax }}">{{ entry_tax_listing }}</span></label>
+                <div class="col-sm-10">
+                  <select name="ebay_tax_listing" id="entry-tax-listing" class="form-control">
+                    <option value="0" <?php echo ($ebay_tax_listing == 0 ? 'selected' : '' ); ?>>{{ text_tax_use_value }}</option>
+                    <option value="1" <?php echo ($ebay_tax_listing == 1 ? 'selected' : '' ); ?>>{{ text_tax_use_listing }}</option>
+                    <option value="2" <?php echo ($ebay_tax_listing == 2 ? 'selected' : '' ); ?>>{{ text_tax_use_product }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" id="entry-tax-listing-preset">
+                <label class="col-sm-2 control-label" for="entry-tax"><span data-toggle="tooltip" data-container="#tab-setup" title="{{ help_tax }}">{{ entry_tax }}</span></label>
+                <div class="col-sm-10">
+                  <div class="input-group col-xs-2">
+                    <input type="text" name="ebay_tax" value="{{ ebay_tax }}" id="entry-tax" class="form-control" />
+                    <span class="input-group-addon">%</span> </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+    $('#button-clear-locks').bind('click', function() {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/ebay/deleteAllLocks&token={{ token }}',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+          $('#button-clear-locks').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#button-clear-locks').empty().html('{{ button_clear }}');
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+          $('#button-clear-locks').empty().html('{{ button_clear }}');
+        }
+      });
+    });
+
+    $('#button-repair-links').bind('click', function() {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/ebay/repairLinks&token={{ token }}',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+          $('#button-repair-links').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#button-repair-links').empty().html('{{ button_update }}');
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+          $('#button-repair-links').empty().html('{{ button_update }}');
+        }
+      });
+    });
+
+    function validateForm() {
+        $('#form-ebay-settings').submit();
+    }
+
+    function checkCredentials() {
+        $.ajax({
+            url: 'index.php?route=extension/openbay/ebay/verifycredentials&token={{ token }}',
+            type: 'POST',
+            dataType: 'json',
+            data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},
+            beforeSend: function() {
+              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
+            },
+            success: function(data) {
+                if (data.error == false) {
+                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> {{ text_api_ok }}: ' + data.data.expire);
+                } else {
+                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
+                }
+            },
+            failure: function() {
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+            },
+            error: function() {
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> {{ error_api_connect }}');
+            }
+        });
+    }
+
+    function changeTaxHandler(){
+        if ($('#entry-tax-listing').val() == 0){
+            $('#entry-tax-listing-preset').show();
+        }else{
+            $('#entry-tax-listing-preset').hide();
+        }
+    }
+
+    $('.credentials').change(function() {
+      checkCredentials();
+    });
+
+    $('#entry-tax-listing').change(function() {
+      changeTaxHandler();
+    });
+
+    $(document).ready(function() {
+      checkCredentials();
+      changeTaxHandler();
+    });
+//--></script>
+{{ footer }}

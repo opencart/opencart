@@ -1,0 +1,249 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-affiliate').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-name">{{ entry_name }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-email">{{ entry_email }}</label>
+                <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-status">{{ entry_status }}</label>
+                <select name="filter_status" id="input-status" class="form-control">
+                  <option value="*"></option>
+                  {% if filter_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  {% endif %}
+                  {% if not filter_status %}
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% else %}
+                  <option value="0">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-approved">{{ entry_approved }}</label>
+                <select name="filter_approved" id="input-approved" class="form-control">
+                  <option value="*"></option>
+                  {% if filter_approved %}
+                  <option value="1" selected="selected">{{ text_yes }}</option>
+                  {% else %}
+                  <option value="1">{{ text_yes }}</option>
+                  {% endif %}
+                  {% if not filter_approved %}
+                  <option value="0" selected="selected">{{ text_no }}</option>
+                  {% else %}
+                  <option value="0">{{ text_no }}</option>
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </span></div>
+              </div>
+              <div class="form-group">
+                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-affiliate">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{% if sort == 'name' %}
+                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                    {% else %}
+                    <a href="{{ sort_name }}">{{ column_name }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'a.email' %}
+                    <a href="{{ sort_email }}" class="{{ order|lower }}">{{ column_email }}</a>
+                    {% else %}
+                    <a href="{{ sort_email }}">{{ column_email }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_balance }}</td>
+                  <td class="text-left">{% if sort == 'a.status' %}
+                    <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                    <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'a.date_added' %}
+                    <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+                    {% else %}
+                    <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if affiliates %}
+                {% for affiliate in affiliates %}
+                <tr>
+                  <td class="text-center">{% if affiliate.affiliate_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ affiliate.affiliate_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ affiliate.affiliate_id }}" />
+                    {% endif %}</td>
+                  <td class="text-left">{{ affiliate.name }}</td>
+                  <td class="text-left">{{ affiliate.email }}</td>
+                  <td class="text-right">{{ affiliate.balance }}</td>
+                  <td class="text-left">{{ affiliate.status }}</td>
+                  <td class="text-left">{{ affiliate.date_added }}</td>
+                  <td class="text-right">{% if affiliate.approve %}
+                    <a href="{{ affiliate.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
+                    {% else %}
+                    <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
+                    {% endif %}
+                    {% if affiliate.unlock %}
+                    <a href="{{ affiliate.unlock }}" data-toggle="tooltip" title="{{ button_unlock }}" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                    {% else %}
+                    <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
+                    {% endif %}                   
+                    <a href="{{ affiliate.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="7">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	url = 'index.php?route=marketing/affiliate&token={{ token }}';
+	
+	var filter_name = $('input[name=\'filter_name\']').val();
+	
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+	
+	var filter_email = $('input[name=\'filter_email\']').val();
+	
+	if (filter_email) {
+		url += '&filter_email=' + encodeURIComponent(filter_email);
+	}
+		
+	var filter_status = $('select[name=\'filter_status\']').val();
+	
+	if (filter_status != '*') {
+		url += '&filter_status=' + encodeURIComponent(filter_status); 
+	}	
+	
+	var filter_approved = $('select[name=\'filter_approved\']').val();
+	
+	if (filter_approved != '*') {
+		url += '&filter_approved=' + encodeURIComponent(filter_approved);
+	}	
+	
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
+	
+	if (filter_date_added) {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+	
+	location = url;
+});
+//--></script> 
+  <script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=marketing/affiliate/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['affiliate_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_name\']').val(item['label']);
+	}	
+});
+
+$('input[name=\'filter_email\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=marketing/affiliate/autocomplete&token={{ token }}&filter_email=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['email'],
+						value: item['affiliate_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_email\']').val(item['label']);
+	}	
+});
+//--></script> 
+  <script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+//--></script></div>
+{{ footer }}

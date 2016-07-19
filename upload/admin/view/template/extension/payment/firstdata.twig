@@ -184,10 +184,13 @@
                 <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="{{ help_settle }}">{{ entry_auto_settle }}</span></label>
                 <div class="col-sm-10">
                   <select name="firstdata_auto_settle" id="input-auto-settle" class="form-control">
-                    <option value="0"
-                <?php echo ($firstdata_auto_settle == 0 ? ' selected' : ''); ?>>{{ text_settle_delayed }}</option>
-                    <option value="1"
-                <?php echo ($firstdata_auto_settle == 1 ? ' selected' : ''); ?>>{{ text_settle_auto }}</option>
+                    {% if firstdata_auto_settle %}
+                    <option value="1" selected="selected">{{ text_settle_auto }}</option>
+                    <option value="0">{{ text_settle_delayed }}</option>
+                    {% else %}
+                    <option value="1">{{ text_settle_auto }}</option>
+                    <option value="0" selected="selected">{{ text_settle_delayed }}</option>
+                    {% endif %}
                   </select>
                 </div>
               </div>

@@ -24,11 +24,11 @@
             </div>
             <div class="panel-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-divido" class="form-horizontal">
-                  
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="api_key"><span data-toggle="tooltip" title="{{ help_api_key }}">{{ entry_api_key }}</span></label>
                         <div class="col-sm-10">
-                            <input id="api_key" class="form-control" type="text" name="divido_api_key" value="{{ divido_api_key }}" size="60"></td>
+                            <input id="api_key" class="form-control" type="text" name="divido_api_key" value="{{ divido_api_key }}" size="60">
                         </div>
                     </div>
 
@@ -51,12 +51,13 @@
                         <label class="col-sm-2 control-label" for="divido_order_status_id"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
                         <div class="col-sm-10">
                             <select name="divido_order_status_id" id="divido_order_status_id" class="form-control">
-                                <?php foreach ($order_statuses as $order_status): ?>
-                                <?php $selected = ($order_status['order_status_id'] == $divido_order_status_id) ? 'selected' : ''; ?>
-                                <option value="{{ order_status.order_status_id }}" {{ selected }}>
-                                {{ order_status.name }}
-                                </option>
-                                <?php endforeach; ?>
+                                {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id == divido_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                                {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                {% endif %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -72,8 +73,12 @@
                         <label class="col-sm-2 control-label" for="divido_planselection"><span data-toggle="tooltip" title="{{ help_planselection }}">{{ entry_planselection }}</span></label>
                         <div class="col-sm-10">
                             <select name="divido_planselection" id="divido_planselection" class="form-control">
-                                <?php foreach ($entry_plans_options as $option => $text): $selected = $option == $divido_planselection ? 'selected' : null; ?>
-                                <option value="{{ option }}" {{ selected }}>{{ text }}</option>
+                                {% for option, text in entry_plans_options %}
+                                {% if option == divido_planselection %}
+                                <option value="{{ option }}" selected="selected">{{ text }}</option>
+                                {% else %}
+                                <option value="{{ option }}">{{ text }}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -82,11 +87,18 @@
                     <div id="plan-list" class="form-group">
                         <label class="col-sm-2 control-label">{{ entry_planlist }}</label>
                         <div class="col-sm-10">
-                            <?php foreach ($divido_plans as $plan): $checked = in_array($plan->id, $divido_plans_selected) ? 'checked' : null; ?>
+                            {% for plan in divido_plans %}
+                            {% if plan.id in divido_plans_selected %}
                             <label>
-                                <input type="checkbox" name="divido_plans_selected[]" value="<?php echo $plan->id; ?>" {{ checked }}>
-                                <?php echo "{$plan->text} ({$plan->interest_rate}% APR)"; ?>
+                                <input type="checkbox" name="divido_plans_selected[]" value="{{ plan.id }}" checked="checked">
+                                {{ plan.text }} {{ plan.interest_rate }}% APR
                             </label><br>
+                            {% else %}
+                            <label>
+                                <input type="checkbox" name="divido_plans_selected[]" value="{{ plan.id }}">
+                                {{ plan.text }} {{ plan.interest_rate }}% APR
+                            </label><br>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -95,8 +107,12 @@
                         <label class="col-sm-2 control-label" for="divido_productselection"><span data-toggle="tooltip" title="{{ help_productselection }}">{{ entry_productselection }}</span></label>
                         <div class="col-sm-10">
                             <select name="divido_productselection" id="divido_productselection" class="form-control">
-                                <?php foreach ($entry_products_options as $option => $text): $selected = $option == $divido_productselection ? 'selected' : null; ?>
-                                <option value="{{ option }}" {{ selected }}>{{ text }}</option>
+                                {% for option, text in entry_products_options %}
+                                {% if option == divido_productselection %}
+                                <option value="{{ option }}" selected="selected">{{ text }}</option>
+                                {% else %}
+                                <option value="{{ option }}">{{ text }}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>

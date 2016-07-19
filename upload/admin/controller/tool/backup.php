@@ -63,14 +63,16 @@ class ControllerToolBackup extends Controller {
 		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
 			$filename = basename(html_entity_decode($this->request->files['import']['tmp_name'], ENT_QUOTES, 'UTF-8'));
 			
-			move_uploaded_file($this->request->files['import']['tmp_name'], sys_get_temp_dir() . '/' . $filename);
+			$filename = basename(tempnam(ini_get('upload_tmp_dir'), 'bac'));
+			
+			move_uploaded_file($this->request->files['import']['tmp_name'], ini_get('upload_tmp_dir') . '/' . $filename);
 		} elseif (isset($this->request->get['import'])) {
 			$filename = basename(html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filename = '';
 		}
 		
-		if (!is_file(sys_get_temp_dir() . '/' . $filename) || substr(str_replace('\\', '/', realpath(sys_get_temp_dir() . '/' . $filename)), 0, strlen(sys_get_temp_dir())) != str_replace('\\', '/', sys_get_temp_dir())) {
+		if (!is_file(ini_get('upload_tmp_dir') . '/' . $filename) || substr(str_replace('\\', '/', realpath(ini_get('upload_tmp_dir') . '/' . $filename)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_file');
 		}	
 		
@@ -85,7 +87,7 @@ class ControllerToolBackup extends Controller {
 			$i = 0;
 			$start = false;
 			
-			$handle = fopen(sys_get_temp_dir() . '/' . $filename, 'r');
+			$handle = fopen(ini_get('upload_tmp_dir') . '/' . $filename, 'r');
 
 			fseek($handle, $position, SEEK_SET);
 			
@@ -113,7 +115,7 @@ class ControllerToolBackup extends Controller {
 
 			$position = ftell($handle);
 
-			$size = filesize(sys_get_temp_dir() . '/' . $filename);
+			$size = filesize(ini_get('upload_tmp_dir') . '/' . $filename);
 
 			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
 			
@@ -124,7 +126,7 @@ class ControllerToolBackup extends Controller {
 			} else {
 				fclose($handle);
 				
-				unlink(sys_get_temp_dir() . '/' . $filename);
+				unlink(ini_get('upload_tmp_dir') . '/' . $filename);
 			}
 		}
 

@@ -574,9 +574,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		// Request is valid, we can spoof/simulate the customer to calculate shipping
 		if ($process) {
 			session_destroy();
-            session_id($klarna_checkout_order_data['session_id']);
-            session_start();
-            $this->session->start('default', $klarna_checkout_order_data['session_key']);
+			session_id($klarna_checkout_order_data['session_id']);
+			session_start();
+			$this->session->start('default', $klarna_checkout_order_data['session_key']);
 
 			if ($klarna_checkout_order_data['customer_id']) {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
@@ -846,9 +846,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		// Spoof/simulate the customer to calculate shipping
 		if ($validate) {
 			session_destroy();
-            session_id($klarna_checkout_order_data['session_id']);
-            session_start();
-            $this->session->start('default', $klarna_checkout_order_data['session_key']);
+			session_id($klarna_checkout_order_data['session_id']);
+			session_start();
+			$this->session->start('default', $klarna_checkout_order_data['session_key']);
 
 			if ($klarna_checkout_order_data['customer_id']) {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);

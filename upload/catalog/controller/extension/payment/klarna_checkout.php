@@ -1681,12 +1681,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		// Callback data to be used to spoof/simulate customer to accurately calculate shipping
 		$encrypted_order_data = $this->encryption->encrypt(json_encode(array(
-			'session_id'  => session_id(),
-			'session_key' => $this->session->getId(),
-			'customer_id' => $this->customer->getId(),
-			'order_id'	  => $this->session->data['order_id'],
-			'merchant_id' => $klarna_account['merchant_id'],
-			'secret'      => $klarna_account['secret']
+			'session_id'	=> session_id(),
+			'session_key'	=> $this->session->getId(),
+			'customer_id'	=> $this->customer->getId(),
+			'order_id'		=> $this->session->data['order_id'],
+			'merchant_id'	=> $klarna_account['merchant_id'],
+			'secret'		=> $klarna_account['secret']
 		)));
 
 		$encrypted_order_id = $this->encryption->encrypt($this->session->data['order_id']);

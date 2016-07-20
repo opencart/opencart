@@ -13,7 +13,7 @@
     <tr>
       <td>{{ text_amount_authorised }}</td>
       <td>{{ total }}
-        <?php if ($capture_status != 'Complete') { ?>
+	  	{% if capture_status != 'Complete' %}
         &nbsp;&nbsp;&nbsp;
         <button type="button" id="button-void" data-loading="{{ text_loading }}" class="btn btn-danger">{{ button_void }}</button>
         {% endif %}</td>
@@ -29,7 +29,7 @@
   </table>
 </fieldset>
 
-<?php if ($capture_status != 'Complete') { ?>
+{% if capture_status != 'Complete' %}
 	<fieldset id="capture-form">
 		<legend>{{ tab_capture }}</legend>
 		<form id="paypal-capture" class="form-horizontal">

@@ -21,14 +21,14 @@ class ControllerInstallStep3 extends Controller {
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";			
-			$output .= 'define(\'DIR_LANGUAGE\', \'DIR_APPLICATION . \'catalog/language/\');' . "\n";
-			$output .= 'define(\'DIR_TEMPLATE\', \'DIR_APPLICATION . \'catalog/view/theme/\');' . "\n";
-			$output .= 'define(\'DIR_CONFIG\', \'DIR_SYSTEM . \'config/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'DIR_SYSTEM . \'storage/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'DIR_SYSTEM . \'storage/download/\');' . "\n";
-			$output .= 'define(\'DIR_LOGS\', \'DIR_SYSTEM . \'storage/logs/\');' . "\n";
-			$output .= 'define(\'DIR_MODIFICATION\', \'DIR_SYSTEM . \'storage/modification/\');' . "\n";
-			$output .= 'define(\'DIR_UPLOAD\', \'DIR_SYSTEM . \'storage/upload/\');' . "\n\n";
+			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'catalog/language/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'catalog/view/theme/\');' . "\n";
+			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', DIR_SYSTEM . \'storage/cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', DIR_SYSTEM . \'storage/download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', DIR_SYSTEM . \'storage/logs/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', DIR_SYSTEM . \'storage/modification/\');' . "\n";
+			$output .= 'define(\'DIR_UPLOAD\', DIR_SYSTEM . \'storage/upload/\');' . "\n\n";
 			
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
@@ -58,15 +58,15 @@ class ControllerInstallStep3 extends Controller {
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'admin/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";			
-			$output .= 'define(\'DIR_LANGUAGE\', \'DIR_APPLICATION . \'language/\');' . "\n";
-			$output .= 'define(\'DIR_TEMPLATE\', \'DIR_APPLICATION . \'view/template/\');' . "\n";
-			$output .= 'define(\'DIR_CONFIG\', \'DIR_SYSTEM . \'system/config/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'DIR_SYSTEM . \'storage/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'DIR_SYSTEM . \'storage/download/\');' . "\n";
-			$output .= 'define(\'DIR_LOGS\', \'DIR_SYSTEM . \'storage/logs/\');' . "\n";
+			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
+			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
+			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'system/config/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', DIR_SYSTEM . \'storage/cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', DIR_SYSTEM . \'storage/download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', DIR_SYSTEM . \'storage/logs/\');' . "\n";
 			$output .= 'define(\'DIR_MODIFICATION\', \'DIR_SYSTEM . \'storage/modification/\');' . "\n";
-			$output .= 'define(\'DIR_UPLOAD\', \'DIR_SYSTEM . \'storage/upload/\');' . "\n";
-			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
+			$output .= 'define(\'DIR_UPLOAD\', DIR_SYSTEM . \'storage/upload/\');' . "\n\n";
 			
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";

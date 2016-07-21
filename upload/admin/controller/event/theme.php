@@ -6,12 +6,12 @@ class ControllerEventTheme extends Controller {
 			$view = substr($view, 0, -3);
 		}
 		
-		if (is_file(DIR_TEMPLATE . 'template/' . $view . '.twig')) {
-			$view = 'template/' . $view . '.twig'; 
+		if (is_file(DIR_TEMPLATE . $view . '.twig')) {
+			$view = $view . '.twig'; 
 			
 			$this->config->set('template_type', 'twig');
-		} elseif (is_file(DIR_TEMPLATE . 'template/' . $view . '.tpl')) {
-			$view = 'template/' . $view . '.tpl'; 
+		} elseif (is_file(DIR_TEMPLATE . $view . '.tpl')) {
+			$view = $view . '.tpl'; 
 			
 			$this->config->set('template_type', 'php');
 		}		

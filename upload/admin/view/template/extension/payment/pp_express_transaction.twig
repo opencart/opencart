@@ -22,9 +22,8 @@
     <td class="text-left">{{ transaction.pending_reason }}</td>
     <td class="text-left">{{ transaction.date_added }}</td>
     <td class="text-left"> {% if transaction.transaction_id %} <a href="{{ transaction.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
-      <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
+      {% if transaction.payment_type == 'instant' and (transaction.payment_status is 'Completed' or transaction.payment_status is 'Partially-Refunded') %}
       <a href="{{ transaction.refund }}" data-toggle="tooltip" title="{{ button_refund }}" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;
-      {% endif %}
       {% else %}
       <button type="button" value="{{ transaction.resend }}" data-toggle="tooltip" title="{{ button_resend }}" class="btn btn-info"><i class="fa fa-refresh"></i></button>
       {% endif %} </td>

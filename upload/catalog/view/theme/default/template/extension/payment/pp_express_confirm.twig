@@ -71,7 +71,6 @@
             </tr>
           </thead>
           <tbody>
-          
           {% for product in products %}
           <tr>
             <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
@@ -93,8 +92,7 @@
             <td class="text-right">{{ voucher.amount }}</td>
           </tr>
           {% endfor %}
-            </tbody>
-          
+          </tbody>
         </table>
       </div>
       <br />

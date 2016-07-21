@@ -37,7 +37,7 @@
         </div>
       </div>
       {% else %}
-      <div class="row"> {% for category in categories|batch((categories|length / category.column)|round(1, 'ceil')) %}
+      <div class="row"> {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
         <div class="col-sm-3">
           <ul>
             {% for category in categories %}
@@ -46,6 +46,7 @@
           </ul>
         </div>
         {% endfor %} </div>
+      <br />
       {% endif %}
       {% endif %}
       {% if products %}
@@ -65,21 +66,27 @@
             <select id="input-sort" class="form-control" onchange="location = this.value;">
               
               
+              
               {% for sorts in sorts %}
               {% if sorts.value == '%s-%s'|format(sort, order) %}
+              
               
               
               <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
               
               
+              
               {% else %}
+              
               
               
               <option value="{{ sorts.href }}">{{ sorts.text }}</option>
               
               
+              
               {% endif %}
               {% endfor %}
+            
             
             
             </select>
@@ -91,21 +98,27 @@
             <select id="input-limit" class="form-control" onchange="location = this.value;">
               
               
+              
               {% for limits in limits %}
               {% if limits.value == limit %}
+              
               
               
               <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
               
               
+              
               {% else %}
+              
               
               
               <option value="{{ limits.href }}">{{ limits.text }}</option>
               
               
+              
               {% endif %}
               {% endfor %}
+            
             
             
             </select>

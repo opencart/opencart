@@ -69,9 +69,9 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
-        <div id="logo"> {% if logo %} <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a> {% else %}
+        <div id="logo">{% if logo %}<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>{% else %}
           <h1><a href="{{ home }}">{{ name }}</a></h1>
-          {% endif %} </div>
+          {% endif %}</div>
       </div>
       <div class="col-sm-5">{{ search }} </div>
       <div class="col-sm-3">{{ history }}</div>
@@ -90,7 +90,10 @@
         {% if category.children %}
         <li class="dropdown"><a href="{{ category.href }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu">
-            <div class="dropdown-inner"> {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+            <div class="dropdown-inner"> 
+              {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+              
+              
               <ul class="list-unstyled">
                 {% for child in children %}
                 <li><a href="{{ child.href }}">{{ child.name }}</a></li>

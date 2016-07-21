@@ -12,12 +12,12 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if ($error != '') { ?>
+    {% if error != '' %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <?php if ($attention != '') { ?>
+    {% if attention != '' %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ attention }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -40,13 +40,13 @@
             <label class="col-sm-2 control-label">{{ entry_full_refund }}</label>
             <div class="col-sm-10">
               <input type="hidden" name="refund_full" value="0"/>
-              <input type="checkbox" name="refund_full" id="refund_full" value="1" <?php echo ($refund_available == '' ? 'checked="checked"' : ''); ?> onchange="refundAmount();"/>
+              <input type="checkbox" name="refund_full" id="refund_full" value="1" {{ refund_available == '' ? 'checked="checked"' : '' }} onchange="refundAmount();"/>
             </div>
           </div>
-          <div class="form-group" <?php echo ($refund_available == '' ? 'style="display:none;" ' : ''); ?>id="partial_amount_row">
+          <div class="form-group" {{ refund_available == '' ? 'style="display:none;" ' : ''}} id="partial_amount_row">
             <label class="col-sm-2 control-label">{{ entry_amount }}</label>
             <div class="col-sm-10">
-              <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="{{ entry_amount }}" class="form-control"/>
+              <input type="text" name="amount" value="{{ refund_available != '' ? refund_available : '' }}" placeholder="{{ entry_amount }}" class="form-control"/>
             </div>
           </div>
           <div class="form-group">

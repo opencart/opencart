@@ -6,18 +6,19 @@
         <button type="submit" form="form-eway" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1>{{ heading_title }}</h1>      <ul class="breadcrumb">
+      <h1>{{ heading_title }}</h1>
+	  <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
   <div class="container-fluid">
 	{% if error_warning %}
-		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-		  <button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
+	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  </div>
 	{% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -30,11 +31,11 @@
             <div class="col-sm-10">
               <select name="eway_paymode" id="input-test" class="form-control">
 				{% if eway_paymode == 'iframe' %}
-					<option value="iframe" selected="selected">{{ text_iframe }}</option>
-					<option value="transparent">{{ text_transparent }}</option>
+				  <option value="iframe" selected="selected">{{ text_iframe }}</option>
+				  <option value="transparent">{{ text_transparent }}</option>
 				{% else %}
-					<option value="iframe">{{ text_iframe }}</option>
-					<option value="transparent" selected="selected">{{ text_transparent }}</option>
+				  <option value="iframe">{{ text_iframe }}</option>
+				  <option value="transparent" selected="selected">{{ text_transparent }}</option>
 				{% endif %}
               </select>
             </div>
@@ -44,11 +45,11 @@
             <div class="col-sm-10">
               <select name="eway_test" id="input-test" class="form-control">
 				{% if eway_test %}
-					<option value="1" selected="selected">{{ text_yes }}</option>
-					<option value="0">{{ text_no }}</option>
+				  <option value="1" selected="selected">{{ text_yes }}</option>
+				  <option value="0">{{ text_no }}</option>
 				{% else %}
-					<option value="1">{{ text_yes }}</option>
-					<option value="0" selected="selected">{{ text_no }}</option>
+				  <option value="1">{{ text_yes }}</option>
+				  <option value="0" selected="selected">{{ text_no }}</option>
 				{% endif %}
               </select>
             </div>
@@ -58,7 +59,7 @@
             <div class="col-sm-10">
               <input type="text" name="eway_username" value="{{ eway_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
 			  {% if error_username %}
-				  <div class="text-danger">{{ error_username }}</div>
+			    <div class="text-danger">{{ error_username }}</div>
 			  {% endif %}
             </div>
           </div>
@@ -67,7 +68,7 @@
             <div class="col-sm-10">
               <input type="password" name="eway_password" value="{{ eway_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
 			  {% if error_password %}
-				  <div class="text-danger">{{ error_password }}</div>
+			    <div class="text-danger">{{ error_password }}</div>
 			  {% endif %}
             </div>
           </div>
@@ -76,11 +77,11 @@
             <div class="col-sm-10">
               <select name="eway_status" id="input-status" class="form-control">
 				{% if eway_status %}
-					<option value="1" selected="selected">{{ text_enabled }}</option>
-					<option value="0">{{ text_disabled }}</option>
+				  <option value="1" selected="selected">{{ text_enabled }}</option>
+				  <option value="0">{{ text_disabled }}</option>
 				{% else %}
-					<option value="1">{{ text_enabled }}</option>
-					<option value="0" selected="selected">{{ text_disabled }}</option>
+				  <option value="1">{{ text_enabled }}</option>
+				  <option value="0" selected="selected">{{ text_disabled }}</option>
 				{% endif %}
               </select>
             </div>
@@ -90,11 +91,11 @@
             <div class="col-sm-10">
               <select name="eway_transaction_method" id="input-transaction-method" class="form-control">
 				{% if eway_transaction_method == 'auth' %}
-					<option value="payment">{{ text_sale }}</option>
-					<option value="auth" selected="selected">{{ text_authorisation }}</option>
+				  <option value="payment">{{ text_sale }}</option>
+				  <option value="auth" selected="selected">{{ text_authorisation }}</option>
 				{% else %}
-					<option value="payment" selected="selected">{{ text_sale }}</option>
-					<option value="auth">{{ text_authorisation }}</option>
+				  <option value="payment" selected="selected">{{ text_sale }}</option>
+				  <option value="auth">{{ text_authorisation }}</option>
 				{% endif %}
               </select>
             </div>
@@ -104,34 +105,34 @@
             <div class="col-sm-10">
               <p>
                 <input type="hidden" name="eway_payment_type[visa]" value="0" />
-                <input type='checkbox' name='eway_payment_type[visa]' id="eway_payment_type" value='1' <?php echo (isset($eway_payment_type['visa']) && $eway_payment_type['visa'] == 1 ? 'checked="checked"' : '') ?> /> CC - Visa
+                <input type='checkbox' name='eway_payment_type[visa]' id="eway_payment_type" value='1' {{ eway_payment_type.visa is defined and eway_payment_type.visa == 1 ? 'checked="checked"' : '' }} /> CC - Visa
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[mastercard]" value="0" />
-                <input type='checkbox' name='eway_payment_type[mastercard]' value='1' <?php echo (isset($eway_payment_type['mastercard']) && $eway_payment_type['mastercard'] == 1 ? 'checked="checked"' : '') ?> /> CC - MasterCard
+                <input type='checkbox' name='eway_payment_type[mastercard]' value='1' {{ eway_payment_type.mastercard is defined and eway_payment_type.mastercard == 1 ? 'checked="checked"' : '' }} /> CC - MasterCard
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[amex]" value="0" />
-                <input type='checkbox' name='eway_payment_type[amex]' value='1' <?php echo (isset($eway_payment_type['amex']) && $eway_payment_type['amex'] == 1 ? 'checked="checked"' : '') ?> /> CC - Amex
+                <input type='checkbox' name='eway_payment_type[amex]' value='1' {{ eway_payment_type.amex is defined and eway_payment_type.amex == 1 ? 'checked="checked"' : '' }} /> CC - Amex
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[diners]" value="0" />
-                <input type='checkbox' name='eway_payment_type[diners]' value='1' <?php echo (isset($eway_payment_type['diners']) && $eway_payment_type['diners'] == 1 ? 'checked="checked"' : '') ?> /> CC - Diners Club
+                <input type='checkbox' name='eway_payment_type[diners]' value='1' {{ eway_payment_type.diners is defined and eway_payment_type.diners == 1 ? 'checked="checked"' : '' }} /> CC - Diners Club
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[jcb]" value="0" />
-                <input type='checkbox' name='eway_payment_type[jcb]' value='1' <?php echo (isset($eway_payment_type['jcb']) && $eway_payment_type['jcb'] == 1 ? 'checked="checked"' : '') ?> /> CC - JCB
+                <input type='checkbox' name='eway_payment_type[jcb]' value='1' {{ eway_payment_type.jcb is defined and eway_payment_type.jcb == 1 ? 'checked="checked"' : '' }} /> CC - JCB
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[paypal]" value="0" />
-                <input type='checkbox' name='eway_payment_type[paypal]' value='1' <?php echo (isset($eway_payment_type['paypal']) && $eway_payment_type['paypal'] == 1 ? 'checked="checked"' : '') ?> /> PayPal
+                <input type='checkbox' name='eway_payment_type[paypal]' value='1' {{ eway_payment_type.paypal is defined and eway_payment_type.paypal == 1 ? 'checked="checked"' : '' }} /> PayPal
               </p>
               <p>
                 <input type="hidden" name="eway_payment_type[masterpass]" value="0" />
-                <input type='checkbox' name='eway_payment_type[masterpass]' value='1' <?php echo (isset($eway_payment_type['masterpass']) && $eway_payment_type['masterpass'] == 1 ? 'checked="checked"' : '') ?> /> MasterPass
+                <input type='checkbox' name='eway_payment_type[masterpass]' value='1' {{ eway_payment_type.masterpass is defined and eway_payment_type.masterpass == 1 ? 'checked="checked"' : '' }} /> MasterPass
               </p>
 			  {% if error_payment_type %}
-			  <div class="text-danger">{{ error_payment_type }}</div>
+			    <div class="text-danger">{{ error_payment_type }}</div>
 			  {% endif %}
             </div>
           </div>
@@ -141,14 +142,12 @@
               <select name="eway_standard_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
 				{% for geo_zone in geo_zones %}
-				
-				{% if geo_zone.geo_zone_id == eway_standard_geo_zone_id %}
-						<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-					{% else %}
-						<option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-					{% endif %}
-					
-					{% endfor %}
+				  {% if geo_zone.geo_zone_id == eway_standard_geo_zone_id %}
+				    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+				  {% else %}
+				    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+				  {% endif %}
+				{% endfor %}
               </select>
             </div>
           </div>
@@ -157,14 +156,12 @@
             <div class="col-sm-10">
               <select name="eway_order_status_id" id="input-order-status" class="form-control">
 				{% for order_status in order_statuses %}
-                
-                {% if order_status.order_status_id == eway_order_status_id %}
-						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-					{% else %}
-						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					{% endif %}
-					
-					{% endfor %}
+                  {% if order_status.order_status_id == eway_order_status_id %}
+				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+				  {% else %}
+				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+				  {% endif %}
+				{% endfor %}
               </select>
             </div>
           </div>
@@ -172,15 +169,13 @@
             <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
             <div class="col-sm-10">
               <select name="eway_order_status_refunded_id" id="input-order-status-refund" class="form-control">
-				{% for order_status in order_statuses) { ?>
-				
-				<?php if ($order_status['order_status_id'] == $eway_order_status_refunded_id  %}
-						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-					{% else %}
-						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					{% endif %}
-					
-					{% endfor %}
+				{% for order_status in order_statuses %}
+				  {% if order_status.order_status_id == eway_order_status_refunded_id %}
+				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+				  {% else %}
+				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+				  {% endif %}
+				{% endfor %}
               </select>
             </div>
           </div>
@@ -189,11 +184,12 @@
             <div class="col-sm-10">
               <select name="eway_order_status_auth_id" id="input-order-status-auth" class="form-control">
 				{% for order_status in order_statuses %}
-				<?php if ($order_status['order_status_id'] == $eway_order_status_auth_id) { ?>
-						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-					{% else %}
-						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					{% endif %}{% endfor %}
+				  {% if order_status.order_status_id == eway_order_status_auth_id %}
+				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+				  {% else %}
+				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+				  {% endif %}
+				{% endfor %}
 			  </select>
             </div>
           </div>
@@ -202,12 +198,12 @@
             <div class="col-sm-10">
               <select name="eway_order_status_fraud_id" id="input-order-status-fraud" class="form-control">
 				{% for order_status in order_statuses %}
-				<?php if ($order_status['order_status_id'] == $eway_order_status_fraud_id) { ?>
-						<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-					{% else %}
-						<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-					{% endif %}
-					{% endfor %}
+				  {% if order_status.order_status_id == eway_order_status_fraud_id %}
+				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+				  {% else %}
+				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+				  {% endif %}
+				{% endfor %}
 			  </select>
             </div>
           </div>

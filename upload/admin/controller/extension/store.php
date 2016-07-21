@@ -4,7 +4,7 @@ class ControllerExtensionStore extends Controller {
 		$this->load->language('extension/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -16,9 +16,9 @@ class ControllerExtensionStore extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
 		);
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
-        
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_all'] = $this->language->get('text_all');
 		$data['text_license'] = $this->language->get('text_license');
@@ -39,19 +39,19 @@ class ControllerExtensionStore extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('extension/store_list', $data));
 	}
-	
+
 	public function store() {
 		$this->load->language('extension/store');
 
 		$json = array();
-				
+
 		$url = '';
 		/*
-		$url  = '?api_key=' . $this->config->get('config_api_key'); 
-		
+		$url  = '?api_key=' . $this->config->get('config_api_key');
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -66,15 +66,15 @@ class ControllerExtensionStore extends Controller {
 
 		if (isset($this->request->get['search'])) {
 			$url .= '&search=' . $this->request->get['search'];
-		}		
-		
+		}
+
 		if (isset($this->request->get['tags'])) {
 			$url .= '&tags=' . $this->request->get['tags'];
-		}		
+		}
 		*/
 		//echo HTTP_TEST;// . $url
 		$curl = curl_init(HTTP_TEST);
-				
+
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		//curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -84,9 +84,9 @@ class ControllerExtensionStore extends Controller {
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_PORT, 80);
 		//curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-			
+
 		$response = curl_exec($curl);
-		
+
 		echo $response;
 /*
 		curl_close($curl);
@@ -95,24 +95,24 @@ class ControllerExtensionStore extends Controller {
 			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
 		} else {
 			$json = json_decode($response);
-		}		
-		
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
+		$this->response->setOutput(json_encode($json));
 	*/
 	}
-	
+
 	public function info() {
 		$this->load->language('extension/store');
 
 		$json = array();
-				
+
 		$url = '';
-		
+
 		$curl = curl_init('https://extension.opencart.com');
-		
-		$request  = '?api_key=' . $this->config->get('config_api_key'); 
-		
+
+		$request  = '?api_key=' . $this->config->get('config_api_key');
+
 		if (isset($this->request->get['sort'])) {
 			$request .= '&sort=' . $this->request->get['sort'];
 		}
@@ -127,12 +127,12 @@ class ControllerExtensionStore extends Controller {
 
 		if (isset($this->request->get['search'])) {
 			$request .= '&search=' . $this->request->get['search'];
-		}		
-		
+		}
+
 		if (isset($this->request->get['tags'])) {
 			$request .= '&tags=' . $this->request->get['tags'];
-		}		
-				
+		}
+
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -141,7 +141,7 @@ class ControllerExtensionStore extends Controller {
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-				
+
 		$response = curl_exec($curl);
 
 		curl_close($curl);
@@ -151,26 +151,26 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			$json = json_decode($response);
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}		
-	
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function download() {
 		$this->load->language('extension/store');
 
 		$json = array();
-				
+
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
-		}		
-				
+		}
+
 		$url = '';
-		
+
 		$curl = curl_init('https://extension.opencart.com');
-		
-		$request  = '?api_key=' . $this->config->get('config_api_key'); 
-		
+
+		$request  = '?api_key=' . $this->config->get('config_api_key');
+
 		if (isset($this->request->get['sort'])) {
 			$request .= '&sort=' . $this->request->get['sort'];
 		}
@@ -185,12 +185,12 @@ class ControllerExtensionStore extends Controller {
 
 		if (isset($this->request->get['search'])) {
 			$request .= '&search=' . $this->request->get['search'];
-		}		
-		
+		}
+
 		if (isset($this->request->get['tags'])) {
 			$request .= '&tags=' . $this->request->get['tags'];
-		}		
-				
+		}
+
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -199,7 +199,7 @@ class ControllerExtensionStore extends Controller {
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-				
+
 		$response = curl_exec($curl);
 
 		curl_close($curl);
@@ -209,11 +209,11 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			$json = json_decode($response);
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
+		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function unzip() {
 		$this->load->language('extension/store');
 
@@ -248,7 +248,7 @@ class ControllerExtensionStore extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function move() {
 		$this->load->language('extension/store');
 
@@ -278,12 +278,12 @@ class ControllerExtensionStore extends Controller {
 
 					$files[] = $file;
 				}
-			}			
+			}
 		}
-			
+
 		foreach ($files as $file) {
 			$destination = substr($file, strlen($directory));
-			
+
 			// Upload everything in the upload directory
 			// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 			// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
@@ -302,8 +302,8 @@ class ControllerExtensionStore extends Controller {
 			if (substr($destination, 0, 6) == 'system') {
 				$destination = basename(DIR_SYSTEM) . substr($destination, 6);
 			}
-			
-			// Check if the file exists or not.	
+
+			// Check if the file exists or not.
  			$allowed = array(
 				DIR_APPLICATION . 'controller/extension/',
 				DIR_APPLICATION . 'model/extension/',
@@ -312,61 +312,61 @@ class ControllerExtensionStore extends Controller {
 				DIR_CATALOG . 'model/extension/',
 				DIR_CATALOG . 'view/theme/'
 			);
-			
+
 			if (is_file($destination)) {
 				$json['error'] = sprintf($this->language->get('error_file'), $destination);
-				
+
 				break;
 			}
-			
-			// Check if the copy location exists or not				
+
+			// Check if the copy location exists or not
 			if (!in_array(substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)), $allowed)) {
 				$json['error'] = $this->language->get('error_file_exists');
-				
+
 				break;
 			}
-			
-			// Check if the file exsits or not.				
+
+			// Check if the file exsits or not.
 			if (is_dir($destination)) {
 				$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-				
+
 				break;
 			}
-			
-			// Check if the copy location exists or not				
+
+			// Check if the copy location exists or not
 			if (is_dir($destination)) {
 				$json['error'] = sprintf($this->language->get('error_directory_exists'), $destination);
-				
+
 				break;
-			}								
+			}
 		}
-	
+
 		if (!$json) {
 			foreach ($files as $file) {
 				$destination = substr($file, strlen($directory));
-	
+
 				// Upload everything in the upload directory
 				// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 				// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
 				if (substr($destination, 0, 5) == 'admin') {
 					$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 				}
-	
+
 				if (substr($destination, 0, 7) == 'catalog') {
 					$destination = basename(DIR_CATALOG) . substr($destination, 7);
 				}
-	
+
 				if (substr($destination, 0, 5) == 'image') {
 					$destination = basename(DIR_IMAGE) . substr($destination, 5);
 				}
-	
+
 				if (substr($destination, 0, 6) == 'system') {
 					$destination = basename(DIR_SYSTEM) . substr($destination, 6);
 				}
 
 				if (is_dir($file)) {
-					
-					
+
+
 					if (!in_array(basename($destination), $list_data)) {
 						if (!mkdir($connection, $destination)) {
 							$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
@@ -378,13 +378,14 @@ class ControllerExtensionStore extends Controller {
 							$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
 						}
 					}
+				}
 			}
-		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+		}
 	}
-	
+
 	public function sql() {
 		$this->load->language('extension/installer');
 
@@ -524,8 +525,8 @@ class ControllerExtensionStore extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
-	
+	}
+
 	public function remove() {
 		$this->load->language('extension/installer');
 
@@ -536,7 +537,7 @@ class ControllerExtensionStore extends Controller {
 		}
 
 		$directory = DIR_UPLOAD . $this->request->post['path'];
-		
+
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
 		}
@@ -582,5 +583,5 @@ class ControllerExtensionStore extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

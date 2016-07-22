@@ -13,7 +13,7 @@
     </div>
     {% endif %}
     <div class="card_container">
-      <div class="form-group" {% if not store_cards) %} style="display: none;" {% endif %}>
+      <div class="form-group" {% if not store_cards %} style="display: none;" {% endif %}>
         <label class="col-sm-2 control-label">{{ entry_card_new_or_old }}</label>
         <div class="col-sm-10">
           <label class="radio-inline">
@@ -29,13 +29,9 @@
           <label class="col-sm-2 control-label" for="input-card-type">{{ entry_card_type }}</label>
           <div class="col-sm-10">
             <select name="card_type" id="input-card-type" class="form-control">
-              
              {% for card_type in card_types %}
-              
               <option value="{{ card_type.value }}">{{ card_type.text }}</option>
-              
               {% endfor %}
-            
             </select>
           </div>
         </div>
@@ -49,24 +45,16 @@
           <label class="col-sm-2 control-label" for="input-card-expiry">{{ entry_card_expiry }}</label>
           <div class="col-sm-3">
             <select name="card_expiry_month" id="input-card-expiry" class="form-control">
-              
              {% for month in months %}
-              
               <option value="{{ month.value }}">{{ month.text }}</option>
-              
               {% endfor %}
-            
             </select>
           </div>
           <div class="col-sm-3">
             <select name="card_expiry_year" class="form-control">
-              
              {% for year in years %}
-              
               <option value="{{ year.value }}">{{ year.text }}</option>
-              
               {% endfor %}
-            
             </select>
           </div>
         </div>
@@ -90,20 +78,13 @@
           <div class="col-sm-8">
             <select name="card_choice" id="input-card-choice" class="form-control" {% if not cards %} disabled {% endif %}>
           	  {% if cards %}
-       		    
               <option value="">{{ text_select_card }}</option>
-              
                {% for card in cards %}
-                
               <option value="{{ card.token }}">{{ card.type }}, &nbsp; {{ card.account }}, &nbsp; {{ card.expiry }}</option>
-              
                 {% endfor %}
               {% else %}
-                
               <option value="">{{ text_no_cards }}</option>
-              
               {% endif %}
-            
             </select>
           </div>
           <div class="col-sm-2">

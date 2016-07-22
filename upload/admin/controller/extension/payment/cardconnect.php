@@ -41,8 +41,8 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 		$data['tab_settings']                  = $this->language->get('tab_settings');
 		$data['tab_order_status']              = $this->language->get('tab_order_status');
 
-		$data['text_payment']                  = $this->language->get('text_payment');
 		$data['text_edit']                     = $this->language->get('text_edit');
+		$data['text_payment']                  = $this->language->get('text_payment');		
 		$data['text_authorize']                = $this->language->get('text_authorize');
 		$data['text_live']                     = $this->language->get('text_live');
 		$data['text_test']                     = $this->language->get('text_test');

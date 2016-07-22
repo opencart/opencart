@@ -271,9 +271,9 @@
                 <label class="col-sm-2 control-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="realex_remote_auto_settle" id="input-auto-settle" class="form-control">
-                    <option value="0"<?php echo ($realex_remote_auto_settle == 0 ? ' selected' : ''); ?>>{{ text_settle_delayed }}</option>
-                    <option value="1"<?php echo ($realex_remote_auto_settle == 1 ? ' selected' : ''); ?>>{{ text_settle_auto }}</option>
-                    <option value="2"<?php echo ($realex_remote_auto_settle == 2 ? ' selected' : ''); ?>>{{ text_settle_multi }}</option>
+                    <option value="0" {{ realex_remote_auto_settle == 0 ? 'selected' : '' }}>{{ text_settle_delayed }}</option>
+                    <option value="1" {{ realex_remote_auto_settle == 1 ? 'selected' : '' }}>{{ text_settle_auto }}</option>
+                    <option value="2" {{ realex_remote_auto_settle == 2 ? 'selected' : '' }}>{{ text_settle_multi }}</option>
                   </select>
                 </div>
               </div>

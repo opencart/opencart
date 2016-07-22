@@ -45,7 +45,7 @@
           <tr>
             <td class="text-left">{{ transaction.transaction_reference }}</td>
             <td class="text-left">{{ transaction.transaction_type }}</td>
-            <td class="text-left"><?php echo number_format($transaction['amount'], 2); ?></td>
+            <td class="text-left">{{ transaction.amount|number_format(2) }}</td>
             <td class="text-left">{{ transaction.time }}</td>
             <td class="text-left">{% for action in transaction.actions %}
               [<a href="{{ action.href }}">{{ action.title }}</a>]
@@ -67,7 +67,7 @@ function doVoid() {
         $.ajax({
             type:'POST',
             dataType: 'json',
-            data: {'order_id':<?php echo (int)$order_id; ?>},
+            data: {'order_id':{{ order_id }},
             url: 'index.php?route=extension/payment/pp_payflow_iframe/void&token={{ token }}',
             beforeSend: function() {
                 $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');

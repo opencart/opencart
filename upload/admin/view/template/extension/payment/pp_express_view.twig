@@ -23,48 +23,47 @@
             <td>{{ text_product_lines }}</td>
             <td><table class="table table-striped table-bordered">
                 {% set i = 0 %}
-                {% for (lines as k => v) %}
-                  {% if (i is 0) %}
+                {% for k,v in lines %}
+                  {% if i == 0 %}
                     <thead>
                       <tr>
-                        {% for (v as k => row) %}
-                          {% if (k is 'L_EBAYITEMTXNID') %} <td class="left">{{ text_ebay_txn_id }}</td> {% endif %}
-                          {% if (k is 'L_NAME' ) %} <td class="left">{{ text_name }}</td> {% endif %}
-                          {% if (k is 'L_NUMBER') %} <td class="left">{{ text_number }}</td> {% endif %}
-                          {% if (k is 'L_QTY') %} <td class="left">{{ text_qty }}</td> {% endif %}
-                          {% if (k is 'L_COUPONID') %} <td class="left">{{ text_coupon_id }}</td> {% endif %}
-                          {% if (k is 'L_COUPONAMOUNT') %} <td class="left">{{ text_coupon_amount }}</td> {% endif %}
-                          {% if (k is 'L_COUPONAMOUNTCURRENCY') %} <td class="left">{{ text_coupon_currency }}</td> {% endif %}
-                          {% if (k is 'L_LOYALTYCARDDISCOUNTAMOUNT') %} <td class="left">{{ text_loyalty_disc_amt }}</td> {% endif %}
-                          {% if (k is 'L_LOYALTYCARDISCOUNTCURRENCY') %} <td class="left">{{ text_loyalty_currency }}</td> {% endif %}
-                          {% if (k is 'L_AMT') %} <td class="left">{{ text_amount }}</td> {% endif %}
-                          {% if (k is 'L_OPTIONSNAME') %} <td class="left">{{ text_options_name }}</td> {% endif %}
-                          {% if (k is 'L_TAXAMT') %} <td class="left">{{ text_tax_amt }}</td> {% endif %}
-                          {% if (k is 'L_CURRENCYCODE') %} <td class="left">{{ text_currency_code }}</td> {% endif %}
+                        {% for k,row in v %}
+                          {% if k == 'L_EBAYITEMTXNID' %} <td class="left">{{ text_ebay_txn_id }}</td> {% endif %}
+                          {% if k == 'L_NAME' %} <td class="left">{{ text_name }}</td> {% endif %}
+                          {% if k == 'L_NUMBER' %} <td class="left">{{ text_number }}</td> {% endif %}
+                          {% if k == 'L_QTY' %} <td class="left">{{ text_qty }}</td> {% endif %}
+                          {% if k == 'L_COUPONID' %} <td class="left">{{ text_coupon_id }}</td> {% endif %}
+                          {% if k == 'L_COUPONAMOUNT' %} <td class="left">{{ text_coupon_amount }}</td> {% endif %}
+                          {% if k == 'L_COUPONAMOUNTCURRENCY' %} <td class="left">{{ text_coupon_currency }}</td> {% endif %}
+                          {% if k == 'L_LOYALTYCARDDISCOUNTAMOUNT' %} <td class="left">{{ text_loyalty_disc_amt }}</td> {% endif %}
+                          {% if k == 'L_LOYALTYCARDISCOUNTCURRENCY' %} <td class="left">{{ text_loyalty_currency }}</td> {% endif %}
+                          {% if k == 'L_AMT' %} <td class="left">{{ text_amount }}</td> {% endif %}
+                          {% if k == 'L_OPTIONSNAME' %} <td class="left">{{ text_options_name }}</td> {% endif %}
+                          {% if k == 'L_TAXAMT' %} <td class="left">{{ text_tax_amt }}</td> {% endif %}
+                          {% if k == 'L_CURRENCYCODE' %} <td class="left">{{ text_currency_code }}</td> {% endif %}
                         {% endfor %}
-                        {% i++ %}
-                        ?>
+						{% set i = i + 1 %}
                       </tr>
                     </thead>
                   {% endif %}
                 <tr>
-                  {% for (v as k => row) %}
-                  {% if (k is 'L_EBAYITEMTXNID') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_NAME') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_NUMBER') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_QTY') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_COUPONID') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_COUPONAMOUNT') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_COUPONAMOUNTCURRENCY') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_LOYALTYCARDDISCOUNTAMOUNT') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_LOYALTYCARDISCOUNTCURRENCY') %} <td class="left">{{ row }}</td>{% endif %}
-                  {% if (k is 'L_AMT') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_OPTIONSNAME') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_OPTIONSVALUE') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_TAXAMT') %} <td class="left">{{ row }}</td> {% endif %}
-                  {% if (k is 'L_CURRENCYCODE') %} <td class="left">{{ row }}</td>{% endif %}
+                  {% for k,row in v %}
+                  {% if k == 'L_EBAYITEMTXNID' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_NAME' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_NUMBER' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_QTY' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_COUPONID' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_COUPONAMOUNT' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_COUPONAMOUNTCURRENCY' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_LOYALTYCARDDISCOUNTAMOUNT' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_LOYALTYCARDISCOUNTCURRENCY' %} <td class="left">{{ row }}</td>{% endif %}
+                  {% if k == 'L_AMT' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_OPTIONSNAME' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_OPTIONSVALUE' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_TAXAMT' %} <td class="left">{{ row }}</td> {% endif %}
+                  {% if k == 'L_CURRENCYCODE' %} <td class="left">{{ row }}</td>{% endif %}
                   {% endfor %}
-                  {% i++ %}
+				  {% set i = i + 1 %}
                 </tr>
                 {% endfor %}
               </table></td>
@@ -153,7 +152,7 @@
             <td>{{ text_country_code }}</td>
             <td>{{ transaction.COUNTRYCODE }}</td>
           </tr>
-          <{% endif %}
+          {% endif %}
           {% if transaction.PAYERBUSINESS %}
           <tr>
             <td>{{ text_payer_business }}</td>

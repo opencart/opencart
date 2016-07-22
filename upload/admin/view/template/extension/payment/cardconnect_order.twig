@@ -30,9 +30,9 @@
   <tr>
     <td>{{ text_refund_payment }}</td>
     <td>
-      <input type="text" style="width:80px" id="refund_amount" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?> />
-      <a class="button btn btn-primary btn-sm" id="button-refund" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?>>{{ button_refund }}</a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
-     </td>
+      <input type="text" style="width:80px" id="refund_amount" {{ cardconnect_order.total_captured < 1 ? 'style="display:none"' : '' }} />
+      <a class="button btn btn-primary btn-sm" id="button-refund" {{ cardconnect_order.total_captured < 1 ? 'style="display:none"' : '' }}>{{ button_refund }}</a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+    </td>
   </tr>
   <tr>
     <td>{{ text_void }}</td>

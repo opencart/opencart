@@ -65,6 +65,7 @@ $_['text_no_cron_time']             = 'The cron has not yet been executed';
 $_['text_comment'] 	                = 'Updated by Lay-Buy';
 $_['text_comment_canceled'] 	    = 'Order canceled and recurring PayPal Profile #%s canceled.';
 $_['text_remaining'] 	            = 'Remaining:';
+$_['text_payment'] 	                = 'Payment';
 
 // Column
 $_['column_order_id']               = 'Order ID';

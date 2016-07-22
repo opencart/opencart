@@ -15,9 +15,9 @@
   </div>
   <div class="container-fluid">
 	{% if error_warning %}
-		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-		  <button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
+	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  </div>
 	{% endif %}
     {% if success %}
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
@@ -88,7 +88,7 @@
 		      </div>
 			  <a class="button btn btn-primary col-sm-offset-2" id="button-register">{{ button_register }}</a> <span class="btn btn-primary col-sm-offset-2" id="img_loading_register" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
 			</div>
-		    <div class="tab-pane <?php if (!$show_register) { echo 'active'; } ?>" id="tab-settings">
+		    <div class="tab-pane {% if not show_register %} active {% endif %}" id="tab-settings">
 		      {% if error_weight %}
                 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_weight }}</div>
 			  {% endif %}
@@ -120,14 +120,14 @@
                 <div class="col-sm-10">
                   <select name="pilibaba_environment" id="input-pilibaba-environment" class="form-control">
                     {% if pilibaba_environment == 'live' %}
-                    <option value="live" selected="selected">{{ text_live }}</option>
+                      <option value="live" selected="selected">{{ text_live }}</option>
                     {% else %}
-                    <option value="live">{{ text_live }}</option>
+                      <option value="live">{{ text_live }}</option>
                     {% endif %}
                     {% if pilibaba_environment == 'test' %}
-                    <option value="test" selected="selected">{{ text_test }}</option>
+                      <option value="test" selected="selected">{{ text_test }}</option>
                     {% else %}
-                    <option value="test">{{ text_test }}</option>
+                      <option value="test">{{ text_test }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -146,11 +146,11 @@
                 <div class="col-sm-10">
                   <select name="pilibaba_order_status_id" id="input-pilibaba-order-status" class="form-control">
                     {% for order_status in order_statuses %}
-                    {% if order_status.order_status_id == pilibaba_order_status_id %}
-                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                    {% else %}
-                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                    {% endif %}
+                      {% if order_status.order_status_id == pilibaba_order_status_id %}
+                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                      {% else %}
+                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                 </div>
@@ -160,11 +160,11 @@
 		        <div class="col-sm-10">
 		          <select name="pilibaba_status" id="input-pilibaba-status" class="form-control">
                     {% if pilibaba_status %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
                     {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
 			      </select>
 			    </div>
@@ -174,11 +174,11 @@
 			    <div class="col-sm-10">
 		          <select name="pilibaba_logging" id="input-pilibaba-logging" class="form-control">
                     {% if pilibaba_logging %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
                     {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
 			      </select>
 			    </div>

@@ -255,7 +255,7 @@
           {% if transaction.PARENTTRANSACTIONID %}
           <tr>
             <td>{{ text_parent_trans_id }}</td>
-            <td><a href="<?php echo $view_link.'&transaction_id='.$transaction['PARENTTRANSACTIONID']; ?>">{{ transaction.PARENTTRANSACTIONID }}</a></td>
+            <td><a href="{{ view_link ~ '&transaction_id=' ~ transaction.PARENTTRANSACTIONID }}">{{ transaction.PARENTTRANSACTIONID }}</a></td>
           </tr>
           {% endif %}
           {% if transaction.RECEIPTID %}

@@ -142,39 +142,39 @@
                   <tbody>
                     <tr>
                       <td class="text-left">{{ text_card_visa }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][enabled]" value="1" <?php if (isset($realex_remote_account['visa']['enabled']) && $realex_remote_account['visa']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][default]" value="1" <?php if (isset($realex_remote_account['visa']['default']) && $realex_remote_account['visa']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[visa][merchant_id]" value="<?php echo isset($realex_remote_account['visa']['merchant_id']) ? $realex_remote_account['visa']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][enabled]" value="1" {% if realex_remote_account.visa.enabled is defined and realex_remote_account.visa.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][default]" value="1" {% if realex_remote_account.visa.default is defined and realex_remote_account.visa.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[visa][merchant_id]" value="{{ realex_remote_account.visa.merchant_id is defined ? realex_remote_account.visa.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                     <tr>
                       <td class="text-left">{{ text_card_master }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][enabled]" value="1" <?php if (isset($realex_remote_account['mc']['enabled']) && $realex_remote_account['mc']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][default]" value="1" <?php if (isset($realex_remote_account['mc']['default']) && $realex_remote_account['mc']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[mc][merchant_id]" value="<?php echo isset($realex_remote_account['mc']['merchant_id']) ? $realex_remote_account['mc']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][enabled]" value="1" {% if realex_remote_account.mc.enabled is defined and realex_remote_account.mc.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][default]" value="1" {% if realex_remote_account.mc.default is defined and realex_remote_account.mc.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[mc][merchant_id]" value="{{ realex_remote_account.mc.merchant_id is defined ? realex_remote_account.mc.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                     <tr>
                       <td class="text-left">{{ text_card_amex }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][enabled]" value="1" <?php if (isset($realex_remote_account['amex']['enabled']) && $realex_remote_account['amex']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][default]" value="1" <?php if (isset($realex_remote_account['amex']['default']) && $realex_remote_account['amex']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[amex][merchant_id]" value="<?php echo isset($realex_remote_account['amex']['merchant_id']) ? $realex_remote_account['amex']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][enabled]" value="1" {% if realex_remote_account.amex.enabled is defined and realex_remote_account.amex.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][default]" value="1" {% if realex_remote_account.amex.default is defined and realex_remote_account.amex.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[amex][merchant_id]" value="{{ realex_remote_account.amex.merchant_id is defined ? realex_remote_account.amex.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                     <tr>
                       <td class="text-left">{{ text_card_switch }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][enabled]" value="1" <?php if (isset($realex_remote_account['switch']['enabled']) && $realex_remote_account['switch']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][default]" value="1" <?php if (isset($realex_remote_account['switch']['default']) && $realex_remote_account['switch']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[switch][merchant_id]" value="<?php echo isset($realex_remote_account['switch']['merchant_id']) ? $realex_remote_account['switch']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][enabled]" value="1" {% if realex_remote_account.switch.enabled is defined and realex_remote_account.switch.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][default]" value="1" {% if realex_remote_account.switch.default is defined and realex_remote_account.switch.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[switch][merchant_id]" value="{{ realex_remote_account.switch.merchant_id is defined ? realex_remote_account.switch.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                     <tr>
                       <td class="text-left">{{ text_card_laser }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][enabled]" value="1" <?php if (isset($realex_remote_account['laser']['enabled']) && $realex_remote_account['laser']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][default]" value="1" <?php if (isset($realex_remote_account['laser']['default']) && $realex_remote_account['laser']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[laser][merchant_id]" value="<?php echo isset($realex_remote_account['laser']['merchant_id']) ? $realex_remote_account['laser']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][enabled]" value="1" {% if realex_remote_account.laser.enabled is defined and realex_remote_account.laser.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][default]" value="1" {% if realex_remote_account.laser.default is defined and realex_remote_account.laser.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[laser][merchant_id]" value="{{ realex_remote_account.laser.merchant_id is defined ? realex_remote_account.laser.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                     <tr>
                       <td class="text-left">{{ text_card_diners }}</td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][enabled]" value="1" <?php if (isset($realex_remote_account['diners']['enabled']) && $realex_remote_account['diners']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][default]" value="1" <?php if (isset($realex_remote_account['diners']['default']) && $realex_remote_account['diners']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                      <td class="text-right"><input type="text" name="realex_remote_account[diners][merchant_id]" value="<?php echo isset($realex_remote_account['diners']['merchant_id']) ? $realex_remote_account['diners']['merchant_id'] : ''; ?>" placeholder="{{ text_subaccount }}" class="form-control" /></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][enabled]" value="1" {% if realex_remote_account.diners.enabled is defined and realex_remote_account.diners.enabled == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][default]" value="1" {% if realex_remote_account.diners.default is defined and realex_remote_account.diners.default == 1 %} checked="checked" {% endif %}/></td>
+                      <td class="text-right"><input type="text" name="realex_remote_account[diners][merchant_id]" value="{{ realex_remote_account.diners.merchant_id is defined ? realex_remote_account.diners.merchant_id : '' }}" placeholder="{{ text_subaccount }}" class="form-control" /></td>
                     </tr>
                   </tbody>
                 </table>
@@ -271,9 +271,9 @@
                 <label class="col-sm-2 control-label" for="input-auto-settle">{{ entry_auto_settle }}</label>
                 <div class="col-sm-10">
                   <select name="realex_remote_auto_settle" id="input-auto-settle" class="form-control">
-                    <option value="0"<?php echo ($realex_remote_auto_settle == 0 ? ' selected' : ''); ?>>{{ text_settle_delayed }}</option>
-                    <option value="1"<?php echo ($realex_remote_auto_settle == 1 ? ' selected' : ''); ?>>{{ text_settle_auto }}</option>
-                    <option value="2"<?php echo ($realex_remote_auto_settle == 2 ? ' selected' : ''); ?>>{{ text_settle_multi }}</option>
+                    <option value="0" {{ realex_remote_auto_settle == 0 ? 'selected' : '' }}>{{ text_settle_delayed }}</option>
+                    <option value="1" {{ realex_remote_auto_settle == 1 ? 'selected' : '' }}>{{ text_settle_auto }}</option>
+                    <option value="2" {{ realex_remote_auto_settle == 2 ? 'selected' : '' }}>{{ text_settle_multi }}</option>
                   </select>
                 </div>
               </div>

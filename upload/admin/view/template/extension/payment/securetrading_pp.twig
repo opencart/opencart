@@ -113,7 +113,7 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_settle_status">{{ entry_settle_status }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_settle_status" id="securetrading_pp_settle_status" class="form-control">
-                {% for key => $value in settlement_statuses %}
+                {% for key, value in settlement_statuses %}
                 {% if key == securetrading_pp_settle_status %}
                 <option value="{{ key }}" selected="selected">{{ value }}</option>
                 {% else %}
@@ -132,11 +132,11 @@
                 {% else %}
                 <option value="0">{{ text_process_immediately }}</option>
                 {% endif %}
-                <?php for ($i = 1; $i < 8; $i++) { ?>
+                {% for i in 0..7 %}
                 {% if i == securetrading_pp_settle_due_date %}
-                <option value="{{ i }}" selected="selected"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+                <option value="{{ i }}" selected="selected">{{ text_wait_x_days|format(i) }}</option>
                 {% else %}
-                <option value="{{ i }}"><?php echo sprintf($text_wait_x_days, $i); ?></option>
+                <option value="{{ i }}">{{ text_wait_x_days|format(i) }}</option>
                 {% endif %}
                 {% endfor %}
               </select>
@@ -208,7 +208,7 @@
             <label class="col-sm-2 control-label" for="securetrading_pp_geo_zone_id">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="securetrading_pp_geo_zone_id" id="securetrading_pp_geo_zone_id" class="form-control">
-                <?php if ($securetrading_pp_geo_zone_id == 0) { ?>
+                {% if securetrading_pp_geo_zone_id == 0 %}
                 <option value="0" selected="selected">{{ text_all_geo_zones }}</option>
                 {% else %}
                 <option value="0">{{ text_all_geo_zones }}</option>

@@ -106,7 +106,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-{% if not existing_cards %}
+{% if existing_cards is not empty %}
 	$('#card-new input').prop('disabled', true);
 	$('#card-new input').prop('disabled', true);
 	$('#card-new select').prop('disabled', true);

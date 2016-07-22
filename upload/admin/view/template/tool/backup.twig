@@ -2,10 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-backup" data-toggle="tooltip" title="{{ button_export }}" class="btn btn-default"><i class="fa fa-download"></i></button>
-        <button type="submit" form="form-restore" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-default"><i class="fa fa-upload"></i></button>
-      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,15 +10,14 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="panel panel-default">
@@ -30,32 +25,113 @@
         <h3 class="panel-title"><i class="fa fa-exchange"></i> {{ heading_title }}</h3>
       </div>
       <div class="panel-body">
-        <form action="{{ restore }}" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">
+        <form class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-import">{{ entry_import }}</label>
             <div class="col-sm-10">
-              <input type="file" name="import" id="input-import" />
+              <button type="button" id="button-import" class="btn btn-primary"><i class="fa fa-upload"></i> {{ button_import }}</button>
             </div>
           </div>
         </form>
-        <form action="{{ backup }}" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
+        <form action="{{ export }}" method="post" enctype="multipart/form-data" id="form-export" class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ entry_export }}</label>
             <div class="col-sm-10">
-              <div class="well well-sm" style="height: 150px; overflow: auto;">
-                {% for table in tables %}
+              <button type="submit" form="form-export" class="btn btn-default"><i class="fa fa-download"></i> {{ button_export }}</button>
+              <br />
+              <br />
+              <div class="well well-sm" style="height: 150px; overflow: auto;"> {% for table in tables %}
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" />
                     {{ table }}</label>
                 </div>
-                {% endfor %}
-              </div>
-              <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a></div>
+                {% endfor %} </div>
+              <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a>
+              <div></div>
+            </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+  <script type="text/javascript"><!--
+$('#button-import').on('click', function() {
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="import" /></form>');
+
+	$('#form-upload input[name=\'import\']').trigger('click');
+	
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+	
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'import\']').val() != '') {
+			clearInterval(timer);		
+			
+			$.ajax({
+				url: 'index.php?route=tool/backup/import&token={{ token }}',
+				type: 'post',		
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,		
+				beforeSend: function() {
+					$('#button-import').button('loading');
+				},
+				complete: function() {
+					$('#button-import').button('reset');
+				},	
+				success: function(json) {
+					$('.alert').remove();
+					
+					if (json['error']) {
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+								
+					if (json['success']) {
+						$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+					
+					if (json['next']) {
+						next(json['next']);
+					}
+				},			
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+
+function next(url) {
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+						
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['next']) {
+				next(json['next']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+//--></script> 
 </div>
-{{ footer }}
+{{ footer }} 

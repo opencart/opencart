@@ -573,8 +573,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		// Request is valid, we can spoof/simulate the customer to calculate shipping
 		if ($process) {
-			$this->session->destroy();
-			$this->session->start($klarna_checkout_order_data['session_id']);
+			session_destroy();
+			session_id($klarna_checkout_order_data['session_id']);
+			session_start();
+			$this->session->start('default', $klarna_checkout_order_data['session_key']);
 
 			if ($klarna_checkout_order_data['customer_id']) {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
@@ -843,10 +845,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		// Spoof/simulate the customer to calculate shipping
 		if ($validate) {
-			$this->session->destroy();
-			$this->model_extension_payment_klarna_checkout->log('Session ID:');
-			$this->model_extension_payment_klarna_checkout->log($klarna_checkout_order_data['session_id']);
-			$this->session->start($klarna_checkout_order_data['session_id']);
+			session_destroy();
+			session_id($klarna_checkout_order_data['session_id']);
+			session_start();
+			$this->session->start('default', $klarna_checkout_order_data['session_key']);
 
 			if ($klarna_checkout_order_data['customer_id']) {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
@@ -1679,11 +1681,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		// Callback data to be used to spoof/simulate customer to accurately calculate shipping
 		$encrypted_order_data = $this->encryption->encrypt(json_encode(array(
-			'session_id'  => $this->session->getId(),
-			'customer_id' => $this->customer->getId(),
-			'order_id'	  => $this->session->data['order_id'],
-			'merchant_id' => $klarna_account['merchant_id'],
-			'secret'      => $klarna_account['secret']
+			'session_id'	=> session_id(),
+			'session_key'	=> $this->session->getId(),
+			'customer_id'	=> $this->customer->getId(),
+			'order_id'		=> $this->session->data['order_id'],
+			'merchant_id'	=> $klarna_account['merchant_id'],
+			'secret'		=> $klarna_account['secret']
 		)));
 
 		$encrypted_order_id = $this->encryption->encrypt($this->session->data['order_id']);

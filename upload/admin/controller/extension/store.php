@@ -100,8 +100,7 @@ class ControllerExtensionStore extends Controller {
 		//$url .= '&version=' . $this->config->get('config_currency');
 		
 		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension' . $url);
-				
-		curl_setopt($curl, CURLOPT_PORT, 443);
+		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -244,14 +243,13 @@ class ControllerExtensionStore extends Controller {
 	}
 	
 	public function info() {
-		$url  = '?api_key=' . $this->config->get('config_api_key'); 
+		$url  = '&api_key=' . $this->config->get('config_api_key'); 
 		$url .= '&store=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
 
 		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/info&extension_id=' . $this->request->get['extension_id'] . $url);
 				
-		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -268,11 +266,13 @@ class ControllerExtensionStore extends Controller {
 		
 		$response_info = json_decode($response, true);
 		
+		//print_r($response_info);
+		
 		if ($response_info) {
 			$this->load->language('extension/store');
 	
 			$this->document->setTitle($this->language->get('heading_title'));			
-			
+							
 			$data['heading_title'] = $this->language->get('heading_title');
 			
 			$data['text_price'] = $this->language->get('text_price');
@@ -287,37 +287,6 @@ class ControllerExtensionStore extends Controller {
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
-			$this->load->helper('bbcode');
-			
-			$data['banner'] = $response_info['banner'];
-			
-			$data['extension_id'] = (int)$this->request->get['extension_id'];
-			$data['name'] = $response_info['name'];
-			$data['description'] = nl2br(bbcode_decode($response_info['description']));
-			$data['price'] = $this->currency->format($response_info['price'], $this->config->get('config_currency'));
-			$data['license'] = $response_info['license'];
-			$data['member'] = $response_info['member'];
-			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['member']);
-			$data['rating'] = $response_info['rating'];
-			$data['downloaded'] = $response_info['downloaded'];
-			$data['sales'] = $response_info['sales'];
-			$data['date_added'] = date('j F Y', strtotime($response_info['date_added']));
-			$data['date_modified'] = date('j F Y', strtotime($response_info['date_modified']));
-			$data['comment_total'] = $response_info['comment_total'];
-			
-			$data['downloads'] = array();
-			
-			if ($response_info['downloads']) {
-				foreach ($response_info['downloads'] as $result) {
-					$json['downloads'][] = array(
-						'name'       => $result['name'],
-						'download'   => $result['download'],
-						'date_added' => date('d/m/Y', strtotime($result['date_added'])),
-						'href'       => $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true)
-					);				
-				}
-			}
-			
 			$url = '';
 			
 			if (isset($this->request->get['extension_category_id'])) {
@@ -343,7 +312,50 @@ class ControllerExtensionStore extends Controller {
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-				
+			
+			$data['breadcrumbs'] = array();
+	
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			);
+	
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true)
+			);
+
+			$this->load->helper('bbcode');
+			
+			$data['banner'] = $response_info['banner'];
+			
+			$data['extension_id'] = (int)$this->request->get['extension_id'];
+			$data['name'] = $response_info['name'];
+			$data['description'] = nl2br(bbcode_decode($response_info['description']));
+			$data['price'] = $this->currency->format($response_info['price'], $this->config->get('config_currency'));
+			$data['license'] = $response_info['license'];
+			$data['member'] = $response_info['member'];
+			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['member']);
+			$data['rating'] = $response_info['rating'];
+			$data['downloaded'] = $response_info['downloaded'];
+			$data['sales'] = $response_info['sales'];
+			$data['date_added'] = date('j F Y', strtotime($response_info['date_added']));
+			$data['date_modified'] = date('j F Y', strtotime($response_info['date_modified']));
+			$data['comment_total'] = $response_info['comment_total'];
+			
+			$data['downloads'] = array();
+			
+			if ($response_info['downloads']) {
+				foreach ($response_info['downloads'] as $result) {
+					$data['downloads'][] = array(
+						'name'          => $result['name'],
+						'compatibility' => $result['compatibility'],
+						'date_added'    => date('d/m/Y', strtotime($result['date_added'])),
+						'href'          => $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true)
+					);				
+				}
+			}
+			
 			$data['cancel'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true);
 			
 			$data['header'] = $this->load->controller('common/header');
@@ -365,54 +377,59 @@ class ControllerExtensionStore extends Controller {
 
 		$json = array();
 				
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if ($this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
-		}		
-				
-		$url = '';
-		
-		$curl = curl_init('https://extension.opencart.com');
-		
-		$request  = '?api_key=' . $this->config->get('config_api_key'); 
-		
-		if (isset($this->request->get['sort'])) {
-			$request .= '&sort=' . $this->request->get['sort'];
 		}
-
-		if (isset($this->request->get['order'])) {
-			$request .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$request .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['search'])) {
-			$request .= '&search=' . $this->request->get['search'];
-		}		
 		
-		if (isset($this->request->get['tags'])) {
-			$request .= '&tags=' . $this->request->get['tags'];
-		}		
-				
-		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
-				
-		$response = curl_exec($curl);
-
-		if (!$response) {
-			$json['error'] = curl_error($curl) . '(' . curl_errno($curl) . ')';
-		} else {
+		if ($json) {
+			if (isset($this->request->get['extension_download_id'])) {
+				$extension_download_id = $this->request->get['extension_download_id'];
+			} else {
+				$extension_download_id = 0;
+			}
+			
+			$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/download&api_key=' . $this->config->get('config_api_key') .  '&extension_download_id=' . $extension_download_id);
+			
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_PORT, 80);
+					
+			$response = curl_exec($curl);
+		
+			curl_close($curl);
+		
 			$json = json_decode($response);
-		}
 		
-		curl_close($curl);
+			if ($json['download']) {
+				$curl = curl_init($json['download']);
+				
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+				curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+				curl_setopt($curl, CURLOPT_PORT, 80);
+						
+				$response = curl_exec($curl);
+			
+				curl_close($curl);
+			
+				$filename = tempnam(ini_get('upload_tmp_dir'), 'ext');
+			
+				$handle = fopen($filename, 'w');
+				
+				fwrite($handle, json_encode($value));
+		
+				fflush($handle);
+		
+				fclose($handle);
+				
+				$json['next'] = $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&download=' . $filename, true);			
+			} else {
+				$json['error'] = '';
+			}
+		}
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
@@ -423,14 +440,20 @@ class ControllerExtensionStore extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Sanitize the filename
-		$file = DIR_UPLOAD . $this->request->post['path'] . '/upload.zip';
+		if ($this->request->get['download']) {
+			$download = $this->request->get['download'];
+		} else {
+			$download = '';
+		}		
 
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		// Sanitize the filename
+		$file = ini_get('upload_tmp_dir') . '/' . $download;
+
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
@@ -439,7 +462,7 @@ class ControllerExtensionStore extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD . $this->request->post['path']);
+				$zip->extractTo(ini_get('upload_tmp_dir') . $download);
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -461,14 +484,23 @@ class ControllerExtensionStore extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+		
+		// Sanitize the filename
+		$file = ini_get('upload_tmp_dir') . '/' . $download;
 
-		$files = array();
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
+			$json['error'] = $this->language->get('error_file');
+		}
+		
+		$directory = ini_get('upload_tmp_dir') . '/' . $download;
 
-		$directory = DIR_UPLOAD . $this->request->post['path'] . '/upload/';
-
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
 			$json['error'] = $this->language->get('error_directory');
-		} else {
+		}
+		
+		$files = array();
+		
+		if (!$json) {
 			// Get a list of files ready to upload
 			$path = array($directory . '*');
 

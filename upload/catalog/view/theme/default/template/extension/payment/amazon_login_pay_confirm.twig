@@ -36,7 +36,7 @@
       </thead>
       <tbody>
       
-      % for product in products %}
+      {% for product in products %}
       <tr>
         <td class="text-left">{{ product.name }}
           {% for option in product.option %} <br />
@@ -51,7 +51,7 @@
       
       <tfoot>
       
-      % for total in totals %}
+      {% for total in totals %}
       <tr>
         <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
         <td class="text-right">{{ total.text }}</td>

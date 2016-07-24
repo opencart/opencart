@@ -42,15 +42,15 @@ function bbcode_decode($string) {
 	
 	// Image
 	$pattern[8] = '/\[img\](.*?)\[\/img\]/is';
-	$replace[8] = '<img src="$1" alt="" />';
+	$replace[8] = '<img src="$1" alt="" class="img-responsive" />';
 		
 	// URL
 	$pattern[9] = '/\[url\](.*?)\[\/url\]/is';
-	$replace[9] = '<a href="$1" rel="nofollow">$1</a>';
+	$replace[9] = '<a href="$1" rel="nofollow" target="_blank">$1</a>';
 		
 	// URL (named)
 	$pattern[10] = '/\[url\=([^\[]+?)\](.*?)\[\/url\]/is';
-	$replace[10] = '<a href="$1" rel="nofollow">$2</a>';	
+	$replace[10] = '<a href="$1" rel="nofollow" target="_blank">$2</a>';	
 	
 	// Font Size
 	$pattern[11] = '/\[size\=([\-\+]?\d+)\](.*?)\[\/size\]/is';

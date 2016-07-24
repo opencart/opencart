@@ -7,48 +7,7 @@ class ControllerExtensionTranslation extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/translation');
-
 		$this->getList();
-	}
-
-	public function refresh() {
-		$this->load->language('extension/translation');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if ($this->validate()) {
-			// Make a CURL request 
-			$curl = curl_init('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
-	
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-	
-			$response = curl_exec($curl);
-	
-			if (!$response) {
-				$this->data['warning'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
-			} else {
-				$translations = json_decode($response, true);
-	
-				$this->model_extension_translation->addTranslations($translations);
-				
-				$this->session->data['success'] = $this->language->get('text_success');
-			}
-			
-			curl_close($curl);
-			
-			$this->getList();
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function getList() {
@@ -69,8 +28,6 @@ class ControllerExtensionTranslation extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/translation', 'token=' . $this->session->data['token'], true)
 		);
-		
-		$data['refresh'] = $this->url->link('extension/translatio/refresh', 'token=' . $this->session->data['token'], true);
 
 		$data['translations'] = array();
 		
@@ -79,28 +36,48 @@ class ControllerExtensionTranslation extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 		
-		$translation_total = $this->model_extension_translation->getTotalTranslations();
-		
-		$results = $this->model_extension_translation->getTranslations($filter_data);
+		// Make a CURL request 
+		$curl = curl_init('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
 
-		foreach ($translations as $translation){
-			if (is_dir(DIR_LANGUAGE . strtolower($translation['code']))) {
-				$installed = true;
-			} else {
-				$installed = false;
-			}
-			
-			$data['translations'][] = array(
-				'name'      => $translation['name'],
-				'code'      => $translation['code'],
-				'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
-				'progress'  => $translation['translated_progress'],
-				'install'   => $this->url->link('extension/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'uninstall' => $this->url->link('extension/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-				'installed' => $installed
-			);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+		$response = curl_exec($curl);
+
+		if (!$response) {
+			$data['warning'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
+		} else {
+			$translations = json_decode($response, true);
 		}
+		
+		curl_close($curl);		
+		
+		$translation_total = count($translations);
 
+		if ($translations) {
+			$translations = array_splice($translations, ($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
+			
+			foreach ($translations as $translation){
+				if (is_dir(DIR_LANGUAGE . strtolower($translation['code']))) {
+					$installed = true;
+				} else {
+					$installed = false;
+				}
+				
+				$data['translations'][] = array(
+					'name'      => $translation['name'],
+					'code'      => $translation['code'],
+					'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
+					'progress'  => $translation['translated_progress'],
+					'install'   => $this->url->link('extension/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
+					'uninstall' => $this->url->link('extension/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
+					'installed' => $installed
+				);
+			}
+		}
+		
 		$data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_list'] = $this->language->get('text_list');
@@ -131,7 +108,7 @@ class ControllerExtensionTranslation extends Controller {
 		
 		$data['token'] = $this->session->data['token'];
 
-		$directories = glob(DIR_UPLOAD . 'language-*', GLOB_ONLYDIR);
+		$directories = glob(ini_get('upload_tmp_dir') . '/lng-*');
 
 		if ($directories) {
 			$data['error_warning'] = $this->language->get('error_temporary');
@@ -155,86 +132,8 @@ class ControllerExtensionTranslation extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/translation', $data));
 	}
-	
+
 	public function install() {
-		$this->load->language('extension/translation');
-		
-		$json = array();
-
-		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-		
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = '';
-		}
-						
-		if (!$json) {
-			$json['step'] = array();
-			
-			// Download
-			$json['step'][] = array(
-				'text' => $this->language->get('text_download'),
-				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);			
-			
-			// Zip
-			$json['step'][] = array(
-				'text' => $this->language->get('text_unzip'),
-				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);
-			
-			// FTP
-			$directory = DIR_LANGUAGE . $this->config->get('config_language') . '/';
-			
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory . '*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
-			}
-			
-			// Split the FTP file upload list so we don't get any max execution errors.
-			$files = array_chunk($files, 20);			
-			
-			for ($i = 1; $i < count($files); $i++) {
-				$json['step'][] = array(
-					'text' => $this->language->get('text_ftp'),
-					'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/ftp', 'token=' . $this->session->data['token'] . '&code=' . $code . '&page=' . $i, true))
-				);
-			}
-	
-			// Zip
-			$json['step'][] = array(
-				'text' => $this->language->get('text_db'),
-				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);
-						
-			// Clear temporary files
-			$json['step'][] = array(
-				'text' => $this->language->get('text_remove'),
-				'href' => str_replace('&amp;', '&', $this->url->link('extension/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true))
-			);					
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function download() {
 		$this->load->language('extension/translation');
 
 		$json = array();
@@ -247,16 +146,6 @@ class ControllerExtensionTranslation extends Controller {
 			$code = $this->request->get['code'];
 		} else {
 			$code = '';
-		}
-		
-		$directory = DIR_UPLOAD . 'language-' . $code . '/';
-		
-		if (!is_dir($directory)) {
-			mkdir($directory);
-		}
-
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
-			$json['error'] = $this->language->get('error_file');
 		}
 						
 		if (!$json) {
@@ -274,7 +163,7 @@ class ControllerExtensionTranslation extends Controller {
 			if (!$response) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
 			} else {
-				$file = DIR_UPLOAD . 'language-' . $code . '/' . $code . '.zip';
+				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
 		
 				$handle = fopen($file, 'w');
 		
@@ -286,7 +175,11 @@ class ControllerExtensionTranslation extends Controller {
 		
 				flock($handle, LOCK_UN);
 		
-				fclose($handle);			
+				fclose($handle);
+				
+				$json['success'] = $this->language->get('text_download');
+				
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 			}
 			
 			curl_close($curl);	
@@ -311,9 +204,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 
-		$file = DIR_UPLOAD . 'language-' . $code . '/' . $code . '.zip';
+		$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
 		
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_file');
 		}
 			
@@ -322,7 +215,7 @@ class ControllerExtensionTranslation extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_UPLOAD . 'language-' . $code . '/');
+				$zip->extractTo(ini_get('upload_tmp_dir') . '/lng-' . $code . '/');
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -330,41 +223,34 @@ class ControllerExtensionTranslation extends Controller {
 
 			// Remove Zip
 			unlink($file);
+			
+			$json['success'] = $this->language->get('text_download');
+				
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
 
-	public function ftp() {
+	public function move() {
 		$this->load->language('extension/translation');
 
 		$json = array();
 
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		
 		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Check FTP status
-		if (!$this->config->get('config_ftp_status')) {
-			$json['error'] = $this->language->get('error_ftp_status');
-		}
-		
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
 			$code = '';
 		}
 		
-		$directory = DIR_UPLOAD . 'language-' . $code . '/2.0.0.x/';
+		$directory = ini_get('upload_tmp_dir') . '/lng-' . $code . '/2.0.0.x/';
 
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -385,73 +271,25 @@ class ControllerExtensionTranslation extends Controller {
 					$files[] = $file;
 				}
 			}
-			
-			$files = array_splice($files, ($page - 1) * 20, 20);
 
-			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
-
-			if ($connection) {
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-
-				if ($login) {
-					if ($this->config->get('config_ftp_root')) {
-						$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-					} else {
-						$root = ftp_chdir($connection, '/');
-					}
-
-					if ($root) {
-						foreach ($files as $file) {
-							$destination = substr($file, strlen($directory));
-
-							// Upload everything in the upload directory
-							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
-							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($destination, 0, 5) == 'admin') {
-								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
-							}
-
-							if (substr($destination, 0, 7) == 'catalog') {
-								$destination = basename(DIR_CATALOG) . substr($destination, 7);
-							}
-
-							if (is_dir($file)) {
-								$lists = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-
-								// Basename all the directories because on some servers they don't return the fulll paths.
-								$list_data = array();
-
-								foreach ($lists as $list) {
-									$list_data[] = basename($list);
-								}
-
-								if (!in_array(basename($destination), $list_data)) {
-									if (!ftp_mkdir($connection, $destination)) {
-										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
-									}
-								}
-							}
-
-							if (is_file($file)) {
-								if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
-									echo "\n" . $file . "\n";
-									echo $destination . "\n";
-									
-									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
-								}
-							}
-						}
-					} else {
-						$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
-					}
-				} else {
-					$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+			foreach ($files as $file) {
+				$destination = substr($file, strlen($directory));
+				
+				if (substr($destination, 0, 5) == 'admin') {
+					$destination = DIR_APPLICATION . substr($destination, 6);
 				}
 
-				ftp_close($connection);
-			} else {
-				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+				if (substr($destination, 0, 7) == 'catalog') {
+					$destination = DIR_CATALOG . substr($destination, 7);
+				}
+				
+				$json['success'] = $this->language->get('text_download');
+				
+				//$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				
+				if (is_file($file)) {
+					copy($file, $destination);
+				}
 			}
 		}
 
@@ -502,7 +340,7 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = DIR_UPLOAD . 'language-' . $code;
+		$directory = ini_get('upload_tmp_dir') . 'lng-' . $code;
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
@@ -561,7 +399,15 @@ class ControllerExtensionTranslation extends Controller {
 		}
 
 		if (!$json) {
-			$directories = glob(DIR_UPLOAD . 'language-*', GLOB_ONLYDIR);
+			// Remove and language files
+			$files = glob(ini_get('upload_tmp_dir') . '/lng-*.zip');
+			
+			foreach ($files as $file) {
+				unlink($file);
+			}
+			
+			// Remove and language directories
+			$directories = glob(ini_get('upload_tmp_dir') . '/lng-*', GLOB_ONLYDIR);
 
 			foreach ($directories as $directory) {
 				// Get a list of files ready to upload
@@ -598,7 +444,7 @@ class ControllerExtensionTranslation extends Controller {
 					rmdir($directory);
 				}
 			}
-
+			
 			$json['success'] = $this->language->get('text_clear');
 		}
 

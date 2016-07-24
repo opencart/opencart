@@ -3,7 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="{{ refresh }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fa fa-refresh"></i></a>
         {% if error_warning %}
         <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
         {% else %}
@@ -95,14 +94,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var step = new Array();
-var total = 0;
-
-$('a.btn').attr('disabled', 'disabled');
-
 $('table a.btn').on('click', function(e) {
 	e.preventDefault();
-	
+		
 	var node = this;
 	
 	// Reset the progress bar		
@@ -114,26 +108,20 @@ $('table a.btn').on('click', function(e) {
 		url: $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('table a.btn').not(node);
-			
-			$('table a.btn').prop('disabled', true);
-		},
-		complete: function() {
-			$(node).button('reset');
+			$('table a.btn').addClass('disabled');
 		},
 		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');			
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');	
+				
+				$('table a.btn').addClass('disabled');		
 			}
 			
-			if (json['step']) {
-				step = json['step'];
-				total = step.length;
-				
-				next();
+			if (json['next']) {
+				next(json['next'], i = 0);
 			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -142,43 +130,42 @@ $('table a.btn').on('click', function(e) {
 	});
 });
 
-function next() {
-	data = step.shift();
+function next(url, i) {
+	i++;
+	
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			$('#progress-bar').css('width', (100 - (i / 4) * 100) + '%');
 
-	if (data) {
-		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
-		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
-
-		$.ajax({
-			url: data.href,
-			dataType: 'json',
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					$('#button-clear').prop('disabled', false);
-				}
-
-				if (json['success']) {
-					$('#progress-bar').addClass('progress-bar-success');
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-					
-					//if ($(node).has('.btn-success')) {
-					//	$('#button-reward-remove').replaceWith('<a href="" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
-					//}
-				}
-
-				if (!json['error'] && !json['success']) {
-					next();
-				} else {
-					
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				
+				$('#button-clear').prop('disabled', false);
+				
+				$('table a.btn').addClass('disabled');	
 			}
-		});
-	}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+				
+				$('table a.btn').addClass('disabled');	
+				//if ($(node).has('.btn-success')) {
+				//	$('#button-reward-remove').replaceWith('<a href="" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				//}
+			}
+
+			if (json['next']) {
+				next(json['next']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 }
 
 $('#button-clear').bind('click', function() {
@@ -200,8 +187,8 @@ $('#button-clear').bind('click', function() {
 
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				$('#button-clear').prop('disabled', true);
+				
+				$('#button-clear').addClass('disabled');	
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

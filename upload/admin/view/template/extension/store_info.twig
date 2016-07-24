@@ -1,40 +1,42 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+<div class="page-header">
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_info }}</h3>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-sm-8"> {% if banner %}
-            <div class="well well-sm"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
-            {% endif %}
-            <div> {% for image in images %} <a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a> {% endfor %} </div>
-            <div>{{ description }}</div>
-          </div>
-          <div class="col-sm-4">
-            <div class="well well-sm"> {% for download in downloads %}
-              <button type="button" id="button-install" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-default btn-block">Download</button>
-              {% endfor %} <br />
-              <div> </div>
-              <button type="button" class="btn btn-primary btn-block">Buy</button>
-              <br />
+    <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+    <h1>{{ heading_title }}</h1>
+    <ul class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_info }}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-8"> {% if banner %}
+          <div class="well well-sm"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+          {% endif %}
+          <div> {% for image in images %} <a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a> {% endfor %} </div>
+          <div>{{ description }}</div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well well-sm">
+            <button type="button" class="btn btn-primary btn-block">Buy</button>
+            {% for download in downloads %}
+            <button type="button" id="button-install" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-default btn-block">Install</button>
+            {% endfor %} <br />
+            <div id="progress">
               <div class="progress">
                 <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
               </div>
               <div id="progress-text"></div>
+            </div>
+            <div> <br />
               <div class="row">
                 <div class="col-md-6">{{ text_price }}</div>
                 <div class="col-md-6 text-right">{{ price }}</div>
@@ -45,7 +47,7 @@
                   Commercial
                   {% else %}
                   Free
-                  {% endif %} </div>
+                  {% endif %}</div>
               </div>
               <hr />
               <div class="row">
@@ -57,7 +59,7 @@
               <hr />
               <div class="row">
                 <div class="col-md-6">{{ text_compatibility }}</div>
-                <div class="col-md-6 text-right"></div>
+                <div class="col-md-6 text-right">{{ compatibility }}</div>
               </div>
               <hr />
               <div class="row">
@@ -79,9 +81,6 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-var step = new Array();
-var total = 0;
-
 $('#button-install').on('click', function() {
 	var node = this;
 	
@@ -106,11 +105,14 @@ $('#button-install').on('click', function() {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
-
-			if (json['install']) {
-				step = json['step'];
-
-				next();
+			
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+			}
+			
+			if (json['next']) {
+				next(json['next']);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -119,45 +121,37 @@ $('#button-install').on('click', function() {
 	});
 });
 
-var total = 6;
+var i = 0;
 
-function next() {
-	data = step.shift();
+function next(url) {
+	i++;
 
-	if (data) {
-		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
-		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
-
-		$.ajax({
-			url: data.href,
-			dataType: 'json',
-			success: function(json) {
-				console.log(json);
-				
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					$('#button-clear').prop('disabled', false);
-				}
-
-				if (json['success']) {
-					$('#progress-bar').addClass('progress-bar-success');
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				}
-
-				if (json['next']) {
-					
-				}
-				
-				if (!json['error'] && !json['success']) {
-					next();
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			console.log(json);
+			
+			$('#progress-bar').css('width', Math.ceil(100 - (i / 6) * 100) + '%');
+			
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
-		});
-	}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+			}
+
+			if (json['next']) {
+				next(json['next']);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 }
 //--></script> 
 </div>

@@ -259,14 +259,9 @@ class ControllerExtensionStore extends Controller {
 			
 		$response = curl_exec($curl);
 		
-		//echo $url;
-		//echo $response;
-		
 		curl_close($curl);
 		
 		$response_info = json_decode($response, true);
-		
-		//print_r($response_info);
 		
 		if ($response_info) {
 			$this->load->language('extension/store');
@@ -275,6 +270,8 @@ class ControllerExtensionStore extends Controller {
 							
 			$data['heading_title'] = $this->language->get('heading_title');
 			
+			$data['text_info'] = $this->language->get('text_info');
+			$data['text_loading'] = $this->language->get('text_loading');
 			$data['text_price'] = $this->language->get('text_price');
 			$data['text_rating'] = $this->language->get('text_rating');
 			$data['text_developed'] = $this->language->get('text_developed');
@@ -286,6 +283,8 @@ class ControllerExtensionStore extends Controller {
 
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_cancel'] = $this->language->get('button_cancel');
+
+			$data['token'] = $this->session->data['token'];
 
 			$url = '';
 			
@@ -339,8 +338,8 @@ class ControllerExtensionStore extends Controller {
 			$data['rating'] = $response_info['rating'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
-			$data['date_added'] = date('j F Y', strtotime($response_info['date_added']));
-			$data['date_modified'] = date('j F Y', strtotime($response_info['date_modified']));
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
+			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
 			$data['comment_total'] = $response_info['comment_total'];
 			
 			$data['downloads'] = array();
@@ -348,10 +347,10 @@ class ControllerExtensionStore extends Controller {
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
 					$data['downloads'][] = array(
-						'name'          => $result['name'],
-						'compatibility' => $result['compatibility'],
-						'date_added'    => date('d/m/Y', strtotime($result['date_added'])),
-						'href'          => $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true)
+						'extension_download_id' => $result['extension_download_id'],
+						'name'                  => $result['name'],
+						'compatibility'         => $result['compatibility'],
+						'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
 					);				
 				}
 			}
@@ -368,20 +367,16 @@ class ControllerExtensionStore extends Controller {
 		}	
 	}
 	
-	public function comment() {
-	
-	}
-	
 	public function download() {
 		$this->load->language('extension/store');
 
 		$json = array();
 				
-		if ($this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if ($json) {
+		if (!$json) {
 			if (isset($this->request->get['extension_download_id'])) {
 				$extension_download_id = $this->request->get['extension_download_id'];
 			} else {
@@ -397,13 +392,13 @@ class ControllerExtensionStore extends Controller {
 			curl_setopt($curl, CURLOPT_PORT, 80);
 					
 			$response = curl_exec($curl);
-		
+			
 			curl_close($curl);
 		
-			$json = json_decode($response);
+			$response_info = json_decode($response, true);
 		
-			if ($json['download']) {
-				$curl = curl_init($json['download']);
+			if (isset($response_info['download'])) {
+				$curl = curl_init($response_info['download']);
 				
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -415,24 +410,130 @@ class ControllerExtensionStore extends Controller {
 			
 				curl_close($curl);
 			
-				$filename = tempnam(ini_get('upload_tmp_dir'), 'ext');
+				$file = tempnam(ini_get('upload_tmp_dir'), 'ext');
 			
-				$handle = fopen($filename, 'w');
+				$handle = fopen($file, 'w');
 				
-				fwrite($handle, json_encode($value));
-		
-				fflush($handle);
+				fwrite($handle, $response);
 		
 				fclose($handle);
 				
-				$json['next'] = $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&download=' . $filename, true);			
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&download=' . basename($file, '.tmp'), true));		
 			} else {
-				$json['error'] = '';
+				$json['error'] = 'error';
 			}
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
+	}
+	
+	public function install() {
+		$this->load->language('extension/store');
+
+		$json = array();
+
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if ($this->request->get['download']) {
+			$download = $this->request->get['download'];
+		} else {
+			$download = '';
+		}		
+
+		// Sanitize the filename
+		$file = ini_get('upload_tmp_dir') . '/' . $download . '.tmp';
+
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
+			$json['error'] = $this->language->get('error_file');
+		}
+		
+		if (!$json) {
+			// Set the steps required for installation
+			$json['step'] = array();
+
+			// Open zip file
+			$zip = zip_open($file);
+
+			if ($zip) {
+				// Zip
+				$json['step'][] = array(
+					'text' => $this->language->get('text_unzip'),
+					'href' => str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&file=' . $download, true)),
+				);
+
+				// Move
+				$json['step'][] = array(
+					'text' => $this->language->get('text_move'),
+					'href' => str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&file=' . $download, true)),
+				);
+
+				// Send make and array of actions to carry out
+				while ($entry = zip_read($zip)) {
+					$zip_name = zip_entry_name($entry);
+
+					// SQL
+					if (substr($zip_name, 0, 11) == 'install.sql') {
+						$json['step'][] = array(
+							'text' => $this->language->get('text_sql'),
+							'href' => str_replace('&amp;', '&', $this->url->link('extension/store/sql', 'token=' . $this->session->data['token'] . '&file=' . $download, true))
+						);
+					}
+
+					// XML
+					if (substr($zip_name, 0, 11) == 'install.xml') {
+						$json['step'][] = array(
+							'text' => $this->language->get('text_xml'),
+							'href' => str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&file=' . $download, true))
+						);
+					}
+
+					// Compare admin files
+					$file = DIR_APPLICATION . substr($zip_name, 13);
+
+					if (is_file($file) && substr($zip_name, 0, 13) == 'upload/admin/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare catalog files
+					$file = DIR_CATALOG . substr($zip_name, 15);
+
+					if (is_file($file) && substr($zip_name, 0, 15) == 'upload/catalog/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare image files
+					$file = DIR_IMAGE . substr($zip_name, 13);
+
+					if (is_file($file) && substr($zip_name, 0, 13) == 'upload/image/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare system files
+					$file = DIR_SYSTEM . substr($zip_name, 14);
+
+					if (is_file($file) && substr($zip_name, 0, 14) == 'upload/system/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+				}
+
+				// Clear temporary files
+				$json['step'][] = array(
+					'text' => $this->language->get('text_remove'),
+					'href' => str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&file=' . $download, true))
+				);
+
+				zip_close($zip);
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function unzip() {
@@ -451,7 +552,7 @@ class ControllerExtensionStore extends Controller {
 		}		
 
 		// Sanitize the filename
-		$file = ini_get('upload_tmp_dir') . '/' . $download;
+		$file = ini_get('upload_tmp_dir') . '/' . $download . '.tmp';
 
 		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
 			$json['error'] = $this->language->get('error_file');
@@ -462,7 +563,7 @@ class ControllerExtensionStore extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(ini_get('upload_tmp_dir') . $download);
+				$zip->extractTo(ini_get('upload_tmp_dir') . '/' . $download);
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -485,13 +586,13 @@ class ControllerExtensionStore extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
+		if ($this->request->get['download']) {
+			$download = $this->request->get['download'];
+		} else {
+			$download = '';
+		}		
+				
 		// Sanitize the filename
-		$file = ini_get('upload_tmp_dir') . '/' . $download;
-
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
-			$json['error'] = $this->language->get('error_file');
-		}
-		
 		$directory = ini_get('upload_tmp_dir') . '/' . $download;
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
@@ -527,7 +628,7 @@ class ControllerExtensionStore extends Controller {
 				$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 			}
 
-			if (substr($destination, 0, 7) == 'catalog') {
+			if (substr($destination, 0, 7) == 'upload/catalog') {
 				$destination = basename(DIR_CATALOG) . substr($destination, 7);
 			}
 
@@ -539,7 +640,53 @@ class ControllerExtensionStore extends Controller {
 				$destination = basename(DIR_SYSTEM) . substr($destination, 6);
 			}
 			
-			// Check if the file exists or not.	
+			
+					// Compare admin files
+					$file = DIR_APPLICATION . substr($destination, 13);
+
+					if (is_file($file) && substr($zip_name, 0, 13) == 'upload/admin/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare catalog files
+					$file = DIR_CATALOG . substr($destination, 15);
+
+					if (is_file($file) && substr($destination, 0, 15) == 'upload/catalog/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare image files
+					$file = DIR_IMAGE . substr($destination, 13);
+
+					if (is_file($file) && substr($zip_name, 0, 13) == 'upload/image/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}
+
+					// Compare system files
+					$file = DIR_SYSTEM . substr($destination, 14);
+
+					if (is_file($file) && substr($destination, 0, 14) == 'upload/system/') {
+						$json['error'] = sprintf($this->language->get('error_exists'), substr($zip_name, 7));
+					}		
+			
+			
+			
+			
+			// Check if the copy location exists or not	
+			if (is_file($destination)) {
+				$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+				
+				break;
+			}
+			
+			// Check if the copy location exists or not				
+			if (is_dir($destination)) {
+				$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+				
+				break;
+			}	
+			
+			// Check if the file is going into an allowed directoy
  			$allowed = array(
 				DIR_APPLICATION . 'controller/extension/',
 				DIR_APPLICATION . 'model/extension/',
@@ -549,32 +696,18 @@ class ControllerExtensionStore extends Controller {
 				DIR_CATALOG . 'view/theme/'
 			);
 			
-			if (is_file($destination)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $destination);
-				
-				break;
-			}
+			$status = true;
 			
+			foreach ($allowed as $allowed) {
+				
+			}
+								
 			// Check if the copy location exists or not				
-			if (!in_array(substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)), $allowed)) {
-				$json['error'] = $this->language->get('error_file_exists');
+			if (!in_array(substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))), $allowed)) {
+				$json['error'] = $this->language->get('error_exists');
 				
 				break;
 			}
-			
-			// Check if the file exsits or not.				
-			if (is_dir($destination)) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-				
-				break;
-			}
-			
-			// Check if the copy location exists or not				
-			if (is_dir($destination)) {
-				$json['error'] = sprintf($this->language->get('error_directory_exists'), $destination);
-				
-				break;
-			}								
 		}
 	
 		if (!$json) {
@@ -617,64 +750,19 @@ class ControllerExtensionStore extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	public function sql() {
-		$this->load->language('extension/installer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$file = DIR_UPLOAD . $this->request->post['path'] . '/install.sql';
-
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
-			$json['error'] = $this->language->get('error_file');
-		}
-
-		if (!$json) {
-			$lines = file($file);
-
-			if ($lines) {
-				try {
-					$sql = '';
-
-					foreach ($lines as $line) {
-						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-							$sql .= $line;
-
-							if (preg_match('/;\s*$/', $line)) {
-								$sql = str_replace(" `oc_", " `" . DB_PREFIX, $sql);
-
-								$this->db->query($sql);
-
-								$sql = '';
-							}
-						}
-					}
-				} catch(Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-				}
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 
 	public function xml() {
-		$this->load->language('extension/installer');
+		$this->load->language('extension/store');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+		
+		$file = ini_get('upload_tmp_dir') . '/' . $download . '/install.xml';
 
-		$file = DIR_UPLOAD . $this->request->post['path'] . '/install.xml';
-
-		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
@@ -758,13 +846,59 @@ class ControllerExtensionStore extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	
-	
-	public function remove() {
-		$this->load->language('extension/installer');
+		
+	public function sql() {
+		$this->load->language('extension/store');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = ini_get('upload_tmp_dir') . '/' . $download . '/install.sql';
+		
+		// Sanitize the filename
+		if (!is_file($file) || substr(str_replace('\\', '/', realpath($file)), 0, strlen(ini_get('upload_tmp_dir'))) != ini_get('upload_tmp_dir')) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		if (!$json) {
+			$lines = file($file);
+
+			if ($lines) {
+				try {
+					$sql = '';
+
+					foreach ($lines as $line) {
+						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
+							$sql .= $line;
+
+							if (preg_match('/;\s*$/', $line)) {
+								$sql = str_replace(" `oc_", " `" . DB_PREFIX, $sql);
+
+								$this->db->query($sql);
+
+								$sql = '';
+							}
+						}
+					}
+				} catch(Exception $exception) {
+					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function remove() {
+		$this->load->language('extension/store');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

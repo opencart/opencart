@@ -280,35 +280,31 @@ class ControllerExtensionTranslation extends Controller {
 				}
 
 				if (substr($destination, 0, 7) == 'catalog') {
-					$destination = DIR_CATALOG . substr($destination, 7);
+					$destination = DIR_CATALOG . substr($destination, 8);
 				}
 				
-				
-				$this->log->write($destination);
-				
+				if (substr($destination, 0, 7) == 'install') {
+					$destination = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/' . substr($destination, 8);
+				}
+												
+				if (is_dir($file) && !is_dir($destination)) {
+					if (!mkdir($destination, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
+					}
+				}
 				
 				if (is_file($file)) {
-					
-					/*
-					$path = '';
-
-					$directories = explode('/', dirname($destination));
-
-					foreach ($directories as $directory) {
-						$path = $path . '/' . $directory;
-		
-						if (!is_dir($destination)) {
-							@mkdir($destination, 0777);
-						}
+					if (!rename($file, $destination)) {
+						$json['error'] = sprintf($this->language->get('error_file'), $file);
 					}
-					*/
-				//	rename($file, $destination);
 				}
 			}
-			
-			//$json['success'] = $this->language->get('text_download');
+		}
+
+		if (!$json) {
+			$json['success'] = $this->language->get('text_move');
 				
-			//$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -323,20 +319,29 @@ class ControllerExtensionTranslation extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-
+		
 		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+		
+		if (!$json) {
 			$this->load->model('localisation/language');
 			
-			$language_info = $this->model_localisation_language->getLanguageByCode($this->request->get['code']);
+			$language_info = $this->model_localisation_language->getLanguageByCode($code);
 
 			if (!$language_info) {
+				$data = array(
 				
-			//	foreach () {
-					
-			//	}
+				);['']
 				
 				$this->model_localisation_language->addLanguage();
 			}
+			
+			$json['success'] = $this->language->get('text_move');
+				
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -363,7 +368,7 @@ class ControllerExtensionTranslation extends Controller {
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
 			$json['error'] = $this->language->get('error_directory');
 		}
-
+		
 		if (!$json) {
 			// Get a list of files ready to upload
 			$files = array();

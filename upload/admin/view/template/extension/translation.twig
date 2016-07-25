@@ -43,6 +43,7 @@
                 <tr>
                   <td class="text-center">{{ column_flag }}</td>
                   <td class="text-left">{{ column_name }}</td>
+                  <td class="text-left">{{ column_code }}</td>
                   <td class="text-left">{{ column_progress }}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
@@ -51,8 +52,9 @@
                 {% if translations %}
                 {% for translation in translations %}
                 <tr>
-                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" style="width: 48px; height: 48px;" /></td>
+                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
                   <td class="text-left">{{ translation.name }}</td>
+                  <td class="text-left">{{ translation.code }}</td>
                   <td class="text-left"><div class="progress">
                       {% if translation.progress > 75 %}
                       <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
@@ -90,7 +92,8 @@
 $('table').on('click', '.btn-success', function(e) {
 	var node = this;
 	
-	// Reset the progress bar		
+	// Reset the progress bar
+	$('.alert-success, .alert-danger').remove();		
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('');
@@ -102,8 +105,6 @@ $('table').on('click', '.btn-success', function(e) {
 			$('table button').prop('disabled', true);	
 		},
 		success: function(json) {
-			$('.alert-success, .alert-danger').remove();
-
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');	

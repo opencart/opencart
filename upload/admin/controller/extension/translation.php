@@ -1,7 +1,5 @@
 <?php
 class ControllerExtensionTranslation extends Controller {
-	private $error = array();
-	
 	public function index() {
 		$this->load->language('extension/translation');
 
@@ -27,13 +25,8 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['translations'] = array();
 		
-		$filter_data = array(
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
-		
-		// Make a CURL request 
-		$curl = curl_init('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
+		// Make a CURL request
+		$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '.json');
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HEADER, false);
@@ -65,7 +58,7 @@ class ControllerExtensionTranslation extends Controller {
 				$data['translations'][] = array(
 					'name'      => $translation['name'],
 					'code'      => $translation['code'],
-					'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
+					'image'     => (!$this->request->server['HTTPS'] ? HTTP_CATALOG : HTTPS_CATALOG) . 'image/flags/' . substr(strtolower($translation['code']), 0, 2) . '.png',
 					'progress'  => $translation['translated_progress'],
 					'installed' => $installed
 				);
@@ -84,6 +77,7 @@ class ControllerExtensionTranslation extends Controller {
 		
 		$data['column_flag'] = $this->language->get('column_flag');
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_code'] = $this->language->get('column_code');
 		$data['column_progress'] = $this->language->get('column_progress');
         $data['column_action'] = $this->language->get('column_action');
 
@@ -91,12 +85,6 @@ class ControllerExtensionTranslation extends Controller {
 		
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
-		
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 		
 		$data['token'] = $this->session->data['token'];
 
@@ -126,10 +114,10 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (!isset($this->request->get['code'])) {
-			$json['error'] = $this->language->get('error_code');
-		} else {
+		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
+		} else {
+			$code = '';
 		}
 		
 		if (!$json) {		
@@ -171,6 +159,7 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_directory');
 		} 		
 		
+		// Get a list of all language install files	
 		$install = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/' . $code . '/';
 	
 		if (substr(str_replace('\\', '/', realpath($install)), 0, strlen(DIR_APPLICATION . '/language/')) != DIR_APPLICATION . '/language/') {
@@ -266,6 +255,7 @@ class ControllerExtensionTranslation extends Controller {
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_PORT, 443);
 	
 			$response = curl_exec($curl);
 	
@@ -357,7 +347,7 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = ini_get('upload_tmp_dir') . '/lng-' . $code . '/2.0.0.x/';
+		$directory = ini_get('upload_tmp_dir') . '/lng-' . $code . '/' . VERSION . '/';
 
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
@@ -398,13 +388,13 @@ class ControllerExtensionTranslation extends Controller {
 												
 				if (is_dir($file) && !is_dir($destination)) {
 					if (!mkdir($destination, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
+						$json['error'] = sprintf($this->language->get('error_move'), $destination);
 					}
 				}
 				
 				if (is_file($file)) {
 					if (!rename($file, $destination)) {
-						$json['error'] = sprintf($this->language->get('error_file'), $file);
+						$json['error'] = sprintf($this->language->get('error_move'), $file);
 					}
 				}
 			}
@@ -445,7 +435,7 @@ class ControllerExtensionTranslation extends Controller {
 					if ($result['code'] == $code) {  
 						$this->load->model('localisation/language');
 						
-						$language_info = $this->model_localisation_language->getLanguageByCode($response_info[$code]['name']);
+						$language_info = $this->model_localisation_language->getLanguageByCode($code);
 						
 						if (!$language_info) {
 							$language_data = array(

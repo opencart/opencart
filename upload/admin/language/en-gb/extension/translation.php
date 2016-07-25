@@ -16,6 +16,7 @@ $_['text_remove']      = 'Removing temporary files!';
 
 // Column
 $_['column_name']      = 'Country Name';
+$_['column_code']      = 'Code';
 $_['column_flag']      = 'Flag';
 $_['column_progress']  = 'Translation Progress';
 $_['column_action']    = 'Action';
@@ -25,8 +26,9 @@ $_['entry_progress']   = 'Progress';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify language translation!';
-$_['error_api']        = 'API ERROR :: CURL failed %s (%s)';
 $_['error_file']       = 'File could not be found!';
-$_['error_unzip']      = 'Zip file could not be opened!';
-$_['error_move']       = 'File could not be found!';
 $_['error_directory']  = 'Directory containing files to be uploaded could not be found!';
+$_['error_api']        = 'API ERROR :: CURL failed %s (%s)';
+$_['error_unzip']      = 'Zip file could not be opened!';
+$_['error_move']       = 'Unable to move directory / files to %s!';
+$_['error_db']         = 'Adding new language to the database!';

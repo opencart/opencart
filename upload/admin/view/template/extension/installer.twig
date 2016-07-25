@@ -2,13 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        {% if error_warning %}
-        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        {% else %}
-        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        {% endif %}
-      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -52,9 +45,6 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-var step = new Array();
-var total = 0;
-
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 
@@ -95,24 +85,24 @@ $('#button-upload').on('click', function() {
 						$('#progress-bar').addClass('progress-bar-danger');
 						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					}
+			
+					if (json['text']) {
+						$('#progress-bar').css('width', '20%');
+						$('#progress-text').html(json['text']);
+					}
+			
+					if (json['overwrite'].length) {
+						html = '';
 
-					if (json['step']) {
-						step = json['step'];
-						total = step.length;
-
-						if (json['overwrite'].length) {
-							html = '';
-
-							for (i = 0; i < json['overwrite'].length; i++) {
-								html += json['overwrite'][i] + "\n";
-							}
-
-							$('#overwrite').html(html);
-
-							$('#button-continue').prop('disabled', false);
-						} else {
-							next();
+						for (i = 0; i < json['overwrite'].length; i++) {
+							html += json['overwrite'][i] + "\n";
 						}
+
+						$('#overwrite').html(html);
+
+						$('#button-continue').prop('disabled', false);
+					} else if (json['next']) {
+						next(json['next'], i = 2));
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -129,68 +119,35 @@ $('#button-continue').on('click', function() {
 	$('#button-continue').prop('disabled', true);
 });
 
-function next() {
-	data = step.shift();
+function next(url) {
+	$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
+	$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
 
-	if (data) {
-		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
-		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
-
-		$.ajax({
-			url: data.href,
-			type: 'post',
-			dataType: 'json',
-			data: 'path=' + data.path,
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					$('#button-clear').prop('disabled', false);
-				}
-
-				if (json['success']) {
-					$('#progress-bar').addClass('progress-bar-success');
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				}
-
-				if (!json['error'] && !json['success']) {
-					next();
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-}
-
-$('#button-clear').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/installer/clear&token={{ token }}',
+		url: url,
+		type: 'post',
 		dataType: 'json',
-		beforeSend: function() {
-			$('#button-clear').button('loading');
-		},
-		complete: function() {
-			$('#button-clear').button('reset');
-		},
+		data: 'path=' + data.path,
 		success: function(json) {
-			$('.alert').remove();
-
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				$('#button-clear').prop('disabled', false);
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+			}
 
-				$('#button-clear').prop('disabled', true);
+			if (!json['error'] && !json['success']) {
+				next();
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
+}
 //--></script></div>
 {{ footer }} 

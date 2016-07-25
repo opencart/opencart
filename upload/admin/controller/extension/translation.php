@@ -57,8 +57,8 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$data['translations'][] = array(
 					'name'      => $translation['name'],
+					'image'     => (!$this->request->server['HTTPS'] ? HTTP_CATALOG : HTTPS_CATALOG) . 'image/flags/' . strtolower($translation['code']) . '.png',
 					'code'      => $translation['code'],
-					'image'     => (!$this->request->server['HTTPS'] ? HTTP_CATALOG : HTTPS_CATALOG) . 'image/flags/' . substr(strtolower($translation['code']), 0, 2) . '.png',
 					'progress'  => $translation['translated_progress'],
 					'installed' => $installed
 				);
@@ -75,8 +75,8 @@ class ControllerExtensionTranslation extends Controller {
 		$data['text_crowdin'] = $this->language->get('text_crowdin');
 		$data['text_loading'] = $this->language->get('text_loading');
 		
-		$data['column_flag'] = $this->language->get('column_flag');
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_flag'] = $this->language->get('column_flag');
 		$data['column_code'] = $this->language->get('column_code');
 		$data['column_progress'] = $this->language->get('column_progress');
         $data['column_action'] = $this->language->get('column_action');
@@ -144,52 +144,40 @@ class ControllerExtensionTranslation extends Controller {
 		} else {
 			$code = '';
 		}
-				
-		// Get a list of all language admin files		
-		$admin = DIR_APPLICATION . '/language/' . $code . '/';
-
-		if (substr(str_replace('\\', '/', realpath($admin)), 0, strlen(DIR_APPLICATION . '/language/')) != DIR_APPLICATION . '/language/') {
-			$json['error'] = $this->language->get('error_directory');
-		}
 		
-		// Get a list of all language admin files		
-		$catalog = DIR_CATALOG . '/language/' . $code . '/';
-		
-		if (substr(str_replace('\\', '/', realpath($catalog)), 0, strlen(DIR_CATALOG . '/language/')) != DIR_CATALOG . '/language/') {
-			$json['error'] = $this->language->get('error_directory');
-		} 		
-		
-		// Get a list of all language install files	
-		$install = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/' . $code . '/';
-	
-		if (substr(str_replace('\\', '/', realpath($install)), 0, strlen(DIR_APPLICATION . '/language/')) != DIR_APPLICATION . '/language/') {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
 		if (!$json) {
 			$directories = array();
 					
-			// Get a list of all admin language files	
-			$files = glob($admin . '*');
+			$directory = DIR_APPLICATION . 'language/';
+	
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$files = glob($directory . '*');
 				
-			if ($files) {
-				$directories = array_merge($directories, $files);
+				if ($files) {
+					$directories = array_merge($directories, $files);
+				}			
 			}
 			
-			// Get a list of all catalog language files	
-			$files = glob($catalog . '*');
+			$directory = DIR_CATALOG . 'language/';
+			
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$files = glob($directory . '*');
 				
-			if ($files) {
-				$directories = array_merge($directories, $files);
-			}	
-		
-			// Get a list of all install language files	
-			$files = glob($install . '*');
-		
-			if ($files) {
-				$directories = array_merge($directories, $files);
+				if ($files) {
+					$directories = array_merge($directories, $files);
+				}			
+			}
+			
+			$directory = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/';
+	
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == $directory) {
+				$files = glob($directory . '*');
+				
+				if ($files) {
+					$directories = array_merge($directories, $files);
+				}		
 			}			
-
+			
 			foreach ($directories as $directory) {
 				// Get a list of files ready to upload
 				$files = array();
@@ -225,6 +213,8 @@ class ControllerExtensionTranslation extends Controller {
 					rmdir($directory);
 				}
 			}
+			
+			$json['success'] = $this->language->get('text_uninstalled');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -247,17 +237,20 @@ class ControllerExtensionTranslation extends Controller {
 		}
 						
 		if (!$json) {
-			$curl = curl_init('https://crowdin.com/download/project/opencart/' . $code . '.zip');
-	
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, 'json=true');
+			$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '/' . $code . '.zip');
+			
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_PORT, 443);
 	
 			$response = curl_exec($curl);
+	
+			$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+			
+			$header = substr($response, 0, $header_size);
+	
+	$this->log->write($header);
 	
 			if (!$response) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
@@ -520,7 +513,7 @@ class ControllerExtensionTranslation extends Controller {
 				rmdir($directory);
 			}
 						
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_installed');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

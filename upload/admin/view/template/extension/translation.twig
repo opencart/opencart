@@ -41,8 +41,8 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-center">{{ column_flag }}</td>
                   <td class="text-left">{{ column_name }}</td>
+                  <td class="text-center">{{ column_flag }}</td>
                   <td class="text-left">{{ column_code }}</td>
                   <td class="text-left">{{ column_progress }}</td>
                   <td class="text-right">{{ column_action }}</td>
@@ -52,8 +52,8 @@
                 {% if translations %}
                 {% for translation in translations %}
                 <tr>
-                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
                   <td class="text-left">{{ translation.name }}</td>
+                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
                   <td class="text-left">{{ translation.code }}</td>
                   <td class="text-left"><div class="progress">
                       {% if translation.progress > 75 %}
@@ -65,9 +65,9 @@
                       {% endif %}
                     </div></td>
                   <td class="text-right">{% if not translation.installed %}
-                    <button type="button" value="{{ code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                    <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                     {% else %}
-                    <button type="button" value="{{ code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-plus-circle"></i></button>
+                    <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
                     {% endif %}</td>
                 </tr>
                 {% endfor %}
@@ -191,7 +191,7 @@ $('table').on('click', '.btn-danger', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-danger"><i class="fa fa-plus-circle"></i></button>');
+				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

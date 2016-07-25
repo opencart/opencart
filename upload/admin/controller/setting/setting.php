@@ -120,12 +120,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_captcha_page'] = $this->language->get('entry_captcha_page');
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_icon'] = $this->language->get('entry_icon');
-		$data['entry_ftp_hostname'] = $this->language->get('entry_ftp_hostname');
-		$data['entry_ftp_port'] = $this->language->get('entry_ftp_port');
-		$data['entry_ftp_username'] = $this->language->get('entry_ftp_username');
-		$data['entry_ftp_password'] = $this->language->get('entry_ftp_password');
-		$data['entry_ftp_root'] = $this->language->get('entry_ftp_root');
-		$data['entry_ftp_status'] = $this->language->get('entry_ftp_status');
 		$data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
 		$data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
 		$data['entry_mail_smtp_hostname'] = $this->language->get('entry_mail_smtp_hostname');
@@ -194,7 +188,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_return_status'] = $this->language->get('help_return_status');
 		$data['help_captcha'] = $this->language->get('help_captcha');
 		$data['help_icon'] = $this->language->get('help_icon');
-		$data['help_ftp_root'] = $this->language->get('help_ftp_root');
 		$data['help_mail_protocol'] = $this->language->get('help_mail_protocol');
 		$data['help_mail_parameter'] = $this->language->get('help_mail_parameter');
 		$data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
@@ -221,7 +214,6 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_local'] = $this->language->get('tab_local');
 		$data['tab_option'] = $this->language->get('tab_option');
 		$data['tab_image'] = $this->language->get('tab_image');
-		$data['tab_ftp'] = $this->language->get('tab_ftp');
 		$data['tab_mail'] = $this->language->get('tab_mail');
 		$data['tab_server'] = $this->language->get('tab_server');
 
@@ -313,30 +305,6 @@ class ControllerSettingSetting extends Controller {
 			$data['error_complete_status'] = $this->error['complete_status'];
 		} else {
 			$data['error_complete_status'] = '';
-		}
-
-		if (isset($this->error['ftp_hostname'])) {
-			$data['error_ftp_hostname'] = $this->error['ftp_hostname'];
-		} else {
-			$data['error_ftp_hostname'] = '';
-		}
-
-		if (isset($this->error['ftp_port'])) {
-			$data['error_ftp_port'] = $this->error['ftp_port'];
-		} else {
-			$data['error_ftp_port'] = '';
-		}
-
-		if (isset($this->error['ftp_username'])) {
-			$data['error_ftp_username'] = $this->error['ftp_username'];
-		} else {
-			$data['error_ftp_username'] = '';
-		}
-
-		if (isset($this->error['ftp_password'])) {
-			$data['error_ftp_password'] = $this->error['ftp_password'];
-		} else {
-			$data['error_ftp_password'] = '';
 		}
 
 		if (isset($this->error['error_filename'])) {
@@ -928,46 +896,6 @@ class ControllerSettingSetting extends Controller {
 			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
-		if (isset($this->request->post['config_ftp_hostname'])) {
-			$data['config_ftp_hostname'] = $this->request->post['config_ftp_hostname'];
-		} elseif ($this->config->get('config_ftp_hostname')) {
-			$data['config_ftp_hostname'] = $this->config->get('config_ftp_hostname');
-		} else {
-			$data['config_ftp_hostname'] = str_replace('www.', '', $this->request->server['HTTP_HOST']);
-		}
-
-		if (isset($this->request->post['config_ftp_port'])) {
-			$data['config_ftp_port'] = $this->request->post['config_ftp_port'];
-		} elseif ($this->config->get('config_ftp_port')) {
-			$data['config_ftp_port'] = $this->config->get('config_ftp_port');
-		} else {
-			$data['config_ftp_port'] = 21;
-		}
-
-		if (isset($this->request->post['config_ftp_username'])) {
-			$data['config_ftp_username'] = $this->request->post['config_ftp_username'];
-		} else {
-			$data['config_ftp_username'] = $this->config->get('config_ftp_username');
-		}
-
-		if (isset($this->request->post['config_ftp_password'])) {
-			$data['config_ftp_password'] = $this->request->post['config_ftp_password'];
-		} else {
-			$data['config_ftp_password'] = $this->config->get('config_ftp_password');
-		}
-
-		if (isset($this->request->post['config_ftp_root'])) {
-			$data['config_ftp_root'] = $this->request->post['config_ftp_root'];
-		} else {
-			$data['config_ftp_root'] = $this->config->get('config_ftp_root');
-		}
-
-		if (isset($this->request->post['config_ftp_status'])) {
-			$data['config_ftp_status'] = $this->request->post['config_ftp_status'];
-		} else {
-			$data['config_ftp_status'] = $this->config->get('config_ftp_status');
-		}
-
 		if (isset($this->request->post['config_mail_protocol'])) {
 			$data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
 		} else {
@@ -1198,24 +1126,6 @@ class ControllerSettingSetting extends Controller {
 
 		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
-		}
-
-		if ($this->request->post['config_ftp_status']) {
-			if (!$this->request->post['config_ftp_hostname']) {
-				$this->error['ftp_hostname'] = $this->language->get('error_ftp_hostname');
-			}
-
-			if (!$this->request->post['config_ftp_port']) {
-				$this->error['ftp_port'] = $this->language->get('error_ftp_port');
-			}
-
-			if (!$this->request->post['config_ftp_username']) {
-				$this->error['ftp_username'] = $this->language->get('error_ftp_username');
-			}
-
-			if (!$this->request->post['config_ftp_password']) {
-				$this->error['ftp_password'] = $this->language->get('error_ftp_password');
-			}
 		}
 
 		if (!$this->request->post['config_error_filename']) {

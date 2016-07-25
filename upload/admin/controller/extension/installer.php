@@ -33,14 +33,6 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['token'] = $this->session->data['token'];
-
-		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
-
-		if ($directories) {
-			$data['error_warning'] = $this->language->get('error_temporary');
-		} else {
-			$data['error_warning'] = '';
-		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -7,10 +7,6 @@ class ControllerExtensionTranslation extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->getList();
-	}
-	
-	public function getList() {
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -71,8 +67,6 @@ class ControllerExtensionTranslation extends Controller {
 					'code'      => $translation['code'],
 					'image'     => 'https://d1ztvzf22lmr1j.cloudfront.net/images/flags/' . $translation['code'] . '.png',
 					'progress'  => $translation['translated_progress'],
-					'install'   => $this->url->link('extension/translation/install', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
-					'uninstall' => $this->url->link('extension/translation/uninstall', 'token=' . $this->session->data['token'] . '&code=' . $translation['code'], true),
 					'installed' => $installed
 				);
 			}
@@ -95,8 +89,6 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['entry_progress'] = $this->language->get('entry_progress');
 		
-		$data['button_refresh'] = $this->language->get('button_refresh');
-		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
 		
@@ -107,14 +99,6 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		$data['token'] = $this->session->data['token'];
-
-		$directories = glob(ini_get('upload_tmp_dir') . '/lng-*');
-
-		if ($directories) {
-			$data['error_warning'] = $this->language->get('error_temporary');
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
@@ -134,6 +118,131 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function install() {
+		$this->load->language('extension/translation');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!isset($this->request->get['code'])) {
+			$json['error'] = $this->language->get('error_code');
+		} else {
+			$code = $this->request->get['code'];
+		}
+		
+		if (!$json) {		
+			$json['text'] = $this->language->get('text_download');
+					
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
+	}
+	
+	public function uninstall() {
+		$this->load->language('extension/translation');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+				
+		// Get a list of all language admin files		
+		$admin = DIR_APPLICATION . '/language/' . $code . '/';
+
+		if (substr(str_replace('\\', '/', realpath($admin)), 0, strlen(DIR_APPLICATION . '/language/')) != DIR_APPLICATION . '/language/') {
+			$json['error'] = $this->language->get('error_directory');
+		}
+		
+		// Get a list of all language admin files		
+		$catalog = DIR_CATALOG . '/language/' . $code . '/';
+		
+		if (substr(str_replace('\\', '/', realpath($catalog)), 0, strlen(DIR_CATALOG . '/language/')) != DIR_CATALOG . '/language/') {
+			$json['error'] = $this->language->get('error_directory');
+		} 		
+		
+		$install = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/' . $code . '/';
+	
+		if (substr(str_replace('\\', '/', realpath($install)), 0, strlen(DIR_APPLICATION . '/language/')) != DIR_APPLICATION . '/language/') {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			$directories = array();
+					
+			// Get a list of all admin language files	
+			$files = glob($admin . '*');
+				
+			if ($files) {
+				$directories = array_merge($directories, $files);
+			}
+			
+			// Get a list of all catalog language files	
+			$files = glob($catalog . '*');
+				
+			if ($files) {
+				$directories = array_merge($directories, $files);
+			}	
+		
+			// Get a list of all install language files	
+			$files = glob($install . '*');
+		
+			if ($files) {
+				$directories = array_merge($directories, $files);
+			}			
+
+			foreach ($directories as $directory) {
+				// Get a list of files ready to upload
+				$files = array();
+
+				$path = array($directory);
+
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+
+						$files[] = $file;
+					}
+				}
+
+				rsort($files);
+
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+
+				if (is_dir($directory)) {
+					rmdir($directory);
+				}
+			}
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
+	}
+	
+	public function download() {
 		$this->load->language('extension/translation');
 
 		$json = array();
@@ -177,7 +286,7 @@ class ControllerExtensionTranslation extends Controller {
 		
 				fclose($handle);
 				
-				$json['success'] = $this->language->get('text_download');
+				$json['text'] = $this->language->get('text_unzip');
 				
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 			}
@@ -186,7 +295,7 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function unzip() {
@@ -224,7 +333,7 @@ class ControllerExtensionTranslation extends Controller {
 			// Remove Zip
 			unlink($file);
 			
-			$json['success'] = $this->language->get('text_download');
+			$json['text'] = $this->language->get('text_move');
 				
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
@@ -253,7 +362,7 @@ class ControllerExtensionTranslation extends Controller {
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
 		}
-
+		
 		if (!$json) {
 			// Get a list of files ready to upload
 			$files = array();
@@ -302,7 +411,7 @@ class ControllerExtensionTranslation extends Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_move');
+			$json['text'] = $this->language->get('text_db');
 				
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
@@ -327,23 +436,39 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		if (!$json) {
-			$this->load->model('localisation/language');
+			$response = file_get_contents('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
 			
-			$language_info = $this->model_localisation_language->getLanguageByCode($code);
-
-			if (!$language_info) {
-				$data = array(
+			if ($response) {
+				$results = json_decode($response, true);
 				
-				);['']
+				foreach ($results as $result) {
+					if ($result['code'] == $code) {  
+						$this->load->model('localisation/language');
+						
+						$language_info = $this->model_localisation_language->getLanguageByCode($response_info[$code]['name']);
+						
+						if (!$language_info) {
+							$language_data = array(
+								'name'       => $result['name'],
+								'code'       => $code,
+								'locale'     => '',
+								'sort_order' => 0,
+								'status'     => 1
+							);
+							
+							$this->model_localisation_language->addLanguage($language_data);
+						}
+					}
+				}
 				
-				$this->model_localisation_language->addLanguage();
-			}
-			
-			$json['success'] = $this->language->get('text_move');
+				$json['text'] = $this->language->get('text_remove');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			} else {
+				$json['error'] = $this->language->get('error_db');
+			}	
 		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -363,9 +488,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$directory = ini_get('upload_tmp_dir') . 'lng-' . $code;
+		$directory = ini_get('upload_tmp_dir') . '/lng-' . $code;
 
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
@@ -411,67 +536,4 @@ class ControllerExtensionTranslation extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
-	
-	public function clear() {
-		$this->load->language('extension/translation');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Remove and language files
-			$files = glob(ini_get('upload_tmp_dir') . '/lng-*.zip');
-			
-			foreach ($files as $file) {
-				unlink($file);
-			}
-			
-			// Remove and language directories
-			$directories = glob(ini_get('upload_tmp_dir') . '/lng-*', GLOB_ONLYDIR);
-
-			foreach ($directories as $directory) {
-				// Get a list of files ready to upload
-				$files = array();
-
-				$path = array($directory);
-
-				while (count($path) != 0) {
-					$next = array_shift($path);
-
-					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-						$file = $next . '/' . $file;
-
-						if (is_dir($file)) {
-							$path[] = $file;
-						}
-
-						$files[] = $file;
-					}
-				}
-
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				if (is_dir($directory)) {
-					rmdir($directory);
-				}
-			}
-			
-			$json['success'] = $this->language->get('text_clear');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}	
 }

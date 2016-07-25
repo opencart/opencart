@@ -36,7 +36,6 @@
             <li><a href="#tab-local" data-toggle="tab">{{ tab_local }}</a></li>
             <li><a href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
             <li><a href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
-            <li><a href="#tab-ftp" data-toggle="tab">{{ tab_ftp }}</a></li>
             <li><a href="#tab-mail" data-toggle="tab">{{ tab_mail }}</a></li>
             <li><a href="#tab-server" data-toggle="tab">{{ tab_server }}</a></li>
           </ul>
@@ -1011,73 +1010,6 @@
                 <label class="col-sm-2 control-label" for="input-icon"><span data-toggle="tooltip" title="{{ help_icon }}">{{ entry_icon }}</span></label>
                 <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="{{ icon }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                   <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon" />
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="tab-ftp">
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ftp-host">{{ entry_ftp_hostname }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_ftp_hostname" value="{{ config_ftp_hostname }}" placeholder="{{ entry_ftp_hostname }}" id="input-ftp-host" class="form-control" />
-                  {% if error_ftp_hostname %}
-                  <div class="text-danger">{{ error_ftp_hostname }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ftp-port">{{ entry_ftp_port }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_ftp_port" value="{{ config_ftp_port }}" placeholder="{{ entry_ftp_port }}" id="input-ftp-port" class="form-control" />
-                  {% if error_ftp_port %}
-                  <div class="text-danger">{{ error_ftp_port }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ftp-username">{{ entry_ftp_username }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_ftp_username" value="{{ config_ftp_username }}" placeholder="{{ entry_ftp_username }}" id="input-ftp-username" class="form-control" />
-                  {% if error_ftp_username %}
-                  <div class="text-danger">{{ error_ftp_username }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ftp-password">{{ entry_ftp_password }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_ftp_password" value="{{ config_ftp_password }}" placeholder="{{ entry_ftp_password }}" id="input-ftp-password" class="form-control" />
-                  {% if error_ftp_password %}
-                  <div class="text-danger">{{ error_ftp_password }}</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-ftp-root"><span data-toggle="tooltip" data-html="true" title="{{ help_ftp_root|escape('html') }}">{{ entry_ftp_root }}</span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_ftp_root" value="{{ config_ftp_root }}" placeholder="{{ entry_ftp_root }}" id="input-ftp-root" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">{{ entry_ftp_status }}</label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">
-                    {% if config_ftp_status %}
-                    <input type="radio" name="config_ftp_status" value="1" checked="checked" />
-                    {{ text_yes }}
-                    {% else %}
-                    <input type="radio" name="config_ftp_status" value="1" />
-                    {{ text_yes }}
-                    {% endif %}
-                  </label>
-                  <label class="radio-inline">
-                    {% if not config_ftp_status %}
-                    <input type="radio" name="config_ftp_status" value="0" checked="checked" />
-                    {{ text_no }}
-                    {% else %}
-                    <input type="radio" name="config_ftp_status" value="0" />
-                    {{ text_no }}
-                    {% endif %}
-                  </label>
                 </div>
               </div>
             </div>

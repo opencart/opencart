@@ -5,8 +5,6 @@ class ControllerToolBackup extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('tool/backup');
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_select_all'] = $this->language->get('text_select_all');
@@ -41,6 +39,8 @@ class ControllerToolBackup extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['export'] = $this->url->link('tool/backup/export', 'token=' . $this->session->data['token'], true);
+		
+		$this->load->model('tool/backup');
 
 		$data['tables'] = $this->model_tool_backup->getTables();
 
@@ -61,9 +61,7 @@ class ControllerToolBackup extends Controller {
 		}
 		
 		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
-			$filename = basename(html_entity_decode($this->request->files['import']['tmp_name'], ENT_QUOTES, 'UTF-8'));
-			
-			$filename = basename(tempnam(ini_get('upload_tmp_dir'), 'bac'));
+			$filename = tempnam(ini_get('upload_tmp_dir'), 'bac');
 			
 			move_uploaded_file($this->request->files['import']['tmp_name'], ini_get('upload_tmp_dir') . '/' . $filename);
 		} elseif (isset($this->request->get['import'])) {

@@ -2,13 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        {% if error_warning %}
-        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        {% else %}
-        <button type="button" id="button-clear" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_clear }}" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i></button>
-        {% endif %}
-      </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -28,6 +21,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
       </div>
       <div class="panel-body">
+        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_crowdin }}</div>
         <fieldset>
           <legend>{{ text_progress }}</legend>
           <div class="form-group">
@@ -43,7 +37,6 @@
         <br />
         <fieldset>
           <legend>{{ text_available }}</legend>
-          <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_crowdin }}</div>
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -70,9 +63,9 @@
                       {% endif %}
                     </div></td>
                   <td class="text-right">{% if not translation.installed %}
-                    <a href="{{ translation.install }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                    <button type="button" value="{{ code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                     {% else %}
-                    <a href="{{ translation.uninstall }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                    <button type="button" value="{{ code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-plus-circle"></i></button>
                     {% endif %}</td>
                 </tr>
                 {% endfor %}
@@ -94,9 +87,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('table a.btn').on('click', function(e) {
-	e.preventDefault();
-		
+$('table').on('click', '.btn-success', function(e) {
 	var node = this;
 	
 	// Reset the progress bar		
@@ -105,10 +96,10 @@ $('table a.btn').on('click', function(e) {
 	$('#progress-text').html('');
 				
 	$.ajax({
-		url: $(node).attr('href'),
+		url: 'index.php?route=extension/translation/install&token={{token }}&code=' + $(node).val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('table a.btn').addClass('disabled');
+			$('table button').prop('disabled', true);	
 		},
 		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
@@ -117,11 +108,16 @@ $('table a.btn').on('click', function(e) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');	
 				
-				$('table a.btn').addClass('disabled');		
+				$('table button').prop('disabled', false);		
+			}
+			
+			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
+				$('#progress-text').html(json['text']);
 			}
 			
 			if (json['next']) {
-				next(json['next'], i = 0);
+				next(json['next'], i = 2);
 			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -131,35 +127,39 @@ $('table a.btn').on('click', function(e) {
 });
 
 function next(url, i) {
-	i++;
-	
 	$.ajax({
 		url: url,
 		dataType: 'json',
 		success: function(json) {
-			$('#progress-bar').css('width', (100 - (i / 4) * 100) + '%');
+			$('.alert-success, .alert-danger').remove();
 
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 				
-				$('#button-clear').prop('disabled', false);
-				
-				$('table a.btn').addClass('disabled');	
+				$('table button').prop('disabled', false);
 			}
 
+			if (json['text']) {
+				$('#progress-bar').css('width', (i * 20) + '%');
+				$('#progress-text').html(json['text']);
+			}
+			
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
+				
+				$('#progress-bar').css('width', '100%');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 				
-				$('table a.btn').addClass('disabled');	
-				//if ($(node).has('.btn-success')) {
-				//	$('#button-reward-remove').replaceWith('<a href="" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
-				//}
+				$('table button').prop('disabled', false);
+				
+				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-success"><i class="fa fa-minus-circle"></i></button>');
 			}
 
 			if (json['next']) {
-				next(json['next']);
+				next(json['next'], i = i + 1);
+			} else {
+				$('table button').prop('disabled', false);	
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -168,18 +168,20 @@ function next(url, i) {
 	});
 }
 
-$('#button-clear').bind('click', function() {
+$('table').on('click', '.btn-danger', function() {
+	var node = this;
+	
 	$.ajax({
-		url: 'index.php?route=extension/translation/clear&token={{ token }}',
+		url: 'index.php?route=extension/translation/uninstall&token={{ token }}&code=' + $(node).val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-clear').button('loading');
+			$(node).button('loading');
 		},
 		complete: function() {
-			$('#button-clear').button('reset');
+			$(node).button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();
+			$('.alert-success, .alert-danger').remove();
 
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -188,7 +190,7 @@ $('#button-clear').bind('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#button-clear').prop('disabled', false);	
+				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-danger"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

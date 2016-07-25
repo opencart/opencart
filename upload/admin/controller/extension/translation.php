@@ -283,14 +283,32 @@ class ControllerExtensionTranslation extends Controller {
 					$destination = DIR_CATALOG . substr($destination, 7);
 				}
 				
-				$json['success'] = $this->language->get('text_download');
 				
-				//$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				$this->log->write($destination);
+				
 				
 				if (is_file($file)) {
-					copy($file, $destination);
+					
+					/*
+					$path = '';
+
+					$directories = explode('/', dirname($destination));
+
+					foreach ($directories as $directory) {
+						$path = $path . '/' . $directory;
+		
+						if (!is_dir($destination)) {
+							@mkdir($destination, 0777);
+						}
+					}
+					*/
+				//	rename($file, $destination);
 				}
 			}
+			
+			//$json['success'] = $this->language->get('text_download');
+				
+			//$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

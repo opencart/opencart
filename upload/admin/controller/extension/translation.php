@@ -509,10 +509,6 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 
-			if (is_dir($directory)) {
-				rmdir($directory);
-			}
-						
 			$json['success'] = $this->language->get('text_installed');
 		}
 		

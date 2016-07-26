@@ -139,7 +139,7 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (empty($this->request->get['code'])) {
+		if (!empty($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
 			$code = '';
@@ -152,7 +152,7 @@ class ControllerExtensionTranslation extends Controller {
 		if ($this->config->get('config_admin_language') == $code) {
 			$json['error'] = $this->language->get('error_admin');
 		}
-				
+		
 		if (!$json && $code) {
 			$directories = array();
 					

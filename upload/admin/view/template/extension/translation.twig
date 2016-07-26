@@ -99,10 +99,12 @@ $('table').on('click', '.btn-success', function(e) {
 	$('#progress-text').html('');
 				
 	$.ajax({
-		url: 'index.php?route=extension/translation/install&token={{token }}&code=' + $(node).val(),
+		url: 'index.php?route=extension/translation/install&token={{ token }}&code=' + $(node).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('table button').prop('disabled', true);	
+			
+			$(node).button('loading');
 		},
 		success: function(json) {
 			if (json['error']) {
@@ -118,16 +120,18 @@ $('table').on('click', '.btn-success', function(e) {
 			}
 			
 			if (json['next']) {
-				next(json['next'], i = 2);
+				next(json['next'], node, i = 2);
 			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			
+			$('table button').prop('disabled', false);	
 		}
-	})
+	});
 });
 
-function next(url, i) {
+function next(url, node, i) {
 	$.ajax({
 		url: url,
 		dataType: 'json',
@@ -154,17 +158,19 @@ function next(url, i) {
 				
 				$('table button').prop('disabled', false);
 				
-				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-success"><i class="fa fa-minus-circle"></i></button>');
+				$(node).replaceWith('<button type="button" value="' + $(node).val() + '" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>');
 			}
 
 			if (json['next']) {
-				next(json['next'], i = i + 1);
+				next(json['next'], node, i = i + 1);
 			} else {
 				$('table button').prop('disabled', false);	
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			
+			$('table button').prop('disabled', false);	
 		}
 	});
 }
@@ -196,6 +202,8 @@ $('table').on('click', '.btn-danger', function() {
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			
+			$('table button').prop('disabled', false);	
 		}
 	});
 });

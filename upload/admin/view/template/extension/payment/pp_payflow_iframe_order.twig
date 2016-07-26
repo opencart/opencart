@@ -67,7 +67,7 @@ function doVoid() {
         $.ajax({
             type:'POST',
             dataType: 'json',
-            data: {'order_id':{{ order_id }},
+            data: {'order_id':{{ order_id }}},
             url: 'index.php?route=extension/payment/pp_payflow_iframe/void&token={{ token }}',
             beforeSend: function() {
                 $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');

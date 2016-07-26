@@ -57,8 +57,8 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$data['translations'][] = array(
 					'name'      => $translation['name'],
-					'image'     => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 's3.amazonaws.com/opencart-language/flags/' . strtolower($translation['code']) . '.png',
-					'code'      => $translation['code'],
+					'image'     => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 's3.amazonaws.com/opencart-language/flags/' . str_replace('_', '-', strtolower($translation['code'])) . '.png',
+					'code'      => str_replace('_', '-', strtolower($translation['code'])),
 					'progress'  => $translation['translated_progress'],
 					'installed' => $installed
 				);
@@ -139,8 +139,8 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (!empty($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (!empty(trim($this->request->get['code']))) {
+			$code = str_replace('_', '-', strtolower($this->request->get['code']));
 		} else {
 			$code = '';
 		}
@@ -255,7 +255,7 @@ class ControllerExtensionTranslation extends Controller {
 			} elseif ((substr($response, 0, 5) == '<?xml')) {
 				$json['error'] = $this->language->get('error_s3');
 			} else {
-				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
+				$file = ini_get('upload_tmp_dir') . '/lng-' . str_replace('_', '-', strtolower($code)) . '.zip';
 		
 				$handle = fopen($file, 'w');
 		
@@ -271,7 +271,7 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . str_replace('_', '-', strtolower($code)), true));		
 			}
 			
 			curl_close($curl);	
@@ -509,6 +509,10 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 
+			if (is_dir($directory)) {
+				rmdir($directory);
+			}
+						
 			$json['success'] = $this->language->get('text_installed');
 		}
 		

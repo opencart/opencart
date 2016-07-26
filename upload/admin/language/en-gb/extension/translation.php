@@ -33,3 +33,6 @@ $_['error_api']        = 'API ERROR :: CURL failed %s (%s)';
 $_['error_unzip']      = 'Zip file could not be opened!';
 $_['error_move']       = 'Unable to move directory / files to %s!';
 $_['error_db']         = 'Adding new language to the database!';
+$_['error_s3']         = 'Could not get the appropriate response from Amazon S3!';
+$_['error_default']    = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
+$_['error_admin']      = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';

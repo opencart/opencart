@@ -140,12 +140,20 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		if (empty($this->request->get['code'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
 			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+			
+		if ($this->config->get('config_language') == $code) {
+			$json['error'] = $this->language->get('error_default');
 		}
 		
-		if (!$json) {
+		if ($this->config->get('config_admin_language') == $code) {
+			$json['error'] = $this->language->get('error_admin');
+		}
+				
+		if (!$json && $code) {
 			$directories = array();
 					
 			$directory = DIR_APPLICATION . 'language/';
@@ -202,6 +210,14 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 			
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguageByCode($code);	
+			
+			if ($language_info) {
+				$this->model_localisation_language->deleteLanguage($language_info['language_id']);
+			}
+			
 			$json['success'] = $this->language->get('text_uninstalled');
 		}
 		
@@ -234,8 +250,10 @@ class ControllerExtensionTranslation extends Controller {
 	
 			$response = curl_exec($curl);
 		
-			if (!$response || preg_match($response, '<?xml')) {
+			if (!$response || (substr($response, 0, 5) == '<?xml')) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
+			} elseif ((substr($response, 0, 5) == '<?xml')) {
+				$json['error'] = $this->language->get('error_s3');
 			} else {
 				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
 		

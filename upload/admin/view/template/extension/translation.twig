@@ -176,6 +176,11 @@ function next(url, node, i) {
 }
 
 $('table').on('click', '.btn-danger', function() {
+	$('.alert-success, .alert-danger').remove();		
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-text').html('');	
+	
 	var node = this;
 	
 	$.ajax({
@@ -188,8 +193,6 @@ $('table').on('click', '.btn-danger', function() {
 			$(node).button('reset');
 		},
 		success: function(json) {
-			$('.alert-success, .alert-danger').remove();
-
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}

@@ -57,7 +57,7 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$data['translations'][] = array(
 					'name'      => $translation['name'],
-					'image'     => (!$this->request->server['HTTPS'] ? HTTP_CATALOG : HTTPS_CATALOG) . 'image/flags/' . strtolower($translation['code']) . '.png',
+					'image'     => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 's3.amazonaws.com/opencart-language/flags/' . strtolower($translation['code']) . '.png',
 					'code'      => $translation['code'],
 					'progress'  => $translation['translated_progress'],
 					'installed' => $installed
@@ -139,10 +139,10 @@ class ControllerExtensionTranslation extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (empty($this->request->get['code'])) {
+			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$code = '';
+			$code = $this->request->get['code'];
 		}
 		
 		if (!$json) {
@@ -151,31 +151,19 @@ class ControllerExtensionTranslation extends Controller {
 			$directory = DIR_APPLICATION . 'language/';
 	
 			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-				$files = glob($directory . '*');
-				
-				if ($files) {
-					$directories = array_merge($directories, $files);
-				}			
+				$directories[] = $directory . $code . '/';
 			}
 			
 			$directory = DIR_CATALOG . 'language/';
 			
 			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-				$files = glob($directory . '*');
-				
-				if ($files) {
-					$directories = array_merge($directories, $files);
-				}			
+				$directories[] = $directory . $code . '/';
 			}
 			
 			$directory = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/';
 	
 			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == $directory) {
-				$files = glob($directory . '*');
-				
-				if ($files) {
-					$directories = array_merge($directories, $files);
-				}		
+				$directories[] = $directory . $code . '/';
 			}			
 			
 			foreach ($directories as $directory) {
@@ -245,14 +233,8 @@ class ControllerExtensionTranslation extends Controller {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	
 			$response = curl_exec($curl);
-	
-			$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-			
-			$header = substr($response, 0, $header_size);
-	
-	$this->log->write($header);
-	
-			if (!$response) {
+		
+			if (!$response || preg_match($response, '<?xml')) {
 				$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
 			} else {
 				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
@@ -419,7 +401,7 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		if (!$json) {
-			$response = file_get_contents('https://s3.amazonaws.com/opencart-language/2.0.0.x.json');
+			$response = file_get_contents('https://s3.amazonaws.com/opencart-language/' . VERSION . '.json');
 			
 			if ($response) {
 				$results = json_decode($response, true);

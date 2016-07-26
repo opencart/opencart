@@ -7,7 +7,7 @@
   <tr>
     <td>{{ text_amount_auth }}</td>
     <td>{{ paypal_order.total }}
-      {% if paypal_order.capture_status is not 'Complete' %}
+      {% if paypal_order.capture_status != 'Complete' %}
       &nbsp;&nbsp; <a onclick="doVoid();" id="button-void" class="button paypal_capture btn btn-primary">{{ button_void }}</a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       {% endif %}</td>
   </tr>
@@ -19,7 +19,7 @@
     <td>{{ text_amount_refunded }}</td>
     <td id="paypal_refunded">{{ paypal_order.refunded }}</td>
   </tr>
-  {% if paypal_order.capture_status is not 'Complete' %}
+  {% if paypal_order.capture_status != 'Complete' %}
   <tr class="paypal_capture">
     <td>{{ text_capture_amount }}</td>
     <td><p>
@@ -30,7 +30,7 @@
         <a class="btn btn-primary" onclick="capture();" id="button-capture">{{ button_capture }}</a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span> </p></td>
   </tr>
   {% endif %}
-  {% if paypal_order.capture_status is not 'Complete' %}
+  {% if paypal_order.capture_status != 'Complete' %}
   <tr>
     <td>{{ text_reauthorise }}</td>
     <td><a id="button-reauthorise" onclick="reauthorise()" class="btn btn-primary">{{ button_reauthorise }}</a></td>
@@ -61,7 +61,7 @@
             <td class="text-left">{{ transaction.date_added }}</td>
             <td class="text-left">{% if transaction.transaction_id %}
               <a href="{{ transaction.view }}">{{ text_view }}</a>
-              {% if transaction.payment_type is 'instant' and (transaction.payment_status is 'Completed' or transaction.payment_status is 'Partially-Refunded') %}
+              {% if transaction.payment_type == 'instant' and (transaction.payment_status == 'Completed' or transaction.payment_status == 'Partially-Refunded') %}
               &nbsp;<a href="{{ transaction.refund }}">{{ text_refund }}</a>
               {% endif %}
               {% else %}

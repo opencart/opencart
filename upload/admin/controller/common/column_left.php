@@ -152,7 +152,6 @@ class ControllerCommonColumnLeft extends Controller {
 				);		
 			}
 			
-	
 			// Extension
 			$extension = array();
 			
@@ -616,7 +615,7 @@ class ControllerCommonColumnLeft extends Controller {
 			$tool = array();
 			
 			if ($this->user->hasPermission('access', 'tool/upload')) {
-				$tool[] = array(
+				$system[] = array(
 					'name'	   => $this->language->get('text_upload'),
 					'href'     => $this->url->link('tool/upload', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
@@ -624,29 +623,29 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 			
 			if ($this->user->hasPermission('access', 'tool/backup')) {
-				$tool[] = array(
+				$system[] = array(
 					'name'	   => $this->language->get('text_backup'),
 					'href'     => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);
 			}
 			
+			if ($this->user->hasPermission('access', 'tool/maintenance')) {
+				$system[] = array(
+					'name'	   => $this->language->get('text_maintenance'),
+					'href'     => $this->url->link('tool/maintenance', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}	
+						
 			if ($this->user->hasPermission('access', 'tool/log')) {
-				$tool[] = array(
+				$system[] = array(
 					'name'	   => $this->language->get('text_log'),
 					'href'     => $this->url->link('tool/log', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);
 			}
-			
-			if ($tool) {
-				$system[] = array(
-					'name'	   => $this->language->get('text_tools'),
-					'href'     => '',
-					'children' => $tool	
-				);
-			}
-			
+		
 			if ($system) {
 				$data['menus'][] = array(
 					'id'       => 'menu-system',

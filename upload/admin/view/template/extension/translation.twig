@@ -2,6 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right"><a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fa fa-refresh"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -10,8 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -49,34 +49,34 @@
                 </tr>
               </thead>
               <tbody>
-                {% if translations %}
-                {% for translation in translations %}
-                <tr>
-                  <td class="text-left">{{ translation.name }}</td>
-                  <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
-                  <td class="text-left">{{ translation.code }}</td>
-                  <td class="text-left"><div class="progress">
-                      {% if translation.progress > 75 %}
-                      <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      {% elseif translation.progress > 25 and translation.progress < 75 %}
-                      <div class="progress-bar progress-bar-info progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      {% elseif translation.progress < 25 %}
-                      <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
-                      {% endif %}
-                    </div></td>
-                  <td class="text-right">{% if not translation.installed %}
-                    <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
-                    {% else %}
-                    <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
-                    {% endif %}</td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
-                </tr>
-                {% endif %}
-              </tbody>
+              
+              {% if translations %}
+              {% for translation in translations %}
+              <tr>
+                <td class="text-left">{{ translation.name }}</td>
+                <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
+                <td class="text-left">{{ translation.locale }}</td>
+                <td class="text-left"><div class="progress"> {% if translation.progress > 75 %}
+                    <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
+                    {% elseif translation.progress > 25 and translation.progress < 75 %}
+                    <div class="progress-bar progress-bar-info progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
+                    {% elseif translation.progress < 25 %}
+                    <div class="progress-bar progress-bar-danger progress-bar-striped"  style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
+                    {% endif %} </div></td>
+                <td class="text-right">{% if not translation.installed %}
+                  <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                  {% else %}
+                  <button type="button" value="{{ translation.code }}" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+                  {% endif %}</td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-center" colspan="4">{{ text_no_results }}</td>
+              </tr>
+              {% endif %}
+                </tbody>
+              
             </table>
           </div>
           <div class="row">

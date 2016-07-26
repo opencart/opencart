@@ -8,8 +8,6 @@ class ControllerToolMaintenance extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-		
-		$directories = ini_get('upload_tmp_dir') . '/' . $download . '.tmp';
 
 		$directories = glob(ini_get('upload_tmp_dir') . '/ext-*', GLOB_ONLYDIR);
 
@@ -19,7 +17,19 @@ class ControllerToolMaintenance extends Controller {
 			$data['error_warning'] = '';
 		}
 		
-		
+		$directories = glob(ini_get('upload_tmp_dir') . '/bac-*', GLOB_ONLYDIR);
+
+		if ($directories) {
+			$data['error_warning'] = $this->language->get('error_temporary');
+		} else {
+			$data['error_warning'] = '';
+		}		
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('extension/translation', $data));
 	}
 		
 	public function clear() {

@@ -1,16 +1,68 @@
 <?php
 class ControllerExtensionTranslation extends Controller {
+	public $error = array();
+	
 	public function index() {
 		$this->load->language('extension/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		
+		$this->load->model('extension/translation');
+		
+		$this->getList();
+	}
+	
+	public function refresh() {
+		$this->load->language('extension/translation');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('extension/translation');
+		
+		if ($this->validate()) {
+			$this->model_extension_translation->clear();
+			
+			// Make a CURL request
+			$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '.json');
+	
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	
+			$response = curl_exec($curl);
+	
+			if ($response) {
+				$translations = json_decode($response, true);
+			} else {
+				$translations = array();
+			}
+			
+			curl_close($curl);
+			
+			if ($translations) {
+				foreach ($translations as $translation) {
+					$this->model_extension_translation->addTranslation($translation);
+				}
+			}
+		}
+		
+		$this->getList();
+	}	
+	
+	public function getList() {
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
+		
+		$url = '';
 
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -20,49 +72,32 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/translation', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/translation', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
+		$data['refresh'] = $this->url->link('extension/translation/refresh', 'token=' . $this->session->data['token'] . $url, true);
+
 		$data['translations'] = array();
-		
-		// Make a CURL request
-		$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '.json');
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$translation_total = $this->model_extension_translation->getTotalTranslations();
 
-		$response = curl_exec($curl);
-
-		if (!$response) {
-			$data['warning'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
-		} else {
-			$translations = json_decode($response, true);
-		}
-		
-		curl_close($curl);		
-		
-		$translation_total = count($translations);
-
-		if ($translations) {
-			$translations = array_splice($translations, ($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
+		$results = $this->model_extension_translation->getTranslations(($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
 			
-			foreach ($translations as $translation){
-				if (is_dir(DIR_LANGUAGE . strtolower($translation['code']))) {
-					$installed = true;
-				} else {
-					$installed = false;
-				}
-				
-				$data['translations'][] = array(
-					'name'      => $translation['name'],
-					'image'     => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 's3.amazonaws.com/opencart-language/flags/' . str_replace('_', '-', strtolower($translation['code'])) . '.png',
-					'code'      => str_replace('_', '-', strtolower($translation['code'])),
-					'progress'  => $translation['translated_progress'],
-					'installed' => $installed
-				);
+		foreach ($results as $result){
+			if (is_dir(DIR_LANGUAGE . $result['locale'])) {
+				$installed = true;
+			} else {
+				$installed = false;
 			}
+			
+			$data['translations'][] = array(
+				'name'      => $result['name'],
+				'image'     => ($this->request->server['HTTPS'] ? 'https://' : 'http://') . 's3.amazonaws.com/opencart-language/flags/' . $result['code'] . '.png',
+				'code'      => $result['code'],
+				'locale'    => $result['locale'],
+				'progress'  => $result['progress'],
+				'installed' => $installed
+			);
 		}
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -83,10 +118,27 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['entry_progress'] = $this->language->get('entry_progress');
 		
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
-		
+
 		$data['token'] = $this->session->data['token'];
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} elseif (!$translation_total) {
+			$data['error_warning'] = $this->language->get('error_refresh');
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
 
 		$pagination = new Pagination();
 		$pagination->total = $translation_total;
@@ -103,6 +155,14 @@ class ControllerExtensionTranslation extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/translation', $data));
+	}
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
 	}
 
 	public function install() {
@@ -140,7 +200,7 @@ class ControllerExtensionTranslation extends Controller {
 		}
 		
 		if (!empty(trim($this->request->get['code']))) {
-			$code = str_replace('_', '-', strtolower($this->request->get['code']));
+			$code = strtolower($this->request->get['code']);
 		} else {
 			$code = '';
 		}
@@ -255,7 +315,7 @@ class ControllerExtensionTranslation extends Controller {
 			} elseif ((substr($response, 0, 5) == '<?xml')) {
 				$json['error'] = $this->language->get('error_s3');
 			} else {
-				$file = ini_get('upload_tmp_dir') . '/lng-' . str_replace('_', '-', strtolower($code)) . '.zip';
+				$file = ini_get('upload_tmp_dir') . '/lng-' . $code . '.zip';
 		
 				$handle = fopen($file, 'w');
 		
@@ -271,7 +331,7 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . str_replace('_', '-', strtolower($code)), true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 			}
 			
 			curl_close($curl);	
@@ -365,7 +425,7 @@ class ControllerExtensionTranslation extends Controller {
 			}
 
 			foreach ($files as $file) {
-				$destination = substr($file, strlen($directory .  'lng-' . $code . '/' . VERSION . '/'));
+				$destination = substr($file, strlen($directory . 'lng-' . $code . '/' . VERSION . '/'));
 				
 				if (substr($destination, 0, 5) == 'admin') {
 					$destination = DIR_APPLICATION . substr($destination, 6);
@@ -378,7 +438,7 @@ class ControllerExtensionTranslation extends Controller {
 				if (substr($destination, 0, 7) == 'install') {
 					$destination = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/' . substr($destination, 8);
 				}
-												
+				
 				if (is_dir($file) && !is_dir($destination)) {
 					if (!mkdir($destination, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_move'), $destination);
@@ -386,7 +446,7 @@ class ControllerExtensionTranslation extends Controller {
 				}
 				
 				if (is_file($file)) {
-					if (!rename($file, $destination)) {
+					if (!rename($file, strtolower($destination))) {
 						$json['error'] = sprintf($this->language->get('error_move'), $file);
 					}
 				}
@@ -428,12 +488,12 @@ class ControllerExtensionTranslation extends Controller {
 					if ($result['code'] == $code) {  
 						$this->load->model('localisation/language');
 						
-						$language_info = $this->model_localisation_language->getLanguageByCode($code);
+						$language_info = $this->model_localisation_language->getLanguageByCode(strtolower($code));
 						
 						if (!$language_info) {
 							$language_data = array(
 								'name'       => $result['name'],
-								'code'       => $code,
+								'code'       => strtolower($code),
 								'locale'     => '',
 								'sort_order' => 0,
 								'status'     => 1
@@ -473,7 +533,7 @@ class ControllerExtensionTranslation extends Controller {
 		
 		$directory = ini_get('upload_tmp_dir') . '/';
 
-		if (!is_dir($directory. 'lng-' . $code . '/') || substr(str_replace('\\', '/', realpath($directory . 'lng-' . $code . '/')), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_dir($directory . 'lng-' . $code . '/') || substr(str_replace('\\', '/', realpath($directory . 'lng-' . $code . '/')), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
@@ -509,8 +569,8 @@ class ControllerExtensionTranslation extends Controller {
 				}
 			}
 
-			if (is_dir($directory)) {
-				rmdir($directory);
+			if (is_dir($directory . 'lng-' . $code . '/')) {
+				rmdir($directory . 'lng-' . $code . '/');
 			}
 						
 			$json['success'] = $this->language->get('text_installed');

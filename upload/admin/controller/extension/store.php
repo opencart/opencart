@@ -386,6 +386,143 @@ class ControllerExtensionStore extends Controller {
 		}	
 	}
 	
+	public function install() {
+		$this->load->language('extension/store');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}
+
+		$this->load->model('extension/translation');
+			
+		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		
+		if (!$translation_info) {
+			$json['error'] = $this->language->get('error_code');
+		}
+				
+		if (!$json) {		
+			$json['text'] = $this->language->get('text_download');
+					
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
+	}
+	
+	public function uninstall() {
+		$this->load->language('extension/translation');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!empty(trim($this->request->get['code']))) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = '';
+		}		
+
+		$this->load->model('extension/translation');
+			
+		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		
+		if (!$translation_info) {
+			$json['error'] = $this->language->get('error_code');
+		}
+				
+		if ($this->config->get('config_language') == $code) {
+			$json['error'] = $this->language->get('error_default');
+		}
+		
+		if ($this->config->get('config_admin_language') == $code) {
+			$json['error'] = $this->language->get('error_admin');
+		}
+	
+		if (!$json) {
+			$directories = array();
+					
+			$directory = DIR_APPLICATION . 'language/';
+	
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$directories[] = $directory . $code . '/';
+			}
+			
+			$directory = DIR_CATALOG . 'language/';
+			
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+				$directories[] = $directory . $code . '/';
+			}
+			
+			$directory = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/';
+	
+			if (is_dir($directory . $code) && substr(str_replace('\\', '/', realpath($directory . $code)), 0, strlen($directory)) == $directory) {
+				$directories[] = $directory . $code . '/';
+			}			
+			
+			foreach ($directories as $directory) {
+				// Get a list of files ready to upload
+				$files = array();
+
+				$path = array($directory);
+
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
+
+						$files[] = $file;
+					}
+				}
+
+				rsort($files);
+
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+
+				if (is_dir($directory)) {
+					rmdir($directory);
+				}
+			}
+			
+			$this->load->model('localisation/language');
+			
+			$language_info = $this->model_localisation_language->getLanguageByCode($code);	
+			
+			if ($language_info) {
+				$this->model_localisation_language->deleteLanguage($language_info['language_id']);
+			}				
+			
+			$json['success'] = $this->language->get('text_uninstalled');
+
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
+	}
+			
 	public function download() {
 		$this->load->language('extension/store');
 

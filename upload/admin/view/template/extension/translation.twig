@@ -55,7 +55,7 @@
               <tr>
                 <td class="text-left">{{ translation.name }}</td>
                 <td class="text-center"><img src="{{ translation.image }}" alt="{{ translation.name }}" title="{{ translation.name }}" /></td>
-                <td class="text-left">{{ translation.locale }}</td>
+                <td class="text-left">{{ translation.code }}</td>
                 <td class="text-left"><div class="progress"> {% if translation.progress > 75 %}
                     <div class="progress-bar progress-bar-success progress-bar-striped" style="width:{{ translation.progress }}%">{{ translation.progress }}%</div>
                     {% elseif translation.progress > 25 and translation.progress < 75 %}

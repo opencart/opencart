@@ -106,13 +106,13 @@ $('#button-install').on('click', function() {
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
 			
-			if (json['success']) {
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
+				$('#progress-text').html(json['text']);
 			}
 			
 			if (json['next']) {
-				next(json['next']);
+				next(json['next'], i = 2);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -121,31 +121,32 @@ $('#button-install').on('click', function() {
 	});
 });
 
-var i = 0;
-
-function next(url) {
-	i++;
-
+function next(url, i) {
 	$.ajax({
 		url: url,
 		dataType: 'json',
 		success: function(json) {
 			console.log(json);
 			
-			$('#progress-bar').css('width', Math.ceil(100 - (i / 6) * 100) + '%');
+			//$('#progress-bar').css('width', (i * 0.6) + '%');
 			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
-
+			
+			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
+				$('#progress-text').html(json['text']);
+			}
+			
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 			}
 
 			if (json['next']) {
-				next(json['next']);
+				next(json['next'], i = i + 1);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

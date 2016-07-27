@@ -4,7 +4,7 @@
     <div class="btn-group">
       <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">{% for currency in currencies %}
       {% if currency.symbol_left and currency.code == code %} <strong>{{ currency.symbol_left }}</strong> {% elseif currency.symbol_right and currency.code == code %} <strong>{{ currency.symbol_right }}</strong> {% endif %}
-      {% endfor %} <span class="hidden-xs hidden-sm hidden-md">{{ text_currency }}</span> <i class="fa fa-caret-down"></i></button>
+      {% endfor %} <span class="hidden-xs hidden-sm hidden-md">{{ text_currency }}</span>&nbsp;<i class="fa fa-caret-down"></i></button>
       <ul class="dropdown-menu">
         {% for currency in currencies %}
         {% if currency.symbol_left %}

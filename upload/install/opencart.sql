@@ -1034,8 +1034,7 @@ DROP TABLE IF EXISTS `oc_crowdin`;
 CREATE TABLE `oc_crowdin` (
   `crowdin_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
-  `code` varchar(4) NOT NULL,
-  `locale` varchar(5) NOT NULL,
+  `code` varchar(5) NOT NULL,
   `progress` int(3) NOT NULL,
   PRIMARY KEY (`crowdin_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

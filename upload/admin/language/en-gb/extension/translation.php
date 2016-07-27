@@ -16,7 +16,7 @@ $_['text_db']          = 'Adding new language to the database!';
 $_['text_remove']      = 'Removing temporary files!';
 
 // Column
-$_['column_name']      = 'Country Name';
+$_['column_name']      = 'Language Name';
 $_['column_code']      = 'Code';
 $_['column_flag']      = 'Flag';
 $_['column_progress']  = 'Translation Progress';
@@ -27,12 +27,13 @@ $_['entry_progress']   = 'Progress';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify language translation!';
+$_['error_code']       = 'Invalide language code!';
 $_['error_file']       = 'File could not be found!';
 $_['error_directory']  = 'Directory containing files to be uploaded could not be found!';
 $_['error_api']        = 'API ERROR :: CURL failed %s (%s)';
 $_['error_unzip']      = 'Zip file could not be opened!';
 $_['error_move']       = 'Unable to move directory / files to %s!';
-$_['error_db']         = 'Adding new language to the database!';
 $_['error_s3']         = 'Could not get the appropriate response from Amazon S3!';
 $_['error_default']    = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
 $_['error_admin']      = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
+$_['error_refresh']    = 'Warning: You need to click the refresh button to get the latest list of available languages!';

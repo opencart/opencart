@@ -128,7 +128,7 @@ function next(url, i) {
 		success: function(json) {
 			console.log(json);
 			
-			//$('#progress-bar').css('width', (i * 0.6) + '%');
+			$('#progress-bar').css('width', (Math.ceil(i * 1.6) * 100) + '%');
 			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');

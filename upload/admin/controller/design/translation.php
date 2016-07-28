@@ -90,13 +90,20 @@ class ControllerDesignTranslation extends Controller {
 		} else {
 			$page = 1;
 		}
-		
+						
 		$data['histories'] = array();
 		
 		$this->load->model('design/translation');
 		$this->load->model('setting/store');
 		
-		$results = $this->model_design_translation->getTranslations(($page - 1) * 10, 10);
+		$filter_data = array(
+			'start' => ($page - 1) * 10,
+			'limit' => 10
+		);
+		
+		$history_total = $this->model_design_translation->getTotalTranslations();
+		
+		$results = $this->model_design_translation->getTranslations($filter_data);
 					
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);
@@ -117,8 +124,6 @@ class ControllerDesignTranslation extends Controller {
 				'delete'   => $this->url->link('design/translation/delete', 'token=' . $this->session->data['token'] . '&translation_id=' . $result['translation_id'], true)
 			);			
 		}
-		
-		$history_total = $this->model_design_translation->getTotalTranslations();
 
 		$pagination = new Pagination();
 		$pagination->total = $history_total;
@@ -172,14 +177,28 @@ class ControllerDesignTranslation extends Controller {
 				foreach($files as $file) {
 					if (!in_array(basename($file), $path_data))  {
 						if (is_dir($file)) {
+							$filter_data = array(
+								'filter_store_id'	 => $store_id,
+								'filter_language_id' => $language_id,
+								'filter_route'	     => trim($path . '/' . basename($file, '.php'), '/') . '%'
+							);
+							
+							$translation_total = $this->model_design_translation->getTotalTranslations($filter_data);									
+							
 							$json['directory'][] = array(
-								'name' => basename($file),
+								'name' => basename($file) . ' (' . $translation_total . ')',
 								'path' => trim($path . '/' . basename($file), '/')
 							);
 						}
 						
 						if (is_file($file) && (substr($file, -4) == '.php')) {
-							$translation_total = $this->model_design_language->getTotalTranslations($store_id, $language_id, trim($path . '/' . basename($file, '.php'), '/'));
+							$filter_data = array(
+								'filter_store_id'	 => $store_id,
+								'filter_language_id' => $language_id,
+								'filter_route'	     => trim($path . '/' . basename($file, '.php'), '/')
+							);
+							
+							$translation_total = $this->model_design_translation->getTotalTranslations($filter_data);							
 							
 							$json['file'][] = array(
 								'name' => basename($file, '.php') . ' (' . $translation_total . ')',
@@ -245,8 +264,14 @@ class ControllerDesignTranslation extends Controller {
 			$translation_data = array();
 			
 			$this->load->model('design/translation');
-					
-			$results = $this->model_design_language->getTranslations($store_id, $language_id, $path);
+			
+			$filter_data = array(
+				'filter_store_id'	 => $store_id,
+				'filter_language_id' => $language_id,
+				'filter_route'	     => trim($path . '/' . basename($path, '.php'), '/') . '%'
+			);
+												
+			$results = $this->model_design_translation->getTranslations($filter_data);
 		
 			foreach ($results as $result) {
 				$translation_data[$result['key']] = $result['value'];
@@ -267,7 +292,7 @@ class ControllerDesignTranslation extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('design/translation_translation', $data));
+		$this->response->setOutput($this->load->view('design/translation_form', $data));
 	}		
 	
 	public function save() {

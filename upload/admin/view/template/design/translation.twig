@@ -25,9 +25,17 @@
               <div class="list-group-item">
                 <select name="store_id" class="form-control">
                   <option value="0">{{ text_default }}</option>
+                  
+        
                   {% for store in stores %}
+                  
+        
                   <option value="{{ store.store_id }}">{{ store.name }}</option>
+                  
+        
                   {% endfor %}
+                
+      
                 </select>
               </div>
             </div>
@@ -37,13 +45,25 @@
               </div>
               <div class="list-group-item">
                 <select name="language_id" class="form-control">
+                  
+        
                   {% for language in languages %}
                   {% if language.language_id == language_id %}
+                  
+        
                   <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
+                  
+        
                   {% else %}
+                  
+        
                   <option value="{{ language.language_id }}">{{ language.name }}</option>
+                  
+        
                   {% endif %}
                   {% endfor %}
+                
+      
                 </select>
               </div>
             </div>
@@ -55,19 +75,14 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-                      
-                          <fieldset>
-                <legend>{{ text_history }}</legend>
-  
-            <div id="translation"></div>
-            
-            
-                          <fieldset>
-                <legend>{{ text_history }}</legend>
-            <div id="history"></div>
-          </fieldset>
-          
-          
+            <fieldset>
+              <legend>{{ text_history }}</legend>
+              <div id="translation"></div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_history }}</legend>
+              <div id="history"></div>
+            </fieldset>
           </div>
         </div>
       </div>
@@ -169,6 +184,8 @@ $('#path').on('click', 'a.directory', function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
+			console.log(json);
+			
 			html = '';
 
 			if (json['directory']) {

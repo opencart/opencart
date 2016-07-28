@@ -724,7 +724,7 @@ class ControllerExtensionStore extends Controller {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
-		}		
+		}
 			
 		$directory = ini_get('upload_tmp_dir');
 
@@ -748,7 +748,7 @@ class ControllerExtensionStore extends Controller {
 
 					$files[] = $file;
 				}
-			}			
+			}
 		}
 		
 		// First we need to do some checks
@@ -823,7 +823,7 @@ class ControllerExtensionStore extends Controller {
 					if (!mkdir($destination, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
 					} else {
-						$this->model_extension_install->addEntry($code, $destination);
+						$this->model_extension_install->addPath($code, $destination);
 					}
 				}
 			
@@ -831,7 +831,7 @@ class ControllerExtensionStore extends Controller {
 					if (!rename($file, $destination)) {
 						$json['error'] = sprintf($this->language->get('error_file'), $file);
 					} else {
-						$this->model_extension_install->addEntry($code, $destination);
+						$this->model_extension_install->addPath($code, $destination);
 					}
 				}
 			}
@@ -869,20 +869,24 @@ class ControllerExtensionStore extends Controller {
 
 			if ($lines) {
 				try {
-					$sql = '';
-
 					foreach ($lines as $line) {
-						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-							$sql .= $line;
-
-							if (preg_match('/;\s*$/', $line)) {
-								$sql = str_replace(" `oc_", " `" . DB_PREFIX, $sql);
-
-								$this->db->query($sql);
-
-								$sql = '';
-							}
+						if (substr($line, 0, 14) == 'CREATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
+							$sql = '';
+							
+							$start = true;
 						}
+						
+						if ($start) {
+							$sql .= $line;
+						}
+						
+						if ($start && substr($line, -2) == ";\n") {
+							$this->db->query(str_replace(" `oc_", " `" . DB_PREFIX, substr($sql, 0, strlen($sql) -2)));
+							
+							$start = false;
+						}
+							
+						$i++;
 					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
@@ -911,8 +915,8 @@ class ControllerExtensionStore extends Controller {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
-		}	
-				
+		}
+		
 		$directory = ini_get('upload_tmp_dir');
 		
 		if (!is_dir($directory . '/' . $download) || substr(str_replace('\\', '/', realpath($directory . '/' . $download)), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {

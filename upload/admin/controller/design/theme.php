@@ -79,6 +79,8 @@ class ControllerDesignTheme extends Controller {
 		$this->load->model('design/theme');
 		$this->load->model('setting/store');
 		
+		$history_total = $this->model_design_theme->getTotalThemes();
+		
 		$results = $this->model_design_theme->getThemes(($page - 1) * 10, 10);
 					
 		foreach ($results as $result) {
@@ -100,8 +102,6 @@ class ControllerDesignTheme extends Controller {
 				'delete'     => $this->url->link('design/theme/delete', 'token=' . $this->session->data['token'] . '&theme_id=' . $result['theme_id'], true)
 			);			
 		}
-		
-		$history_total = $this->model_design_theme->getTotalThemes();
 
 		$pagination = new Pagination();
 		$pagination->total = $history_total;

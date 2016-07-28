@@ -10,6 +10,7 @@ $_['text_store']       = 'Store';
 $_['text_language']    = 'Language';
 $_['text_translation'] = 'Choose a translation';
 $_['text_translation'] = 'Translations';
+$_['text_history']     = 'Translation History';
 
 // Entry
 $_['entry_key']        = 'Key';

@@ -20,24 +20,28 @@
           <div class="input-group">
             <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
             <div class="input-group-btn">
+              
+              
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
+              
+              
               <ul class="dropdown-menu">
-                <li class="dropdown-header">License</li>
-                <li><a href="">License</a></li>
-                <li><a href="free"><?php echo $text_free; ?></a></li>
-                <li><a href="paid"><?php echo $text_paid; ?></a></li>
+                {% for license in licenses %}
+                {% if license.code == filter_license %}
+                <li class="dropdown-header">License ({{ license.text }})</li>
+                {% endif %} 
+                {% endfor %} 
+                
+                
+                {% for license in licenses %}
+                <li><a href="{{ license.href }}}">{{ license.text }}</a></li>
+                {% endfor %}
               </ul>
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li><a href="">All Categories</a></li>
-                <li><a href="theme"><?php echo $text_theme; ?></a></li>
-                <li><a href="payment"><?php echo $text_payment; ?></a></li>
-                <li><a href="shipping"><?php echo $text_shipping; ?></a></li>
-                <li><a href="module"><?php echo $text_module; ?></a></li>
-                <li><a href="total"><?php echo $text_total; ?></a></li>
-                <li><a href="feed"><?php echo $text_feed; ?></a></li>
-                <li><a href="report"><?php echo $text_report; ?></a></li>
-                <li><a href="other"><?php echo $text_other; ?></a></li>
+                {% for category in categories %}
+                <li><a href="{{ category.href }}">{{ category.text }}</a></li>
+                {% endfor %}
               </ul>
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
             </div>
@@ -45,21 +49,12 @@
         </div>
         </fieldset>
         <div class="row">
-          <div class="col-md-9">
-            <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-default">
-                <input type="checkbox" autocomplete="off" checked>
-                Checkbox 1 (pre-checked) </label>
-              <label class="btn btn-default">
-                <input type="checkbox" autocomplete="off">
-                Checkbox 3 </label>
-            </div>
-          </div>
-          <div class="col-md-3">
+          <div class="col-sm-12">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort }}</label>
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <select id="input-sort" class="form-control" onchange="location = this.value;">
+                  
                   
               
                   
@@ -68,7 +63,9 @@
         {% for sorts in sorts %}
         {% if sorts.value == sort %}
               
+                  
                   <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                  
                   
               
                   
@@ -80,7 +77,9 @@
           
                   
               
+                  
                   <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                  
                   
               
                   
@@ -93,6 +92,7 @@
         
                 
             
+                
                 </select>
               </div>
             </div>

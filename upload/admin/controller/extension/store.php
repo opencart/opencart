@@ -269,38 +269,38 @@ class ControllerExtensionStore extends Controller {
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_date_modified'),
-			'value' => '',
+			'text'  => $this->language->get('text_date_modified'),
+			'value' => 'date_modified',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=date_modified' . $url, true)
 		);
 		
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_date_added'),
-			'value' => '',
+			'text'  => $this->language->get('text_date_added'),
+			'value' => 'date_added',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=date_added' . $url, true)
 		);
 				
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_name'),
-			'value' => '',
+			'text'  => $this->language->get('text_name'),
+			'value' => 'name',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=name' . $url, true)
 		);
 		
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_rating'),
-			'value' => '',
+			'text'  => $this->language->get('text_rating'),
+			'value' => 'rating',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=rating' . $url, true)
 		);		
 		
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_downloaded'),
-			'value' => '',
+			'text'  => $this->language->get('text_downloaded'),
+			'value' => 'downloaded',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=downloaded' . $url, true)
 		);	
 			
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_sort_price'),
-			'value' => '',
+			'text'  => $this->language->get('text_price'),
+			'value' => 'price',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=price' . $url, true)
 		);	
 		

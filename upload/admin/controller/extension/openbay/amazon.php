@@ -4,6 +4,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		$this->load->model('extension/openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
+		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/amazon_listing');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/amazon_listing');
@@ -1001,7 +1002,7 @@ class ControllerExtensionOpenbayAmazon extends Controller {
 		}
 
 		$data['cancel'] = $this->url->link('extension/openbay/amazon', 'token=' . $this->session->data['token'], true);
-		$data['link_do_listings'] = $this->url->link('extension/openbay/amazonus/doBulkLinking', 'token=' . $this->session->data['token'], true);
+		$data['link_do_listings'] = $this->url->link('extension/openbay/amazon/doBulkLinking', 'token=' . $this->session->data['token'], true);
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');

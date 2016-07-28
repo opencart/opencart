@@ -1,0 +1,26 @@
+{% set translation_rows = 0 %}
+{% for translation in translations %}
+<fieldset>
+  <legend>{{ translation.key }}</legend>
+  <div class="table-responsive">
+  <table id="translation" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td>{{ entry_default }}</td>
+        <td>{{ entry_value }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><textarea class="form-control" disabled="disabled">{{ translation.default }}</textarea></td>
+        <td><textarea name="translation[{{ translation_row }}][value]" class="form-control">{{ translation.value }}</textarea></td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
+</div>
+{% set translation_rows = translation_rows + 1 %}
+{% endfor %}
+<div class="pull-right">
+  <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>
+</div>

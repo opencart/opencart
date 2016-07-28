@@ -155,7 +155,7 @@ class ControllerCommonColumnLeft extends Controller {
 	
 			// Extension
 			$extension = array();
-			/*
+			
 			if ($this->user->hasPermission('access', 'extension/store')) {		
 				$extension[] = array(
 					'name'	   => $this->language->get('text_store'),
@@ -163,7 +163,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
-			*/
+			
 			if ($this->user->hasPermission('access', 'extension/installer')) {		
 				$extension[] = array(
 					'name'	   => $this->language->get('text_installer'),
@@ -179,7 +179,15 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()
 				);
 			}
-					
+			
+			if ($this->user->hasPermission('access', 'extension/translation')) {
+				$extension[] = array(
+					'name'	   => $this->language->get('text_translation'),
+					'href'     => $this->url->link('extension/translation', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);	
+			}
+								
 			if ($this->user->hasPermission('access', 'extension/modification')) {
 				$extension[] = array(
 					'name'	   => $this->language->get('text_modification'),
@@ -213,35 +221,34 @@ class ControllerCommonColumnLeft extends Controller {
 				$design[] = array(
 					'name'	   => $this->language->get('text_layout'),
 					'href'     => $this->url->link('design/layout', 'token=' . $this->session->data['token'], true),
-					'children' => array()		
+					'children' => array()
 				);	
 			}
-			/*
-			if ($this->user->hasPermission('access', 'design/menu')) {
+			
+			if ($this->user->hasPermission('access', 'design/menu')) {	
 				$design[] = array(
 					'name'	   => $this->language->get('text_menu'),
 					'href'     => $this->url->link('design/menu', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}
-			*/	
-			/*	
+			
 			if ($this->user->hasPermission('access', 'design/theme')) {	
 				$design[] = array(
-					'name'	   => $this->language->get('text_theme'),
+					'name'	   => $this->language->get('text_theme_editor'),
 					'href'     => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}
 			
-			if ($this->user->hasPermission('access', 'design/language')) {
+			if ($this->user->hasPermission('access', 'design/translation')) {
 				$design[] = array(
-					'name'	   => $this->language->get('text_translation'),
-					'href'     => $this->url->link('design/language', 'token=' . $this->session->data['token'], true),
+					'name'	   => $this->language->get('text_language_editor'),
+					'href'     => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}
-			*/	
+						
 			if ($this->user->hasPermission('access', 'design/banner')) {
 				$design[] = array(
 					'name'	   => $this->language->get('text_banner'),

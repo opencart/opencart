@@ -1,31 +1,11 @@
 <?php
 class ControllerToolBackup extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('tool/backup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('tool/backup');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'tool/backup')) {
-			if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
-				$content = file_get_contents($this->request->files['import']['tmp_name']);
-			} else {
-				$content = false;
-			}
-
-			if ($content) {
-				$this->model_tool_backup->restore($content);
-
-				$this->session->data['success'] = $this->language->get('text_success');
-
-				$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
-			} else {
-				$this->error['warning'] = $this->language->get('error_empty');
-			}
-		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -42,18 +22,8 @@ class ControllerToolBackup extends Controller {
 			$data['error_warning'] = $this->session->data['error'];
 
 			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -68,9 +38,9 @@ class ControllerToolBackup extends Controller {
 			'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true);
+		$data['token'] = $this->session->data['token'];
 
-		$data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], true);
+		$data['export'] = $this->url->link('tool/backup/export', 'token=' . $this->session->data['token'], true);
 
 		$data['tables'] = $this->model_tool_backup->getTables();
 
@@ -80,15 +50,104 @@ class ControllerToolBackup extends Controller {
 
 		$this->response->setOutput($this->load->view('tool/backup', $data));
 	}
+	
+	public function import() {
+		$this->load->language('tool/backup');
+		
+		$json = array();
+		
+		if (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (isset($this->request->files['import']['tmp_name']) && is_uploaded_file($this->request->files['import']['tmp_name'])) {
+			$filename = basename(html_entity_decode($this->request->files['import']['tmp_name'], ENT_QUOTES, 'UTF-8'));
+			
+			$filename = basename(tempnam(ini_get('upload_tmp_dir'), 'bac'));
+			
+			move_uploaded_file($this->request->files['import']['tmp_name'], ini_get('upload_tmp_dir') . '/' . $filename);
+		} elseif (isset($this->request->get['import'])) {
+			$filename = basename(html_entity_decode($this->request->get['import'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$filename = '';
+		}
+		
+		if (!is_file(ini_get('upload_tmp_dir') . '/' . $filename) || substr(str_replace('\\', '/', realpath(ini_get('upload_tmp_dir') . '/' . $filename)), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+			$json['error'] = $this->language->get('error_file');
+		}	
+		
+		if (isset($this->request->get['position'])) {
+			$position = $this->request->get['position'];
+		} else {
+			$position = 0; 	
+		}
+				
+		if (!$json) {
+			// We set $i so we can batch execute the queries rather than do them all at once.
+			$i = 0;
+			$start = false;
+			
+			$handle = fopen(ini_get('upload_tmp_dir') . '/' . $filename, 'r');
 
-	public function backup() {
+			fseek($handle, $position, SEEK_SET);
+			
+			while (!feof($handle) && ($i < 100)) {
+				$line = fgets($handle, 1000000);
+				
+				if (substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
+					$sql = '';
+					
+					$start = true;
+				}
+				
+				if ($start) {
+					$sql .= $line;
+				}
+				
+				if ($start && substr($line, -2) == ";\n") {
+					$this->db->query(substr($sql, 0, strlen($sql) -2));
+					
+					$start = false;
+				}
+					
+				$i++;
+			}
+
+			$position = ftell($handle);
+
+			$size = filesize(ini_get('upload_tmp_dir') . '/' . $filename);
+
+			$json['success'] = sprintf($this->language->get('text_success'), round(($position / $size) * 100));
+			
+			if ($position && !feof($handle)) {
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/import', 'token=' . $this->session->data['token'] . '&import=' . $filename . '&position=' . $position, true));
+			
+				fclose($handle);
+			} else {
+				fclose($handle);
+				
+				unlink(ini_get('upload_tmp_dir') . '/' . $filename);
+
+				$this->cache->delete('*');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function export() {
 		$this->load->language('tool/backup');
 
 		if (!isset($this->request->post['backup'])) {
 			$this->session->data['error'] = $this->language->get('error_export');
 
 			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
-		} elseif ($this->user->hasPermission('modify', 'tool/backup')) {
+		} elseif (!$this->user->hasPermission('modify', 'tool/backup')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+
+			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
+		} else {
 			$this->response->addheader('Pragma: public');
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
@@ -98,11 +157,7 @@ class ControllerToolBackup extends Controller {
 
 			$this->load->model('tool/backup');
 
-			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
-		} else {
-			$this->session->data['error'] = $this->language->get('error_permission');
-
-			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], true));
+			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));		
 		}
-	}
+	}	
 }

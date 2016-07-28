@@ -51,41 +51,4 @@ class ModelSettingSetting extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(json_encode($value)) . "', serialized = '1' WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND store_id = '" . (int)$store_id . "'");
 		}
 	}
-
-	public function getTimezones() {
-		// The list of available timezone groups to use.
-		$use_zones = array('Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
-
-		// Get the list of time zones from the server.
-		$zones = DateTimeZone::listIdentifiers();
-
-		// Build the group lists.
-		foreach ($zones as $zone) {
-			// Time zones not in a group we will ignore.
-			if (strpos($zone, '/') === false) {
-				continue;
-			}
-
-			// Get the group/locale from the timezone.
-			list ($group, $locale) = explode('/', $zone, 2);
-
-			// Only use known groups.
-			if (in_array($group, $use_zones)) {
-				// Initialize the group if necessary.
-				if (!isset($groups[$group])) {
-					$groups[$group] = array();
-				}
-
-				// Only add options where a locale exists.
-				if (!empty($locale)) {
-					$groups[$group][$zone] = str_replace('_', ' ', $locale);
-				}
-			}
-		}
-
-		// Sort the group lists.
-		ksort($groups);
-
-		return $groups;
-	}
 }

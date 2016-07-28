@@ -118,7 +118,6 @@ require_once(modification(DIR_SYSTEM . 'engine/proxy.php'));
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
-require_once(DIR_SYSTEM . 'helper/json.php');
 
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	

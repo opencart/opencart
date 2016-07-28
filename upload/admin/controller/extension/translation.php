@@ -483,9 +483,7 @@ class ControllerExtensionTranslation extends Controller {
 					if (!mkdir($destination, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_move'), $destination);
 					}
-				}
-				
-				if (is_file($file)) {
+				} elseif (is_file($file)) {
 					if (!rename($file, strtolower($destination))) {
 						$json['error'] = sprintf($this->language->get('error_move'), $file);
 					}

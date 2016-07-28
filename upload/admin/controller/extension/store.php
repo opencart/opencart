@@ -483,8 +483,7 @@ class ControllerExtensionStore extends Controller {
 				$this->model_localisation_language->deleteLanguage($language_info['language_id']);
 			}				
 			
-			$json['text'] = $this->language->get('text_uninstalled');
-
+			$json['success'] = $this->language->get('text_uninstalled');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -548,7 +547,7 @@ class ControllerExtensionStore extends Controller {
 		
 				fclose($handle);
 				
-				$json['text'] = $this->language->get('text_download');
+				$json['text'] = $this->language->get('text_unzip');
 				
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&download=' . basename($file, '.tmp'), true));		
 			//} else {
@@ -596,7 +595,7 @@ class ControllerExtensionStore extends Controller {
 			// Remove Zip
 			unlink($directory . '/' . $download . '.tmp');
 			
-			$json['text'] = $this->language->get('text_unzip');
+			$json['text'] = $this->language->get('text_move');
 			
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
@@ -609,7 +608,7 @@ class ControllerExtensionStore extends Controller {
 		$this->load->language('extension/store');
 
 		$json = array();
-echo 'hi';
+		
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -661,12 +660,18 @@ echo 'hi';
 				'catalog/view/theme/'
 			);
 			
+			$safe = false;
+			
 			for ($i = 0; $i < count($allowed); $i++) {
-				if (substr(str_replace('\\', '/', realpath($destination)), 0, strlen($allowed[$i])) != $path) {
-					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
+				if (substr(str_replace('\\', '/', realpath($destination)), 0, strlen($allowed[$i])) == $path) {
+					$safe = true;
 					
 					break;
 				}
+			}
+		
+			if (!$safe) {
+				$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
 			}
 						
 			// Check if the copy location exists or not	
@@ -694,6 +699,8 @@ echo 'hi';
 		}
 
 		if (!$json) {
+			$this->load->model('extension/extension');
+			
 			foreach ($files as $file) {
 				$destination = substr($file, strlen($directory . '/' . $download . '/upload/'));
 	
@@ -713,28 +720,28 @@ echo 'hi';
 					$destination = DIR_SYSTEM . substr($destination, 6);
 				}
 
-				if (!is_dir($destination)) {
+				if (is_dir($file) && !is_dir($destination)) {
 					if (!mkdir($destination, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
 					} else {
-					///	$this->model_extension_install->addPath($code, $destination);
+						$this->model_extension_extension->addPath($download, $destination);
 					}
 				}
 			
-				if (!is_dir($destination) && !is_file($file)) {
+				if (is_file($file)) {
 					if (!rename($file, $destination)) {
 						$json['error'] = sprintf($this->language->get('error_file'), $file);
 					} else {
-					//	$this->model_extension_install->addPath($code, $destination);
+						$this->model_extension_extension->addPath($download, $destination);
 					}
 				}
 			}
 		}
-		
+	
 		if (!$json) {
-			$json['text'] = $this->language->get('text_db');
+			$json['text'] = $this->language->get('text_xml');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/db', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
 			
 		$this->response->addHeader('Content-Type: application/json');
@@ -833,9 +840,9 @@ echo 'hi';
 					if (!$json) {
 						$this->model_extension_modification->addModification($modification_data);
 						
-						$json['text'] = $this->language->get('text_xml');
+						$json['text'] = $this->language->get('text_sql');
 						
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/sql', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
@@ -893,7 +900,7 @@ echo 'hi';
 				}
 			}
 			
-			$json['text'] = $this->language->get('text_sql');
+			$json['text'] = $this->language->get('text_remove');
 			
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}

@@ -75,63 +75,20 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <fieldset>
-              <legend>{{ text_history }}</legend>
-              <div id="translation"></div>
-            </fieldset>
-            <fieldset>
+            <fieldset id="recent">
               <legend>{{ text_history }}</legend>
               <div id="history"></div>
+            </fieldset>
+            <fieldset id="form">
+              <legend>Add you language overrides</legend>
+              <div id="translation"></div>
             </fieldset>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-$('#history').delegate('.pagination a', 'click', function(e) {
-	e.preventDefault();
-
-	$('#history').load(this.href);
-});
-
-$('#history').on('click', '.btn-danger', function(e) {
-	e.preventDefault();
-	
-	if (confirm('{{ text_confirm }}')) {
-		var node = this;
-
-		$.ajax({
-			url: $(node).attr('href'),
-			dataType: 'json',
-			beforeSend: function() {
-				$(node).button('loading');
-			},
-			complete: function() {
-				$(node).button('reset');
-			},
-			success: function(json) {
-				$('.alert').remove();
-				
-				if (json['error']) {
-					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-
-				if (json['success']) {
-					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-					$('#history').load('index.php?route=design/translation/history&token={{ token }}');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-});
-
-$('#history').load('index.php?route=design/translation/history&token={{ token }}');
-
+  <script type="text/javascript"><!--  
 $('select[name="store_id"]').on('change', function(e) {
 	$.ajax({
 		url: 'index.php?route=design/translation/path&token={{ token }}&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val(),
@@ -165,8 +122,8 @@ $('select[name="store_id"]').on('change', function(e) {
 	});
 });
 
-$('select[name="store_id"]').trigger('change');
-
+$('select[name="store_id"]').trigger('change');  
+  
 $('#path').on('click', 'a.directory', function(e) {
 	e.preventDefault();
 
@@ -230,6 +187,9 @@ $('#path').on('click', 'a.file',function(e) {
 			$(node).find('i').addClass('fa-arrow-right');
 		},
 		success: function(html) {
+			$('#recent').hide();
+			$('#form').show();
+			
 			$('#translation').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -268,6 +228,49 @@ $('#translation').on('click', '#button-save', function(e) {
 		}
 	});
 });
+
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=design/translation/history&token={{ token }}');
+
+$('#history').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	
+	if (confirm('{{ text_confirm }}')) {
+		var node = this;
+
+		$.ajax({
+			url: $(node).attr('href'),
+			dataType: 'json',
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+				
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+
+				if (json['success']) {
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('#history').load('index.php?route=design/translation/history&token={{ token }}');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+}); 
 //--></script> 
 </div>
 {{ footer }} 

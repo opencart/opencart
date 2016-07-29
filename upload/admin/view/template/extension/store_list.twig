@@ -19,28 +19,14 @@
         <div class="well">
           <div class="input-group">
             <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
-            <div class="input-group-btn">
-              
-              
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">License (All) <span class="caret"></span></button>
-              
-              
-              <ul class="dropdown-menu">
-                {% for license in licenses %}
-                {% if license.code == filter_license %}
-                <li class="dropdown-header">License ({{ license.text }})</li>
-                {% endif %} 
-                {% endfor %} 
-                
-                
-                {% for license in licenses %}
-                <li><a href="{{ license.href }}}">{{ license.text }}</a></li>
-                {% endfor %}
-              </ul>
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories (Themes) <span class="caret"></span></button>
+            <div class="input-group-btn"> {% for category in categories %}
+              {% if category.value == filter_category %}
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
+              {% endif %}
+              {% endfor %}
               <ul class="dropdown-menu">
                 {% for category in categories %}
-                <li><a href="{{ category.href }}">{{ category.text }}</a></li>
+                <li><a href="{{ category.href }}">{{ category.text }} ()</a></li>
                 {% endfor %}
               </ul>
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
@@ -49,11 +35,22 @@
         </div>
         </fieldset>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-6">
+            <div class="btn-group">{% for license in licenses %}
+              {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
+              
+              {% endfor %} </div>
+          </div>
+          <div class="col-sm-6">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort }}</label>
-              <div class="col-sm-8">
+              <label class="col-sm-3 control-label" for="input-sort-order">{{ entry_sort }}</label>
+              <div class="col-sm-7 text-right">
                 <select id="input-sort" class="form-control" onchange="location = this.value;">
+                  
+                  
+                  
+                  
+                  
                   
                   
               
@@ -64,7 +61,17 @@
         {% if sorts.value == sort %}
               
                   
+                  
+                  
+                  
+                  
+                  
                   <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                  
+                  
+                  
+                  
+                  
                   
                   
               
@@ -78,7 +85,17 @@
                   
               
                   
+                  
+                  
+                  
+                  
+                  
                   <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                  
+                  
+                  
+                  
+                  
                   
                   
               
@@ -92,6 +109,11 @@
         
                 
             
+                
+                
+                
+                
+                
                 
                 </select>
               </div>

@@ -18,9 +18,9 @@ class ControllerExtensionStore extends Controller {
 		}
 				
 		if (isset($this->request->get['filtern_category_id'])) {
-			$filter_category_id = $this->request->get['filter_category_id'];
+			$filter_category = $this->request->get['filter_category'];
 		} else {
-			$filter_category_id = null;
+			$filter_category = 'all';
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -51,8 +51,8 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 		
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -129,7 +129,8 @@ class ControllerExtensionStore extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_list'] = $this->language->get('text_list');
-						
+		$data['text_category'] = $this->language->get('text_category');
+		
 		$data['entry_sort'] = $this->language->get('entry_sort');
 
 		// Licenses
@@ -138,32 +139,39 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-		
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
+
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
-		}
-		
+				
 		if (isset($this->request->get['filter_username'])) {
 			$url .= '&filter_username=' . $this->request->get['filter_username'];
 		}
-		
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+				
+		// Licenses
 		$data['licenses'] = array();
 		
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_free'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=free' . $url, true)
+			'text'  => $this->language->get('text_all'),
+			'value' => 'all',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_paid'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=paid' . $url, true)
+			'text'  => $this->language->get('text_free'),
+			'value' => 'free',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=free' . $url, true)
 		);
+		
+		$data['licenses'][] = array(
+			'text'  => $this->language->get('text_paid'),
+			'value' => 'paid',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=paid' . $url, true)
+		);		
 
 		// Categories
 		$url = '';
@@ -179,12 +187,30 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_username'])) {
 			$url .= '&filter_username=' . $this->request->get['filter_username'];
 		}		
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 		
+		
+		
+		$_['text_all']           = 'All';
+$_['text_theme']         = 'Themes';
+$_['text_marketplace']   = 'Marketplaces';
+$_['text_payment']       = 'Payment';
+$_['text_shipping']      = 'Shipping';
+$_['text_module']        = 'Modules';
+$_['text_total']         = 'Order Totals';
+$_['text_feed']          = 'Feeds';
+$_['text_report']        = 'Reports';
+$_['text_other']         = 'Other';
+
+				
 		$data['categories'] = array();
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_all'),
-			'value' => '',
+			'value' => 'all',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
@@ -254,8 +280,8 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 			
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -315,8 +341,8 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 		
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -337,7 +363,7 @@ class ControllerExtensionStore extends Controller {
 		
 		$data['filter_search'] = $filter_search;
 		$data['filter_license'] = $filter_license;
-		$data['filter_category_id'] = $filter_category_id;
+		$data['filter_category'] = $filter_category;
 		$data['sort'] = $sort;
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -405,8 +431,8 @@ class ControllerExtensionStore extends Controller {
 				$url .= '&filter_license=' . $this->request->get['filter_license'];
 			}
 			
-			if (isset($this->request->get['filter_category_id'])) {
-				$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
+			if (isset($this->request->get['filter_category'])) {
+				$url .= '&filter_category=' . $this->request->get['filter_category'];
 			}
 	
 			if (isset($this->request->get['filter_username'])) {

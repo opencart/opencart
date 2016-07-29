@@ -18,15 +18,15 @@
       <div class="panel-body">
         <div class="well">
           <div class="input-group">
-            <input type="text" name="search" value="" placeholder="Search for extensions" class="form-control" />
-            <div class="input-group-btn"> {% for category in categories %}
+            <input type="text" name="search" value="" placeholder="{{ text_search }}" class="form-control" />
+            <div class="input-group-btn">{% for category in categories %}
               {% if category.value == filter_category %}
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
               {% endif %}
               {% endfor %}
               <ul class="dropdown-menu">
                 {% for category in categories %}
-                <li><a href="{{ category.href }}">{{ category.text }} ()</a></li>
+                <li><a href="{{ category.href }}">{{ category.text }}</a></li>
                 {% endfor %}
               </ul>
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
@@ -35,92 +35,37 @@
         </div>
         </fieldset>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <div class="btn-group">{% for license in licenses %}
               {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
-              
-              {% endfor %} </div>
+              {% endfor %}</div>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="input-sort-order">{{ entry_sort }}</label>
-              <div class="col-sm-7 text-right">
-                <select id="input-sort" class="form-control" onchange="location = this.value;">
-                  
-                  
-                  
-                  
-                  
-                  
-                  
+          <div class="col-sm-4 text-right">
+
+            <div class="input-group pull-right">
+              <span class="input-group-addon">{{ entry_sort }}</span> 
+              <div class="input-group-btn">
               
-                  
-          
-        
-        {% for sorts in sorts %}
-        {% if sorts.value == sort %}
+              {% for sorts in sorts %}
+              {% if sorts.value == sort %}
               
-                  
-                  
-                  
-                  
-                  
-                  
-                  <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-              
-                  
-          
-        
-        {% else %}
-        
-        
-          
-                  
-              
-                  
-                  
-                  
-                  
-                  
-                  
-                  <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-              
-                  
-          
-        
-        {% endif %}
-        {% endfor %}      
-      
-      
-        
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ sorts.text }} <span class="caret"></span></button>
+               
+               
+               {% endif %}
+                {% endfor %}
                 
-            
-                
-                
-                
-                
-                
-                
-                </select>
+                <ul class="dropdown-menu pull-right">
+                  {% for sorts in sorts %}
+                  <li><a href="{{ sorts.href }}">{{ sorts.text }}</a></li>
+                  {% endfor %}
+                </ul>
               </div>
+              
+
             </div>
           </div>
         </div>
-        <br />
         <br />
         {% if extensions %}
         {% for extension in extensions|batch(3, '') %}
@@ -135,7 +80,7 @@
           {% endfor %} </div>
         {% endfor %}
         <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-12 text-center">{{ pagination }}</div>
         </div>
         {% else %}
         <div>{{ no_results }}</div>

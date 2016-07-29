@@ -10,17 +10,17 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			$filter_search = null;
 		}
-
+				
+		if (isset($this->request->get['filtern_category'])) {
+			$filter_category = $this->request->get['filter_category'];
+		} else {
+			$filter_category = 'all';
+		}
+		
 		if (isset($this->request->get['filter_license'])) {
 			$filter_license = $this->request->get['filter_license'];
 		} else {
 			$filter_license = 'all';
-		}
-				
-		if (isset($this->request->get['filtern_category_id'])) {
-			$filter_category = $this->request->get['filter_category'];
-		} else {
-			$filter_category = 'all';
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -47,12 +47,12 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
 		
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-		
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		}
+		
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -129,9 +129,92 @@ class ControllerExtensionStore extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_list'] = $this->language->get('text_list');
+		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
 		
 		$data['entry_sort'] = $this->language->get('entry_sort');
+
+		// Categories
+		$url = '';
+
+		if (isset($this->request->get['filter_search'])) {
+			$url .= '&filter_search=' . $this->request->get['filter_search'];
+		}
+				
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
+		}
+
+		if (isset($this->request->get['filter_username'])) {
+			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		}		
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+				
+		$data['categories'] = array();
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_all'),
+			'value' => 'all',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
+		);	
+			
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_theme'),
+			'value' => 'theme',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=theme' . $url, true)
+		);
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_marketplace'),
+			'value' => 'marketplace',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=marketplace' . $url, true)
+		);		
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_payment'),
+			'value' => 'payment',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=payment' . $url, true)
+		);	
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_shipping'),
+			'value' => 'shipping',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=shipping' . $url, true)
+		);		
+
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_module'),
+			'value' => 'module',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=module' . $url, true)
+		);	
+
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_total'),
+			'value' => 'total',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=total' . $url, true)
+		);	
+		
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_feed'),
+			'value' => 'feed',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=feed' . $url, true)
+		);			
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_report'),
+			'value' => 'report',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=report' . $url, true)
+		);		
+		
+		$data['categories'][] = array(
+			'text'  => $this->language->get('text_other'),
+			'value' => 'other',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=other' . $url, true)
+		);
 
 		// Licenses
 		$url = '';
@@ -171,117 +254,21 @@ class ControllerExtensionStore extends Controller {
 			'text'  => $this->language->get('text_paid'),
 			'value' => 'paid',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=paid' . $url, true)
-		);		
-
-		// Categories
-		$url = '';
-
-		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . $this->request->get['filter_search'];
-		}
-				
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
-		}		
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-		
-		
-		
-		$_['text_all']           = 'All';
-$_['text_theme']         = 'Themes';
-$_['text_marketplace']   = 'Marketplaces';
-$_['text_payment']       = 'Payment';
-$_['text_shipping']      = 'Shipping';
-$_['text_module']        = 'Modules';
-$_['text_total']         = 'Order Totals';
-$_['text_feed']          = 'Feeds';
-$_['text_report']        = 'Reports';
-$_['text_other']         = 'Other';
-
-				
-		$data['categories'] = array();
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_all'),
-			'value' => 'all',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
-		);	
-			
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_theme'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
 		);
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_marketplace'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);		
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_payment'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);	
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_shipping'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);		
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_module'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);	
-
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_total'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);	
-		
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_feed'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);			
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_report'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);		
-		
-		$data['categories'][] = array(
-			'text'  => $this->language->get('text_other'),
-			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&category=' . $url, true)
-		);
-		
+				
 		// Sort
 		$url = '';
 
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
 			
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		}
+		
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -297,37 +284,37 @@ $_['text_other']         = 'Other';
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_date_modified'),
 			'value' => 'date_modified',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=date_modified' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, true)
 		);
 		
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_date_added'),
 			'value' => 'date_added',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=date_added' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true)
 		);
 				
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_name'),
 			'value' => 'name',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=name' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true)
 		);
 		
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_rating'),
 			'value' => 'rating',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=rating' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=rating' . $url, true)
 		);		
 		
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_downloaded'),
 			'value' => 'downloaded',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=downloaded' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=downloaded' . $url, true)
 		);	
 			
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_price'),
 			'value' => 'price',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . 'sort=price' . $url, true)
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=price' . $url, true)
 		);	
 		
 		// Pagination
@@ -336,13 +323,13 @@ $_['text_other']         = 'Other';
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
 		
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		}
+		
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
 		if (isset($this->request->get['filter_username'])) {
@@ -362,8 +349,8 @@ $_['text_other']         = 'Other';
 		$data['pagination'] = $pagination->render();
 		
 		$data['filter_search'] = $filter_search;
-		$data['filter_license'] = $filter_license;
 		$data['filter_category'] = $filter_category;
+		$data['filter_license'] = $filter_license;
 		$data['sort'] = $sort;
 		
 		$data['header'] = $this->load->controller('common/header');

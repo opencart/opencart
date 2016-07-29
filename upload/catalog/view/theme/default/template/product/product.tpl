@@ -118,15 +118,15 @@
         <?php } else { ?>
         <?php $class = 'col-sm-4'; ?>
         <?php } ?>
-        <div class="<?php echo $class; ?>">
+        <div class="<?php echo $class; ?>" class="<?php echo $class; ?>" itemscope itemtype="http://schema.org/Product">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
           </div>
-          <h1><?php echo $heading_title; ?></h1>
+          <h1 itemprop="name"><?php echo $heading_title; ?></h1>
           <ul class="list-unstyled">
             <?php if ($manufacturer) { ?>
-            <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
+            <li itemprop="brand" itemscope itemtype="http://schema.org/Organization"><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><span itemprop="name"><?php echo $manufacturer; ?></span></a></li>
             <?php } ?>
             <li><?php echo $text_model; ?> <?php echo $model; ?></li>
             <?php if ($reward) { ?>
@@ -135,15 +135,17 @@
             <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
           </ul>
           <?php if ($price) { ?>
-          <ul class="list-unstyled">
+          <ul class="list-unstyled" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <?php if (!$special) { ?>
             <li>
-              <h2><?php echo $price; ?></h2>
+              <span itemprop="priceCurrency" content="<?php echo $currency;?>"></span>
+              <h2 itemprop="price" content="<?php echo preg_replace("/[^0-9. ]/", '',$price); ?>"><?php echo $price; ?></h2>
             </li>
             <?php } else { ?>
             <li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>
             <li>
-              <h2><?php echo $special; ?></h2>
+              <span itemprop="priceCurrency" content="<?php echo $currency;?>"></span>
+              <h2 itemprop="price" content="<?php echo preg_replace("/[^0-9. ]/", '',$special); ?>"><?php echo $special; ?></h2>
             </li>
             <?php } ?>
             <?php if ($tax) { ?>

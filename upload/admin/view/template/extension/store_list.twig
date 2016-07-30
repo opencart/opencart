@@ -21,7 +21,7 @@
             <input type="text" name="search" value="" placeholder="{{ text_search }}" class="form-control" />
             <div class="input-group-btn">{% for category in categories %}
               {% if category.value == filter_category %}
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
               {% endif %}
               {% endfor %}
               <ul class="dropdown-menu">
@@ -35,34 +35,30 @@
         </div>
         </fieldset>
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-9 col-xs-7">
             <div class="btn-group">{% for license in licenses %}
               {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
               {% endfor %}</div>
           </div>
-          <div class="col-sm-4 text-right">
-
+          <div class="col-sm-3 col-xs-5">
             <div class="input-group pull-right">
-              <span class="input-group-addon">{{ entry_sort }}</span> 
-              <div class="input-group-btn">
-              
-              {% for sorts in sorts %}
-              {% if sorts.value == sort %}
-              
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ sorts.text }} <span class="caret"></span></button>
-               
-               
-               {% endif %}
-                {% endfor %}
+              <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
+              <select onchange="location = this.value;" class="form-control">
                 
-                <ul class="dropdown-menu pull-right">
+                
                   {% for sorts in sorts %}
-                  <li><a href="{{ sorts.href }}">{{ sorts.text }}</a></li>
+                  {% if sorts.value == sort %}
+                  
+                <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                
+                  {% else %}
+                  
+                <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                
+                  {% endif %}
                   {% endfor %}
-                </ul>
-              </div>
-              
-
+                  
+              </select>
             </div>
           </div>
         </div>
@@ -73,11 +69,17 @@
           <div class="col-sm-4">
             <div class="thumbnail"><a href="{{ extension.href }}"><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a>
               <div class="caption">
-                <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                <div>
+                  <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                  {{ extension.price }} </div>
+                  {% for i in 1..5 %}
+                  {% if i < extension.rating %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %} 
+                  {% endfor %}
+                <div>{{ extension.comment_total }}</div>
               </div>
             </div>
           </div>
-          {% endfor %} </div>
+          {% endfor %}</div>
         {% endfor %}
         <div class="row">
           <div class="col-sm-12 text-center">{{ pagination }}</div>

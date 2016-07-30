@@ -23,11 +23,14 @@ $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
 $_['text_name']          = 'Name';
 $_['text_rating']        = 'Rating';
+$_['text_compatibility'] = 'Compatibility';
 $_['text_downloaded']    = 'Downloaded';
 $_['text_price']         = 'Price';
-
-// Entry
-$_['entry_sort']         = 'Sort By';
+$_['text_partner']       = 'Developed by OpenCart Partner';
+$_['text_support']       = '12 Months free support';
+$_['text_documentation'] = 'Documentation Included';
+$_['text_sales']         = 'Sales';
+$_['text_comment']       = 'Comments';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

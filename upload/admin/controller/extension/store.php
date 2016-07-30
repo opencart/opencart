@@ -83,11 +83,11 @@ class ControllerExtensionStore extends Controller {
 
 		$data['extensions'] = array();
 		
-		//$url .= '&api_key=' . $this->config->get('config_api_key'); 
-		//$url .= '&store=' . $this->request->server['HTTP_HOST'];
-		//$url .= '&language=' . $this->config->get('config_language');
-		//$url .= '&currency=' . $this->config->get('config_currency');
-		//$url .= '&version=' . $this->config->get('config_currency');
+		$url .= '&api_key=' . $this->config->get('config_api_key'); 
+		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+		$url .= '&language=' . $this->config->get('config_language');
+		$url .= '&currency=' . $this->config->get('config_currency');
+		$url .= '&version=' . VERSION;
 		
 		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension' . $url);
 		
@@ -132,8 +132,6 @@ class ControllerExtensionStore extends Controller {
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
 		
-		$data['entry_sort'] = $this->language->get('entry_sort');
-
 		// Categories
 		$url = '';
 
@@ -362,9 +360,10 @@ class ControllerExtensionStore extends Controller {
 	
 	public function info() {
 		$url  = '&api_key=' . $this->config->get('config_api_key'); 
-		$url .= '&store=' . $this->request->server['HTTP_HOST'];
+		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
+		$url .= '&version=' . VERSION;
 
 		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/info&extension_id=' . $this->request->get['extension_id'] . $url);
 				
@@ -392,20 +391,28 @@ class ControllerExtensionStore extends Controller {
 							
 			$data['heading_title'] = $this->language->get('heading_title');
 			
-			$data['text_info'] = $this->language->get('text_info');
 			$data['text_loading'] = $this->language->get('text_loading');
 			$data['text_price'] = $this->language->get('text_price');
-			$data['text_rating'] = $this->language->get('text_rating');
-			$data['text_developed'] = $this->language->get('text_developed');
+			$data['text_partner'] = $this->language->get('text_partner');
 			$data['text_support'] = $this->language->get('text_support');
 			$data['text_documentation'] = $this->language->get('text_documentation');
+			
+			
+			$data['text_rating'] = $this->language->get('text_rating');
 			$data['text_compatibility'] = $this->language->get('text_compatibility');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
-
+			$data['text_sales'] = $this->language->get('text_sales');
+			$data['text_comment'] = $this->language->get('text_comment');
+			
 			$data['button_buy'] = $this->language->get('button_buy');
+			$data['button_install'] = $this->language->get('button_install');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
+			$data['tab_description'] = $this->language->get('tab_description');
+			$data['tab_documentation'] = $this->language->get('tab_documentation');
+			$data['tab_comment'] = $this->language->get('tab_comment');
+			
 			$data['token'] = $this->session->data['token'];
 			
 			$url = '';
@@ -414,12 +421,12 @@ class ControllerExtensionStore extends Controller {
 				$url .= '&filter_search=' . $this->request->get['filter_search'];
 			}
 			
-			if (isset($this->request->get['filter_license'])) {
-				$url .= '&filter_license=' . $this->request->get['filter_license'];
-			}
-			
 			if (isset($this->request->get['filter_category'])) {
 				$url .= '&filter_category=' . $this->request->get['filter_category'];
+			}
+			
+			if (isset($this->request->get['filter_license'])) {
+				$url .= '&filter_license=' . $this->request->get['filter_license'];
 			}
 	
 			if (isset($this->request->get['filter_username'])) {
@@ -445,7 +452,7 @@ class ControllerExtensionStore extends Controller {
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 			);
 
 			$this->load->helper('bbcode');
@@ -455,36 +462,41 @@ class ControllerExtensionStore extends Controller {
 			$data['extension_id'] = (int)$this->request->get['extension_id'];
 			$data['name'] = $response_info['name'];
 			$data['description'] = nl2br(bbcode_decode($response_info['description']));
-			$data['price'] = $this->currency->format($response_info['price'], $this->config->get('config_currency'));
+			$data['documentation'] = nl2br(bbcode_decode($response_info['documentation']));
+			
+			$data['downloads'] = array();
+			
+			if ($response_info['downloads']) {
+				//if (in_array(VERSION, $result['compatibility'])) {
+					foreach ($response_info['downloads'] as $result) {
+						$data['downloads'][] = array(
+							'extension_download_id' => $result['extension_download_id'],
+							'name'                  => $result['name'],
+							'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
+						);	
+					}
+				//}
+			}		
+			
+			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
-			$data['member'] = $response_info['member'];
-			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['member']);
 			$data['rating'] = $response_info['rating'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
 			$data['comment_total'] = $response_info['comment_total'];
-			
-			$compatibility = array();
-			
-			$data['downloads'] = array();
+	
+			$data['member'] = $response_info['member'];
+			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['username']);
+		
+			$data['compatibility'] = '';
 			
 			if ($response_info['downloads']) {
-				//print_r($response_info['downloads']);
-				
 				foreach ($response_info['downloads'] as $result) {
-					$data['downloads'][] = array(
-						'extension_download_id' => $result['extension_download_id'],
-						'name'                  => $result['name'],
-						'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
-					);	
-					
-					$compatibility = array_merge($compatibility, $result['compatibility']);
+					$data['compatibility'] .= implode(', ', $result['compatibility']);
 				}
 			}
-			
-			$data['compatibility'] = implode(', ', $compatibility);
 			
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -627,7 +639,6 @@ class ControllerExtensionStore extends Controller {
 			/*
 			$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/download&api_key=' . $this->config->get('config_api_key') .  '&extension_download_id=' . $extension_download_id);
 			//$curl = curl_init('http://localhost/test/test.ocmod.zip');
-			
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

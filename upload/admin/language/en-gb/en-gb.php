@@ -99,6 +99,7 @@ $_['button_apply']                  = 'Apply';
 $_['button_category_add']           = 'Add Category';
 $_['button_order']                  = 'View Order';
 $_['button_order_recurring']        = 'View Recurring Order';
+$_['button_buy']                    = 'Buy';
 
 // Tab
 $_['tab_address']                   = 'Address';
@@ -106,9 +107,12 @@ $_['tab_additional']                = 'Additional';
 $_['tab_admin']                     = 'Admin';
 $_['tab_attribute']                 = 'Attribute';
 $_['tab_customer']                  = 'Customer Details';
+$_['tab_comment']                   = 'Comment';
 $_['tab_data']                      = 'Data';
+$_['tab_description']               = 'Description';
 $_['tab_design']                    = 'Design';
 $_['tab_discount']                  = 'Discount';
+$_['tab_documentation']             = 'Documentation';
 $_['tab_general']                   = 'General';
 $_['tab_history']                   = 'History';
 $_['tab_ftp']                       = 'FTP';

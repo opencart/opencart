@@ -1,60 +1,83 @@
 {{ header }}{{ column_left }}
 <div id="content">
-<div class="page-header">
-  <div class="container-fluid">
-    <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-    <h1>{{ heading_title }}</h1>
-    <ul class="breadcrumb">
-      {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-<div class="container-fluid">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_info }}</h3>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
     </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-sm-8"> {% if banner %}
-          <div class="well well-sm"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
-          {% endif %}
-          <div> {% for image in images %} <a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a> {% endfor %} </div>
-          <div>{{ description }}</div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well well-sm">
-            <button type="button" class="btn btn-primary btn-block">Buy</button>
-            {% for download in downloads %}
-            <button type="button" id="button-install" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-default btn-block">Install</button>
-            {% endfor %} <br />
-            <div id="progress">
-              <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-              </div>
-              <div id="progress-text"></div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-8">{% if banner %}
+            <div class="well well-sm"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+            {% endif %}
+            <div>{% for image in images %}<a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
+              <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
+              <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }}</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-description" class="tab-pane active">{{ description }}</div>
+              <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
+              <div id="tab-comment" class="tab-pane">{{ comment }}</div>
             </div>
-            <div> <br />
+          </div>
+          <div class="col-sm-4">
+            <div class="well well-sm">
+              <button type="button" class="btn btn-primary btn-block">{{ button_buy }}</button>
+              <br />
+              <div class="dropdown">
+                <button type="button" data-loading="{{ text_loading }}" data-toggle="dropdown" class="btn btn-default btn-block">{{ button_install }} <span class="caret"></span></button>
+                <ul class="dropdown-menu pull-right">
+                  {% for download in downloads %}
+                  <li><a href="{{ download.extension_download_id }}"><i class="fa fa-download"></i> {{ download.name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <br />
+              <div id="progress">
+                <div class="progress">
+                  <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <div id="progress-text"></div>
+              </div>
+              <hr />
+              {% if license %}
               <div class="row">
                 <div class="col-md-6">{{ text_price }}</div>
                 <div class="col-md-6 text-right">{{ price }}</div>
               </div>
+              {% else %}
+              <div class="row">
+                <div class="col-md-6">{{ text_price }}</div>
+                <div class="col-md-6 text-right">Free</div>
+              </div>
+              {% endif %}
               <hr />
               <div class="row">
-                <div class="col-md-12">{% if license %}
-                  Commercial
-                  {% else %}
-                  Free
-                  {% endif %}</div>
+                <div class="col-md-12">
+                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_partner }}</div>
+                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_support }}</div>
+                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_documentation }}</div>
+                </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-md-6">{{ text_rating }}</div>
-                <div class="col-md-6 text-right"> {% for i in 1..5 %}
-                  {% if rating >= i %} <i class="fa fa-star"></i> {% else %} <i class="fa fa-star-o"></i> {% endif %}
-                  {% endfor %} </div>
+                <div class="col-md-6 text-right">{% for i in 1..5 %}
+                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% endfor %}</div>
               </div>
               <hr />
               <div class="row">
@@ -72,16 +95,34 @@
                 <div class="col-md-6 text-right">{{ date_modified }}</div>
               </div>
             </div>
-            <div class="well well-sm"> {{ sales }}  {{ downloaded }} </div>
-            <div class="well well-sm"> Comments ({{ comment_total }}) </div>
-            <div class="well well-sm"> <b>Developer</b> <a href="{{ username }}">{{ member }}</a> </div>
+            {% if license %}
+            <div class="well well-sm">
+              <div class="row">
+                <div class="col-md-12"><i class="fa fa-shopping-cart fa-2x text-success"></i> {{ sales }} {{ text_sales }}</div>
+              </div>
+            </div>
+            {% else %}
+            <div class="well well-sm">
+              <div class="row">
+                <div class="col-md-12"><i class="fa fa-cloud-download fa-2x text-primary"></i> {{ downloaded }} {{ text_downloaded }}</div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="well well-sm">
+              <div class="row">
+                <div class="col-md-12"><i class="fa fa-comment fa-2x text-info"></i> {{ comment_total }} {{ text_comment }}</div>
+              </div>
+            </div>
+            <div class="well well-sm"> <b>Developer</b> <a href="{ filter_username }}">{{ member }}</a> </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#button-install').on('click', function() {
+$('#button-install').parent().find('a').on('click', function(e) {
+	e.preventDefault();
+	
 	var node = this;
 	
 	// Reset everything
@@ -93,10 +134,10 @@ $('#button-install').on('click', function() {
 		url: 'index.php?route=extension/store/download&token={{ token }}&extension_download_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).button('loading');
+			$('#button-install').button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$('#button-install').button('reset');
 		},
 		success: function(json) {
 			console.log(json);

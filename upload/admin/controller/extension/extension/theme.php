@@ -23,6 +23,10 @@ class ControllerExtensionExtensionTheme extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->get['extension']);
 
+			// Compatibility
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'theme/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'theme/' . $this->request->get['extension']);
+
 			// Call install method if it exsits
 			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/install');
 

@@ -7,7 +7,8 @@ class ControllerEventCompatibility extends Controller {
 		$part = explode('/', $route);
 				
 		if (!is_file(DIR_APPLICATION . 'controller/' . $route . '.php') && is_file(DIR_APPLICATION . 'controller/' . $part[1] . '/' . $part[2] . '.php')) {
-			$route = $part[1] . '/' . $part[2];
+			unset($part[0]);
+			$route = implode('/', $part);
 		}
 	}
 	

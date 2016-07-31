@@ -102,11 +102,17 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
-						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+						$payment_address = $this->model_account_address->getAddress($this->customer->getAddressId());
+						if($payment_address){
+							$this->session->data['payment_address'] = $payment_address;
+						}
 					}
 
 					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+						$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
+						if($shipping_address){
+							$this->session->data['shipping_address'] = $shipping_address;
+						}
 					}
 
 					if ($this->config->get('config_customer_activity')) {
@@ -163,11 +169,17 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
-						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+						$payment_address = $this->model_account_address->getAddress($this->customer->getAddressId());
+						if($payment_address){
+							$this->session->data['payment_address'] = $payment_address;
+						}
 					}
 
 					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+						$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
+						if($shipping_address){
+							$this->session->data['shipping_address'] = $shipping_address;
+						}
 					}
 
 					if ($this->config->get('config_customer_activity')) {

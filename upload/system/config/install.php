@@ -8,7 +8,7 @@ $_['language_default']  = 'en-gb';
 $_['language_autoload'] = array('en-gb');
 
 // Template
-$_['template_type']     = 'twig';
+$_['template_engine']   = 'twig';
 
 // Actions
 $_['action_default']    = 'install/step_1';

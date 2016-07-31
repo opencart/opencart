@@ -33,7 +33,7 @@ $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
 }
 
 // Session
@@ -46,7 +46,7 @@ if ($config->get('session_autostart')) {
 $registry->set('session', $session);
 
 // Cache 
-$registry->set('cache', new Cache($config->get('cache_type'), $config->get('cache_expire')));
+$registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url
 if ($config->get('url_autostart')) {

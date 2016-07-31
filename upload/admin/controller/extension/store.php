@@ -11,7 +11,7 @@ class ControllerExtensionStore extends Controller {
 			$filter_search = null;
 		}
 				
-		if (isset($this->request->get['filtern_category'])) {
+		if (isset($this->request->get['filter_category'])) {
 			$filter_category = $this->request->get['filter_category'];
 		} else {
 			$filter_category = 'all';
@@ -360,10 +360,10 @@ class ControllerExtensionStore extends Controller {
 	
 	public function info() {
 		$url  = '&api_key=' . $this->config->get('config_api_key'); 
-		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&language=' . $this->config->get('config_language');
-		$url .= '&currency=' . $this->config->get('config_currency');
-		$url .= '&version=' . VERSION;
+		//$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+		//$url .= '&language=' . $this->config->get('config_language');
+		//$url .= '&currency=' . $this->config->get('config_currency');
+		//$url .= '&version=' . VERSION;
 
 		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/info&extension_id=' . $this->request->get['extension_id'] . $url);
 				
@@ -375,6 +375,8 @@ class ControllerExtensionStore extends Controller {
 		curl_setopt($curl, CURLOPT_PORT, 80);
 			
 		$response = curl_exec($curl);
+		
+		echo $response;
 		
 		if (!$response) {
 			$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));

@@ -39,21 +39,21 @@ class ControllerEventTheme extends Controller {
 			$output = $template->render($data);
 		} else {
 			if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.twig')) { 
-				$view = $theme . '/template/' . $view . '.twig';
+				$view = $theme . '/template/' . $view;
 				
-				$this->config->set('template_type', 'twig');
+				$this->config->set('template_engine', 'twig');
 			} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $view . '.twig')) {
-				$view = 'default/template/' . $view . '.twig';
+				$view = 'default/template/' . $view;
 				
-				$this->config->set('template_type', 'twig');
+				$this->config->set('template_engine', 'twig');
 			} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
 				$view = $theme . '/template/' . $view . '.tpl';
 				
-				$this->config->set('template_type', 'php');
+				$this->config->set('template_engine', 'php');
 			} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $view . '.tpl')) {
-				$view = 'default/template/' . $view . '.tpl';
+				$view = 'default/template/' . $view;
 				
-				$this->config->set('template_type', 'php');
+				$this->config->set('template_engine', 'php');
 			}		
 		}
 	}

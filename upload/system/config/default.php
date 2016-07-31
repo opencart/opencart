@@ -12,7 +12,7 @@ $_['language_autoload']    = array('en-gb');
 
 // Database
 $_['db_autostart']         = false;
-$_['db_type']              = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';
@@ -33,7 +33,7 @@ $_['mail_verp']            = false;
 $_['mail_parameter']       = '';
 
 // Cache
-$_['cache_type']           = 'file'; // apc, file or mem
+$_['cache_engine']         = 'file'; // apc, file or mem
 $_['cache_expire']         = 3600;
 
 // Session
@@ -41,7 +41,7 @@ $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 
 // Template
-$_['template_type']        = 'php';
+$_['template_engine']        = 'php';
 
 // Error
 $_['config_error_display'] = true;

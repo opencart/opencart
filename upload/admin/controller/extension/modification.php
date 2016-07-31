@@ -51,7 +51,7 @@ class ControllerExtensionModification extends Controller {
 		$this->getList();
 	}
 
-	public function refresh() {
+	public function refresh($data = array()) {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -134,9 +134,10 @@ class ControllerExtensionModification extends Controller {
 			$modification = array();
 
 			foreach ($xml as $xml) {
-				if(empty($xml)){
+				if (empty($xml)){
 					continue;
 				}
+				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
@@ -163,16 +164,16 @@ class ControllerExtensionModification extends Controller {
 						$path = '';
 
 						// Get the full path of the files that are going to be used for modification
-						if (substr($file, 0, 7) == 'catalog') {
-							$path = DIR_CATALOG . str_replace('../', '', substr($file, 8));
+						if ((substr($file, 0, 7) == 'catalog')) {
+							$path = DIR_CATALOG . substr($file, 8);
 						}
 
-						if (substr($file, 0, 5) == 'admin') {
-							$path = DIR_APPLICATION . str_replace('../', '', substr($file, 6));
+						if ((substr($file, 0, 5) == 'admin')) {
+							$path = DIR_APPLICATION . substr($file, 6);
 						}
 
-						if (substr($file, 0, 6) == 'system') {
-							$path = DIR_SYSTEM . str_replace('../', '', substr($file, 7));
+						if ((substr($file, 0, 6) == 'system')) {
+							$path = DIR_SYSTEM . substr($file, 7);
 						}
 
 						if ($path) {
@@ -201,7 +202,7 @@ class ControllerExtensionModification extends Controller {
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);
 
 										// Log
-										$log[] = 'FILE: ' . $key;
+										$log[] = PHP_EOL . 'FILE: ' . $key;
 									}
 
 									foreach ($operations as $operation) {
@@ -359,23 +360,23 @@ class ControllerExtensionModification extends Controller {
 										}
 
 										if (!$status) {
-											// Log
-											$log[] = 'NOT FOUND!';
-
 											// Abort applying this modification completely.
 											if ($error == 'abort') {
 												$modification = $recovery;
-
 												// Log
-												$log[] = 'ABORTING!';
-
+												$log[] = 'NOT FOUND - ABORTING!';
 												break 5;
 											}
-
 											// Skip current operation or break
-											if ($error == 'skip') {
+											elseif ($error == 'skip') {
+												// Log
+												$log[] = 'NOT FOUND - OPERATION SKIPPED!';
 												continue;
-											} else {
+											}
+											// Break current operations
+											else {
+												// Log
+												$log[] = 'NOT FOUND - OPERATIONS ABORTED!';
 											 	break;
 											}
 										}
@@ -421,7 +422,10 @@ class ControllerExtensionModification extends Controller {
 			// Maintance mode back to original settings
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			// Do not return success message if refresh() was called with $data
+			if (!empty($data['redirect'])) {
+				$this->session->data['success'] = $this->language->get('text_success');
+			}
 
 			$url = '';
 
@@ -437,7 +441,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+		//	$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -677,7 +681,7 @@ class ControllerExtensionModification extends Controller {
 				'link'            => $result['link'],
 				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
 				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
-				'enabled'         => $result['status'],
+				'enabled'         => $result['status']
 			);
 		}
 
@@ -741,7 +745,7 @@ class ControllerExtensionModification extends Controller {
 
 		$data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
 		$data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, true);
-		$data['sort_version'] = $this->url->link('extension/version', 'token=' . $this->session->data['token'] . '&sort=author' . $url, true);
+		$data['sort_version'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=version' . $url, true);
 		$data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
 		$data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 

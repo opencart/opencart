@@ -40,7 +40,7 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'address_1') { ?>
+                  <td class="text-left"><?php if ($sort == 'address') { ?>
                     <a href="<?php echo $sort_address; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_address; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_address; ?>"><?php echo $column_address; ?></a>

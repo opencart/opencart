@@ -66,7 +66,7 @@
               <tr>
                 <td><?php echo $text_customer; ?></td>
                 <td><?php if ($customer) { ?>
-                  <a href="<?php echo $customer ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a>
+                  <a href="<?php echo $customer; ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a>
                   <?php } else { ?>
                   <?php echo $firstname; ?> <?php echo $lastname; ?>
                   <?php } ?></td>

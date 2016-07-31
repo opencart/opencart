@@ -11,8 +11,10 @@ Options -Indexes
 
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
- Order deny,allow
- Deny from all
+ Require all denied
+## For apache 2.2 and older, replace "Require all denied" with these two lines :
+# Order deny,allow
+# Deny from all
 </FilesMatch>
 
 # SEO URL Settings
@@ -20,8 +22,8 @@ RewriteEngine On
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
 RewriteBase /
-RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
-RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
+RewriteRule ^sitemap.xml$ index.php?route=extension/feed/google_sitemap [L]
+RewriteRule ^googlebase.xml$ index.php?route=extension/feed/google_base [L]
 RewriteRule ^system/download/(.*) index.php?route=error/not_found [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

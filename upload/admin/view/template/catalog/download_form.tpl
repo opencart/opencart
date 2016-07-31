@@ -38,7 +38,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group">
@@ -51,7 +51,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="<?php echo $help_mask; ?>"><?php echo $entry_mask; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
@@ -102,8 +102,8 @@ $('#button-upload').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 						
-						$('input[name=\'filename\']').attr('value', json['filename']);
-						$('input[name=\'mask\']').attr('value', json['mask']);
+						$('input[name=\'filename\']').val(json['filename']);
+						$('input[name=\'mask\']').val(json['mask']);
 					}
 				},			
 				error: function(xhr, ajaxOptions, thrownError) {

@@ -985,7 +985,7 @@ var token = '';
 
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login',
+	url: '<?php echo $catalog; ?>index.php?route=api/login',
 	type: 'post',
 	data: 'key=<?php echo $api_key; ?>',
 	dataType: 'json',
@@ -1017,7 +1017,7 @@ $.ajax({
 // Currency
 $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/currency&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/currency&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
@@ -1036,7 +1036,7 @@ $('select[name=\'currency\']').on('change', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'currency\']').parent().parent().addClass('has-error');
+				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1048,7 +1048,7 @@ $('select[name=\'currency\']').on('change', function() {
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/cart/products&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/cart/products&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {
@@ -1267,7 +1267,7 @@ $('input[name=\'customer\']').autocomplete({
 	'select': function(item) {
 		// Reset all custom fields
 		$('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
-		$('#tab-customer select option').removeAttr('selected');
+		$('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency\'] option')).removeAttr('selected');
 		$('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
 
 		$('#tab-customer input[name=\'customer\']').val(item['label']);
@@ -1338,7 +1338,7 @@ $('select[name=\'customer_group_id\']').trigger('change');
 
 $('#button-customer').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/customer&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/customer&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
 		dataType: 'json',
@@ -1373,7 +1373,7 @@ $('#button-customer').on('click', function() {
 			} else {
                 // Refresh products, vouchers and totals
                 var request_1 = $.ajax({
-                    url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+                    url: '<?php echo $catalog; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
                     type: 'post',
                     data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
                     dataType: 'json',
@@ -1399,7 +1399,7 @@ $('#button-customer').on('click', function() {
 
                 var request_2 = request_1.then(function() {
                     $.ajax({
-                        url: '<?php echo $store_url; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+                        url: '<?php echo $catalog; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
                         type: 'post',
                         data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
                         dataType: 'json',
@@ -1634,7 +1634,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 
 $('#button-product-add').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
@@ -1686,7 +1686,7 @@ $('#button-product-add').on('click', function() {
 // Voucher
 $('#button-voucher-add').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
 		dataType: 'json',
@@ -1719,12 +1719,12 @@ $('#button-voucher-add').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
-				$('input[name=\'from_name\']').attr('value', '');
-				$('input[name=\'from_email\']').attr('value', '');
-				$('input[name=\'to_name\']').attr('value', '');
-				$('input[name=\'to_email\']').attr('value', '');
-				$('textarea[name=\'message\']').attr('value', '');
-				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
+				$('input[name=\'from_name\']').val('');
+				$('input[name=\'from_email\']').val('');
+				$('input[name=\'to_name\']').val('');
+				$('input[name=\'to_email\']').val('');
+				$('textarea[name=\'message\']').val('');
+				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1740,7 +1740,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 	var node = this;
 
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/cart/remove&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/cart/remove&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'key=' + encodeURIComponent(this.value),
 		dataType: 'json',
@@ -1773,7 +1773,7 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 
     // Refresh products, vouchers and totals
     $.ajax({
-        url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: '<?php echo $catalog; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
         dataType: 'json',
@@ -1873,9 +1873,9 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-payment input[name=\'postcode\']').parent().parent().addClass('required');
+				$('#tab-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-payment input[name=\'postcode\']').parent().parent().removeClass('required');
+				$('#tab-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -1906,7 +1906,7 @@ $('#tab-payment select[name=\'country_id\']').trigger('change');
 
 $('#button-payment-address').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/payment/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/payment/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
@@ -1918,6 +1918,7 @@ $('#button-payment-address').on('click', function() {
 			$('#button-payment-address').button('reset');
 		},
 		success: function(json) {
+			console.log(json);
 			$('.alert, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
@@ -1942,16 +1943,14 @@ $('#button-payment-address').on('click', function() {
 			} else {
 				// Payment Methods
 				$.ajax({
-					url: '<?php echo $store_url; ?>index.php?route=api/payment/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					url: '<?php echo $catalog; ?>index.php?route=api/payment/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					crossDomain: true,
 					beforeSend: function() {
-						$('#button-payment-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-						$('#button-payment-address').prop('disabled', true);
+						$('#button-payment-address').button('loading');
 					},
 					complete: function() {
-						$('#button-payment-address i').replaceWith('<i class="fa fa-arrow-right"></i>');
-						$('#button-payment-address').prop('disabled', false);
+						$('#button-payment-address').button('reset');
 					},
 					success: function(json) {
 						if (json['error']) {
@@ -2059,9 +2058,9 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#tab-shipping input[name=\'postcode\']').parent().parent().addClass('required');
+				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
 			} else {
-				$('#tab-shipping input[name=\'postcode\']').parent().parent().removeClass('required');
+				$('#tab-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -2092,7 +2091,7 @@ $('#tab-shipping select[name=\'country_id\']').trigger('change');
 
 $('#button-shipping-address').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/shipping/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/shipping/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
@@ -2128,15 +2127,13 @@ $('#button-shipping-address').on('click', function() {
 			} else {
 				// Shipping Methods
 				var request = $.ajax({
-					url: '<?php echo $store_url; ?>index.php?route=api/shipping/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					url: '<?php echo $catalog; ?>index.php?route=api/shipping/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					beforeSend: function() {
-						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-						$('#button-shipping-address').prop('disabled', true);
+						$('#button-shipping-address').button('loading');
 					},
 					complete: function() {
-						$('#button-shipping-address i').replaceWith('<i class="fa fa-arrow-right"></i>');
-						$('#button-shipping-address').prop('disabled', false);
+						$('#button-shipping-address').button('reset');
 					},
 					success: function(json) {
 						if (json['error']) {
@@ -2188,7 +2185,7 @@ $('#button-shipping-address').on('click', function() {
 // Shipping Method
 $('#button-shipping-method').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/shipping/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/shipping/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
@@ -2207,7 +2204,7 @@ $('#button-shipping-method').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'shipping_method\']').parent().parent().parent().addClass('has-error');
+				$('select[name=\'shipping_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2226,7 +2223,7 @@ $('#button-shipping-method').on('click', function() {
 // Payment Method
 $('#button-payment-method').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/payment/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/payment/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
@@ -2245,7 +2242,7 @@ $('#button-payment-method').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('select[name=\'payment_method\']').parent().parent().parent().addClass('has-error');
+				$('select[name=\'payment_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2264,7 +2261,7 @@ $('#button-payment-method').on('click', function() {
 // Coupon
 $('#button-coupon').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/coupon&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/coupon&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
@@ -2283,7 +2280,7 @@ $('#button-coupon').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'coupon\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'coupon\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2302,7 +2299,7 @@ $('#button-coupon').on('click', function() {
 // Voucher
 $('#button-voucher').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/voucher&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/voucher&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'voucher=' + $('input[name=\'voucher\']').val(),
 		dataType: 'json',
@@ -2321,7 +2318,7 @@ $('#button-voucher').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'voucher\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'voucher\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2340,7 +2337,7 @@ $('#button-voucher').on('click', function() {
 // Reward
 $('#button-reward').on('click', function() {
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/reward&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '<?php echo $catalog; ?>index.php?route=api/reward&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'reward=' + $('input[name=\'reward\']').val(),
 		dataType: 'json',
@@ -2359,7 +2356,7 @@ $('#button-reward').on('click', function() {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
-				$('input[name=\'reward\']').parent().parent().parent().addClass('has-error');
+				$('input[name=\'reward\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
@@ -2405,9 +2402,9 @@ $('input[name=\'affiliate\']').autocomplete({
 // Checkout
 $('#button-save').on('click', function() {
 	if ($('input[name=\'order_id\']').val() == 0) {
-		var url = '<?php echo $store_url; ?>index.php?route=api/order/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+		var url = '<?php echo $catalog; ?>index.php?route=api/order/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val();
 	} else {
-		var url = '<?php echo $store_url; ?>index.php?route=api/order/edit&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
+		var url = '<?php echo $catalog; ?>index.php?route=api/order/edit&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
 	}
 
 	$.ajax({
@@ -2489,7 +2486,7 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 					}
 
 					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+						$(node).parent().find('input[type=\'hidden\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -2512,7 +2509,7 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });
-//--></script>
+//--></script> 
   <script type="text/javascript">
 // Sort the custom fields
 $('#tab-customer .form-group[data-sort]').detach().each(function() {
@@ -2558,4 +2555,4 @@ $('#tab-shipping .form-group[data-sort]').detach().each(function() {
 	}
 });
 </script></div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

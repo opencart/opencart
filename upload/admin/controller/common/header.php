@@ -97,7 +97,7 @@ class ControllerCommonHeader extends Controller {
 			// Reviews
 			$this->load->model('catalog/review');
 
-			$review_total = $this->model_catalog_review->getTotalReviews(array('filter_status' => false));
+			$review_total = $this->model_catalog_review->getTotalReviews(array('filter_status' => 0));
 
 			$data['review_total'] = $review_total;
 

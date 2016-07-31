@@ -114,9 +114,9 @@
           </div>
           <div class="tab-pane" id="tab-log">
             <p>
-              <textarea wrap="off" rows="15" class="form-control"><?php echo $log ?></textarea>
+              <textarea wrap="off" rows="15" class="form-control"><?php echo $log; ?></textarea>
             </p>
-            <div class="text-right"><a href="<?php echo $clear_log; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear ?></a></div>
+            <div class="text-right"><a href="<?php echo $clear_log; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></a></div>
           </div>
         </div>
       </div>

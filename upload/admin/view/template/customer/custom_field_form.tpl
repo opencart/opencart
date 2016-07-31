@@ -122,9 +122,9 @@
             </div>
           </div>
           <div class="form-group" id="display-validation">
-            <label class="col-sm-2 control-label" for="input-validation"><span data-toggle="tooltip" title="<?php echo $help_regex ?>"><?php echo $entry_validation ?></span></label>
+            <label class="col-sm-2 control-label" for="input-validation"><span data-toggle="tooltip" title="<?php echo $help_regex; ?>"><?php echo $entry_validation; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="validation" id="input-validation" value="<?php echo $validation ?>" placeholder="<?php echo $text_regex ?>"  class="form-control"/>
+              <input type="text" name="validation" id="input-validation" value="<?php echo $validation; ?>" placeholder="<?php echo $text_regex; ?>"  class="form-control"/>
             </div>
           </div>
           <div class="form-group">

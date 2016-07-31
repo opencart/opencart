@@ -117,15 +117,12 @@ class ControllerCheckoutCart extends Controller {
 
 				// Display prices
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+					
+					$price = $this->currency->format($unit_price, $this->session->data['currency']);
+					$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 				} else {
 					$price = false;
-				}
-
-				// Display prices
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']);
-				} else {
 					$total = false;
 				}
 
@@ -209,10 +206,10 @@ class ControllerCheckoutCart extends Controller {
 
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {
-						$this->load->model('total/' . $result['code']);
+						$this->load->model('extension/total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal($total_data);
+						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 
@@ -242,11 +239,11 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['modules'] = array();
 			
-			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
+			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
 
 			if ($files) {
 				foreach ($files as $file) {
-					$result = $this->load->controller('total/' . basename($file, '.php'));
+					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
 					
 					if ($result) {
 						$data['modules'][] = $result;
@@ -379,10 +376,10 @@ class ControllerCheckoutCart extends Controller {
 
 					foreach ($results as $result) {
 						if ($this->config->get($result['code'] . '_status')) {
-							$this->load->model('total/' . $result['code']);
+							$this->load->model('extension/total/' . $result['code']);
 
 							// We have to put the totals in an array so that they pass by reference.
-							$this->{'model_total_' . $result['code']}->getTotal($total_data);
+							$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 						}
 					}
 
@@ -416,6 +413,8 @@ class ControllerCheckoutCart extends Controller {
 				$this->cart->update($key, $value);
 			}
 
+			$this->session->data['success'] = $this->language->get('text_remove');
+
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -440,7 +439,7 @@ class ControllerCheckoutCart extends Controller {
 
 			unset($this->session->data['vouchers'][$this->request->post['key']]);
 
-			$this->session->data['success'] = $this->language->get('text_remove');
+			$json['success'] = $this->language->get('text_remove');
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
@@ -476,10 +475,10 @@ class ControllerCheckoutCart extends Controller {
 
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {
-						$this->load->model('total/' . $result['code']);
+						$this->load->model('extension/total/' . $result['code']);
 
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal($total_data);
+						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 

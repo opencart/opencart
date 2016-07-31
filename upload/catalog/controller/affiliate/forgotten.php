@@ -45,17 +45,19 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			// Add to activity log
-			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
+			if ($this->config->get('config_customer_activity')) {
+				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
 
-			if ($affiliate_info) {
-				$this->load->model('affiliate/activity');
+				if ($affiliate_info) {
+					$this->load->model('affiliate/activity');
 
-				$activity_data = array(
-					'affiliate_id' => $affiliate_info['affiliate_id'],
-					'name'         => $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname']
-				);
+					$activity_data = array(
+						'affiliate_id' => $affiliate_info['affiliate_id'],
+						'name'         => $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname']
+					);
 
-				$this->model_affiliate_activity->addActivity('forgotten', $activity_data);
+					$this->model_affiliate_activity->addActivity('forgotten', $activity_data);
+				}
 			}
 
 			$this->response->redirect($this->url->link('affiliate/login', '', true));

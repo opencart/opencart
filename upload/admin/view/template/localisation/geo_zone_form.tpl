@@ -92,7 +92,7 @@ function addGeoZone() {
 	html += '    <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>   
 	html += '</select></td>';
-	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control"></select></td>';
+	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control"><option value="0"><?php echo $text_all_zones; ?></option></select></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
@@ -114,9 +114,9 @@ function country(element, index, zone_id) {
 			$('.fa-spin').remove();
 		},
 		success: function(json) {
-			html = '<option value=""><?php echo $text_select; ?></option>';
-
-			if (json['zone'] && json['zone'] != '') {
+			html = '<option value="0"><?php echo $text_all_zones; ?></option>';
+			
+			if (json['zone'] && json['zone'] != '') {	
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
@@ -126,8 +126,6 @@ function country(element, index, zone_id) {
 
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
-			} else {
-				html += '<option value="0"><?php echo $text_none; ?></option>';
 			}
 
 			$('select[name=\'zone_to_geo_zone[' + index + '][zone_id]\']').html(html);

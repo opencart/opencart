@@ -7,7 +7,7 @@ final class MySQLi {
 		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
 		if ($this->connection->connect_error) {
-			throw new \Exception('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
+			throw new \Exception('Error: ' . $this->connection->error . '<br />Error No: ' . $this->connection->errno);
 		}
 
 		$this->connection->set_charset("utf8");
@@ -54,7 +54,7 @@ final class MySQLi {
 	}
 	
 	public function connected() {
-		return $this->connection->connected();
+		return $this->connection->ping();
 	}
 	
 	public function __destruct() {

@@ -110,10 +110,13 @@
                   <?php  } ?>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-model"><?php echo $entry_model; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
+                  <?php if ($error_model) { ?>
+                  <div class="text-danger"><?php echo $error_model; ?></div>
+                  <?php  } ?>
                 </div>
               </div>
               <div class="form-group">
@@ -255,10 +258,10 @@ $('input[name=\'customer\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'customer\']').val(item['label']);
 		$('input[name=\'customer_id\']').val(item['value']);
-		$('input[name=\'firstname\']').attr('value', item['firstname']);
-		$('input[name=\'lastname\']').attr('value', item['lastname']);
-		$('input[name=\'email\']').attr('value', item['email']);
-		$('input[name=\'telephone\']').attr('value', item['telephone']);
+		$('input[name=\'firstname\']').val(item['firstname']);
+		$('input[name=\'lastname\']').val(item['lastname']);
+		$('input[name=\'email\']').val(item['email']);
+		$('input[name=\'telephone\']').val(item['telephone']);
 	}
 });
 //--></script> 

@@ -98,7 +98,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-session">
+            <div class="tab-pane table-responsive" id="tab-session">
               <table id="session" class="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>

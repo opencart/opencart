@@ -6,7 +6,7 @@ class ControllerCommonHome extends Controller {
 		$this->document->setKeywords($this->config->get('config_meta_keyword'));
 
 		if (isset($this->request->get['route'])) {
-			$this->document->addLink(HTTP_SERVER, 'canonical');
+			$this->document->addLink($this->config->get('config_url'), 'canonical');
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

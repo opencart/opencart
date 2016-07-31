@@ -17,7 +17,7 @@ $_['text_profile']			= 'Recurring Profile';
 $_['text_trial']			= 'Trial Profile';
 
 // Entry
-$_['entry_name']			= 'Name';
+$_['entry_name']		    = 'Name';
 $_['entry_price']			= 'Price';
 $_['entry_duration']		= 'Duration';
 $_['entry_cycle']			= 'Cycle';
@@ -26,7 +26,7 @@ $_['entry_trial_price']		= 'Trial price';
 $_['entry_trial_duration']	= 'Trial duration';
 $_['entry_trial_status']	= 'Trial status';
 $_['entry_trial_cycle']	    = 'Trial cycle';
-$_['entry_trial_frequency']	= 'Trial frequency';
+$_['entry_trial_frequency'] = 'Trial frequency';
 $_['entry_status']			= 'Status';
 $_['entry_sort_order']		= 'Sort Order';
 

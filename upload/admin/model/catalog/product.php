@@ -111,12 +111,12 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		if (isset($data['keyword'])) {
+		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 
-		if (isset($data['product_recurrings'])) {
-			foreach ($data['product_recurrings'] as $recurring) {
+		if (isset($data['product_recurring'])) {
+			foreach ($data['product_recurring'] as $recurring) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$recurring['customer_group_id'] . ", `recurring_id` = " . (int)$recurring['recurring_id']);
 			}
 		}
@@ -363,6 +363,14 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 
+		if (isset($data['filter_image']) && !is_null($data['filter_image'])) {
+			if ($data['filter_image'] == 1) {
+				$sql .= " AND (p.image IS NOT NULL AND p.image <> '' AND p.image <> 'no_image.png')";
+			} else {
+				$sql .= " AND (p.image IS NULL OR p.image = '' OR p.image = 'no_image.png')";
+			}
+		}
+
 		$sql .= " GROUP BY p.product_id";
 
 		$sort_data = array(
@@ -483,7 +491,7 @@ class ModelCatalogProduct extends Model {
 		foreach ($product_option_query->rows as $product_option) {
 			$product_option_value_data = array();
 
-			$product_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option_value WHERE product_option_id = '" . (int)$product_option['product_option_id'] . "'");
+			$product_option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON(pov.option_value_id = ov.option_value_id) WHERE pov.product_option_id = '" . (int)$product_option['product_option_id'] . "' ORDER BY ov.sort_order ASC");
 
 			foreach ($product_option_value_query->rows as $product_option_value) {
 				$product_option_value_data[] = array(
@@ -627,6 +635,14 @@ class ModelCatalogProduct extends Model {
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if (isset($data['filter_image']) && !is_null($data['filter_image'])) {
+			if ($data['filter_image'] == 1) {
+				$sql .= " AND (p.image IS NOT NULL AND p.image <> '' AND p.image <> 'no_image.png')";
+			} else {
+				$sql .= " AND (p.image IS NULL OR p.image = '' OR p.image = 'no_image.png')";
+			}
 		}
 
 		$query = $this->db->query($sql);

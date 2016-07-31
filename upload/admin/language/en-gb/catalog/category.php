@@ -43,3 +43,4 @@ $_['error_permission']       = 'Warning: You do not have permission to modify ca
 $_['error_name']             = 'Category Name must be between 2 and 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_keyword']          = 'SEO URL already in use!';
+$_['error_parent']           = 'The parent category you have chosen is a child of the current one!';

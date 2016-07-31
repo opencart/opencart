@@ -42,6 +42,7 @@
             <label class="col-sm-2 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
             <div class="col-sm-10">
               <select name="attribute_group_id" id="input-attribute-group" class="form-control">
+                <option value="0"></option>
                 <?php foreach ($attribute_groups as $attribute_group) { ?>
                 <?php if ($attribute_group['attribute_group_id'] == $attribute_group_id) { ?>
                 <option value="<?php echo $attribute_group['attribute_group_id']; ?>" selected="selected"><?php echo $attribute_group['name']; ?></option>

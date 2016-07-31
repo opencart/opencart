@@ -7,11 +7,6 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_map'] = $this->language->get('text_map');
-		$data['text_activity'] = $this->language->get('text_activity');
-		$data['text_recent'] = $this->language->get('text_recent');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -31,18 +26,58 @@ class ControllerCommonDashboard extends Controller {
 			$data['error_install'] = '';
 		}
 
-		$data['token'] = $this->session->data['token'];
+		// Dashboard Extensions
+		$dashboards = array();
+
+		$this->load->model('extension/extension');
+
+		// Get a list of installed modules
+		$extensions = $this->model_extension_extension->getInstalled('dashboard');
+		
+		// Add all the modules which have multiple settings for each module
+		foreach ($extensions as $code) {
+			if ($this->config->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
+				$output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
+				
+				if ($output) {
+					$dashboards[] = array(
+						'code'       => $code,
+						'width'      => $this->config->get('dashboard_' . $code . '_width'),
+						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
+						'output'     => $output
+					);
+				}
+			}
+		}
+
+		$sort_order = array();
+
+		foreach ($dashboards as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $dashboards);
+		
+		// Split the array so the columns width is not more than 12 on each row.
+		$width = 0;
+		$column = array();
+		$data['rows'] = array();
+		
+		foreach ($dashboards as $dashboard) {
+			$column[] = $dashboard;
+			
+			$width = ($width + $dashboard['width']);
+			
+			if ($width >= 12) {
+				$data['rows'][] = $column;
+				
+				$width = 0;
+				$column = array();
+			}
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['order'] = $this->load->controller('dashboard/order');
-		$data['sale'] = $this->load->controller('dashboard/sale');
-		$data['customer'] = $this->load->controller('dashboard/customer');
-		$data['online'] = $this->load->controller('dashboard/online');
-		$data['map'] = $this->load->controller('dashboard/map');
-		$data['chart'] = $this->load->controller('dashboard/chart');
-		$data['activity'] = $this->load->controller('dashboard/activity');
-		$data['recent'] = $this->load->controller('dashboard/recent');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		// Run currency update

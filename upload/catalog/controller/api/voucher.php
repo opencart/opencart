@@ -11,7 +11,7 @@ class ControllerApiVoucher extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('total/voucher');
+			$this->load->model('extension/total/voucher');
 
 			if (isset($this->request->post['voucher'])) {
 				$voucher = $this->request->post['voucher'];
@@ -19,7 +19,7 @@ class ControllerApiVoucher extends Controller {
 				$voucher = '';
 			}
 
-			$voucher_info = $this->model_total_voucher->getVoucher($voucher);
+			$voucher_info = $this->model_extension_total_voucher->getVoucher($voucher);
 
 			if ($voucher_info) {
 				$this->session->data['voucher'] = $this->request->post['voucher'];

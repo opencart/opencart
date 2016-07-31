@@ -418,7 +418,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 					if (json['success']) {
 						alert(json['success']);
 
-						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
+						$(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -456,9 +456,9 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
+				$('#collapse-payment-address input[name=\'postcode\']').parent().addClass('required');
 			} else {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
+				$('#collapse-payment-address input[name=\'postcode\']').parent().removeClass('required');
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';

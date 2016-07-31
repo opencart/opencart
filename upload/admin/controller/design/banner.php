@@ -369,22 +369,24 @@ class ControllerDesignBanner extends Controller {
 
 		$data['banner_images'] = array();
 
-		foreach ($banner_images as $banner_image) {
-			if (is_file(DIR_IMAGE . $banner_image['image'])) {
-				$image = $banner_image['image'];
-				$thumb = $banner_image['image'];
-			} else {
-				$image = '';
-				$thumb = 'no_image.png';
+		foreach ($banner_images as $key => $value) {
+			foreach ($value as $banner_image) {
+				if (is_file(DIR_IMAGE . $banner_image['image'])) {
+					$image = $banner_image['image'];
+					$thumb = $banner_image['image'];
+				} else {
+					$image = '';
+					$thumb = 'no_image.png';
+				}
+				
+				$data['banner_images'][$key][] = array(
+					'title'      => $banner_image['title'],
+					'link'       => $banner_image['link'],
+					'image'      => $image,
+					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+					'sort_order' => $banner_image['sort_order']
+				);
 			}
-
-			$data['banner_images'][] = array(
-				'banner_image_description' => $banner_image['banner_image_description'],
-				'link'                     => $banner_image['link'],
-				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($thumb, 100, 100),
-				'sort_order'               => $banner_image['sort_order']
-			);
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
@@ -406,10 +408,10 @@ class ControllerDesignBanner extends Controller {
 		}
 
 		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $banner_image_id => $banner_image) {
-				foreach ($banner_image['banner_image_description'] as $language_id => $banner_image_description) {
-					if ((utf8_strlen($banner_image_description['title']) < 2) || (utf8_strlen($banner_image_description['title']) > 64)) {
-						$this->error['banner_image'][$banner_image_id][$language_id] = $this->language->get('error_title');
+			foreach ($this->request->post['banner_image'] as $language_id => $value) {
+				foreach ($value as $banner_image_id => $banner_image) {
+					if ((utf8_strlen($banner_image['title']) < 2) || (utf8_strlen($banner_image['title']) > 64)) {
+						$this->error['banner_image'][$language_id][$banner_image_id] = $this->language->get('error_title');
 					}
 				}
 			}

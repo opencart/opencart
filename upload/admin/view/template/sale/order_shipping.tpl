@@ -47,7 +47,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td style="width: 50%;"><b><?php echo $text_payment_address; ?></b></td>
+          <td style="width: 50%;"><b><?php echo $text_shipping_address; ?></b></td>
           <td style="width: 50%;"><b><?php echo $text_contact; ?></b></td>
         </tr>
       </thead>

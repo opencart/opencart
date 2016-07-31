@@ -46,7 +46,7 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
                     <?php } ?></td>
-                  <td class="text-right"><?php echo $column_action ?></td>
+                  <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
               <tbody>
@@ -58,8 +58,8 @@
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $recurring['recurring_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $recurring['name'] ?></td>
-                  <td class="text-right"><?php echo $recurring['sort_order'] ?></td>
+                  <td class="text-left"><?php echo $recurring['name']; ?></td>
+                  <td class="text-right"><?php echo $recurring['sort_order']; ?></td>
                   <td class="text-right"><a href="<?php echo $recurring['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>

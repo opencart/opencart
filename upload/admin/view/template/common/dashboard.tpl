@@ -16,20 +16,19 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+    <?php foreach ($rows as $row) { ?>
     <div class="row">
-      <div class="col-lg-3 col-md-3 col-sm-6"><?php echo $order; ?></div>
-      <div class="col-lg-3 col-md-3 col-sm-6"><?php echo $sale; ?></div>
-      <div class="col-lg-3 col-md-3 col-sm-6"><?php echo $customer; ?></div>
-      <div class="col-lg-3 col-md-3 col-sm-6"><?php echo $online; ?></div>
+      <?php foreach ($row as $dashboard_1) { ?>
+      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-3 col-sm-6'; ?>
+      <?php foreach ($row as $dashboard_2) { ?>
+      <?php if ($dashboard_2['width'] > 3) { ?>
+      <?php $class = 'col-lg-' . $dashboard_1['width'] . ' col-md-12 col-sm-12'; ?>
+      <?php } ?>
+      <?php } ?>
+      <div class="<?php echo $class; ?>"><?php echo $dashboard_1['output']; ?></div>
+      <?php } ?>
     </div>
-    <div class="row">
-      <div class="col-lg-6 col-md-12 col-sx-12 col-sm-12"><?php echo $map; ?></div>
-      <div class="col-lg-6 col-md-12 col-sx-12 col-sm-12"><?php echo $chart; ?></div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-12 col-sm-12 col-sx-12"><?php echo $activity; ?></div>
-      <div class="col-lg-8 col-md-12 col-sm-12 col-sx-12"> <?php echo $recent; ?> </div>
-    </div>
+    <?php } ?>
   </div>
 </div>
 <?php echo $footer; ?>

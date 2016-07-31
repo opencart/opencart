@@ -305,7 +305,8 @@ class ControllerLocalisationCurrency extends Controller {
 		$data['text_form'] = !isset($this->request->get['currency_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-
+		$data['text_iso'] = $this->language->get('text_iso');
+		
 		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_value'] = $this->language->get('entry_value');
@@ -313,7 +314,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$data['entry_symbol_right'] = $this->language->get('entry_symbol_right');
 		$data['entry_decimal_place'] = $this->language->get('entry_decimal_place');
 		$data['entry_status'] = $this->language->get('entry_status');
-
+		
 		$data['help_code'] = $this->language->get('help_code');
 		$data['help_value'] = $this->language->get('help_value');
 

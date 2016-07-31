@@ -33,8 +33,6 @@ class ControllerStartupLogin extends Controller {
 			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 				return new Action('common/login');
 			}
-			
-			echo 'hi';
 		}
 	}
 }

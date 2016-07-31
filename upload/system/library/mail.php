@@ -102,7 +102,7 @@ class Mail {
 		
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
-		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
+		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		if (!$this->html) {
 			$message  = '--' . $boundary . PHP_EOL;
@@ -141,8 +141,8 @@ class Mail {
 				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
 				$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
 				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
-				$message .= 'Content-ID: <' . basename(urlencode($attachment)) . '>' . PHP_EOL;
-				$message .= 'X-Attachment-Id: ' . basename(urlencode($attachment)) . PHP_EOL . PHP_EOL;
+				$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
+				$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
 				$message .= chunk_split(base64_encode($content));
 			}
 		}
@@ -187,7 +187,12 @@ class Mail {
 				while ($line = fgets($handle, 515)) {
 					$reply .= $line;
 
-					if (substr($line, 3, 1) == ' ') {
+					//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
+					if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
+						$reply = '';
+						continue;
+					}
+					else if (substr($line, 3, 1) == ' ') {
 						break;
 					}
 				}

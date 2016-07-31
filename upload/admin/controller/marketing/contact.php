@@ -212,13 +212,13 @@ class ControllerMarketingContact extends Controller {
 				}
 
 				if ($emails) {
+					$json['success'] = $this->language->get('text_success');
+
 					$start = ($page - 1) * 10;
 					$end = $start + 10;
 
 					if ($end < $email_total) {
 						$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
-					} else {
-						$json['success'] = $this->language->get('text_success');
 					}
 
 					if ($end < $email_total) {
@@ -254,6 +254,8 @@ class ControllerMarketingContact extends Controller {
 							$mail->send();
 						}
 					}
+				} else {
+					$json['error']['email'] = $this->language->get('error_email');
 				}
 			}
 		}

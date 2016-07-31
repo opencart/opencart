@@ -9,7 +9,7 @@ class ControllerStartupStartup extends Controller {
 		}
 		
 		if (isset($this->request->get['store_id'])) {
-			$this->config->set('config_store_id', $this->request->get['store_id']);
+			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
 		} else if ($query->num_rows) {
 			$this->config->set('config_store_id', $query->row['store_id']);
 		} else {
@@ -18,6 +18,7 @@ class ControllerStartupStartup extends Controller {
 		
 		if (!$query->num_rows) {
 			$this->config->set('config_url', HTTP_SERVER);
+			$this->config->set('config_ssl', HTTPS_SERVER);
 		}
 		
 		// Settings
@@ -30,6 +31,14 @@ class ControllerStartupStartup extends Controller {
 				$this->config->set($result['key'], json_decode($result['value'], true));
 			}
 		}
+
+		// Timezone
+		if ($this->config->get('config_timezone')) {
+			date_default_timezone_set($this->config->get('config_timezone'));
+		}
+
+		// Url
+		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 		
 		// Language
 		$code = '';
@@ -48,15 +57,36 @@ class ControllerStartupStartup extends Controller {
 		
 		// Language Detection
 		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
+			$detect = '';
+			
 			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
 			
+			// Try using local to detect the language
 			foreach ($browser_languages as $browser_language) {
-				if (array_key_exists(strtolower($browser_language), $languages)) {
-					$code = strtolower($browser_language);
-					
-					break;
+				foreach ($languages as $key => $value) {
+					if ($value['status']) {
+						$locale = explode(',', $value['locale']);
+						
+						if (in_array($browser_language, $locale)) {
+							$detect = $key;
+							break 2;
+						}
+					}
+				}	
+			}			
+			
+			if (!$detect) { 
+				// Try using language folder to detect the language
+				foreach ($browser_languages as $browser_language) {
+					if (array_key_exists(strtolower($browser_language), $languages)) {
+						$detect = strtolower($browser_language);
+						
+						break;
+					}
 				}
 			}
+			
+			$code = $detect ? $detect : '';
 		}
 		
 		if (!array_key_exists($code, $languages)) {

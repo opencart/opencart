@@ -1,5 +1,5 @@
 <?php
-define('VERSION', '2.3.0.2');
+define('VERSION', '2.3.0.3_rc');
 define('ADMIN_USERNAME', '');
 define('ADMIN_PASSWORD', '');
 

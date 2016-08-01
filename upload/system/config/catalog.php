@@ -30,7 +30,8 @@ $_['action_pre_action'] = array(
 	'startup/error',
 	'startup/event',
 	'startup/maintenance',
-	'startup/seo_url'
+//	'startup/seo_url'
+	'startup/seo_pro'
 );
 
 // Action Events

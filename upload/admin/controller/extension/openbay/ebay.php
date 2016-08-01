@@ -5,6 +5,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
+		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/ebay_profile');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/ebay_profile');
@@ -90,7 +91,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('ebay', $this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
-			$this->response->redirect($this->url->link('extension/openbay/ebay&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/ebay', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1490,7 +1491,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 
 				$this->response->setOutput($this->load->view('extension/openbay/ebay_new', $data));
 			} else {
-				$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
+				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], true));
 			}
 		}
 	}

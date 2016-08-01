@@ -4,6 +4,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         $this->load->model('extension/openbay/fba');
         $this->load->model('setting/setting');
         $this->load->model('extension/extension');
+        $this->load->model('user/user_group');
 
         $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/fba');
         $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/fba');
@@ -83,7 +84,7 @@ class ControllerExtensionOpenbayFba extends Controller {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
             $this->model_setting_setting->editSetting('openbay_fba', $this->request->post);
             $this->session->data['success'] = $this->language->get('text_success');
-            $this->response->redirect($this->url->link('extension/openbay/fba/index', 'token=' . $this->session->data['token'], true));
+            $this->response->redirect($this->url->link('extension/openbay/fba', 'token=' . $this->session->data['token'], true));
         }
 
         $data['breadcrumbs'] = array();

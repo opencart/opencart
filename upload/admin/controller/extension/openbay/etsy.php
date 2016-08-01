@@ -5,6 +5,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		$this->load->model('extension/openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
+		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/etsy_product');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay/etsy_product');
@@ -47,7 +48,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/ebay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/openbay/etsy', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_dashboard'),
 		);
 
@@ -101,7 +102,7 @@ class ControllerExtensionOpenbayEtsy extends Controller {
 				$this->session->data['error'] = $this->language->get('error_account_info');
 			}
 
-			$this->response->redirect($this->url->link('extension/openbay/etsy/index&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/etsy', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));

@@ -596,6 +596,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
 		$data['entry_download'] = $this->language->get('entry_download');
 		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_filter'] = $this->language->get('entry_filter');
 		$data['entry_related'] = $this->language->get('entry_related');
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
@@ -1023,6 +1024,18 @@ class ControllerCatalogProduct extends Controller {
 
 		// Categories
 		$this->load->model('catalog/category');
+		
+		$categories = $this->model_catalog_category->getAllCategories();
+		
+		$data['categories'] = $this->model_catalog_category->getCategories($categories);
+		
+		if (isset($this->request->post['main_category_id'])) {
+			$data['main_category_id'] = $this->request->post['main_category_id'];
+		} elseif (isset($product_info)) {
+			$data['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($this->request->get['product_id']);
+		} else {
+			$data['main_category_id'] = 0;
+		}
 
 		if (isset($this->request->post['product_category'])) {
 			$categories = $this->request->post['product_category'];

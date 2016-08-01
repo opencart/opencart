@@ -328,6 +328,21 @@
                   <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                 </div>
               </div>
+			  <div class="form-group">
+				<label class="col-sm-2 control-label" for="input-category"><?php echo $entry_main_category; ?></label>
+				<div class="col-sm-10">
+				<select class="form-control" name="main_category_id">
+					<option value="0" selected="selected"><?php echo $text_none; ?></option>
+						<?php foreach ($categories as $category) { ?>
+							<?php if ($category['category_id'] == $main_category_id) { ?>
+					<option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+						<?php } else { ?>
+					<option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+						<?php } ?>
+						<?php } ?>
+				</select>
+				</div>
+			  </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
                 <div class="col-sm-10">

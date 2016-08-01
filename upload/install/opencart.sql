@@ -2841,6 +2841,7 @@ DROP TABLE IF EXISTS `oc_product_to_category`;
 CREATE TABLE `oc_product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
+  `main_category` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`,`category_id`),
   KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -2849,37 +2850,37 @@ CREATE TABLE `oc_product_to_category` (
 -- Dumping data for table `oc_product_to_category`
 --
 
-INSERT INTO `oc_product_to_category` (`product_id`, `category_id`) VALUES
-(28, 20),
-(28, 24),
-(29, 20),
-(29, 24),
-(30, 20),
-(30, 33),
-(31, 33),
-(32, 34),
-(33, 20),
-(33, 28),
-(34, 34),
-(35, 20),
-(36, 34),
-(40, 20),
-(40, 24),
-(41, 27),
-(42, 20),
-(42, 28),
-(43, 18),
-(43, 20),
-(44, 18),
-(44, 20),
-(45, 18),
-(46, 18),
-(46, 20),
-(47, 18),
-(47, 20),
-(48, 20),
-(48, 34),
-(49, 57);
+INSERT INTO `oc_product_to_category` (`product_id`, `category_id`, `main_category`) VALUES
+(28, 20, 0),
+(28, 24, 1),
+(29, 20, 0),
+(29, 24, 1),
+(30, 20, 0),
+(30, 33, 1),
+(31, 33, 1),
+(32, 34, 1),
+(33, 20, 0),
+(33, 28, 1),
+(34, 34, 1),
+(35, 20, 1),
+(36, 34, 1),
+(40, 20, 0),
+(40, 24, 1),
+(41, 27, 1),
+(42, 20, 0),
+(42, 28, 1),
+(43, 18, 0),
+(43, 20, 1),
+(44, 18, 0),
+(44, 20, 1),
+(45, 18, 1),
+(46, 18, 0),
+(46, 20, 1),
+(47, 18, 0),
+(47, 20, 1),
+(48, 20, 0),
+(48, 34, 1),
+(49, 57, 1);
 
 -- --------------------------------------------------------
 

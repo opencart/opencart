@@ -32,11 +32,6 @@ class ControllerStartupStartup extends Controller {
 			}
 		}
 
-		// Timezone
-		if ($this->config->get('config_timezone')) {
-			date_default_timezone_set($this->config->get('config_timezone'));
-		}
-
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 		

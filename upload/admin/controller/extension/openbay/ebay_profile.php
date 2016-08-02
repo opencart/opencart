@@ -69,7 +69,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 		$data = $this->language->all();
 
 		$data['btn_save'] = $this->url->link('extension/openbay/ebay_profile/add', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/openbay/ebay_profile/profileall', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], true);
 
 		if (!isset($this->request->post['step1'])) {
 			if ($this->request->post && $this->profileValidate()) {
@@ -77,7 +77,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 
 				$this->model_extension_openbay_ebay_profile->add($this->request->post);
 
-				$this->response->redirect($this->url->link('extension/openbay/ebay_profile/ProfileAll&token=' . $this->session->data['token'], true));
+				$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], true));
 			}
 		}
 
@@ -95,7 +95,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 			}
 		}
 
-		$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileAll&token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], true));
 	}
 
 	public function edit() {
@@ -110,7 +110,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 
 			$this->model_extension_openbay_ebay_profile->edit($this->request->post['ebay_profile_id'], $this->request->post);
 
-			$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileAll&token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->profileForm($data);
@@ -134,7 +134,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 
 		if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 			$this->session->data['warning'] = $this->language->get('error_missing_settings');
-			$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise&token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/openbay/ebay/syncronise', 'token=' . $this->session->data['token'], true));
 		}
 
 		if (is_array($setting['dispatch_times'])) {
@@ -171,7 +171,7 @@ class ControllerExtensionOpenbayEbayProfile extends Controller {
 		if (!array_key_exists($type, $data['types'])) {
 			$this->session->data['error'] = $data['error_no_template'];
 
-			$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profileall&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/ebay_profile/profilAall', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

@@ -13,6 +13,7 @@ class ModelCatalogProduct extends Model {
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
 				'meta_title'       => $query->row['meta_title'],
+				'meta_h1'	       => $query->row['meta_h1'],
 				'meta_description' => $query->row['meta_description'],
 				'meta_keyword'     => $query->row['meta_keyword'],
 				'tag'              => $query->row['tag'],

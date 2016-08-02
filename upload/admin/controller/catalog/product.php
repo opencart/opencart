@@ -562,6 +562,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
+		$data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$data['entry_keyword'] = $this->language->get('entry_keyword');
@@ -672,6 +673,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_meta_title'] = $this->error['meta_title'];
 		} else {
 			$data['error_meta_title'] = array();
+		}
+		
+		if (isset($this->error['meta_h1'])) {
+			$data['error_meta_h1'] = $this->error['meta_h1'];
+		} else {
+			$data['error_meta_h1'] = array();
 		}
 
 		if (isset($this->error['model'])) {
@@ -1344,8 +1351,12 @@ class ControllerCatalogProduct extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 
-			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
+			if ((utf8_strlen($value['meta_title']) < 0) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+			}
+			
+			if ((utf8_strlen($value['meta_h1']) < 0) || (utf8_strlen($value['meta_h1']) > 255)) {
+				$this->error['meta_h1'][$language_id] = $this->language->get('error_meta_h1');
 			}
 		}
 

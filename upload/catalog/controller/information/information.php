@@ -21,7 +21,17 @@ class ControllerInformationInformation extends Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-			$this->document->setTitle($information_info['meta_title']);
+			if ($information_info['meta_title']) {
+				$this->document->setTitle($information_info['meta_title']);
+			} else {
+				$this->document->setTitle($information_info['title']);
+			}
+			
+			if ($information_info['meta_h1']) {
+				$data['heading_title'] = $information_info['meta_h1'];
+			} else {
+				$data['heading_title'] = $information_info['title'];
+			}
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
 
@@ -29,8 +39,6 @@ class ControllerInformationInformation extends Controller {
 				'text' => $information_info['title'],
 				'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
 			);
-
-			$data['heading_title'] = $information_info['title'];
 
 			$data['button_continue'] = $this->language->get('button_continue');
 

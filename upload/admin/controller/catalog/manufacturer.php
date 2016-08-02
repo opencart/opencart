@@ -270,6 +270,11 @@ class ControllerCatalogManufacturer extends Controller {
 		$data['text_amount'] = $this->language->get('text_amount');
 
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
+		$data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
+		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_keyword'] = $this->language->get('entry_keyword');
 		$data['entry_image'] = $this->language->get('entry_image');
@@ -280,6 +285,9 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_data'] = $this->language->get('tab_data');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -291,6 +299,18 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
+		}
+		
+		if (isset($this->error['meta_title'])) {
+			$data['error_meta_title'] = $this->error['meta_title'];
+		} else {
+			$data['error_meta_title'] = array();
+		}
+		
+		if (isset($this->error['meta_h1'])) {
+			$data['error_meta_h1'] = $this->error['meta_h1'];
+		} else {
+			$data['error_meta_h1'] = array();
 		}
 
 		if (isset($this->error['keyword'])) {
@@ -338,6 +358,17 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 
 		$data['token'] = $this->session->data['token'];
+		
+		$this->load->model('localisation/language');
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+		
+		if (isset($this->request->post['manufacturer_description'])) {
+			$data['manufacturer_description'] = $this->request->post['manufacturer_description'];
+		} elseif (isset($this->request->get['manufacturer_id'])) {
+			$data['manufacturer_description'] = $this->model_catalog_manufacturer->getManufacturerDescriptions($this->request->get['manufacturer_id']);
+		} else {
+			$data['manufacturer_description'] = array();
+		}
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
@@ -409,6 +440,21 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
+		}
+		
+		foreach ($this->request->post['manufacturer_description'] as $language_id => $value) {
+			if ((utf8_strlen($value['meta_title']) < 0) || (utf8_strlen($value['meta_title']) > 255)) {
+				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$this->error['warning'] = $this->language->get('error_warning');
+			}
+			
+			if ((utf8_strlen($value['meta_h1']) < 0) || (utf8_strlen($value['meta_h1']) > 255)) {
+				$this->error['meta_h1'][$language_id] = $this->language->get('error_meta_h1');
+				$this->error['warning'] = $this->language->get('error_warning');
+			}
+		}
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		if (utf8_strlen($this->request->post['keyword']) > 0) {

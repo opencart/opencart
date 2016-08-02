@@ -115,7 +115,27 @@ class ControllerProductManufacturer extends Controller {
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {
-			$this->document->setTitle($manufacturer_info['name']);
+			if ($manufacturer_info['meta_title']) {
+				$this->document->setTitle($manufacturer_info['meta_title']);
+			} else {
+				$this->document->setTitle($manufacturer_info['name']);
+			}
+			
+			if ($manufacturer_info['meta_h1']) {
+				$data['heading_title'] = $manufacturer_info['meta_h1'];
+			} else {
+				$data['heading_title'] = $manufacturer_info['name'];
+			}
+			
+			$this->document->setDescription($manufacturer_info['meta_description']);
+			$this->document->setKeywords($manufacturer_info['meta_keyword']);
+			$data['description'] = html_entity_decode($manufacturer_info['description'], ENT_QUOTES, 'UTF-8');
+			
+			if ($manufacturer_info['image']) {
+				$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+			} else {
+				$data['thumb'] = '';
+			}
 
 			$url = '';
 

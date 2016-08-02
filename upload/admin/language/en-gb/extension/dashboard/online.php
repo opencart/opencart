@@ -8,7 +8,6 @@ $_['text_success']     = 'Success: You have modified dashboard online!';
 $_['text_edit']        = 'Edit Dashboard Online';
 $_['text_view']        = 'View more...';
 
-
 // Entry
 $_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sort Order';

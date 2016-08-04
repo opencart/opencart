@@ -29,45 +29,44 @@
     </div>
   </div>
   <div class="modules">
-    <div class="row" id="extension">
-      <h2 class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i> <?php echo $text_loading; ?></h2>
-    </div>
+    <div id="extensions" class="row"><div class="col-sm-6 module">  
+	<a href="https://liveopencart.ru/opencart-moduli-shablony/shablonyi/2-x-revolution-adaptivnyiy-universalnyiy-shablon" target="_BLANK" class="thumbnail pull-left">
+	<img alt="Revolution. Адаптивный универсальный шаблон" src="/install/view/image/revolution.png"></a>  
+	<h5>Revolution. Адаптивный универсальный шаблон</h5>  <p><a href="https://liveopencart.ru/opencart-moduli-shablony/shablonyi/2-x-revolution-adaptivnyiy-universalnyiy-shablon" target="_BLANK">Подробнее</a></p>  
+	<div class="clearfix"></div></div><div class="col-sm-6 module">  
+	<a href="https://liveopencart.ru/opencart-moduli-shablony/shablonyi/newstore-universalnyiy-adaptivnyiy-shablon" target="_BLANK" class="thumbnail pull-left">
+	<img alt="NewStore - универсальный, адаптивный шаблон" src="/install/view/image/newstore.png"></a>
+	<h5>NewStore - универсальный, адаптивный шаблон</h5>
+	<p><a href="https://liveopencart.ru/opencart-moduli-shablony/shablonyi/newstore-universalnyiy-adaptivnyiy-shablon" target="_BLANK">Подробнее</a></p>  
+	<div class="clearfix"></div></div><div class="col-sm-6 module">  <a href="http://simpleopencart.com/" target="_BLANK" class="thumbnail pull-left">
+	<img alt="Простая регистрация и заказ Simple" src="/install/view/image/simple.png"></a>  <h5>Простая регистрация и заказ Simple</h5>  <p><a href="http://simpleopencart.com/" target="_BLANK">Подробнее</a></p>  
+	<div class="clearfix"></div></div></div>
     <div class="row">
-      <div class="col-sm-12 text-center"><a href="http://www.opencart.com/index.php?route=extension/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default"><?php echo $text_extension; ?></a></div>
+      <div class="col-sm-12 text-center"><a href="https://liveopencart.ru/" target="_BLANK" class="btn btn-default"><?php echo $text_extension; ?></a></div>
     </div>
   </div>
   <div class="mailing">
     <div class="row">
-      <div class="col-sm-12"><i class="fa fa-envelope-o fa-5x"></i>
+      <div class="col-sm-12"><i class="fa fa-gavel fa-5x"></i>
         <h3><?php echo $text_mail; ?><br>
           <small><?php echo $text_mail_description; ?></small></h3>
-        <a href="http://newsletter.opencart.com/h/r/B660EBBE4980C85C" target="_BLANK" class="btn btn-secondary"><?php echo $button_mail; ?></a></div>
-    </div>
-  </div>
-  <div class="core-modules">
-    <div class="row">
-      <div class="col-sm-6 text-center"><img src="view/image/openbay_pro.gif" />
-        <p><?php echo $text_openbay; ?></p>
-        <a class="btn btn-primary" href="<?php echo $openbay; ?>"><?php echo $button_setup; ?></a></div>
-      <div class="col-sm-6 text-center"><img src="view/image/maxmind.gif" />
-        <p><?php echo $text_maxmind; ?></p>
-        <a class="btn btn-primary" href="<?php echo $maxmind; ?>"><?php echo $button_setup; ?></a></div>
+        <a href="http://opencart.pro/discount/" target="_BLANK" class="btn btn-secondary"><?php echo $button_mail; ?></a></div>
     </div>
   </div>
   <div class="support text-center">
     <div class="row">
-      <div class="col-sm-4"><a href="https://www.facebook.com/pages/OpenCart/477182382328323" class="icon transition"><i class="fa fa-facebook fa-4x"></i></a>
+      <div class="col-sm-4"><a href="https://vk.com/club65930646" class="icon transition"><i class="fa fa-vk fa-4x"></i></a>
         <h3><?php echo $text_facebook; ?></h3>
         <p><?php echo $text_facebook_description; ?></p>
-        <a href="https://www.facebook.com/pages/OpenCart/477182382328323"><?php echo $text_facebook_visit; ?></a></div>
-      <div class="col-sm-4"><a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-comments fa-4x"></i></a>
+        <a href="https://vk.com/club65930646"><?php echo $text_facebook_visit; ?></a></div>
+      <div class="col-sm-4"><a href="http://forum.opencart.pro" class="icon transition"><i class="fa fa-comments fa-4x"></i></a>
         <h3><?php echo $text_forum; ?></h3>
         <p><?php echo $text_forum_description; ?></p>
-        <a href="http://forum.opencart.com/?utm_source=opencart_install&utm_medium=forum_link&utm_campaign=opencart_install"><?php echo $text_forum_visit; ?></a></div>
-      <div class="col-sm-4"><a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" class="icon transition"><i class="fa fa-user fa-4x"></i></a>
+        <a href="http://forum.opencart.pro"><?php echo $text_forum_visit; ?></a></div>
+      <div class="col-sm-4"><a href="http://opencart.pro/blog/" class="icon transition"><i class="fa fa-user fa-4x"></i></a>
         <h3><?php echo $text_commercial; ?></h3>
         <p><?php echo $text_commercial_description; ?></p>
-        <a href="http://www.opencart.com/index.php?route=partner/partner&utm_source=opencart_install&utm_medium=partner_link&utm_campaign=opencart_install" target="_BLANK"><?php echo $text_commercial_visit; ?></a></div>
+        <a href="http://opencart.pro/blog/" target="_BLANK"><?php echo $text_commercial_visit; ?></a></div>
     </div>
   </div>
 </div>

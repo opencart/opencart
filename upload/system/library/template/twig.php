@@ -24,7 +24,7 @@ final class Twig {
 	public function render($template) {
 		try {
 			// load template
-			$template = $this->twig->loadTemplate($template);
+			$template = $this->twig->loadTemplate($template . '.twig');
 			
 			return $template->render($this->data);
 		} catch (Exception $e) {

@@ -47,7 +47,7 @@ class ControllerEventTheme extends Controller {
 				
 				$this->config->set('template_engine', 'twig');
 			} elseif (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.tpl')) {
-				$view = $theme . '/template/' . $view . '.tpl';
+				$view = $theme . '/template/' . $view;
 				
 				$this->config->set('template_engine', 'php');
 			} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $view . '.tpl')) {

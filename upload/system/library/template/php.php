@@ -8,7 +8,7 @@ final class PHP {
 	}
 	
 	public function render($template) {
-		$file = DIR_TEMPLATE . $template;
+		$file = DIR_TEMPLATE . $template . '.tpl';
 
 		if (is_file($file)) {
 			extract($this->data);

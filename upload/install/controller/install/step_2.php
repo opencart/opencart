@@ -54,6 +54,81 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['action'] = $this->url->link('install/step_2');
 
+		if (!is_file(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog'] = $this->language->get('error_missing');
+		} else {
+			$data['error_catalog'] = '';
+		}
+		
+		if (is_writable(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog'] = $this->language->get('error_writable');
+		} else {
+			$data['error_catalog'] = '';
+		}
+
+		if (!is_file(DIR_OPENCART . 'admin/config.php')) {
+			$data['error_admin'] = $this->language->get('error_missing');
+		} else {
+			$data['error_admin'] = '';
+		}
+		
+		if (is_writable(DIR_OPENCART . 'admin/config.php')) {
+			$data['error_admin'] = $this->language->get('error_writable');
+		} else {
+			$data['error_admin'] = '';
+		}
+ 
+		if (is_writable(DIR_OPENCART . 'image/')) {
+			$data['error_image'] = $this->language->get('error_writable');
+		} else {
+			$data['error_image'] = '';
+		}
+		        
+		if (is_writable(DIR_OPENCART . 'image/')) {
+			$data['error_image_cache'] = $this->language->get('error_writable');
+		} else {
+			$data['error_image_cache'] = '';
+		}		
+
+		if (is_writable(DIR_OPENCART . 'image/')) {
+			$data['error_image_catalog'] = $this->language->get('error_writable');
+		} else {
+			$data['error_image_catalog'] = '';
+		}	
+		
+		if (is_writable(DIR_SYSTEM . 'storage/logs')) {
+			$data['error_log'] = $this->language->get('error_writable');
+		} else {
+			$data['error_log'] = '';
+		}		
+			
+		if (is_writable(DIR_SYSTEM . 'storage/download')) {
+			$data['error_download'] = $this->language->get('error_writable');
+		} else {
+			$data['error_download'] = '';
+		}			
+
+		if (is_writable(DIR_SYSTEM . 'storage/upload')) {
+			$data['error_upload'] = $this->language->get('error_writable');
+		} else {
+			$data['error_upload'] = '';
+		}	
+
+		if (is_writable(DIR_SYSTEM . 'storage/modification')) {
+			$data['error_modification'] = $this->language->get('error_writable');
+		} else {
+			$data['error_modification'] = '';
+		}	
+		
+		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
+		$data['cache'] = DIR_SYSTEM . 'storage/cache';
+		$data['logs'] = DIR_SYSTEM . 'storage/logs';
+		$data['download'] = DIR_SYSTEM . 'storage/download';
+		$data['upload'] = DIR_SYSTEM . 'storage/upload';
+		$data['modification'] = DIR_SYSTEM . 'storage/modification';
+		
+		
+		                  
 		$data['php_version'] = phpversion();
 		$data['register_globals'] = ini_get('register_globals');
 		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
@@ -87,12 +162,18 @@ class ControllerInstallStep2 extends Controller {
 		
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
+		
+		
+		
 		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
 		$data['cache'] = DIR_SYSTEM . 'storage/cache';
 		$data['logs'] = DIR_SYSTEM . 'storage/logs';
 		$data['download'] = DIR_SYSTEM . 'storage/download';
 		$data['upload'] = DIR_SYSTEM . 'storage/upload';
 		$data['modification'] = DIR_SYSTEM . 'storage/modification';
+
+		
+
 
 		$data['back'] = $this->url->link('install/step_1');
 

@@ -1842,9 +1842,12 @@ CREATE TABLE `oc_length_class_description` (
 --
 
 INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `title`, `unit`) VALUES
-(1, 1, 'Centimeter', 'cm'),
-(2, 1, 'Millimeter', 'mm'),
-(3, 1, 'Inch', 'in');
+(1, 1, 'Сантиметр', 'см'),
+(1, 2, 'Centimeter', 'cm'),
+(2, 1, 'Миллиметр', 'мм'),
+(2, 2, 'Millimeter', 'mm'),
+(3, 1, 'Дюйм', 'in'),
+(3, 2, 'Inch', 'in');
 
 -- --------------------------------------------------------
 
@@ -2399,20 +2402,34 @@ CREATE TABLE `oc_order_status` (
 --
 
 INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES
-(2, 1, 'Processing'),
-(3, 1, 'Shipped'),
-(7, 1, 'Canceled'),
-(5, 1, 'Complete'),
-(8, 1, 'Denied'),
-(9, 1, 'Canceled Reversal'),
-(10, 1, 'Failed'),
-(11, 1, 'Refunded'),
-(12, 1, 'Reversed'),
-(13, 1, 'Chargeback'),
-(1, 1, 'Pending'),
-(16, 1, 'Voided'),
-(15, 1, 'Processed'),
-(14, 1, 'Expired');
+(2, 1, 'В обработке'),
+(3, 1, 'Доставлено'),
+(7, 1, 'Отменено'),
+(5, 1, 'Сделка завершена'),
+(8, 1, 'Возврат'),
+(9, 1, 'Отмена и аннулирование'),
+(10, 1, 'Неудавшийся'),
+(11, 1, 'Возмещенный'),
+(12, 1, 'Полностью измененный'),
+(13, 1, 'Полный возврат'),
+(1, 1, 'Ожидание'),
+(15, 1, 'Обработано'),
+(14, 1, 'Истекло'),
+(2, 2, 'Processing'),
+(8, 2, 'Denied'),
+(11, 2, 'Refunded'),
+(3, 2, 'Shipped'),
+(10, 2, 'Failed'),
+(1, 2, 'Pending'),
+(9, 2, 'Canceled Reversal'),
+(7, 2, 'Canceled'),
+(12, 2, 'Reversed'),
+(13, 2, 'Chargeback'),
+(5, 2, 'Complete'),
+(14, 2, 'Expired'),
+(16, 1, 'Анулированный'),
+(16, 2, 'Voided'),
+(15, 2, 'Processed');
 
 -- --------------------------------------------------------
 
@@ -3126,9 +3143,12 @@ CREATE TABLE `oc_return_action` (
 --
 
 INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`) VALUES
-(1, 1, 'Refunded'),
-(2, 1, 'Credit Issued'),
-(3, 1, 'Replacement Sent');
+(1, 1, 'Возмещенный'),
+(2, 1, 'Возврат средств'),
+(3, 1, 'Отправлена замена'),
+(1, 2, 'Refunded'),
+(3, 2, 'Replacement Sent'),
+(2, 2, 'Credit Issued');
 
 -- --------------------------------------------------------
 
@@ -3166,11 +3186,16 @@ CREATE TABLE `oc_return_reason` (
 --
 
 INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`) VALUES
-(1, 1, 'Dead On Arrival'),
-(2, 1, 'Received Wrong Item'),
-(3, 1, 'Order Error'),
-(4, 1, 'Faulty, please supply details'),
-(5, 1, 'Other, please supply details');
+(1, 1, 'Получен неисправным (сломанным)'),
+(1, 2, 'Dead On Arrival'),
+(2, 1, 'Получен не тот (ошибочный) товар'),
+(2, 2, 'Received Wrong Item'),
+(3, 1, 'Заказан по ошибке'),
+(3, 2, 'Order Error'),
+(4, 1, 'Неисправен, пожалуйста укажите/приложите подробности'),
+(4, 2, 'Faulty, please supply details'),
+(5, 1, 'Другое (другая причина), пожалуйста укажите/приложите подробности'),
+(5, 2, 'Other, please supply details');
 
 -- --------------------------------------------------------
 
@@ -3191,9 +3216,12 @@ CREATE TABLE `oc_return_status` (
 --
 
 INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUES
-(1, 1, 'Pending'),
-(3, 1, 'Complete'),
-(2, 1, 'Awaiting Products');
+(1, 1, 'В ожидании'),
+(3, 1, 'Выполнен'),
+(2, 1, 'Ожидание товара'),
+(1, 2, 'Pending'),
+(2, 2, 'Awaiting Products'),
+(3, 2, 'Complete');
 
 -- --------------------------------------------------------
 
@@ -3431,10 +3459,14 @@ CREATE TABLE `oc_stock_status` (
 --
 
 INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
-(7, 1, 'In Stock'),
-(8, 1, 'Pre-Order'),
-(5, 1, 'Out Of Stock'),
-(6, 1, '2-3 Days');
+(7, 1, 'В наличии'),
+(8, 1, 'Предзаказ'),
+(5, 1, 'Нет в наличии'),
+(6, 1, 'Ожидание 2-3 дня'),
+(7, 2, 'In Stock'),
+(8, 2, 'Pre-Order'),
+(5, 2, 'Out Of Stock'),
+(6, 2, '2-3 Days');
 
 -- --------------------------------------------------------
 
@@ -3859,10 +3891,14 @@ CREATE TABLE `oc_weight_class_description` (
 --
 
 INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `title`, `unit`) VALUES
-(1, 1, 'Kilogram', 'kg'),
-(2, 1, 'Gram', 'g'),
-(5, 1, 'Pound ', 'lb'),
-(6, 1, 'Ounce', 'oz');
+(1, 1, 'Килограммы', 'кг'),
+(1, 2, 'Kilogram', 'kg'),
+(2, 1, 'Граммы', 'г'),
+(2, 2, 'Gram', 'g'),
+(5, 1, 'Фунты', 'lb'),
+(5, 2, 'Pound', 'lb'),
+(6, 1, 'Унции', 'oz'),
+(6, 2, 'Ounce', 'oz');
 
 -- --------------------------------------------------------
 

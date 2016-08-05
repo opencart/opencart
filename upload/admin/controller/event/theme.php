@@ -7,12 +7,8 @@ class ControllerEventTheme extends Controller {
 		}
 		
 		if (is_file(DIR_TEMPLATE . $view . '.twig')) {
-			$view = $view . '.twig'; 
-			
 			$this->config->set('template_engine', 'twig');
 		} elseif (is_file(DIR_TEMPLATE . $view . '.tpl')) {
-			$view = $view . '.tpl'; 
-			
 			$this->config->set('template_engine', 'php');
 		}		
 	}

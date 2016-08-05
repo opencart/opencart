@@ -16,7 +16,7 @@
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <?php } ?>
+  {% endif %}
   <div class="row">
     <div class="col-sm-9">
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
@@ -36,7 +36,7 @@
                 <td>{{ text_version }}</td>
                 <td>{{ php_version }}</td>
                 <td>5.4+</td>
-                <td class="text-center">{% php_version >= '5.4' %}
+                <td class="text-center">{% if php_version >= '5.4' %}
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -64,7 +64,7 @@
                   {{ text_off }}
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
-                <td class="text-center">{% if not magic_quotes_gpc %}
+                <td class="text-center">{% if not error_magic_quotes_gpc %}
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -227,23 +227,19 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ config_catalog }}</td>
-                <td><?php if (!is_file($config_catalog)) { ?>
-                  <span class="text-danger">{{ text_missing }}</span>
-                  <?php } elseif (!is_writable($config_catalog)) { ?>
-                  <span class="text-danger">{{ text_unwritable }}</span>
-                  {% else %}
+                <td>{{ catalog_config }}</td>
+                <td>{% if not error_catalog_config %}
                   <span class="text-success">{{ text_writable }}</span>
+                  {% else %}
+                  <span class="text-danger">{{ error_catalog_config }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
-                <td>{{ config_admin }}</td>
-                <td><?php if (!file_exists($config_admin)) { ?>
-                  <span class="text-danger">{{ text_missing }}</span>
-                  <?php } elseif (!is_writable($config_admin)) { ?>
-                  <span class="text-danger">{{ text_unwritable }}</span>
-                  {% else %}
+                <td>{{ admin_config }}</td>
+                <td>{% if not error_admin_config %}
                   <span class="text-success">{{ text_writable }}</span>
+                  {% else %}
+                  <span class="text-danger">{{ error_admin_config }}</span>
                   {% endif %}</td>
               </tr>
             </tbody>
@@ -269,26 +265,26 @@
               </tr>
               <tr>
                 <td>{{ image_cache }}/</td>
-                <td><?php if (is_writable($image_cache)) { ?>
+                <td>{% if not error_image_cache %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_image_cache }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ image_catalog }}/</td>
-                <td>{% if error_image_catalog %}
+                <td>{% if not error_image_catalog %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_image_catalog }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ cache }}/</td>
-                <td>{% if error_cache %}
+                <td>{% if not error_cache %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_cache }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -296,31 +292,31 @@
                 <td>{% if not error_logs %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_logs }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ download }}/</td>
-                <td><?php if (is_writable($download)) { ?>
+                <td>{% if not error_download %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_download }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
-                <td><?php echo $upload . '/'; ?></td>
-                <td><?php if (is_writable($upload)) { ?>
+                <td>{{ upload }}/</td>
+                <td>{% if not error_upload %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_upload }}</span>
                   {% endif %}</td>
               </tr>
               <tr>
                 <td>{{ modification }}/</td>
-                <td>{% if (is_writable(modification) %}
+                <td>{% if not error_modification %}
                   <span class="text-success">{{ text_writable }}</span>
                   {% else %}
-                  <span class="text-danger">{{ text_unwritable }}</span>
+                  <span class="text-danger">{{ error_modification }}</span>
                   {% endif %}</td>
               </tr>
             </tbody>

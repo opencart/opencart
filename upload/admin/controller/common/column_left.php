@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
 		if (isset($this->request->get['token']) && isset($this->session->data['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
@@ -620,6 +625,14 @@ class ControllerCommonColumnLeft extends Controller {
 				$tool[] = array(
 					'name'	   => $this->language->get('text_backup'),
 					'href'     => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'tool/seomanager')) {
+				$tool[] = array(
+					'name'	   => $this->language->get('text_seomanager'),
+					'href'     => $this->url->link('tool/seomanager', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);
 			}

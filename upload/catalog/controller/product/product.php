@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
@@ -218,6 +223,10 @@ class ControllerProductProduct extends Controller {
 				$this->document->setTitle($product_info['meta_title']);
 			} else {
 				$this->document->setTitle($product_info['name']);
+			}
+			
+			if ($product_info['noindex'] <= 0) {
+				$this->document->setRobots('noindex,follow');
 			}
 			
 			if ($product_info['meta_h1']) {	

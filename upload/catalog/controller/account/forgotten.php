@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerAccountForgotten extends Controller {
 	private $error = array();
 
@@ -10,6 +15,7 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->language('account/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setRobots('noindex,follow');
 
 		$this->load->model('account/customer');
 
@@ -82,6 +88,7 @@ class ControllerAccountForgotten extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_your_email'] = $this->language->get('text_your_email');
 		$data['text_email'] = $this->language->get('text_email');

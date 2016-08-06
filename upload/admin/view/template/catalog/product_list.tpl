@@ -85,6 +85,24 @@
                   <?php } ?>
                 </select>
               </div>
+			  </div>
+			<div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-noindex"><?php echo $entry_noindex; ?></label>
+                <select name="filter_noindex" id="input-noindex" class="form-control">
+                  <option value="*"></option>
+                  <?php if ($filter_noindex) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (($filter_noindex !== null) && !$filter_noindex) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+				</div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
@@ -121,6 +139,11 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                     <?php } ?></td>
+					<td class="text-left"><?php if ($sort == 'p.noindex') { ?>
+                    <a href="<?php echo $sort_noindex; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_noindex; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_noindex; ?>"><?php echo $column_noindex; ?></a>
+                    <?php } ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
@@ -154,6 +177,7 @@
                     <span class="label label-success"><?php echo $product['quantity']; ?></span>
                     <?php } ?></td>
                   <td class="text-left"><?php echo $product['status']; ?></td>
+				  <td class="text-left"><?php echo $product['noindex']; ?></td>
                   <td class="text-right"><a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
@@ -205,6 +229,12 @@ $('#button-filter').on('click', function() {
 
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+	
+	var filter_noindex = $('select[name=\'filter_noindex\']').val();
+	
+	if (filter_noindex != '*') {
+		url += '&filter_noindex=' + encodeURIComponent(filter_noindex);
 	}
 
   var filter_image = $('select[name=\'filter_image\']').val();

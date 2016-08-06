@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
@@ -10,6 +15,7 @@ class ControllerAccountAccount extends Controller {
 		$this->load->language('account/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setRobots('noindex,follow');
 
 		$data['breadcrumbs'] = array();
 
@@ -32,6 +38,7 @@ class ControllerAccountAccount extends Controller {
 		} 
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_my_account'] = $this->language->get('text_my_account');
 		$data['text_my_orders'] = $this->language->get('text_my_orders');

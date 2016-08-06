@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCatalogInformation extends Controller {
 	private $error = array();
 
@@ -176,6 +181,7 @@ class ControllerCatalogInformation extends Controller {
 				'information_id' => $result['information_id'],
 				'title'          => $result['title'],
 				'sort_order'     => $result['sort_order'],
+				'noindex'  	  	 => $result['noindex'],
 				'edit'           => $this->url->link('catalog/information/edit', 'token=' . $this->session->data['token'] . '&information_id=' . $result['information_id'] . $url, true)
 			);
 		}
@@ -188,6 +194,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_noindex'] = $this->language->get('column_noindex');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_add'] = $this->language->get('button_add');
@@ -228,6 +235,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['sort_title'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, true);
 		$data['sort_sort_order'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, true);
+		$data['sort_noindex'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . '&sort=i.noindex' . $url, true);
 
 		$url = '';
 
@@ -278,10 +286,12 @@ class ControllerCatalogInformation extends Controller {
 		$data['entry_bottom'] = $this->language->get('entry_bottom');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_noindex'] = $this->language->get('entry_noindex');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_bottom'] = $this->language->get('help_bottom');
+		$data['help_noindex'] = $this->language->get('help_noindex');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -412,6 +422,22 @@ class ControllerCatalogInformation extends Controller {
 			$data['status'] = $information_info['status'];
 		} else {
 			$data['status'] = true;
+		}
+		
+		if (isset($this->request->post['noindex'])) {
+			$data['noindex'] = $this->request->post['noindex'];
+		} elseif (!empty($information_info)) {
+			$data['noindex'] = $information_info['noindex'];
+		} else {
+			$data['noindex'] = 1;
+		}
+		
+		if (isset($this->request->post['sort_order'])) {
+			$data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($information_info)) {
+			$data['sort_order'] = $information_info['sort_order'];
+		} else {
+			$data['sort_order'] = '';
 		}
 
 		if (isset($this->request->post['sort_order'])) {

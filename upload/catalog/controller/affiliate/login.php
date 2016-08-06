@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerAffiliateLogin extends Controller {
 	private $error = array();
 
@@ -10,6 +15,7 @@ class ControllerAffiliateLogin extends Controller {
 		$this->load->language('affiliate/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setRobots('noindex,follow');
 
 		$this->load->model('affiliate/affiliate');
 
@@ -52,6 +58,7 @@ class ControllerAffiliateLogin extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_affiliate_commission') . '%');
 		$data['text_new_affiliate'] = $this->language->get('text_new_affiliate');

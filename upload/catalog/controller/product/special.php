@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerProductSpecial extends Controller {
 	public function index() {
 		$this->load->language('product/special');
@@ -9,6 +14,7 @@ class ControllerProductSpecial extends Controller {
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
+			$this->document->setRobots('noindex,follow');
 		} else {
 			$sort = 'p.sort_order';
 		}
@@ -21,12 +27,14 @@ class ControllerProductSpecial extends Controller {
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
+			$this->document->setRobots('noindex,follow');
 		} else {
 			$page = 1;
 		}
 
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
+			$this->document->setRobots('noindex,follow');
 		} else {
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}

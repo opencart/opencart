@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerAccountVoucher extends Controller {
 	private $error = array();
 
@@ -6,6 +11,7 @@ class ControllerAccountVoucher extends Controller {
 		$this->load->language('account/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setRobots('noindex,follow');
 
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = array();
@@ -44,6 +50,7 @@ class ControllerAccountVoucher extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_description'] = $this->language->get('text_description');
 		$data['text_agree'] = $this->language->get('text_agree');
@@ -189,6 +196,7 @@ class ControllerAccountVoucher extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setRobots('noindex,follow');
 
 		$data['text_message'] = $this->language->get('text_message');
 

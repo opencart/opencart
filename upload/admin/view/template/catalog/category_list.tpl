@@ -45,6 +45,11 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
                     <?php } ?></td>
+					<td class="text-right"><?php if ($sort == 'noindex') { ?>
+                    <a href="<?php echo $sort_noindex; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_noindex; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_noindex; ?>"><?php echo $column_noindex; ?></a>
+                    <?php } ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
@@ -59,6 +64,7 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $category['name']; ?></td>
                   <td class="text-right"><?php echo $category['sort_order']; ?></td>
+				  <td class="text-right"><?php echo $category['noindex']; ?></td>
                   <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>

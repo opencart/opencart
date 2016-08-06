@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerInformationInformation extends Controller {
 	public function index() {
 		$this->load->language('information/information');
@@ -25,6 +30,10 @@ class ControllerInformationInformation extends Controller {
 				$this->document->setTitle($information_info['meta_title']);
 			} else {
 				$this->document->setTitle($information_info['title']);
+			}
+			
+			if ($information_info['noindex'] <= 0) {
+				$this->document->setRobots('noindex,follow');
 			}
 			
 			if ($information_info['meta_h1']) {

@@ -109,7 +109,7 @@ $('#button-upload').on('click', function() {
 
 						$('#button-continue').prop('disabled', false);
 					} else if (json['next']) {
-						next(json['next'], i = 2));
+						next(json['next'], i = 2);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

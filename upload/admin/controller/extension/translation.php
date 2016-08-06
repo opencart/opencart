@@ -442,7 +442,7 @@ class ControllerExtensionTranslation extends Controller {
 		
 		$directory = ini_get('upload_tmp_dir');
 
-		if (!is_dir($directory . '/lng-' . $code . '/' . VERSION . '/') || substr(str_replace('\\', '/', realpath($directory . '/lng-' . $code . '/' . VERSION . '/')), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
+		if (!is_dir($directory . '/lng-' . $code . '/') || substr(str_replace('\\', '/', realpath($directory . '/lng-' . $code . '/')), 0, strlen(ini_get('upload_tmp_dir'))) != str_replace('\\', '/', ini_get('upload_tmp_dir'))) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
@@ -450,7 +450,7 @@ class ControllerExtensionTranslation extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '/lng-' . $code . '/' . VERSION . '/*');
+			$path = array($directory . '/lng-' . $code . '/*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -465,7 +465,7 @@ class ControllerExtensionTranslation extends Controller {
 			}
 
 			foreach ($files as $file) {
-				$destination = str_replace('%locale%', $code, substr($file, strlen($directory . '/lng-' . $code . '/' . VERSION . '/')));
+				$destination = substr($file, strlen($directory . '/lng-' . $code . '/'));
 				
 				if (substr($destination, 0, 5) == 'admin') {
 					$destination = DIR_APPLICATION . substr($destination, 6);

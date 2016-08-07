@@ -1,5 +1,35 @@
 # OpenCart 2.0 change log
 
+## d0.0.0.1 (07.08.2016)
+#### target
+* A.simplify
+*   the website  accoding to requirement
+* 1.ec10001,Change LOGO,replace OC LOGO with xlight LOGO 
+* 2.ec10002,Default Currency,change the default currency to C$
+* 3.ec10004,Social Media Link,Add links to FB, Twitter, Instagram, google+, etc.
+* 4.ec10005,Head,Change site title to "Xlight Home" and the icon on browser head. The page title should change according to the page, e.g Xlight | pagetile
+* 5.ec10006,Hide Search,Hide search textbox and button
+* 6.ec10007,Simplify Menu,change main menu, refer to sample.png
+* 7.ec10008,Simplify Footer,simplify the footer as shown in sample.png
+* 8.ec10009,Sign up page,User signup, two methods:  1. email (necessary), username (optional). Then active the account via email 2. FB, TW, INS, G+ association(todo)
+* 9.ec10010,Payment Method,online payment, e.g. PayPal, Credit card
+*10.ec10021,Log-in menu-simplify,when log-in, show the name,items in the menu,choose the right item,display
+*11.ec10022,Account information page,simplify(delete unnecessary items,choose the right information  Information display)
+*12.ec10023,Rating--- change to star,  change the circle to star
+*13.ec10024,Content for privacy policy, Terms & Conditions, Contact  Us,fill the content and display
+*14.ec10025,Logo
+*15.ec20001,remove the point, remove the item since there is no point concept
+*16.ec20002,letter min limit in review ,change from 25 to 10
+*17.ec20003,number control in product and order ,change the textbox to number spin, and limit the max 999
+*18.ec20004,improve the card, change the num to spin and adjust the button
+*18.ec20005,improve the UE when register ,use ajax check whether email exists 
+*18.ec20006,
+* B.support
+*     online payment include paypay exress, credit card(visa,master)
+* C. change
+*    improve the order flow , create order even user don't pay, so the user can continue pay via the menu order history
+*    
+################ x version( http://www.xlight.ca/) Start ################
 ## v2.2.0.0 (02.03.2016)
 
 ## v2.1.0.1 (06.10.2015)

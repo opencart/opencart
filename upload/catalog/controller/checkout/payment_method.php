@@ -38,8 +38,9 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			}
 
 			// Payment Methods
-			$method_data = array();
-
+			$method_data = array("cod" => array("code" => "cod","title" => "Cash On Delivery"),
+								  "pay_online" => array("code" => "pay_online","title" => "Pay Online"));
+			/*$method_data = array();
 			$this->load->model('extension/extension');
 
 			$results = $this->model_extension_extension->getExtensions('payment');
@@ -70,7 +71,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $method_data);
+			array_multisort($sort_order, SORT_ASC, $method_data);*/
 
 			$this->session->data['payment_methods'] = $method_data;
 		}
@@ -125,6 +126,30 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$data['agree'] = $this->session->data['agree'];
 		} else {
 			$data['agree'] = '';
+		}
+
+		// Coupon
+		$this->load->language('checkout/cart');
+		//$this->document->setTitle($this->language->get('heading_title'));
+		$data['text_next'] = $this->language->get('text_next');
+		$data['text_next_choice'] = $this->language->get('text_next_choice');
+
+		$this->load->model('extension/extension');
+
+		$data['modules'] = array();
+		$data['module_names'] = array();
+		$files = glob(DIR_APPLICATION . '/controller/total/*.php');
+		if($files) {
+			foreach ($files as $file)
+			{
+				$result = $this->load->controller('total/' . basename($file, '.php'));
+
+				if($result)
+				{
+					$data['modules'][] = $result;
+					$data['module_names'][] = basename($file,'.php');
+				}
+			}
 		}
 
 		$this->response->setOutput($this->load->view('checkout/payment_method', $data));

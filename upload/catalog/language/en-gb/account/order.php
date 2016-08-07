@@ -6,6 +6,7 @@ $_['heading_title']         = 'Order History';
 $_['text_account']          = 'Account';
 $_['text_order']            = 'Order Information';
 $_['text_order_detail']     = 'Order Details';
+$_['text_order_no']         = 'Order No';
 $_['text_invoice_no']       = 'Invoice No.:';
 $_['text_order_id']         = 'Order ID:';
 $_['text_date_added']       = 'Date Added:';
@@ -18,6 +19,16 @@ $_['text_history']          = 'Order History';
 $_['text_success']          = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_empty']            = 'You have not made any previous orders!';
 $_['text_error']            = 'The order you requested could not be found!';
+$_['text_payment']          = 'Payment';
+$_['text_order_canceled'] = 'Canceled Order';
+$_['text_should_pay'] = 'Should Pay';
+$_['text_within_three_months'] = 'Three months';
+$_['text_within_this_year'] = 'This year';
+$_['text_receiver'] = 'Receiver';
+$_['text_money'] = 'Money';
+$_['text_all_status'] = 'All Status';
+$_['text_operation'] = 'Operation';
+
 
 // Column
 $_['column_order_id']       = 'Order ID';

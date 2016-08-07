@@ -30,6 +30,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
+			$data['column_operation'] = $this->language->get('column_operation');
 
 			$data['button_update'] = $this->language->get('button_update');
 			$data['button_remove'] = $this->language->get('button_remove');
@@ -238,21 +239,20 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
-			$this->load->model('extension/extension');
+			/*$this->load->model('extension/extension');
 
 			$data['modules'] = array();
-			
-			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
 
+			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
 			if ($files) {
 				foreach ($files as $file) {
 					$result = $this->load->controller('total/' . basename($file, '.php'));
-					
+
 					if ($result) {
 						$data['modules'][] = $result;
 					}
 				}
-			}
+			}*/
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -409,7 +409,6 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->language('checkout/cart');
 
 		$json = array();
-
 		// Update
 		if (!empty($this->request->post['quantity'])) {
 			foreach ($this->request->post['quantity'] as $key => $value) {

@@ -32,7 +32,7 @@ class ControllerPaymentPPPro extends Controller {
 			'value' => 'MASTERCARD'
 		);
 
-		$data['cards'][] = array(
+		/*$data['cards'][] = array(
 			'text'  => 'Discover Card',
 			'value' => 'DISCOVER'
 		);
@@ -50,7 +50,7 @@ class ControllerPaymentPPPro extends Controller {
 		$data['cards'][] = array(
 			'text'  => 'Solo',
 			'value' => 'SOLO'
-		);
+		); */
 
 		$data['months'] = array();
 
@@ -81,7 +81,33 @@ class ControllerPaymentPPPro extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/pp_pro', $data);
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_cart'),
+			'href' => $this->url->link('checkout/cart')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('express_text_title'),
+			'href' => $this->url->link('checkout/checkout', '', true)
+		);
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('payment/pp_pro', $data));
+
+		//return $this->load->view('payment/pp_pro', $data);
 	}
 
 	public function send() {

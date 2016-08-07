@@ -36,14 +36,26 @@ class ControllerAccountOrder extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_order_detail'] = $this->language->get('text_order_detail');
+		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_order_canceled'] = $this->language->get('text_order_canceled');
+		$data['text_order_no'] = $this->language->get('text_order_no');
 		$data['text_empty'] = $this->language->get('text_empty');
+		$data['text_within_three_months'] = $this->language->get('text_within_three_months');
+		$data['text_within_this_year'] = $this->language->get('text_within_this_year');
+		$data['text_receiver'] = $this->language->get('text_receiver');
+		$data['text_money'] = $this->language->get('text_money');
+		$data['text_all_status'] = $this->language->get('text_all_status');
+		$data['text_operation'] = $this->language->get('text_operation');
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
 		$data['column_product'] = $this->language->get('column_product');
+		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_quantity'] = $this->language->get('column_quantity');
 
 		$data['button_view'] = $this->language->get('button_view');
 		$data['button_continue'] = $this->language->get('button_continue');
@@ -54,28 +66,75 @@ class ControllerAccountOrder extends Controller {
 			$page = 1;
 		}
 
+		if(isset($this->request->get['order_month'])) {
+			$order_month = $this->request->get['order_month'];
+		}
+		else {
+			$order_month = 3;
+		}
+
+		if(isset($this->request->get['order_status_id'])) {
+			$order_status_id = $this->request->get['order_status_id'];
+		}
+		else {
+			$order_status_id = -1;
+		}
+
+		$data['order_month'] = $order_month;
+		$data['order_status_id'] = $order_status_id;
+
 		$data['orders'] = array();
 
+		$this->load->model('tool/image');
 		$this->load->model('account/order');
 
 		$order_total = $this->model_account_order->getTotalOrders();
 
-		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
+		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10,$order_month, $order_status_id);
 
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
 
+			if ($result['image']) {
+				$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
+			} else {
+				$image = '';
+			}
+
 			$data['orders'][] = array(
 				'order_id'   => $result['order_id'],
+				'product_id' => $result['product_id'],
+				'order_product_id'	=> $result['order_product_id'],
+				'order_no' => $result['order_no'],
+				'image' => $image,
+				'product_name' => $result['product_name'],
+				'numbers' => $result['numbers'],
+				'price' => $this->currency->format($result['price'], $result['currency_code'], $result['currency_value']),
+				'payment_method' => $result['payment_method'],
+				'address' => $result['payment_address_1'] . " " . $result['payment_address_2'] . ", " . $result['payment_city'] . ", " .$result['payment_zone'] . ", " . $result['payment_country'],
+				'user_detail' => "<ul class='list-unstyled'><li class='user_name'>" . $result['firstname'] . '  ' . $result['lastname'] . "</li><li class='address'>" . $result['payment_address_1'] . " " . $result['payment_address_2'] . ", " . $result['payment_city'] . ", " .$result['payment_zone'] . ", " . $result['payment_country'] . "</li><li class='telephone'>" . $result['telephone'] . "</li></ul>",
+				'postcode' => $result['payment_postcode'],
+				'telephone' => $result['telephone'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
-				'status'     => $result['status'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'status' => $result['order_status_id'],
+				'status_name'     => $result['status_name'],
+				'date_added' => $result['order_date_added'],
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'view'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], true),
+				'href'      => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+				'reorder_href'	=> $this->url->link('account/order/reorder','order_id=' . $result['order_id'] . '&order_product_id=' . $result['order_product_id'], true)
 			);
 		}
+
+		$data['text_order_detail'] = $this->language->get('text_order_detail');
+
+		$data['order_statuses'] = array();
+		$order_statuses = $this->model_account_order->getOrderStatuses();
+		$data['order_statuses'] = array_column($order_statuses, "order_status_id", "name");
+
+		$data['pay_online'] = $this->url->link('checkout/pay_action');
 
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
@@ -151,7 +210,6 @@ class ControllerAccountOrder extends Controller {
 
 			$data['heading_title'] = $this->language->get('text_order');
 
-			$data['text_order_detail'] = $this->language->get('text_order_detail');
 			$data['text_invoice_no'] = $this->language->get('text_invoice_no');
 			$data['text_order_id'] = $this->language->get('text_order_id');
 			$data['text_date_added'] = $this->language->get('text_date_added');
@@ -162,6 +220,8 @@ class ControllerAccountOrder extends Controller {
 			$data['text_history'] = $this->language->get('text_history');
 			$data['text_comment'] = $this->language->get('text_comment');
 			$data['text_no_results'] = $this->language->get('text_no_results');
+			$data['text_order_detail'] = $this->language->get('text_order_detail');
+			$data['text_order_no'] = $this->language->get('text_order_no');
 
 			$data['column_name'] = $this->language->get('column_name');
 			$data['column_model'] = $this->language->get('column_model');
@@ -201,6 +261,7 @@ class ControllerAccountOrder extends Controller {
 
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+			$data['order_no'] = $order_info['order_no'];
 
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -478,5 +539,26 @@ class ControllerAccountOrder extends Controller {
 		}
 
 		$this->response->redirect($this->url->link('account/order/info', 'order_id=' . $order_id));
+	}
+
+	public function cancel() {
+		$data = array();
+		$this->load->model('account/order');
+
+		$data['order_id'] = -1;
+		$data['email'] = $this->customer->getEmail();
+
+		if (isset($this->request->post['order_id'])) {
+			$data['order_id'] = $this->request->post['order_id'];
+		}
+
+		$data['order_statuses'] = array();
+		$order_statuses = $this->model_account_order->getOrderStatuses();
+		$order_statuses = array_column($order_statuses, "order_status_id", "name");
+		$data['order_cancel_status'] = $order_statuses['Canceled'];
+
+	    $this->model_account_order->cancelOrder($data['order_id'], $data['email'], $data['order_cancel_status']);
+
+		//$this->response->redirect($this->url->link('account/order_list'));
 	}
 }

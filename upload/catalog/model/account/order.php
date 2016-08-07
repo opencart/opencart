@@ -42,6 +42,7 @@ class ModelAccountOrder extends Model {
 
 			return array(
 				'order_id'                => $order_query->row['order_id'],
+				'order_no'					=> $order_query->row['order_no'],
 				'invoice_no'              => $order_query->row['invoice_no'],
 				'invoice_prefix'          => $order_query->row['invoice_prefix'],
 				'store_id'                => $order_query->row['store_id'],
@@ -101,7 +102,7 @@ class ModelAccountOrder extends Model {
 		}
 	}
 
-	public function getOrders($start = 0, $limit = 20) {
+	public function getOrders($start = 0, $limit = 20,$order_month, $order_status_id) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -110,7 +111,27 @@ class ModelAccountOrder extends Model {
 			$limit = 1;
 		}
 
-		$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$sql = "SELECT o.*,o.date_added as order_date_added,op.order_product_id,op.name AS product_name,op.product_id,op.quantity AS numbers,op.total,p.*,os.NAME as status_name FROM `" . DB_PREFIX . "order` o LEFT JOIN `"
+			. DB_PREFIX . "order_product` op ON (o.order_id = op.order_id) LEFT JOIN `" . DB_PREFIX . "product` p ON op.product_id = p.product_id LEFT JOIN `oc_order_status` AS os ON (o.order_status_id = os.order_status_id) WHERE o.email = '" . $this->customer->getEmail() . "'";
+
+
+		if(!empty($order_month) && (int)$order_month >= 0)
+		{
+			$sql .= " AND (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(o.date_added))/(60*60*24*30) <= " . $order_month;
+		}
+		elseif ((int)$order_month == -1) {
+			$sql .= " AND o.date_added >= " . date("Y",time()) . "-01-01";
+		}
+
+		if(!isset($order_status_id) && $order_status_id > -1)
+		{
+			$sql .= " AND o.order_status_id=" . $order_status_id ;
+		}
+
+		$sql .=  " ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit;
+
+		//$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query($sql);
 
 		return $query->rows;
 	}
@@ -167,5 +188,16 @@ class ModelAccountOrder extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
+	}
+
+	public function getOrderStatuses() {
+		$query = $this->db->query("SELECT order_status_id, name FROM `" . DB_PREFIX . "order_status` ORDER BY order_status_id ASC");
+
+		return $query->rows;
+	}
+
+	public function cancelOrder($order_id, $email, $order_cancel_status) {
+	    $this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id=" . $order_cancel_status . " WHERE order_id=" . (int)$order_id . " and email='" . $this->db->escape($email) . "'");
+		return $this->db->countAffected();
 	}
 }

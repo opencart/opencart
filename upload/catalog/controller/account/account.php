@@ -52,7 +52,7 @@ class ControllerAccountAccount extends Controller {
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
 		$data['address'] = $this->url->link('account/address', '', true);
-		
+
 		$data['credit_cards'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/credit_card/*.php');

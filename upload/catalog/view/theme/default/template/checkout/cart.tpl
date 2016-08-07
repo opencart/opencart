@@ -34,7 +34,7 @@
         &nbsp;(<?php echo $weight; ?>)
         <?php } ?>
       </h1>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form id="cart_form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
@@ -45,6 +45,7 @@
                 <td class="text-left"><?php echo $column_quantity; ?></td>
                 <td class="text-right"><?php echo $column_price; ?></td>
                 <td class="text-right"><?php echo $column_total; ?></td>
+                <td class="text-right"><?php echo $column_operation ?></td>
               </tr>
             </thead>
             <tbody>
@@ -63,28 +64,38 @@
                   <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
                   <?php } ?>
                   <?php } ?>
-                  <?php if ($product['reward']) { ?>
+                  <!--<?php if ($product['reward']) { ?>
                   <br />
                   <small><?php echo $product['reward']; ?></small>
-                  <?php } ?>
+                  <?php } ?>-->
                   <?php if ($product['recurring']) { ?>
                   <br />
                   <span class="label label-info"><?php echo $text_recurring_item; ?></span> <small><?php echo $product['recurring']; ?></small>
                   <?php } ?></td>
                 <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                    <input type="text" name="quantity[<?php echo $product['cart_id']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
+                <td class="text-left"><div class="btn-block" style="max-width: 200px;">
+                    <div class="input-group spinner" data-trigger="spinner">
+                      <input type="text" name="quantity[<?php echo $product['cart_id']; ?>]" class="form-control text-center" value="<?php echo $product['quantity']; ?>" data-rule="quantity" data-min="1" data-max="999">
+                      <div class="input-group-addon">
+                        <a href="javascript:;" type="submit" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
+                        <a href="javascript:;" type="submit" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
+                      </div>
+                    </div>
+                    <!--<input type="number" min="1" name="quantity[<?php echo $product['cart_id']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />-->
                     <span class="input-group-btn">
-                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>
-                    </span></div></td>
+                    <!--<button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>-->
+                    <!--<button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>-->
+                    </span>
+                </td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>
+                <td class="text-right">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>
+                </td>
               </tr>
               <?php } ?>
               <?php foreach ($vouchers as $voucher) { ?>
               <tr>
-                <td></td>
                 <td class="text-left"><?php echo $voucher['description']; ?></td>
                 <td class="text-left"></td>
                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
@@ -100,15 +111,8 @@
           </table>
         </div>
       </form>
-      <?php if ($modules) { ?>
-      <h2><?php echo $text_next; ?></h2>
-      <p><?php echo $text_next_choice; ?></p>
-      <div class="panel-group" id="accordion">
-        <?php foreach ($modules as $module) { ?>
-        <?php echo $module; ?>
-        <?php } ?>
-      </div>
-      <?php } ?>
+      <!--Coupon优惠券-->
+      <!--End优惠券-->
       <br />
       <div class="row">
         <div class="col-sm-4 col-sm-offset-8">
@@ -129,4 +133,11 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>
+<script>
+  $(function () {
+    $(".spinner").spinner('changed',function (e,newVal,oldVal) {
+      $('#cart_form').submit();
+    });
+  });
+</script>

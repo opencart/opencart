@@ -35,16 +35,16 @@
           <?php } ?>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
-            <?php if ($attribute_groups) { ?>
+            <!--<?php if ($attribute_groups) { ?>
             <li><a href="#tab-specification" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
-            <?php } ?>
+            <?php } ?>-->
             <?php if ($review_status) { ?>
             <li><a href="#tab-review" data-toggle="tab"><?php echo $tab_review; ?></a></li>
             <?php } ?>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
-            <?php if ($attribute_groups) { ?>
+            <!--<?php if ($attribute_groups) { ?>
             <div class="tab-pane" id="tab-specification">
               <table class="table table-bordered">
                 <?php foreach ($attribute_groups as $attribute_group) { ?>
@@ -64,7 +64,7 @@
                 <?php } ?>
               </table>
             </div>
-            <?php } ?>
+            <?php } ?>-->
             <?php if ($review_status) { ?>
             <div class="tab-pane" id="tab-review">
               <form class="form-horizontal" id="form-review">
@@ -86,18 +86,18 @@
                 </div>
                 <div class="form-group required">
                   <div class="col-sm-12">
-                    <label class="control-label"><?php echo $entry_rating; ?></label>
-                    &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
-                    <input type="radio" name="rating" value="1" />
-                    &nbsp;
+                    <label class="control-label"><?php echo $entry_rating; ?></label><?php echo $entry_bad; ?>
+                    <!--<input type="radio" name="rating" value="1" />
                     <input type="radio" name="rating" value="2" />
-                    &nbsp;
                     <input type="radio" name="rating" value="3" />
-                    &nbsp;
                     <input type="radio" name="rating" value="4" />
-                    &nbsp;
-                    <input type="radio" name="rating" value="5" />
-                    &nbsp;<?php echo $entry_good; ?></div>
+                    <input type="radio" name="rating" value="5" />-->
+                    <a href="javascript:void(0);" name="rating" data-value="1"><span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span></a>
+                    <a href="javascript:void(0);" name="rating" data-value="2"><span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span></a>
+                    <a href="javascript:void(0);" name="rating" data-value="3"><span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span></a>
+                    <a href="javascript:void(0);" name="rating" data-value="4"><span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span></a>
+                    <a href="javascript:void(0);" name="rating" data-value="5"><span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span></a>
+                    <?php echo $entry_good; ?></div>
                 </div>
                 <?php echo $captcha; ?>
                 <div class="buttons clearfix">
@@ -120,8 +120,8 @@
         <?php } ?>
         <div class="<?php echo $class; ?>">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
+            <!--<button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>-->
           </div>
           <h1><?php echo $heading_title; ?></h1>
           <ul class="list-unstyled">
@@ -129,9 +129,9 @@
             <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
             <?php } ?>
             <li><?php echo $text_model; ?> <?php echo $model; ?></li>
-            <?php if ($reward) { ?>
+            <!--<?php if ($reward) { ?>
             <li><?php echo $text_reward; ?> <?php echo $reward; ?></li>
-            <?php } ?>
+            <?php } ?>-->
             <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
           </ul>
           <?php if ($price) { ?>
@@ -146,20 +146,20 @@
               <h2><?php echo $special; ?></h2>
             </li>
             <?php } ?>
-            <?php if ($tax) { ?>
+            <!--<?php if ($tax) { ?>
             <li><?php echo $text_tax; ?> <?php echo $tax; ?></li>
             <?php } ?>
             <?php if ($points) { ?>
             <li><?php echo $text_points; ?> <?php echo $points; ?></li>
-            <?php } ?>
-            <?php if ($discounts) { ?>
+            <?php } ?>-->
+            <!--<?php if ($discounts) { ?>
             <li>
               <hr>
             </li>
             <?php foreach ($discounts as $discount) { ?>
             <li><?php echo $discount['quantity']; ?><?php echo $text_discount; ?><?php echo $discount['price']; ?></li>
             <?php } ?>
-            <?php } ?>
+            <?php } ?>-->
           </ul>
           <?php } ?>
           <div id="product">
@@ -305,7 +305,14 @@
             <?php } ?>
             <div class="form-group">
               <label class="control-label" for="input-quantity"><?php echo $entry_qty; ?></label>
-              <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />
+              <!--<input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />-->
+              <div class="input-group spinner" data-trigger="spinner">
+                <input type="text" name="quantity" class="form-control text-center" value="1" data-rule="quantity" data-max="999">
+                <div class="input-group-addon">
+                  <a href="javascript:;" type="submit" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
+                  <a href="javascript:;" type="submit" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
+                </div>
+              </div>
               <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
               <br />
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
@@ -378,8 +385,8 @@
             </div>
             <div class="button-group">
               <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+              <!--<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>-->
             </div>
           </div>
         </div>
@@ -561,12 +568,29 @@ $('#review').delegate('.pagination a', 'click', function(e) {
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
+  // review
+$('#form-review a[name="rating"]').on('click',function(){
+  // empty star
+    $('#form-review a[name="rating"] i[class*="fa-star"]').removeClass('fa-star');
+    $('#form-review a[name="rating"] i').addClass('fa-star-o');
+    // fill star
+    var index = $(this).data('value');
+    for(var i = 0;i< index;i++)
+    {
+      var $star = $($('#form-review a[name="rating"]')[i]);
+      $star.find('i').removeClass("fa-star-o");
+      $star.find('i').addClass("fa-star");
+    }
+});
+
 $('#button-review').on('click', function() {
+    var data = $("#form-review").serialize() + '&rating=' +  $('#form-review').find('a[name="rating"] i:not([class*="fa-star-o"])').length;
+
 	$.ajax({
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: $("#form-review").serialize(),
+		data: data,
 		beforeSend: function() {
 			$('#button-review').button('loading');
 		},

@@ -52,8 +52,30 @@ class ControllerCommonHeader extends Controller {
 			$this->load->model('account/wishlist');
 
 			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
+			//add by terry 20160802 start
+			$data['logindesc'] = 'My Account';
+
+			if (!empty($this->customer->getFirstName())&& !empty($this->customer->getLastName()))
+			{
+				$data['logindesc'] =$this->customer->getFirstName()." ".$this->customer->getLastName();
+			}
+			elseif (!empty($this->customer->getFirstName()))
+			{
+				$data['logindesc'] =$this->customer->getFirstName();
+			}
+			elseif (!empty($this->customer->getLastName()))
+			{
+				$data['logindesc'] =$this->customer->getLastName();
+			}
+			elseif (!empty($this->customer->getEmail()))
+			{
+				$data['logindesc'] =$this->customer->getEmail();
+			}
+			//add by terry 20160802 end
+
 		} else {
 			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+			$data['logindesc'] = 'Guest';
 		}
 
 		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
@@ -127,7 +149,6 @@ class ControllerCommonHeader extends Controller {
 		$data['currency'] = $this->load->controller('common/currency');
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
-
 		// For page specific css
 		if (isset($this->request->get['route'])) {
 			if (isset($this->request->get['product_id'])) {

@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
 $_['heading_title']          = 'Categories';
 
@@ -8,10 +13,12 @@ $_['text_list']              = 'Category List';
 $_['text_add']               = 'Add Category';
 $_['text_edit']              = 'Edit Category';
 $_['text_default']           = 'Default';
+$_['text_category_total']    = 'Total Categories: ';
 
 // Column
 $_['column_name']            = 'Category Name';
 $_['column_sort_order']      = 'Sort Order';
+$_['column_noindex']         = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry

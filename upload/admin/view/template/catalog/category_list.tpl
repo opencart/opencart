@@ -35,21 +35,9 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
-                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                    <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'sort_order') { ?>
-                    <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                    <?php } ?></td>
-					<td class="text-right"><?php if ($sort == 'noindex') { ?>
-                    <a href="<?php echo $sort_noindex; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_noindex; ?></a>
-                    <?php } else { ?>
-                    <a href="<?php echo $sort_noindex; ?>"><?php echo $column_noindex; ?></a>
-                    <?php } ?></td>
+                  <td class="text-left"><?php echo $column_name; ?></td>
+                  <td class="text-right"><?php echo $column_sort_order; ?></td>
+				  <td class="text-right"><?php echo $column_noindex; ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
@@ -62,7 +50,11 @@
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $category['name']; ?></td>
+                  <?php if ($category['href']) { ?>
+                  <td class="left"><?php echo $category['indent']; ?><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></td>
+					<?php } else { ?>
+                  <td class="left"><?php echo $category['indent']; ?><?php echo $category['name']; ?></td>
+                  <?php } ?>
                   <td class="text-right"><?php echo $category['sort_order']; ?></td>
 				  <td class="text-right"><?php echo $category['noindex']; ?></td>
                   <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -78,8 +70,7 @@
           </div>
         </form>
         <div class="row">
-          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+          <div class="col-sm-12 text-right"><?php echo $results; ?></div>
         </div>
       </div>
     </div>

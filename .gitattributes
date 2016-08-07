@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+# * text=auto
 
 # Ignore specific directories / files when using export
 /tests export-ignore

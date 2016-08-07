@@ -848,6 +848,102 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}		
 			
+			//howto
+			// Report
+			$howto = array();
+			
+			// gogettop			
+			$howto_gogettop = array();	
+			
+			if ($this->user->hasPermission('access', 'howto/gogettop')) {
+				$howto_gogettop[] = array(
+					'name'	   => $this->language->get('text_gogettop'),
+					'href'     => ('http://gogettop.ru/?ref=16605'),
+					'children' => array()	
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'howto/gogettop')) {
+				$howto_gogettop[] = array(
+					'name'	   => $this->language->get('text_gogettop_help'),
+					'href'     => $this->url->link('howto/gogettop', 'token=' . $this->session->data['token'], true),
+					'children' => array()	
+				);
+			}
+			
+			if ($howto_gogettop) {	
+				$howto[] = array(
+					'name'	   => $this->language->get('text_gogettop'),
+					'href'     => '',
+					'children' => $howto_gogettop	
+				);		
+			}
+			
+			// seopult			
+			$howto_seopult = array();	
+			
+			if ($this->user->hasPermission('access', 'howto/seopult')) {
+				$howto_seopult[] = array(
+					'name'	   => $this->language->get('text_seopult'),
+					'href'     => ('http://seopult.ru/ref/f8924f1b27c4ffd6/aHR0cDovL3Nlb3B1bHQucnUvcmVnaXN0ZXIuaHRtbD9zPXRodG9w'),
+					'children' => array()	
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'howto/seopult')) {
+				$howto_seopult[] = array(
+					'name'	   => $this->language->get('text_seopult_help'),
+					'href'     => $this->url->link('howto/seopult', 'token=' . $this->session->data['token'], true),
+					'children' => array()	
+				);
+			}
+			
+			if ($howto_seopult) {	
+				$howto[] = array(
+					'name'	   => $this->language->get('text_seopult'),
+					'href'     => '',
+					'children' => $howto_seopult	
+				);		
+			}
+			
+			// blogun			
+			$howto_blogun = array();	
+			
+			if ($this->user->hasPermission('access', 'howto/blogun')) {
+				$howto_blogun[] = array(
+					'name'	   => $this->language->get('text_blogun'),
+					'href'     => ('https://blogun.ru/unimpairedcedcdhg.html'),
+					'children' => array()	
+				);
+			}
+			
+			if ($this->user->hasPermission('access', 'howto/blogun')) {
+				$howto_blogun[] = array(
+					'name'	   => $this->language->get('text_blogun_help'),
+					'href'     => $this->url->link('howto/blogun', 'token=' . $this->session->data['token'], true),
+					'children' => array()	
+				);
+			}
+			
+			if ($howto_blogun) {	
+				$howto[] = array(
+					'name'	   => $this->language->get('text_blogun'),
+					'href'     => '',
+					'children' => $howto_blogun	
+				);		
+			}
+			
+			if ($howto) {	
+				$data['menus'][] = array(
+					'id'       => 'menu-howto',
+					'icon'	   => 'fa-comment-o', 
+					'name'	   => $this->language->get('text_seo'),
+					'href'     => '',
+					'children' => $howto
+				);	
+			}	
+			
+			
 			// Stats
 			$data['text_complete_status'] = $this->language->get('text_complete_status');
 			$data['text_processing_status'] = $this->language->get('text_processing_status');

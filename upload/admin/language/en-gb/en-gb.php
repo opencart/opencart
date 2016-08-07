@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Locale
 $_['code']                          = 'en';
 $_['direction']                     = 'ltr';
@@ -41,6 +46,7 @@ $_['button_disable']                = 'Disable';
 $_['button_filter']                 = 'Filter';
 $_['button_send']                   = 'Send';
 $_['button_edit']                   = 'Edit';
+$_['button_shop']                   = 'Look';
 $_['button_copy']                   = 'Copy';
 $_['button_back']                   = 'Back';
 $_['button_remove']                 = 'Remove';

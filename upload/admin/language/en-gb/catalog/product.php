@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
 $_['heading_title']          = 'Products';
 
@@ -22,6 +27,7 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
+$_['column_noindex']         = 'Index';
 $_['column_action']          = 'Action';
 
 // Entry
@@ -71,6 +77,7 @@ $_['entry_option']           = 'Option';
 $_['entry_option_value']     = 'Option Value';
 $_['entry_required']         = 'Required';
 $_['entry_status']           = 'Status';
+$_['entry_noindex']          = 'Index';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_category']         = 'Categories';
 $_['entry_filter']           = 'Filters';

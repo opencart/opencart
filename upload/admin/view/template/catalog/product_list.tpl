@@ -178,7 +178,10 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $product['status']; ?></td>
 				  <td class="text-left"><?php echo $product['noindex']; ?></td>
-                  <td class="text-right"><a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-right">
+				  <a target="_blank" href="<?php echo $product['href_shop']; ?>" data-toggle="tooltip" title="<?php echo $button_shop; ?>" class="btn btn-success"><i class="fa fa-eye"></i></a>
+				  <a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+				  </td
                 </tr>
                 <?php } ?>
                 <?php } else { ?>

@@ -150,7 +150,8 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	protected function getList() {
-
+        $url = '';
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -160,12 +161,12 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . true)
+			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, true)
 		);
 		
-		$data['add'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . true);
-		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . true);
-		$data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . true);
+		$data['add'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['path'])) {
 			if ($this->request->get['path'] != '') {

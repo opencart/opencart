@@ -119,4 +119,4 @@ $_['help_error']                              = 'Returns an error string with a 
 
 // Error
 $_['error_permission']                        = 'Warning: You do not have permission to modify MaxMind anti-fraud!';
-$_['error_key']		                          = 'License Key Required!';
+$_['error_key']                               = 'License Key Required!';

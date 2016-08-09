@@ -19,5 +19,5 @@ $_['column_action']         = 'Action';
 // Entry
 $_['entry_date_start']      = 'Date Start';
 $_['entry_date_end']        = 'Date End';
-$_['entry_customer']		= 'Customer';
+$_['entry_customer']        = 'Customer';
 $_['entry_status']          = 'Order Status';

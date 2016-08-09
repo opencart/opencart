@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']        	  = 'Subscription';
-$_['text_openbay']			  = 'OpenBay Pro';
-$_['text_amazon']			  = 'Amazon EU';
+$_['heading_title']           = 'Subscription';
+$_['text_openbay']            = 'OpenBay Pro';
+$_['text_amazon']             = 'Amazon EU';
 
 // Text
 $_['text_current_plan']       = 'Current plan';

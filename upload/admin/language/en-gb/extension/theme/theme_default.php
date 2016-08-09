@@ -31,7 +31,7 @@ $_['entry_height']                     = 'Height';
 // Help
 $_['help_directory']                   = 'This field is only to enable older themes to be compatible with the new theme system. You can set the theme directory to use on the image size settings defined here.';
 $_['help_product_limit']               = 'Determines how many catalog items are shown per page (products, categories, etc)';
-$_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
+$_['help_product_description_length']  = 'In the list view, short description character limit (categories, special, etc)';
 
 // Error
 $_['error_permission']                 = 'Warning: You do not have permission to modify the default store theme!';

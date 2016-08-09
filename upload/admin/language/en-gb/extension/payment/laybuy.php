@@ -60,11 +60,11 @@ $_['text_suburb']                   = 'Suburb';
 $_['text_state']                    = 'State';
 $_['text_country']                  = 'Country';
 $_['text_postcode']                 = 'Postcode';
-$_['text_payment_info']		     	= 'Payment Information';
+$_['text_payment_info']             = 'Payment Information';
 $_['text_no_cron_time']             = 'The cron has not yet been executed';
-$_['text_comment'] 	                = 'Updated by Lay-Buy';
-$_['text_comment_canceled'] 	    = 'Order canceled and recurring PayPal Profile #%s canceled.';
-$_['text_remaining'] 	            = 'Remaining:';
+$_['text_comment']                  = 'Updated by Lay-Buy';
+$_['text_comment_canceled']         = 'Order canceled and recurring PayPal Profile #%s canceled.';
+$_['text_remaining']                = 'Remaining:';
 
 // Column
 $_['column_order_id']               = 'Order ID';

@@ -12,9 +12,9 @@ $_['text_for']         = '%s Gift Certificate for %s';
 
 // Entry
 $_['entry_to_name']    = 'Recipient\'s Name';
-$_['entry_to_email']   = 'Recipient\'s e-mail';
+$_['entry_to_email']   = 'Recipient\'s E-Mail';
 $_['entry_from_name']  = 'Your Name';
-$_['entry_from_email'] = 'Your e-mail';
+$_['entry_from_email'] = 'Your E-Mail';
 $_['entry_theme']      = 'Gift Certificate Theme';
 $_['entry_message']    = 'Message';
 $_['entry_amount']     = 'Amount';

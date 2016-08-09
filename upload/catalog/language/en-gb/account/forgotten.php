@@ -6,8 +6,8 @@ $_['heading_title']   = 'Forgot Your Password?';
 $_['text_account']    = 'Account';
 $_['text_forgotten']  = 'Forgotten Password';
 $_['text_your_email'] = 'Your E-Mail Address';
-$_['text_email']      = 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.';
-$_['text_success']    = 'An email with a confirmation link has been sent your email address.';
+$_['text_email']      = 'Enter the e-mail address associated with your account. Click submit to have a password reset link emailed to you.';
+$_['text_success']    = 'An e-mail with a confirmation link has been sent your e-mail address.';
 
 // Entry
 $_['entry_email']     = 'E-Mail Address';

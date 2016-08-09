@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']        	= 'Stock updates';
-$_['text_openbay']			= 'OpenBay Pro';
-$_['text_amazon']			= 'Amazon US';
+$_['heading_title']         = 'Stock updates';
+$_['text_openbay']          = 'OpenBay Pro';
+$_['text_amazon']           = 'Amazon US';
 
 // Text
 $_['text_empty']            = 'No results!';

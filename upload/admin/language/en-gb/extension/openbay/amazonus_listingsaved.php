@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title'] 	  = 'Saved Listings';
-$_['text_openbay'] 		  = 'OpenBay Pro';
-$_['text_amazon'] 		  = 'Amazon US';
+$_['heading_title']       = 'Saved Listings';
+$_['text_openbay']        = 'OpenBay Pro';
+$_['text_amazon']         = 'Amazon US';
 
 // Text
 $_['text_description']    = 'This is the list of product listings which are saved and ready to be uploaded to Amazon.';

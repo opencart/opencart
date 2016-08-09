@@ -54,8 +54,8 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Date Added';
 
 // Help
-$_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';
-$_['help_points']           = 'Use minus to remove points';
+$_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system.';
+$_['help_points']           = 'Use minus to remove points.';
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';

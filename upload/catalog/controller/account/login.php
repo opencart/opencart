@@ -177,6 +177,35 @@ class ControllerAccountLogin extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
+		require_once DIR_SYSTEM . '/vendor/autoload.php';
+
+		if(!session_id()) {
+			session_start();
+		}
+
+		$provider = new \League\OAuth2\Client\Provider\Facebook([
+			'clientId'		=>	'yourclientId',
+			'clientSecret'	=>	'yourclientSecret',
+			'redirectUri'		=>	HTTP_SERVER . 'yourredirectUri',
+			'graphApiVersion'		=>	'v2.7'
+		]);
+
+		if(!isset($_GET['code'])) {
+			// If we don't have an authorization code then get one
+			$data['authUrl'] = $provider->getAuthorizationUrl([
+				'scope'	=>	['email']
+			]);
+
+			$_SESSION['oauth2state'] = $provider->getState();
+
+			//echo '<a href="' . $authUrl . '">Log in with Facebook</a>';
+			//exit;
+		} elseif(empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+			unset($_SESSION['oauth2state']);
+			//echo 'Invalid state.';
+			//exit;
+		}
+
 		$this->response->setOutput($this->load->view('account/login', $data));
 	}
 

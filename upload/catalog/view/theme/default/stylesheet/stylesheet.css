@@ -1012,3 +1012,18 @@ ul.list-unstyled > li.telephone
 .count-time {
 	color:#aaa;
 }
+
+a.facebook {
+	display: inline-block;
+	background: #3b5998;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	padding: 1px;
+	color: #fff;
+	border-radius: 1px;
+}
+
+a.facebook:hover {
+	color:#fff;
+}

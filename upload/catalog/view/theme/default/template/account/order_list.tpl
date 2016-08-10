@@ -63,9 +63,9 @@
                 <span class="pull-right"><?php echo $text_order_detail; ?></span>
               </td>
               <td><?php echo $column_quantity; ?></td>
-              <td><?php echo $text_receiver; ?></td>
+              <td style="width:95px;"><?php echo $text_receiver; ?></td>
               <td><?php echo $text_money; ?></td>
-              <td><?php echo $text_all_status; ?></td>
+              <td style="width:100px;"><?php echo $text_all_status; ?></td>
               <td><?php echo $text_operation; ?></td>
             </tr>
           </thead>

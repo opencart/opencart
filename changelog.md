@@ -1,5 +1,11 @@
 # OpenCart 2.0 change log
 
+## d0.0.0.2(10.08.2016)
+#### target
+* 1.ec10009,Sign up page,User signup, two methods:  1. email (necessary), username (optional). Then active the account via email 2. FB, TW, INS, G+ association
+*           support facebook
+
+
 ## d0.0.0.1 (07.08.2016)
 #### target
 * A.simplify
@@ -22,8 +28,8 @@
 *16.ec20002,letter min limit in review ,change from 25 to 10
 *17.ec20003,number control in product and order ,change the textbox to number spin, and limit the max 999
 *18.ec20004,improve the card, change the num to spin and adjust the button
-*18.ec20005,improve the UE when register ,use ajax check whether email exists 
-*18.ec20006,
+*19.ec20005,improve the UE when register ,use ajax check whether email exists 
+*20.ec20006,
 * B.support
 *     online payment include paypay exress, credit card(visa,master)
 * C. change

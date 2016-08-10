@@ -62,6 +62,23 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		return $response;
 	}
 
+	public function format($number, $currency, $value = '', $format = false) {
+
+		$decimal_place = $this->currency->getDecimalPlace($currency);
+
+		if (!$value) {
+			$value = $this->currency->getValue($currency);
+		}
+
+		$amount = $value ? (float)$number * $value : (float)$number;
+
+		$amount = number_format($amount, (int)$decimal_place);
+
+		if (!$format) {
+			return $amount;
+		}
+	}
+
 	public function getOrder($order_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 

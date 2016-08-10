@@ -1,0 +1,27 @@
+/*
+2016.08.10
+add by terryluwenbin 
+add the column for the social login
+*/
+
+/*script start */
+
+USING yourDB
+
+ALTER TABLE oc_customer ADD COLUMN facebook_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN twitter_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN google_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN linkedin_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN vkontakte_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN odnoklassniki_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN live_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN yandex_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN mailru_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN instagram_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN paypal_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN vimeo_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN tumblr_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN yahoo_id VARCHAR(255);
+ALTER TABLE oc_customer ADD COLUMN foursquare_id VARCHAR(255);
+
+/*script end */

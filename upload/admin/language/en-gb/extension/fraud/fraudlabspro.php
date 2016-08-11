@@ -34,7 +34,6 @@ $_['text_error']                 = 'Error:';
 $_['text_flp_upgrade']           = '<a href="http://www.fraudlabspro.com/plan" target="_blank">[Upgrade]</a>';
 $_['text_flp_merchant_area']     = 'Please login to <a href="http://www.fraudlabspro.com/merchant/login" target="_blank">FraudLabs Pro Merchant Area</a> for more information about this order.';
 
-
 // Entry
 $_['entry_status']               = 'Status';
 $_['entry_key']                  = 'API Key';
@@ -77,4 +76,4 @@ $_['help_credits']               = 'Balance of the credits available after this 
 
 // Error
 $_['error_permission']           = 'Warning: You do not have permission to modify FraudLabs Pro settings!';
-$_['error_key']		             = 'API Key Required!';
+$_['error_key']                  = 'API Key Required!';

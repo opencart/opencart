@@ -11,15 +11,15 @@ $_['text_default']           = 'Default';
 
 // Column
 $_['column_title']           = 'Information Title';
-$_['column_sort_order']	     = 'Sort Order';
+$_['column_sort_order']      = 'Sort Order';
 $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_title']            = 'Information Title';
 $_['entry_description']      = 'Description';
 $_['entry_store']            = 'Stores';
-$_['entry_meta_title'] 	     = 'Meta Tag Title';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
+$_['entry_meta_title']       = 'Meta Tag Title';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_keyword']          = 'SEO URL';
 $_['entry_bottom']           = 'Bottom';

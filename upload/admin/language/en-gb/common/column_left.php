@@ -114,3 +114,7 @@ $_['text_seopult']                   = 'SeoPult';
 $_['text_seopult_help']              = 'How To SeoPult';
 $_['text_blogun']                    = 'Blogun';
 $_['text_blogun_help']               = 'How To Blogun';
+$_['text_blog_article']              = 'Articles';
+$_['text_blog_category']             = 'Blog Categories';
+$_['text_blog_review']               = 'Blog review';
+$_['text_blog_setting']              = 'Blog setting';

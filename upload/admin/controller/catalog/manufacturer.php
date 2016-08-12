@@ -289,6 +289,8 @@ class ControllerCatalogManufacturer extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_noindex'] = $this->language->get('entry_noindex');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$data['entry_related_mn'] = $this->language->get('entry_related_mn');
+		$data['entry_related_article'] = $this->language->get('entry_related_article');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_noindex'] = $this->language->get('help_noindex');
@@ -298,6 +300,7 @@ class ControllerCatalogManufacturer extends Controller {
 		
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
+		$data['tab_related'] = $this->language->get('tab_related');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -442,6 +445,52 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['sort_order'] = $manufacturer_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
+		}
+		
+		if (isset($this->request->post['product_related'])) {
+			$products = $this->request->post['product_related'];
+		} elseif (isset($manufacturer_info)) {		
+			$products = $this->model_catalog_manufacturer->getProductRelated($this->request->get['manufacturer_id']);
+		} else {
+			$products = array();
+		}		
+
+		$data['product_related'] = array();
+			
+		$this->load->model('catalog/product');
+		
+		foreach ($products as $product_id) {
+			$related_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($related_info) {
+				$data['product_related'][] = array(
+					'product_id' => $related_info['product_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
+
+		if (isset($this->request->post['article_related'])) {
+			$articles = $this->request->post['article_related'];
+		} elseif (isset($manufacturer_info)) {		
+			$articles = $this->model_catalog_manufacturer->getArticleRelated($this->request->get['manufacturer_id']);
+		} else {
+			$articles = array();
+		}		
+
+		$data['article_related'] = array();
+			
+		$this->load->model('blog/article');
+		
+		foreach ($articles as $article_id) {
+			$related_info = $this->model_blog_article->getArticle($article_id);
+			
+			if ($related_info) {
+				$data['article_related'][] = array(
+					'article_id' => $related_info['article_id'],
+					'name'       => $related_info['name']
+				);
+			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');

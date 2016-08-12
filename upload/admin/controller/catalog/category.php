@@ -256,6 +256,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_noindex'] = $this->language->get('entry_noindex');
 		$data['entry_layout'] = $this->language->get('entry_layout');
+		$data['entry_related_wb'] = $this->language->get('entry_related_wb');
+		$data['entry_related_article'] = $this->language->get('entry_related_article');
 
 		$data['help_filter'] = $this->language->get('help_filter');
 		$data['help_keyword'] = $this->language->get('help_keyword');
@@ -268,6 +270,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
+		$data['tab_related'] = $this->language->get('tab_related');
 		$data['tab_design'] = $this->language->get('tab_design');
 
 		if (isset($this->error['warning'])) {
@@ -459,6 +462,52 @@ class ControllerCatalogCategory extends Controller {
 			$data['sort_order'] = $category_info['sort_order'];
 		} else {
 			$data['sort_order'] = 0;
+		}
+		
+		if (isset($this->request->post['product_related'])) {
+			$products = $this->request->post['product_related'];
+		} elseif (isset($category_info)) {		
+			$products = $this->model_catalog_category->getProductRelated($this->request->get['category_id']);
+		} else {
+			$products = array();
+		}	
+
+		$data['product_related'] = array();
+			
+		$this->load->model('catalog/product');
+		
+		foreach ($products as $product_id) {
+			$related_info = $this->model_catalog_product->getProduct($product_id);
+			
+			if ($related_info) {
+				$data['product_related'][] = array(
+					'product_id' => $related_info['product_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
+		
+		if (isset($this->request->post['article_related'])) {
+			$articles = $this->request->post['article_related'];
+		} elseif (isset($category_info)) {		
+			$articles = $this->model_catalog_category->getArticleRelated($this->request->get['category_id']);
+		} else {
+			$articles = array();
+		}			
+
+		$data['article_related'] = array();
+			
+		$this->load->model('blog/article');
+		
+		foreach ($articles as $article_id) {
+			$related_info = $this->model_blog_article->getArticle($article_id);
+			
+			if ($related_info) {
+				$data['article_related'][] = array(
+					'article_id' => $related_info['article_id'],
+					'name'       => $related_info['name']
+				);
+			}
 		}
 
 		if (isset($this->request->post['status'])) {

@@ -647,6 +647,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_filter'] = $this->language->get('entry_filter');
 		$data['entry_related'] = $this->language->get('entry_related');
+		$data['entry_related_article'] = $this->language->get('entry_related_article');
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
 		$data['entry_text'] = $this->language->get('entry_text');
 		$data['entry_option'] = $this->language->get('entry_option');
@@ -1363,6 +1364,28 @@ class ControllerCatalogProduct extends Controller {
 				$data['product_relateds'][] = array(
 					'product_id' => $related_info['product_id'],
 					'name'       => $related_info['name']
+				);
+			}
+		}
+		
+		if (isset($this->request->post['product_related_article'])) {
+			$articles = $this->request->post['product_related_article'];
+		} elseif (isset($product_info)) {
+			$articles = $this->model_catalog_product->getArticleRelated($this->request->get['product_id']);
+		} else {
+			$articles = array();
+		}
+	
+		$data['product_related_article'] = array();
+		$this->load->model('blog/article');
+		
+		foreach ($articles as $article_id) {
+			$article_info = $this->model_blog_article->getArticle($article_id);
+			
+			if ($article_info) {
+				$data['product_related_article'][] = array(
+					'article_id' => $article_info['article_id'],
+					'name'       => $article_info['name']
 				);
 			}
 		}

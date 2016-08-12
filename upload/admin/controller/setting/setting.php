@@ -1021,6 +1021,14 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_mail_alert'] = array();
 		}
+		
+		if (isset($this->request->post['config_mail_alert_email'])) {
+			$data['config_mail_alert_email'] = $this->request->post['config_mail_alert_email'];
+		} elseif ($this->config->has('config_mail_alert_email')) {
+		   	$data['config_mail_alert_email'] = $this->config->get('config_mail_alert_email');
+		} else {
+			$data['config_mail_alert_email'] = array();
+		}
 
 		$data['mail_alerts'] = array();
 

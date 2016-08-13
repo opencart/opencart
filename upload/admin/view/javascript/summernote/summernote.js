@@ -629,8 +629,12 @@
       if (isText(node)) {
         return node.nodeValue.length;
       }
+  
+      if (node) {
+        return node.childNodes.length;
+      }
 
-      return node.childNodes.length;
+      return false;
     };
 
     /**

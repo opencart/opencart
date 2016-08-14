@@ -13,7 +13,7 @@
     <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" />
     <?php } ?>
     <?php echo $payment_method['title']; ?>
-    <?php if ($payment_method['terms']) { ?>
+    <?php if(array_key_exists('terms', $payment_method)) { ?>
     (<?php echo $payment_method['terms']; ?>)
     <?php } ?>
   </label>

@@ -1,0 +1,233 @@
+.responsive-slider-parallax {
+  max-width: 100%;
+  position: relative;
+}
+.responsive-slider-parallax [data-animate] {
+  opacity: 0;
+}
+.responsive-slider-parallax .slides-container {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 0 0;
+}
+.responsive-slider-parallax .slides-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  font-size: 0;
+}
+.responsive-slider-parallax .slides-container ul li {
+  display: inline-block;
+  width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body img {
+  width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .container {
+  height: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .container .wrapper {
+  position: relative;
+  height: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0px 1px 0px #000000;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.header {
+  top: 28%;
+  left: 8%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 {
+  font-size: 50px;
+  padding: 0 3px 20px 3px;
+  color: #fff;
+  font-weight: bold;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 a{
+  font-size: 50px;
+  padding: 0 3px 20px 3px;
+  color: #fff;
+  font-weight: bold;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 i {
+  font-size: 35px;
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 {
+    font-size: 25px;
+    line-height: 25px;
+  }
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 i {
+    font-size: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 {
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.header h2 i {
+    font-size: 14px;
+  }
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.sub {
+  right: 0px;
+  font-weight: bold;
+  font-family: 'Cuprum', sans-serif;
+  color: #000000;
+  text-shadow: 0px 1px 0px #ffffff;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.7)
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.sub:hover a{
+  color: #ff9900;
+  text-shadow: none;
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.sub {
+    font-size: 11px;
+    line-height: 11px;
+    bottom: 0px;
+    right: -10px;
+  }
+}
+@media (max-width: 480px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body .caption.sub {
+    font-size: 10px;
+    line-height: 10px;
+    bottom: 0px;
+    right: 0;
+  }
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-html5 {
+  top: 12%;
+  right: 8%;
+  width: 30%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-html5 img {
+  max-width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-css3 {
+  top: 58%;
+  right: 12%;
+  width: 10%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-css3 img {
+  max-width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-bootstrap {
+  top: 56%;
+  right: 12%;
+  width: 11%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-bootstrap img {
+  max-width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-twitter {
+  top: 20%;
+  right: 12%;
+  width: 11%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-twitter img {
+  max-width: 100%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-jquery {
+  top: 55%;
+  right: 12%;
+  width: 33%;
+}
+.responsive-slider-parallax .slides-container ul li .slide-body .caption.img-jquery img {
+  max-width: 100%;
+}
+@media (min-width: 1200px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body {
+    height: 480px;
+  }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body {
+    height: 300px;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body {
+    height: 220px;
+  }
+}
+@media (max-width: 480px) {
+  .responsive-slider-parallax .slides-container ul li .slide-body {
+    height: 150px;
+  }
+}
+.responsive-slider-parallax .slider-control {
+  position: absolute;
+  font-size: 50px;
+  color: #000;
+  text-shadow: 0 1px 2px #fff;
+  top: 40%;
+  background-color: none;
+  padding: 10px;
+  opacity: 0.6;
+  z-index: -1;
+}
+.responsive-slider-parallax .slider-control .fa{
+  font-size: 50px;
+}
+.responsive-slider-parallax:hover> .slider-control{
+  z-index: 999999;
+}
+.responsive-slider-parallax .slider-control.left {
+  left: 10px;
+  padding-left: 7px;
+  border-radius: 6px;
+}
+.responsive-slider-parallax .slider-control.left:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+.responsive-slider-parallax .slider-control.right {
+  right: 10px;
+  padding-right: 7px;
+  border-radius: 6px;
+}
+.responsive-slider-parallax .slider-control.right:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+@media (max-width: 480px) {
+  .responsive-slider-parallax .slider-control.left,
+  .responsive-slider-parallax .slider-control.right {
+    display: none;
+  }
+}
+.responsive-slider-parallax .pages {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.responsive-slider-parallax .pages .page {
+  display: inline-block;
+  color: transparent;
+  width: 5px;
+  height: 5px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.responsive-slider-parallax .pages .page.active {
+  opacity: 1;
+}

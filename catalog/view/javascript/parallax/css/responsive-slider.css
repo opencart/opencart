@@ -1,0 +1,174 @@
+.responsive-slider {
+  width: 100%;
+  position: relative;
+}
+.responsive-slider [data-animate] {
+  opacity: 0;
+}
+.responsive-slider .slides {
+  position: relative;
+  overflow: hidden;
+}
+.responsive-slider .slides ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  font-size: 0;
+}
+.responsive-slider .slides ul li {
+  display: inline-block;
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+  font-size: 14px;
+}
+.responsive-slider .slides ul li .slide-body img {
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body .caption {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0px 1px 0px #000000;
+}
+.responsive-slider .slides ul li .slide-body .caption.header {
+  top: 28%;
+  left: 8%;
+}
+.responsive-slider .slides ul li .slide-body .caption.header h2 {
+  font-size: 40px;
+}
+.responsive-slider .slides ul li .slide-body .caption.header h2 i {
+  font-size: 35px;
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-slider .slides ul li .slide-body .caption.header h2 {
+    font-size: 25px;
+  }
+  .responsive-slider .slides ul li .slide-body .caption.header h2 i {
+    font-size: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .responsive-slider .slides ul li .slide-body .caption.header h2 {
+    font-size: 16px;
+  }
+  .responsive-slider .slides ul li .slide-body .caption.header h2 i {
+    font-size: 14px;
+  }
+}
+.responsive-slider .slides ul li .slide-body .caption.sub {
+  bottom: -8px;
+  right: -20px;
+  font-weight: bold;
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .responsive-slider .slides ul li .slide-body .caption.sub {
+    font-size: 11px;
+    bottom: 0px;
+    right: -10px;
+  }
+}
+@media (max-width: 480px) {
+  .responsive-slider .slides ul li .slide-body .caption.sub {
+    font-size: 10px;
+    bottom: 5px;
+    right: 0;
+  }
+}
+.responsive-slider .slides ul li .slide-body .caption.img-html5 {
+  top: 13%;
+  right: 8%;
+  width: 30%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-html5 img {
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-css3 {
+  top: 57%;
+  right: 12%;
+  width: 10%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-css3 img {
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-bootstrap {
+  top: 48%;
+  right: 12%;
+  width: 11%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-bootstrap img {
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-twitter {
+  top: 19%;
+  right: 12%;
+  width: 11%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-twitter img {
+  max-width: 100%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-jquery {
+  top: 66%;
+  right: 12%;
+  width: 33%;
+}
+.responsive-slider .slides ul li .slide-body .caption.img-jquery img {
+  max-width: 100%;
+}
+.responsive-slider .slider-control {
+  position: absolute;
+  font-size: 20px;
+  color: #000;
+  top: 40%;
+  background-color: #fff;
+  padding: 10px;
+}
+.responsive-slider .slider-control.left {
+  left: 0;
+  padding-left: 0;
+  -webkit-border-radius: 0px 6px 6px 0px;
+  border-radius: 0px 6px 6px 0px;
+}
+.responsive-slider .slider-control.left:hover {
+  text-decoration: none;
+  padding-left: 10px;
+}
+.responsive-slider .slider-control.right {
+  right: 0;
+  padding-right: 0;
+  -webkit-border-radius: 6px 0px 0px 6px;
+  border-radius: 6px 0px 0px 6px;
+}
+.responsive-slider .slider-control.right:hover {
+  text-decoration: none;
+  padding-right: 10px;
+}
+@media (max-width: 480px) {
+  .responsive-slider .slider-control.left,
+  .responsive-slider .slider-control.right {
+    display: none;
+  }
+}
+.responsive-slider .pages {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.responsive-slider .pages .page {
+  display: inline-block;
+  color: transparent;
+  width: 5px;
+  height: 5px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.responsive-slider .pages .page.active {
+  opacity: 1;
+}

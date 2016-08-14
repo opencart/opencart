@@ -118,7 +118,6 @@ class ModelCatalogProduct extends Model {
 						$min[]=$value;
 					}
 				}
-
 			$imp=implode(',',$min);
 			}
 		}

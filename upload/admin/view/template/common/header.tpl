@@ -25,7 +25,11 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
+<?php if ($locale_js) { ?>
+<script src="view/javascript/locale/common-<?php echo $lang; ?>.js" type="text/javascript"></script>
+<?php } else { ?>
 <script src="view/javascript/common.js" type="text/javascript"></script>
+<?php } ?>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>

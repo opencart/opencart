@@ -594,6 +594,11 @@ footer h5 {
 h2.price {
 	margin: 0;
 }
+.product-compare .price-old {
+	color: #999;
+	text-decoration: line-through;
+	margin-right: 10px;
+}
 .product-thumb .price {
 	color: #444;
 }

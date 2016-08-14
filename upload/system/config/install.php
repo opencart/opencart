@@ -3,6 +3,9 @@
 $_['site_base']         = HTTP_SERVER;
 $_['site_ssl']          = HTTP_SERVER;
 
+//Url
+$_['url_autostart']     = true;
+
 // Language
 $_['language_default']  = 'en-gb';
 $_['language_autoload'] = array('en-gb');

@@ -1,0 +1,34 @@
+{       
+    "name": "abraham/twitteroauth", 
+    "type": "library",
+    "description": "The most popular PHP library for use with the Twitter OAuth REST API.",
+    "keywords": ["twitter", "api", "oauth", "rest", "social", "twitter api", "twitter oauth"],
+    "license": "MIT",
+    "homepage": "https://twitteroauth.com",
+    "authors": [
+        {
+            "name": "Abraham Williams",
+            "email": "abraham@abrah.am",
+            "homepage": "https://abrah.am",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/abraham/twitteroauth",
+        "issues": "https://github.com/abraham/twitteroauth/issues"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.7.*",
+        "squizlabs/php_codesniffer": "2.3.*",
+        "phpmd/phpmd": "2.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Abraham\\TwitterOAuth\\": "src"
+        }
+    }
+}

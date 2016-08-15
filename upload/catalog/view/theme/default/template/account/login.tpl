@@ -32,9 +32,28 @@
           <div class="well">
             <h2><?php echo $text_returning_customer; ?></h2>
             <p><strong><?php echo $text_i_am_returning_customer; ?></strong></p>
-            <a class="facebook" href="<?php echo $authUrl; ?>">
-              <i class="fa fa-facebook"></i>
-            </a>
+            <ul class="social-login">
+              <li>
+                <a class="facebook" href="<?php echo $fb_authUrl; ?>">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li>
+                <a class="twitter" href="<?php echo $tw_authUrl; ?>">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li>
+                <a class="google-plus" href="<?php echo $gp_authUrl; ?>">
+                  <i class="fa fa-google-plus"></i>
+                </a>
+              </li>
+              <li>
+                <a class="instagram" href="<?php echo $ins_authUrl; ?>">
+                  <i class="fa fa-instagram"></i>
+                </a>
+              </li>
+            </ul>
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>

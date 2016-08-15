@@ -1,0 +1,13 @@
+# WARNING: Running the tests will perform live actions as the Twitter account.
+# Set all values, move to `env`, run `source tests/env` and `phpunit` to start testing.
+
+# To run the tests you must register Twitter application at https://app.twitter.com/.
+export TEST_CONSUMER_KEY=
+export TEST_CONSUMER_SECRET=
+export TEST_ACCESS_TOKEN=
+export TEST_ACCESS_TOKEN_SECRET=
+export TEST_OAUTH_CALLBACK=
+# You can find proxies for testing at http://proxylist.hidemyass.com/.
+export TEST_CURLOPT_PROXY=
+export TEST_CURLOPT_PROXYUSERPWD=
+export TEST_CURLOPT_PROXYPORT=

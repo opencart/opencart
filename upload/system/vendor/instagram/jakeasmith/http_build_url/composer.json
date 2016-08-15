@@ -1,0 +1,21 @@
+{
+  "name": "jakeasmith/http_build_url",
+  "description": "Provides functionality for http_build_url() to environments without pecl_http.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jake A. Smith",
+      "email": "theman@jakeasmith.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/jakeasmith/http_build_url/issues",
+    "source": "https://github.com/jakeasmith/http_build_url"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~3.7"
+  },
+  "autoload": {
+      "files": ["src/http_build_url.php"]
+  }
+}

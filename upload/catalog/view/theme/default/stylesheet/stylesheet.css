@@ -1015,7 +1015,7 @@ ul.list-unstyled > li.telephone
 
 a.facebook {
 	display: inline-block;
-	background: #3b5998;
+	background: #3b5a99;
 	width: 20px;
 	height: 20px;
 	text-align: center;
@@ -1024,6 +1024,54 @@ a.facebook {
 	border-radius: 1px;
 }
 
-a.facebook:hover {
+a.twitter {
+	display: inline-block;
+	background: #25a8e0;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	padding: 1px;
+	color: #fff;
+	border-radius: 1px;
+}
+
+a.google-plus {
+	display: inline-block;
+	background: #ce3633;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	padding: 1px;
+	color: #fff;
+	border-radius: 1px;
+}
+
+a.instagram {
+	display: inline-block;
+	background: #127bb7;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	padding: 1px;
+	color: #fff;
+	border-radius: 1px;
+}
+
+a.facebook:hover,
+a.twitter:hover,
+a.google-plus:hover
+a.instagram:hover {
 	color:#fff;
+}
+
+ul.social-login {
+	list-style: none;
+	display: inline-block;
+	width: 100%;
+	padding: 0 0;
+}
+
+ul.social-login > li {
+	float: left;
+	margin-right: 5px;
 }

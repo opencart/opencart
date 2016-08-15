@@ -152,6 +152,8 @@ class ControllerCommonHeader extends Controller {
 				);
 			}
 		}
+		
+		$data['search'] = $this->load->controller('search/search');
 
 		return $this->load->view('common/header', $data);
 	}

@@ -26,6 +26,7 @@ $_['text_homepage']          = 'OpenCart Homepage';
 $_['text_support']           = 'Support Forum';
 $_['text_documentation']     = 'Documentation';
 $_['text_logout']            = 'Logout';
+$_['text_search_options']    = 'Search Options';
 $_['text_new']  		     = 'New';
 $_['text_new_category']    	 = 'Category';
 $_['text_new_customer']      = 'Customer';

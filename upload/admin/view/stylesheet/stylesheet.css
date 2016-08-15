@@ -307,6 +307,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 }
 /* Mobile */
+@media (max-width: 768px) {
+#ocpro-search-div {
+	display: none;
+}
+#header .nav.pull-left{
+  margin-left: -15px;
+}
+}
 @media (max-width: 767px) {
 #column-left.active + #content {
 	position: relative;
@@ -466,6 +474,183 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
 	margin: 0;
 }
+.form-group {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
+
+.form-group + .form-group {
+    border-top: 1px solid #ededed;
+}
+/* search */
+
+select, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    height: 35px !important;
+    margin-bottom: 0px !important;
+}
+
+#ocpro-search{
+    padding: 0;
+    margin: 0;
+}
+
+#ocpro-search .btn-default {
+  color: #fff;
+  font-size: 13px;
+  padding-top: 8px;
+}
+
+#ocpro-search .caret{
+    margin: 0 0 0 10px;
+}
+
+#ocpro-search .input-group{
+    width: 100%;
+}
+
+#ocpro-search .input-group-addon, #ocpro-search .input-group-btn {
+    width: 1% !important;
+}
+
+#ocpro-search .btn {
+  background: #585858 none repeat scroll 0 0;
+  border: 0 none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  height: 35px !important;
+  margin-top: 5px;
+}
+
+#ocpro-search input {
+  background: #fff none repeat scroll 0 0;
+  border-color: #585858;
+  box-shadow: none !important;
+  color: #373737 !important;
+  height: 35px !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 5px;
+  padding-top: 9px;
+}
+
+#ocpro-search input::-webkit-input-placeholder {
+    color:#f8f8f8 !important;
+    opacity: 0.7;
+    text-shadow: none;
+}
+#ocpro-search input:-moz-placeholder {
+    color:#f8f8f8 !important;
+    opacity: 0.7;
+    text-shadow: none;
+}
+#ocpro-search input::-moz-placeholder{
+    color:#6d6d6d !important;
+    opacity: 0.7;
+    text-shadow: none;
+}
+#ocpro-search input:-ms-input-placeholder {
+    color:#f8f8f8 !important;
+    opacity: 0.7;
+    text-shadow: none;
+}
+
+#ocpro-search ul li a span {
+    margin-left: 8px;
+}
+
+#ocpro-search ul li a{
+    color: #7C7A7A;
+    cursor: pointer;
+}
+
+#ocpro-search ul li a:hover{
+    color: #f8f8f8;
+    background-color: #008DB9;
+}
+
+#ocpro-search-div{
+    padding-left: 1px !important;
+    padding-right: 0 !important;
+}
+
+#ocpro-search-result {
+    display: none;
+    position: absolute;
+    padding: 5px 0;
+    padding-right: 15px;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 12px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    z-index: 999;
+    width: 100%;
+    min-width: 347px;
+}
+
+#ocpro-search-result ul {
+    margin: 10px;
+    padding: 0;
+}
+
+#ocpro-search-result ul .result-header {
+    margin: 10px 0px;
+    display: block;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #777777;
+    white-space: nowrap;
+    border-bottom: 1px solid #E8E7E7;
+}
+
+#ocpro-search-result ul li {
+    list-style: none;
+}
+
+#ocpro-search-result ul li a {
+    text-decoration: none;
+    color : #777777;
+    line-height: 30px;
+    border-bottom: 1px solid #FAF8F8;
+}
+
+#ocpro-search-result ul li a:hover {
+    background: #f8f8f8;
+}
+
+#ocpro-search-result ul li a img{
+    float: left;
+}
+
+#ocpro-search-result ul li a i {
+    float: left;
+    line-height: 30px;
+}
+
+#ocpro-search-result ul li a span{
+    float: left;
+    white-space: nowrap;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+#loader-search {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+}
+
 .form-group {
     padding-top: 15px;
     padding-bottom: 15px;

@@ -1,4 +1,8 @@
 # OpenCart 2.0 change log
+## d0.0.0.3(15.08.2016)
+## 
+* 1.ec10009,Sign up page,User signup, two methods:  1. email (necessary), username (optional). Then active the account via email 2. FB, TW, INS, G+ association
+* support FB,TW,INS,G+
 
 ## d0.0.0.2(10.08.2016)
 #### target

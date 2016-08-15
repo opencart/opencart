@@ -40,3 +40,21 @@
     <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>
+<script>
+  $(function () {
+    if($('#input-email').val() == "") {
+      $('input[type="submit"]').addClass("disabled");
+      $('input[type="submit"]').attr("disabled","disabled");
+    }
+
+    $('#input-email').bind("input propertychange" ,function () {
+      if($('#input-email').val().indexOf("@") >= 0) {
+        $('input[type="submit"]').removeClass("disabled");
+        $('input[type="submit"]').removeAttr("disabled");
+      } else {
+        $('input[type="submit"]').addClass("disabled");
+        $('input[type="submit"]').attr("disabled","disabled");
+      }
+    });
+  });
+</script>

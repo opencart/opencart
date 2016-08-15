@@ -62,7 +62,6 @@
                 </div>
                 <span class="pull-right"><?php echo $text_order_detail; ?></span>
               </td>
-              <td><?php echo $column_quantity; ?></td>
               <td style="width:95px;"><?php echo $text_receiver; ?></td>
               <td><?php echo $text_money; ?></td>
               <td style="width:100px;"><?php echo $text_all_status; ?></td>
@@ -86,21 +85,27 @@
             </tr>
             <tr>
               <td class="text-left">
+                <?php $product_names = explode(",", $order['product_name']); ?>
+                <?php $images = explode(",", $order['image']); ?>
+                <?php $href = explode(",", $order['href']); ?>
+                <?php $numbers = explode(",", $order['numbers']); ?>
+                <?php foreach($product_names as $key => $product_name) { ?>
                 <div class="row nomargin" style="width:340px;">
                   <div class="col-md-3">
-                    <a href="<?php echo $order['href']; ?>" class="pull-left">
-                      <img src="<?php echo $order['image']; ?>" alt="<?php echo $order['product_name']; ?>" title="<?php echo $order['product_name']; ?>" class="img-thumbnail">
+                    <a href="<?php echo $href[$key]; ?>" class="pull-left">
+                      <img src="<?php echo $images[$key]; ?>" alt="<?php echo $product_name; ?>" title="<?php echo $product_name; ?>" class="img-thumbnail">
                     </a>
                   </div>
-                  <div class="col-md-9">
-                    <a href="<?php echo $order['href']; ?>" style="display: inline-block;">
-                      <span class="product_name"><?php echo $order['product_name']; ?></span>
+                  <div class="col-md-7">
+                    <a href="<?php echo $href[$key]; ?>">
+                      <span class="product_name"><?php echo $product_name; ?></span>
                     </a>
+                  </div>
+                  <div class="col-md-2">
+                    <span class="goods_number">x<?php echo $numbers[$key]; ?></span>
                   </div>
                 </div>
-              </td>
-              <td>
-                <span class="goods_number">x<?php echo $order['numbers']; ?></span>
+                <?php } ?>
               </td>
               <td>
                 <?php echo $order['name']; ?>
@@ -110,9 +115,8 @@
                 </button>
               </td>
               <td class="text-center">
-                <p class="amount"><?php echo ($column_price . " : " . $order['price']); ?></p>
-                <span><b><?php echo $column_total; ?></b></span>
-                <p><b><?php echo $order['total']; ?></b></p>
+                <p class="amount">
+                  <?php echo ($order['total']); ?></p>
                 <hr />
                 <p class="payment_type"><?php echo $order['payment_method']; ?></p>
               </td>
@@ -121,18 +125,18 @@
                 <p><a href="<?php echo $order['view']; ?>"><span class="order-detail"><?php echo $text_order_detail; ?></span></a></p>
               </td>
               <td>
-                <!--Pending 待付款-->
+                <!--Pending-->
                 <?php if(isset($order_statuses['Pending']) && $order['status'] == $order_statuses['Pending']) { ?>
                   <p class="count-time">Remaining<br /> 13h 20min</p>
                 <p>
-                  <a href="<?php echo $pay_online; ?>" class="btn-payment"><?php echo $text_payment; ?></a>
+                  <a href="<?php echo $order['pay_online']; ?>" class="btn-payment"><?php echo $text_payment; ?></a>
                 </p>
                 <p>
                   <a href="javascript:void(0);" onclick="fn_cancel_order(this);" data-id="<?php echo $order['order_id']; ?>">
                     <span class="order-canceled"><?php echo $text_order_canceled; ?></span></a>
                 </p>
                 <?php } ?>
-                <!--Completed 完成-->
+                <!--Completed->
                 <!--<?php if(isset($order_statuses['Complete']) && $order['status'] == $order_statuses['Complete']) { ?>
                 <?php } ?>-->
                 <?php if(isset($order_statuses['Canceled']) && $order['status'] == $order_statuses['Canceled']) { ?>

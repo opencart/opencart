@@ -1,5 +1,7 @@
 <?php
 namespace Cart;
+use GuzzleHttp\Psr7\BufferStream;
+
 class Customer {
 	private $customer_id;
 	private $firstname;

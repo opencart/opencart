@@ -4,7 +4,10 @@
   <a href="<?php echo $register; ?>" class="list-group-item"><?php echo $text_register; ?></a>
   <a href="<?php echo $forgotten; ?>" class="list-group-item"><?php echo $text_forgotten; ?></a>
   <?php } ?>
+  <!--
   <a href="<?php echo $account; ?>" class="list-group-item"><?php echo $text_account; ?></a>
+  -->
+
   <?php if ($logged) { ?>
   <a href="<?php echo $edit; ?>" class="list-group-item"><?php echo $text_edit; ?></a>
   <!--<a href="<?php echo $password; ?>" class="list-group-item"><?php echo $text_password; ?></a>-->

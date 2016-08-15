@@ -5,7 +5,8 @@ $_['heading_title']                  = 'Checkout';
 // Text
 $_['text_cart']                      = 'Shopping Cart';
 $_['text_checkout_option']           = 'Step %s: Checkout Options';
-$_['text_checkout_account']          = 'Step %s: Account &amp; Billing Details';
+//$_['text_checkout_account']          = 'Step %s: Account &amp; Billing Details';
+$_['text_checkout_account']          = 'Step %s: Account &amp; Delivery Details';
 $_['text_checkout_payment_address']  = 'Step %s: Billing Details';
 $_['text_checkout_shipping_address'] = 'Step %s: Delivery Details';
 $_['text_checkout_shipping_method']  = 'Step %s: Delivery Method';
@@ -21,7 +22,7 @@ $_['text_guest']                     = 'Guest Checkout';
 $_['text_register_account']          = 'By creating an account you will be able to shop faster, be up to date on an order\'s status, and keep track of the orders you have previously made.';
 $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
-$_['text_your_address']              = 'Your Address';
+$_['text_your_address']              = 'Shipping Address';
 $_['text_your_password']             = 'Your Password';
 $_['text_agree']                     = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 $_['text_address_new']               = 'I want to use a new address';
@@ -39,6 +40,15 @@ $_['text_week']                      = 'week';
 $_['text_semi_month']                = 'half-month';
 $_['text_month']                     = 'month';
 $_['text_year']                      = 'year';
+
+$_['text_guarantee'] = 'The Xlight Guarantee';
+$_['text_accepted_payment_methods'] = 'Accepted Payment Methods';
+$_['text_free_return']  = 'Free Return';
+$_['text_free_return_content'] = 'If you’re not happy with your Xlight purchase, we’re not happy. That’s why we offer a 90-day return policy on most items you buy in-store or online at <a href="https://xlight.ca">Xlight.ca</a>. That means 90 days from the date of an in-store purchase, or 90 days from the day you receive an online purchase. For a list of exceptions – most of which are also returnable, but with varying return periods or conditions – check out the Returns page in the Help section.';
+$_['text_safe_secured'] = 'Safe & Secured';
+$_['text_safe_secured_content'] = 'The safety and security of your account information is a priority for us at Xlight. Xlight does not sell or rent your personal information. And we use industry standard technology and controls to help ensure the security of your financial information, both during transactions and while stored on our servers and in our offices. We encourage you to read our full Privacy Statement, and to get in touch with us if you have any questions at all.';
+$_['text_instant_help'] = 'Instant Help';
+$_['text_instant_help_content'] = 'We want your experience at <a href="https://xlight.ca">Xlight.ca</a> to be as enjoyable and simple as a visit to one of our stores. And in the same way there’s always a friendly Xlight representative to help in-store, we offer a complete Help Section online and an online form you can use to send us an email. We’re thinking up new ways to make our website easier and more fun to use all the time. If you come up with an idea of your own, be sure to let us know!';
 
 // Column
 $_['column_name']                    = 'Product Name';

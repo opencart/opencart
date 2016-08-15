@@ -31,6 +31,7 @@ class ControllerCheckoutLogin extends Controller {
 
 		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
+		require_once DIR_APPLICATION . 'controller/account/social_setting.php';
 		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
 

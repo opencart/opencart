@@ -18,10 +18,6 @@ class ControllerPaymentPayOnline extends Controller{
     }
 
     public function confirm() {
-        if($this->session->data['payment_method']['code'] == 'pay_online') {
-            $this->load->model('checkout/order');
-
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_express_pending_status_id'));
-        }
+        
     }
 }

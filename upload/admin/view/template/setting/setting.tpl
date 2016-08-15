@@ -136,13 +136,13 @@
                   <?php } ?>
                 </div>
               </div>
-              <div class="form-group required">
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
-                  <?php if ($error_telephone) { ?>
+                  <!--<?php if ($error_telephone) { ?>
                   <div class="text-danger"><?php echo $error_telephone; ?></div>
-                  <?php } ?>
+                  <?php } ?>-->
                 </div>
               </div>
               <div class="form-group">

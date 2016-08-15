@@ -17,9 +17,9 @@ class ControllerAccountSocialLoginCallBack extends Controller {
         }
 
         $provider = new \League\OAuth2\Client\Provider\Facebook([
-           'clientId'   =>  'yourKey',
-            'clientSecret'  =>  'yourSecret',
-            'redirectUri'   =>  HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Ffacebook',
+            'clientId'		=>	FB_CLIENTID,
+            'clientSecret'	=>	FB_CLIENTSECRET,
+            'redirectUri'		=>	FB_REDIRECTURI,
             'graphApiVersion'     =>  'v2.7'
         ]);
 
@@ -50,9 +50,9 @@ class ControllerAccountSocialLoginCallBack extends Controller {
         }
 
         $provider = new \League\OAuth2\Client\Provider\Instagram([
-           'clientId'   =>  'yourKey',
-            'clientSecret'  =>  'yourSecret',
-            'redirectUri'		=>	HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Finstagram',
+            'clientId'		=>	INS_CLIENTID,
+            'clientSecret'	=>	INS_CLIENTSECRET,
+            'redirectUri'		=>	INS_REDIRECTURI,
         ]);
 
         $token = $provider->getAccessToken('authorization_code',[
@@ -81,10 +81,11 @@ class ControllerAccountSocialLoginCallBack extends Controller {
         }
 
         // Create a project at https://console.developers.google.com/
-        $clientId 	= 'yourKey';
-        $clientSecret = 'yourSecret';
+        // Create a project at https://console.developers.google.com/
+        $clientId 	= GP_CLIENTID;
+        $clientSecret = GP_CLIENTSECRET;
         // Change this if you are not using the built-in PHP server
-        $redirectUri = HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Fgoogleplus';
+        $redirectUri = GP_REDIRECTURI;
         $provider = new \League\OAuth2\Client\Provider\Google(compact('clientId', 'clientSecret', 'redirectUri'));
 
         $token = $provider->getAccessToken('authorization_code',[
@@ -114,9 +115,9 @@ class ControllerAccountSocialLoginCallBack extends Controller {
     public function twitter() {
         require_once DIR_SYSTEM . 'vendor/twitter/autoload.php';
 
-        define('CONSUMER_KEY','yourKey');
-        define('CONSUMER_SECRET','yourSecret');
-        define('OAUTH_CALLBACK',HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Ftwitter');
+        define('CONSUMER_KEY',TW_CLIENTID);
+        define('CONSUMER_SECRET',TW_CLIENTSECRET);
+        define('OAUTH_CALLBACK',TW_REDIRECTURI);
 
         // Get temporary credentials from session.
         $request_token = [];
@@ -180,7 +181,7 @@ class ControllerAccountSocialLoginCallBack extends Controller {
         if($customer_info) {
             $this->model_account_customer->editCustomerByEmail($data);
         } else {
-            $this->model_account_customer->addCustomer($data);
+            $this->model_account_customer->addCustomerForSocial($data);
         }
 
         // login
@@ -206,7 +207,7 @@ class ControllerAccountSocialLoginCallBack extends Controller {
 
             $this->model_account_activity->addActivity('login',$activity_data);
 
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->url->link('common/home', '', true));
         }
     }
 

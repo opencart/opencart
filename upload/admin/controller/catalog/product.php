@@ -72,6 +72,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -361,6 +362,18 @@ class ControllerCatalogProduct extends Controller {
 					break;
 				}
 			}
+			$ccttype =0;
+			$shortdesc='';
+			$product_dtit = $this->model_catalog_product->getProductDtit($result['product_id']);
+			if(isset($product_dtit) &&  count($product_dtit)>0 )
+			{
+				$ccttype=(int)$product_dtit["ccttype"];
+				$shortdesc=$product_dtit["shortdesc"];
+			}
+
+//			add by terrylu 2016.09.24 for dtit ext but anti-pattern start
+			//add get data here
+//			add by terrylu 2016.09.24 for dtit ext but anti-pattern end
 
 			$data['products'][] = array(
 				'product_id' => $result['product_id'],
@@ -371,6 +384,11 @@ class ControllerCatalogProduct extends Controller {
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+//			add by terrylu 2016.09.24 for dtit ext but anti-pattern start
+			 //aet to data
+				'ccttype'      =>$ccttype,
+				 'shortdesc'  =>$shortdesc,
+//			add by terrylu 2016.09.24 for dtit ext but anti-pattern end
 				'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true)
 			);
 		}
@@ -402,6 +420,13 @@ class ControllerCatalogProduct extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
+
+//		add by terrylu 2016.09.24 for dtit ext start
+		$data['entry_ccttype'] = $this->language->get('entry_ccttype');
+		$data['entry_shortdesc'] = $this->language->get('entry_shortdesc');
+		$data['text_ccttpyewarm'] = $this->language->get('text_ccttpyewarm');
+		$data['text_ccttypecold'] = $this->language->get('text_ccttypecold');
+//		add by terrylu 2016.09.24 for dtit ext end
 
 		$data['token'] = $this->session->data['token'];
 
@@ -633,6 +658,14 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
+
+//		add by terrylu 2016.09.24 for dtit ext  start
+		$data['tab_dtit'] = $this->language->get('tab_dtit');
+		$data['entry_ccttype'] = $this->language->get('entry_ccttype');
+		$data['entry_shortdesc'] = $this->language->get('entry_shortdesc');
+		$data['text_ccttypewarm'] = $this->language->get('text_ccttypewarm');
+		$data['text_ccttypecold'] = $this->language->get('text_ccttypecold');
+//		add by terrylu 2016.09.24 for dtit ext  end
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1220,6 +1253,33 @@ class ControllerCatalogProduct extends Controller {
 			);
 		}
 
+		// Saving Images
+		if (isset($this->request->post['product_saving_image'])) {
+			$product_saving_images = $this->request->post['product_saving_image'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$product_saving_images = $this->model_catalog_product->getProductSavingImages($this->request->get['product_id']);
+		} else {
+			$product_saving_images = array();
+		}
+
+		$data['product_saving_images'] = array();
+
+		foreach ($product_saving_images as $product_saving_image) {
+			if (is_file(DIR_IMAGE . $product_saving_image['image'])) {
+				$saving_image = $product_saving_image['image'];
+				$saving_image_thumb = $product_saving_image['image'];
+			} else {
+				$saving_image = '';
+				$saving_image_thumb = 'no_image.png';
+			}
+
+			$data['product_saving_images'][] = array(
+				'image'      => $saving_image,
+				'thumb'      => $this->model_tool_image->resize($saving_image_thumb, 100, 100),
+				'sort_order' => $product_saving_image['sort_order']
+			);
+		}
+
 		// Downloads
 		$this->load->model('catalog/download');
 
@@ -1288,6 +1348,25 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_layout'] = array();
 		}
+
+//		add by terrylu 2016.09.24 for dtit ext but anti-pattern start
+		if (isset($this->request->post['product_dtit'])) {
+			$data['product_dtit'] = $this->request->post['product_dtit'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_dtit'] = $this->model_catalog_product->getProductDtit($this->request->get['product_id']);
+		} else {
+			$data['product_dtit'] = array();
+		}
+	    if (!empty($data['product_dtit'])) {
+			$data['ccttype'] = $data['product_dtit']['ccttype'];
+			$data['shortdesc'] = $data['product_dtit']['shortdesc'];
+		} else {
+			$data['ccttype'] = 0;
+			$data['shortdesc'] ='';
+		}
+
+
+//		add by terrylu 2016.09.24 for dtit ext but anti-pattern start
 
 		$this->load->model('design/layout');
 

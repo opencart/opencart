@@ -2,7 +2,6 @@
 class ModelTotalTotal extends Model {
 	public function getTotal($total) {
 		$this->load->language('total/total');
-
 		$total['totals'][] = array(
 			'code'       => 'total',
 			'title'      => $this->language->get('text_total'),

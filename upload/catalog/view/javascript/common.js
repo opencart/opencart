@@ -150,7 +150,14 @@ var cart = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					//$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#top').parent().before('<div id="cart_add" class="modal fade">' +
+						'<div class="modal-dialog modal-cart cart-success">' +
+						'<div class="modal-content">' +
+						'<div class="modal-body"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>' +
+						'</div></div></div>');
+
+					$('#cart_add').modal('show');
 
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {

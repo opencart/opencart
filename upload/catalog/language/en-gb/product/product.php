@@ -16,8 +16,9 @@ $_['text_reviews']             = '%s reviews';
 $_['text_write']               = 'Write a review';
 $_['text_login']               = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
 $_['text_no_reviews']          = 'There are no reviews for this product.';
-$_['text_note']                = '<span class="text-danger">Note:</span> HTML is not translated!';
-$_['text_success']             = 'Thank you for your review. It has been submitted to the webmaster for approval.';
+//$_['text_note']                = '<span class="text-danger">Note:</span> HTML is not translated!';
+$_['text_note']                ='';
+$_['text_success']             = 'Thank you for your review. It has been submitted and will appear soon.';
 $_['text_related']             = 'Related Products';
 $_['text_tags']                = 'Tags:';
 $_['text_error']               = 'Product not found!';
@@ -30,14 +31,18 @@ $_['text_week']                = 'week';
 $_['text_semi_month']          = 'half-month';
 $_['text_month']               = 'month';
 $_['text_year']                = 'year';
+// per bulb
+$_['text_per_bulb']             = '(CDN$%s per bulb)';
+// view chart
+$_['text_view_chart']       = 'Compare Brightness:';
 
 // Entry
-$_['entry_qty']                = 'Qty';
+$_['entry_qty']                = 'QTY:';
 $_['entry_name']               = 'Your Name';
 $_['entry_review']             = 'Your Review';
 $_['entry_rating']             = 'Rating';
 $_['entry_good']               = 'Good';
-$_['entry_bad']                = 'Bad';
+$_['entry_bad']                = 'Poor';
 
 // Tabs
 $_['tab_description']          = 'Description';

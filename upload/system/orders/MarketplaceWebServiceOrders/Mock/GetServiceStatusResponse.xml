@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetServiceStatusResponse xmlns="https://mws.amazonservices.com/Orders/2013-09-01">
+   <GetServiceStatusResult>
+        <Status>String</Status>
+        <Timestamp>1969-07-21T02:56:03Z</Timestamp>
+        <MessageId>String</MessageId>
+        <Messages>
+            <Message>
+                <Locale>String</Locale>
+                <Text>String</Text>
+            </Message>
+        </Messages>
+    </GetServiceStatusResult>
+   <ResponseMetadata>
+        <RequestId>String</RequestId>
+    </ResponseMetadata>
+</GetServiceStatusResponse>

@@ -27,18 +27,25 @@ class ControllerCheckoutPayAction extends Controller {
             'href' => $this->url->link('checkout/checkout', '', true)
         );
 
-        $data['paypal_express_url'] = $this->url->link('payment/pp_express/checkout', true);
-        $data['paypal_pro_url'] = $this->url->link('payment/pp_pro', true);
+        if(!empty($this->session->data['order_id']) || (isset($this->request->get['order_id']) && $this->request->get["token"] == md5($this->request->get['order_id'] . $this->session->data['token']))) {
+            $order_id = !empty($this->session->data['order_id']) ? $this->session->data['order_id'] : $this->request->get['order_id'];
+            $token = isset($this->request->get["token"]) ? $this->request->get["token"] : "";
 
-        $data['heading_title'] = $this->language->get('heading_title');
+            $data['paypal_express_url'] = $this->url->link('payment/pp_express/checkout&order_id=' . $order_id . "&token=" . $token, true);
+            $data['paypal_pro_url'] = $this->url->link('payment/pp_pro&order_id=' . $order_id . "&token=" . $token, true);
 
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['column_right'] = $this->load->controller('common/column_right');
-        $data['content_top'] = $this->load->controller('common/content_top');
-        $data['content_bottom'] = $this->load->controller('common/content_bottom');
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+            $data['heading_title'] = $this->language->get('heading_title');
 
-        $this->response->setOutput($this->load->view('checkout/pay_action', $data));
+            $data['column_left'] = $this->load->controller('common/column_left');
+            $data['column_right'] = $this->load->controller('common/column_right');
+            $data['content_top'] = $this->load->controller('common/content_top');
+            $data['content_bottom'] = $this->load->controller('common/content_bottom');
+            $data['footer'] = $this->load->controller('common/footer');
+            $data['header'] = $this->load->controller('common/header');
+
+            $this->response->setOutput($this->load->view('checkout/pay_action', $data));
+        } else {
+            $this->response->redirect($this->url->link('account/order_error', '', true));
+        }
     }
 }

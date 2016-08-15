@@ -36,7 +36,11 @@
       <p><?php echo $text_empty; ?></p>
       <?php } ?>
       <div class="buttons clearfix">
+        <!-- remove the back button  start 2016.09.12 -->
+        <!--
         <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
+        -->
+        <!-- remove the back button  end 2016.09.12 -->
         <div class="pull-right"><a href="<?php echo $add; ?>" class="btn btn-primary"><?php echo $button_new_address; ?></a></div>
       </div>
       <?php echo $content_bottom; ?></div>

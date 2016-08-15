@@ -111,9 +111,8 @@ class ModelAccountOrder extends Model {
 			$limit = 1;
 		}
 
-		$sql = "SELECT o.*,o.date_added as order_date_added,op.order_product_id,op.name AS product_name,op.product_id,op.quantity AS numbers,op.total,p.*,os.NAME as status_name FROM `" . DB_PREFIX . "order` o LEFT JOIN `"
+		$sql = "SELECT GROUP_CONCAT(op.name) AS product_name,GROUP_CONCAT(p.image) AS images,GROUP_CONCAT(op.quantity) AS numbers,SUM(op.total) AS total , o.*,o.date_added AS order_date_added, GROUP_CONCAT(op.order_product_id) AS order_product_id, GROUP_CONCAT(op.product_id) AS product_ids,p.*,os.NAME AS status_name FROM `" . DB_PREFIX . "order` o LEFT JOIN `"
 			. DB_PREFIX . "order_product` op ON (o.order_id = op.order_id) LEFT JOIN `" . DB_PREFIX . "product` p ON op.product_id = p.product_id LEFT JOIN `oc_order_status` AS os ON (o.order_status_id = os.order_status_id) WHERE o.email = '" . $this->customer->getEmail() . "'";
-
 
 		if(!empty($order_month) && (int)$order_month >= 0)
 		{
@@ -128,7 +127,7 @@ class ModelAccountOrder extends Model {
 			$sql .= " AND o.order_status_id=" . $order_status_id ;
 		}
 
-		$sql .=  " ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit;
+		$sql .=  " GROUP BY order_id ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit;
 
 		//$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);
 		$query = $this->db->query($sql);

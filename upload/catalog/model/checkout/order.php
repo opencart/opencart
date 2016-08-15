@@ -1,20 +1,40 @@
 <?php
 class ModelCheckoutOrder extends Model {
 	public function addOrder($data) {
+		$quantity = 0;
+
+		if (isset($data['products'])) {
+			foreach ($data['products'] as $product) {
+				$quantity += (int)$product['quantity'];
+			}
+		}
+		
+		// shipping
+		$shipping_array = array(4.9, 7, 9, 12, 15, 17, 19, 21, 22, 23);
+
+		if($quantity == 0) {
+			$shipping = 0;
+		} else if($quantity >= 10) {
+			$shipping = $shipping_array[count($shipping_array) - 1];
+		} else {
+			$shipping = $shipping_array[$quantity - 1];
+		}
+
+		$data['total'] += $shipping;
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order` SET invoice_prefix = '" . $this->db->escape($data['invoice_prefix'])
 			. "', store_id = '" . (int)$data['store_id'] . "', store_name = '" . $this->db->escape($data['store_name']) . "', store_url = '" . $this->db->escape($data['store_url'])
 			. "', customer_id = '" . (int)$data['customer_id'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname'])
 			. "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone'])
 			. "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '')
 			. "', payment_firstname = '" . $this->db->escape($data['payment_firstname']) . "', payment_lastname = '" . $this->db->escape($data['payment_lastname'])
-			. "', payment_company = '" . $this->db->escape($data['payment_company']) . "', payment_address_1 = '" . $this->db->escape($data['payment_address_1'])
+			. "', payment_company = '', payment_address_1 = '" . $this->db->escape($data['payment_address_1'])
 			. "', payment_address_2 = '" . $this->db->escape($data['payment_address_2']) . "', payment_city = '" . $this->db->escape($data['payment_city'])
 			. "', payment_postcode = '" . $this->db->escape($data['payment_postcode']) . "', payment_country = '" . $this->db->escape($data['payment_country'])
 			. "', payment_country_id = '" . (int)$data['payment_country_id'] . "', payment_zone = '" . $this->db->escape($data['payment_zone']) . "', payment_zone_id = '" . (int)$data['payment_zone_id']
 			. "', payment_address_format = '" . $this->db->escape($data['payment_address_format']) . "', payment_custom_field = '" . $this->db->escape(isset($data['payment_custom_field']) ? json_encode($data['payment_custom_field']) : '')
 			. "', payment_method = '" . $this->db->escape($data['payment_method']) . "', payment_code = '" . $this->db->escape($data['payment_code']) . "', shipping_firstname = '" . $this->db->escape($data['shipping_firstname'])
-			. "', shipping_lastname = '" . $this->db->escape($data['shipping_lastname']) . "', shipping_company = '" . $this->db->escape($data['shipping_company'])
-			. "', shipping_address_1 = '" . $this->db->escape($data['shipping_address_1']) . "', shipping_address_2 = '" . $this->db->escape($data['shipping_address_2'])
+			. "', shipping_lastname = '" . $this->db->escape($data['shipping_lastname']) . "', shipping_company = '', shipping_address_1 = '" . $this->db->escape($data['shipping_address_1']) . "', shipping_address_2 = '" . $this->db->escape($data['shipping_address_2'])
 			. "', shipping_city = '" . $this->db->escape($data['shipping_city']) . "', shipping_postcode = '" . $this->db->escape($data['shipping_postcode'])
 			. "', shipping_country = '" . $this->db->escape($data['shipping_country']) . "', shipping_country_id = '" . (int)$data['shipping_country_id'] . "', shipping_zone = '" . $this->db->escape($data['shipping_zone'])
 			. "', shipping_zone_id = '" . (int)$data['shipping_zone_id'] . "', shipping_address_format = '" . $this->db->escape($data['shipping_address_format'])
@@ -27,7 +47,7 @@ class ModelCheckoutOrder extends Model {
 			. "', date_added = NOW(), date_modified = NOW()");
 
 		$order_id = $this->db->getLastId();
-		// 生成订单编号
+		// general order no.
 		$order_no = date("Ymd",time()) . str_pad($order_id, 6, "0", STR_PAD_LEFT);
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_no='" . $order_no . "' WHERE order_id = " . $order_id);
 
@@ -62,7 +82,14 @@ class ModelCheckoutOrder extends Model {
 
 		// Totals
 		if (isset($data['totals'])) {
+			$shippings = array(array("code" => "shipping", "title" => "Shipping", "value" => $shipping, "sort_order" => 2));
+			$data['totals'] = array_merge($data['totals'], $shippings);
+
 			foreach ($data['totals'] as $total) {
+				if($total['code'] == "total") {
+					$total['value'] += $shipping;
+				}
+
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 			}
 		}
@@ -262,6 +289,11 @@ class ModelCheckoutOrder extends Model {
 		} else {
 			return false;
 		}
+	}
+
+	public function updateOrderStatus($order_id, $order_status_id) {
+		// Update the DB with the new statuses
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 	}
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {

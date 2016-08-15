@@ -53,6 +53,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_reports'] = $this->language->get('text_reports');
 		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
+		$data['text_report_sale_amazon_order'] = $this->language->get('text_report_sale_amazon_order');
 		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
 		$data['text_report_sale_shipping'] = $this->language->get('text_report_sale_shipping');
 		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
@@ -148,6 +149,7 @@ class ControllerCommonMenu extends Controller {
 		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], true);
 		$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], true);
 		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], true);
+		$data['report_sale_amazon_order'] = $this->url->link('report/sale_amazon_order','token=' . $this->session->data['token'], true);
 		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], true);
 		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], true);
 		$data['report_sale_return'] = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], true);

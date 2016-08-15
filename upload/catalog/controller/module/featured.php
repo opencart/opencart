@@ -10,7 +10,7 @@ class ControllerModuleFeatured extends Controller {
 		$data['button_cart'] = $this->language->get('button_cart');
 		$data['button_wishlist'] = $this->language->get('button_wishlist');
 		$data['button_compare'] = $this->language->get('button_compare');
-
+		$data['button_viewdetail'] = $this->language->get('button_viewdetail');
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
@@ -58,15 +58,25 @@ class ControllerModuleFeatured extends Controller {
 						$rating = false;
 					}
 
+					$data['limit'] = $setting['limit'];
+					//todo99 terry temp note 2016.09.18 start
+//					$desc =utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length'));
+//					$split =explode("Product Details",$desc);
+					$shortdesc=strip_tags(html_entity_decode($product_info['shortdesc'], ENT_QUOTES, 'UTF-8'));
+					//todo99 terry temp note 2016.09.18 end
 					$data['products'][] = array(
 						'product_id'  => $product_info['product_id'],
 						'thumb'       => $image,
 						'name'        => $product_info['name'],
-						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+						//'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+						'description' =>$shortdesc,
 						'price'       => $price,
 						'special'     => $special,
 						'tax'         => $tax,
 						'rating'      => $rating,
+						'saving_images' => explode(",", $product_info['saving_images']),
+						'ccttype'       =>$product_info['ccttype'],
+					//	'ccttype'       =>"bb",
 						'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 					);
 				}

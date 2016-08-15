@@ -30,6 +30,7 @@
               <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
               <?php } ?>
             </div>
+            <?php if($telephone) { ?>
             <div class="col-sm-3"><strong><?php echo $text_telephone; ?></strong><br>
               <?php echo $telephone; ?><br />
               <br />
@@ -37,6 +38,12 @@
               <strong><?php echo $text_fax; ?></strong><br>
               <?php echo $fax; ?>
               <?php } ?>
+            </div>
+            <?php } ?>
+            <div class="col-sm-3">
+              <strong>Email</strong>
+              <br />
+              <email> <a href="mailto:sales@xlight.ca">sales@xlight.ca</a> </email>
             </div>
             <div class="col-sm-3">
               <?php if ($open) { ?>

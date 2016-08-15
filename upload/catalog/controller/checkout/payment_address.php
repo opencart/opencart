@@ -29,6 +29,9 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		}
 
 		$this->load->model('account/address');
+		// get first name & last name
+		$data['firstname'] = $this->customer->getFirstName();
+		$data['lastname'] = $this->customer->getLastName();
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
 

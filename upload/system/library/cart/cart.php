@@ -163,6 +163,7 @@ class Cart {
 					}
 				}
 
+				$original_price = $product_query->row['price'];
 				$price = $product_query->row['price'];
 
 				// Product Discounts
@@ -248,6 +249,7 @@ class Cart {
 					'minimum'         => $product_query->row['minimum'],
 					'subtract'        => $product_query->row['subtract'],
 					'stock'           => $stock,
+					'original_price' => $original_price,
 					'price'           => ($price + $option_price),
 					'total'           => ($price + $option_price) * $cart['quantity'],
 					'reward'          => $reward * $cart['quantity'],
@@ -327,29 +329,82 @@ class Cart {
 
 	public function getTaxes() {
 		$tax_data = array();
-
+		$tax_shipping_data = array();
+		// shipping
+		$shipping_array = array(4.9, 7, 9, 12, 15, 17, 19, 21, 22, 23);
+		$quantity = 0;
 		foreach ($this->getProducts() as $product) {
 			if ($product['tax_class_id']) {
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {
 					if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
+						// add shipping * tax_rate to tax
 						$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $product['quantity']);
 					} else {
 						$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $product['quantity']);
 					}
 				}
 			}
+
+			$quantity += $product['quantity'];
 		}
 
-		return $tax_data;
+		if($quantity == 0) {
+			$shipping = 0;
+		} else if($quantity >= 10) {
+			$shipping = $shipping_array[count($shipping_array) - 1];
+		} else {
+			$shipping = $shipping_array[$quantity - 1];
+		}
+
+		if(isset($tax_rate['tax_rate_id'])) {
+			// shipping * rate
+			$shipping_rate = $shipping * $this->tax->getRate($tax_rate['tax_rate_id'])/100;
+
+			foreach ($tax_data as $key => $value) {
+				$tax_shipping_data = array(
+					$key => $value + $shipping_rate);
+			}
+		}
+
+		return $tax_shipping_data;
 	}
 
 	public function getTotal() {
 		$total = 0;
 
+		// shipping
+		$shipping_array = array(4.9, 7, 9, 12, 15, 17, 19, 21, 22, 23);
+		$quantity = 0;
+		$tax_class_id = 0;
+
+		if($quantity == 0) {
+			$shipping = 0;
+		} else if($quantity >= 10) {
+			$shipping = $shipping_array[count($shipping_array) - 1];
+		} else {
+			$shipping = $shipping_array[$quantity - 1];
+		}
+
 		foreach ($this->getProducts() as $product) {
+			$quantity += $product['quantity'];
 			$total += $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'];
+			$tax_class_id = $product['tax_class_id'];
+		}
+
+		// shipping * rate
+		$shipping_rate = $shipping * $this->tax->getRate($tax_class_id)/100;
+		$total += ($shipping + $shipping_rate);
+
+		return $total;
+	}
+
+	public function getOriginalTotal() {
+		$total = 0;
+
+		foreach ($this->getProducts() as $product) {
+			$total += $product['original_price'] * $product['quantity'];
 		}
 
 		return $total;

@@ -52,6 +52,9 @@ class ControllerPaymentPPPro extends Controller {
 			'value' => 'SOLO'
 		); */
 
+
+		$data['credit'] = $this->request->get['credit'];
+
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {
@@ -105,9 +108,15 @@ class ControllerPaymentPPPro extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/pp_pro', $data));
+		if(empty($this->session->data['order_id'])) {
+			$this->session->data['order_id'] = $this->request->get['order_id'];
+		}
 
-		//return $this->load->view('payment/pp_pro', $data);
+		if((empty($this->session->data['order_id']) || !isset($this->session->data['order_id'])) &&  $this->request->get["token"] != md5($this->request->get['order_id'] . $this->session->data['token'])) {
+			$this->response->redirect($this->url->link('account/order_error', '', true));
+		}
+
+		$this->response->setOutput($this->load->view('payment/pp_pro', $data));
 	}
 
 	public function send() {
@@ -121,6 +130,24 @@ class ControllerPaymentPPPro extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
+		$quantity = 0;
+		foreach ($this->cart->getProducts() as $item) {
+			$quantity += $item['quantity'];
+		}
+
+		// shipping
+		$shipping_array = array(4.9, 7, 9, 12, 15, 17, 19, 21, 22, 23);
+
+		if($quantity == 0) {
+			$shipping = 0;
+		} else if($quantity >= 10) {
+			$shipping = $shipping_array[count($shipping_array) - 1];
+		} else {
+			$shipping = $shipping_array[$quantity - 1];
+		}
+
+		$order_info['total'] += $shipping;
+
 		$request  = 'METHOD=DoDirectPayment';
 		$request .= '&VERSION=51.0';
 		$request .= '&USER=' . urlencode($this->config->get('pp_pro_username'));
@@ -131,7 +158,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$request .= '&CREDITCARDTYPE=' . $this->request->post['cc_type'];
 		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
-		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year']);
+		$request .= '&CARDSTART=' . urlencode(01 . 2016);
 		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year']);
 		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
 

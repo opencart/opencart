@@ -38,8 +38,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			}
 
 			// Payment Methods
-			$method_data = array("cod" => array("code" => "cod","title" => "Cash On Delivery"),
-								  "pay_online" => array("code" => "pay_online","title" => "Pay Online"));
+			$method_data = array("pay_online" => array("code" => "pay_online","title" => "Pay Online"));
 			/*$method_data = array();
 			$this->load->model('extension/extension');
 

@@ -20,24 +20,6 @@
 </div>
 <?php } ?>
 <?php } ?>
-
-<?php if ($modules) { ?>
-  <h2><?php echo $text_next; ?></h2>
-  <p><?php echo $text_next_choice; ?></p>
-  <ul class="nav nav-tabs" role="tablist">
-    <?php foreach ($module_names as $module_name) { ?>
-      <li role="presentation">
-        <a href="#<?php echo $module_name; ?>" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false"><?php echo $module_name; ?></a>
-      </li>
-    <?php } ?>
-  </ul>
-  <div class="tab-content">
-    <?php foreach ($modules as $module) { ?>
-      <?php echo $module; ?>
-    <?php } ?>
-  </div>
-<?php } ?>
-<br />
 <p><strong><?php echo $text_comments; ?></strong></p>
 <p>
   <textarea name="comment" rows="8" class="form-control"><?php echo $comment; ?></textarea>
@@ -63,7 +45,6 @@
 <?php } ?>
 <script>
   $(function () {
-    // tab,默认选中第一个
     $('ul.nav-tabs > li:first').addClass('active');
     $('.tab-content > [class="tab-pane"]').removeClass('active');
     $('.tab-content > [class="tab-pane"]:first').addClass('active');

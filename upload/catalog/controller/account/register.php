@@ -20,6 +20,26 @@ class ControllerAccountRegister extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
+
+			/*
+             *  Sycn the account from ec to bbs
+             * now, temporary call it directly ,
+             * furturn ,change to MQ
+			 *  add by terry 20160828 start
+             * */
+			if(SYNC_ACCOUNT=="1")
+			{
+				if($customer_id) {
+					$this->syncAccountEC2BBS(HTTP_SYNC_API,
+						$this->request->post['firstname'],
+						$this->request->post['lastname'],
+						$this->request->post['email'],
+						$this->request->post['password']
+					);
+				}
+			}
+			//add by terry 20160828 end
+
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
@@ -491,5 +511,44 @@ class ControllerAccountRegister extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	//send the post via aync
+	function curl_post_async($url, $params)
+	{
+		/*
+                foreach ($params as $key => &$val) {
+                    if (is_array($val)) $val = implode(',', $val);
+                    $post_params[] = $key.'='.urlencode($val);
+                }
+                $post_string = implode('/', $post_params);
+                */
+		$post_string ="";
+		$parts=parse_url($url);
+
+		$fp = fsockopen($parts['host'],
+			isset($parts['port'])?$parts['port']:80,
+			$errno, $errstr, 30);
+
+		$out = "POST ".$parts['path']." HTTP/1.1\r\n";
+		$out.= "Host: ".$parts['host']."\r\n";
+		$out.= "Content-Type: application/x-www-form-urlencoded\r\n";
+		$out.= "Content-Length: ".strlen($post_string)."\r\n";
+		$out.= "Connection: Close\r\n\r\n";
+		if (isset($post_string)) $out.= $post_string;
+
+		fwrite($fp, $out);
+		fclose($fp);
+	}
+
+	//Account from ec tobbs
+	function  syncAccountEC2BBS($url,$firstname,$lastname,$email,$password)
+	{
+		$urlFormat = $url."/".$email."/".$firstname."/"."$lastname"."/".$password;
+		$log = new Log('syncAccount.log');
+		$log->write("customer callsyncAccountEC2BBS.. ");
+		$log->write($urlFormat);
+		//sample http://x.ca:10002/bbs/customer/b2@qq.com/f2/l2/123456
+		$this->curl_post_async($urlFormat);
 	}
 }

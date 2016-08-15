@@ -9,7 +9,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_company'] = $this->language->get('entry_company');
+		//$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
 		$data['entry_address_2'] = $this->language->get('entry_address_2');
 		$data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -162,7 +162,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 		if (!$json) {
 			$this->session->data['shipping_address']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['shipping_address']['lastname'] = $this->request->post['lastname'];
-			$this->session->data['shipping_address']['company'] = $this->request->post['company'];
+			//$this->session->data['shipping_address']['company'] = $this->request->post['company'];
 			$this->session->data['shipping_address']['address_1'] = $this->request->post['address_1'];
 			$this->session->data['shipping_address']['address_2'] = $this->request->post['address_2'];
 			$this->session->data['shipping_address']['postcode'] = $this->request->post['postcode'];

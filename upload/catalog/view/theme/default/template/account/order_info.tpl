@@ -6,15 +6,40 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <!--<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>-->
+  <div id="recorder" class="modal fade in">
+    <div class="modal-dialog modal-cart cart-success">
+      <div class="modal-content">
+        <div class="modal-body">
+          <i class="fa fa-check-circle"></i>
+          <?php echo $success; ?>
+        </div>
+      </div>
+    </div>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <!--<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>-->
+  <div id="recorder" class="modal fade in">
+    <div class="modal-dialog modal-cart cart-danger">
+      <div class="modal-content">
+        <div class="modal-body">
+          <i class="fa fa-check-circle"></i>
+          <?php echo $success; ?>
+        </div>
+      </div>
+    </div>
   </div>
   <?php } ?>
+  <script>
+    $(function () {
+      $('#recorder').modal('show');
+    });
+  </script>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>

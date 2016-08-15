@@ -170,6 +170,7 @@
       <li><a class="parent"><?php echo $text_sale; ?></a>
         <ul>
           <li><a href="<?php echo $report_sale_order; ?>"><?php echo $text_report_sale_order; ?></a></li>
+          <li><a href="<?php echo $report_sale_amazon_order; ?>"><?php echo $text_report_sale_amazon_order; ?></a></li>
           <li><a href="<?php echo $report_sale_tax; ?>"><?php echo $text_report_sale_tax; ?></a></li>
           <li><a href="<?php echo $report_sale_shipping; ?>"><?php echo $text_report_sale_shipping; ?></a></li>
           <li><a href="<?php echo $report_sale_return; ?>"><?php echo $text_report_sale_return; ?></a></li>

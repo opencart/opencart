@@ -10,14 +10,15 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			// Validate if shipping method has been set.
-			if (!isset($this->session->data['shipping_method'])) {
+			/*if (!isset($this->session->data['shipping_method'])) {
 				$redirect = $this->url->link('checkout/checkout', '', true);
-			}
-		} else {
+			}*/
+		}
+		/*else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-		}
+		}*/
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
@@ -100,6 +101,15 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$this->load->language('checkout/checkout');
 
+			$data['text_guarantee'] = $this->language->get('text_guarantee');
+			$data['text_accepted_payment_methods'] = $this->language->get('text_accepted_payment_methods');
+			$data['text_free_return'] = $this->language->get('text_free_return');
+			$data['text_free_return_content'] = $this->language->get('text_free_return_content');
+			$data['text_safe_secured'] = $this->language->get('text_safe_secured');
+			$data['text_safe_secured_content'] = $this->language->get('text_safe_secured_content');
+			$data['text_instant_help'] = $this->language->get('text_instant_help');
+			$data['text_instant_help_content'] = $this->language->get('text_instant_help_content');
+
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 			$order_data['store_id'] = $this->config->get('config_store_id');
 			$order_data['store_name'] = $this->config->get('config_name');
@@ -136,7 +146,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 			$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
-			$order_data['payment_company'] = $this->session->data['payment_address']['company'];
+			//$order_data['payment_company'] = $this->session->data['payment_address']['company'];
 			$order_data['payment_address_1'] = $this->session->data['payment_address']['address_1'];
 			$order_data['payment_address_2'] = $this->session->data['payment_address']['address_2'];
 			$order_data['payment_city'] = $this->session->data['payment_address']['city'];
@@ -163,7 +173,7 @@ class ControllerCheckoutConfirm extends Controller {
 			if ($this->cart->hasShipping()) {
 				$order_data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 				$order_data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
-				$order_data['shipping_company'] = $this->session->data['shipping_address']['company'];
+				//$order_data['shipping_company'] = $this->session->data['shipping_address']['company'];
 				$order_data['shipping_address_1'] = $this->session->data['shipping_address']['address_1'];
 				$order_data['shipping_address_2'] = $this->session->data['shipping_address']['address_2'];
 				$order_data['shipping_city'] = $this->session->data['shipping_address']['city'];
@@ -319,10 +329,6 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['accept_language'] = '';
 			}
 
-			$this->load->model('checkout/order');
-
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
-
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
 			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 
@@ -333,6 +339,9 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['column_total'] = $this->language->get('column_total');
 
 			$this->load->model('tool/upload');
+
+			$quantity = 0;
+			$tax_class_id = 0;
 
 			$data['products'] = array();
 
@@ -389,10 +398,14 @@ class ControllerCheckoutConfirm extends Controller {
 					'recurring'  => $recurring,
 					'quantity'   => $product['quantity'],
 					'subtract'   => $product['subtract'],
-					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+					'price'      => $this->currency->format($product['price'], $this->session->data['currency']),
+					'original_price'	=> $this->currency->format($product['original_price'], $this->session->data['currency']),
+					'total'      => $this->currency->format($product['price'] * $product['quantity'], $this->session->data['currency']),
 					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				);
+
+				$quantity += $product['quantity'];
+				$tax_class_id = $product['tax_class_id'];
 			}
 
 			// Gift Voucher
@@ -407,12 +420,81 @@ class ControllerCheckoutConfirm extends Controller {
 				}
 			}
 
+			// shipping
+			$shipping_array = array(4.9, 7, 9, 12, 15, 17, 19, 21, 22, 23);
+
+			if($quantity == 0) {
+				$shipping = 0;
+			} else if($quantity >= 10) {
+				$shipping = $shipping_array[count($shipping_array) - 1];
+			} else {
+				$shipping = $shipping_array[$quantity - 1];
+			}
+
+			// shipping * rate
+			$shipping_rate = $shipping * $this->tax->getRate($tax_class_id)/100;
+
 			$data['totals'] = array();
+
+			foreach ($totals as $key => $total) {
+				if($total['code'] == 'tax') {
+					$total['value'] += $shipping_rate;
+				}
+
+				if($total['code'] == "total") {
+					$total['class'] = "price-total";
+					$total['value'] += ($shipping + $shipping_rate);
+				} else {
+					$total['class'] = "";
+				}
+
+				$total['addin'] = "";
+
+				if($total['code'] == "sub_total") {
+					$total['title'] = "Cart subtotal";
+					$total['addin'] = $this->cart->getOriginalTotal();
+				}
+
+				$data['results'][] = array(
+					'code'	=> $total['code'],
+					'title' => $total['title'],
+					'value' => $total['value'],
+					'text'	=> $this->currency->format($total['value'], $this->session->data['currency']),
+					'class' => $total['class'],
+					'addin' => $total['addin'],
+					'sort_order' => $key
+				);
+			}
+
+			$this->load->model('checkout/order');
+
+			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+
+			// update order status to pending
+			$this->load->model('checkout/order');
+			$this->model_checkout_order->updateOrderStatus($this->session->data['order_id'], $this->config->get('pp_express_pending_status_id'));
+
+			$totals = $data['results'];
+
+			$data['shipping'][] = array("code" => "shipping", "title" => "Shipping", "value" => $shipping, "class" => "", "addin" => 0);
+			$totals = $this->array_push_before($totals, $data['shipping'], 1);
+
+			if($this->cart->getOriginalTotal() - $this->cart->getSubTotal() > 0) {
+				$data['saving'][] = array("code" => "price-saving", "title" => "Saving", "value" => ($this->cart->getOriginalTotal() - $this->cart->getSubTotal()) ,"class" =>"price-saving","addin" => 0, 'sort_order' => count($totals) + 1);
+			} else {
+				$data['saving'][] = array("code" => "price-saving", "title" => "Saving", "value" => ($this->cart->getOriginalTotal() - $this->cart->getSubTotal()) ,"class" =>"price-saving hide","addin" => 0, 'sort_order' => count($totals) + 1);
+			}
+
+			$order_data['totals'] = $this->array_push_before($totals, $data['saving'], count($totals));
 
 			foreach ($order_data['totals'] as $total) {
 				$data['totals'][] = array(
+					'code' => $total['code'],
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+					'value' => $total['value'],
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
+					'class' => $total['class'],
+					'addin' => $total['addin']
 				);
 			}
 
@@ -422,5 +504,24 @@ class ControllerCheckoutConfirm extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));
+	}
+
+	/**
+	 * @return array
+	 * @param array $src
+	 * @param array $in
+	 * @param int|string $pos
+	 */
+	function array_push_before($src,$in,$pos){
+		$R = array();
+		if(is_int($pos))
+			$R=array_merge(array_slice($src,0,$pos), $in, array_slice($src,$pos));
+		else{
+			foreach($src as $k=>$v){
+				if($k==$pos)
+					$R=array_merge($R,$in);
+				$R[$k]=$v;
+			}
+		}return $R;
 	}
 }

@@ -50,6 +50,11 @@ class ControllerAccountLogin extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+
+			if( SSO === "1") {
+				setcookie('emailec',$this->customer->getEmail(), strtotime('+30 days'), '/', DOMAIN);
+				setcookie('tokenec',md5($this->customer->getEmail() . SECRET),strtotime('+30 days'), '/', DOMAIN);
+			}
 			// Unset guest
 			unset($this->session->data['guest']);
 
@@ -86,10 +91,15 @@ class ControllerAccountLogin extends Controller {
 			$this->model_account_activity->addActivity('login', $activity_data);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
+			if(!empty($this->session->data['redirect_after_login'])) {
+				$url = $this->session->data['redirect_after_login'];
+				unset($this->session->data['redirect_after_login']);
+				$this->redirect($this->session->data['redirect_after_login']);
+			}
+			else if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
-				$this->response->redirect($this->url->link('account/account', '', true));
+				$this->response->redirect($this->url->link('common/home', '', true));
 			}
 		}
 

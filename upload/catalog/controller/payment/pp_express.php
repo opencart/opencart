@@ -83,8 +83,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
 		$result = $this->model_payment_pp_express->call($data);
-
-		/**
+			/**
 		 * If a failed PayPal setup happens, handle it.
 		 */
 		if (!isset($result['TOKEN'])) {
@@ -1244,7 +1243,7 @@ class ControllerPaymentPPExpress extends Controller {
 						if ($this->session->data['paypal_redirect_count'] == 2) {
 							$this->session->data['paypal_redirect_count'] = 0;
 							$this->session->data['error'] = $this->language->get('error_too_many_failures');
-							$this->response->redirect($this->url->link('checkout/checkout', '', true));
+							//$this->response->redirect($this->url->link('checkout/checkout', '', true));
 						} else {
 							$this->session->data['paypal_redirect_count']++;
 						}
@@ -1275,6 +1274,14 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('payment/pp_express');
 		$this->load->model('tool/image');
 		$this->load->model('checkout/order');
+
+		if(empty($this->session->data['order_id'])) {
+			$this->session->data['order_id'] = $this->request->get['order_id'];
+		}
+
+		if((empty($this->session->data['order_id']) || !isset($this->session->data['order_id'])) &&  $this->request->get["token"] != md5($this->request->get['order_id'] . $this->session->data['token'])) {
+			$this->response->redirect($this->url->link('account/order_error', '', true));
+		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -1321,7 +1328,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
 		$result = $this->model_payment_pp_express->call($data);
-
 		/**
 		 * If a failed PayPal setup happens, handle it.
 		 */

@@ -27,21 +27,21 @@
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
       <div class="col-sm-10">
-        <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
+        <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
       </div>
     </div>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
       <div class="col-sm-10">
-        <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
+        <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
       </div>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
       <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
       <div class="col-sm-10">
         <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
       </div>
-    </div>
+    </div>-->
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
       <div class="col-sm-10">

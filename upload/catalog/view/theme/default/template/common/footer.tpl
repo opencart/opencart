@@ -45,10 +45,10 @@
     <ul class="list-unstyled">
       <li><a href="http://facebook.com/xlightca" target="_blank"><i class="fa fa-facebook"></i></a></li>
       <li><a href="http://twitter.com/xlightca" target="_blank"><i class="fa fa-twitter"></i></a></li>
-      <li><a href="https://www.linkedin.com/in/xlightca" target="_blank"><i class="fa fa-linkedin"></i></a></li>
       <li><a href="https://instagram.com/xlightca" target="_blank"><i class="fa fa-instagram"></i></a></li>
-      <li><a href="https://plus.google.com/+XlightCanada" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-      <li class="pull-right">Xlight © 2016</li>
+      <!-- change the link terry 2016.09.12 start-->
+      <li class="pull-right">Xlight © 2016 | <a href="http://bbs.xlight.ca/sso" target="_blank" class="sso"><i class="fa fa-commenting"></i>XFans</a></li>
+      <!-- change the link terry 2016.09.12 end-->
     </ul>
   </div>
 </footer>

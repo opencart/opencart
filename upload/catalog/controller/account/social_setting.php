@@ -14,9 +14,9 @@ if(!session_id()) {
 }
 
 $fb_provider = new \League\OAuth2\Client\Provider\Facebook([
-    'clientId'		=>	'yourKey',
-    'clientSecret'	=>	'yourSecret',
-    'redirectUri'		=>	HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Ffacebook',
+    'clientId'		=>	FB_CLIENTID,
+    'clientSecret'	=>	FB_CLIENTSECRET,
+    'redirectUri'		=>	FB_REDIRECTURI,
     'graphApiVersion'		=>	'v2.7'
 ]);
 
@@ -44,9 +44,9 @@ if(!session_id()) {
 }
 
 $ins_provider = new League\OAuth2\Client\Provider\Instagram([
-    'clientId'		=>	'yourKey',
-    'clientSecret'	=>	'yourSecret',
-    'redirectUri'		=>	HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Finstagram',
+    'clientId'		=>	INS_CLIENTID,
+    'clientSecret'	=>	INS_CLIENTSECRET,
+    'redirectUri'		=>	INS_REDIRECTURI,
 ]);
 
 if(!isset($_GET['code'])) {
@@ -62,10 +62,10 @@ if(!isset($_GET['code'])) {
 require_once DIR_SYSTEM . 'vendor/googleplus/autoload.php';
 
 // Create a project at https://console.developers.google.com/
-$clientId 	= 'yourkey';
-$clientSecret = 'yourSecret';
+$clientId 	= GP_CLIENTID;
+$clientSecret = GP_CLIENTSECRET;
 // Change this if you are not using the built-in PHP server
-$redirectUri = HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Fgoogleplus';
+$redirectUri = GP_REDIRECTURI;
 
 if(!session_id()) {
     session_start();
@@ -110,13 +110,12 @@ if (!DEBUG) {
     }
 }
 
-define('CONSUMER_KEY','yourKey');
-define('CONSUMER_SECRET','yourSecret');
-define('OAUTH_CALLBACK',HTTP_SOCIAL_LOGIN . 'index.php?route=account%2Fsocial_login_callback%2Ftwitter');
+define('CONSUMER_KEY',TW_CLIENTID);
+define('CONSUMER_SECRET',TW_CLIENTSECRET);
+define('OAUTH_CALLBACK',TW_REDIRECTURI);
 
 // Build TwitterOAuth object with client credentials.
 $connection = new \Abraham\TwitterOAuth\TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-
 // Get temporary credentials
 $request_token = $connection->oauth('oauth/request_token', ['oauth_callback' => OAUTH_CALLBACK]);
 
@@ -133,5 +132,5 @@ switch ($connection->getLastHttpCode()) {
         break;
     default:
         // Show notification if something went wrong.
-        echo 'Could not connect to Twitter. Refresh the page or try again later.';
+        //echo 'Could not connect to Twitter. Refresh the page or try again later.';
 }

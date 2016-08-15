@@ -66,6 +66,9 @@ class ControllerAccountEdit extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');
+		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
@@ -151,6 +154,14 @@ class ControllerAccountEdit extends Controller {
 			$data['fax'] = $customer_info['fax'];
 		} else {
 			$data['fax'] = '';
+		}
+
+		if(isset($this->request->post['newsletter'])) {
+			$data['newsletter'] = $this->request->post['newsletter'];
+		} elseif (!empty($customer_info)) {
+			$data['newsletter'] = $customer_info['newsletter'];
+		} else {
+			$data['newsletter'] = '';
 		}
 
 		// Custom Fields

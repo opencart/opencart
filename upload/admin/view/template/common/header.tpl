@@ -40,6 +40,17 @@
     <?php } ?>
     <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
   <?php if ($logged) { ?>
+   <ul class="nav pull-left">
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"  title="<?php echo $text_new; ?>"><i class="fa fa-plus fa-lg"></i> <span class="header-item"><?php echo $text_new; ?></span></a>
+      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+        <li><a href="<?php echo $new_product; ?>" style="display: block; overflow: auto;"><?php echo $text_new_product; ?></a></li>
+        <li><a href="<?php echo $new_category; ?>" style="display: block; overflow: auto;"><?php echo $text_new_category; ?></a></li>
+        <li><a href="<?php echo $new_manufacturer; ?>" style="display: block; overflow: auto;"><?php echo $text_new_manufacturer; ?></a></li>
+        <li><a href="<?php echo $new_customer; ?>" style="display: block; overflow: auto;"><?php echo $text_new_customer; ?></a></li>
+        <li><a href="<?php echo $new_download; ?>" style="display: block; overflow: auto;"><?php echo $text_new_download; ?></a></li>
+      </ul>
+    </li> 
+  </ul>
   <ul class="nav pull-right">
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if($alerts > 0) { ?><span class="label label-danger pull-left"><?php echo $alerts; ?></span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">

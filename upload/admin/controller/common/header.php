@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
@@ -40,6 +45,14 @@ class ControllerCommonHeader extends Controller {
 		$data['text_support'] = $this->language->get('text_support');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 		$data['text_logout'] = $this->language->get('text_logout');
+		
+		$data['text_search_options'] = $this->language->get('text_search_options');
+		$data['text_new'] = $this->language->get('text_new');
+		$data['text_new_category'] = $this->language->get('text_new_category');
+		$data['text_new_customer'] = $this->language->get('text_new_customer');
+		$data['text_new_download'] = $this->language->get('text_new_download');
+		$data['text_new_manufacturer'] = $this->language->get('text_new_manufacturer');
+		$data['text_new_product'] = $this->language->get('text_new_product');
 
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = '';
@@ -50,6 +63,13 @@ class ControllerCommonHeader extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true);
 			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], true);
+			
+			// fast add menu
+			$data['new_category'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'], true);
+			$data['new_customer'] = $this->url->link('user/user/add', 'token=' . $this->session->data['token'], true);
+			$data['new_download'] = $this->url->link('catalog/download/add', 'token=' . $this->session->data['token'], true);
+			$data['new_manufacturer'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'], true);
+			$data['new_product'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'], true);
 
 			// Orders
 			$this->load->model('sale/order');

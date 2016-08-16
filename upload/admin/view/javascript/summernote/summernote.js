@@ -630,7 +630,11 @@
         return node.nodeValue.length;
       }
 
-      return node.childNodes.length;
+       if (node) {
+         return node.childNodes.length;
+       }
+
+      return false;
     };
 
     /**

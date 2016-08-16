@@ -687,7 +687,6 @@ h2.price {
 
 @media (min-width: 1200px) {
 	#content .col-lg-2:nth-child(6n+1),
-	#content .col-lg-2:nth-child(6n+1),
 	#content .col-lg-3:nth-child(4n+1),
 	#content .col-lg-4:nth-child(3n+1),
 	#content .col-lg-6:nth-child(2n+1) {

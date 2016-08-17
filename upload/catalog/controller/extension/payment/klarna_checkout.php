@@ -253,7 +253,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['text_choose_shipping_method'] = $this->language->get('text_choose_shipping_method');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-        $data['text_no_shipping'] = $this->language->get('error_no_shipping');
+		$data['text_no_shipping'] = $this->language->get('error_no_shipping');
 
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -688,17 +688,17 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 							if ($this->cart->hasShipping()) {
 								$shipping_method = array();
 
-                                if (isset($this->session->data['shipping_method']) && !empty($this->session->data['shipping_method'])) {
-                                    foreach ($shipping_methods as $individual_shipping_method) {
-                                        if ($individual_shipping_method['quote']) {
-                                            foreach ($individual_shipping_method['quote'] as $quote) {
-                                                if (($this->session->data['shipping_method']['code'] == $quote['code']) && ($this->session->data['shipping_method']['title'] == $quote['title']) && ($this->session->data['shipping_method']['cost'] == $quote['cost']) && ($this->session->data['shipping_method']['tax_class_id'] == $quote['tax_class_id'])) {
-                                                    $shipping_method = $quote;
-                                                    break 2;
-                                                }
-                                            }
-                                        }
-                                    }
+								if (isset($this->session->data['shipping_method']) && !empty($this->session->data['shipping_method'])) {
+									foreach ($shipping_methods as $individual_shipping_method) {
+										if ($individual_shipping_method['quote']) {
+											foreach ($individual_shipping_method['quote'] as $quote) {
+												if (($this->session->data['shipping_method']['code'] == $quote['code']) && ($this->session->data['shipping_method']['title'] == $quote['title']) && ($this->session->data['shipping_method']['cost'] == $quote['cost']) && ($this->session->data['shipping_method']['tax_class_id'] == $quote['tax_class_id'])) {
+													$shipping_method = $quote;
+													break 2;
+												}
+											}
+										}
+									}
 								}
 
 								// If the current shipping method isn't in the available shipping methods, assign default
@@ -1648,11 +1648,11 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$merchant_urls['terms'] = html_entity_decode($this->url->link('information/information', 'information_id=' . $this->config->get('klarna_checkout_terms'), true));
 		}
 
-        $country_info = $this->model_localisation_country->getCountry($klarna_account['country']);
+		$country_info = $this->model_localisation_country->getCountry($klarna_account['country']);
 
-        if ($country_info) {
-            $klarna_order_data['purchase_country'] = $country_info['iso_code_2'];
-        }
+		if ($country_info) {
+			$klarna_order_data['purchase_country'] = $country_info['iso_code_2'];
+		}
 
 		$klarna_order_data['purchase_currency'] = $currency_code;
 		$klarna_order_data['locale'] = $klarna_account['locale'];
@@ -1680,16 +1680,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'allow_separate_shipping_address' => true
 		);
 
-        $shipping_countries = $this->model_extension_payment_klarna_checkout->getCountriesByGeoZone($klarna_account['shipping']);
+		$shipping_countries = $this->model_extension_payment_klarna_checkout->getCountriesByGeoZone($klarna_account['shipping']);
 
-        $klarna_shipping_countries = array();
-        foreach ($shipping_countries as $shipping_country) {
-            $country_info = $this->model_localisation_country->getCountry($shipping_country['country_id']);
+		$klarna_shipping_countries = array();
+		foreach ($shipping_countries as $shipping_country) {
+			$country_info = $this->model_localisation_country->getCountry($shipping_country['country_id']);
 
-            if ($country_info && $country_info['iso_code_2']) {
-                $klarna_shipping_countries[] = $country_info['iso_code_2'];
-            }
-        }
+			if ($country_info && $country_info['iso_code_2']) {
+				$klarna_shipping_countries[] = $country_info['iso_code_2'];
+			}
+		}
 
 		$klarna_order_data['shipping_countries'] = $klarna_shipping_countries;
 

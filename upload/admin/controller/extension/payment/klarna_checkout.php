@@ -43,7 +43,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_environment'] = $this->language->get('entry_environment');
 		$data['entry_country'] = $this->language->get('entry_country');
-        $data['entry_shipping'] = $this->language->get('entry_shipping');
+		$data['entry_shipping'] = $this->language->get('entry_shipping');
 		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_sftp_username'] = $this->language->get('entry_sftp_username');
 		$data['entry_sftp_password'] = $this->language->get('entry_sftp_password');
@@ -57,7 +57,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['help_sftp_username'] = $this->language->get('help_sftp_username');
 		$data['help_sftp_password'] = $this->language->get('help_sftp_password');
 		$data['help_settlement_order_status'] = $this->language->get('help_settlement_order_status');
-        $data['help_shipping'] = $this->language->get('help_shipping');
+		$data['help_shipping'] = $this->language->get('help_shipping');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

@@ -1,7 +1,7 @@
 <?php
-//Heading
+// Heading
 $_['heading_title']                = 'New listings';
-$_['text_ebay']               	   = 'eBay';
+$_['text_ebay']                    = 'eBay';
 $_['text_openbay']                 = 'Openbay Pro';
 
 // Buttons
@@ -14,15 +14,15 @@ $_['text_features']                = 'Features';
 $_['text_catalog']                 = 'Select catalog';
 $_['text_catalog_search']          = 'Search catalog';
 $_['text_search_term']             = 'Search term';
-$_['text_close']           		   = 'Close';
-$_['text_bulk']           		   = 'Create new listings in bulk';
+$_['text_close']                   = 'Close';
+$_['text_bulk']                    = 'Create new listings in bulk';
 
-//Form options / text
+// Form options / text
 $_['text_pixels']                  = 'Pixels';
 $_['text_other']                   = 'Other';
 
-//Profile names
-$_['text_profile']            	   = 'Profiles';
+// Profile names
+$_['text_profile']                 = 'Profiles';
 $_['text_profile_theme']           = 'Theme profile';
 $_['text_profile_shipping']        = 'Shipping profile';
 $_['text_profile_returns']         = 'Returns profile';
@@ -55,16 +55,16 @@ $_['text_esc_key']                 = 'The splash page has been hidden but may no
 $_['text_loading_categories']      = 'Loading categories';
 $_['text_loading_condition']       = 'Loading product conditions';
 $_['text_loading_duration']        = 'Loading listing durations';
-$_['text_total_fee']         	   = 'Total fees';
+$_['text_total_fee']               = 'Total fees';
 $_['text_category_choose']         = 'Find category';
-$_['text_suggested']         	   = 'Suggested categories';
+$_['text_suggested']               = 'Suggested categories';
 $_['text_product_identifiers']     = 'Product identifiers';
-$_['text_ean']    				   = 'EAN';
-$_['text_upc']    				   = 'UPC';
-$_['text_isbn']    				   = 'ISBN';
+$_['text_ean']                     = 'EAN';
+$_['text_upc']                     = 'UPC';
+$_['text_isbn']                    = 'ISBN';
 $_['text_identifier_not_required'] = 'Not required';
 
-//Errors
+// Errors
 $_['text_error_ship_profile']      = 'You need to have a default shipping profile set up';
 $_['text_error_generic_profile']   = 'You need to have a default generic profile set up';
 $_['text_error_return_profile']    = 'You need to have a default return profile set up';

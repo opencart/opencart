@@ -17,7 +17,7 @@ $_['text_recurring_status']                = 'Recurring Status';
 $_['text_payment_method']                  = 'Payment Method';
 $_['text_order_id']                        = 'Order ID';
 $_['text_customer']                        = 'Customer';
-$_['text_email']                           = 'Email';
+$_['text_email']                           = 'E-Mail';
 $_['text_date_added']                      = 'Date Added';
 $_['text_order_status']                    = 'Order Status';
 $_['text_type']                            = 'Type';
@@ -32,7 +32,6 @@ $_['text_status_3']                        = 'Cancelled';
 $_['text_status_4']                        = 'Suspended';
 $_['text_status_5']                        = 'Expired';
 $_['text_status_6']                        = 'Pending';
-
 $_['text_transactions']                    = 'Transactions';
 $_['text_cancel_confirm']                  = 'Profile\'s cancellation cannot be undone! Are you sure want to do this?';
 $_['text_transaction_date_added']          = 'Date added';
@@ -48,15 +47,15 @@ $_['text_transaction_expired']             = 'Expired';
 $_['text_cancelled']                       = 'Recurring payment has been cancelled';
 
 // Column
-$_['column_order_recurring_id']             = 'Recurring ID';
-$_['column_order_id']                       = 'Order ID';
-$_['column_reference']                      = 'Payment Reference';
-$_['column_customer']                       = 'Customer';
-$_['column_date_added']                     = 'Date Added';
-$_['column_status']                         = 'Status';
-$_['column_amount']                         = 'Amount';
-$_['column_type']                           = 'Type';
-$_['column_action']                         = 'Action';
+$_['column_order_recurring_id']            = 'Recurring ID';
+$_['column_order_id']                      = 'Order ID';
+$_['column_reference']                     = 'Payment Reference';
+$_['column_customer']                      = 'Customer';
+$_['column_date_added']                    = 'Date Added';
+$_['column_status']                        = 'Status';
+$_['column_amount']                        = 'Amount';
+$_['column_type']                          = 'Type';
+$_['column_action']                        = 'Action';
 
 // Entry
 $_['entry_order_recurring_id']             = 'Recurring ID';
@@ -67,7 +66,7 @@ $_['entry_date_added']                     = 'Date Added';
 $_['entry_status']                         = 'Status';
 $_['entry_type']                           = 'Type';
 $_['entry_action']                         = 'Action';
-$_['entry_email']                          = 'Email';
+$_['entry_email']                          = 'E-Mail';
 $_['entry_description']                    = 'Recurring Profile\'s description';
 $_['entry_product']                        = 'Product';
 $_['entry_quantity']                       = 'Quantity';

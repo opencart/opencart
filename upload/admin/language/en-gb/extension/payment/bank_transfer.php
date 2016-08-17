@@ -20,4 +20,4 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 
 // Error 
 $_['error_permission']   = 'Warning: You do not have permission to modify payment bank transfer!';
-$_['error_bank']         = 'Bank Transfer Instructions Required!';
+$_['error_bank']         = 'Bank Transfer Instructions required!';

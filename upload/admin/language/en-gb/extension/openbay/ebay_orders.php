@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']			  = 'Import orders';
-$_['text_openbay']			  = 'OpenBay Pro';
-$_['text_ebay']				  = 'eBay';
+$_['heading_title']           = 'Import orders';
+$_['text_openbay']            = 'OpenBay Pro';
+$_['text_ebay']               = 'eBay';
 
 // Buttons
 $_['button_pull_orders']      = 'Start';

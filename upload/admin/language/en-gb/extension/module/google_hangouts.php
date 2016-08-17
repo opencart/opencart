@@ -16,4 +16,4 @@ $_['help_code']        = 'Goto <a href="https://developers.google.com/+/hangouts
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Google Hangouts module!';
-$_['error_code']       = 'Code Required';
+$_['error_code']       = 'Code required';

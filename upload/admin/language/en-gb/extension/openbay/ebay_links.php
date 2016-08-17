@@ -1,8 +1,8 @@
 <?php
 // Heading
 $_['heading_title']           = 'Item links';
-$_['text_openbay']			  = 'OpenBay Pro';
-$_['text_ebay']				  = 'eBay';
+$_['text_openbay']            = 'OpenBay Pro';
+$_['text_ebay']               = 'eBay';
 
 // Buttons
 $_['button_resync']           = 'Re-sync';
@@ -29,7 +29,7 @@ $_['text_text_linked_desc']   = 'Linked items are OpenCart items that have a lin
 $_['text_text_unlinked_desc'] = 'Unlinked items are listings on your eBay account that do not link to any of your OpenCart products.';
 $_['text_text_unlinked_info'] = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['text_text_loading_items'] = 'Loading items';
-$_['text_failed']       	  = 'Failed to load';
+$_['text_failed']             = 'Failed to load';
 $_['text_limit_reached']      = 'The maximum number of checks per request was reached, click the button to continue searching';
 $_['text_stock_error']        = 'Stock error';
 $_['text_listing_ended']      = 'Listing ended';

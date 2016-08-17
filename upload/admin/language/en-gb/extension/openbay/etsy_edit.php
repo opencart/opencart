@@ -7,16 +7,16 @@ $_['text_etsy']           = 'Etsy';
 // Tabs
 
 // Text
-$_['text_option']      	  = 'Select option';
-$_['text_listing_id']  	  = 'Listing ID';
-$_['text_updated']  	  = 'Your Etsy listing has been updated';
-$_['text_edit']  		  = 'Update your Etsy listing';
+$_['text_option']         = 'Select option';
+$_['text_listing_id']     = 'Listing ID';
+$_['text_updated']        = 'Your Etsy listing has been updated';
+$_['text_edit']           = 'Update your Etsy listing';
 
 // Entry
-$_['entry_title']      	  = 'Product title';
+$_['entry_title']         = 'Product title';
 $_['entry_description']   = 'Description';
-$_['entry_price']      	  = 'Price';
-$_['entry_state']      	  = 'State';
+$_['entry_price']         = 'Price';
+$_['entry_state']         = 'State';
 
 // Errors
 $_['error_price_missing'] = 'Price is missing or empty';

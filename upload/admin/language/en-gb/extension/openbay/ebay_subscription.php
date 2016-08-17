@@ -5,14 +5,14 @@ $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
 
 // Buttons
-$_['button_plan_change']  		= 'Change to plan';
+$_['button_plan_change']        = 'Change to plan';
 
 // Columns
-$_['column_plan']  				= 'Plan name';
-$_['column_call_limit']  		= 'Call limit';
-$_['column_price']  			= 'Price (p/month)';
-$_['column_description']  		= 'Description';
-$_['column_current']  			= 'Current plan';
+$_['column_plan']               = 'Plan name';
+$_['column_call_limit']         = 'Call limit';
+$_['column_price']              = 'Price (p/month)';
+$_['column_description']        = 'Description';
+$_['column_current']            = 'Current plan';
 
 // Text
 $_['text_subscription_current'] = 'Current plan';
@@ -25,4 +25,4 @@ $_['text_load_plans']           = 'Loading available plans';
 $_['text_subscription']         = 'Change your OpenBay Pro subscription';
 
 // Errors
-$_['error_ajax_load']      		= 'Sorry, could not get a response. Try later.';
+$_['error_ajax_load']           = 'Sorry, could not get a response. Try later.';

@@ -41,7 +41,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 
 		$this->setShipping();
 
-		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $this->session->data['shipping_address']['country_id'], $this->session->data['currency']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $this->session->data['currency']);
 
 		if (!$klarna_account || !$connector) {
 			$this->model_extension_payment_klarna_checkout->log('Couldn\'t secure connection to Klarna API.');

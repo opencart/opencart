@@ -253,6 +253,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['text_choose_shipping_method'] = $this->language->get('text_choose_shipping_method');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+        $data['text_no_shipping'] = $this->language->get('error_no_shipping');
 
 		$data['button_remove'] = $this->language->get('button_remove');
 

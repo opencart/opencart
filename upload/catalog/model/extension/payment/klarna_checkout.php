@@ -132,7 +132,7 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 	}
 
 	public function getZoneByCode($code, $country_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE `code` = '" . $this->db->escape($code) . "' AND `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE (`code` = '" . $this->db->escape($code) . "' OR `name` = '" . $this->db->escape($code) . "') AND `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
 
 		return $query->row;
 	}

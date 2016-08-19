@@ -106,6 +106,7 @@
 					<td class="text-left required"><?php echo $entry_secret; ?></td>
 					<td class="text-left required"><?php echo $entry_environment; ?></td>
 					<td class="text-left required"><?php echo $entry_country; ?></td>
+					<td class="text-left required"><span data-toggle="tooltip" title="<?php echo $help_shipping; ?>"><?php echo $entry_shipping; ?></span></td>
 					<td class="text-left required"><?php echo $entry_currency; ?></td>
 					<td class="text-left required"><span data-toggle="tooltip" title="<?php echo $help_locale; ?>"><?php echo $entry_locale; ?></span></td>
 					<td class="text-left required"><span data-toggle="tooltip" title="<?php echo $help_api; ?>"><?php echo $entry_api; ?></span></td>
@@ -151,6 +152,17 @@
 					  </select>
 					</td>
 					<td class="text-left">
+					  <select name="klarna_checkout_account[<?php echo $account_row; ?>][shipping]" class="form-control">
+						<?php foreach ($geo_zones as $geo_zone) { ?>
+						<?php if ($geo_zone['geo_zone_id'] == $account['shipping']) { ?>
+						<option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+						<?php } else { ?>
+						<option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+						<?php } ?>
+						<?php } ?>
+					  </select>
+					</td>
+					<td class="text-left">
 					  <select name="klarna_checkout_account[<?php echo $account_row; ?>][currency]" class="form-control">
 						<?php foreach ($currencies as $currency) { ?>
 						<?php if ($currency['code'] == $account['currency']) { ?>
@@ -185,7 +197,7 @@
 				</tbody>
 				<tfoot>
 				  <tr>
-					<td colspan="7"></td>
+					<td colspan="8"></td>
 					<td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="<?php echo $button_account_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
 				  </tr>
 				</tfoot>
@@ -333,6 +345,11 @@ function addAccount() {
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][country]" class="form-control">';
 	<?php foreach ($countries as $country) { ?>
 	html += '    <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
+	<?php } ?>
+	html += '  </select></td>';
+	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][shipping]" class="form-control">';
+	<?php foreach ($geo_zones as $geo_zone) { ?>
+	html += '    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo addslashes($geo_zone['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';

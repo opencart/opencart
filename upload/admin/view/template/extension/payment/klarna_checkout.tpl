@@ -33,6 +33,12 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
               <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_version; ?></label>
+                <div class="col-sm-10" style="padding-top: 9px;">
+                  <span><?php echo $text_version; ?></span>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
                 <div class="col-sm-10">
                   <select name="klarna_checkout_debug" id="input-debug" class="form-control">

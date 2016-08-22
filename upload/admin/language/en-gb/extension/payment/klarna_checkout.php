@@ -33,6 +33,7 @@ $_['text_downloading_settlement']		 = 'Downloading settlement files...';
 $_['text_processing_orders']			 = 'Processing orders...';
 $_['text_processing_order']				 = 'Processing order';
 $_['text_no_files']						 = 'No files to download.';
+$_['text_version']						 = '1.1';
 
 // Column
 $_['column_order_id']					 = 'Order ID';
@@ -108,6 +109,7 @@ $_['entry_sftp_username']				 = 'SFTP Username';
 $_['entry_sftp_password']				 = 'SFTP Password';
 $_['entry_process_settlement']			 = 'Process Settlement Files';
 $_['entry_settlement_order_status']		 = 'Order Status';
+$_['entry_version']						 = 'Extension Version';
 
 // Help
 $_['help_debug']						 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';

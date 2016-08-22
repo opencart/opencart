@@ -31,6 +31,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['text_processing_order'] = $this->language->get('text_processing_order');
 		$data['text_no_files'] = $this->language->get('text_no_files');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_version'] = $this->language->get('text_version');
 
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_total'] = $this->language->get('entry_total');
@@ -49,6 +50,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['entry_sftp_password'] = $this->language->get('entry_sftp_password');
 		$data['entry_process_settlement'] = $this->language->get('entry_process_settlement');
 		$data['entry_settlement_order_status'] = $this->language->get('entry_settlement_order_status');
+		$data['entry_version'] = $this->language->get('entry_version');
 
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_total'] = $this->language->get('help_total');

@@ -35,7 +35,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_version; ?></label>
                 <div class="col-sm-10" style="padding-top: 9px;">
-				  <span><?php echo $text_version; ?></span>
+                  <span><?php echo $text_version; ?></span>
                 </div>
               </div>
               <div class="form-group">

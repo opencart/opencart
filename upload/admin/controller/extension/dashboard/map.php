@@ -89,7 +89,7 @@ class ControllerExtensionDashboardMap extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/analytics/google_analytics')) {
+		if (!$this->user->hasPermission('modify', 'extension/dashboard/map')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

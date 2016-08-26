@@ -5,7 +5,7 @@ $_['heading_title']                    = 'Divido';
 // Text
 $_['text_divido']                      = '<a href="http://divido.com" target="_blank"><img src="view/image/payment/divido.png"></a>';
 $_['text_edit']                        = 'Edit Divido';
-$_['text_extension']                     = 'Extensions';
+$_['text_extension']                   = 'Extensions';
 $_['text_order_info']                  = 'Divido info';
 $_['text_success']                     = 'Success: You have modified the Divido module';
 $_['text_proposal_id']                 = 'Proposal ID';
@@ -31,6 +31,7 @@ $_['entry_cart_threshold']             = 'Cart total threshold';
 $_['entry_threshold_list']             = 'Plan thresholds';
 $_['entry_category']                   = 'Categories';
 
+// Help
 $_['help_api_key']                     = 'Key that identifies you with Divido (obtained from Divido)';
 $_['help_status']                      = 'Status of the payment method';
 $_['help_order_status']                = 'Status of the order when lender has approved';

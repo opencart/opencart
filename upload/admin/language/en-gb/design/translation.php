@@ -14,7 +14,7 @@ $_['column_country']   = 'Country';
 $_['column_progress']  = 'Translation Progress';
 $_['column_action']    = 'Action';
 
-// button
+// Button
 $_['button_install']   = 'Install';
 $_['button_uninstall'] = 'Uninstall';
 $_['button_refresh']   = 'Refresh';

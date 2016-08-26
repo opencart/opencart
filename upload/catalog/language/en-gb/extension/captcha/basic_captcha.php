@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_captcha'] = 'Captcha';
+$_['text_captcha']  = 'Captcha';
 
 // Entry
 $_['entry_captcha'] = 'Enter the code in the box below';

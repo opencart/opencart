@@ -20,7 +20,7 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 2. Rename config-dist.php to config.php and admin/config-dist.php to admin/config.php
 
-3. For Linux/Unix make sure the following folders and files are writeable.
+3. For Linux/Unix make sure the following folders and files are writable.
 
 		chmod 0755 or 0777 system/storage/cache/
 		chmod 0755 or 0777 system/storage/logs/

@@ -2328,6 +2328,47 @@ CREATE TABLE `oc_order_recurring_transaction` (
 -----------------------------------------------------------
 
 --
+-- Table structure for table `oc_order_shipment`
+--
+
+CREATE TABLE `oc_order_shipment` (
+  `order_shipment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `shipping_courier_id` varchar(255) NOT NULL DEFAULT '',
+  `tracking_number` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`order_shipment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_shipping_courier`
+--
+
+CREATE TABLE `oc_shipping_courier` (
+  `shipping_courier_id` int(11) NOT NULL,
+  `shipping_courier_code` varchar(255) NOT NULL DEFAULT '',
+  `shipping_courier_name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`shipping_courier_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `oc_shipping_courier`
+--
+
+INSERT INTO `oc_shipping_courier` (`shipping_courier_id`, `shipping_courier_code`, `shipping_courier_name`) VALUES
+  (1, 'dhl', 'DHL'),
+  (2, 'fedex', 'Fedex'),
+  (3, 'ups', 'UPS'),
+  (4, 'royal-mail', 'Royal Mail'),
+  (5, 'usps', 'United States Postal Service'),
+  (6, 'auspost', 'Australia Post'),
+  (7, 'citylink', 'Citylink');
+
+-----------------------------------------------------------
+
+--
 -- Table structure for table `oc_order_status`
 --
 

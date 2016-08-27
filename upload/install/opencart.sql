@@ -8687,3 +8687,352 @@ INSERT INTO `oc_review_article` (`review_article_id`, `article_id`, `customer_id
 (11, 123, 0, 'Василий Покупайкин', 'Спасибо за отличный фото обзор, обязательно в ближайшее время приобрету себе такую тушку и напишу дополнение к Вашей статье.', 5, 1, '2014-04-08 05:59:25', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu`;
+CREATE TABLE `oc_custommenu` (
+  `custommenu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(3) NOT NULL,
+  `columns` int(3) NOT NULL,
+  `custommenu_type` varchar(20) NOT NULL,
+  `status` int(3) NOT NULL,
+  PRIMARY KEY (`custommenu_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu`
+--
+
+INSERT INTO `oc_custommenu` (`custommenu_id`, `sort_order`, `columns`, `custommenu_type`, `status`) VALUES
+(2, 2, 0, 'category', 1),
+(3, 3, 0, 'category', 1),
+(7, 7, 0, 'category', 1),
+(8, 8, 4, 'category', 1),
+(9, 1, 1, 'product', 1),
+(14, 9, 1, 'custom', 1),
+(17, 1, 1, 'manufacturer', 1),
+(24, 1, 1, 'category', 1),
+(30, 11, 1, 'information', 1),
+(31, 12, 1, 'custom', 1),
+(33, 6, 1, 'category', 1),
+(35, 1, 1, 'manufacturer', 1),
+(36, 1, 1, 'manufacturer', 1),
+(37, 1, 1, 'manufacturer', 1),
+(38, 1, 1, 'manufacturer', 1),
+(39, 1, 1, 'manufacturer', 1),
+(41, 1, 1, 'custom', 1),
+(44, 1, 1, 'custom', 1),
+(49, 1, 1, 'custom', 1),
+(51, 1, 1, 'custom', 1),
+(53, 10, 3, 'custom', 1),
+(62, 5, 1, 'category', 1),
+(63, 4, 1, 'category', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu_description`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu_description`;
+CREATE TABLE `oc_custommenu_description` (
+  `custommenu_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `language_id` int(11) NOT NULL,
+  PRIMARY KEY (`custommenu_id`,`language_id`),
+  KEY `language_id` (`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu_description`
+--
+
+INSERT INTO `oc_custommenu_description` (`custommenu_id`, `name`, `link`, `language_id`) VALUES
+(2, 'Ноутбуки', '18', 1),
+(2, 'Laptops', '18', 2),
+(3, 'Компоненты', '25', 1),
+(3, 'Components', '25', 2),
+(7, 'Камеры', '33', 1),
+(7, 'Cameras', '33', 2),
+(8, 'MP3 Плееры', '34', 1),
+(8, 'MP3 Players', '34', 2),
+(14, 'Акции', 'product/special', 1),
+(14, 'Special', 'product/special', 2),
+(24, 'Компьютеры', '20', 1),
+(24, 'Desktops', '20', 2),
+(26, 'PC', '', 1),
+(26, 'PC', '', 2),
+(30, 'О нас', '4', 1),
+(30, 'About Us', '4', 2),
+(31, 'Контакты', 'information/contact', 1),
+(31, 'Contact Us', 'information/contact', 2),
+(33, 'Телефоны', '24', 1),
+(33, 'Phones &amp; PDAs', '24', 2),
+(37, 'Apple', '8', 0),
+(38, 'Apple', '8', 0),
+(53, 'Производители', 'product/manufacturer', 1),
+(53, 'Brand', 'product/manufacturer', 2),
+(62, 'Планшеты', '57', 1),
+(62, 'Tablets', '57', 2),
+(63, 'Дополнения', '17', 1),
+(63, 'Software', '17', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu_to_store`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu_to_store`;
+CREATE TABLE `oc_custommenu_to_store` (
+  `custommenu_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`custommenu_id`,`store_id`),
+  KEY `store_id` (`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu_to_store`
+--
+
+INSERT INTO `oc_custommenu_to_store` (`custommenu_id`, `store_id`) VALUES
+(2, 0),
+(3, 0),
+(7, 0),
+(8, 0),
+(9, 0),
+(14, 0),
+(17, 0),
+(24, 0),
+(30, 0),
+(31, 0),
+(33, 0),
+(35, 0),
+(36, 0),
+(37, 0),
+(38, 0),
+(41, 0),
+(44, 0),
+(49, 0),
+(51, 0),
+(53, 0),
+(62, 0),
+(63, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu_child`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu_child`;
+CREATE TABLE `oc_custommenu_child` (
+  `custommenu_child_id` int(11) NOT NULL AUTO_INCREMENT,
+  `custommenu_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  `custommenu_type` varchar(20) NOT NULL,
+  `status` int(3) NOT NULL,
+  PRIMARY KEY (`custommenu_child_id`),
+  KEY `custommenu_id` (`custommenu_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu_child`
+--
+
+INSERT INTO `oc_custommenu_child` (`custommenu_child_id`, `custommenu_id`, `sort_order`, `custommenu_type`, `status`) VALUES
+(10, 8, 1, 'category', 1),
+(11, 8, 2, 'category', 1),
+(12, 8, 3, 'category', 1),
+(13, 8, 4, 'category', 1),
+(14, 8, 5, 'category', 1),
+(15, 8, 6, 'category', 1),
+(16, 8, 7, 'category', 1),
+(17, 8, 8, 'category', 1),
+(18, 8, 9, 'category', 1),
+(19, 8, 10, 'category', 1),
+(20, 8, 11, 'category', 1),
+(21, 8, 12, 'category', 1),
+(22, 8, 13, 'category', 1),
+(23, 8, 14, 'category', 1),
+(24, 8, 15, 'category', 1),
+(25, 8, 16, 'category', 1),
+(26, 8, 17, 'category', 1),
+(27, 8, 18, 'category', 1),
+(28, 3, 1, 'category', 1),
+(29, 3, 4, 'category', 1),
+(31, 3, 0, 'category', 1),
+(32, 3, 5, 'category', 1),
+(33, 3, 6, 'category', 1),
+(34, 14, 1, 'product', 1),
+(41, 24, 1, 'category', 1),
+(42, 24, 2, 'category', 1),
+(44, 2, 2, 'category', 1),
+(45, 3, 3, 'category', 1),
+(47, 14, 2, 'product', 1),
+(55, 53, 1, 'manufacturer', 1),
+(57, 53, 2, 'manufacturer', 1),
+(58, 53, 3, 'manufacturer', 1),
+(60, 53, 4, 'manufacturer', 1),
+(63, 53, 5, 'manufacturer', 1),
+(67, 53, 6, 'manufacturer', 1),
+(77, 2, 1, 'category', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu_child_description`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu_child_description`;
+CREATE TABLE `oc_custommenu_child_description` (
+  `custommenu_child_id` int(11) NOT NULL,
+  `custommenu_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `language_id` int(11) NOT NULL,
+  PRIMARY KEY (`custommenu_child_id`,`language_id`),
+  KEY `custommenu_id` (`custommenu_id`),
+  KEY `language_id` (`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu_child_description`
+--
+
+INSERT INTO `oc_custommenu_child_description` (`custommenu_child_id`, `custommenu_id`, `name`, `link`, `language_id`) VALUES
+(10, 8, 'test 11', '43', 1),
+(10, 8, 'test 11', '43', 2),
+(11, 8, 'test 12', '44', 1),
+(11, 8, 'test 12', '44', 2),
+(12, 8, 'test 15', '47', 1),
+(12, 8, 'test 15', '47', 2),
+(13, 8, 'test 16', '48', 1),
+(13, 8, 'test 16', '48', 2),
+(14, 8, 'test 17', '49', 1),
+(14, 8, 'test 17', '49', 2),
+(15, 8, 'test 18', '50', 1),
+(15, 8, 'test 18', '50', 2),
+(16, 8, 'test 19', '51', 1),
+(16, 8, 'test 19', '51', 2),
+(17, 8, 'test 20', '52', 1),
+(17, 8, 'test 20', '52', 2),
+(18, 8, 'test 21', '53', 1),
+(18, 8, 'test 21', '53', 2),
+(19, 8, 'test 22', '54', 1),
+(19, 8, 'test 22', '54', 2),
+(20, 8, 'test 23', '55', 1),
+(20, 8, 'test 23', '55', 2),
+(21, 8, 'test 24', '56', 1),
+(21, 8, 'test 24', '56', 2),
+(22, 8, 'test 4', '38', 1),
+(22, 8, 'test 4', '38', 2),
+(23, 8, 'test 5', '37', 1),
+(23, 8, 'test 5', '37', 2),
+(24, 8, 'test 6', '39', 1),
+(24, 8, 'test 6', '39', 2),
+(25, 8, 'test 7', '40', 1),
+(25, 8, 'test 7', '40', 2),
+(26, 8, 'test 8', '41', 1),
+(26, 8, 'test 8', '41', 2),
+(27, 8, 'test 9', '42', 1),
+(27, 8, 'test 9', '42', 2),
+(28, 3, 'Веб-камеры', '32', 1),
+(28, 3, 'Web Cameras', '32', 2),
+(29, 3, 'Мониторы', '28', 1),
+(29, 3, 'Monitors', '28', 2),
+(32, 3, 'Принтеры', '30', 1),
+(32, 3, 'Printers', '30', 2),
+(33, 3, 'Сканеры', '31', 1),
+(33, 3, 'Scanners', '31', 2),
+(34, 14, 'Apple Cinema 30&quot;', '42', 1),
+(34, 14, 'Apple Cinema 30&quot;', '42', 2),
+(41, 24, 'Mac', '27', 1),
+(41, 24, 'Mac', '27', 2),
+(42, 24, 'PC', '26', 1),
+(42, 24, 'PC', '26', 2),
+(44, 2, 'Windows', '45', 1),
+(44, 2, 'Windows', '45', 2),
+(45, 3, 'Мышки', '29', 1),
+(45, 3, 'Mice and Trackballs', '29', 2),
+(47, 14, 'Canon EOS 5D', '30', 1),
+(47, 14, 'Canon EOS 5D', '30', 2),
+(53, 0, 'Телефоны и PDA', '24', 1),
+(53, 0, 'Phones &amp; PDAs', '24', 2),
+(55, 53, 'Apple', '8', 1),
+(55, 53, 'Apple', '8', 2),
+(57, 53, 'Canon', '9', 1),
+(57, 53, 'Canon', '9', 2),
+(58, 53, 'Hewlett-Packard', '7', 1),
+(58, 53, 'Hewlett-Packard', '7', 2),
+(60, 53, 'HTC', '5', 1),
+(60, 53, 'HTC', '5', 2),
+(63, 53, 'Palm', '6', 1),
+(63, 53, 'Palm', '6', 2),
+(67, 53, 'Sony', '10', 1),
+(67, 53, 'Sony', '10', 2),
+(77, 2, 'Macs', '46', 1),
+(77, 2, 'Macs', '46', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custommenu_child_to_store`
+--
+
+DROP TABLE IF EXISTS `oc_custommenu_child_to_store`;
+CREATE TABLE `oc_custommenu_child_to_store` (
+  `custommenu_child_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`custommenu_child_id`,`store_id`),
+  KEY `store_id` (`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custommenu_child_to_store`
+--
+
+INSERT INTO `oc_custommenu_child_to_store` (`custommenu_child_id`, `store_id`) VALUES
+(2, 0),
+(10, 0),
+(11, 0),
+(12, 0),
+(13, 0),
+(14, 0),
+(15, 0),
+(16, 0),
+(17, 0),
+(18, 0),
+(19, 0),
+(20, 0),
+(21, 0),
+(22, 0),
+(23, 0),
+(24, 0),
+(25, 0),
+(26, 0),
+(27, 0),
+(28, 0),
+(29, 0),
+(32, 0),
+(33, 0),
+(34, 0),
+(37, 0),
+(41, 0),
+(42, 0),
+(44, 0),
+(45, 0),
+(47, 0),
+(55, 0),
+(57, 0),
+(58, 0),
+(60, 0),
+(63, 0),
+(67, 0),
+(77, 0);
+
+-- --------------------------------------------------------

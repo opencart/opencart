@@ -11,6 +11,7 @@ $_['text_attribute']                 = 'Attributes';
 $_['text_attribute_group']           = 'Attribute Groups';
 $_['text_backup']                    = 'Backup / Restore';
 $_['text_banner']                    = 'Banners';
+$_['text_custommenu']                = 'Custom Menus';
 $_['text_catalog']                   = 'Catalog';
 $_['text_category']                  = 'Categories';
 $_['text_country']                   = 'Countries';

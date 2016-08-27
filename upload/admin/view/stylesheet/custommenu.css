@@ -1,0 +1,1012 @@
+/* nav-custommenu */
+
+/* @todo: determine if this is truly for nav custommenus only */
+.no-js #message {
+	display: block;
+}
+
+ul.add-custommenu-item-tabs li {
+	padding: 3px 5px 3px 8px;
+}
+
+.accordion-section ul.category-tabs,
+.accordion-section ul.add-custommenu-item-tabs,
+.accordion-section ul.wp-tab-bar {
+	margin: 0;
+}
+
+.accordion-section .categorychecklist {
+	margin: 13px 0;
+}
+
+#nav-custommenu-meta .accordion-section-content {
+	padding: 18px 13px;
+}
+
+#nav-custommenu-meta .button-controls {
+	margin-bottom: 0;
+}
+
+#nav-custommenus-frame {
+	margin-left: 300px;
+	margin-top: 23px;
+}
+
+#wpbody-content #custommenu-settings-column {
+	display:inline;
+	width:281px;
+	margin-left: -300px;
+	clear: both;
+	float: left;
+	padding-top: 0;
+}
+
+#custommenu-settings-column .inside {
+	clear: both;
+	margin: 10px 0 0;
+}
+
+.metabox-holder-disabled .postbox,
+.metabox-holder-disabled .accordion-section-content,
+.metabox-holder-disabled .accordion-section-title {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+
+.metabox-holder-disabled .button-controls .select-all {
+	display: none;
+}
+
+#wpbody {
+	position: relative;
+}
+
+.blank-slate .custommenu-name {
+	height: 2em;
+}
+
+.blank-slate .custommenu-settings {
+	border: none;
+	margin-top: 0;
+	padding-top: 0;
+	overflow: hidden;
+}
+
+.is-subcustommenu {
+	color: #999;
+	font-style: italic;
+	font-weight: normal;
+	margin-left: 4px;
+}
+
+.manage-custommenus {
+	margin-top: 23px;
+	padding: 10px;
+	overflow: hidden;
+	background: #fbfbfb;
+}
+
+.manage-custommenus select {
+	float: left;
+	margin-right: 6px;
+}
+
+.manage-custommenus .selected-custommenu {
+	float: left;
+	margin: 5px 6px 0 0;
+}
+
+.manage-custommenus .submit-btn {
+	float: left;
+	margin-top: 1px;
+}
+
+.custommenu-edit p {
+	margin: .3em 0 .6em;
+}
+
+.custommenu-edit #post-body-content h3 {
+	margin: 1em 0 10px;
+}
+
+.custommenu-settings {
+	border-top: 1px solid #eee;
+	margin-top: 2em;
+}
+
+.custommenu-settings dl {
+	margin: 0 0 10px;
+	overflow: hidden;
+	padding-left: 18%;
+}
+
+.custommenu-settings dd {
+	float: left;
+	margin: 0;
+	width: 100%;
+}
+
+.custommenu-settings dt {
+	float: left;
+	clear: both;
+	width: 21.951%;
+	padding: 3px 0 0;
+	margin-left: -21.951%;
+}
+
+.custommenu-settings label {
+	vertical-align: baseline;
+}
+
+.custommenu-edit .checkbox-input {
+	margin-top: 4px;
+}
+
+.theme-location-set {
+	color: #999;
+	font-size: 11px;
+}
+
+/* custommenu Container */
+#custommenu-management-liquid {
+	float: left;
+	min-width: 100%;
+	margin-top: 3px;
+}
+/*
+#custommenu-management {
+	position: relative;
+	margin-right: 20px;
+	margin-top: -3px;
+	width: 100%;
+	background: #f5f5f5;
+}*/
+
+#custommenu-management .custommenu-edit {
+	margin-bottom: 20px;
+}
+
+#post-body {
+	padding: 0 10px 10px;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #dfdfdf;
+	background: #fff;
+}
+
+#nav-custommenu-header,
+#nav-custommenu-footer {
+	padding: 0 10px;
+}
+
+#nav-custommenu-header {
+	background: #f5f5f5;
+	border-bottom: 1px solid #dfdfdf;
+	margin-bottom: 0;
+}
+
+#nav-custommenu-header .custommenu-name-label {
+  margin-top: 7px;
+  font-size: 13px;
+  font-weight: inherit;
+}
+
+#post-body div.updated,
+#post-body div.error {
+	margin: 0;
+}
+
+#post-body-content {
+	position: relative;
+	float: none;
+}
+
+#custommenu-management .custommenu-add-new abbr {
+	font-weight:600;
+}
+
+#select-nav-custommenu-container {
+	text-align: right;
+	padding: 0 10px 3px 10px;
+	margin-bottom: 5px;
+}
+
+#select-nav-custommenu {
+	width: 100px;
+	display: inline;
+}
+
+#custommenu-name-label {
+	margin-top: -2px;
+}
+
+.widefat td.custommenu-location-custommenus {
+	padding-bottom: 5px;
+}
+
+.custommenu-location-custommenus select {
+	float: left;
+}
+
+#locations-nav-custommenu-wrapper {
+	padding: 5px 0;
+}
+
+.locations-nav-custommenu-select select {
+	float: left;
+	width: 160px;
+	margin-right: 5px;
+}
+
+.locations-row-links {
+	float: left;
+	margin: 6px 0 0 6px;
+}
+
+.locations-edit-custommenu-link,
+.locations-add-custommenu-link {
+	margin: 0 3px;
+}
+
+.locations-edit-custommenu-link {
+	padding-right: 3px;
+	border-right: 1px solid #ccc;
+}
+
+#wpbody .open-label {
+	display: block;
+	float:left;
+}
+
+#wpbody .open-label span {
+	padding-right: 10px;
+}
+
+.js .input-with-default-title {
+	color: #aaa;
+	font-style: italic;
+}
+
+#custommenu-management .inside {
+	padding: 0 10px;
+}
+
+/* Add custommenu Item Boxes */
+.postbox .howto input,
+.accordion-container .howto input {
+	width: 180px;
+	float: right;
+}
+
+.accordion-container .outer-border {
+	margin: 0;
+}
+
+.customlinkdiv .howto input {
+	width: 180px;
+}
+
+.customlinkdiv p {
+	margin-top: 0
+}
+
+#nav-custommenu-theme-locations .howto select {
+	width: 100%;
+}
+
+#nav-custommenu-theme-locations .button-controls {
+	text-align: right;
+}
+
+.add-custommenu-item-view-all {
+	height: 400px;
+}
+
+/* Button Primary Actions */
+#custommenu-container .submit {
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.nav-custommenus-php .add-new-custommenu-action {
+	float: left;
+	margin: 6px 0 0 6px;
+	line-height: 15px;
+}
+
+.nav-custommenus-php .meta-sep,
+.nav-custommenus-php .submitdelete,
+.nav-custommenus-php .submitcancel {
+	display: block;
+	float: left;
+	margin: 6px 0;
+	line-height: 15px;
+}
+
+.meta-sep {
+	padding: 0 2px;
+}
+
+/* @todo: is this actually used? */
+#cancel-save {
+	text-decoration: underline;
+	font-size: 12px;
+	margin-left: 20px;
+	margin-top: 5px;
+}
+
+.button.right, .button-secondary.right, .button-primary.right {
+	float: right;
+}
+
+/* Button Secondary Actions */
+.list-controls {
+	float: left;
+	margin-top: 5px;
+}
+
+.add-to-custommenu {
+	float: right;
+}
+
+.postbox .spinner {
+	display: none;
+	vertical-align: middle;
+}
+
+.button-controls {
+	clear:both;
+	margin: 10px 0;
+}
+
+.show-all,
+.hide-all {
+	cursor: pointer;
+}
+
+.hide-all {
+	display: none;
+}
+
+/* Create custommenu */
+#custommenu-name {
+	width: 270px;
+}
+
+#manage-custommenu .inside {
+	padding: 0px 0px;
+}
+
+/* Custom Links */
+#available-links dt {
+	display: block;
+}
+
+#add-custom-link .howto {
+	font-size: 12px;
+}
+
+#add-custom-link label span {
+	display: block;
+	float: left;
+	margin-top: 5px;
+	padding-right: 5px;
+}
+
+.custommenu-item-textbox {
+	width: 180px;
+}
+
+.nav-custommenus-php .howto span {
+	margin-top: 6px;
+	display: block;
+	float: left;
+}
+
+/* custommenu item types */
+.quick-search {
+	width: 190px;
+}
+
+.nav-custommenus-php .list-wrap {
+	display: none;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.nav-custommenus-php .postbox p.submit {
+	margin-bottom: 0;
+}
+
+/* Listings */
+.nav-custommenus-php .list li {
+	display: none;
+	margin: 0;
+	margin-bottom: 5px;
+}
+
+.nav-custommenus-php .list li .custommenu-item-title {
+	cursor: pointer;
+	display: block;
+}
+
+.nav-custommenus-php .list li .custommenu-item-title input {
+	margin-right: 3px;
+	margin-top: -3px;
+}
+
+.custommenu-item-title input[type=checkbox] {
+	display: inline-block;
+	margin-top: -4px;
+}
+
+/* Nav custommenu */
+#custommenu-container .inside {
+	padding-bottom: 10px;
+}
+
+.custommenu {
+	padding-top:1em;
+}
+
+#custommenu-to-edit {
+	margin: 0;
+	padding: 0.1em 0;
+}
+
+.custommenu ul {
+	width: 100%;
+}
+
+.custommenu li {
+	margin-bottom: 0;
+	position:relative;
+}
+
+.custommenu-item-bar {
+	clear:both;
+	line-height:1.5em;
+	position:relative;
+	margin: 9px 0 0;
+}
+
+.custommenu-item-bar .custommenu-item-handle {
+	border: 1px solid #dfdfdf;
+	position: relative;
+	padding: 10px 15px;
+	height: auto;
+	min-height: 20px;
+	width: 400px;
+	line-height: 30px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+.custommenu-item-bar .custommenu-item-handle:hover {
+	border-color: #999;
+}
+
+#custommenu-to-edit .custommenu-item-invalid .custommenu-item-handle {
+	background: #f6c9cc;
+	border-color: #f1acb1;
+}
+
+.no-js .custommenu-item-edit-active .item-edit {
+	display: none;
+}
+
+.js .custommenu-item-handle {
+	cursor: move;
+}
+
+.custommenu li.deleting .custommenu-item-handle {
+	background-image: none;
+	background-color: #f66;
+}
+
+.custommenu-item-handle .item-title {
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 20px;
+	display: block;
+	margin-right: 13em;
+}
+
+.custommenu-item-handle .custommenu-item-title.no-title {
+	color: #999;
+}
+
+/* Sortables */
+li.custommenu-item.ui-sortable-helper dl {
+	margin-top: 0;
+}
+
+li.custommenu-item.ui-sortable-helper .custommenu-item-transport dl {
+	margin-top: 13px;
+}
+
+.custommenu .sortable-placeholder {
+	height: 35px;
+	width: 410px;
+	margin-top: 13px;
+}
+
+/* WARNING: The factor of 30px is hardcoded into the nav-custommenus JavaScript. */
+.custommenu-item-depth-0 { margin-left: 0px; }
+.custommenu-item-depth-1 { margin-left: 30px; }
+.custommenu-item-depth-2 { margin-left: 60px; }
+.custommenu-item-depth-3 { margin-left: 90px; }
+.custommenu-item-depth-4 { margin-left: 120px; }
+.custommenu-item-depth-5 { margin-left: 150px; }
+.custommenu-item-depth-6 { margin-left: 180px; }
+.custommenu-item-depth-7 { margin-left: 210px; }
+.custommenu-item-depth-8 { margin-left: 240px; }
+.custommenu-item-depth-9 { margin-left: 270px; }
+.custommenu-item-depth-10 { margin-left: 300px; }
+.custommenu-item-depth-11 { margin-left: 330px; }
+
+.custommenu-item-depth-0 .custommenu-item-transport { margin-left: 0px; }
+.custommenu-item-depth-1 .custommenu-item-transport { margin-left: -30px; }
+.custommenu-item-depth-2 .custommenu-item-transport { margin-left: -60px; }
+.custommenu-item-depth-3 .custommenu-item-transport { margin-left: -90px; }
+.custommenu-item-depth-4 .custommenu-item-transport { margin-left: -120px; }
+.custommenu-item-depth-5 .custommenu-item-transport { margin-left: -150px; }
+.custommenu-item-depth-6 .custommenu-item-transport { margin-left: -180px; }
+.custommenu-item-depth-7 .custommenu-item-transport { margin-left: -210px; }
+.custommenu-item-depth-8 .custommenu-item-transport { margin-left: -240px; }
+.custommenu-item-depth-9 .custommenu-item-transport { margin-left: -270px; }
+.custommenu-item-depth-10 .custommenu-item-transport { margin-left: -300px; }
+.custommenu-item-depth-11 .custommenu-item-transport { margin-left: -330px; }
+
+body.custommenu-max-depth-0 { min-width: 950px !important; }
+body.custommenu-max-depth-1 { min-width: 980px !important; }
+body.custommenu-max-depth-2 { min-width: 1010px !important; }
+body.custommenu-max-depth-3 { min-width: 1040px !important; }
+body.custommenu-max-depth-4 { min-width: 1070px !important; }
+body.custommenu-max-depth-5 { min-width: 1100px !important; }
+body.custommenu-max-depth-6 { min-width: 1130px !important; }
+body.custommenu-max-depth-7 { min-width: 1160px !important; }
+body.custommenu-max-depth-8 { min-width: 1190px !important; }
+body.custommenu-max-depth-9 { min-width: 1220px !important; }
+body.custommenu-max-depth-10 { min-width: 1250px !important; }
+body.custommenu-max-depth-11 { min-width: 1280px !important; }
+
+/* custommenu item controls */
+.item-type {
+	color: #777;
+	font-size: 12px;
+	padding: 12px 10px;
+	line-height: 18px;
+	display: block;
+}
+
+.item-controls {
+	font-size: 12px;
+	position: absolute;
+	right: 20px;
+	top: -1px;
+}
+
+.item-controls a {
+	text-decoration: none;
+}
+
+.item-controls a:hover {
+	cursor: pointer;
+}
+
+.item-controls .item-order {
+	padding-right: 10px;
+}
+
+.nav-custommenus-php .item-edit {
+	position: absolute;
+	right: -20px;
+	top: 0;
+	display: block;
+	width: 30px;
+	height: 40px;
+	margin-right: 0 !important;
+	text-indent: 100%;
+	outline: none;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/* custommenu editing */
+.custommenu-instructions-inactive {
+	display: none;
+}
+
+.custommenu-item-settings {
+	display: block;
+	width: 400px;
+	padding: 10px 0 10px 10px;
+	position: relative;
+	z-index: 10; /* Keep .item-title's shadow from appearing on top of .custommenu-item-settings */
+	border: 1px solid #e5e5e5;
+	border-top: none;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+.custommenu-item-settings .field-move a {
+	display: none;
+	margin: 0 2px;
+}
+
+.custommenu-item-edit-active .custommenu-item-settings {
+	display: block;
+}
+
+.custommenu-item-edit-inactive .custommenu-item-settings {
+	display: none;
+}
+
+.add-custommenu-item-pagelinks {
+	margin: .5em auto;
+	text-align: center;
+}
+
+.link-to-original {
+	display: block;
+	margin: 0 0 10px;
+	padding: 3px 5px 5px;
+	border: 1px solid #dfdfdf;
+	color: #777;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.link-to-original a {
+	padding-left: 4px;
+	font-style: normal;
+}
+
+.hidden-field {
+	display: none;
+}
+
+.custommenu-item-settings .description-thin,
+.custommenu-item-settings .description-wide {
+	margin-right: 2px;
+	float: left;
+}
+
+.description-thin {
+	width: 190px;
+}
+
+.description-wide {
+	width: 390px;
+}
+
+.custommenu-item-actions {
+	padding-top: 15px;
+}
+
+#cancel-save {
+	cursor: pointer;
+}
+
+/* Major/minor publishing actions (classes) */
+.nav-custommenus-php .major-publishing-actions {
+	clear: both;
+	padding: 3px 0 6px;
+}
+
+.nav-custommenus-php .major-publishing-actions .publishing-action {
+	text-align: right;
+	float: right;
+	line-height: 23px;
+	margin: 4px 0 1px;
+}
+
+.nav-custommenus-php .blank-slate .custommenu-settings {
+	display: none;
+}
+
+.nav-custommenus-php .delete-action {
+	float: left;
+	margin-top: 2px;
+}
+
+.nav-custommenus-php .submitbox .submitcancel {
+	border-bottom: 1px solid #0074a2;
+	padding: 1px 2px;
+	color: #0074a2;
+	text-decoration: none;
+}
+
+.nav-custommenus-php .submitbox .submitcancel:hover {
+	background: #0074a2;
+	color: #fff;
+}
+
+.nav-custommenus-php .major-publishing-actions .form-invalid {
+	padding-left: 4px;
+	margin-left: -4px;
+}
+
+/* Clearfix */
+#custommenu-item-name-wrap:after,
+#custommenu-item-url-wrap:after,
+#custommenu-name-label:after,
+#custommenu-settings-column .inside:after,
+#nav-custommenus-frame:after,
+#post-body-content:after,
+.nav-custommenus-php .button-controls:after,
+.nav-custommenus-php .major-publishing-actions:after,
+.nav-custommenus-php .custommenu-item-settings:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+#nav-custommenus-frame,
+.button-controls,
+#custommenu-item-url-wrap,
+#custommenu-item-name-wrap {
+	display: block;
+}
+
+/* =Media Queries
+-------------------------------------------------------------- */
+
+@media screen and ( max-width: 782px ) {
+	body.nav-custommenus-php {
+		min-width: 0 !important;
+	}
+
+	#nav-custommenus-frame {
+		margin-left: 0;
+		float: none;
+		width: 100%;
+	}
+
+	#wpbody-content #custommenu-settings-column {
+		display: block;
+		width: 100%;
+		float: none;
+		margin-left: 0;
+	}
+
+	#side-sortables .add-custommenu-item-tabs {
+		margin: 15px 0 14px;
+	}
+
+	ul.add-custommenu-item-tabs li.tabs {
+		padding: 13px 15px 14px;
+	}
+
+	.nav-custommenus-php .item-controls .item-type {
+		margin-top: 2px;
+	}
+
+	.nav-custommenus-php .customlinkdiv .howto input {
+		width: 65%;
+	}
+
+	.nav-custommenus-php .quick-search {
+		width: 85%;
+	}
+
+	#custommenu-management-liquid {
+		margin-top: 25px;
+	}
+
+	.nav-custommenus-php .custommenu-name-label.howto span {
+		margin-top: 13px
+	}
+
+	.custommenu-name-label #custommenu-name {
+		margin-top: 4px;
+	}
+
+	.nav-custommenus-php .major-publishing-actions .publishing-action {
+		margin-top: 6px;
+	}
+
+	.nav-custommenus-php .delete-action {
+		font-size: 14px;
+		line-height: 50px;
+		margin-top: 12px;
+	}
+
+	.custommenu-item-bar .custommenu-item-handle,
+	.custommenu-item-settings,
+	.description-wide {
+		width: auto;
+	}
+
+	.custommenu-item-settings {
+		padding: 10px;
+	}
+
+	.custommenu-item-settings .description-thin,
+	.custommenu-item-settings .description-wide {
+		width: 100%;
+		height: auto;
+	}
+
+	.custommenu-item-settings input {
+		width: 100%;
+	}
+
+	.custommenu-settings dl {
+		padding-left: 0;
+	}
+
+	.custommenu-settings dd {
+		float: none;
+		width: 100%;
+		margin-bottom: 15px;
+	}
+
+	.custommenu-settings dt {
+		float: none;
+		width: auto;
+		margin-left: 0;
+		margin-bottom: 15px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	/* custommenu locations */
+	#custommenu-locations-wrap .widefat {
+		width: 100%;
+	}
+}
+
+.sortable-placeholder {
+    border: 1px dashed #bbb;
+    margin-bottom: 20px
+}
+.custommenu-item-handle{
+    background: #fafafa;
+    color: #222
+}
+
+ul {
+    list-style: none
+}
+
+.custommenu-edit{
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  margin-top: -10px;
+}
+
+.drag-instructions {
+  margin-top: 5px;
+}
+
+.item-edit {
+  top: 6px;
+  left: 100%;
+  position: absolute;
+  color: #999;
+}
+.item-type{
+  color: #999;
+}
+
+.custommenu-item-settings .input-group, .custommenu-item-settings .pull-right{
+    padding-right: 10px;
+    margin-bottom: 5px;
+}
+
+.panel-body dl {
+  background-color: inherit;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 0px;
+  cursor: move;
+  margin: 0;
+  min-height: inherit;
+  padding-top: 10px;
+  text-align: inherit;
+}
+
+.module_accordion {
+  margin-top: 10px !important;
+}
+
+.col-sm-7 .custommenu{
+  width: 50%;
+}
+
+.input-group {
+  position: inherit !important;
+}
+.input-group .dropdown-custommenu {
+	width: 87% !important;
+}
+
+.col-sm-3 .module_accordion {
+  margin-top: -11px !important;
+}
+
+.col-sm-3 .heading-bar,.col-sm-9 .heading-bar {
+  margin: 0 auto 10px auto;
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 10px;
+}
+
+.addInformation #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 230px;
+  left: 300px;
+}
+
+.addManufacturer #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 195px;
+  left: 300px;
+}
+
+.addProduct #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 160px;
+  left: 300px;
+}
+
+.addCategory #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 125px;
+  left: 300px;
+}
+
+.addcustommenuItem #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 80px;
+  left: 300px;
+}
+
+.addCustom #loading-bar{
+    position: absolute;
+    top: 12%;
+    left: 35%;
+    z-index: 5;
+    font-size: 100px;
+}
+
+.custommenu-item-settings #loading-bar{
+  font-size: 35px;
+  position: absolute;
+  z-index: 500;
+  top: 0px;
+  left: 0px;
+  background: rgb(136, 136, 136);
+  width: 100%;
+  opacity: 0.2;
+  height: 100%;
+}
+
+.custommenu-item-settings .save-loading{
+  font-size: 100px;
+  position: absolute;
+}
+
+.custommenu-item-add{
+  margin: 0 auto 10px auto;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 2px 5px;
+  line-height: 35px;
+}

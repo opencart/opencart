@@ -22,6 +22,10 @@ class ModelUpgrade1001 extends Model {
 		// order_recurring
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");
 
+		// user_group
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "user_group` CHANGE `permission` `permission` MEDIUMTEXT NOT NULL AFTER `name`");
+
+
 		if ($query->num_rows) {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'date_added'");
 

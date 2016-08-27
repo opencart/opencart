@@ -55,6 +55,13 @@
     <?php echo $search; ?>
   </div>
   <ul class="nav pull-right">
+  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-refresh fa-lg"></i></a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a href="<?php echo $clearcache; ?>"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;<?php echo $button_clearcache; ?></a></li>
+        <li><a href="<?php echo $clearsystemcache; ?>"><i class="fa fa-cogs"></i>&nbsp;&nbsp;<?php echo $button_clearsystemcache; ?></a></li>
+        <li><a href="<?php echo $clearallcache; ?>"><i class="fa fa-refresh"></i>&nbsp;&nbsp;<?php echo $button_clearallcache; ?></a></li>
+      </ul>
+    </li>
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if($alerts > 0) { ?><span class="label label-danger pull-left"><?php echo $alerts; ?></span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
         <li class="dropdown-header"><?php echo $text_order; ?></li>

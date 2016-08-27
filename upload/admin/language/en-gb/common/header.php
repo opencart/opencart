@@ -33,3 +33,6 @@ $_['text_new_customer']      = 'Customer';
 $_['text_new_download']      = 'Download';
 $_['text_new_manufacturer']  = 'Manufacturer';
 $_['text_new_product']       = 'Product';
+$_['button_clearallcache']   = 'Delete the entire cache';
+$_['button_clearcache']      = 'Delete Cache Images';
+$_['button_clearsystemcache'] = 'Remove the system cache';

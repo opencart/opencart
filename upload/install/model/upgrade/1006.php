@@ -92,12 +92,13 @@ class ModelUpgrade1006 extends Model {
 			DIR_SYSTEM . 'storage/modification/',
 			DIR_SYSTEM . 'logs/',
 			DIR_SYSTEM . 'cache/',
+			DIR_OPENCART . 'catalog/model/total/'
 		);
 
         $files = array();
 
         foreach ($directories as $dir) {
-			if (is_dir($dir)){
+			if (is_dir($dir) && writable($dir)){
 				// Make path into an array
 				$path = array($dir . '*');
 
@@ -131,6 +132,9 @@ class ModelUpgrade1006 extends Model {
 							}
 						}
 					}
+				}
+				if(strpos($dir,'total')){
+					@rmdir($dir);
 				}
 			}
 		}

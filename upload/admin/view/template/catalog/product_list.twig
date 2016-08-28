@@ -62,7 +62,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if not filter_status %}
+                  {% if not filter_status is null %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -78,7 +78,7 @@
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if not filter_image %}
+                  {% if not filter_image is null %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>

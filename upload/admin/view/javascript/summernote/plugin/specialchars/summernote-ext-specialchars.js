@@ -63,7 +63,7 @@
 
       context.memo('button.specialCharacter', function () {
         return ui.button({
-          contents: '<i class="fa fa-font fa-flip-vertical">',
+          contents: '<i class="mi mi-font mi-flip-vertical">',
           tooltip: lang.specialChar.specialChar,
           click: function () {
             self.show();

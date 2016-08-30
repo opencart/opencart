@@ -6,12 +6,12 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -92,9 +92,9 @@
               <td class="text-right"><?php echo $product['price']; ?></td>
               <td class="text-right"><?php echo $product['total']; ?></td>
               <td class="text-right" style="white-space: nowrap;"><?php if ($product['reorder']) { ?>
-                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a>
+                <a href="<?php echo $product['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>" class="btn btn-primary"><i class="mi mi-shopping-cart">shopping_cart</i></a>
                 <?php } ?>
-                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
+                <a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="mi mi-reply">reply</i></a></td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>

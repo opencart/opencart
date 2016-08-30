@@ -1,5 +1,5 @@
 <h3><?php echo $text_payment_info; ?></h3>
-<div class="kc-alert" style="display: none;"><i class="fa fa-check-circle"></i></div>
+<div class="kc-alert" style="display: none;"><i class="mi mi-check-circle">check_circle</i></div>
 <div id="table-action"></div>
 
 <script type="text/javascript"><!--
@@ -13,7 +13,7 @@ function getTransaction() {
 		beforeSend: function() {
 			$('#button-filter').button('loading');
 
-			$('#table-action').html('<i class="klarna_checkout-loading fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i>');
+			$('#table-action').html('<i class="klarna_checkout-loading fa mi-spinner mi-spin mi-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;">refresh</i>');
 		},
 		complete: function() {
 			$('#button-filter').button('reset');

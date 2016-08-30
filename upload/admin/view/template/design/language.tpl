@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-    
+
               <div id="translation"></div>
 
           </div>
@@ -79,13 +79,13 @@ $('select[name="store_id"]').on('change', function(e) {
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="mi mi-arrow-right mi-fw pull-right">chevron_right</i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="mi mi-arrow-right mi-fw pull-right">chevron_right</i></a>';
 				}
 			}
 
@@ -108,30 +108,30 @@ $('#path').on('click', 'a.directory', function(e) {
 		url: 'index.php?route=design/language/path&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).find('i').removeClass('fa-arrow-right');
-			$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+			$(node).find('i').removeClass('mi-arrow-right');
+			$(node).find('i').addClass('mi-circle-o-notch mi-spin');
 		},
 		complete: function() {
-			$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
-			$(node).find('i').addClass('fa-arrow-right');
+			$(node).find('i').removeClass('mi-circle-o-notch mi-spin');
+			$(node).find('i').addClass('mi-arrow-right');
 		},
 		success: function(json) {
 			html = '';
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="mi mi-arrow-right mi-fw pull-right">chevron_right</i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="mi mi-arrow-right mi-fw pull-right">chevron_right</i></a>';
 				}
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-left fa-fw pull-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="mi mi-arrow-left mi-fw pull-right">chevron_left</i></a>';
 			}
 
 			$('#path').html(html);
@@ -146,18 +146,18 @@ $('#path').on('click', 'a.file',function(e) {
 	e.preventDefault();
 
 	var node = this;
-	
+
 	// Check if the file has an extension
 	$.ajax({
 		url: 'index.php?route=design/language/translation&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $(node).attr('href'),
 		dataType: 'html',
 		beforeSend: function() {
-			$(node).find('i').removeClass('fa-arrow-right');
-			$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+			$(node).find('i').removeClass('mi-arrow-right');
+			$(node).find('i').addClass('mi-circle-o-notch mi-spin');
 		},
 		complete: function() {
-			$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
-			$(node).find('i').addClass('fa-arrow-right');
+			$(node).find('i').removeClass('mi-circle-o-notch mi-spin');
+			$(node).find('i').addClass('mi-arrow-right');
 		},
 		success: function(html) {
 			$('#translation').html(html);
@@ -170,7 +170,7 @@ $('#path').on('click', 'a.file',function(e) {
 
 $('#translation').on('click', '#button-save', function(e) {
 	var node = this;
-				
+
 	$.ajax({
 		url: 'index.php?route=design/language/save&token=<?php echo $token; ?>&store_id=' + $('select[name="store_id"]').val() + '&language_id=' + $('select[name="language_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
@@ -184,13 +184,13 @@ $('#translation').on('click', '#button-save', function(e) {
 		},
 		success: function(json) {
 			$('.alert').remove();
-			
+
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -198,6 +198,6 @@ $('#translation').on('click', '#button-save', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

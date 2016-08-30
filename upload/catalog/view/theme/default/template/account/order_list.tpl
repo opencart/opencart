@@ -38,7 +38,7 @@
               <td class="text-left"><?php echo $order['status']; ?></td>
               <td class="text-right"><?php echo $order['total']; ?></td>
               <td class="text-left"><?php echo $order['date_added']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a></td>
             </tr>
             <?php } ?>
           </tbody>

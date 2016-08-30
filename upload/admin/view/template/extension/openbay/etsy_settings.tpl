@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="mi mi-check-circle">check_circle</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,18 +16,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($account_info != false) { ?>
       <?php if ($account_info['header_code'] == 200) { ?>
-        <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
+        <div class="alert alert-success"><i class="mi mi-check">check</i> <?php echo $text_account_ok; ?></div>
       <?php } else { ?>
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+        <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
       <?php } ?>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
@@ -71,7 +71,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $text_api_other; ?></label>
             <div class="col-sm-10">
-              <p><a href="https://account.openbaypro.com/etsy/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
+              <p><a href="https://account.openbaypro.com/etsy/apiRegister/" target="_BLANK"><i class="mi mi-link">link</i> <?php echo $text_token_register; ?></a></p>
             </div>
           </div>
           <div class="form-group">
@@ -130,11 +130,11 @@
           <?php if (isset($account_info['header_code']) && $account_info['header_code'] == 200) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_pull_orders; ?>"><?php echo $text_pull_orders; ?></span></label>
-              <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="mi mi-refresh">refresh</i></a> </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
-              <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="mi mi-refresh">refresh</i></a> </div>
             </div>
           <?php } ?>
         </div>
@@ -153,7 +153,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/etsy/getorders&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#button-import').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-import').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -177,7 +177,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/etsy/settingsupdate&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#button-settings').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-settings').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'get',
       dataType: 'json',

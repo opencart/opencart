@@ -3,7 +3,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	font-family: 'Open Sans', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-size: 12px;
 	color: #666666;
 	text-rendering: optimizeLegibility;
@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6, p {
 	border-bottom: none;
 }
 .page-header h1 {
-	font-family: 'Open Sans', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-weight: 400;
 	font-size: 30px;
 	color: #848484;
@@ -141,7 +141,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #profile h4 {
 	margin-top: 6px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-size: 15px;
 	font-weight: 400;
 	color: #FFF;
@@ -641,6 +641,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-size: 14px;
 }
 /* Filemanager Folder Size */
-#filemanager .fa-folder.fa-5x {
+#filemanager .mi-folder.mi-5x {
 	font-size: 10.5em;
 }

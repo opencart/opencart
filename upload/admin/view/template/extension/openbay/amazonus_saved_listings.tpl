@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -22,7 +22,7 @@
         <div class="col-sm-12">
           <div class="pull-right">
             <?php if (!empty($saved_products)) { ?>
-            <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
+            <a id="button-upload" class="btn btn-primary"><i class="mi mi-cloud-upload mi-lg">cloud_upload</i> <?php echo $button_upload; ?></a>
             <?php } ?>
           </div>
         </div>
@@ -47,8 +47,8 @@
           <td class="text-left"><?php echo $saved_product['var']; ?></td>
           <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
           <td class="text-right">
-            <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a>
+            <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="mi mi-pencil">mode_edit</i></a>
+            <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="mi mi-times-circle">cancel</i></a>
           </td>
         </tr>
         <?php } ?>
@@ -71,7 +71,7 @@
       type: 'get',
       data: 'product_id=' + id + '&var=' + option_var,
       beforeSend: function () {
-        $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $(button).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function () {
         window.location.href = window.location.href;
@@ -89,10 +89,10 @@
       url: '<?php echo html_entity_decode($upload_saved); ?>',
       dataType: 'json',
       beforeSend: function () {
-        $('#button-upload').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-upload').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#button-upload').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
+        $('#button-upload').empty().html('<i class="mi mi-cloud-upload mi-lg">cloud_upload</i> <?php echo $button_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
         if (data['status'] == 'ok') {

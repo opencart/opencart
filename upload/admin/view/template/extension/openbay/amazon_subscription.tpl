@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -22,7 +22,7 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_current_plan; ?></h1>
+            <h1 class="panel-title"><i class="mi mi-user">person</i> <?php echo $text_current_plan; ?></h1>
           </div>
           <div class="panel-body">
             <table class="table table-bordered table-hover">
@@ -81,7 +81,7 @@
       <div class="col-md-8">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_available_plans; ?></h1>
+            <h1 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_available_plans; ?></h1>
           </div>
           <div class="panel-body">
             <table class="table table-bordered table-hover">
@@ -113,7 +113,7 @@
               </tbody>
             </table>
             <?php if ($link_change_plan) { ?>
-            <div class="pull-right"> <a href="<?php echo $link_change_plan; ?>" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> <?php echo $button_change_plan; ?></a> </div>
+            <div class="pull-right"> <a href="<?php echo $link_change_plan; ?>" class="btn btn-primary" target="_blank"><i class="mi mi-arrow-right mi-lg">chevron_right</i> <?php echo $button_change_plan; ?></a> </div>
             <?php } ?>
           </div>
         </div>

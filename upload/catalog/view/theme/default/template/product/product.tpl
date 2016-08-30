@@ -120,8 +120,8 @@
         <?php } ?>
         <div class="<?php echo $class; ?>">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="mi mi-heart">favorite</i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="mi mi-exchange">compare_arrows</i></button>
           </div>
           <h1><?php echo $heading_title; ?></h1>
           <ul class="list-unstyled">
@@ -191,8 +191,8 @@
                   <label>
                     <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" />
                     <?php if ($option_value['image']) { ?>
-                    <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
-                    <?php } ?>                    
+                    <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" />
+                    <?php } ?>
                     <?php echo $option_value['name']; ?>
                     <?php if ($option_value['price']) { ?>
                     (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
@@ -212,7 +212,7 @@
                   <label>
                     <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" />
                     <?php if ($option_value['image']) { ?>
-                    <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" /> 
+                    <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" class="img-thumbnail" />
                     <?php } ?>
                     <?php echo $option_value['name']; ?>
                     <?php if ($option_value['price']) { ?>
@@ -239,7 +239,7 @@
             <?php if ($option['type'] == 'file') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
-              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default btn-block"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="input-option<?php echo $option['product_option_id']; ?>" />
             </div>
             <?php } ?>
@@ -249,7 +249,7 @@
               <div class="input-group date">
                 <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-date-format="YYYY-MM-DD" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                <button class="btn btn-default" type="button"><i class="mi mi-calendar">date_range</i></button>
                 </span></div>
             </div>
             <?php } ?>
@@ -259,7 +259,7 @@
               <div class="input-group datetime">
                 <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                 </span></div>
             </div>
             <?php } ?>
@@ -269,7 +269,7 @@
               <div class="input-group time">
                 <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-date-format="HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                 </span></div>
             </div>
             <?php } ?>
@@ -296,7 +296,7 @@
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
             </div>
             <?php if ($minimum > 1) { ?>
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
+            <div class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $text_minimum; ?></div>
             <?php } ?>
           </div>
           <?php if ($review_status) { ?>
@@ -304,9 +304,9 @@
             <p>
               <?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($rating < $i) { ?>
-              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <span class="mi mi-stack"><i class="mi mi-star-o mi-stack-1x">star_border</i></span>
               <?php } else { ?>
-              <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+              <span class="mi mi-stack"><i class="mi mi-star mi-stack-1x">star</i><i class="mi mi-star-o mi-stack-1x">star_border</i></span>
               <?php } ?>
               <?php } ?>
               <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a></p>
@@ -341,9 +341,9 @@
               <div class="rating">
                 <?php for ($j = 1; $j <= 5; $j++) { ?>
                 <?php if ($product['rating'] < $j) { ?>
-                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                <span class="mi mi-stack"><i class="mi mi-star-o mi-stack-1x">star_border</i></span>
                 <?php } else { ?>
-                <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                <span class="mi mi-stack"><i class="mi mi-star mi-stack-1x">star</i><i class="mi mi-star-o mi-stack-1x">star_border</i></span>
                 <?php } ?>
                 <?php } ?>
               </div>
@@ -362,9 +362,9 @@
               <?php } ?>
             </div>
             <div class="button-group">
-              <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+              <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="mi mi-shopping-cart">shopping_cart</i></button>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="mi mi-heart">favorite</i></button>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="mi mi-exchange">compare_arrows</i></button>
             </div>
           </div>
         </div>
@@ -454,7 +454,7 @@ $('#button-cart').on('click', function() {
 			if (json['success']) {
 				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+				$('#cart > button').html('<span id="cart-total"><i class="mi mi-shopping-cart">shopping_cart</i> ' + json['total'] + '</span>');
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 
@@ -562,11 +562,11 @@ $('#button-review').on('click', function() {
 			$('.alert-success, .alert-danger').remove();
 
 			if (json['error']) {
-				$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#review').after('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#review').after('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');

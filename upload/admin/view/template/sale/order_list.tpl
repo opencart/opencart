@@ -3,10 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
-        <button type="submit" id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
-        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" id="button-delete" form="form-order" formaction="<?php echo $delete; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="mi mi-truck">local_shipping</i></button>
+        <button type="submit" id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="mi mi-print">print</i></button>
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="mi mi-plus">add</i></a>
+        <button type="button" id="button-delete" form="form-order" formaction="<?php echo $delete; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="mi mi-trash-o">delete</i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -18,18 +18,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -74,7 +74,7 @@
                 <div class="input-group date">
                   <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
               <div class="form-group">
@@ -82,10 +82,10 @@
                 <div class="input-group date">
                   <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" placeholder="<?php echo $entry_date_modified; ?>" data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@
                   <td class="text-right"><?php echo $order['total']; ?></td>
                   <td class="text-left"><?php echo $order['date_added']; ?></td>
                   <td class="text-left"><?php echo $order['date_modified']; ?></td>
-                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -205,7 +205,7 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
@@ -226,7 +226,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 		$('input[name=\'filter_customer\']').val(item['label']);
 	}
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name^=\'selected\']').on('change', function() {
 	$('#button-shipping, #button-invoice').prop('disabled', true);
@@ -257,14 +257,14 @@ $('#button-shipping, #button-invoice').on('click', function(e) {
 
 $('#button-delete').on('click', function(e) {
 	$('#form-order').attr('action', this.getAttribute('formAction'));
-	
+
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		$('#form-order').submit();
 	} else {
 		return false;
 	}
 });
-//--></script> 
+//--></script>
   <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
   <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
   <script type="text/javascript"><!--
@@ -272,4 +272,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

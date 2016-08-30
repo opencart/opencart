@@ -20,21 +20,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 /* makes the font 33% larger relative to the icon container */
-.fa-lg {
+.mi-lg {
   font-size: 1.33333333em;
   line-height: 0.75em;
   vertical-align: -15%;
 }
-.fa-2x {
+.mi-2x {
   font-size: 2em;
 }
-.fa-3x {
+.mi-3x {
   font-size: 3em;
 }
-.fa-4x {
+.mi-4x {
   font-size: 4em;
 }
-.fa-5x {
+.mi-5x {
   font-size: 5em;
 }
 .fa-fw {
@@ -56,7 +56,7 @@
   top: 0.14285714em;
   text-align: center;
 }
-.fa-li.fa-lg {
+.fa-li.mi-lg {
   left: -1.85714286em;
 }
 .fa-border {

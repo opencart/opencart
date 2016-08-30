@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
 <?php } ?>
 <p><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/invoice/<?php echo $iso_code_2; ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant; ?>" /></p>
 <form id="payment" class="form-horizontal">

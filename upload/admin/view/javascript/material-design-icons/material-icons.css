@@ -1,0 +1,177 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(MaterialIcons-Regular.woff2) format('woff2'),
+       url(MaterialIcons-Regular.woff) format('woff'),
+       url(MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.mi {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+/* Rules for sizing the icon. */
+.mi.mi-lg { font-size: 18px; }
+.mi.mi-2x { font-size: 28px; }
+.mi.mi-3x { font-size: 42px; }
+.mi.mi-4x { font-size: 56px; }
+.mi.mi-5x { font-size: 70px; }
+
+/* Rules for using icons as black on a light background. */
+.mi.mi-dark { color: rgba(0, 0, 0, 0.54); }
+.mi.mi-dark.mi-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.mi.mi-light { color: rgba(255, 255, 255, 1); }
+.mi.mi-light.mi-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+.mi-border {
+  padding: 2px 3px 2px;
+  border: solid 1px #eeeeee;
+  border-radius: 1px;
+}
+.mi-pull-left {
+  float: left;
+}
+.mi-pull-right {
+  float: right;
+}
+.fa.mi-pull-left {
+  margin-right: 4px;
+}
+.fa.mi-pull-right {
+  margin-left: 4px;
+}
+/* Deprecated as of 4.4.0 */
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.fa.pull-left {
+  margin-right: 4px;
+}
+.fa.pull-right {
+  margin-left: 4px;
+}
+.mi-spin {
+  -webkit-animation: mi-spin 2s infinite linear;
+  animation: mi-spin 2s infinite linear;
+}
+.mi-pulse {
+  -webkit-animation: mi-spin 1s infinite steps(8);
+  animation: mi-spin 1s infinite steps(8);
+}
+@-webkit-keyframes mi-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes mi-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.mi-rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.mi-rotate-180 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.mi-rotate-270 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.mi-flip-horizontal {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.mi-flip-vertical {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+:root .mi-rotate-90,
+:root .mi-rotate-180,
+:root .mi-rotate-270,
+:root .mi-flip-horizontal,
+:root .mi-flip-vertical {
+  filter: none;
+}
+.mi-stack {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  vertical-align: middle;
+}
+.mi-stack-1x,
+.mi-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.mi-stack-1x {
+  line-height: inherit;
+}
+.mi-stack-2x {
+  font-size: 28px;
+}
+.mi-inverse {
+  color: #ffffff;
+}
+.mi-fw {
+  width: 18px;
+  text-align: center;
+}

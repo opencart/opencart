@@ -13,7 +13,7 @@
     </div>
   </header>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -37,9 +37,9 @@
                 <td><?php echo $php_version; ?></td>
                 <td>5.4+</td>
                 <td class="text-center"><?php if ($php_version >= '5.4') { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -51,9 +51,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$register_globals) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -65,9 +65,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$magic_quotes_gpc) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -79,9 +79,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($file_uploads) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -93,9 +93,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$session_auto_start) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
             </tbody>
@@ -122,9 +122,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($db) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -136,9 +136,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($gd) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -150,9 +150,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($curl) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -164,9 +164,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($mcrypt_encrypt) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -178,9 +178,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($zlib) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -192,9 +192,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($zip) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <?php if (!$iconv) { ?>
@@ -207,9 +207,9 @@
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($mbstring) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="mi mi-check-circle">check_circle</i></span>
                   <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="mi mi-minus-circle">remove circle</i></span>
                   <?php } ?></td>
               </tr>
               <?php } ?>

@@ -101,7 +101,7 @@ $('#button-confirm').bind('click', function () {
     beforeSend: function () {
       $('#firstdata_message_error').remove();
       $('#button-confirm').attr('disabled', true);
-      $('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+      $('#payment').before('<div id="firstdata_message_wait" class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $text_wait; ?></div>');
     },
     complete: function () {
       $('#button-confirm').attr('disabled', false);
@@ -110,7 +110,7 @@ $('#button-confirm').bind('click', function () {
     success: function (json) {
       // if error
       if (json['error']) {
-        $('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
+        $('#payment').before('<div id="firstdata_message_error" class="alert alert-warning"><i class="mi mi-info-circle">info</i> ' + json['error'] + '</div>');
       }
 
       // if success

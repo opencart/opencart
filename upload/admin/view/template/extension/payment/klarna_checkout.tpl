@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-klarna-checkout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-klarna-checkout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-klarna-checkout" class="form-horizontal">
@@ -103,7 +103,7 @@
             </div>
 			<div class="tab-pane" id="tab-account">
 			  <?php if ($error_account_warning) { ?>
-			  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_warning; ?></div>
+			  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_account_warning; ?></div>
 			  <?php } ?>
 			  <table id="account" class="table table-striped table-bordered table-hover">
 				<thead>
@@ -196,7 +196,7 @@
 						<?php } ?>
 					  </select>
 					</td>
-					<td class="text-left"><button type="button" onclick="$('#account-row<?php echo $account_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_account_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+					<td class="text-left"><button type="button" onclick="$('#account-row<?php echo $account_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_account_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
 				  </tr>
 				  <?php $account_row++; ?>
 				  <?php } ?>
@@ -204,7 +204,7 @@
 				<tfoot>
 				  <tr>
 					<td colspan="8"></td>
-					<td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="<?php echo $button_account_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+					<td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="<?php echo $button_account_add; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i></button></td>
 				  </tr>
 				</tfoot>
 			  </table>
@@ -279,18 +279,18 @@ $(document).on('click', '#button-process-settlement', function() {
 			success: function(json) {
 				if (json['error']) {
 					$.each(json['error'], function(index, value) {
-						$('.settlement-alerts').append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + value + '</div>');
+						$('.settlement-alerts').append('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + value + '</div>');
 					});
 				}
 
 				if (json['orders']) {
-					$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> <?php echo $text_downloading_settlement; ?></div>');
+					$('.settlement-alerts').append('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_downloading_settlement; ?></div>');
 
 					if (json['orders'].length > 0) {
-						$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> <?php echo $text_processing_orders; ?></div>');
+						$('.settlement-alerts').append('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_processing_orders; ?></div>');
 
 						$.each(json['orders'], function(index, value) {
-							$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> <?php echo $text_processing_order; ?> ' + value + '</div>');
+							$('.settlement-alerts').append('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_processing_order; ?> ' + value + '</div>');
 
 							$.ajax({
 								url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=' + encodeURIComponent(value),
@@ -305,11 +305,11 @@ $(document).on('click', '#button-process-settlement', function() {
 								},
 								success: function(json) {
 									if (json['error']) {
-										$('.settlement-alerts').append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+										$('.settlement-alerts').append('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 									}
 
 									if (json['success']) {
-										$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+										$('.settlement-alerts').append('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 									}
 								},
 								error: function(xhr, ajaxOptions, thrownError) {
@@ -319,7 +319,7 @@ $(document).on('click', '#button-process-settlement', function() {
 						});
 					}
 
-					$('.settlement-alerts').append('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> <?php echo $text_no_files; ?></div>');
+					$('.settlement-alerts').append('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_no_files; ?></div>');
 				}
 			}
 		});
@@ -369,7 +369,7 @@ function addAccount() {
 	html += '    <option value="<?php echo $api_location['code']; ?>"><?php echo $api_location['name']; ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_account_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_account_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>';
 	html += '</tr>';
 
 	$('#account tbody').append(html);
@@ -393,11 +393,11 @@ $(document).delegate('#button-ip-add', 'click', function() {
 			$('.api-alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success api-alert"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success api-alert"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -420,11 +420,11 @@ $.ajax({
 
         if (json['error']) {
     		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     		}
 
             if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="mi mi-plus">add</i> <?php echo $button_ip_add; ?></button></div>');
     		}
         }
 

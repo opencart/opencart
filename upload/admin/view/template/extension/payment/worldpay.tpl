@@ -8,9 +8,9 @@
   <div class="page-header">
 	<div class="container-fluid">
 	  <div class="pull-right">
-		<button type="submit" form="form-worldpay" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-		<a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-	  <h1><i class="fa fa-credit-card"></i> <?php echo $heading_title; ?></h1>
+		<button type="submit" form="form-worldpay" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+		<a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
+	  <h1><i class="mi mi-credit-card">credit_card</i> <?php echo $heading_title; ?></h1>
 	</div>
   </div>
   <div class="container-fluid">
@@ -69,7 +69,7 @@
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="input-webhook-url"><span data-toggle="tooltip" title="<?php echo $help_webhook_url; ?>"><?php echo $entry_webhook_url; ?></span></label>
 			  <div class="col-sm-10">
-				<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
+				<div class="input-group"><span class="input-group-addon"><i class="mi mi-link">link</i></span>
 				  <input type="text" readonly value="<?php echo $worldpay_webhook_url; ?>" id="input-webhook-url" class="form-control" />
 				</div>
 			  </div>
@@ -77,7 +77,7 @@
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="input-cron-job-url"><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
 			  <div class="col-sm-10">
-				<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
+				<div class="input-group"><span class="input-group-addon"><i class="mi mi-link">link</i></span>
 				  <input type="text" readonly value="<?php echo $worldpay_cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
 				</div>
 			  </div>

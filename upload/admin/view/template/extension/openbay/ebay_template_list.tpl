@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="mi mi-plus">add</i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,14 +15,14 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
       <table class="table table-bordered table-hover">
@@ -38,8 +38,8 @@
             <tr>
               <td class="text-left"><?php echo $template['name']; ?></td>
               <td class="text-right">
-                <a href="<?php echo $template['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
-                <a href="<?php echo $template['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
+                <a href="<?php echo $template['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a>&nbsp;
+                <a href="<?php echo $template['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger profile-delete"><i class="mi mi-minus-circle">remove circle</i></a>
               </td>
             </tr>
           <?php } ?>

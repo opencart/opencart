@@ -6,10 +6,10 @@
 	<?php } ?>
   </ul>
   <?php if ($success) { ?>
-	  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+	  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-	  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+	  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="row"><?php echo $column_left; ?>
 	<?php if ($column_left && $column_right) { ?>
@@ -88,7 +88,7 @@
 
           // if error
           if (json['error']) {
-            $('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+            $('.breadcrumb').after('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
           }
         }
       });

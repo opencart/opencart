@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-sm-12">
           <?php if (in_array($marketplace_code, $marketplaces_processing)) { ?>
-          <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></a> </div>
+          <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading; ?></a> </div>
           <?php } else { ?>
           <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings']; ?>"><?php echo $button_load; ?></a> </div>
           <?php } ?>
@@ -88,7 +88,7 @@
             <div class="well">
               <div class="row">
                 <div class="col-sm-12 text-right">
-                  <div class="pull-right"> <a id="link-button" class="btn btn-primary" href="<?php echo $button_save; ?>" data-toggle="tooltip" title="<?php echo $button_load; ?>"><i class="fa fa-save"></i></a></div>
+                  <div class="pull-right"> <a id="link-button" class="btn btn-primary" href="<?php echo $button_save; ?>" data-toggle="tooltip" title="<?php echo $button_load; ?>"><i class="mi mi-save">save</i></a></div>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@
       url: $(this).attr('href'),
       dataType: 'json',
       beforeSend: function () {
-        $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?>').attr('disabled','disabled');
+        $('#button-load-listings').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading; ?>').attr('disabled','disabled');
         $('.alert-danger, .alert-success').remove();
       },
       success: function (json) {
@@ -148,13 +148,13 @@
       type: 'POST',
       data: $('.link-checkbox:checked').parent().siblings('input[type="hidden"]').serialize(),
       beforeSend: function() {
-        $('#link-button').empty().attr('disabled', 'disabled').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#link-button').empty().attr('disabled', 'disabled').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
       },
       success: function () {
         document.location.reload(true);
       },
       error: function(xhr, ajaxOptions, thrownError) {
-        $('#link-button').empty().removeAttr('disabled').html('<i class="fa fa-save"></i>');
+        $('#link-button').empty().removeAttr('disabled').html('<i class="mi mi-save">save</i>');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

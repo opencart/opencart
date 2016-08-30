@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,15 +16,15 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_create; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_create; ?></h3>
       </div>
       <div class="panel-body">
         <?php if ($error_variant) { ?>
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_variant; ?></div>
+          <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_variant; ?></div>
         <?php } else { ?>
           <div id="page-listing">
             <?php if ($error_warning) { ?>
-              <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+              <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
             <?php } ?>
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
               <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
@@ -42,8 +42,8 @@
                       <div class="form-group required">
                         <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
                         <div class="col-sm-10">
-                          <div id="category-selected" class="alert alert-success" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_category_selected; ?> <a class="label label-info" id="reset-category"><?php echo $button_edit; ?></a></div>
-                          <span id="category-loading"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                          <div id="category-selected" class="alert alert-success" style="display:none;"><i class="mi mi-check mi-lg" style="color:green">check</i> <?php echo $text_category_selected; ?> <a class="label label-info" id="reset-category"><?php echo $button_edit; ?></a></div>
+                          <span id="category-loading"><i class="mi mi-cog mi-lg mi-spin">settings</i></span>
                           <span id="category-parents"></span>
                           <div id="category-select-container" style="display: none;"></div>
                         </div>
@@ -108,7 +108,7 @@
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?> <span id="shipping-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
+                    <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?> <span id="shipping-loading" style="display: none;"><i class="mi mi-cog mi-lg mi-spin">settings</i></span></label>
                     <div class="col-sm-10">
                       <select name="shipping_template_id" id="input-shipping" class="form-control" disabled="disabled">
                       </select>
@@ -117,7 +117,7 @@
                 </div>
                 <div id="tab-listing-additional" class="tab-pane">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-shop-section"><?php echo $entry_shop; ?> <span id="shop-section-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
+                    <label class="col-sm-2 control-label" for="input-shop-section"><?php echo $entry_shop; ?> <span id="shop-section-loading" style="display: none;"><i class="mi mi-cog mi-lg mi-spin">settings</i></span></label>
                     <div class="col-sm-10">
                       <select name="shop_section_id" id="input-shop-section" class="form-control" disabled="disabled">
                       </select>
@@ -186,7 +186,7 @@
                               <input type="text" name="material_input" value="" placeholder="<?php echo $entry_materials; ?>" id="input-material" class="form-control" />
                             </div>
                             <div class="col-xs-2">
-                              <button class="btn btn-primary" title="" onclick="addMaterial();" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_material_add; ?>"><i class="fa fa-plus-circle"></i></button>
+                              <button class="btn btn-primary" title="" onclick="addMaterial();" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_material_add; ?>"><i class="mi mi-plus-circle">add_circle</i></button>
                             </div>
                           </div>
                         </div>
@@ -207,7 +207,7 @@
                               <input type="text" name="tag_input" value="" placeholder="<?php echo $entry_tags; ?>" id="input-tag" class="form-control" />
                             </div>
                             <div class="col-xs-2">
-                              <button class="btn btn-primary" title="" onclick="addTag();" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_tag_add; ?>"><i class="fa fa-plus-circle"></i></button>
+                              <button class="btn btn-primary" title="" onclick="addTag();" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_tag_add; ?>"><i class="mi mi-plus-circle">add_circle</i></button>
                             </div>
                           </div>
                         </div>
@@ -281,7 +281,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/etsy_product/createsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-submit').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'post',
       data: $("#form").serialize(),
@@ -332,13 +332,13 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/etsy_product/addimage&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_img_upload; ?> '+id+'</li>');
+        $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_img_upload; ?> '+id+'</li>');
       },
       type: 'post',
       data: {'listing_id':listing_id,'image':url},
       dataType: 'json',
       success: function(json) {
-        $('#image-upload-status-'+id).removeClass('list-group-item-info').addClass('list-group-item-success').empty().html('<i class="fa fa-check fa-lg" style="color:green;"></i> <?php echo $text_img_upload_done; ?> '+id+'');
+        $('#image-upload-status-'+id).removeClass('list-group-item-info').addClass('list-group-item-success').empty().html('<i class="mi mi-check mi-lg" style="color:green;">check</i> <?php echo $text_img_upload_done; ?> '+id+'');
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -352,7 +352,7 @@
     var material = $('#input-material').val();
 
     if (material != '') {
-      $('#material-container').append('<li class="list-group-item" id="material-id-'+material_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_material_remove; ?>" onclick="$(\'#material-id-'+material_count+'\').remove();"><i class="fa fa-times"></i></button></div><div class="col-xs-11">'+material+'</div></div><input type="hidden" name="materials[]" value="'+material+'" /></li>');
+      $('#material-container').append('<li class="list-group-item" id="material-id-'+material_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_material_remove; ?>" onclick="$(\'#material-id-'+material_count+'\').remove();"><i class="mi mi-times">highlight_off</i></button></div><div class="col-xs-11">'+material+'</div></div><input type="hidden" name="materials[]" value="'+material+'" /></li>');
 
       material_count = material_count + 1;
 
@@ -366,7 +366,7 @@
     var tag = $('#input-tag').val();
 
     if (tag != '') {
-      $('#tag-container').append('<li class="list-group-item" id="tag-id-'+tag_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_tag_remove; ?>" onclick="$(\'#tag-id-'+tag_count+'\').remove();"><i class="fa fa-times"></i></button></div><div class="col-xs-11">'+tag+'</div></div><input type="hidden" name="tags[]" value="'+tag+'" /></li>');
+      $('#tag-container').append('<li class="list-group-item" id="tag-id-'+tag_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_tag_remove; ?>" onclick="$(\'#tag-id-'+tag_count+'\').remove();"><i class="mi mi-times">highlight_off</i></button></div><div class="col-xs-11">'+tag+'</div></div><input type="hidden" name="tags[]" value="'+tag+'" /></li>');
 
       tag_count = tag_count + 1;
 

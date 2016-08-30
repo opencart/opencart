@@ -1,5 +1,5 @@
 <?php if ($testmode) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
+  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_testmode; ?></div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="cmd" value="_cart" />

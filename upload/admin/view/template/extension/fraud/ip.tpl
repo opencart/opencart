@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button class="btn btn-primary" data-toggle="tooltip" form="form-google-base" title="<?php echo $button_save; ?>" type="submit"><i class="fa fa-save"></i></button>
-        <a class="btn btn-default" data-toggle="tooltip" href="<?php echo $cancel; ?>" title="<?php echo $button_cancel; ?>"><i class="fa fa-reply"></i></a></div>
+        <button class="btn btn-primary" data-toggle="tooltip" form="form-google-base" title="<?php echo $button_save; ?>" type="submit"><i class="mi mi-save">save</i></button>
+        <a class="btn btn-default" data-toggle="tooltip" href="<?php echo $cancel; ?>" title="<?php echo $button_cancel; ?>"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button class="close" data-dismiss="alert" type="button">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
       <form action="<?php echo $action; ?>" class="form-horizontal" enctype="multipart/form-data" id="form-google-base" method="post">
@@ -110,11 +110,11 @@ $('#button-ip-add').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#ip').load('index.php?route=extension/fraud/ip/ip&token=<?php echo $token; ?>');
 				
@@ -145,11 +145,11 @@ $('#ip').delegate('button', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#ip').load('index.php?route=extension/fraud/ip/ip&token=<?php echo $token; ?>');
 			}

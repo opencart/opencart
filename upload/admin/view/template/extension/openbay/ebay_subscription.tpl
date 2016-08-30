@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,15 +16,15 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_subscription; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_subscription; ?></h3>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-md-4">
-            <a class="btn btn-primary" id="load-account" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_load_my_plan; ?></a>
+            <a class="btn btn-primary" id="load-account" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_load_my_plan; ?></a>
             <div class="panel panel-default" id="my-plan-container">
               <div class="panel-heading">
-                <h1 class="panel-title"><i class="fa fa-user fa-lg"></i> <?php echo $text_subscription_current; ?></h1>
+                <h1 class="panel-title"><i class="mi mi-user mi-lg">person</i> <?php echo $text_subscription_current; ?></h1>
               </div>
               <div class="panel-body">
                 <table class="table" id="my-plan"></table>
@@ -32,10 +32,10 @@
             </div>
           </div>
           <div class="col-md-8">
-            <a class="btn btn-primary" id="load-plans" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_load_plans; ?></a>
+            <a class="btn btn-primary" id="load-plans" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_load_plans; ?></a>
             <div class="panel panel-default" id="openbay-plans-container">
               <div class="panel-heading">
-                <h1 class="panel-title"><i class="fa fa-list fa-lg"></i> <?php echo $text_subscription_avail; ?></h1>
+                <h1 class="panel-title"><i class="mi mi-list mi-lg">view_list</i> <?php echo $text_subscription_avail; ?></h1>
               </div>
               <div class="panel-body">
                 <table id="openbay-plans" class="table"></table>
@@ -125,13 +125,13 @@
           htmlInj += '<td>&pound;'+val.price+'</td>';
           htmlInj += '<td>'+val.description+'</td>';
           if (val.myplan == 1){
-            htmlInj += '<td><a class="btn btn-success" disabled="disabled"><i class="fa fa-check-circle-o fa-lg"></i> <?php echo $column_current; ?></a></td>';
+            htmlInj += '<td><a class="btn btn-success" disabled="disabled"><i class="mi mi-check-circle-o mi-lg">check_box</i> <?php echo $column_current; ?></a></td>';
           }else{
             if (val.user_plan_id == 1) {
               htmlInj += '<td></td>';
             }else{
               htmlInj += '<td>';
-              htmlInj += '<a href="https://uk.openbaypro.com/account/live/subscription_setup.php?plan_id='+val.user_plan_id+'&subscriber_id=<?php echo $obp_token;?>" class="btn btn-primary" target="_BLANK"><i class="fa fa-arrow-right fa-lg"></i> <?php echo $button_plan_change; ?></a>';
+              htmlInj += '<a href="https://uk.openbaypro.com/account/live/subscription_setup.php?plan_id='+val.user_plan_id+'&subscriber_id=<?php echo $obp_token;?>" class="btn btn-primary" target="_BLANK"><i class="mi mi-arrow-right mi-lg">chevron_right</i> <?php echo $button_plan_change; ?></a>';
               htmlInj += '</td>';
             }
           }

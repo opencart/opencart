@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
-        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-voucher').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary"><i class="mi mi-envelope">mail</i></button>
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="mi mi-plus">add</i></a>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-voucher').submit() : false;"><i class="mi mi-trash-o">delete</i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -17,18 +17,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-voucher">
@@ -93,9 +93,9 @@
                   <td class="text-left"><?php echo $voucher['date_added']; ?></td>
                   <td class="text-right">
                   <?php if ($voucher['order']) { ?>
-                  <a href="<?php echo $voucher['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
+                  <a href="<?php echo $voucher['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="mi fa mi-eye">visibility</i></a>
                   <?php } ?>
-                  <a href="<?php echo $voucher['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <a href="<?php echo $voucher['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -122,22 +122,22 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: $('input[name^=\'selected\']:checked'),
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#button-send i').replaceWith('<i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
+			$('#button-send i').replaceWith('<i class="mi mi-envelope">mail</i>');
 			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 			}		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

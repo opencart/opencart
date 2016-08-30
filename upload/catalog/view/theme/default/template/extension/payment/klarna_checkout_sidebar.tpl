@@ -66,7 +66,7 @@
         		  <?php } ?></td>
         		<td class="text-right">x <?php echo $product['quantity']; ?></td>
         		<td class="text-right"><?php echo $product['total']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.cartRemove('<?php echo $product['cart_id']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-center"><button type="button" onclick="kc.cartRemove('<?php echo $product['cart_id']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="mi mi-times">highlight_off</i></button></td>
         	  </tr>
         	  <?php } ?>
         	  <?php foreach ($vouchers as $voucher) { ?>
@@ -74,7 +74,7 @@
         		<td class="text-left"><?php echo $voucher['description']; ?></td>
         		<td class="text-right">x&nbsp;1</td>
         		<td class="text-right"><?php echo $voucher['amount']; ?></td>
-        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('<?php echo $voucher['key']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="fa fa-times"></i></button></td>
+        		<td class="text-center"><button type="button" onclick="kc.voucherRemove('<?php echo $voucher['key']; ?>');" title="<?php echo $button_remove; ?>" class="btn-link"><i class="mi mi-times">highlight_off</i></button></td>
         	  </tr>
         	  <?php } ?>
         	</table>
@@ -123,7 +123,7 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
 
 					$.get('index.php?route=extension/payment/klarna_checkout/cartTotal', function(total) {
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + total + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="mi mi-shopping-cart">shopping_cart</i> ' + total + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');
@@ -169,7 +169,7 @@ var kc = {
 
 						// Need to set timeout otherwise it wont update the total
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="mi mi-shopping-cart">shopping_cart</i> ' + json['total'] + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');
@@ -212,7 +212,7 @@ var kc = {
 
 						// Need to set timeout otherwise it wont update the total
 						setTimeout(function() {
-							$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+							$('#cart > button').html('<span id="cart-total"><i class="mi mi-shopping-cart">shopping_cart</i> ' + json['total'] + '</span>');
 						}, 100);
 
 						$('#cart > ul').load('index.php?route=common/cart/info ul li');

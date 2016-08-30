@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-openbay" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <button type="submit" form="form-openbay" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
     </div>
@@ -114,7 +114,7 @@
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
-        $('#button-patch').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#button-patch').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         $("#button-patch").attr('disabled', 'disabled');
       },
       success: function() {
@@ -134,7 +134,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/faqclear&token=<?php echo $token; ?>',
       beforeSend: function() {
-        $('#button-clear-faq').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#button-clear-faq').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         $("#button-clear-faq").attr('disabled','disabled');
       },
       type: 'post',
@@ -162,7 +162,7 @@
         dataType: 'json',
         data: 'pass=' + pass,
         beforeSend: function() {
-          $('#button-clear-data').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+          $('#button-clear-data').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         },
         success: function(json) {
           setTimeout(function() {
@@ -229,7 +229,7 @@
       beforeSend: function() { },
       success: function(json) {
         if (json.error == 1) {
-          $('#update-error').removeClass('alert-danger').addClass('alert-info').html('<i class="fa fa-check"></i> ' + json.response).show();
+          $('#update-error').removeClass('alert-danger').addClass('alert-info').html('<i class="mi mi-check">check</i> ' + json.response).show();
           $('#update-v2-progress').hide();
           $('#update-v2-box').fadeIn();
         } else {

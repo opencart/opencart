@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-puzzle-piece">extension</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <fieldset>
@@ -29,7 +29,7 @@
                 <?php } ?>
                 <?php } ?>
               </select>
-              <span class="input-group-addon"><i class="fa fa-filter"></i> <?php echo $text_filter; ?></span>
+              <span class="input-group-addon"><i class="mi mi-filter">filter_list</i> <?php echo $text_filter; ?></span>
             </div>
           </div>
         </fieldset>
@@ -44,13 +44,13 @@ $('select[name="type"]').on('change', function() {
 		url: $('select[name="type"]').val(),
 		dataType: 'html',
 		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
+			$('.mi-filter').addClass('mi-circle-o-notch mi-spin');
+			$('.mi-filter').removeClass('mi-filter');
 		},
 		complete: function() {
-			$('.fa-circle-o-notch').addClass('fa-filter');
-			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
-			
+			$('.mi-circle-o-notch').addClass('mi-filter');
+			$('.mi-circle-o-notch').removeClass('mi-circle-o-notch mi-spin');
+
 		},
 		success: function(html) {
 			$('#extension').html(html);
@@ -65,7 +65,7 @@ $('select[name="type"]').trigger('change');
 
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();
-	
+
 	var node = this;
 
 	$.ajax({
@@ -88,10 +88,10 @@ $('#extension').on('click', '.btn-success', function(e) {
 
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
-	
+
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
-	
+
 		$.ajax({
 			url: $(node).attr('href'),
 			dataType: 'html',
@@ -113,4 +113,4 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 //--></script>
   <?php } ?>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

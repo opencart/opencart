@@ -25,7 +25,7 @@
       <?php } else { ?>
       <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($firstdata_order['void_status'] == 0) { ?>
-      <a class="button btn btn-primary" id="button_capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button_capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -34,7 +34,7 @@
     <td id="void_status"><?php if ($firstdata_order['void_status'] == 1) { ?>
       <span class="void_text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
-      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?></td>
   </tr>
   <tr>

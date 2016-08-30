@@ -22,8 +22,8 @@
 <?php $translation_rows++; ?>
 <?php } ?>
 <div class="pull-right">
-  <button type="button" id="button-save" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button_save; ?></button>
+  <button type="button" id="button-save" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-floppy-o">save</i> <?php echo $button_save; ?></button>
 </div>
 <script type="text/javascript"><!--
 
-//--></script> 
+//--></script>

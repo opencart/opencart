@@ -1,5 +1,5 @@
 body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-weight: 400;
 	color: #666;
 	font-size: 12px;
@@ -328,7 +328,7 @@ footer a:hover {
 	color: #fff;
 }
 footer h5 {
-	font-family: 'Open Sans', sans-serif;
+
 	font-size: 13px;
 	font-weight: bold;
 	color: #fff;

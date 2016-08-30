@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="$('#form').submit();"><i class="mi mi-check-circle">check_circle</i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,11 +16,11 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_manage; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_manage; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
@@ -157,7 +157,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -186,7 +186,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -239,7 +239,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -270,7 +270,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -332,7 +332,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc + '&type=' + type,
       beforeSend: function(){
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'GET',
       dataType: 'json',
@@ -386,16 +386,16 @@
               html += '</div>';
             }
             html += '<div class="col-sm-3 pull-right text-right">';
-              html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>';
+              html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i> <?php echo $button_delete; ?></a>';
             html += '</div>';
           html += '</div>';
         html += '</div>';
 
         $('#options-' + id + '-' + type).append(html);
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-shipping-'+id).empty().html('<i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

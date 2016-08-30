@@ -3,8 +3,8 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="submit" form="form-free-checkout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+                <button type="submit" form="form-free-checkout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
             <h1><?php echo $heading_title; ?></h1>
             <ul class="breadcrumb">
                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
     </div>
     <div class="container-fluid">
         <?php if ($error_warning) { ?>
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+        <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+                <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_edit; ?></h3>
             </div>
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-divido" class="form-horizontal">
@@ -130,7 +130,7 @@
                             <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="category" class="form-control" />
                             <div id="divido-category" class="well well-sm" style="height: 150px; overflow: auto;">
                             <?php foreach ($categories as $category) { ?>
-                                <div id="category<?php echo $category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category['name']; ?>
+                                <div id="category<?php echo $category['category_id']; ?>"><i class="mi mi-minus-circle">remove circle</i> <?php echo $category['name']; ?>
                                     <input type="hidden" name="divido_categories[]" value="<?php echo $category['category_id']; ?>" />
                                 </div>
                             <?php } ?>
@@ -204,11 +204,11 @@
 		select: function(item) {
 			$('input[name=\'category\']').val('');
 			$('#divido-category' + item['value']).remove();
-			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="divido_categories[]" value="' + item['value'] + '" /></div>');
+			$('#divido-category').append('<div id="divido-category' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="divido_categories[]" value="' + item['value'] + '" /></div>');
 		}
 	});
 
-	$('#divido-category').delegate('.fa-minus-circle', 'click', function() {
+	$('#divido-category').delegate('.mi-minus-circle', 'click', function() {
 		$(this).parent().remove();
 	});
 

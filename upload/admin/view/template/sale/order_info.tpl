@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="mi mi-print">print</i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="mi mi-truck">local_shopping</i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -16,25 +16,25 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_order_detail; ?></h3>
+            <h3 class="panel-title"><i class="mi mi-shopping-cart">shopping_cart</i> <?php echo $text_order_detail; ?></h3>
           </div>
           <table class="table">
             <tbody>
               <tr>
-                <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_store; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_store; ?>" class="btn btn-info btn-xs"><i class="mi mi-shopping-cart mi-fw">shopping_cart</i>shopping_cart</button></td>
                 <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a></td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="<?php echo $text_date_added; ?>" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+                <td><button data-toggle="tooltip" title="<?php echo $text_date_added; ?>" class="btn btn-info btn-xs"><i class="mi mi-calendar mi-fw">date_range</i></button></td>
                 <td><?php echo $date_added; ?></td>
               </tr>
               <tr>
-                <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+                <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="mi mi-credit-card mi-fw">credit_card</i></button></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
               <?php if ($shipping_method) { ?>
               <tr>
-                <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+                <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="mi mi-truck mi-fw">local_shipping</i></button></td>
                 <td><?php echo $shipping_method; ?></td>
               </tr>
               <?php } ?>
@@ -45,11 +45,11 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_customer_detail; ?></h3>
+            <h3 class="panel-title"><i class="mi mi-user">person</i> <?php echo $text_customer_detail; ?></h3>
           </div>
           <table class="table">
             <tr>
-              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_customer; ?>" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
+              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_customer; ?>" class="btn btn-info btn-xs"><i class="mi mi-user mi-fw">person</i></button></td>
               <td><?php if ($customer) { ?>
                 <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a>
                 <?php } else { ?>
@@ -57,15 +57,15 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="<?php echo $text_customer_group; ?>" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="<?php echo $text_customer_group; ?>" class="btn btn-info btn-xs"><i class="mi mi-group mi-fw">people</i></button></td>
               <td><?php echo $customer_group; ?></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="<?php echo $text_email; ?>" class="btn btn-info btn-xs"><i class="fa fa-envelope-o fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="<?php echo $text_email; ?>" class="btn btn-info btn-xs"><i class="mi mi-envelope-o mi-fw">mail_outline</i></button></td>
               <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
             </tr>
             <tr>
-              <td><button data-toggle="tooltip" title="<?php echo $text_telephone; ?>" class="btn btn-info btn-xs"><i class="fa fa-phone fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="<?php echo $text_telephone; ?>" class="btn btn-info btn-xs"><i class="mi mi-phone mi-fw">phone</i></button></td>
               <td><?php echo $telephone; ?></td>
             </tr>
           </table>
@@ -74,7 +74,7 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-cog"></i> <?php echo $text_option; ?></h3>
+            <h3 class="panel-title"><i class="mi mi-cog">settings</i> <?php echo $text_option; ?></h3>
           </div>
           <table class="table">
             <tbody>
@@ -82,9 +82,9 @@
                 <td><?php echo $text_invoice; ?></td>
                 <td id="invoice" class="text-right"><?php echo $invoice_no; ?></td>
                 <td style="width: 1%;" class="text-center"><?php if (!$invoice_no) { ?>
-                  <button id="button-invoice" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_generate; ?>" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
+                  <button id="button-invoice" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_generate; ?>" class="btn btn-success btn-xs"><i class="mi mi-cog">settings</i></button>
                   <?php } else { ?>
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="mi mi-refresh">refresh</i></button>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -92,12 +92,12 @@
                 <td class="text-right"><?php echo $reward; ?></td>
                 <td class="text-center"><?php if ($customer && $reward) { ?>
                   <?php if (!$reward_total) { ?>
-                  <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>
                   <?php } else { ?>
-                  <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="mi mi-minus-circle">remove circle</i></button>
                   <?php } ?>
                   <?php } else { ?>
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>
                   <?php } ?></td>
               </tr>
               <tr>
@@ -108,12 +108,12 @@
                 <td class="text-right"><?php echo $commission; ?></td>
                 <td class="text-center"><?php if ($affiliate) { ?>
                   <?php if (!$commission_total) { ?>
-                  <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>
                   <?php } else { ?>
-                  <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="mi mi-minus-circle">remove circle</i></button>
                   <?php } ?>
                   <?php } else { ?>
-                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>
                   <?php } ?></td>
               </tr>
             </tbody>
@@ -123,7 +123,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_order; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-info-circle">info</i> <?php echo $text_order; ?></h3>
       </div>
       <div class="panel-body">
         <table class="table table-bordered">
@@ -207,7 +207,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-comment-o"></i> <?php echo $text_history; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-comment-o">chat_bubble_outline</i> <?php echo $text_history; ?></h3>
       </div>
       <div class="panel-body">
         <ul class="nav nav-tabs">
@@ -259,7 +259,7 @@
               </form>
             </fieldset>
             <div class="text-right">
-              <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
+              <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_history_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-additional">
@@ -374,11 +374,11 @@ $(document).delegate('#button-ip-add', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -401,13 +401,13 @@ $(document).delegate('#button-invoice', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['invoice_no']) {
 				$('#invoice').html(json['invoice_no']);
 
-				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
+				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="mi mi-cog">settings</i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -431,13 +431,13 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="mi mi-minus-circle">remove circle</i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -461,13 +461,13 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -491,13 +491,13 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="mi mi-minus-circle">remove circle</i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -521,13 +521,13 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="mi mi-plus-circle">add_circle</i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -550,11 +550,11 @@ $.ajax({
 
         if (json['error']) {
     		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     		}
 
             if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="mi mi-plus">add</i> <?php echo $button_ip_add; ?></button></div>');
     		}
         }
 
@@ -602,13 +602,13 @@ $('#button-history').on('click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').before('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
 				$('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
-				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').before('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('textarea[name=\'comment\']').val('');
 			}
@@ -651,6 +651,6 @@ $(document).ready(function() {
 $('select[name="order_status_id"]').change(function(){
 	changeStatus();
 });
-//--></script> 
+//--></script>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

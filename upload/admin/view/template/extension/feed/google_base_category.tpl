@@ -12,7 +12,7 @@
     <tr>
       <td class="text-left"><?php echo $google_base_category['google_base_category']; ?></td>
       <td class="text-left"><?php echo $google_base_category['category']; ?></td>
-      <td class="text-right"><button type="button" value="<?php echo $google_base_category['category_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+      <td class="text-right"><button type="button" value="<?php echo $google_base_category['category_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
     </tr>
     <?php } ?>
     <?php } else { ?>

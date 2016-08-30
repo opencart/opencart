@@ -51,7 +51,7 @@ var step = 0;
 $('#button-continue').on('click', function() {
 	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
 	$('#progress-text').html('');
-	$('#button-continue').prop('disabled', true).before('<i class="fa fa-spinner fa-spin"></i> ');
+	$('#button-continue').prop('disabled', true).before('<i class="mi mi-spinner mi-spin">refresh</i> ');
 
 	start('index.php?route=upgrade/upgrade/next');
 });
@@ -68,7 +68,7 @@ function start(url) {
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
 					$('#button-continue').prop('disabled', false);
-					$('.fa-spinner').remove();
+					$('.mi-spinner').remove();
 				}
 
 				if (json['success']) {
@@ -80,7 +80,7 @@ function start(url) {
 					start(json['next']);
 				} else if (!json['error']) {
 					$('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
-					$('.fa-spinner').remove();
+					$('.mi-spinner').remove();
 				}
 
 				step++;
@@ -89,7 +89,7 @@ function start(url) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
 				$('#button-continue').prop('disabled', false);
-				$('.fa-spinner').remove();
+				$('.mi-spinner').remove();
 			}
 		});
 	}, 1000);

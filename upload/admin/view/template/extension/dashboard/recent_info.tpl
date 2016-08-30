@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $heading_title; ?></h3>
+    <h3 class="panel-title"><i class="mi mi-shopping-cart">shopping_cart</i> <?php echo $heading_title; ?></h3>
   </div>
   <div class="table-responsive">
     <table class="table">
@@ -23,7 +23,7 @@
           <td><?php echo $order['status']; ?></td>
           <td><?php echo $order['date_added']; ?></td>
           <td class="text-right"><?php echo $order['total']; ?></td>
-          <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+          <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a></td>
         </tr>
         <?php } ?>
         <?php } else { ?>

@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td><?php echo $text_update; ?></td>
-    <td><a class="button btn btn-primary btn-xs" id="button-inquire-all"><?php echo $button_inquire_all; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+    <td><a class="button btn btn-primary btn-xs" id="button-inquire-all"><?php echo $button_inquire_all; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span></td>
   </tr>
   <tr>
     <td><?php echo $text_order_total; ?></td>
@@ -24,19 +24,19 @@
     <td><?php echo $text_capture_payment; ?></td>
     <td>
       <input type="text" style="width:80px" id="capture_amount" value="<?php echo $cardconnect_order['total']; ?>"/>
-      <a class="button btn btn-primary btn-sm" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary btn-sm" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_capture" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
     </td>
   </tr>
   <tr>
     <td><?php echo $text_refund_payment; ?></td>
     <td>
       <input type="text" style="width:80px" id="refund_amount" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?> />
-      <a class="button btn btn-primary btn-sm" id="button-refund" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary btn-sm" id="button-refund" <?php if ($cardconnect_order['total_captured'] < 1) { echo 'style="display:none"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_refund" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
      </td>
   </tr>
   <tr>
     <td><?php echo $text_void; ?></td>
-    <td><a class="button btn btn-primary btn-xs" id="button-void-all"><?php echo $button_void_all; ?></a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+    <td><a class="button btn btn-primary btn-xs" id="button-void-all"><?php echo $button_void_all; ?></a> <span class="btn btn-primary btn-xs" id="img_loading_void" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span></td>
   </tr>
   <tr>
     <td><?php echo $text_transactions; ?></td>
@@ -62,8 +62,8 @@
             <td class="text-left"><?php echo $transaction['status']; ?></td>
             <td class="text-left"><?php echo $transaction['date_modified']; ?></td>
             <td class="text-left"><?php echo $transaction['date_added']; ?></td>
-            <td class="text-left"><a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="<?php echo $transaction['retref']; ?>"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
-            <td class="text-left"><a class="button btn btn-primary button-void btn-xs" data-void-retref="<?php echo $transaction['retref']; ?>"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span></td>
+            <td class="text-left"><a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="<?php echo $transaction['retref']; ?>"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span></td>
+            <td class="text-left"><a class="button btn btn-primary button-void btn-xs" data-void-retref="<?php echo $transaction['retref']; ?>"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -101,20 +101,20 @@
 						html += '<td class="text-left">' + json['status'] + '</td>';
 						html += '<td class="text-left">' + json['date_modified'] + '</td>';
 						html += '<td class="text-left">' + json['date_added'] + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>' + '</td>';
 						html += '</tr>';
 
 						$('#cardconnect_transactions').append(html);
 						$('#cardconnect_total_captured').text(json['total_captured']);
 
-						$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>').fadeIn();
 
 						$('#refund_amount, #button-refund').show();
 					}
 
 					if (json['error']) {
-						$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>').fadeIn();
 					}
 
 					$('#capture_amount').val(0.00).show();
@@ -150,18 +150,18 @@
 						html += '<td class="text-left">' + json['status'] + '</td>';
 						html += '<td class="text-left">' + json['date_modified'] + '</td>';
 						html += '<td class="text-left">' + json['date_added'] + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
-						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-inquire btn-xs" data-inquire-retref="' + json['retref'] + '"><?php echo $button_inquire; ?></a> <span class="btn btn-primary btn-xs img_loading_inquire" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>' + '</td>';
+						html += '<td class="text-left">' + '<a class="button btn btn-primary button-void btn-xs" data-void-retref="' + json['retref'] + '"><?php echo $button_void; ?></a> <span class="btn btn-primary btn-xs img_loading_void" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>' + '</td>';
 						html += '</tr>';
 
 						$('#cardconnect_transactions').append(html);
 						$('#cardconnect_total_captured').text(json['total_captured']);
 
-						$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>').fadeIn();
 					}
 
 					if (json['error']) {
-						$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>').fadeIn();
 					}
 
 					$('#refund_amount').val(0.00).show();
@@ -194,11 +194,11 @@
 
 					$('*[data-inquire-retref="' + button.data('inquire-retref') + '"]').parent().prev().prev().text(json['date_modified']);
 
-					$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+					$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 				}
 
 				if (json['error']) {
-					$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+					$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 				}
 
 				$('.button-inquire').show();
@@ -228,11 +228,11 @@
 
 					$('*[data-void-retref="' + button.data('void-retref') + '"]').parent().prev().prev().prev().text(json['date_modified']);
 
-					$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+					$('h2').after('<div class="alert alert-success cardconnect_message" style="display:none"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>');
 				}
 
 				if (json['error']) {
-					$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+					$('h2').after('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>');
 				}
 
 				$('.button-void').show();

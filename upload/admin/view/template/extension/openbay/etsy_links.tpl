@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,10 +16,10 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-plus fa-lg"></i> <?php echo $text_new_link; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-plus mi-lg">add</i> <?php echo $text_new_link; ?></h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
+        <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="mi mi-check mi-lg" style="color:green">check</i> <?php echo $text_link_saved; ?></div>
         <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
         <div class="well">
       <div class="row">
@@ -35,14 +35,14 @@
             <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
             <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
           </div>
-          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
+          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="mi mi-check">check</i> <?php echo $button_save; ?></a> </div>
       </div>
     </div>
       </div>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $text_current_links; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-link mi-lg">link</i> <?php echo $text_current_links; ?></h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
@@ -64,11 +64,11 @@
                   <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
                   <td class="text-center"><?php echo $item['quantity']; ?></td>
                   <td class="text-center"><?php if ($item['status'] == 1) { ?>
-                    <i class="fa fa-check" style="color: green;"></i>
+                    <i class="mi mi-check" style="color: green;">check</i>
                     <?php } else { ?>
-                    <i class="fa fa-times" style="color: red;"></i>
+                    <i class="mi mi-times" style="color: red;">clear</i>
                     <?php } ?></td>
-                  <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button></td>
+                  <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="mi mi-times">highlight_off</i></button></td>
                 </tr>
               <?php } ?>
             <?php } else { ?>
@@ -110,7 +110,7 @@
       beforeSend: function() {
         $('#alert-link-save').hide();
         $('#alert-link-error').hide().empty();
-        $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-submit-link').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.error == false) {
@@ -119,13 +119,13 @@
           $('#input-etsy-id').val('');
           $('#alert-link-save').show();
         } else {
-          $('#alert-link-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
+          $('#alert-link-error').html('<i class="mi mi-times mi-lg" style="color:red;">clear</i> '+json.error).show();
         }
 
-        $('#button-submit-link').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+        $('#button-submit-link').empty().html('<i class="mi mi-check">check</i> <?php echo $button_save; ?>').removeAttr('disabled');
       },
       failure: function() {
-        $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+        $('#button-submit').empty().html('<i class="mi mi-check">check</i> <?php echo $button_save; ?>').removeAttr('disabled');
       }
     });
   }
@@ -137,18 +137,18 @@
       method: 'POST',
       data: { 'etsy_link_id' : etsy_link_id },
       beforeSend: function() {
-        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.error == false) {
           $('#row-'+etsy_link_id).remove();
         } else {
-          $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-          $('#alert-link-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+          $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="mi mi-times mi-lg" style="color:red;">clear</i>').removeAttr('disabled');
+          $('#alert-link-error').html('<i class="mi mi-times mi-lg">clear</i> '+json.error).show();
         }
       },
       failure: function() {
-        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="mi mi-times mi-lg">clear</i>').removeAttr('disabled');
       }
     });
   }

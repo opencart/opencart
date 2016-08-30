@@ -12,21 +12,21 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_event; ?>
+    <div class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $text_event; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
@@ -77,9 +77,9 @@
                 <td class="text-left"><?php echo $event['status']; ?></td>
                 <td class="text-left"><?php echo $event['date_added']; ?></td>
                 <td class="text-right"><?php if (!$event['enabled']) { ?>
-                  <a href="<?php echo $event['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                  <a href="<?php echo $event['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="mi mi-plus-circle">add_circle</i></a>
                   <?php } else { ?>
-                  <a href="<?php echo $event['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                  <a href="<?php echo $event['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>

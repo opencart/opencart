@@ -155,7 +155,7 @@ $('#button-delete').bind('click', function() {
 			dataType: 'json',
 			beforeSend: function() {
 				$('.cardconnect_message').remove();
-				$('#payment').before('<div class="alert alert-info cardconnect_wait"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+				$('#payment').before('<div class="alert alert-info cardconnect_wait"><i class="mi mi-info-circle">info</i> <?php echo $text_wait; ?></div>');
 				$('#button-delete').button('loading');
 			},
 			complete: function() {
@@ -164,7 +164,7 @@ $('#button-delete').bind('click', function() {
 			},
 			success: function(json) {
 				if (json['error']) {
-					$('#cardconnect-form').before('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#cardconnect-form').before('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('.cardconnect_message').fadeIn();
 				} else {
@@ -196,7 +196,7 @@ $('#button-confirm').bind('click', function() {
 			$('.cardconnect_message').remove();
 			$('.text-danger').remove();
 			$('#payment').find('*').removeClass('has-error');
-			$('#payment').before('<div class="alert alert-info cardconnect_wait"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+			$('#payment').before('<div class="alert alert-info cardconnect_wait"><i class="mi mi-info-circle">info</i> <?php echo $text_wait; ?></div>');
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
@@ -205,7 +205,7 @@ $('#button-confirm').bind('click', function() {
 		},
 		success: function(json) {
 			if (json['error']['warning']) {
-				$('#cardconnect-form').before('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#cardconnect-form').before('<div class="alert alert-danger cardconnect_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('.cardconnect_message').fadeIn();
 			}

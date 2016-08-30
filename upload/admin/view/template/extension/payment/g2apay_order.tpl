@@ -24,7 +24,7 @@
 		  <?php if ($g2apay_order['total_released'] > 0) { ?>
 			  <input type="text" width="10" id="refund_amount" />
 			  <a class="button btn btn-primary" id="btn_refund"><?php echo $btn_refund; ?></a>
-			  <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+			  <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="mi mi-cog mi-spin mi-lg">settings</i></span>
 		  <?php } ?>
 	  <?php } ?>
 	</td>
@@ -87,7 +87,7 @@
               }
 
               if (data.msg != '') {
-                $('#g2apay_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+                $('#g2apay_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> ' + data.msg).fadeIn();
               }
             }
             if (data.error == true) {

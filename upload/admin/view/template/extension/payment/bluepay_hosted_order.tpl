@@ -21,7 +21,7 @@
       <span class="release_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($bluepay_hosted_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="release_amount" value="<?php echo $bluepay_hosted_order['total']; ?>"/>
-      <a class="button btn btn-primary" id="button-release"><?php echo $button_release; ?></a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button-release"><?php echo $button_release; ?></a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -30,7 +30,7 @@
     <td id="void_status"><?php if ($bluepay_hosted_order['void_status'] == 1) { ?>
       <span class="void_text"><?php echo $text_yes; ?></span>
       <?php } elseif ($bluepay_hosted_order['void_status'] == 0 && $bluepay_hosted_order['release_status'] == 1 && $bluepay_hosted_order['rebate_status'] != 1) { ?>
-      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } else { ?>
       <span class="void_text"><?php echo $text_no; ?></span>
       <?php } ?></td>
@@ -43,7 +43,7 @@
       <span class="rebate_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($bluepay_hosted_order['total_released'] > 0 && $bluepay_hosted_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="rebate_amount" />
-      <a class="button btn btn-primary" id="button-rebate"><?php echo $button_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button-rebate"><?php echo $button_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -100,7 +100,7 @@
 						$('#rebate_amount').hide();
 
 						if (data.msg != '') {
-							$('#bluepay_hosted_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+							$('#bluepay_hosted_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> ' + data.msg).fadeIn();
 						}
 					}
 					if (data.error == true) {
@@ -149,7 +149,7 @@
 						}
 
 						if (data.msg != '') {
-							$('#bluepay_hosted_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+							$('#bluepay_hosted_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> ' + data.msg).fadeIn();
 						}
 
 						$('#button-rebate').show();
@@ -200,7 +200,7 @@
 						}
 
 						if (data.msg != '') {
-							$('#bluepay_hosted_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
+							$('#bluepay_hosted_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> ' + data.msg).fadeIn();
 						}
 					}
 					if (data.error == true) {

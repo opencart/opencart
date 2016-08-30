@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-affiliate" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-affiliate" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-affiliate" class="form-horizontal">
@@ -320,7 +320,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <button type="button" id="button-transaction" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
+                <button type="button" id="button-transaction" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_transaction_add; ?></button>
               </div>
             </div>
             <?php } ?>
@@ -335,10 +335,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('.mi-spin').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -407,11 +407,11 @@ $('#button-transaction').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('#tab-transaction').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+				 $('#tab-transaction').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
 				$('#transaction').load('index.php?route=marketing/affiliate/transaction&token=<?php echo $token; ?>&affiliate_id=<?php echo $affiliate_id; ?>');
 	

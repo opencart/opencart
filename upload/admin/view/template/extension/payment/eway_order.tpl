@@ -12,7 +12,7 @@
       <?php if (($eway_order['void_status'] == 0) && ($eway_order['capture_status'] == 0) ) { ?>
       <input type="text" name="eway_capture_amount" placeholder="<?php echo $eway_order['uncaptured']; ?>" id="eway-capture-amount" class="" />
         <a class="button btn btn-primary" id="btn-capture"><?php echo $btn_capture; ?></a>
-        <span class="btn btn-primary" id="img-loading-capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+        <span class="btn btn-primary" id="img-loading-capture" style="display:none;"><i class="mi mi-cog mi-spin mi-lg">settings</i></span>
         <?php } ?>
   </td>
   </tr>
@@ -23,7 +23,7 @@
       <?php if ($eway_order['refund_status'] == 0 && $eway_order['capture_status'] == 1) { ?>
         <input type="text" name="eway_refund_amount" placeholder="<?php echo $eway_order['unrefunded']; ?>" id="eway-refund-amount" class="" />
         <a class="button btn btn-primary" id="btn-refund"><?php echo $btn_refund; ?></a>
-        <span class="btn btn-primary" id="img-loading-refund" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+        <span class="btn btn-primary" id="img-loading-refund" style="display:none;"><i class="mi mi-cog mi-spin mi-lg">settings</i></span>
       <?php } ?>
     </td>
   </tr>
@@ -92,7 +92,7 @@
 						}
 
 						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+							$('#eway-transaction-msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.message).fadeIn();
 						}
 					}
 					if (data.error == true) {
@@ -146,7 +146,7 @@
 						}
 
 						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+							$('#eway-transaction-msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.message).fadeIn();
 						}
 					}
 					if (data.error == true) {

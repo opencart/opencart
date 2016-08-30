@@ -13,18 +13,18 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_upload; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-puzzle-piece">extension</i> <?php echo $text_upload; ?></h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
             <div class="col-sm-10">
-              <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>
               <?php if ($error_warning) { ?>
-              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="mi mi-eraser">clear_all</i> <?php echo $button_clear; ?></button>
               <?php } else { ?>
-              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+              <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="mi mi-eraser">clear_all</i> <?php echo $button_clear; ?></button>
               <?php } ?>
             </div>
           </div>
@@ -42,7 +42,7 @@
             <div class="col-sm-10">
               <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
               <br />
-              <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
+              <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="mi mi-check">check</i> <?php echo $button_continue; ?></button>
             </div>
           </div>
         </form>
@@ -176,11 +176,11 @@ $('#button-clear').bind('click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#button-clear').prop('disabled', true);
 			}
@@ -191,4 +191,4 @@ $('#button-clear').bind('click', function() {
 	});
 });
 //--></script></div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

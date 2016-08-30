@@ -3,15 +3,15 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
         <?php if ($fba_order_status == 1) { ?>
-          <a href="<?php echo $resend_link; ?>" id="button-resend" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info" value=""><i class="fa fa-refresh"></i></a>
+          <a href="<?php echo $resend_link; ?>" id="button-resend" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info" value=""><i class="mi mi-refresh">refresh</i></a>
         <?php } ?>
         <?php if ($fba_order_status == 2) { ?>
-          <a href="<?php echo $ship_link; ?>" id="button-ship" data-toggle="tooltip" title="<?php echo $button_ship; ?>" class="btn btn-info" value=""><i class="fa fa-truck"></i></a>
+          <a href="<?php echo $ship_link; ?>" id="button-ship" data-toggle="tooltip" title="<?php echo $button_ship; ?>" class="btn btn-info" value=""><i class="mi mi-truck">local_shipping</i></a>
         <?php } ?>
         <?php if ($fba_order_status == 0 || $fba_order_status == 2) { ?>
-          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $cancel_link; ?>' : false;" id="button-cancel" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger" value=""><i class="fa fa-times-circle"></i></a>
+          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $cancel_link; ?>' : false;" id="button-cancel" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger" value=""><i class="mi mi-times-circle">cancel</i></a>
         <?php } ?>
       </div>
       <h1><?php echo $heading_title; ?></h1>
@@ -25,13 +25,13 @@
   <div class="container-fluid" id="main-body">
     <?php if ($error_warning) { ?>
       <?php foreach ($error_warning as $warning) { ?>
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $warning; ?>
+        <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $warning; ?>
           <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
       <?php } ?>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
@@ -46,7 +46,7 @@
             <div class="col-md-6">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_shipping_address; ?></h3>
+                  <h3 class="panel-title"><i class="mi mi-shopping-cart">shopping_cart</i> <?php echo $text_shipping_address; ?></h3>
                 </div>
                 <table class="table">
                   <tbody>
@@ -60,16 +60,16 @@
             <div class="col-md-6">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_order_info; ?></h3>
+                  <h3 class="panel-title"><i class="mi mi-user">person</i> <?php echo $text_order_info; ?></h3>
                 </div>
                 <table class="table">
                   <tr>
-                    <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                    <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="mi mi-shopping-cart mi-fw">shopping_cart</i></button></td>
                     <td><a href="<?php echo $order_link; ?>"><?php echo $order_id; ?></a></td>
                   </tr>
                   <tr>
                     <td style="width: 1%;">
-                      <button data-toggle="tooltip" title="<?php echo $text_status; ?>" class="btn btn-info btn-xs"><i class="fa fa-cog fa-fw"></i></button>
+                      <button data-toggle="tooltip" title="<?php echo $text_status; ?>" class="btn btn-info btn-xs"><i class="mi mi-cog mi-fw">settings</i></button>
                     </td>
                     <td>
                       <?php if ($fba_order_status == 0) { ?>
@@ -87,7 +87,7 @@
                   </tr>
                   <?php if($fulfillment_id) { ?>
                   <tr>
-                    <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_fulfillment_id; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+                    <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_fulfillment_id; ?>" class="btn btn-info btn-xs"><i class="mi mi-truck mi-fw">local_shipping</i></button></td>
                     <td><a href="<?php echo $fulfillment_link; ?>"><?php echo $fulfillment_id; ?></a></td>
                   </tr>
                   <?php } ?>
@@ -97,7 +97,7 @@
           </div>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_order; ?></h3>
+              <h3 class="panel-title"><i class="mi mi-info-circle">info</i> <?php echo $text_order; ?></h3>
             </div>
             <div class="panel-body">
               <table class="table table-bordered">
@@ -129,9 +129,9 @@
                   <td class="text-right"><?php echo $product['quantity']; ?></td>
                   <td class="text-right">
                     <?php if ($product['fba'] == 1) { ?>
-                    <span class="btn btn-success btn-sm"><i class="fa fa-check fa-fw"></i></span>
+                    <span class="btn btn-success btn-sm"><i class="mi mi-check mi-fw">check</i></span>
                     <?php } else { ?>
-                    <span class="btn btn-danger btn-sm"><i class="fa fa-minus fa-fw"></i></span>
+                    <span class="btn btn-danger btn-sm"><i class="mi mi-minus mi-fw">remove</i></span>
                     <?php } ?>
                   </td>
                 </tr>
@@ -144,7 +144,7 @@
         <div class="tab-pane" id="tab-history">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-comment-o"></i> <?php echo $text_history; ?></h3>
+              <h3 class="panel-title"><i class="mi mi-comment-o">chat_bubble_outline</i> <?php echo $text_history; ?></h3>
             </div>
             <div class="panel-body">
               <table class="table table-bordered">
@@ -166,9 +166,9 @@
                       <td class="text-left"><?php echo $type_options[$fulfillment['type']]; ?></td>
                       <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>"><?php echo $fulfillment['response_header_code']; ?></label></td>
                       <td class="text-right">
-                        <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
-                        <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
-                        <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="mi mi-mail-forward mi-fw">forward</i></button><?php } ?>
+                        <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="mi mi-mail-reply mi-fw">reply</i></button><?php } ?>
+                        <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="mi mi-exclamation mi-fw">error</i></button><?php } ?>
                       </td>
                     </tr>
                     <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
@@ -209,15 +209,15 @@
 <script type="text/javascript"><!--
 
 $('#button-resend').click(function() {
-  $('#button-resend').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+  $('#button-resend').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
 });
 
 $('#button-ship').click(function() {
-  $('#button-ship').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+  $('#button-ship').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
 });
 
 $('#button-cancel').click(function() {
-  $('#button-cancel').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+  $('#button-cancel').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
 });
 
 //--></script>

@@ -12,14 +12,14 @@
   </div>
   <div class="container-fluid">
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
     <?php } ?>
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_listings; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_listings; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -41,7 +41,7 @@
                   <option value="expired"<?php if ($filter['status'] == 'expired') { echo ' selected'; } ?>>Expired</option>
                 </select>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
                 <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
                 <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
               </div>
-              <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
+              <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="mi mi-check">check</i> <?php echo $button_save; ?></a> </div>
           </div>
         </div>
         <div class="table-responsive">
@@ -85,7 +85,7 @@
                 <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
                 <?php if (!empty($listing['link'])) { ?>
                 <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
-                <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
+                <td class="text-center"><i class="mi mi-check" style="color: green;">check</i></td>
                 <td class="text-center"><?php
                         if ($listing['link']['quantity'] != $listing['listing']['quantity']) {
                           echo $text_status_stock;
@@ -94,23 +94,23 @@
                         }
                        ?></td>
                 <?php } else { ?>
-                <td class="text-center"><i class="fa fa-minus"></i></td>
-                <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
+                <td class="text-center"><i class="mi mi-minus">remove</i></td>
+                <td class="text-center"><i class="mi mi-times" style="color: red;">clear</i></td>
                 <td class="text-center"><?php echo $text_status_nolink; ?></td>
                 <?php } ?>
                   </td>
                 <td class="text-right"><?php if (in_array('activate_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="<?php echo $text_activate; ?>" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-plus"></i></button>
+                  <button data-toggle="tooltip" title="<?php echo $text_activate; ?>" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="mi mi-plus">add</i></button>
                   <?php } ?>
                   <?php if (in_array('add_link', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="<?php echo $text_add_link; ?>" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="fa fa-link"></i></button>
+                  <button data-toggle="tooltip" title="<?php echo $text_add_link; ?>" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="mi mi-link">link</i></button>
                   <?php } ?>
                   <?php if (in_array('delete_link', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="<?php echo $text_delete_link; ?>" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="fa fa-unlink"></i></button>
+                  <button data-toggle="tooltip" title="<?php echo $text_delete_link; ?>" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="mi mi-unlink"></i></button>
                   <?php } ?>
                   <?php if (in_array('end_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="<?php echo $text_delete; ?>" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
-                  <button data-toggle="tooltip" title="<?php echo $text_deactivate; ?>" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-ban"></i></button>
+                  <button data-toggle="tooltip" title="<?php echo $text_delete; ?>" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="mi mi-times">highlight_off</i></button>
+                  <button data-toggle="tooltip" title="<?php echo $text_deactivate; ?>" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="mi mi-ban">block</i></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -187,20 +187,20 @@ function addLink() {
     data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
     beforeSend: function() {
       $('#alert-error').hide().empty();
-      $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('#button-submit-link').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
     },
     success: function(json) {
       if (json.error == false) {
         url += '&link_added=1';
         location = url;
       } else {
-        $('#alert-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
+        $('#alert-error').html('<i class="mi mi-times mi-lg" style="color:red;">clear</i> '+json.error).show();
       }
 
-      $('#button-submit-link').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+      $('#button-submit-link').empty().html('<i class="mi mi-check">check</i> <?php echo $button_save; ?>').removeAttr('disabled');
     },
     failure: function() {
-      $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+      $('#button-submit').empty().html('<i class="mi mi-check">check</i> <?php echo $button_save; ?>').removeAttr('disabled');
     }
   });
 }
@@ -212,19 +212,19 @@ function deleteLink(etsy_link_id) {
     method: 'POST',
     data: { 'etsy_link_id' : etsy_link_id },
     beforeSend: function() {
-      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
     },
     success: function(json) {
       if (json.error == false) {
         url += '&link_deleted=1';
         location = url;
       } else {
-        $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-        $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        $('#btn-delete-'+etsy_link_id).empty().html('<i class="mi mi-times mi-lg" style="color:red;">clear</i>').removeAttr('disabled');
+        $('#alert-error').html('<i class="mi mi-times mi-lg">clear</i> '+json.error).show();
       }
     },
     failure: function() {
-      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="mi mi-times mi-lg">clear</i>').removeAttr('disabled');
     }
   });
 }
@@ -239,19 +239,19 @@ function endListing(etsy_item_id) {
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
       beforeSend: function() {
-        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.error == false) {
           url += '&item_ended=1';
           location = url;
         } else {
-          $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+          $('#btn-end-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg" style="color:red;">clear</i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="mi mi-times mi-lg">clear</i> '+json.error).show();
         }
       },
       failure: function() {
-        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg">clear</i>').removeAttr('disabled');
       }
     });
   }
@@ -267,19 +267,19 @@ function deactivateListing(etsy_item_id) {
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
       beforeSend: function() {
-        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.error == false) {
           url += '&item_deactivated=1';
           location = url;
         } else {
-          $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+          $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg" style="color:red;">clear</i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="mi mi-times mi-lg">clear</i> '+json.error).show();
         }
       },
       failure: function() {
-        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+        $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg">clear</i>').removeAttr('disabled');
       }
     });
   }
@@ -295,19 +295,19 @@ function activateListing(etsy_item_id) {
       method: 'POST',
       data: { 'etsy_item_id' : etsy_item_id },
       beforeSend: function() {
-        $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#btn-activate-'+etsy_item_id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.error == false) {
           url += '&item_activated=1';
           location = url;
         } else {
-          $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+          $('#btn-activate-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg" style="color:red;">clear</i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="mi mi-times mi-lg">clear</i> '+json.error).show();
         }
       },
       failure: function() {
-        $('#btn-activate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+        $('#btn-activate-'+etsy_item_id).empty().html('<i class="mi mi-times mi-lg">clear</i>').removeAttr('disabled');
       }
     });
   }

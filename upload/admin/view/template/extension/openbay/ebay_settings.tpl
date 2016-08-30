@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,11 +16,11 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
@@ -79,9 +79,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_api_other; ?></label>
               <div class="col-sm-10">
-                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
-                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_renew; ?></a></p>
-                <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_obp_detail_update; ?></a></p>
+                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="mi mi-link">link</i> <?php echo $text_token_register; ?></a></p>
+                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="mi mi-link">link</i> <?php echo $text_token_renew; ?></a></p>
+                <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="mi mi-link">link</i> <?php echo $text_obp_detail_update; ?></a></p>
               </div>
             </div>
           </div>
@@ -481,7 +481,7 @@
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-          $('#button-clear-locks').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+          $('#button-clear-locks').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         },
         success: function(json) {
           setTimeout(function() {
@@ -502,7 +502,7 @@
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-          $('#button-repair-links').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+          $('#button-repair-links').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         },
         success: function(json) {
           setTimeout(function() {
@@ -528,20 +528,20 @@
             dataType: 'json',
             data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},
             beforeSend: function() {
-              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
+              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="mi mi-cog mi-lg mi-spin">settings</i> Checking details').show();
             },
             success: function(data) {
                 if (data.error == false) {
-                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?>: ' + data.data.expire);
+                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="mi mi-check-square-o">check_box</i> <?php echo $text_api_ok; ?>: ' + data.data.expire);
                 } else {
-                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
+                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="mi mi-minus-square">indeterminate_check_box</i> ' + data.msg);
                 }
             },
             failure: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $error_api_connect; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="mi mi-minus-square">indeterminate_check_box</i> <?php echo $error_api_connect; ?>');
             },
             error: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $error_api_connect; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="mi mi-minus-square">indeterminate_check_box</i> <?php echo $error_api_connect; ?>');
             }
         });
     }

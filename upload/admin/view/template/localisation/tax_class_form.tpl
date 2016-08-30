@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-tax-class">
@@ -83,7 +83,7 @@
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>
-                <td class="text-left"><button type="button" onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
               </tr>
               <?php $tax_rule_row++; ?>
               <?php } ?>
@@ -91,7 +91,7 @@
             <tfoot>
               <tr>
                 <td colspan="3"></td>
-                <td class="text-left"><button type="button" onclick="addRule();" data-toggle="tooltip" title="<?php echo $button_rule_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="addRule();" data-toggle="tooltip" title="<?php echo $button_rule_add; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i></button></td>
               </tr>
             </tfoot>
           </table>
@@ -115,7 +115,7 @@ function addRule() {
     html += '    <option value="store"><?php echo $text_store; ?></option>';
     html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>';
 	html += '</tr>';
 	
 	$('#tax-rule tbody').append(html);

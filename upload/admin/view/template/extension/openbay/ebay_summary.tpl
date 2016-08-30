@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,7 +16,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_summary; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_summary; ?></h3>
       </div>
       <div class="panel-body">
 
@@ -30,7 +30,7 @@
           <div class="col-md-6">
             <div class="panel panel-default dsr-table">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_30; ?></h3>
+                <h3 class="panel-title"><i class="mi mi-bar-chart-o mi-lg">insert_chart</i> <?php echo $text_report_30; ?></h3>
               </div>
               <div class="panel-body">
                 <table class="table" id="dsr-table-30">
@@ -48,7 +48,7 @@
           <div class="col-md-6">
             <div class="panel panel-default dsr-table">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_52; ?></h3>
+                <h3 class="panel-title"><i class="mi mi-bar-chart-o mi-lg">insert_chart</i> <?php echo $text_report_52; ?></h3>
               </div>
               <div class="panel-body">
                 <table class="table" id="dsr-table-52">
@@ -67,7 +67,7 @@
         <div class="well">
           <div class="row">
             <div class="col-sm-12 text-right">
-              <a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i></a>
+              <a class="btn btn-primary" id="load-usage"><i class="mi mi-cog mi-lg mi-spin">settings</i></a>
             </div>
           </div>
         </div>
@@ -83,13 +83,13 @@
       type: 'post',
       dataType: 'json',
       beforeSend: function(){
-        $('#load-usage').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#load-usage').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         $('#selling-limits').empty().hide();
         $('.dsr-table').hide();
         $('.data-row').remove();
       },
       success: function(json) {
-          $('#load-usage').empty().html('<i class="fa fa-refresh"></i> <?php echo $button_refresh; ?>').removeAttr('disabled');
+          $('#load-usage').empty().html('<i class="mi mi-refresh">refresh</i> <?php echo $button_refresh; ?>').removeAttr('disabled');
 
           if (json.data.summary.QuantityLimitRemaining != ''){
               var limitHtml = '';

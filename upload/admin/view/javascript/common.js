@@ -50,7 +50,7 @@ $(document).ready(function() {
 	}
 
 	if (localStorage.getItem('column-left') == 'active') {
-		$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+		$('#button-menu i').replaceWith('<i class="mi mi-dedent mi-lg">format_indent_decrease</i>');
 
 		$('#column-left').addClass('active');
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
 		$('#menu li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
 	} else {
-		$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+		$('#button-menu i').replaceWith('<i class="mi mi-indent mi-lg">format_indent_increase</i>');
 
 		$('#menu li li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');
@@ -70,7 +70,7 @@ $(document).ready(function() {
 		if ($('#column-left').hasClass('active')) {
 			localStorage.setItem('column-left', '');
 
-			$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+			$('#button-menu i').replaceWith('<i class="mi mi-indent mi-lg">format_indent_increase</i>');
 
 			$('#column-left').removeClass('active');
 
@@ -87,7 +87,7 @@ $(document).ready(function() {
 				}
 			}
 
-			$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+			$('#button-menu i').replaceWith('<i class="mi mi-dedent mi-lg">format_indent_decrease</i>');
 
 			$('#column-left').addClass('active');
 
@@ -117,7 +117,7 @@ $(document).ready(function() {
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
 		var $popover = $element.data('bs.popover'); // element has bs popover?
-		
+
 		e.preventDefault();
 
 		// destroy all image popovers
@@ -133,7 +133,7 @@ $(document).ready(function() {
 			placement: 'right',
 			trigger: 'manual',
 			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
+				return '<button type="button" id="button-image" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="mi mi-trash-o">delete</i></button>';
 			}
 		});
 
@@ -142,7 +142,7 @@ $(document).ready(function() {
 		$('#button-image').on('click', function() {
 			var $button = $(this);
 			var $icon   = $button.find('> i');
-			
+
 			$('#modal-image').remove();
 
 			$.ajax({
@@ -151,13 +151,13 @@ $(document).ready(function() {
 				beforeSend: function() {
 					$button.prop('disabled', true);
 					if ($icon.length) {
-						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+						$icon.attr('class', 'mi  mi-circle-o-notch mi-spin');
 					}
 				},
 				complete: function() {
 					$button.prop('disabled', false);
 					if ($icon.length) {
-						$icon.attr('class', 'fa fa-pencil');
+						$icon.attr('class', 'mi  mi-pencil');
 					}
 				},
 				success: function(html) {
@@ -207,7 +207,7 @@ $(document).ready(function() {
 		return this.each(function() {
 			var $this = $(this);
 			var $dropdown = $('<ul class="dropdown-menu" />');
-			
+
 			this.timer = null;
 			this.items = [];
 

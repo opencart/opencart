@@ -12,18 +12,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -66,10 +66,10 @@
                 <div class="input-group date">
                   <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -122,8 +122,8 @@
                     <td class="text-left"><?php echo $recurring['status']; ?></td>
                     <td class="text-left"><?php echo $recurring['date_added']; ?></td>
                     <td class="text-right">
-                      <a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_order_recurring; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                      <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>
+                      <a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_order_recurring; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a>
+                      <a href="<?php echo $recurring['order']; ?>" data-toggle="tooltip" title="<?php echo $button_order; ?>" class="btn btn-info"><i class="mi mi-shopping-cart">shopping_cart</i></a>
                     </td>
                   </tr>
                   <?php } ?>

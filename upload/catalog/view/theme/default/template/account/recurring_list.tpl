@@ -34,7 +34,7 @@
               <td class="text-left"><?php echo $recurring['product']; ?></td>
               <td class="text-left"><?php echo $recurring['status']; ?></td>
               <td class="text-left"><?php echo $recurring['date_added']; ?></td>
-              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a></td>
             </tr>
             <?php } ?>
           </tbody>

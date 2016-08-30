@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
-      <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a> <a id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="mi mi-search">search</i></a></div>
+      <h1><i class="mi mi-search">search</i> <?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <div id="search-input">
@@ -26,7 +26,7 @@
                 <div class="input-group date">
                   <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="input-group date">
                   <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
             </div>
@@ -155,7 +155,7 @@
           </form>
         </div>
         <div id="search-box" style="display:none;">
-          <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
+          <div id="searching"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i> <?php echo $text_searching; ?></div>
           <div style="display:none;" id="error" class="alert alert-danger"></div>
           <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
           </table>
@@ -181,7 +181,7 @@ $('#button-search').on('click', function() {
 		success: function (data) {
 			if (data.error == true) {
 				$('#searching').hide();
-				$('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
+				$('#error').html('<i class="mi mi-exclamation-circle">error</i> ' + data.error_msg).fadeIn();
 			} else {
 				if (data.result != '') {
 					html += '<thead><tr>';
@@ -228,7 +228,7 @@ $('#button-search').on('click', function() {
           $('#search_results').append(html).fadeIn();
 	      } else {
 	        $('#searching').hide();
-	        $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
+	        $('#error').html('<i class="mi mi-exclamation-circle">error</i> <?php echo $text_no_results; ?>').fadeIn();
 	      }
 	    }
 	  }

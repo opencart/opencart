@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+<div class="alert alert-warning"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
 <?php } ?>
 <?php if ($shipping_methods) { ?>
 <p><?php echo $text_shipping_method; ?></p>

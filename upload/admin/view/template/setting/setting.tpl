@@ -888,7 +888,7 @@
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_affiliate_auto; ?>"><?php echo $entry_affiliate_auto; ?></span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
-                      <?php if ($config_stock_checkout) { ?>
+                      <?php if ($config_affiliate_auto) { ?>
                       <input type="radio" name="config_affiliate_auto" value="1" checked="checked" />
                       <?php echo $text_yes; ?>
                       <?php } else { ?>
@@ -897,7 +897,7 @@
                       <?php } ?>
                     </label>
                     <label class="radio-inline">
-                      <?php if (!$config_stock_checkout) { ?>
+                      <?php if (!$config_affiliate_auto) { ?>
                       <input type="radio" name="config_affiliate_auto" value="0" checked="checked" />
                       <?php echo $text_no; ?>
                       <?php } else { ?>

@@ -5,6 +5,9 @@ class ControllerExtensionModuleSlicebox extends Controller {
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
+		$this->load->language('extension/module/slicebox');
+		$data['text_next'] = $this->language->get('text_next');
+		$data['text_prev'] = $this->language->get('text_prev');
 		$data['slicebox_type'] = $setting['type'];
 
 		$this->document->addStyle('catalog/view/javascript/jquery/slicebox/css/slicebox.css');

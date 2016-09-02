@@ -35,6 +35,9 @@ class ModelCatalogManufacturer extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "article_related_mn SET manufacturer_id = '" . (int)$manufacturer_id . "', article_id = '" . (int)$related_id . "'");
 			}
 		}
+		
+		$this->cache->delete('seo_pro');
+		$this->cache->delete('seo_url');
 
 		if (isset($data['keyword'])) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
@@ -89,6 +92,9 @@ class ModelCatalogManufacturer extends Model {
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
+		
+		$this->cache->delete('seo_pro');
+		$this->cache->delete('seo_url');
 
 		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");

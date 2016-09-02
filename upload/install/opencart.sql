@@ -3131,6 +3131,36 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_product_tab`
+--
+
+DROP TABLE IF EXISTS `oc_product_tab`;
+CREATE TABLE `oc_product_tab` (
+  `product_tab_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `sort_order` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`product_tab_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_product_tab_desc`
+--
+
+DROP TABLE IF EXISTS `oc_product_tab_desc`;
+CREATE TABLE `oc_product_tab_desc` (
+  `product_tab_id` int(11) NOT NULL,
+  `heading` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_recurring`
 --
 

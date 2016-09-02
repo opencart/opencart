@@ -9,6 +9,17 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
 
 		$product_id = $this->db->getLastId();
+		
+		if(isset($data['product_tab'])){
+			foreach($data['product_tab'] as $tabdata){
+			$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '".$tabdata['status']."',sort_order='".$tabdata['sort_order']."'");
+			
+				$product_tab_id = $this->db->getLastId();
+					foreach($tabdata['description'] as $language_id => $value){
+						$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab_desc SET product_tab_id = '".(int)$product_tab_id."', heading = '".$this->db->escape($value['heading'])."', description = '".$this->db->escape($value['description'])."', product_id = '".(int)$product_id."', language_id = '".(int)$language_id."'");
+					}
+			}
+		}
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'");
@@ -148,6 +159,21 @@ class ModelCatalogProduct extends Model {
 	public function editProduct($product_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab_desc WHERE product_id = '" . (int)$product_id . "'");
+		
+		if(isset($data['product_tab'])){
+			foreach($data['product_tab'] as $tabdata){
+				$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '".$tabdata['status']."',sort_order='".$tabdata['sort_order']."'");
+		
+				$product_tab_id = $this->db->getLastId();
+			
+					foreach($tabdata['description'] as $language_id => $value){
+						$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab_desc SET product_tab_id = '".(int)$product_tab_id."', heading = '".$this->db->escape($value['heading'])."', description = '".$this->db->escape($value['description'])."', product_id = '".(int)$product_id."', language_id = '".(int)$language_id."'");
+					}
+			}
+		}
+		
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'");
 		}
@@ -368,8 +394,32 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab_desc WHERE product_id = '" . (int)$product_id . "'");
 
 		$this->cache->delete('product');
+	}
+	
+	public function getProductTabbyProductID($product_id){
+		$product_tab_data = array();
+		$description = array();
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
+		
+		foreach($query->rows as $result){
+			$querys = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab_desc WHERE product_tab_id = '" . (int)$result['product_tab_id']. "'");
+				foreach($querys->rows as $row){
+					$description[$row['language_id']]=array(
+						'heading' 	  => $row['heading'],
+						'description' => $row['description'],
+					);
+				}
+				$product_tab_data[]=array(
+					'status' 	 => $result['status'],
+					'sort_order' => $result['status'],
+					'description' => $description,
+				); 
+		}
+		return $product_tab_data;
 	}
 
 	public function getProduct($product_id) {

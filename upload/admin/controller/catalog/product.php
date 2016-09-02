@@ -605,6 +605,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_percent'] = $this->language->get('text_percent');
 		$data['text_amount'] = $this->language->get('text_amount');
+		$data['text_add'] = $this->language->get('text_add');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');
@@ -664,6 +665,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
+		$data['entry_heading'] = $this->language->get('entry_heading');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -706,6 +708,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
+		$data['tab_extra_tab'] = $this->language->get('tab_extra_tab');
+		$data['tab_module'] = $this->language->get('tab_module');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -735,6 +739,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_model'] = $this->error['model'];
 		} else {
 			$data['error_model'] = '';
+		}
+		
+		if (isset($this->error['tab'])) {
+			$data['error_tab'] = $this->error['tab'];
+		} else {
+			$data['error_tab'] = array();
 		}
 
 		if (isset($this->error['keyword'])) {
@@ -1413,6 +1423,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_layout'] = array();
 		}
+		
+		if(isset($this->request->post['product_tab'])){
+			$data['product_tabs'] = $this->request->post['product_tab'];
+		}elseif(isset($this->request->get['product_id'])){
+			$data['product_tabs'] = $this->model_catalog_product->getProductTabbyProductID($this->request->get['product_id']);
+		}else{
+			$data['product_tabs'] = array();
+		}
 
 		$this->load->model('design/layout');
 
@@ -1428,6 +1446,18 @@ class ControllerCatalogProduct extends Controller {
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+		
+		if(isset($this->request->post['product_tab'])) {
+			foreach($this->request->post['product_tab'] as $key => $tab){
+				if($tab){
+					foreach($tab['description'] as $language_id => $value){
+						if(empty($value['heading'])){
+							$this->error['tab'][$key][$language_id] = $this->language->get('error_tab');
+						}
+					}
+				}
+			}
 		}
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {

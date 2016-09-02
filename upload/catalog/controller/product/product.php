@@ -492,6 +492,18 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			
+			$data['product_tabs']=array();
+			
+			$tabresults = $this->model_catalog_product->getproducttab($this->request->get['product_id']);
+			
+			foreach($tabresults as $result){
+				$data['product_tabs'][]=array(
+					'product_tab_id' => $result['product_tab_id'],
+					'title'   => $result['heading'],
+					'description' => html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'),
+				);
+			}
 
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {

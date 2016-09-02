@@ -88,6 +88,7 @@ $_['entry_tag']          	 = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
+$_['entry_heading']     	 = 'Heading';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
@@ -114,3 +115,4 @@ $_['error_name']             = 'Product Name must be greater than 3 and less tha
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 1 and less than 64 characters!';
 $_['error_keyword']          = 'SEO URL already in use!';
+$_['error_tab']              = 'Please Fill the Product Tab Name!';

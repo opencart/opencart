@@ -12,7 +12,9 @@ class ControllerEventTheme extends Controller {
 		
 		if ($this->config->get('config_theme') == 'theme_default') {
 			$theme = $this->config->get('theme_default_directory');
-		} else {
+		} elseif($this->config->get($this->config->get('config_theme') . '_directory')) {
+                        $theme = $this->config->get($this->config->get('config_theme') . '_directory');
+                } else{
 			$theme = $this->config->get('config_theme');
 		}
 		

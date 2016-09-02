@@ -361,6 +361,11 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_description'] = array();
 		}
+		
+		$language_id = $this->config->get('config_language_id');
+		if (isset($data['category_description'][$language_id]['name'])) {
+			$data['heading_title'] = $data['category_description'][$language_id]['name'];
+		}
 
 		if (isset($this->request->post['path'])) {
 			$data['path'] = $this->request->post['path'];

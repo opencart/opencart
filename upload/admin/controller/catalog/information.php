@@ -389,6 +389,11 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['information_description'] = array();
 		}
+		
+		$language_id = $this->config->get('config_language_id');
+		if (isset($data['information_description'][$language_id]['title'])) {
+			$data['heading_title'] = $data['information_description'][$language_id]['title'];
+		}
 
 		$this->load->model('setting/store');
 

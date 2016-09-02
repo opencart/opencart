@@ -392,6 +392,12 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['name'] = '';
 		}
+		
+		if (!empty($manufacturer_info)) {
+			$data['heading_title'] = $data['name'] = $manufacturer_info['name'];
+		} else {
+			$data['heading_title'] = $this->language->get('heading_title');
+		}
 
 		$this->load->model('setting/store');
 

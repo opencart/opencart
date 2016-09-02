@@ -20,8 +20,8 @@
 </ul>
 		<div id="shadow" class="shadow"></div>
 		<div id="nav-arrows" class="nav-arrows">
-					<a href="#">Next</a>
-					<a href="#">Previous</a>
+					<a href="#"><?php echo $text_next;?></a>
+					<a href="#"><?php echo $text_prev;?></a>
 		</div>
 		<div id="nav-dots" class="nav-dots">
                  <?php $i = 0;

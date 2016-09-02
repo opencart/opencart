@@ -182,6 +182,7 @@ class ControllerCatalogInformation extends Controller {
 				'title'          => $result['title'],
 				'sort_order'     => $result['sort_order'],
 				'noindex'  	  	 => $result['noindex'],
+				'href_shop'  	 => HTTP_CATALOG . 'index.php?route=information/information&information_id=' . ($result['information_id']),
 				'edit'           => $this->url->link('catalog/information/edit', 'token=' . $this->session->data['token'] . '&information_id=' . $result['information_id'] . $url, true)
 			);
 		}
@@ -199,6 +200,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_shop'] = $this->language->get('button_shop');
 		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {

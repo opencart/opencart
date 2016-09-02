@@ -182,6 +182,7 @@ class ControllerCatalogManufacturer extends Controller {
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
 				'noindex'  	  	  => $result['noindex'],
+				'href_shop'  	  => HTTP_CATALOG . 'index.php?route=product/manufacturer/info&manufacturer_id=' . ($result['manufacturer_id']),
 				'edit'            => $this->url->link('catalog/manufacturer/edit', 'token=' . $this->session->data['token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url, true)
 			);
 		}
@@ -199,6 +200,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_shop'] = $this->language->get('button_shop');
 		$data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {

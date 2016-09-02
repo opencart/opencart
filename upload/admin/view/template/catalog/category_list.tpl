@@ -57,7 +57,10 @@
                   <?php } ?>
                   <td class="text-right"><?php echo $category['sort_order']; ?></td>
 				  <td class="text-right"><?php echo $category['noindex']; ?></td>
-                  <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                   <td class="text-right">
+				  <a target="_blank" href="<?php echo $category['href_shop']; ?>" data-toggle="tooltip" title="<?php echo $button_shop; ?>" class="btn btn-success"><i class="fa fa-eye"></i></a>
+				  <a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+				   </td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>

@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCatalogReview extends Controller {
 	private $error = array();
 
@@ -245,6 +250,9 @@ class ControllerCatalogReview extends Controller {
 
 		$data['add'] = $this->url->link('catalog/review/add', 'token=' . $this->session->data['token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/review/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['enabled'] = $this->url->link('catalog/review/enable', 'token=' . $this->session->data['token'] . $url, true);
+        $data['disabled'] = $this->url->link('catalog/review/disable', 'token=' . $this->session->data['token'] . $url, true);
+
 
 		$data['reviews'] = array();
 
@@ -300,6 +308,8 @@ class ControllerCatalogReview extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
+		$data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
 
 		$data['token'] = $this->session->data['token'];
 
@@ -601,6 +611,65 @@ class ControllerCatalogReview extends Controller {
 
 		return !$this->error;
 	}
+	
+		public function enable() {
+        $this->load->language('catalog/review');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/review');
+        if (isset($this->request->post['selected'])) {
+            foreach ($this->request->post['selected'] as $review_id) {
+                $data = array();
+                $result = $this->model_catalog_review->getReview($review_id);
+                foreach ($result as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['status'] = 1;
+                $this->model_catalog_review->editReview($review_id, $data);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, true));
+        }
+        $this->getList();
+    }
+    public function disable() {
+        $this->load->language('catalog/review');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/review');
+        if (isset($this->request->post['selected'])) {
+            foreach ($this->request->post['selected'] as $review_id) {
+                $data = array();
+                $result = $this->model_catalog_review->getReview($review_id);
+                foreach ($result as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['status'] = 0;
+                $this->model_catalog_review->editReview($review_id, $data);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, true));
+        }
+        $this->getList();
+    }
 
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {

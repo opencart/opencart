@@ -74,6 +74,13 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 	}
+	
+	public function editInformationStatus($information_id, $status) {
+        $this->db->query("UPDATE " . DB_PREFIX . "information SET status = '" . (int)$status . "'WHERE information_id = '" . (int)$information_id . "'");
+        
+		$this->cache->delete('information');
+		
+    }
 
 	public function deleteInformation($information_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");

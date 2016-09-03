@@ -167,6 +167,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['add'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, true);
 		$data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, true);
+		$data['enabled'] = $this->url->link('catalog/category/enable', 'token=' . $this->session->data['token'] . $url, true);
+        $data['disabled'] = $this->url->link('catalog/category/disable', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['path'])) {
 			if ($this->request->get['path'] != '') {
@@ -199,6 +201,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['button_shop'] = $this->language->get('button_shop');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_rebuild'] = $this->language->get('button_rebuild');
+		$data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -602,6 +606,55 @@ class ControllerCatalogCategory extends Controller {
 		
 		return !$this->error;
 	}
+	
+	public function enable() {
+        $this->load->language('catalog/category');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/category');
+        if (isset($this->request->post['selected'])) {
+            foreach ($this->request->post['selected'] as $category_id) {
+                $this->model_catalog_category->editCategoryStatus($category_id, 1);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+			$this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, true));
+        }
+        $this->getList();
+    }
+	
+    public function disable() {
+        $this->load->language('catalog/category');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('catalog/category');
+        if (isset($this->request->post['selected'])) {
+            foreach ($this->request->post['selected'] as $category_id) {
+                $this->model_catalog_category->editCategoryStatus($category_id, 0);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+            $url = '';
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+            $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, true));
+        }
+        $this->getList();
+    }
+
 
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {

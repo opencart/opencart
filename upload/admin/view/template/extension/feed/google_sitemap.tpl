@@ -45,6 +45,12 @@
               <textarea rows="5" readonly id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
             </div>
           </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-data-yandex-feed"><?php echo $entry_data_yandex_feed; ?></label>
+            <div class="col-sm-10">
+              <textarea rows="5" readonly id="input-data-yandex-feed" class="form-control"><?php echo $data_yandex_feed; ?></textarea>
+            </div>
+		  </div>
         </form>
       </div>
     </div>

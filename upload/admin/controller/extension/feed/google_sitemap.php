@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerExtensionFeedGoogleSitemap extends Controller {
 	private $error = array();
 
@@ -25,6 +30,8 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_data_feed'] = $this->language->get('entry_data_feed');
+		$data['entry_data_yandex_feed'] = $this->language->get('entry_data_yandex_feed');
+ 
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -65,6 +72,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 		}
 
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/google_sitemap';
+		$data['data_yandex_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/yandex_sitemap';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

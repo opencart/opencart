@@ -165,7 +165,7 @@
                 {% else %}
                 &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
                 {% endif %}
-                {% endif %}</td>
+                {% endfor %}</td>
               <td class="text-left">{{ product.model }}</td>
               <td class="text-right">{{ product.quantity }}</td>
               <td class="text-right">{{ product.price }}</td>

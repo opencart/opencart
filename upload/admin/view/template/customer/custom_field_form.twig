@@ -28,7 +28,7 @@
             <label class="col-sm-2 control-label">{{ entry_name }}</label>
             <div class="col-sm-10"> {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{% if custom_field_description[language.language_id] %} {{ custom_field_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
+                <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
@@ -39,26 +39,26 @@
             <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
             <div class="col-sm-10">
               <select name="location" id="input-location" class="form-control">
-                
+
                 {% if location == 'account' %}
-                
+
                 <option value="account" selected="selected">{{ text_account }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="account">{{ text_account }}</option>
-                
+
                 {% endif %}
                 {% if location == 'address' %}
-                
+
                 <option value="address" selected="selected">{{ text_address }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="address">{{ text_address }}</option>
-                
+
                 {% endif %}
-              
+
               </select>
             </div>
           </div>
@@ -68,91 +68,91 @@
               <select name="type" id="input-type" class="form-control">
                 <optgroup label="{{ text_choose }}">
                 {% if type == 'select' %}
-                
+
                 <option value="select" selected="selected">{{ text_select }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="select">{{ text_select }}</option>
-                
+
                 {% endif %}
                 {% if type == 'radio' %}
-                
+
                 <option value="radio" selected="selected">{{ text_radio }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="radio">{{ text_radio }}</option>
-                
+
                 {% endif %}
                 {% if type == 'checkbox' %}
-                
+
                 <option value="checkbox" selected="selected">{{ text_checkbox }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="checkbox">{{ text_checkbox }}</option>
-                
+
                 {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_input }}">
                 {% if type == 'text' %}
-                
+
                 <option value="text" selected="selected">{{ text_text }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="text">{{ text_text }}</option>
-                
+
                 {% endif %}
                 {% if type == 'textarea' %}
-                
+
                 <option value="textarea" selected="selected">{{ text_textarea }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="textarea">{{ text_textarea }}</option>
-                
+
                 {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_file }}">
                 {% if type == 'file' %}
-                
+
                 <option value="file" selected="selected">{{ text_file }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="file">{{ text_file }}</option>
-                
+
                 {% endif %}
                 </optgroup>
                 <optgroup label="{{ text_date }}">
                 {% if type == 'date' %}
-                
+
                 <option value="date" selected="selected">{{ text_date }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="date">{{ text_date }}</option>
-                
+
                 {% endif %}
                 {% if type == 'time' %}
-                
+
                 <option value="time" selected="selected">{{ text_time }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="time">{{ text_time }}</option>
-                
+
                 {% endif %}
                 {% if type == 'datetime' %}
-                
+
                 <option value="datetime" selected="selected">{{ text_datetime }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="datetime">{{ text_datetime }}</option>
-                
+
                 {% endif %}
                 </optgroup>
               </select>
@@ -206,19 +206,19 @@
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
-                
+
                 {% if status %}
-                
+
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
-                
+
                 {% else %}
-                
+
                 <option value="1">{{ text_enabled }}</option>
                 <option value="0" selected="selected">{{ text_disabled }}</option>
-                
+
                 {% endif %}
-              
+
               </select>
             </div>
           </div>
@@ -237,14 +237,14 @@
               </tr>
             </thead>
             <tbody>
-            
+
             {% set custom_field_value_row = 0 %}
             {% for custom_field_value in custom_field_values %}
             <tr id="custom-field-value-row{{ custom_field_value_row }}">
               <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}" />
                 {% for language in languages %}
                 <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                  <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{% if custom_field_value.custom_field_value_description[language.language_id] %} {{ custom_field_value.custom_field_value_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_custom_value }}" class="form-control" />
+                  <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" placeholder="{{ entry_custom_value }}" class="form-control" />
                 </div>
                 {% if error_custom_field_value[custom_field_value_row][language.language_id] %}
                 <div class="text-danger">{{ error_custom_field_value[custom_field_value_row][language.language_id] }}</div>
@@ -256,7 +256,7 @@
             {% set custom_field_value_row = custom_field_value_row + 1 %}
             {% endfor %}
               </tbody>
-            
+
             <tfoot>
               <tr>
                 <td colspan="2"></td>
@@ -277,7 +277,7 @@ $('select[name=\'type\']').on('change', function() {
 		$('#custom-field-value').hide();
 		$('#display-value, #display-validation').show();
 	}
-	
+
 	if (this.value == 'date') {
 		$('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
 	} else if (this.value == 'time') {
@@ -289,15 +289,15 @@ $('select[name=\'type\']').on('change', function() {
 	} else {
 		$('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" />');
 	}
-	
+
 	$('.date').datetimepicker({
 		pickTime: false
 	});
-	
+
 	$('.time').datetimepicker({
 		pickDate: false
-	});	
-		
+	});
+
 	$('.datetime').datetimepicker({
 		pickDate: true,
 		pickTime: true
@@ -309,7 +309,7 @@ $('select[name=\'type\']').trigger('change');
 var custom_field_value_row = {{ custom_field_value_row }};
 
 function addCustomFieldValue() {
-	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';	
+	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	{% for language in languages %}
 	html += '    <div class="input-group">';
@@ -319,10 +319,10 @@ function addCustomFieldValue() {
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';	
-	
+	html += '</tr>';
+
 	$('#custom-field-value tbody').append(html);
-	
+
 	custom_field_value_row++;
 }
 //--></script></div>

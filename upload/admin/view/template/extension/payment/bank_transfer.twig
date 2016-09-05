@@ -30,7 +30,7 @@
             <label class="col-sm-2 control-label" for="input-bank{{ language.language_id }}">{{ entry_bank }}</label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <textarea name="bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control">{% if bank_transfer_bank[language.language_id] %} {{ bank_transfer_bank[language.language_id] }} {% endif %}</textarea>
+                <textarea name="bank_transfer_bank{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank{{ language.language_id }}" class="form-control">{{ bank_transfer_bank[language.language_id] ? bank_transfer_bank[language.language_id] }}</textarea>
               </div>
               {% if error_bank[language.language_id] %}
               <div class="text-danger">{{ error_bank[language.language_id] }}</div>

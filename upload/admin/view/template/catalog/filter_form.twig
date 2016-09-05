@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{% if filter_group_description[language.language_id] %} {{ filter_group_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_group }}" class="form-control" />
+                <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_group }}" class="form-control" />
               </div>
               {% if error_group[language.language_id] %}
               <div class="text-danger">{{ error_group[language.language_id] }}</div>
@@ -59,7 +59,7 @@
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}" />
                   {% for language in languages %}
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                    <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{% if filter.filter_description[language.language_id] %} filter.filter_description[language.language_id].name {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
+                    <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" />
                   </div>
                   {% if error_filter[filter_row][language.language_id] %}
                   <div class="text-danger">{{ error_filter[filter_row][language.language_id] }}</div>
@@ -86,7 +86,7 @@
 var filter_row = {{ filter_row }};
 
 function addFilterRow() {
-	html  = '<tr id="filter-row' + filter_row + '">';	
+	html  = '<tr id="filter-row' + filter_row + '">';
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
 	{% for language in languages %}
 	html += '  <div class="input-group">';
@@ -96,11 +96,11 @@ function addFilterRow() {
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>';
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';	
-	
+	html += '</tr>';
+
 	$('#filter tbody').append(html);
-	
+
 	filter_row++;
 }
 //--></script></div>
-{{ footer }} 
+{{ footer }}

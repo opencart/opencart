@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
               <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                <input type="text" name="option_description[{{ language.language_id }}][name]" value="{% if option_description[language.language_id] %} {{ option_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
+                <input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
               <div class="text-danger">{{ error_name[language.language_id] }}</div>
@@ -120,7 +120,7 @@
                 <td class="text-left"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}" />
                   {% for language in languages %}
                   <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
-                    <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{% if option_value.option_value_description[language.language_id] %} {{ option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control" />
+                    <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control" />
                   </div>
                   {% if error_option_value[option_value_row][language.language_id] %}
                   <div class="text-danger">{{ error_option_value[option_value_row][language.language_id] }}</div>
@@ -160,7 +160,7 @@ $('select[name=\'type\']').trigger('change');
 var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
-	html  = '<tr id="option-value-row' + option_value_row + '">';	
+	html  = '<tr id="option-value-row' + option_value_row + '">';
     html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
 	{% for language in languages %}
 	html += '    <div class="input-group">';
@@ -171,10 +171,10 @@ function addOptionValue() {
     html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';	
-	
+	html += '</tr>';
+
 	$('#option-value tbody').append(html);
-	
+
 	option_value_row++;
 }
 //--></script></div>

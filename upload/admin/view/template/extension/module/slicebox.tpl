@@ -78,7 +78,7 @@
                     <?php if ($type == 2) { ?>
                     <option value="2" selected="selected"><?php echo $text_horizontal_slice; ?></option>
                     <?php } else { ?>
-                    <option value="2"><?php echo $text_text_horizontal_slice; ?></option>
+                    <option value="2"><?php echo $text_horizontal_slice; ?></option>
                     <?php } ?>
                     <?php if ($type == 3) { ?>
                     <option value="3" selected="selected"><?php echo $text_random_orientation_slices; ?></option>

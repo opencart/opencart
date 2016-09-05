@@ -6,7 +6,7 @@
       <div class="col-sm-offset-4 col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-repeat"></i> <?php echo $heading_title; ?></h1>
+            <h1 class="panel-title"><i class="mi mi-repeat">repeat</i> <?php echo $heading_title; ?></h1>
           </div>
           <div class="panel-body">
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -30,8 +30,8 @@
                 </div>
               </div>
               <div class="text-right">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $button_save; ?></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+                <button type="submit" class="btn btn-primary"><i class="mi mi-save">save</i> <?php echo $button_save; ?></button>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
               </div>
             </form>
           </div>

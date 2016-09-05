@@ -461,7 +461,7 @@
 		  <tfoot>
 			<tr>
 			  <td colspan="<?php echo count($capture['shipping_info']) + 1; ?>"></td>
-			  <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-<?php echo $capture['capture_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_add_shipping_info; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+			  <td class="text-left"><button id="add-shipping-info" type="button" onclick="addShippingInfo('#capture-shipping-info-<?php echo $capture['capture_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_add_shipping_info; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i></button></td>
 			</tr>
 		  </tfoot>
 		</table>
@@ -639,11 +639,11 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 			},
 			success: function(json) {
 				if (json.error) {
-					$('.kc-alert').show().addClass('alert alert-danger').html('<i class="fa fa-check-circle"></i> ' + json.error);
+					$('.kc-alert').show().addClass('alert alert-danger').html('<i class="mi mi-check-circle">check_circle</i> ' + json.error);
 				}
 
 				if (json.success) {
-					$('.kc-alert').show().addClass('alert alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('.kc-alert').show().addClass('alert alert-success').html('<i class="mi mi-exclamation-circle">error</i> ' + json.success);
 				}
 
 				setTimeout(function() {

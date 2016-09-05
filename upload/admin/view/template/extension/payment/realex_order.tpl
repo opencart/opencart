@@ -23,7 +23,7 @@
         <?php if ($realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="capture-amount" value="<?php echo $realex_order['total']; ?>"/>
           <a class="button btn btn-primary" id="button-capture"><?php echo $button_capture; ?></a>
-          <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -36,7 +36,7 @@
       <?php } else { ?>
         <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
         <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a>
-        <span class="btn btn-primary" id="loading-void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+        <span class="btn btn-primary" id="loading-void" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
     </td>
   </tr>
@@ -51,7 +51,7 @@
         <?php if ($realex_order['total_captured'] > 0 && $realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="rebate-amount" />
           <a class="button btn btn-primary" id="button-rebate"><?php echo $button_rebate; ?></a>
-          <span class="btn btn-primary" id="loading-rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="loading-rebate" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -108,7 +108,7 @@
             $('#capture-amount').hide();
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.msg).fadeIn();
             }
           }
           if (data.error == true) {
@@ -159,7 +159,7 @@
             }
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.msg).fadeIn();
             }
 
             $('#button-rebate').show();
@@ -209,7 +209,7 @@
             }
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.msg).fadeIn();
             }
           }
           if (data.error == true) {

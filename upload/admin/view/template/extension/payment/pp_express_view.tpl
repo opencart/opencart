@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i> <?php echo $button_cancel; ?></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-bordered">

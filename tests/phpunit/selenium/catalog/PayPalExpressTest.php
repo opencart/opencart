@@ -91,17 +91,17 @@ class CatalogPayPalExpressTest extends OpenCartSeleniumTest {
 			$this->waitToAppearAndClick('#system li:nth-child(2) li:first-child a');
 
 			$this->waitToLoad('Layouts');
-			$this->byCssSelector('.fa-plus-circle')->click();
+			$this->byCssSelector('.mi-plus-circle')->click();
 
 			$this->waitToAppearAndClick('#input-name');
 			$this->keys('Cart');
 
-			$this->byCssSelector('.fa-plus-circle')->click();
+			$this->byCssSelector('.mi-plus-circle')->click();
 
 			$this->byCssSelector('input[name="layout_route[0][route]"]')->click();
 			$this->keys('checkout/cart');
 
-			$this->byCssSelector('.fa-check-circle')->click();
+			$this->byCssSelector('.mi-check-circle')->click();
 
 			// Installing the payment button
 			$this->waitToAppearAndClick('#extension a');
@@ -121,7 +121,7 @@ class CatalogPayPalExpressTest extends OpenCartSeleniumTest {
 			$this->waitToAppearAndClick(".table-bordered tbody tr:nth-child($i) td:last-child a.btn-primary");
 
 			$this->waitToLoad('PayPal Express Checkout button');
-			$this->byCssSelector('.fa-plus-circle')->click();
+			$this->byCssSelector('.mi-plus-circle')->click();
 
 			for ($i = 1; ; $i++) {
 				$element = $this->byCssSelector("select[name=\"pp_button_module[0][layout_id]\"] option:nth-child($i)");

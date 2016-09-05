@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
+    <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="mi mi-caret-down">arrow_drop_down</i></a></h4>
   </div>
   <div id="collapse-shipping" class="panel-collapse collapse">
     <div class="panel-body">
@@ -54,7 +54,7 @@ $('#button-quote').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.breadcrumb').after('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 				}
@@ -150,7 +150,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}
@@ -171,10 +171,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=extension/total/shipping/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('.mi-spin').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

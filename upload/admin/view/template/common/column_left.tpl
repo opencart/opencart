@@ -4,7 +4,7 @@
       <?php if ($image) { ?>
       <img src="<?php echo $image; ?>" alt="<?php echo $firstname; ?> <?php echo $lastname; ?>" title="<?php echo $username; ?>" class="img-circle" />
       <?php } else { ?>
-      <i class="fa fa-opencart"></i>
+      <i class="mi mi-opencart"></i>
       <?php } ?>
     </div>
     <div>
@@ -15,9 +15,9 @@
     <?php foreach ($menus as $menu) { ?>
     <li id="<?php echo $menu['id']; ?>">
       <?php if ($menu['href']) { ?>
-      <a href="<?php echo $menu['href']; ?>"><i class="fa <?php echo $menu['icon']; ?> fw"></i> <span><?php echo $menu['name']; ?></span></a>
+      <a href="<?php echo $menu['href']; ?>"><i class="mi <?php echo $menu['icon']; ?> fw"></i> <span><?php echo $menu['name']; ?></span></a>
       <?php } else { ?>
-      <a class="parent"><i class="fa <?php echo $menu['icon']; ?> fw"></i> <span><?php echo $menu['name']; ?></span></a>
+      <a class="parent"><i class="mi <?php echo $menu['icon']; ?> fw"></i> <span><?php echo $menu['name']; ?></span></a>
       <?php } ?>
       <?php if ($menu['children']) { ?>
       <ul>

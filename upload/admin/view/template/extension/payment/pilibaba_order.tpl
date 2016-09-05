@@ -20,7 +20,7 @@
     <td><?php echo $text_tracking; ?></td>
     <td>
       <input type="text" style="width:80px" id="tracking" maxlength="50" value="<?php echo $pilibaba_order['tracking']; ?>"/>
-      <a class="button btn btn-primary btn-sm" id="button-tracking"><?php echo $button_tracking; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_tracking" style="display:none"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary btn-sm" id="button-tracking"><?php echo $button_tracking; ?></a> <span class="btn btn-primary btn-sm" id="img_loading_tracking" style="display:none"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
     </td>
   </tr>
   <tr>
@@ -46,11 +46,11 @@
 				},
 				success: function(json) {
 					if (json['success']) {
-						$('h2').after('<div class="alert alert-success pilibaba_message" style="display:none"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-success pilibaba_message" style="display:none"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '</div>').fadeIn();
 					}
 
 					if (json['error']) {
-						$('h2').after('<div class="alert alert-danger pilibaba_message" style="display:none"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>').fadeIn();
+						$('h2').after('<div class="alert alert-danger pilibaba_message" style="display:none"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + '</div>').fadeIn();
 					}
 
 					$('#button-tracking').show();

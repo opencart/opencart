@@ -90,20 +90,20 @@
     <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_message; ?>"><?php echo $text_message; ?></span></td>
     <td><?php echo $flp_message; ?></td>
   </tr>
-  
-  
+
+
   <?php if (strtolower($flp_status) == 'review'){?>
   <tr style="background-color:#eee;">
     <td id="flp_action" colspan="2">
       <form id="review-action" method="post">
 	<div align="center">
-	  <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="fa fa-check"></i> Approve</button>
-	  <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="fa fa-remove"></i> Reject</button>
+	  <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="mi mi-check">check</i> Approve</button>
+	  <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="mi mi-remove">remove_circle</i> Reject</button>
 	</div>
 	<input type="hidden" id="flp_id" name="flp_id" value="<?php echo $flp_id; ?>" />
 	<input type="hidden" id="new_status" name="new_status" value="" />
       </form>
-      
+
       <script>
 	$(document).ready(function(){
 		$("#button-flp-approve").click(function(){
@@ -111,7 +111,7 @@
 			$("#review-action").submit();
 		});
 	});
-	
+
 	$(document).ready(function(){
 		$("#button-flp-reject").click(function(){
 			$("#new_status").val("REJECT");

@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-laybuy" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $fetch; ?>" data-toggle="tooltip" title="<?php echo $button_fetch; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></a>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-laybuy" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $fetch; ?>" data-toggle="tooltip" title="<?php echo $button_fetch; ?>" class="btn btn-info"><i class="mi mi-refresh">refresh</i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -16,18 +16,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-laybuy" class="form-horizontal">
@@ -101,7 +101,7 @@
 			      <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="category" class="form-control" />
 				  <div id="laybuy-category" class="well well-sm" style="height: 150px; overflow: auto;">
 				    <?php foreach ($categories as $category) { ?>
-				      <div id="category<?php echo $category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category['name']; ?>
+				      <div id="category<?php echo $category['category_id']; ?>"><i class="mi mi-minus-circle">remove circle</i> <?php echo $category['name']; ?>
 					    <input type="hidden" name="laybuy_category[]" value="<?php echo $category['category_id']; ?>" />
 					  </div>
 				    <?php } ?>
@@ -120,7 +120,7 @@
 			      <input type="text" name="customer_group" value="" placeholder="<?php echo $entry_customer_group; ?>" id="customer-group" class="form-control" />
 				  <div id="laybuy-customer-group" class="well well-sm" style="height: 150px; overflow: auto;">
 				    <?php foreach ($customer_groups as $customer_group) { ?>
-				      <div id="customer-group<?php echo $customer_group['customer_group_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $customer_group['name']; ?>
+				      <div id="customer-group<?php echo $customer_group['customer_group_id']; ?>"><i class="mi mi-minus-circle">remove circle</i> <?php echo $customer_group['name']; ?>
 					    <input type="hidden" name="laybuy_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
 					  </div>
 				    <?php } ?>
@@ -291,10 +291,10 @@
 	                  <div class="input-group date">
 	                    <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
 	                    <span class="input-group-btn">
-	                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+	                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
 	                    </span></div>
 	                </div>
-	                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+	                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
 	              </div>
 	            </div>
 	          </div>
@@ -379,7 +379,7 @@
                       <td class="text-left"><?php echo $report['last_payment']; ?></td>
                       <td class="text-left"><?php echo $report['status']; ?></td>
                       <td class="text-left"><?php echo $report['date_added']; ?></td>
-                      <td class="text-right"><a href="<?php echo $report['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                      <td class="text-right"><a href="<?php echo $report['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a></td>
                     </tr>
                     <?php } ?>
                     <?php } else { ?>
@@ -430,11 +430,11 @@
 
 			$('#laybuy-category' + item['value']).remove();
 
-			$('#laybuy-category').append('<div id="laybuy-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="laybuy_category[]" value="' + item['value'] + '" /></div>');
+			$('#laybuy-category').append('<div id="laybuy-category' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="laybuy_category[]" value="' + item['value'] + '" /></div>');
 		}
 	});
 
-	$('#laybuy-category').delegate('.fa-minus-circle', 'click', function() {
+	$('#laybuy-category').delegate('.mi-minus-circle', 'click', function() {
 		$(this).parent().remove();
 	});
 //--></script>
@@ -460,11 +460,11 @@
 
 			$('#laybuy-customer-group' + item['value']).remove();
 
-			$('#laybuy-customer-group').append('<div id="laybuy-customer-group' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="laybuy_customer_group[]" value="' + item['value'] + '" /></div>');
+			$('#laybuy-customer-group').append('<div id="laybuy-customer-group' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="laybuy_customer_group[]" value="' + item['value'] + '" /></div>');
 		}
 	});
 
-	$('#laybuy-customer-group').delegate('.fa-minus-circle', 'click', function() {
+	$('#laybuy-customer-group').delegate('.mi-minus-circle', 'click', function() {
 		$(this).parent().remove();
 	});
 //--></script>

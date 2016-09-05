@@ -4,13 +4,13 @@
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($link_amazon_eu_bulk) { ?>
-          <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_eu_bulk; ?></a>
+          <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="mi mi-cloud-upload mi-lg">cloud_upload</i> <?php echo $button_amazon_eu_bulk; ?></a>
         <?php } ?>
         <?php if ($link_amazon_us_bulk) { ?>
-          <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk; ?></a>
+          <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="mi mi-cloud-upload mi-lg">cloud_upload</i> <?php echo $button_amazon_us_bulk; ?></a>
         <?php } ?>
         <?php  if ($link_ebay_bulk) { ?>
-          <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_ebay_bulk; ?></a>
+          <a class="btn btn-primary" id="button-ebay-bulk"><i class="mi mi-cloud-upload mi-lg">cloud_upload</i> <?php echo $button_ebay_bulk; ?></a>
         <?php } ?>
       </div>
       <h1><?php echo $heading_title; ?></h1>
@@ -23,14 +23,14 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -147,7 +147,7 @@
                   </div>
                 </div>
               </div>
-              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
+              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></a>
             </div>
           </div>
         </div>
@@ -197,7 +197,7 @@
                     <?php if ($product['image']) { ?>
                       <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
                       <?php } else { ?>
-                      <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
+                      <span class="img-thumbnail"><i class="mi mi-camera mi-5x">photo_camera</i></span>
                       <?php } ?>
                   </td>
                   <td class="text-left"><a href="<?php echo $product['edit']; ?>"><?php echo $product['name']; ?></a></td>

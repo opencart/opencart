@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,14 +14,14 @@
   <div class="container-fluid">
     <?php if ($validation === true) { ?>
       <?php if ($image_import > 0){ ?>
-      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?> <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?> </div>
+      <div class="alert alert-danger"> <i class="mi mi-exclamation-circle">error</i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?> <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?> </div>
       <?php } ?>
       <?php if ($maintenance == 1){ ?>
-      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_maintenance; ?> </div>
+      <div class="alert alert-danger"> <i class="mi mi-exclamation-circle">error</i> <?php echo $error_maintenance; ?> </div>
       <?php } ?>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+          <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $heading_title; ?></h3>
         </div>
         <div class="panel-body">
           <p><?php echo $text_sync_import_line1; ?></p>
@@ -55,7 +55,7 @@
         </div>
       </div>
     <?php } else { ?>
-      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?> </div>
+      <div class="alert alert-danger"> <i class="mi mi-exclamation-circle">error</i> <?php echo $error_validation; ?> </div>
     <?php } ?>
   </div>
 </div>
@@ -75,7 +75,7 @@
       $.ajax({
         url: 'index.php?route=extension/openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
         beforeSend: function(){
-          $('#button-import').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+          $('#button-import').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         },
         type: 'post',
         dataType: 'json',

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -13,11 +13,11 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_insert; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_insert; ?></h3>
       </div>
       <div class="panel-body" id="page-listing">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
@@ -44,7 +44,7 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select name="eBayStoreCatId" class="form-control">
                           <option disabled selected><?php echo $text_select; ?></option>
                           <?php foreach ($product['store_cats'] as $key => $cat) { ?>
@@ -79,7 +79,7 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-1-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-1-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-1" class="form-control" onchange="loadCategories(2);">
                         </select>
                       </div>
@@ -87,7 +87,7 @@
                   </div>
                   <div class="row form-group" id="category-select-2-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-2-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-2-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-2" class="form-control" onchange="loadCategories(3);">
                         </select>
                       </div>
@@ -95,7 +95,7 @@
                   </div>
                   <div class="row form-group" id="category-select-3-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-3-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-3-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-3" class="form-control" onchange="loadCategories(4);">
                         </select>
                       </div>
@@ -103,7 +103,7 @@
                   </div>
                   <div class="row form-group" id="category-select-4-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-4-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-4-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-4" class="form-control" onchange="loadCategories(5);">
                         </select>
                       </div>
@@ -111,7 +111,7 @@
                   </div>
                   <div class="row form-group" id="category-select-5-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-5-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-5-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-5" class="form-control" onchange="loadCategories(6);">
                         </select>
                       </div>
@@ -119,7 +119,7 @@
                   </div>
                   <div class="row form-group" id="category-select-6-container" style="display:none;">
                     <div class="col-sm-12">
-                      <div class="input-group category-select-group"> <span id="category-select-6-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group category-select-group"> <span id="category-select-6-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select id="category-select-6" class="form-control" onchange="loadCategories(7);">
                         </select>
                       </div>
@@ -139,7 +139,7 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group condition-select-group"> <span id="condition-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group condition-select-group"> <span id="condition-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select name="condition" id="condition-input" class="form-control">
                         </select>
                       </div>
@@ -152,7 +152,7 @@
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <div class="input-group condition-select-group"> <span id="duration-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                      <div class="input-group condition-select-group"> <span id="duration-loading" class="input-group-addon"><i class="mi mi-angle-right mi-lg">chevron_right</i></span>
                         <select name="auction_duration" id="duration-input" class="form-control">
                         </select>
                       </div>
@@ -197,7 +197,7 @@
               </div>
               <div class="alert alert-info"><?php echo $text_features_help; ?></div>
               <div class="form-group">
-                <div class="col-sm-12"> <span id="feature-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                <div class="col-sm-12"> <span id="feature-loading" style="display: none;"><i class="mi mi-cog mi-lg mi-spin">settings</i></span>
                   <div id="feature-content"></div>
                 </div>
               </div>
@@ -205,12 +205,12 @@
             <div id="tab-listing-compatibility" class="tab-pane">
               <div class="form-group">
                 <div class="col-sm-12">
-                  <div class="alert alert-info" id="compatibility-loading" style="display:none;"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_compatibility; ?></div>
+                  <div class="alert alert-info" id="compatibility-loading" style="display:none;"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading_compatibility; ?></div>
                   <div id="compatibility-content"></div>
                   <div id="compatibility-content-add" style="display: none;">
                     <div class="form-group">
                       <div class="col-sm-10 text-right">
-                        <button class="btn btn-primary" id="compatibility-button-add" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></button>
+                        <button class="btn btn-primary" id="compatibility-button-add" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_add; ?>"><i class="mi mi-plus-circle">add_circle</i></button>
                       </div>
                     </div>
                   </div>
@@ -234,7 +234,7 @@
                     <div class="col-sm-3">
                       <input type="text" name="catalog_search" id="catalog-search" class="form-control" value="" />
                     </div>
-                    <div class="col-sm-1"> <a class="btn btn-primary" id="button-catalog-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+                    <div class="col-sm-1"> <a class="btn btn-primary" id="button-catalog-search"><i class="mi mi-search">search</i> <?php echo $button_search; ?></a> </div>
                   </div>
                 </div>
               </div>
@@ -272,7 +272,7 @@
                 <div class="row">
                   <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?></label>
                   <div class="col-sm-10">
-                    <div class="input-group"> <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-theme-icon"><i class="mi mi-lg mi-file-text">insert_drive_file</i></span>
                       <select name="profile_theme" id="profile-theme-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_theme'])) { ?>
@@ -428,7 +428,7 @@
                               <tr>
                                 <td id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>"><img src="<?php echo $option_group_choice['image_thumb']; ?>"/>
                                   <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>"/></td>
-                                <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
                               </tr>
                               <?php } ?>
                               <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>"/>
@@ -447,9 +447,9 @@
               <div class="well well-lg">
                 <div class="row">
                   <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
-                    <span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                    <span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group"> <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-generic-icon"><i class="mi mi-lg mi-file-text">insert_drive_file</i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_generic'])) { foreach ($product['profiles_generic'] as $profile) { ?>
@@ -510,7 +510,7 @@
                           $option_count++;
                         } ?>
                       </tbody>
-                    
+
                   </table>
                 </div>
               </div>
@@ -615,9 +615,9 @@
               <div class="well well-lg">
                 <div class="row">
                   <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
-                    <span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                    <span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group"> <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-shipping-icon"><i class="mi mi-lg mi-file-text">insert_drive_file</i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_shipping'])) { foreach ($product['profiles_shipping'] as $profile) { ?>
@@ -729,7 +729,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -758,7 +758,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -805,7 +805,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -834,7 +834,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -915,9 +915,9 @@
               <div class="well well-lg">
                 <div class="row">
                   <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br />
-                    <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                    <span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i></a></span></label>
                   <div class="col-sm-10">
-                    <div class="input-group"> <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <div class="input-group"> <span class="input-group-addon" id="profile-return-icon"><i class="mi mi-lg mi-file-text">insert_drive_file</i></span>
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
                         <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
@@ -1009,8 +1009,8 @@
         <div class="alert alert-info" id="listing-fee-container"></div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-6 text-left"> <a class="btn btn-primary" target="_BLANK" id="button-preview" style="display:none;"><i class="fa fa-external-link fa-lg"></i> <?php echo $text_preview; ?></a> <a class="btn btn-primary" id="button-edit"><i class="fa fa-pencil fa-lg"></i> <?php echo $text_review_edit; ?></a> </div>
-            <div class="col-sm-6 text-right"> <a class="btn btn-primary" id="button-save"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a> </div>
+            <div class="col-sm-6 text-left"> <a class="btn btn-primary" target="_BLANK" id="button-preview" style="display:none;"><i class="mi mi-external-link mi-lg">edit</i> <?php echo $text_preview; ?></a> <a class="btn btn-primary" id="button-edit"><i class="mi mi-pencil mi-lg">edit</i> <?php echo $text_review_edit; ?></a> </div>
+            <div class="col-sm-6 text-right"> <a class="btn btn-primary" id="button-save"><i class="mi mi-save mi-lg">save</i> <?php echo $button_save; ?></a> </div>
           </div>
         </div>
       </div>
@@ -1018,8 +1018,8 @@
         <div class="alert alert-success"><?php echo $text_created_msg; ?>: <span id="item-number"></span></div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-6 text-left"> <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $button_view; ?></a> <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a> </div>
-            <div class="col-sm-6 text-right"> <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="fa fa-reply fa-lg"></i> <?php echo $text_return; ?></a> </div>
+            <div class="col-sm-6 text-left"> <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="mi mi-external-link mi-lg">edit</i> <?php echo $button_view; ?></a> <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="mi mi-pencil mi-lg">edit</i> <?php echo $button_edit; ?></a> </div>
+            <div class="col-sm-6 text-right"> <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="mi mi-reply mi-lg">reply</i> <?php echo $text_return; ?></a> </div>
           </div>
         </div>
       </div>
@@ -1040,7 +1040,7 @@
 </div>
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
 <script type="text/javascript"><!--
   function updateReserveMessage(elementId, total) {
       var reserve = total - $('#qty_'+elementId).val();
@@ -1167,9 +1167,9 @@
             count_i++;
         }
 
-        $('#category-select-' + previous_level + '-loading').html('<i class="fa fa-check fa-lg"></i>');
+        $('#category-select-' + previous_level + '-loading').html('<i class="mi mi-check mi-lg">check</i>');
         $('#category-select-' + level).prop('disabled', true);
-        $('#category-select-' + level + '-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#category-select-' + level + '-loading').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         $('#category-select-' + level + '-container').show();
 
         $.ajax({
@@ -1192,7 +1192,7 @@
                         $('#final-category').val('');
                     }
 
-                  $('#category-select-' + level + '-loading').html('<i class="fa fa-angle-right fa-lg" ></i>');
+                  $('#category-select-' + level + '-loading').html('<i class="mi mi-angle-right mi-lg" >chevron_right</i>');
                   $('#category-select-' + level).prop('disabled', false);
                 } else {
                     $('#category-select-' + level + '-container').hide();
@@ -1203,7 +1203,7 @@
                         $('#page-listing, .heading').hide();
                     } else {
                         $('#final-category').val($('#category-select-' + previous_level).val());
-                        //$('#category-select-' + level + '-loading').html('<i class="fa fa-check fa-lg"></i>');
+                        //$('#category-select-' + level + '-loading').html('<i class="mi mi-check mi-lg">check</i>');
                         $('.category-select-group').addClass('has-success');
                         getCategoryFeatures($('#category-select-'+previous_level).val());
                     }
@@ -1221,7 +1221,7 @@
         $('#duration-container').show();
         $('#duration-input').empty().prop('disabled', true);
         $('.duration-select-group').removeClass('has-success');
-        $('#duration-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#duration-loading').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
 
         $('#compatibility-content').empty();
         $('#listing-compatibility').hide();
@@ -1229,7 +1229,7 @@
         $('#condition-container').show();
         $('#condition-input').empty().prop('disabled', true);
         $('.condition-select-group').removeClass('has-success');
-        $('#condition-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#condition-loading').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
 
         $('#vrm-input-container').remove();
         $('#vin-input-container').remove();
@@ -1274,7 +1274,7 @@
                       });
 
                       $('#condition-input').empty().html(html_inj).show().prop('disabled', false);
-                      $('#condition-loading').html('<i class="fa fa-angle-right fa-lg"></i>');
+                      $('#condition-loading').html('<i class="mi mi-angle-right mi-lg">chevron_right</i>');
                     } else {
                       $('#condition-container').hide();
                     }
@@ -1361,7 +1361,7 @@
             compatibility_html += '<input type="hidden" id="compatibility-data-'+option_value.sequence+'-name" value="'+option_value.name+'" />';
             compatibility_html += '<div class="col-sm-8">';
               compatibility_html += '<div class="input-group">';
-                compatibility_html += '<span class="input-group-addon" id="compatibility-data-' + option_value.sequence + '-loading-icon"><i class="fa fa-angle-right fa-lg" ></i></span>';
+                compatibility_html += '<span class="input-group-addon" id="compatibility-data-' + option_value.sequence + '-loading-icon"><i class="mi mi-angle-right mi-lg" >chevron_right</i></span>';
                 compatibility_html += '<select id="compatibility-data-'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
               compatibility_html += '</div>';
             compatibility_html += '</div>';
@@ -1389,7 +1389,7 @@
     if (parseInt(sequence_id) > 1) {
       var sequence_id_count_loop = parseInt(sequence_id) - parseInt(1);
 
-      $('#compatibility-data-' + sequence_id_count_loop + '-loading-icon').html('<i class="fa fa-check fa-lg"></i>');
+      $('#compatibility-data-' + sequence_id_count_loop + '-loading-icon').html('<i class="mi mi-check mi-lg">check</i>');
 
       // get all of the parent filter choices
       while (sequence_id_count_loop >= 1) {
@@ -1404,7 +1404,7 @@
       }
     }
 
-    $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+    $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
 
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
@@ -1423,7 +1423,7 @@
         });
 
         $('#compatibility-data-' + sequence_id).prop('disabled', false);
-        $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="fa fa-angle-right fa-lg" ></i>');
+        $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="mi mi-angle-right mi-lg" >chevron_right</i>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1480,7 +1480,7 @@
     if (total_name_count >= sequence_id_count) {
       getCompatibilityValues(category_id, option_name, sequence_id_count);
     } else {
-      $('#compatibility-data-' + sequence_id_count + '-loading-icon').html('<i class="fa fa-check fa-lg"></i>');
+      $('#compatibility-data-' + sequence_id_count + '-loading-icon').html('<i class="mi mi-check mi-lg">check</i>');
       // this is the final step and all options are chosen - show the add button
       $('#compatibility-content-add').show();
     }
@@ -1503,7 +1503,7 @@
         inj_html += '<td>' + $('#compatibility-data-' + sequence_id_count_loop).val() + '</td>';
         sequence_id_count_loop++;
       }
-      inj_html += '<td class="text-right"><button class="btn btn-danger" title="" type="button" onclick="$(\'#compatibility-row' + compatibility_row + '\').remove();"><i class="fa fa-trash-o"></i></button></td>';
+      inj_html += '<td class="text-right"><button class="btn btn-danger" title="" type="button" onclick="$(\'#compatibility-row' + compatibility_row + '\').remove();"><i class="mi mi-trash-o">delete</i></button></td>';
     inj_html += '</tr>';
 
     $('#compatibility-table').append(inj_html);
@@ -1535,7 +1535,7 @@
             data: { category_id: cat, page: 1,  search: qry },
             beforeSend: function() {
                 $('#product-catalog-container').empty().show();
-                $('#button-catalog-search').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+                $('#button-catalog-search').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
                 $('#catalog-search-alert').remove();
             },
             success: function(data) {
@@ -1556,7 +1556,7 @@
                                 if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
                                   html += '<img class="img-thumbnail" src="'+val.stockPhotoURL.thumbnail.value+'" style="height:96px;"/>';
                                 } else {
-                                  html += '<span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>';
+                                  html += '<span class="img-thumbnail"><i class="mi mi-camera mi-5x">photo_camera</i></span>';
                                 }
                                 html += '</div>';
                               html += '</div>';
@@ -1580,7 +1580,7 @@
                 $('#button-catalog-search').show();
             },
             complete: function() {
-              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo $button_search; ?>');
+              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="mi mi-search">search</i> <?php echo $button_search; ?>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1610,7 +1610,7 @@
     });
 
     $('#duration-input').empty().html(html_inj).show().prop('disabled', false);
-    $('#duration-loading').html('<i class="fa fa-angle-right fa-lg"></i>');
+    $('#duration-loading').html('<i class="mi mi-angle-right mi-lg">chevron_right</i>');
   }
 
   function itemFeatures(category_id) {
@@ -1764,7 +1764,7 @@
 
   function profileShippingUpdate() {
     if ($('#profile-shipping-input').val() != 'def') {
-      $('#profile-shipping-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+      $('#profile-shipping-icon').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
       $('#profile-shipping-input').attr('disabled', 'disabled');
 
       $.ajax({
@@ -1809,7 +1809,7 @@
             $('#options-international-flat').html(data.html.international_flat);
             $('#options-national-calculated').html(data.html.national_calculated);
             $('#options-international-calculated').html(data.html.international_calculated);
-            $('#profile-shipping-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+            $('#profile-shipping-icon').html('<i class="mi mi-lg mi-file-text">insert_drive_file</i>');
             $('#profile-shipping-input').removeAttr('disabled');
             $('#shipping-type-national').val(data.html.national.type);
             $('#shipping-type-international').val(data.html.international.type);
@@ -1837,7 +1837,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc + '&type=' + type,
       beforeSend: function(){
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'GET',
       dataType: 'json',
@@ -1891,16 +1891,16 @@
           html += '</div>';
         }
         html += '<div class="col-sm-3 pull-right text-right">';
-        html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>';
+        html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i> <?php echo $button_delete; ?></a>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
 
         $('#options-' + id + '-' + type).append(html);
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-shipping-'+id).empty().html('<i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
@@ -2001,7 +2001,7 @@
               $('#button-save').hide();
               $('#button-preview').hide();
               $('#listing-fee-container').hide();
-              $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+              $('#button-verify').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
             },
             success: function(data) {
                 if (data.error != true) {
@@ -2060,7 +2060,7 @@
         url: 'index.php?route=extension/openbay/ebay/listItem&token=<?php echo $token; ?>&options='+hasOptions,
         data: $("#form").serialize(),
         beforeSend: function() {
-          $('#button-save').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+          $('#button-save').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
           $('#button-view').hide();
         },
         success: function(data) {
@@ -2221,7 +2221,7 @@
 
   function profileReturnUpdate() {
       if ($('#profile-return-input').val() != 'def') {
-        $('#profile-return-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#profile-return-icon').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
         $('#profile-return-input').attr('disabled', 'disabled');
 
           $.ajax({
@@ -2249,7 +2249,7 @@
                           $('#returns_restocking_fee').val(data.data.returns_restocking_fee);
                       }
 
-                    $('#profile-return-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                    $('#profile-return-icon').html('<i class="mi mi-lg mi-file-text">insert_drive_file</i>');
                     $('#profile-return-input').removeAttr('disabled');
                   }, 1000);
               },
@@ -2262,7 +2262,7 @@
 
   function profileThemeUpdate() {
   if ($('#profile-theme-input').val() != 'def') {
-      $('#profile-theme-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+      $('#profile-theme-icon').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
       $('#profile-theme-input').attr('disabled', 'disabled');
 
       $.ajax({
@@ -2302,7 +2302,7 @@
                       $('#template_id').val(data.data.ebay_template_id);
                   }
 
-                  $('#profile-theme-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                  $('#profile-theme-icon').html('<i class="mi mi-lg mi-file-text">insert_drive_file</i>');
                 $('#profile-theme-input').removeAttr('disabled');
               }, 1000);
           },
@@ -2315,7 +2315,7 @@
 
   function profileGenericUpdate() {
       if ($('#profile-generic-input').val() != 'def') {
-          $('#profile-generic-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+          $('#profile-generic-icon').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
           $('#profile-generic-input').attr('disabled', 'disabled');
 
           $.ajax({
@@ -2330,7 +2330,7 @@
                           $('#private_listing').removeAttr('checked');
                       }
 
-                    $('#profile-generic-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                    $('#profile-generic-icon').html('<i class="mi mi-lg mi-file-text">insert_drive_file</i>');
                     $('#profile-generic-input').removeAttr('disabled');
                   }, 1000);
               },
@@ -2363,7 +2363,7 @@
           html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="input-image' + count + '" value="" />';
         html += '</td>';
         html += '<td>';
-          html += '<button type="button" onclick="removeVariationImage('+grp_id+', '+id+', '+count+');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>';
+          html += '<button type="button" onclick="removeVariationImage('+grp_id+', '+id+', '+count+');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button>';
         html += '</td>';
       html += '</tr>';
 
@@ -2438,5 +2438,5 @@
       $('#weight-minor-text').text('Grams');
     }
   }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

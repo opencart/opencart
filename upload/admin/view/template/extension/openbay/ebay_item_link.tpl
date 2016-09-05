@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -22,7 +22,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h1 class="panel-title"><i class="fa fa-unlink fa-lg"></i> <?php echo $text_unlinked_items; ?></h1>
+        <h1 class="panel-title"><i class="mi mi-unlink mi-lg"></i> <?php echo $text_unlinked_items; ?></h1>
       </div>
       <div class="panel-body">
         <p><?php echo $text_text_unlinked_desc; ?></p>
@@ -85,7 +85,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h1 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $text_linked_items; ?></h1>
+        <h1 class="panel-title"><i class="mi mi-link mi-lg">link</i> <?php echo $text_linked_items; ?></h1>
       </div>
       <div class="panel-body">
         <p><?php echo $text_text_linked_desc; ?></p>
@@ -104,7 +104,7 @@
             </tr>
           </thead>
           <tr>
-            <td class="text-left" colspan="9" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a></td>
+            <td class="text-left" colspan="9" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_text_loading_items; ?></a></td>
           </tr>
           <tbody style="display:none;" id="show-linked-items">
             <?php foreach ($linked_items as $id => $item) { ?>
@@ -166,7 +166,7 @@
                   $('#ebay-qty-' + key).val(val.qty);
 
                   if (val.status == 1) {
-                    $('#text-buttons-' + key).html('<a href="<?php echo $edit_url; ?>' + product_id + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>');
+                    $('#text-buttons-' + key).html('<a href="<?php echo $edit_url; ?>' + product_id + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="mi mi-pencil">mode_edit</i></a>');
 
                     if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-' + key).text('OK');
@@ -179,7 +179,7 @@
                   } else {
                     $('#text-status-' + key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-' + key + ' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-' + key).html('<a onclick="removeLink(' + product_id + ', ' + key + ');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-' + key).html('<a onclick="removeLink(' + product_id + ', ' + key + ');" class="btn btn-danger"><i class="mi mi-minus-circle mi-lg">remove_circle</i> <?php echo $button_remove_link; ?></a>');
                   }
                 } else {
                   $.each (val.variants, function(key1, val1) {
@@ -195,9 +195,9 @@
                   if (val.status == 0) {
                     $('#text-status-' + key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-' + key + ' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-' + key).html('<a onclick="removeLink(' + product_id + ', ' + key + ');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-' + key).html('<a onclick="removeLink(' + product_id + ', ' + key + ');" class="btn btn-danger"><i class="mi mi-minus-circle mi-lg">remove_circle</i> <?php echo $button_remove_link; ?></a>');
                   } else {
-                    $('#text-buttons-' + key).html('<a href="<?php echo $edit_url; ?>' + product_id + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>');
+                    $('#text-buttons-' + key).html('<a href="<?php echo $edit_url; ?>' + product_id + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="mi mi-pencil">mode_edit</i></a>');
                   }
                 }
               });
@@ -233,7 +233,7 @@
       var r = confirm("<?php echo $text_alert_stock_local; ?>");
       var button_old = $('#text-buttons-' + item_id).html();
 
-      $('#text-buttons-' + item_id).html('<p class="text-center"><i class="fa fa-cog fa-lg fa-spin"></i></p>');
+      $('#text-buttons-' + item_id).html('<p class="text-center"><i class="mi mi-cog mi-lg mi-spin">settings</i></p>');
 
       if (r == true) {
           $.ajax({
@@ -291,7 +291,7 @@
           type: 'post',
           dataType: 'json',
           beforeSend: function() {
-            $('#l-' + id + '-save-button').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+            $('#l-' + id + '-save-button').html('<i class="mi mi-cog mi-lg mi-spin">settings</i>');
           },
           success: function(json) {
             $('#row' + id).fadeOut('slow');
@@ -338,7 +338,7 @@
       dataType: 'json',
       beforeSend: function() {
         $('#fetching-ebay-items').hide();
-        $('#check-unlinked-items').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#check-unlinked-items').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         $('.alert-warning').remove();
       },
       success: function(json) {

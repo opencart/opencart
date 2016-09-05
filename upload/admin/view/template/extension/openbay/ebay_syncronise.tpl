@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,13 +14,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
   </div>
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_sync; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_sync; ?></h3>
       </div>
       <div class="panel-body">
         <?php if ($validation == true) { ?>
@@ -46,7 +46,7 @@
             </div>
           </form>
         <?php } else { ?>
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
+          <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_validation; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
           </div>
         <?php } ?>
@@ -59,7 +59,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/updatecategories&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#update-categories').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#update-categories').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         alert('<?php echo $text_ebay_categories; ?>');
       },
       type: 'post',
@@ -79,7 +79,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/updatesettings&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#update-settings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#update-settings').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -103,7 +103,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/ebay/updatestore&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#update-store').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#update-store').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',

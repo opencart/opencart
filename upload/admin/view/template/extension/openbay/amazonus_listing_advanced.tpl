@@ -4,9 +4,9 @@
         <div class="container-fluid">
             <div class="pull-right">
                 <?php if ($has_listing_errors) { ?>
-                <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>
+                <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-danger"><i class="mi mi-reply">reply</i></a>
                 <?php } ?>
-                <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+                <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
             <h1><?php echo $text_title_advanced; ?></h1>
             <ul class="breadcrumb">
                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -20,13 +20,13 @@
         <div class="alert alert-danger">
             <ul>
                 <?php foreach ($errors as $listing_error) { ?>
-                <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error['message']; ?></li>
+                <li><i class="mi mi-exclamation-circle">error</i> <?php echo $listing_error['message']; ?></li>
                 <?php } ?>
             </ul>
         </div>
         <?php } ?>
         <?php if ($success) { ?>
-        <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+        <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
         <?php } ?>
         <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $tab_main; ?></a></li>
@@ -90,7 +90,7 @@
         </form>
         <div class="well">
             <div class="row">
-                <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save; ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload; ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings; ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
+                <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save; ?>" onclick="validate_and_save('advanced')"><i class="mi mi-save mi-lg">save</i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload; ?>" onclick="save_and_upload()"><i class="mi mi-cloud-upload mi-lg">cloud_upload</i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings; ?>" href="<?php echo $saved_listings_url; ?>"><i class="mi mi-copy mi-lg">content_copy</i></a> </div>
             </div>
         </div>
     </div>
@@ -183,7 +183,7 @@ function show_form(xml, formType) {
         dataType: 'json',
         beforeSend: function() {
             $('#category_selector').attr('disabled', 'disabled');
-            $('#category_selector_label').after('<a class="btn btn-primary wait" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> </a>');
+            $('#category_selector_label').after('<a class="btn btn-primary wait" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i> </a>');
         },
         complete: function() {
             $('#category_selector').removeAttr('disabled');
@@ -318,7 +318,7 @@ function getImageField(fieldData) {
     if (fieldData['thumb'] != "") {
         output += '<img src="'+fieldData['thumb']+'" alt="" title="" />';
     } else {
-        output += '<i class="fa fa-camera fa-5x"></i>';
+        output += '<i class="mi mi-camera mi-5x">photo_camera</i>';
     }
     output += "</a>";
     output += '<input type="hidden" id="input-image-'+fieldData['name']+'" name="fields[' + fieldData['name'] + ']" value="' + fieldData['value'] + '" accepted="' + fieldData['accepted']['type'] + '" field_name="' + fieldData['name'] + '" field_type="' + fieldData['type'] + '">';
@@ -373,7 +373,7 @@ function getBrowseNodeField(fieldData) {
     output += 'class="form-control" ';
     output += 'onclick="loadBrowseNode(\''+fieldData['name']+'\');" ';
     output += 'value="' + fieldData['value'] + '">';
-    output += '<span class="input-group-addon"><i class="fa fa-sitemap fa-lg"></i></span>';
+    output += '<span class="input-group-addon"><i class="mi mi-sitemap mi-lg"></i></span>';
     output += '</div>';
     output += '<span class="label label-info" style="display:none;" id="'+fieldData['name']+'_label"></span>';
 
@@ -640,7 +640,7 @@ function nodeSelect(field, original_field) {
         data: { node: node},
         dataType: 'json',
         beforeSend: function(){
-            $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> </a>');
+            $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="mi mi-cog mi-lg mi-spin">settings</i> </a>');
         },
         success: function(data) {
             if (data.node.error != true){
@@ -663,7 +663,7 @@ function nodeSelect(field, original_field) {
                 }else{
                     html += '<div class="row">';
                     html += '<div class="col-sm-12 text-right">';
-                    html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a>';
+                    html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="mi mi-save mi-lg">save</i> <?php echo $button_save; ?></a>';
                     html += '</div>';
                     html += '</div>';
                 }

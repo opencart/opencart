@@ -56,8 +56,8 @@
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
           <div class="btn-group btn-group-sm">
-            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa fa-th-list"></i></button>
-            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa fa-th"></i></button>
+            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="mi mi-th-list">view_list</i></button>
+            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="mi mi-th">view_module</i></button>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -119,18 +119,18 @@
                 <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++) { ?>
                   <?php if ($product['rating'] < $i) { ?>
-                  <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  <span class="mi mi-stack"><i class="mi mi-star-o mi-stack-2x">star_border</i></span>
                   <?php } else { ?>
-                  <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  <span class="mi mi-stack"><i class="mi mi-star mi-stack-2x">star</i><i class="mi mi-star-o mi-stack-2x">star_border</i></span>
                   <?php } ?>
                   <?php } ?>
                 </div>
                 <?php } ?>
               </div>
               <div class="button-group">
-                <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span></button>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><i class="mi mi-shopping-cart">shopping_cart</i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="mi mi-heart">favorite</i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="mi mi-exchange">compare_arrows</i></button>
               </div>
             </div>
           </div>

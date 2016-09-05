@@ -36,7 +36,7 @@
               <td class="text-left"><?php echo $return['date_added']; ?></td>
               <td class="text-right"><?php echo $return['order_id']; ?></td>
               <td class="text-left"><?php echo $return['name']; ?></td>
-              <td class="text-right"><a href="<?php echo $return['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="<?php echo $return['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a></td>
             </tr>
             <?php } ?>
           </tbody>

@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,12 +16,12 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <div id="page-listing">
           <?php if ($error_warning) { ?>
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+          <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
           <?php } ?>
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
             <input type="hidden" name="etsy_item_id" value="<?php echo $etsy_item_id; ?>" />
@@ -63,7 +63,7 @@
               <div class="well">
                 <div class="row">
                   <div class="col-sm-12 text-right">
-                    <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" id="button-save"><i class="fa fa-save"></i></a>
+                    <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" id="button-save"><i class="mi mi-save">save</i></a>
                   </div>
                 </div>
               </div>
@@ -90,7 +90,7 @@
     $.ajax({
       url: 'index.php?route=extension/openbay/etsy_product/editsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-submit').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
       },
       type: 'post',
       data: $("#form").serialize(),

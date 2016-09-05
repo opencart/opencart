@@ -14,7 +14,7 @@
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <link href="view/stylesheet/bootstrap.css" type="text/css" rel="stylesheet" />
-<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link href="view/javascript/material-design-icons/material-icons.css" type="text/css" rel="stylesheet" />
 <script src="view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
@@ -35,12 +35,12 @@
 <header id="header" class="navbar navbar-static-top">
   <div class="navbar-header">
     <?php if ($logged) { ?>
-    <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
+    <a type="button" id="button-menu" class="pull-left"><i class="mi mi-indent mi-lg">format_indent_increase</i></a>
     <?php } ?>
     <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
   <?php if ($logged) { ?>
   <ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if($alerts > 0) { ?><span class="label label-danger pull-left"><?php echo $alerts; ?></span><?php } ?> <i class="fa fa-bell fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if($alerts > 0) { ?><span class="label label-danger pull-left"><?php echo $alerts; ?></span><?php } ?> <i class="mi mi-bell mi-lg">notifications</i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
         <li class="dropdown-header"><?php echo $text_order; ?></li>
         <li><a href="<?php echo $processing_status; ?>" style="display: block; overflow: auto;"><span class="label label-warning pull-right"><?php echo $processing_status_total; ?></span><?php echo $text_processing_status; ?></a></li>
@@ -59,7 +59,7 @@
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>
       </ul>
     </li>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="mi mi-home mi-lg">home</i></a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li class="dropdown-header"><?php echo $text_store; ?></li>
         <?php foreach ($stores as $store) { ?>
@@ -67,7 +67,7 @@
         <?php } ?>
       </ul>
     </li>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-life-ring fa-lg"></i></a>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="mi mi-life-ring mi-lg">help_outline</i></a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li class="dropdown-header"><?php echo $text_help; ?></li>
         <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_homepage; ?></a></li>
@@ -75,7 +75,7 @@
         <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
       </ul>
     </li>
-    <li><a href="<?php echo $logout; ?>"><span class="hidden-xs hidden-sm hidden-md"><?php echo $text_logout; ?></span> <i class="fa fa-sign-out fa-lg"></i></a></li>
+    <li><a href="<?php echo $logout; ?>"><span class="hidden-xs hidden-sm hidden-md"><?php echo $text_logout; ?></span> <i class="mi mi-sign-out mi-lg">exit_to_app</i></a></li>
   </ul>
   <?php } ?>
 </header>

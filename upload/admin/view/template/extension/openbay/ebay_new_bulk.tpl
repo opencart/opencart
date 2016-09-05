@@ -3,7 +3,7 @@
 <div class="page-header">
   <div class="container-fluid">
     <div class="pull-right">
-      <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
     </div>
     <h1><?php echo $heading_title; ?></h1>
     <ul class="breadcrumb">
@@ -15,11 +15,11 @@
 </div>
 <div class="container-fluid">
   <?php foreach($error_warning as $warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $warning; ?></div>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $warning; ?></div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_bulk; ?></h3>
+      <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_bulk; ?></h3>
     </div>
     <div class="panel-body" id="page-listing">
       <?php $i = 0; ?>
@@ -28,9 +28,9 @@
           <div class="well">
             <div class="row">
               <div class="col-sm-12 text-right">
-                <a class="btn btn-primary" id="button-verify"><i class="fa fa-check"></i> <?php echo $text_preview_all; ?></a>
-                <a class="btn btn-primary" id="button-edit" style="display:none;"><i class="fa fa-pencil"></i> <?php echo $button_edit; ?></a>
-                <a class="btn btn-primary" id="button-submit" style="display:none;"><i class="fa fa-plus-circle"></i> <?php echo $button_submit; ?></a>
+                <a class="btn btn-primary" id="button-verify"><i class="mi mi-check">check</i> <?php echo $text_preview_all; ?></a>
+                <a class="btn btn-primary" id="button-edit" style="display:none;"><i class="mi mi-pencil">mode_edit</i> <?php echo $button_edit; ?></a>
+                <a class="btn btn-primary" id="button-submit" style="display:none;"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_submit; ?></a>
               </div>
             </div>
           </div>
@@ -46,11 +46,11 @@
                     <h4 id="product_title_<?php echo $i; ?>" style="display:none;"></h4>
                   </div>
                   <div class="col-sm-5 form-group text-right" id="p_row_buttons_<?php echo $i; ?>">
-                    <a class="btn btn-primary" onclick="showCategory('<?php echo $i; ?>');" id="editCategory_<?php echo $i; ?>" ><i class="fa fa-pencil"></i> <?php echo $text_category; ?></a>
-                    <a class="btn btn-primary" onclick="showProfiles('<?php echo $i; ?>');" id="editProfiles_<?php echo $i; ?>" ><i class="fa fa-pencil"></i> <?php echo $text_profile; ?></a>
-                    <a class="btn btn-primary" style="display:none;" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" ><i class="fa fa-pencil"></i> <?php echo $text_catalog; ?></a>
-                    <a class="btn btn-primary" style="display:none;" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>"><i class="fa fa-pencil"></i> <?php echo $text_features; ?></a>
-                    <a class="btn btn-danger" onclick="removeBox('<?php echo $i; ?>')"> <i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a>
+                    <a class="btn btn-primary" onclick="showCategory('<?php echo $i; ?>');" id="editCategory_<?php echo $i; ?>" ><i class="mi mi-pencil">mode_edit</i> <?php echo $text_category; ?></a>
+                    <a class="btn btn-primary" onclick="showProfiles('<?php echo $i; ?>');" id="editProfiles_<?php echo $i; ?>" ><i class="mi mi-pencil">mode_edit</i> <?php echo $text_profile; ?></a>
+                    <a class="btn btn-primary" style="display:none;" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" ><i class="mi mi-pencil">mode_edit</i> <?php echo $text_catalog; ?></a>
+                    <a class="btn btn-primary" style="display:none;" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_features; ?></a>
+                    <a class="btn btn-danger" onclick="removeBox('<?php echo $i; ?>')"> <i class="mi mi-minus-circle">remove circle</i> <?php echo $button_remove; ?></a>
                   </div>
                 </div>
                 <div class="row">
@@ -76,7 +76,7 @@
                                 <div class="page-header">
                                   <div class="container-fluid">
                                     <div class="pull-right">
-                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="mi mi-reply">reply</i></a>
                                     </div>
                                     <h1 class="panel-title"><?php echo $text_features; ?></h1>
                                   </div>
@@ -133,7 +133,7 @@
                                 <div class="page-header">
                                   <div class="container-fluid">
                                     <div class="pull-right">
-                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="mi mi-reply">reply</i></a>
                                     </div>
                                     <h1 class="panel-title"><?php echo $text_category; ?></h1>
                                   </div>
@@ -146,7 +146,7 @@
                                         <div class="form-group">
                                           <label class="col-sm-2 control-label"><?php echo $text_suggested; ?></label>
                                           <div class="col-sm-10">
-                                            <div class="alert alert-info" id="loadingSuggestedCat_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_category; ?></div>
+                                            <div class="alert alert-info" id="loadingSuggestedCat_<?php echo $i; ?>"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_category; ?></div>
                                             <div id="suggestedCat_<?php echo $i; ?>"></div>
                                             <input type="hidden" name="finalCat" id="finalCat_<?php echo $i; ?>" class="openbay_data_<?php echo $i; ?>" />
                                           </div>
@@ -156,7 +156,7 @@
                                         <div class="form-group" id="cSelections_<?php echo $i; ?>" style="display:none;">
                                           <label class="col-sm-2 control-label"><?php echo $text_category_choose; ?></label>
                                           <div class="col-sm-10">
-                                          <div class="alert alert-info" id="imageLoading_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_categories; ?></div>
+                                          <div class="alert alert-info" id="imageLoading_<?php echo $i; ?>"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading_categories; ?></div>
                                           <div class="row form-group">
                                             <div class="col-sm-12">
                                               <select id="catsSelect1_<?php echo $i; ?>" class="form-control" onchange="loadCategories(2, false, <?php echo $i; ?>);"></select>
@@ -205,7 +205,7 @@
                                 <div class="page-header">
                                   <div class="container-fluid">
                                     <div class="pull-right">
-                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="mi mi-reply">reply</i></a>
                                     </div>
                                     <h1 class="panel-title"><?php echo $text_catalog_search; ?></h1>
                                   </div>
@@ -243,7 +243,7 @@
                                 <div class="page-header">
                                   <div class="container-fluid">
                                     <div class="pull-right">
-                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="mi mi-reply">reply</i></a>
                                     </div>
                                     <h1 class="panel-title"><?php echo $text_profile; ?></h1>
                                   </div>
@@ -306,7 +306,7 @@
                             <input id="price_<?php echo $i; ?>" type="text" name="price" class="openbay_data_<?php echo $i; ?> form-control" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
                           </div>
                         </div>
-                        <div class="alert alert-info" id="conditionLoading_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_condition; ?></div>
+                        <div class="alert alert-info" id="conditionLoading_<?php echo $i; ?>"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading_condition; ?></div>
                         <div class="form-group" id="conditionContainer_<?php echo $i; ?>" style="display:none;">
                           <label class="col-sm-2 control-label"><?php echo $entry_condition; ?></label>
                           <div class="col-sm-10">
@@ -315,7 +315,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="alert alert-info" id="durationLoading_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_duration; ?></div>
+                        <div class="alert alert-info" id="durationLoading_<?php echo $i; ?>"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading_duration; ?></div>
                         <div class="form-group" id="durationContainer_<?php echo $i; ?>" style="display:none;">
                           <label class="col-sm-2 control-label"><?php echo $text_duration; ?></label>
                           <div class="col-sm-10">
@@ -332,7 +332,7 @@
               <?php $i++;?>
             <?php } ?>
           <?php } else { ?>
-            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?></div>
+            <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_no_results; ?></div>
           <?php } ?>
         </form>
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-loading" data-backdrop="static" data-keyboard="false">
@@ -349,7 +349,7 @@
         </div>
       <?php } else { ?>
         <?php foreach($error_fail as $fail) { ?>
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $fail; ?></div>
+          <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $fail; ?></div>
         <?php } ?>
       <?php } ?>
     </div>
@@ -798,7 +798,7 @@
     $('#catalog-results-'+id).empty().hide();
 
       if (qry == '') {
-        $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="fa fa-exclamation-circle"></i> <?php echo $text_search_text; ?></div>');
+        $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="mi mi-exclamation-circle">error</i> <?php echo $text_search_text; ?></div>');
       } else {
         $.ajax({
             url: 'index.php?route=extension/openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
@@ -807,7 +807,7 @@
             data: { category_id: cat, page: 1, search: qry },
             beforeSend: function() {
               $('#catalog_search_'+id+'_error').remove();
-              $('#button-catalog-search-'+id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+              $('#button-catalog-search-'+id).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
             },
             success: function(data) {
                     if (data.error == false) {
@@ -825,7 +825,7 @@
                           if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
                             html += '<img class="img-thumbnail" src="'+val.stockPhotoURL.thumbnail.value+'"/>';
                           } else {
-                            html += '<span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>';
+                            html += '<span class="img-thumbnail"><i class="mi mi-camera mi-5x">photo_camera</i></span>';
                           }
                           html += '</div>';
                           html += '<div class="col-sm-9">';
@@ -837,14 +837,14 @@
                           $('#catalog-results-'+id).append(html).show();
                         });
                       } else {
-                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> <?php echo $text_catalog_no_products; ?></div>').show();
+                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="mi mi-warning">warning</i> <?php echo $text_catalog_no_products; ?></div>').show();
                       }
                     } else {
-                      $('#catalog-results-'+id).append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+data.error_message+'</div>').show();
+                      $('#catalog-results-'+id).append('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> '+data.error_message+'</div>').show();
                     }
             },
             complete: function() {
-              $('#button-catalog-search-'+id).empty().html('<i class="fa fa-lg fa-search"></i> <?php echo $text_search; ?>').removeAttr('disabled');
+              $('#button-catalog-search-'+id).empty().html('<i class="mi mi-lg mi-search">search</i> <?php echo $text_search; ?>').removeAttr('disabled');
             },
             failure: function() {
                 $('#catalog-results-'+id).append('<?php echo $text_search_failed; ?>');
@@ -902,7 +902,7 @@
           id = $(this).val();
           name = $('#title_'+$(this).val()).val();
 
-          $('#product_messages_'+id).html('<div class="alert alert-info"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></div>').show();
+          $('#product_messages_'+id).html('<div class="alert alert-info"><i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading; ?></div>').show();
           $('.product_content_'+id).hide();
           $('#product_title_'+id).text(name).show();
 
@@ -926,7 +926,7 @@
 
                   if (data.errors) {
                     $.each(data.errors, function(k,v) {
-                      html += '<div class="alert alert-warning"><i class="fa fa-warning"></i> '+v+'</div>';
+                      html += '<div class="alert alert-warning"><i class="mi mi-warning">warning</i> '+v+'</div>';
                     });
                   }
 
@@ -937,10 +937,10 @@
                     currency = val.Cur;
                   });
 
-                  html += '<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_total_fee; ?> '+currency+' '+parseFloat(fee_total).toFixed(2)+'</div>';
+                  html += '<div class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $text_total_fee; ?> '+currency+' '+parseFloat(fee_total).toFixed(2)+'</div>';
                 } else {
                     $.each(data.errors, function(k,v) {
-                        html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
+                        html += '<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> '+v+'</div>';
                     });
                 }
                 $('#product_messages_'+data.i).html(html);
@@ -1009,16 +1009,16 @@
                   if (data.ack != 'Failure') {
                     if (data.errors) {
                       $.each(data.errors, function(k,v) {
-                        html += '<div class="alert alert-warning"><i class="fa fa-warning"></i> '+v+'</div>';
+                        html += '<div class="alert alert-warning"><i class="mi mi-warning">warning</i> '+v+'</div>';
                       });
                     }
 
                     $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $button_view; ?></a>');
 
-                    html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_listed; ?>'+data.itemid+'</div>';
+                    html += '<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $text_listed; ?>'+data.itemid+'</div>';
                   } else {
                     $.each(data.errors, function(k,v) {
-                      html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
+                      html += '<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> '+v+'</div>';
                     });
                   }
                   $('#product_messages_'+data.i).html(html).show();

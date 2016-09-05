@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
@@ -278,10 +278,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=affiliate/register/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('.mi-spin').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

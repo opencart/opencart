@@ -6,17 +6,17 @@
     <?php } ?>
   </ul>
   <?php if ($attention) { ?>
-  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $attention; ?>
+  <div class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $attention; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -75,8 +75,8 @@
                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                     <input type="text" name="quantity[<?php echo $product['cart_id']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>
+                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="mi mi-refresh">refresh</i></button>
+                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="mi mi-times-circle">cancel</i></button>
                     </span></div></td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>
@@ -90,7 +90,7 @@
                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                     <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="voucher.remove('<?php echo $voucher['key']; ?>');"><i class="fa fa-times-circle"></i></button>
+                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="voucher.remove('<?php echo $voucher['key']; ?>');"><i class="mi mi-times-circle">cancel</i></button>
                     </span></div></td>
                 <td class="text-right"><?php echo $voucher['amount']; ?></td>
                 <td class="text-right"><?php echo $voucher['amount']; ?></td>

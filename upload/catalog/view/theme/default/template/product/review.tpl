@@ -9,9 +9,9 @@
     <td colspan="2"><p><?php echo $review['text']; ?></p>
       <?php for ($i = 1; $i <= 5; $i++) { ?>
       <?php if ($review['rating'] < $i) { ?>
-      <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+      <span class="mi mi-stack"><i class="mi mi-star-o mi-stack-2x">star_border</i></span>
       <?php } else { ?>
-      <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+      <span class="mi mi-stack"><i class="mi mi-star mi-stack-2x">star</i><i class="mi mi-star-o mi-stack-2x">star_border</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>

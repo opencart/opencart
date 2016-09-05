@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="settings-form" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="settings-form" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -58,11 +58,11 @@
             <label class="col-sm-2 control-label"><?php echo $text_api_status; ?></label>
             <div class="col-sm-10">
               <?php if (!$API_status) { ?>
-              <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> <?php echo $text_api_error; ?></span></h4>
+              <h4><span class="label label-danger"><i class="mi mi-minus-square">indeterminate_check_box</i> <?php echo $text_api_error; ?></span></h4>
               <?php } else if (!$API_auth) { ?>
-              <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> <?php echo $text_api_auth_error; ?></span></h4>
+              <h4><span class="label label-danger"><i class="mi mi-minus-square">indeterminate_check_box</i> <?php echo $text_api_auth_error; ?></span></h4>
               <?php } else { ?>
-              <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?></span></h4>
+              <h4><span class="label label-success"><i class="mi mi-check-square-o">check_box</i> <?php echo $text_api_ok; ?></span></h4>
               <?php } ?>
             </div>
           </div>

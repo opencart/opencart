@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
         <h1><?php echo $heading_title; ?></h1>
         <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -49,7 +49,7 @@
               <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
             </td>
             <td class="text-center">
-              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="mi mi-plus-circle">add_circle</i></a>
             </td>
           </tr>
           </tbody>
@@ -105,7 +105,7 @@ function loadLinks() {
         }
 
         rows += '<td class="text-left">' + json[i]['amazonus_sku'] + '</td>';
-        rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazonus_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
+        rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazonus_sku'] + '\');"><i class="mi mi-times-circle">cancel</i></a></td>';
         rows += '</tr>';
       }
       $('#linked-items').html(rows);
@@ -124,7 +124,7 @@ $('#button-load').bind('click', function(e) {
     type: 'get',
     dataType: 'json',
     beforeSend: function () {
-      $('#button-load').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('#button-load').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
     },
     complete: function () {
       $('#button-load').empty().html('<?php echo $button_load; ?>').removeAttr('disabled');
@@ -161,12 +161,12 @@ $('#button-load').bind('click', function(e) {
         rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['sku'] + '"  type="text">';
         rows += '</div>';
         rows += '<div class="col-sm-4 form-group">';
-        rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
+        rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="mi mi-plus-circle">add_circle</i></a>';
         rows += '</div>';
         rows += '</div>';
         rows += '</div>';
         rows += '</td>';
-        rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
+        rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="mi mi-plus-circle">add_circle</i></a></td>';
         rows += '</tr>';
       }
 
@@ -186,10 +186,10 @@ function addLink(button, product_id, amazon_sku, variation) {
     async: 'false',
     data: 'product_id=' + encodeURIComponent(product_id) + '&amazon_sku=' + encodeURIComponent(amazon_sku) + '&var=' + encodeURIComponent(variation),
     beforeSend: function () {
-      $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $(button).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
     },
     complete: function () {
-      $(button).empty().html('<i class="fa fa-plus-circle"></i>').removeAttr('disabled');
+      $(button).empty().html('<i class="mi mi-plus-circle">add_circle</i>').removeAttr('disabled');
     },
     success: function (json) {
       loadLinks();
@@ -207,7 +207,7 @@ function removeLink(button, amazon_sku) {
     dataType: 'json',
     data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
     beforeSend: function () {
-      $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $(button).empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
     },
     success: function (json) {
       //alert(json);
@@ -227,7 +227,7 @@ function addNewSkuField(product_id, variation) {
   html += '<input class="form-control amazon_sku_' + product_id + '_' + variation + '"  type="text">';
   html += '</div>';
   html += '<div class="col-sm-4 form-group">';
-  html += '<a class="btn btn-danger remove_sku_icon_' + product_id + '_' + variation + '" onclick="removeSkuField(this, \'' + product_id + '\', \'' + variation + '\')"><i class="fa fa-minus-circle"></i></a>';
+  html += '<a class="btn btn-danger remove_sku_icon_' + product_id + '_' + variation + '" onclick="removeSkuField(this, \'' + product_id + '\', \'' + variation + '\')"><i class="mi mi-minus-circle">remove circle</i></a>';
   html += '</div>';
   html += '</div>';
   html += '</div>';

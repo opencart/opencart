@@ -1,5 +1,5 @@
  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
   <?php } ?>
 <form class="form-horizontal">
   <fieldset id="payment">

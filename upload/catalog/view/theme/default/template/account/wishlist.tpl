@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -51,8 +51,8 @@
                   <?php } ?>
                 </div>
                 <?php } ?></td>
-              <td class="text-right"><button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
+              <td class="text-right"><button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="mi mi-shopping-cart">shopping_cart</i></button>
+                <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-times">highlight_off</i></a></td>
             </tr>
             <?php } ?>
           </tbody>

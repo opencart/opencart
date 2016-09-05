@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-puzzle-piece">extension</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
 
@@ -45,7 +45,7 @@
                 <li><a href="other"><?php echo $text_other; ?></a></li>
               </ul>
               
-              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
+              <button type="button" id="button-filter" class="btn btn-primary"><i class="mi mi-filter">filter_list</i></button>
 
             </div>
           </div>

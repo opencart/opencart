@@ -12,16 +12,16 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+      <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
     <?php } ?>
   </div>
   <div class="container-fluid">
     <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+      <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
     </div>
     <div class="panel-body">
       <div class="well">
@@ -36,7 +36,7 @@
                       <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a>
+                  <a data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_add; ?></a>
                 </div>
               </div>
             </form>
@@ -59,8 +59,8 @@
           <td class="text-left"><?php echo $types[$profile['type']]['name']; ?></td>
           <td class="text-left"><?php echo $profile['description']; ?></td>
           <td class="text-right">
-            <a href="<?php echo $profile['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
-            <a href="<?php echo $profile['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
+            <a href="<?php echo $profile['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a>&nbsp;
+            <a href="<?php echo $profile['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger profile-delete"><i class="mi mi-minus-circle">remove circle</i></a>
           </td>
         </tr>
         <?php } ?><?php } else { ?>

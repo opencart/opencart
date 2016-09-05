@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $reset; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn btn-danger"><i class="fa fa-refresh"></i></a></div>
+      <div class="pull-right"><a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $reset; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn btn-danger"><i class="mi mi-refresh">refresh</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -13,18 +13,18 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-bar-chart">insert_chart</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">

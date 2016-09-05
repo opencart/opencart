@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a> <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+          <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></a> <a class="btn btn-primary" id="button-search"><i class="mi mi-search">search</i> <?php echo $button_search; ?></a> </div>
         </div>
       </div>
       <form id="bulk-list-form" class="form-horizontal">
@@ -119,14 +119,14 @@
               <div class="input-group date">
                 <input type="text" class="form-control" id="input-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-primary"><i class="mi mi-calendar">date_range</i></button>
                 </span> </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <div class="pull-right"> <a class="btn btn-primary" id="button-list"><i class="fa fa-plus-circle"></i> <?php echo $button_list; ?></a> </div>
+            <div class="pull-right"> <a class="btn btn-primary" id="button-list"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_list; ?></a> </div>
           </div>
         </div>
       </div>

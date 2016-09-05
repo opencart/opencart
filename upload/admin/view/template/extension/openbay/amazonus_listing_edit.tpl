@@ -4,12 +4,12 @@
     <div class="container-fluid">
       <div class="pull-right">
         <?php if (isset($url_create_new)) { ?>
-        <a href="<?php echo $url_create_new; ?>" data-toggle="tooltip" title="<?php echo $button_create_new_listing; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+        <a href="<?php echo $url_create_new; ?>" data-toggle="tooltip" title="<?php echo $button_create_new_listing; ?>" class="btn btn-success"><i class="mi mi-plus-circle">add_circle</i></a>
         <?php } ?>
         <?php if (isset($url_delete_links)) { ?>
-        <a href="<?php echo $url_delete_links; ?>" data-toggle="tooltip" title="<?php echo $button_remove_links; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
+        <a href="<?php echo $url_delete_links; ?>" data-toggle="tooltip" title="<?php echo $button_remove_links; ?>" class="btn btn-danger"><i class="mi mi-times-circle">cancel</i></a>
         <?php } ?>
-        <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+        <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $text_edit_heading; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>

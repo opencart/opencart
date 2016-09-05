@@ -114,7 +114,7 @@
 
 				// if error
 				if (json['error']) {
-					$('#payment').before('<div id="sagepay_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> ' + json['error'] + '</div>');
+					$('#payment').before('<div id="sagepay_message_error" class="alert alert-warning"><i class="mi mi-info-circle">info</i> ' + json['error'] + '</div>');
 				}
 			}
 		});

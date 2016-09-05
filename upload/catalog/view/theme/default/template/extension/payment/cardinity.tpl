@@ -1,5 +1,5 @@
 <div style="display: none;" class="payment-warning alert alert-danger">
-  <i class="fa fa-exclamation-circle"></i>
+  <i class="mi mi-exclamation-circle">error</i>
   <span class="message"></span>
 </div>
 <form class="form-horizontal" id="payment">

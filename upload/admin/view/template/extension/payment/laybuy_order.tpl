@@ -290,7 +290,7 @@ $('#cancel-plan').on('click', function(e) {
 		cache: false,
 		beforeSend: function() {
 			$('#cancel-plan, #revise-plan').attr('disabled', true);
-			$('#cancel-plan').after('<span class="laybuy-loading fa fa-spinner" style="margin-left:2px"></span>');
+			$('#cancel-plan').after('<span class="laybuy-loading fa mi-spinner" style="margin-left:2px"></span>');
 		},
 		complete: function() {
 			$('#cancel-plan, #revise-plan').attr('disabled', false);
@@ -344,7 +344,7 @@ $('#revise-plan').on('click', function(e) {
 		cache: false,
 		beforeSend: function() {
 			$('#cancel-plan, #revise-plan').attr('disabled', true);
-			$('#revise-plan').after('<div class="laybuy-loading fa fa-spinner" style="margin-left:2px"></div>');
+			$('#revise-plan').after('<div class="laybuy-loading fa mi-spinner" style="margin-left:2px"></div>');
 		},
 		complete: function() {
 			$('#cancel-plan, #revise-plan').attr('disabled', false);

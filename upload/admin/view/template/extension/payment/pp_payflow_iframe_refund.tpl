@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="mi mi-times">highlight_off</i> <?php echo $button_cancel; ?></a></div>
       <h1><?php echo $heading_refund; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <table class="table table-striped table-bordered">
@@ -46,7 +46,7 @@ function refund() {
     url: 'index.php?route=extension/payment/pp_payflow_iframe/dorefund&token=<?php echo $token; ?>',
 
     beforeSend: function () {
-      $('#button-refund').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
+      $('#button-refund').after('<span class="btn btn-primary loading"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>');
       $('#button-refund').hide();
     },
 

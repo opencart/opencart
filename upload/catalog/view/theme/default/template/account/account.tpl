@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> <?php echo $success; ?></div>
   <?php } ?>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>

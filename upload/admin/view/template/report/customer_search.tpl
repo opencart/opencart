@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-bar-chart">insert_chart</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -24,7 +24,7 @@
                 <div class="input-group date">
                   <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
               <div class="form-group">
@@ -38,7 +38,7 @@
                 <div class="input-group date">
                   <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                   </span></div>
               </div>
               <div class="form-group">
@@ -51,7 +51,7 @@
                 <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
                 <input type="text" name="filter_keyword" value="<?php echo $filter_keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>

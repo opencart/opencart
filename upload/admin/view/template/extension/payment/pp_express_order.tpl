@@ -70,11 +70,11 @@
 				$('.alert').remove();
 
 				if (json['error']) {
-					$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#paypal-capture').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#paypal-capture').prepend('<div class="alert alert-success"><i class="mi mi-exclamation-circle">error</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('#paypal-captured').text(json['captured']);
 					$('#paypal-capture-amount').val(json['remaining']);
@@ -108,7 +108,7 @@
 					$('.alert').remove();
 
 					if (json['error']) {
-						$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#paypal-capture').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 
 					if (json['success']) {
@@ -141,7 +141,7 @@
 				$('.alert').remove();
 
 				if (json['error']) {
-					$('#tab-pp-express').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-pp-express').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {

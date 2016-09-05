@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -18,17 +18,17 @@
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
             </span> </div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
             </span> </div>
         </div>
-        <div class="col-sm-2 text-right"> <a id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a> </div>
+        <div class="col-sm-2 text-right"> <a id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="mi mi-filter">filter_list</i></a> </div>
       </div>
     </div>
     <table class="table table-bordered table-hover">

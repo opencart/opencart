@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i> <?php echo $button_cancel; ?></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
@@ -189,7 +189,7 @@
               <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
                 <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
-                  <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                  <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>
                   <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                 </div>
               </div>
@@ -201,7 +201,7 @@
                   <div class="input-group date">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -213,7 +213,7 @@
                   <div class="input-group time">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -225,7 +225,7 @@
                   <div class="input-group datetime">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -233,7 +233,7 @@
               <?php } ?>
               <?php } ?>
               <div class="text-right">
-                <button type="button" id="button-customer" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
+                <button type="button" id="button-customer" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-arrow-right">chevron_right</i> <?php echo $button_continue; ?></button>
               </div>
             </div>
             <div class="tab-pane" id="tab-cart">
@@ -331,7 +331,7 @@
                     <div id="option"></div>
                   </fieldset>
                   <div class="text-right">
-                    <button type="button" id="button-product-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_product_add; ?></button>
+                    <button type="button" id="button-product-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_product_add; ?></button>
                   </div>
                 </div>
                 <div class="tab-pane" id="tab-voucher">
@@ -385,17 +385,17 @@
                     </div>
                   </fieldset>
                   <div class="text-right">
-                    <button type="button" id="button-voucher-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_voucher_add; ?></button>
+                    <button type="button" id="button-voucher-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_voucher_add; ?></button>
                   </div>
                 </div>
               </div>
               <br />
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                  <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="mi mi-arrow-left">chevron_left</i> <?php echo $button_back; ?></button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
+                  <button type="button" id="button-cart" class="btn btn-primary"><i class="mi mi-arrow-right">chevron_right</i> <?php echo $button_continue; ?></button>
                 </div>
               </div>
             </div>
@@ -558,7 +558,7 @@
               <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
                 <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
-                  <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                  <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>
                   <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                 </div>
               </div>
@@ -570,7 +570,7 @@
                   <div class="input-group date">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -582,7 +582,7 @@
                   <div class="input-group time">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -594,7 +594,7 @@
                   <div class="input-group datetime">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -603,10 +603,10 @@
               <?php } ?>
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-cart\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                  <button type="button" onclick="$('a[href=\'#tab-cart\']').tab('show');" class="btn btn-default"><i class="mi mi-arrow-left">chevron_left</i> <?php echo $button_back; ?></button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
+                  <button type="button" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-arrow-right">chevron_right</i> <?php echo $button_continue; ?></button>
                 </div>
               </div>
             </div>
@@ -769,7 +769,7 @@
               <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>" data-sort="<?php echo $custom_field['sort_order'] + 3; ?>">
                 <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
-                  <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                  <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>
                   <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                 </div>
               </div>
@@ -781,7 +781,7 @@
                   <div class="input-group date">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -793,7 +793,7 @@
                   <div class="input-group time">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -805,7 +805,7 @@
                   <div class="input-group datetime">
                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button>
                     </span></div>
                 </div>
               </div>
@@ -814,10 +814,10 @@
               <?php } ?>
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                  <button type="button" onclick="$('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="mi mi-arrow-left">chevron_left</i> <?php echo $button_back; ?></button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" id="button-shipping-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
+                  <button type="button" id="button-shipping-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-arrow-right">chevron_right</i> <?php echo $button_continue; ?></button>
                 </div>
               </div>
             </div>
@@ -933,11 +933,11 @@
               </fieldset>
               <div class="row">
                 <div class="col-sm-6 text-left">
-                  <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                  <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="mi mi-arrow-left">chevron_left</i> <?php echo $button_back; ?></button>
                 </div>
                 <div class="col-sm-6 text-right">
-                  <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
-                  <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
+                  <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-warning"><i class="mi mi-refresh">refresh</i></button>
+                  <button type="button" id="button-save" class="btn btn-primary"><i class="mi mi-check-circle">check_circle</i> <?php echo $button_save; ?></button>
                 </div>
               </div>
             </div>
@@ -968,11 +968,11 @@ $(document).delegate('#button-ip-add', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -995,11 +995,11 @@ $.ajax({
 
         if (json['error']) {
     		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     		}
 
             if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="mi mi-plus">add</i> <?php echo $button_ip_add; ?></button></div>');
     		}
         }
 
@@ -1023,17 +1023,17 @@ $('select[name=\'currency\']').on('change', function() {
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
-			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'currency\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('.fa-spin').remove();
+			$('.mi-spin').remove();
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'currency\']').closest('.form-group').addClass('has-error');
@@ -1057,16 +1057,16 @@ $('#button-refresh').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['stock'] + '</div>');
 				}
 
 				if (json['error']['minimum']) {
 					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					}
 				}
 			}
@@ -1105,10 +1105,10 @@ $('#button-refresh').on('click', function() {
 
 					html += '</td>';
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><span class="input-group-btn"><button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button></span></div></td>';
+					html += '  <td class="text-right"><div class="input-group btn-block" style="max-width: 200px;"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><span class="input-group-btn"><button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="mi mi-refresh">refresh</i></button></span></div></td>';
                     html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>';
 					html += '</tr>';
 
 					if (product['shipping'] != 0) {
@@ -1146,7 +1146,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>';
 					html += '</tr>';
 				}
 			}
@@ -1355,7 +1355,7 @@ $('#button-customer').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1389,7 +1389,7 @@ $('#button-customer').on('click', function() {
                         $('.form-group').removeClass('has-error');
 
                         if (json['error'] && json['error']['warning']) {
-                            $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         }
             		},
                     error: function(xhr, ajaxOptions, thrownError) {
@@ -1415,7 +1415,7 @@ $('#button-customer').on('click', function() {
                             $('.form-group').removeClass('has-error');
 
                             if (json['error'] && json['error']['warning']) {
-                                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                             }
                 		},
                         error: function(xhr, ajaxOptions, thrownError) {
@@ -1582,7 +1582,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="mi mi-upload">file_upload</i> <?php echo $button_upload; ?></button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -1591,21 +1591,21 @@ $('#tab-product input[name=\'product\']').autocomplete({
 				if (option['type'] == 'date') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button></span></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button></span></div></div>';
 					html += '</div>';
 				}
 
 				if (option['type'] == 'time') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="mi mi-calendar">date_range</i></button></span></div></div>';
 					html += '</div>';
 				}
 			}
@@ -1651,7 +1651,7 @@ $('#button-product-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['error']['option']) {
@@ -1667,7 +1667,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				if (json['error']['store']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['store'] + '</div>');
 				}
 
 				// Highlight any found errors
@@ -1703,7 +1703,7 @@ $('#button-voucher-add').on('click', function() {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1756,7 +1756,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 
 			// Check for errors
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1789,11 +1789,11 @@ $('#cart').delegate('.btn-primary', 'click', function() {
             $('.form-group').removeClass('has-error');
 
             if (json['error'] && json['error']['warning']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1814,10 +1814,10 @@ $('select[name=\'payment_address\']').on('change', function() {
 		url: 'index.php?route=customer/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'payment_address\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('#tab-payment .fa-spin').remove();
+			$('#tab-payment .mi-spin').remove();
 		},
 		success: function(json) {
 			// Reset all fields
@@ -1866,10 +1866,10 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-payment select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#tab-payment select[name=\'country_id\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('#tab-payment .fa-spin').remove();
+			$('#tab-payment .mi-spin').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -1925,7 +1925,7 @@ $('#button-payment-address').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -1954,7 +1954,7 @@ $('#button-payment-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							html = '<option value=""><?php echo $text_select; ?></option>';
 
@@ -1999,10 +1999,10 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		url: 'index.php?route=customer/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'shipping_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('select[name=\'shipping_address\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('#tab-shipping .fa-spin').remove();
+			$('#tab-shipping .mi-spin').remove();
 		},
 		success: function(json) {
 			// Reset all fields
@@ -2051,10 +2051,10 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-shipping select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#tab-shipping select[name=\'country_id\']').after(' <i class="mi mi-circle-o-notch mi-spin">refresh</i>');
 		},
 		complete: function() {
-			$('#tab-shipping .fa-spin').remove();
+			$('#tab-shipping .mi-spin').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -2109,7 +2109,7 @@ $('#button-shipping-address').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -2137,7 +2137,7 @@ $('#button-shipping-address').on('click', function() {
 					},
 					success: function(json) {
 						if (json['error']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							// Shipping Methods
 							html = '<option value=""><?php echo $text_select; ?></option>';
@@ -2201,14 +2201,14 @@ $('#button-shipping-method').on('click', function() {
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'shipping_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2239,14 +2239,14 @@ $('#button-payment-method').on('click', function() {
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('select[name=\'payment_method\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2277,14 +2277,14 @@ $('#button-coupon').on('click', function() {
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'coupon\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2315,14 +2315,14 @@ $('#button-voucher').on('click', function() {
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'voucher\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2353,14 +2353,14 @@ $('#button-reward').on('click', function() {
 			$('.form-group').removeClass('has-error');
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Highlight any found errors
 				$('input[name=\'reward\']').closest('.form-group').addClass('has-error');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2423,11 +2423,11 @@ $('#button-save').on('click', function() {
 			$('.alert, .text-danger').remove();
 
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2509,7 +2509,7 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });
-//--></script> 
+//--></script>
   <script type="text/javascript">
 // Sort the custom fields
 $('#tab-customer .form-group[data-sort]').detach().each(function() {
@@ -2555,4 +2555,4 @@ $('#tab-shipping .form-group[data-sort]').detach().each(function() {
 	}
 });
 </script></div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

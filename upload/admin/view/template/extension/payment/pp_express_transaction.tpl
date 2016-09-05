@@ -22,12 +22,12 @@
         <td class="text-left"><?php echo $transaction['date_added']; ?></td>
         <td class="text-left">
           <?php if ($transaction['transaction_id']) { ?>
-            <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+            <a href="<?php echo $transaction['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="mi mi-eye">visibility</i></a>
             <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed' || $transaction['payment_status'] == 'Partially-Refunded')) { ?>
-              <a href="<?php echo $transaction['refund']; ?>" data-toggle="tooltip" title="<?php echo $button_refund; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>&nbsp;
+              <a href="<?php echo $transaction['refund']; ?>" data-toggle="tooltip" title="<?php echo $button_refund; ?>" class="btn btn-danger"><i class="mi mi-reply">reply</i></a>&nbsp;
             <?php } ?>
           <?php } else { ?>
-            <button type="button" value="<?php echo $transaction['resend']; ?>" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></button>
+            <button type="button" value="<?php echo $transaction['resend']; ?>" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info"><i class="mi mi-refresh">refresh</i></button>
           <?php } ?>
         </td>
       </tr>

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-info"><i class="fa fa-refresh"></i></a></div>
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-info"><i class="mi mi-refresh">refresh</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-layout">
@@ -46,11 +46,11 @@
                     </div></td>
                   <td class="text-right">
                     <?php if (!$list['installed']) { ?>
-                    <a href="<?php echo $list['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-magic"></i></a>
-                    <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-minus-circle"></i></button>
+                    <a href="<?php echo $list['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="mi mi-magic">build</i></a>
+                    <button type="button" class="btn btn-primary" disabled="disabled"><i class="mi mi-minus-circle">remove circle</i></button>
                     <?php } else { ?>
-                    <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-magic"></i></button>
-                    <a href="<?php echo $list['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                    <button type="button" class="btn btn-primary" disabled="disabled"><i class="mi mi-magic">build</i></button>
+                    <a href="<?php echo $list['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></a>
                     <?php } ?>
                     </td>
                 </tr>

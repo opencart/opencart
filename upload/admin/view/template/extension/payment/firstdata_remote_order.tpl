@@ -20,7 +20,7 @@
       <?php } else { ?>
       <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($firstdata_order['void_status'] == 0) { ?>
-      <a class="btn btn-primary" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="btn btn-primary" id="button-capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -31,7 +31,7 @@
       <?php } else { ?>
       <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($firstdata_order['capture_status'] == 0 ) { ?>
-      <a class="btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -40,7 +40,7 @@
     <td id="refund_status"><?php if ($firstdata_order['refund_status'] == 1) { ?>
       <span class="refund_text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
-      <span class="refund_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="btn btn-primary" id="button-refund" <?php if ($firstdata_order['capture_status'] == 0 || $firstdata_order['void_status'] == 1) { echo 'style="display:none;"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <span class="refund_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="btn btn-primary" id="button-refund" <?php if ($firstdata_order['capture_status'] == 0 || $firstdata_order['void_status'] == 1) { echo 'style="display:none;"'; } ?>><?php echo $button_refund; ?></a> <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>
       <?php } ?></td>
   </tr>
   <tr>
@@ -94,7 +94,7 @@ $('#button-void').bind('click', function () {
 					$('#button-capture').hide();
 					
 					if (data.msg != '') {
-						$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data['msg']).fadeIn();
+						$('#firstdata_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> ' + data['msg']).fadeIn();
 					}
 				}
 			
@@ -143,7 +143,7 @@ $('#button-capture').bind('click', function () {
 		}
 		
 		if (data.msg != '') {
-		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+		$('#firstdata_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.msg).fadeIn();
 		}
 		}
 		if (data.error == true) {
@@ -188,7 +188,7 @@ $('#button-refund').bind('click', function () {
 		}
 		
 		if (data.msg != '') {
-		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+		$('#firstdata_transaction_msg').empty().html('<i class="mi mi-check-circle">check_circle</i> '+data.msg).fadeIn();
 		}
 		}
 		if (data.error == true) {

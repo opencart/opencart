@@ -63,7 +63,7 @@ $('#button-confirm').bind('click', function() {
     beforeSend: function() {
         $('#button-confirm').attr('disabled', true);
         $('form.form-horizontal .alert').remove();
-        $('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+        $('#payment').before('<div class="alert alert-info"><i class="mi mi-info-circle">info</i> <?php echo $text_wait; ?></div>');
     },
 
     complete: function() {
@@ -80,7 +80,7 @@ $('#button-confirm').bind('click', function() {
                 $('#threed-form').submit();
             }
         } else {
-            $('#payment').before('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> ' + json['message'] + '</div>');
+            $('#payment').before('<div class="alert alert-danger"><i class="mi mi-info-circle">info</i> ' + json['message'] + '</div>');
         }
     }
   });

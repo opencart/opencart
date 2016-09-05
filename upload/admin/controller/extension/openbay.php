@@ -52,7 +52,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->load->model('setting/setting');
 
 			$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
-			
+
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
 			$class = 'ControllerExtensionOpenbay' . str_replace('_', '', $this->request->get['extension']);
@@ -1814,7 +1814,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function eventDeleteProduct($route, $data) {
 		$this->openbay->log('eventDeleteProduct fired: ' . $route);
-		
+
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -1832,7 +1832,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function eventEditProduct($route, $data) {
 		$this->openbay->log('eventEditProduct fired: ' . $route);
-		
+
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($market == 'amazon') {
 				$status = $this->config->get('openbay_amazon_status');
@@ -2046,7 +2046,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if ($openbay_menu) {
 			$data['menus'][] = array(
 				'id'       => 'menu-openbay',
-				'icon'	   => 'fa-cubes',
+				'icon'	   => 'mi-cubes',
 				'name'	   => $this->language->get('text_openbay_extension'),
 				'href'     => '',
 				'children' => $openbay_menu

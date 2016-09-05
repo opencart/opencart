@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -13,13 +13,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($listing_errors) { ?>
     <div class="alert alert-danger">
       <ul>
         <?php foreach ($listing_errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error; ?></li>
+        <li><i class="mi mi-exclamation-circle">error</i> <?php echo $listing_error; ?></li>
         <?php } ?>
       </ul>
     </div>
@@ -34,11 +34,11 @@
             </div>
           </div>
           <div class="col-md-1">
-            <div class="form-group"> <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="fa fa-search"></i></a> </div>
+            <div class="form-group"> <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="mi mi-search">search</i></a> </div>
           </div>
         </div>
       </div>
-      <div class="well"> <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a> </div>
+      <div class="well"> <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i> <?php echo $button_new; ?></a> </div>
     </div>
     <div class="panel-body" id="search-result-container" style="display:none;">
       <table class="table table-bordered table-hover">
@@ -131,14 +131,14 @@
                     <div class="input-group date">
                       <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_from; ?>" name="sale_from">
                       <span class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-primary"><i class="mi mi-calendar">date_range</i></button>
                       </span> </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group date">
                       <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_to; ?>" name="sale_to">
                       <span class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-primary"><i class="mi mi-calendar">date_range</i></button>
                       </span> </div>
                   </div>
                 </div>
@@ -148,7 +148,7 @@
                     <div class="input-group date">
                       <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                       <span class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-primary"><i class="mi mi-calendar">date_range</i></button>
                       </span> </div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@
                     <div class="input-group date">
                       <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_restock_date; ?>" name="restock_date">
                       <span class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                      <button type="button" class="btn btn-primary"><i class="mi mi-calendar">date_range</i></button>
                       </span> </div>
                   </div>
                 </div>
@@ -187,17 +187,17 @@
       dataType: 'json',
       data: {search_string : encodeURIComponent($('#search-string').val()), marketplace: $('input[name="marketplace"]:checked').val()},
       beforeSend: function(){
-        $('#search-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#search-submit').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         $('#search-error').hide();
         $('#search-result-container').hide();
         $('#chosen-product').hide();
       },
       complete: function() {
-        $('#search-submit').empty().html('<i class="fa fa-search"></i> <?php echo $button_search; ?>').removeAttr('disabled').show();
+        $('#search-submit').empty().html('<i class="mi mi-search">search</i> <?php echo $button_search; ?>').removeAttr('disabled').show();
       },
       success: function(data) {
         if (data.error){
-          $('#search-error').empty().html('<i class="fa fa-exclamation-circle"></i> ' + data.error).show();
+          $('#search-error').empty().html('<i class="mi mi-exclamation-circle">error</i> ' + data.error).show();
         } else {
           var html = '';
           var count = 0;
@@ -212,8 +212,8 @@
             html += '  <td class="text-left">' + value.name + '</td>';
             html += '  <td class="text-center">' + value.price + '</td>';
             html += '  <td class="text-center">';
-            html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon; ?>"><i class="fa fa-eye"></i></a>';
-            html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list; ?>"><i class="fa fa-check-square"></i></a>';
+            html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon; ?>"><i class="mi mi-eye">visibility</i></a>';
+            html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list; ?>"><i class="mi mi-check-square">check_box</i></a>';
             html += '  </td>';
             html += '</tr>';
 
@@ -224,7 +224,7 @@
             $('#search-result-container tbody').html(html);
             $('#search-result-container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
           } else {
-            $('#search-error').empty().html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').show();
+            $('#search-error').empty().html('<i class="mi mi-exclamation-circle">error</i> <?php echo $text_no_results; ?>').show();
           }
         }
 
@@ -248,7 +248,7 @@
       dataType: 'json',
       data: $('form input[name="asin"], form select[name="condition"], form input[name="marketplace"]'),
       beforeSend: function(){
-        $('#button-amazon-price').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-amazon-price').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         $('#best-price-info').remove();
       },
       complete: function() {

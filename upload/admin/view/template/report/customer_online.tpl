@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-bar-chart">insert_chart</i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <div class="well">
@@ -29,7 +29,7 @@
                 <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
                 <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="mi mi-filter">filter_list</i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -57,9 +57,9 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $customer['date_added']; ?></td>
                 <td class="text-right"><?php if ($customer['customer_id']) { ?>
-                  <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                  <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="mi mi-pencil">mode_edit</i></a>
                   <?php } else { ?>
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" disabled="disabled"><i class="mi mi-pencil">mode_edit</i></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>

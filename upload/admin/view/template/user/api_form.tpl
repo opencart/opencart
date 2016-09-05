@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-api" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-api" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="mi mi-save">save</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,13 +15,13 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-api" class="form-horizontal">
@@ -46,7 +46,7 @@
                 <div class="col-sm-10">
                   <textarea name="key" placeholder="<?php echo $entry_key; ?>" rows="5" id="input-key" class="form-control"><?php echo $key; ?></textarea>
                   <br />
-                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_generate; ?></button>
+                  <button type="button" id="button-generate" class="btn btn-primary"><i class="mi mi-refresh">refresh</i> <?php echo $button_generate; ?></button>
                   <?php if ($error_key) { ?>
                   <div class="text-danger"><?php echo $error_key; ?></div>
                   <?php } ?>
@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-ip">
-              <div class="alert alert-info"><i class="fa fa-question-circle"></i> <?php echo $text_ip; ?>
+              <div class="alert alert-info"><i class="mi mi-question-circle">help_outline</i> <?php echo $text_ip; ?>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
               </div>
               <div class="table-responsive">
@@ -84,7 +84,7 @@
                     <?php foreach ($api_ips as $api_ip) { ?>
                     <tr id="ip-row<?php echo $ip_row; ?>">
                       <td class="text-left"><input type="text" name="api_ip[]" value="<?php echo $api_ip['ip']; ?>" placeholder="<?php echo $entry_ip; ?>" class="form-control" /></td>
-                      <td class="text-left"><button type="button" onclick="$('#ip-row<?php echo $ip_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="$('#ip-row<?php echo $ip_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
                     </tr>
                     <?php $ip_row++; ?>
                     <?php } ?>
@@ -92,7 +92,7 @@
                   <tfoot>
                     <tr>
                       <td></td>
-                      <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="<?php echo $button_ip_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="<?php echo $button_ip_add; ?>" class="btn btn-primary"><i class="mi mi-plus-circle">add_circle</i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -117,7 +117,7 @@
                     <td class="text-left"><?php echo $api_session['ip']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_added']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
-                    <td class="text-right"><button type="button" value="<?php echo $api_session['api_session_id']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" value="<?php echo $api_session['api_session_id']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>
                   </tr>
                   <?php } ?>
                   <?php } else { ?>
@@ -152,7 +152,7 @@ var ip_row = <?php echo $ip_row; ?>;
 function addIp() {
 	html  = '<tr id="ip-row' + ip_row + '">';
     html += '  <td class="text-right"><input type="text" name="api_ip[]" value="" placeholder="<?php echo $entry_ip; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#ip-row' + ip_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="mi mi-minus-circle">remove circle</i></button></td>';
 	html += '</tr>';
 
 	$('#ip tbody').append(html);
@@ -181,11 +181,11 @@ $('#session button').on('click', function(e) {
 				$('.alert').remove();
 
 				if (json['error']) {
-					$('#tab-session').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-session').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#tab-session').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#tab-session').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$(node).parent().parent().remove();
 				}

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button id="button-send" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <button id="button-send" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="mi mi-envelope">mail</i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -16,7 +16,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-envelope"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-envelope">mail</i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <form class="form-horizontal">
@@ -126,11 +126,11 @@ $('input[name=\'customers\']').autocomplete({
 
 		$('#input-customer' + item['value']).remove();
 
-		$('#input-customer').parent().find('.well').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+		$('#input-customer').parent().find('.well').append('<div id="customer' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#input-customer').parent().find('.well').delegate('.mi-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -155,11 +155,11 @@ $('input[name=\'affiliates\']').autocomplete({
 
 		$('#input-affiliate' + item['value']).remove();
 
-		$('#input-affiliate').parent().find('.well').append('<div id="affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
+		$('#input-affiliate').parent().find('.well').append('<div id="affiliate' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-affiliate').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#input-affiliate').parent().find('.well').delegate('.mi-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -184,11 +184,11 @@ $('input[name=\'products\']').autocomplete({
 
 		$('#input-product' + item['value']).remove();
 
-		$('#input-product').parent().find('.well').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+		$('#input-product').parent().find('.well').append('<div id="product' + item['value'] + '"><i class="mi mi-minus-circle">remove circle</i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
-$('#input-product').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+$('#input-product').parent().find('.well').delegate('.mi-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -209,11 +209,11 @@ function send(url) {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['warning'] + '</div>');
 				}
 
 				if (json['error']['email']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['email'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="mi mi-exclamation-circle">error</i> ' + json['error']['email'] + '</div>');
 				}
 
 				if (json['error']['subject']) {
@@ -226,7 +226,7 @@ function send(url) {
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="mi mi-check-circle">check_circle</i>  ' + json['success'] + '</div>');
 			}
 				
 			if (json['next']) {

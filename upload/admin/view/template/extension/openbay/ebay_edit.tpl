@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -16,14 +16,14 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_listing_info; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-pencil">mode_edit</i> <?php echo $text_listing_info; ?></h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-info" id="form-loading"> <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?> </div>
+        <div class="alert alert-info" id="form-loading"> <i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_loading; ?> </div>
         <div class="alert alert-danger" id="form-error" style="display:none;">
           <div class="row">
             <div class="col-sm-8"><?php echo $text_error_loading; ?></div>
-            <div class="col-sm-4 text-right"><a id="button-load" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
+            <div class="col-sm-4 text-right"><a id="button-load" class="btn btn-primary"><i class="mi mi-refresh">refresh</i> <?php echo $button_retry; ?></a></div>
           </div>
         </div>
         <div class="content displayNone" id="form-main">
@@ -114,20 +114,20 @@
                 </div>
               </div>
               <div id="tab-recommendation" class="tab-pane">
-                <div class="alert alert-info" id="recommendations-loading"> <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_check_recommendations; ?> </div>
-                <div class="alert alert-danger" id="recommendations-danger" style="display:none;"> <i class="fa fa-minus-circle"></i> </div>
-                <div class="alert alert-success" id="recommendations-success" style="display:none;"> <i class="fa fa-check-circle"></i> <?php echo $text_success_recommendations; ?></div>
+                <div class="alert alert-info" id="recommendations-loading"> <i class="mi mi-cog mi-lg mi-spin">settings</i> <?php echo $text_check_recommendations; ?> </div>
+                <div class="alert alert-danger" id="recommendations-danger" style="display:none;"> <i class="mi mi-minus-circle">remove circle</i> </div>
+                <div class="alert alert-success" id="recommendations-success" style="display:none;"> <i class="mi mi-check-circle">check_circle</i> <?php echo $text_success_recommendations; ?></div>
               </div>
             </div>
           </form>
           <div class="well">
             <div class="row">
               <div class="col-sm-12 text-right">
-                <a class="btn btn-danger" id="button-end-item"><i class="fa fa-minus-circle"></i> <?php echo $button_end; ?></a>
-                <a class="btn btn-danger" id="button-remove-link"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a>
-                <a class="btn btn-primary" href="<?php echo $view_link; ?>" target="_BLANK" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="fa fa-external-link"></i></a>
-                <a class="btn btn-primary" id="button-edit-item" data-toggle="tooltip" title="<?php echo $button_edit; ?>" style="display:none;"><i class="fa fa-pencil"></i></a>
-                <a class="btn btn-primary" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>"><i class="fa fa-save"></i></a>
+                <a class="btn btn-danger" id="button-end-item"><i class="mi mi-minus-circle">remove circle</i> <?php echo $button_end; ?></a>
+                <a class="btn btn-danger" id="button-remove-link"><i class="mi mi-minus-circle">remove circle</i> <?php echo $button_remove; ?></a>
+                <a class="btn btn-primary" href="<?php echo $view_link; ?>" target="_BLANK" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="mi mi-external-link">launch</i></a>
+                <a class="btn btn-primary" id="button-edit-item" data-toggle="tooltip" title="<?php echo $button_edit; ?>" style="display:none;"><i class="mi mi-pencil">mode_edit</i></a>
+                <a class="btn btn-primary" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>"><i class="mi mi-save">save</i></a>
               </div>
             </div>
           </div>
@@ -313,7 +313,7 @@
       dataType: 'json',
       data: $("#form").serialize(),
       beforeSend: function(){
-        $('#button-save').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-save').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
           $('#error_box').empty().hide();
           $('#form-success').hide();
       },
@@ -341,7 +341,7 @@
           $('#form').hide();
       },
       complete: function() {
-        $('#button-save').empty().html('<i class="fa fa-save"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+        $('#button-save').empty().html('<i class="mi mi-save">save</i> <?php echo $button_save; ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -362,7 +362,7 @@
         url: 'index.php?route=extension/openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
         dataType: 'json',
         beforeSend: function(){
-          $('#button-remove-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+          $('#button-remove-link').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
         },
         success: function () {
           alert('<?php echo $text_alert_removed; ?>');
@@ -389,7 +389,7 @@
           url: 'index.php?route=extension/openbay/ebay/endItem&token=<?php echo $token; ?>&item_id=' + item_id,
           dataType: 'json',
           beforeSend: function(){
-            $('#button-end-item').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+            $('#button-end-item').empty().html('<i class="mi mi-cog mi-lg mi-spin">settings</i>').attr('disabled','disabled');
           },
           success: function (data) {
             if (data.error == true) {

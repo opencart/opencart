@@ -16,7 +16,7 @@ class CatalogProductTest extends OpenCartSeleniumTest {
 		$this->byCssSelector('input[name="search"]')->click();
 		$this->keys('Apple');
 		
-		$this->byCssSelector('i.fa-search')->click();
+		$this->byCssSelector('i.mi-search')->click();
 		
 		$this->waitUntil(function() {
 			if (strpos($this->url(), 'product/search') !== False) {
@@ -54,7 +54,7 @@ class CatalogProductTest extends OpenCartSeleniumTest {
 	
 	public function testWishListButton() {
 		$this->url('index.php?route=product/product&product_id=43');
-		$element = $this->byCssSelector('i.fa-heart:last-child');
+		$element = $this->byCssSelector('i.mi-heart:last-child');
 		$element->click();
 	
 		$this->waitUntil(function() {
@@ -66,7 +66,7 @@ class CatalogProductTest extends OpenCartSeleniumTest {
 	
 	public function testCompareButton() {
 		$this->url('index.php?route=product/product&product_id=43');
-		$element = $this->byCssSelector('i.fa-exchange');
+		$element = $this->byCssSelector('i.mi-exchange');
 		$element->click();
 	
 		$this->waitUntil(function() {

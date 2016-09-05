@@ -70,7 +70,7 @@ function doVoid() {
             data: {'order_id':<?php echo (int)$order_id; ?>},
             url: 'index.php?route=extension/payment/pp_payflow_iframe/void&token=<?php echo $token; ?>',
             beforeSend: function() {
-                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
+                $('#button-void').after('<span class="btn btn-primary loading"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>');
                 $('#button-void').hide();
             },
             success: function(data) {
@@ -116,7 +116,7 @@ function capture() {
         url: 'index.php?route=extension/payment/pp_payflow_iframe/capture&token=<?php echo $token; ?>',
 
         beforeSend: function() {
-            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
+            $('#button-capture').after('<span class="btn btn-primary loading"><i class="mi mi-circle-o-notch mi-spin mi-lg">refresh</i></span>');
             $('#button-capture').hide();
         },
 

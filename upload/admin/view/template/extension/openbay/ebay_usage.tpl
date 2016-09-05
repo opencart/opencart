@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-default" onclick="loadUsage();"><i class="fa fa-cog fa-lg"></i></a>
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-default" onclick="loadUsage();"><i class="mi mi-cog mi-lg">settings</i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="mi mi-reply">reply</i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -17,10 +17,10 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_usage; ?></h3>
+        <h3 class="panel-title"><i class="mi mi-list">view_list</i> <?php echo $text_usage; ?></h3>
       </div>
       <div class="panel-body">
-        <h4><div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-cog fa-lg fa-spin"></i></div></h4>
+        <h4><div class="btn btn-primary" id="load_usage_loading"><i class="mi mi-cog mi-lg mi-spin">settings</i></div></h4>
         <div id="usageTable" class="displayNone"></div>
       </div>
     </div>

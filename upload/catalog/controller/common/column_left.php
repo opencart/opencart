@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerCommonColumnLeft extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
@@ -29,6 +34,18 @@ class ControllerCommonColumnLeft extends Controller {
 			$this->load->model('catalog/information');
 
 			$layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
+		}
+		
+		if ($route == 'blog/category' && isset($this->request->get['blog_category_id'])) {
+			$this->load->model('blog/category');
+			
+			$layout_id = $this->model_blog_category->getCategoryLayoutId($this->request->get['blog_category_id']);
+		}
+		
+		if ($route == 'blog/article' && isset($this->request->get['article_id'])) {
+			$this->load->model('blog/article');
+			
+			$layout_id = $this->model_blog_article->getArticleLayoutId($this->request->get['article_id']);
 		}
 
 		if (!$layout_id) {

@@ -245,13 +245,13 @@ class ControllerCommonHeader extends Controller {
                 break;
         }
 
-        $check = strpos($item['link'], 'http');
-        if ( $check !== false ) {
+        $check = stripos($item['link'], 'http');
+        $checkbase = strpos($item['link'], '/');
+        if ( $check === 0 || $checkbase === 0 ) {
 			$link = $item['link'];
         } else {
             $link = $this->url->link($route, $args);
         }
-
         return $link;
     }
 	}

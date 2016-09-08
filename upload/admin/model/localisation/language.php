@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ModelLocalisationLanguage extends Model {
 	public function addLanguage($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
@@ -6,6 +11,35 @@ class ModelLocalisationLanguage extends Model {
 		$this->cache->delete('language');
 
 		$language_id = $this->db->getLastId();
+		
+		// Blog Article
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		foreach ($query->rows as $article) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "article_description SET article_id = '" . (int)$article['article_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($article['name']) . "', description = '" . $this->db->escape($article['description']) . "', meta_description = '" . $this->db->escape($article['meta_description']) . "', meta_keyword = '" . $this->db->escape($article['meta_keyword']) . "', meta_title = '" . $this->db->escape($article['meta_title']) . "', meta_h1 = '" . $this->db->escape($article['meta_h1']) . "', tag = '" . $this->db->escape($article['tag']) . "'");
+		}
+		$this->cache->delete('article');
+		
+		// Blog Category
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog_category_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		foreach ($query->rows as $blog_category) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "blog_category_description SET blog_category_id = '" . (int)$blog_category['blog_category_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($blog_category['name']) . "', description = '" . $this->db->escape($blog_category['description']) . "', meta_description = '" . $this->db->escape($blog_category['meta_description']) . "', meta_keyword = '" . $this->db->escape($blog_category['meta_keyword']) . "', meta_title = '" . $this->db->escape($blog_category['meta_title']) . "', meta_h1 = '" . $this->db->escape($blog_category['meta_h1']) . "'");
+		}
+		
+		// Menu
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		foreach ($query->rows as $menu) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu['name']) . "', link = '" . $this->db->escape($menu['link']) . "'");
+		}
+		
+		// Menu Child
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		
+		foreach ($query->rows as $menu_child) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu_child['name']) . "', link = '" . $this->db->escape($menu_child['link']) . "'");
+		}
 
 		// Attribute
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "attribute_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -215,6 +249,12 @@ class ModelLocalisationLanguage extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->cache->delete('language');
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "article_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->cache->delete('article');
+		$this->db->query("DELETE FROM " . DB_PREFIX . "blog_category_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE language_id = '" . (int)$language_id . "'");

@@ -9,9 +9,9 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 		$data['testmode'] = $this->config->get('pp_standard_test');
 
 		if (!$this->config->get('pp_standard_test')) {
-			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr';
+			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
 		} else {
-			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
 		}
 
 		$this->load->model('checkout/order');

@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
 $_['heading_title']       = 'Layouts';
 
@@ -34,3 +39,5 @@ $_['error_store']         = 'Warning: This layout cannot be deleted as it is cur
 $_['error_product']       = 'Warning: This layout cannot be deleted as it is currently assigned to %s products!';
 $_['error_category']      = 'Warning: This layout cannot be deleted as it is currently assigned to %s categories!';
 $_['error_information']   = 'Warning: This layout cannot be deleted as it is currently assigned to %s information pages!';
+$_['error_blog_article']  = 'Warning: This layout cannot be deleted as it is currently assigned to %s blog articles!';
+$_['error_blog_category'] = 'Warning: This layout cannot be deleted as it is currently assigned to %s blog categories!';

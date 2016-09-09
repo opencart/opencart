@@ -144,6 +144,14 @@ class ControllerExtensionModuleSlicebox extends Controller {
 		} else {
 			$data['status'] = '';
 		}
+		if (isset($this->request->post['type'])) {
+			$data['type'] = $this->request->post['type'];
+		} elseif (!empty($module_info)) {
+			$data['type'] = $module_info['type'];
+		} else {
+			$data['type'] = '';
+		}
+
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

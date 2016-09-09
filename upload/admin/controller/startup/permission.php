@@ -26,6 +26,7 @@ class ControllerStartupPermission extends Controller {
 				'extension/payment',
 				'extension/shipping',
 				'extension/theme',
+				'extension/total',
 				'extension/total'
 			);
 

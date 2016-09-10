@@ -27,7 +27,7 @@ class ControllerStartupPermission extends Controller {
 				'extension/shipping',
 				'extension/theme',
 				'extension/total',
-				'extension/total'
+				'extension/report'
 			);
 
 			if (isset($part[2]) && in_array($route, $extension)) {

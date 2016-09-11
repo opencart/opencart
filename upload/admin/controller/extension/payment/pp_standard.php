@@ -44,6 +44,7 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$data['entry_no_shipping_status'] = $this->language->get('entry_no_shipping_status');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -112,6 +113,12 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			$data['pp_standard_debug'] = $this->request->post['pp_standard_debug'];
 		} else {
 			$data['pp_standard_debug'] = $this->config->get('pp_standard_debug');
+		}
+
+		if (isset($this->request->post['pp_standard_no_shipping_status'])) {
+			$data['pp_standard_no_shipping_status'] = $this->request->post['pp_standard_no_shipping_status'];
+		} else {
+			$data['pp_standard_no_shipping_status'] = $this->config->get('pp_standard_no_shipping_status');
 		}
 
 		if (isset($this->request->post['pp_standard_total'])) {

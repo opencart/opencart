@@ -125,6 +125,20 @@
                 <div class="col-sm-10">
                   <input type="text" name="pp_standard_sort_order" value="<?php echo $pp_standard_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control"/>
                 </div>
+              </div>>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-no-shipping-status"><?php echo $entry_no_shipping_status; ?></label>
+                <div class="col-sm-10">
+                  <select name="pp_standard_no_shipping_status" id="input-vno-shipping-status" class="form-control">
+                    <?php if ($pp_standard_no_shipping_status == 1) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0"" selected="selected"><?php echo $text_no; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="tab-pane" id="tab-status">

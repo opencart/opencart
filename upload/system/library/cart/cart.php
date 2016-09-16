@@ -59,7 +59,10 @@ class Cart {
 									$option_price += $option_value_query->row['price'];
 								} elseif ($option_value_query->row['price_prefix'] == '-') {
 									$option_price -= $option_value_query->row['price'];
-								}
+								} elseif {$option_value_query->row['price_prefix'] == '*') {
+                                    $option_price += $option_value_query->row['price'];
+                                    $price_multiplication = 1;
+                                }
 
 								if ($option_value_query->row['points_prefix'] == '+') {
 									$option_points += $option_value_query->row['points'];
@@ -104,7 +107,10 @@ class Cart {
 										$option_price += $option_value_query->row['price'];
 									} elseif ($option_value_query->row['price_prefix'] == '-') {
 										$option_price -= $option_value_query->row['price'];
-									}
+									} elseif ($option_value_query->row['price_prefix'] == '*') {
+                                        $option_price += $option_value_query->row['price'];
+                                        $price_multiplication = 1;
+                                    }
 
 									if ($option_value_query->row['points_prefix'] == '+') {
 										$option_points += $option_value_query->row['points'];
@@ -235,6 +241,12 @@ class Cart {
 					$recurring = false;
 				}
 
+                if (isset($price_multiplication)) {
+                    $price *= $option_price;
+                } else {
+                    $price += $option_price;
+                }
+
 				$product_data[] = array(
 					'cart_id'         => $cart['cart_id'],
 					'product_id'      => $product_query->row['product_id'],
@@ -248,8 +260,8 @@ class Cart {
 					'minimum'         => $product_query->row['minimum'],
 					'subtract'        => $product_query->row['subtract'],
 					'stock'           => $stock,
-					'price'           => ($price + $option_price),
-					'total'           => ($price + $option_price) * $cart['quantity'],
+					'price'           => $price,
+					'total'           => ($price * $cart['quantity'],
 					'reward'          => $reward * $cart['quantity'],
 					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
 					'tax_class_id'    => $product_query->row['tax_class_id'],

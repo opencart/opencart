@@ -15,6 +15,12 @@ class ControllerCommonColumnLeft extends Controller {
 		}
 
 		$layout_id = 0;
+		
+		if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
+			$this->load->model('catalog/manufacturer');
+
+			$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId($this->request->get['manufacturer_id']);
+		}
 
 		if ($route == 'product/category' && isset($this->request->get['path'])) {
 			$this->load->model('catalog/category');

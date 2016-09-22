@@ -1,5 +1,21 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ModelCatalogManufacturer extends Model {
+	
+	public function getManufacturerLayoutId($manufacturer_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		if ($query->num_rows) {
+			return $query->row['layout_id'];
+		} else {
+			return 0;
+		}
+	}
+	
 	public function getManufacturer($manufacturer_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (m.manufacturer_id = md.manufacturer_id) LEFT JOIN " . DB_PREFIX . "manufacturer_to_store m2s ON (m.manufacturer_id = m2s.manufacturer_id) WHERE m.manufacturer_id = '" . (int)$manufacturer_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "' AND m2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 

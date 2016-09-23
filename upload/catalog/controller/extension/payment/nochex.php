@@ -1,4 +1,8 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
 // Nochex via form will work for both simple "Seller" account and "Merchant" account holders
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
 class ControllerExtensionPaymentNochex extends Controller {

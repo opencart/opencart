@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ControllerExtensionPaymentSecureTradingWs extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');

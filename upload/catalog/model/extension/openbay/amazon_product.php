@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 class ModelExtensionOpenBayAmazonProduct extends Model {
 	public function setStatus($insertion_id, $status_string) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product` SET `status` = '" . $this->db->escape($status_string) . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");

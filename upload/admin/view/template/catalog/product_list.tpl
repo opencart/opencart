@@ -37,21 +37,86 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-                <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
+             <div class="form-group">
                 <label class="control-label" for="input-model"><?php echo $entry_model; ?></label>
-                <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-model" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+			 <div class="form-group">
+                <label class="control-label" for="input-category-name"><?php echo $entry_category; ?></label> <label class="control-label pull-right" for="input-sub-category"><?php echo $entry_sub_category; ?> <input type="checkbox" class="checkbox-inline" name="filter_sub_category" id="input-sub-category" class="form-control"<?php echo ($filter_sub_category)?' checked="checked"':''; ?> /></label>
+                <div class="clearfix"></div>
+				<div class="input-group">
+                  <input type="text" name="filter_category_name" value="<?php echo $filter_category_name; ?>" placeholder="<?php echo $entry_category; ?>" id="input-category-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-category-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <input type="hidden" name="filter_category" value="<?php echo $filter_category; ?>" id="input-category" class="form-control" />
               </div>
             </div>
-            <div class="col-sm-4">
+           <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label" for="input-price"><?php echo $entry_price; ?></label>
-                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="text" name="filter_price_min" value="<?php echo $filter_price_min; ?>" placeholder="<?php echo $entry_min; ?>" id="input-price-min" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-price-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 pull-right">
+                    <div class="input-group">
+                      <input type="text" name="filter_price_max" value="<?php echo $filter_price_max; ?>" placeholder="<?php echo $entry_max; ?>" id="input-price-max" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-price-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
-                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="text" name="filter_quantity_min" value="<?php echo $filter_quantity_min; ?>" placeholder="<?php echo $entry_min; ?>" id="input-quantity-min" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-quantity-min" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 pull-right">
+                    <div class="input-group">
+                      <input type="text" name="filter_quantity_max" value="<?php echo $filter_quantity_max; ?>" placeholder="<?php echo $entry_max; ?>" id="input-quantity-max" class="form-control" />
+                      <div class="input-group-btn">
+                        <button type="button" id="button-clear-input-quantity-max" class="btn btn-default"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-manufacturer-name"><?php echo $entry_manufacturer; ?></label>
+                <div class="input-group">
+                  <input type="text" name="filter_manufacturer_name" value="<?php echo $filter_manufacturer_name; ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer-name" class="form-control" />
+                  <div class="input-group-btn">
+                    <button type="button" id="button-clear-input-manufacturer-name" class="btn btn-default"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <input type="hidden" name="filter_manufacturer" value="<?php echo $filter_manufacturer; ?>" id="input-manufacturer" class="form-control" />
               </div>
             </div>
             <div class="col-sm-4">
@@ -65,6 +130,22 @@
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <?php } ?>
                   <?php if (!$filter_status && !is_null($filter_status)) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-noindex"><?php echo $entry_noindex; ?></label>
+                <select name="filter_noindex" id="input-noindex" class="form-control">
+                  <option value="*"></option>
+                  <?php if ($filter_noindex) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (($filter_noindex !== null) && !$filter_noindex) { ?>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -88,24 +169,9 @@
                 </select>
               </div>
 			  </div>
-			<div class="col-sm-4">
-              <div class="form-group">
-                <label class="control-label" for="input-noindex"><?php echo $entry_noindex; ?></label>
-                <select name="filter_noindex" id="input-noindex" class="form-control">
-                  <option value="*"></option>
-                  <?php if ($filter_noindex) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                  <?php } else { ?>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <?php } ?>
-                  <?php if (($filter_noindex !== null) && !$filter_noindex) { ?>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                  <?php } else { ?>
-                  <option value="0"><?php echo $text_disabled; ?></option>
-                  <?php } ?>
-                </select>
-				</div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+			<div class="col-sm-4 text-right">
+              <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>
+			  <button type="button" id="button-clear-filter" class="btn btn-default"><i class="fa fa-times"></i><span class="hidden-sm"> <?php echo $button_clear; ?></span></button>
             </div>
           </div>
         </div>
@@ -218,22 +284,52 @@ $('#button-filter').on('click', function() {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
 
-	var filter_price = $('input[name=\'filter_price\']').val();
+	var filter_price_min = $('input[name=\'filter_price_min\']').val();
 
-	if (filter_price) {
-		url += '&filter_price=' + encodeURIComponent(filter_price);
+	if (filter_price_min) {
+		url += '&filter_price_min=' + encodeURIComponent(filter_price_min);
 	}
 
-	var filter_quantity = $('input[name=\'filter_quantity\']').val();
+	var filter_price_max = $('input[name=\'filter_price_max\']').val();
 
-	if (filter_quantity) {
-		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+	if (filter_price_max) {
+		url += '&filter_price_max=' + encodeURIComponent(filter_price_max);
+	}
+
+	var filter_quantity_min = $('input[name=\'filter_quantity_min\']').val();
+
+	if (filter_quantity_min) {
+		url += '&filter_quantity_min=' + encodeURIComponent(filter_quantity_min);
+	}
+
+	var filter_quantity_max = $('input[name=\'filter_quantity_max\']').val();
+
+	if (filter_quantity_max) {
+		url += '&filter_quantity_max=' + encodeURIComponent(filter_quantity_max);
 	}
 
 	var filter_status = $('select[name=\'filter_status\']').val();
 
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+	
+	var filter_category = $('input[name=\'filter_category\']').val();
+
+	if (filter_category) {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+
+	var filter_sub_category = $('input[name=\'filter_sub_category\']');
+
+	if (filter_sub_category.prop('checked')) {
+		url += '&filter_sub_category';
+	}
+
+	var filter_manufacturer = $('input[name=\'filter_manufacturer\']').val();
+
+	if (filter_manufacturer) {
+		url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
 	}
 	
 	var filter_noindex = $('select[name=\'filter_noindex\']').val();
@@ -249,6 +345,9 @@ $('#button-filter').on('click', function() {
   }
 
 	location = url;
+});
+$('#button-clear-filter').on('click', function() {
+	location = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
 });
 //--></script>
   <script type="text/javascript"><!--
@@ -271,6 +370,10 @@ $('input[name=\'filter_name\']').autocomplete({
 		$('input[name=\'filter_name\']').val(item['label']);
 	}
 });
+$('#button-clear-input-name').on('click',function(){
+	$('input[name=\'filter_name\']').val('');
+	$('#button-filter').trigger('click');
+});
 
 $('input[name=\'filter_model\']').autocomplete({
 	'source': function(request, response) {
@@ -289,6 +392,111 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
+	}
+});
+
+$('#button-clear-input-model').on('click',function(){
+	$('input[name=\'filter_model\']').val('');
+	$('#button-filter').trigger('click');
+});
+$('input[name=\'filter_category_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_category_name\']').val().length==0) {
+			$('input[name=\'filter_category\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'category_id':null,'name':'<?php echo $text_all; ?>'},{'category_id':0,'name':'<?php echo $text_none_category; ?>'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='<?php echo $text_all; ?>') {
+			$('input[name=\'filter_category_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_category_name\']').val('');
+		}
+		$('input[name=\'filter_category\']').val(item['value']);
+	}
+});
+
+$('#button-clear-input-category-name').on('click',function(){
+	$('input[name=\'filter_category_name\']').val('');
+	$('input[name=\'filter_category\']').val(null);
+	$('#button-filter').trigger('click');
+});
+
+$('input[name=\'filter_manufacturer_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_manufacturer_name\']').val().length==0) {
+			$('input[name=\'filter_manufacturer\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'manufacturer_id':null,'name':'<?php echo $text_all; ?>'},{'manufacturer_id':0,'name':'<?php echo $text_none_manufacturer; ?>'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['manufacturer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='<?php echo $text_all; ?>') {
+			$('input[name=\'filter_manufacturer_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_manufacturer_name\']').val('');
+		}
+		$('input[name=\'filter_manufacturer\']').val(item['value']);
+	}
+});
+
+$('#button-clear-input-manufacturer-name').on('click',function(){
+	$('input[name=\'filter_manufacturer_name\']').val('');
+	$('input[name=\'filter_manufacturer\']').val(null);
+	$('#button-filter').trigger('click');
+});
+
+$('#button-clear-input-price-min').on('click',function(){
+	$('input[name=\'filter_price_min\']').val('');
+	$('#button-filter').trigger('click');
+});
+
+$('#button-clear-input-price-max').on('click',function(){
+	$('input[name=\'filter_price_max\']').val('');
+	$('#button-filter').trigger('click');
+});
+
+$('#button-clear-input-quantity-min').on('click',function(){
+	$('input[name=\'filter_quantity_min\']').val('');
+	$('#button-filter').trigger('click');
+});
+
+$('#button-clear-input-quantity-max').on('click',function(){
+	$('input[name=\'filter_quantity_max\']').val('');
+	$('#button-filter').trigger('click');
+});
+
+$('input[name=\'filter_name\'], input[name=\'filter_model\'], input[name=\'filter_category_name\'], input[name=\'filter_manufacturer_name\'], input[name=\'filter_price_min\'], input[name=\'filter_price_max\'], input[name=\'filter_quantity_min\'], input[name=\'filter_quantity_max\']').keypress(function (e) {
+	if (e.which == 13) {
+		$('#button-filter').trigger('click');
+		return false;
 	}
 });
 //--></script></div>

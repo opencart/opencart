@@ -441,4 +441,9 @@ class ModelCatalogCategory extends Model {
 		
 		return $article_related_data;
 	}
+	
+	public function getCategoriesChildren($parent_id = 0) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_path WHERE path_id = '" . (int)$parent_id . "'");
+		return $query->rows;
+	}
 }

@@ -80,6 +80,8 @@ $_['entry_status']           = 'Status';
 $_['entry_noindex']          = 'Index';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_category']         = 'Categories';
+$_['entry_sub_category']     = 'include subcategories';
+$_['entry_main_category']    = 'Main Category';
 $_['entry_filter']           = 'Filters';
 $_['entry_download']         = 'Downloads';
 $_['entry_related']          = 'Related Products';
@@ -89,6 +91,8 @@ $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
 $_['entry_heading']     	 = 'Heading';
+$_['entry_min']              = 'From';
+$_['entry_max']              = 'To';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';

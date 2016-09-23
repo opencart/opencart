@@ -1,4 +1,9 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
 $_['heading_title']         = 'Sagepay Server Cards';
 
@@ -26,6 +31,3 @@ $_['entry_cc_choice']       = 'Choose an Existing Card';
 // Button
 $_['button_add_card']       = 'Add Card';
 $_['button_new_card']       = 'Add New Card';
-
-
-

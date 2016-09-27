@@ -7,7 +7,8 @@ class ControllerEventCompatibility extends Controller {
 		$part = explode('/', $route);
 				
 		if (!is_file(DIR_APPLICATION . 'controller/' . $route . '.php') && is_file(DIR_APPLICATION . 'controller/' . $part[1] . '/' . $part[2] . '.php')) {
-			$route = $part[1] . '/' . $part[2];
+			unset($part[0]);
+			$route = implode('/', $part);
 		}
 	}
 	
@@ -17,8 +18,13 @@ class ControllerEventCompatibility extends Controller {
 		// Compatibility code for old extension folders
 		$part = explode('/', $route);
 		
-		if (!is_file(DIR_LANGUAGE . $this->config->get('config_language') . '/' . $route . '.php') && is_file(DIR_LANGUAGE . $this->config->get('config_language') . '/' . $part[1] . '/' . $part[2] . '.php')) {
-			$route = $part[1] . '/' . $part[2];
+		$directories = array($this->config->get('config_admin_language'), $this->language->default, 'english');
+		
+		foreach ($directories as $directory) {
+			if (!is_file(DIR_LANGUAGE . $directory . '/' . $route . '.php') && is_file(DIR_LANGUAGE . $directory . '/' . $part[1] . '/' . $part[2] . '.php')) {
+				$route = $part[1] . '/' . $part[2];
+				break;
+			}
 		}
 	}
 	

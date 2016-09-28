@@ -8,6 +8,13 @@ class ControllerStartupSeoPro extends Controller {
 	private $cache_data = null;
 	private $languages = array();
 	private $config_language;
+	private $valid_server = false;
+	private $url_sheme = 'http';
+	private $ssl_routes = array(
+	'checkout/',
+	'account/',
+	'affiliate/',
+	);
 
 	// Добавлять нужные роуты для исключений здесь!
 	private $valide_routes = array(
@@ -28,6 +35,24 @@ class ControllerStartupSeoPro extends Controller {
 	
 	public function __construct($registry) {
 		parent::__construct($registry);
+		$this->valid_server = (bool)(parse_url(HTTPS_SERVER, PHP_URL_SCHEME)=='https');
+			if (!$this->valid_server && $this->request->server['HTTPS']) {
+				$r = isset($this->request->get['route'])?$this->request->get['route']:'';
+				$this->response->redirect(str_replace('&amp;', '&', $this->url->link($r, $this->getQueryString(array('route')))), 301);
+			}
+		$ssl_mode = (bool)$this->config->get('config_secure') + $this->valid_server;
+			switch ($ssl_mode) {
+				case '2':
+				$this->url_sheme = 'https';
+				break;
+				case '1':
+				$this->url_sheme = ($this->request->server['HTTPS'])?'https':'http';
+				break;
+				case '0':
+				default:
+				$this->url_sheme = 'http';
+				break;
+			}
 		$this->cache_data = $this->cache->get('seo_pro');
 		if (!$this->cache_data) {
 			$query = $this->db->query("SELECT LOWER(`keyword`) as 'keyword', `query` FROM " . DB_PREFIX . "url_alias");
@@ -146,6 +171,16 @@ class ControllerStartupSeoPro extends Controller {
 		parse_str($url_info['query'], $data);
 		$route = $data['route'];
 		unset($data['route']);
+		$url_info['scheme'] = $this->url_sheme;
+			if (!$this->valid_server) {
+				$url_info['scheme'] = 'http';
+			} else {
+				foreach ($this->ssl_routes as $ssl_route) {
+					if (stristr($route, $ssl_route)) {
+						$url_info['scheme'] = 'https';
+					}
+				}
+			}
 		switch ($route) {
 			case 'product/product':
 				if (isset($data['product_id'])) {
@@ -387,7 +422,7 @@ class ControllerStartupSeoPro extends Controller {
 			$url = str_replace('&amp;', '&',
 				substr($this->config->get('config_url'), 0, strpos($this->config->get('config_url'), '/', 10)) // leave only domain
 				. $this->request->server['REQUEST_URI']);
-			$seo = str_replace('&amp;', '&', $this->url->link($this->request->get['route'], $this->getQueryString(array('route')), 'NONSSL'));
+			$seo = str_replace('&amp;', '&', $this->url->link($this->request->get['route'], $this->getQueryString(array('route'))));
 		}
 		if (rawurldecode($url) != rawurldecode($seo)) {
 			$this->response->redirect($seo, 301);

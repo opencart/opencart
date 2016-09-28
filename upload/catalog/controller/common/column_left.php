@@ -69,6 +69,10 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 		}
 
+		if (empty($data['modules'])) {
+			return '';
+		}
+
 		return $this->load->view('common/column_left', $data);
 	}
 }

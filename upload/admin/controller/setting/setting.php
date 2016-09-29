@@ -795,9 +795,9 @@ class ControllerSettingSetting extends Controller {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
 		}
 
-		if (isset($this->request->post['config_affiliate_auto'])) {
+		if (isset($this->request->post['config_affiliate_approval'])) {
 			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
-		} elseif ($this->config->has('config_affiliate_commission')) {
+		} elseif ($this->config->has('config_affiliate_approval')) {
 			$data['config_affiliate_approval'] = $this->config->get('config_affiliate_approval');
 		} else {
 			$data['config_affiliate_approval'] = '';

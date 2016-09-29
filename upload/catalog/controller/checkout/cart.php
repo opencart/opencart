@@ -249,9 +249,6 @@ class ControllerCheckoutCart extends Controller {
 				foreach (array_unique($modules) as $module) {
 					$result = $this->load->controller('extension/total/' . $module);
 					
-					if (!$result) {
-						$result = $this->load->controller('total/' . $module);
-					}
 					if ($result) {
 						$data['modules'][] = $result;
 					}

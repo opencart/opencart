@@ -428,10 +428,10 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}
 			
-			if ($this->user->hasPermission('access', 'user/user_permission')) {	
+			if ($this->user->hasPermission('access', 'user/user_group')) {	
 				$user[] = array(
 					'name'	   => $this->language->get('text_user_group'),
-					'href'     => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('user/user_group', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}

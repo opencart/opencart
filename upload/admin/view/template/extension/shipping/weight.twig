@@ -78,7 +78,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-rate{{ geo_zone.geo_zone_id }}"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control">{% if weight_geo_zone_rate[geo_zone.geo_zone_id] %} {{ weight_geo_zone_rate[geo_zone.geo_zone_id] }} {% endif %}</textarea>
+                      <textarea name="weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control">{{ weight_geo_zone_rate[geo_zone.geo_zone_id] ? weight_geo_zone_rate[geo_zone.geo_zone_id] }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -105,4 +105,4 @@
     </div>
   </div>
 </div>
-{{ footer }} 
+{{ footer }}

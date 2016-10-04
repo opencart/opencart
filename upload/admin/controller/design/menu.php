@@ -430,7 +430,7 @@ class ControllerDesignMenu extends Controller {
 				);
 			}
 		}
-                 
+
 		if (isset($this->request->post['menu_module'])) {
 			$menu_modules = $this->request->post['menu_module'];
 		} elseif (isset($this->request->get['menu_id'])) {
@@ -438,7 +438,7 @@ class ControllerDesignMenu extends Controller {
 		} else {
 			$menu_modules = array();
 		}
-            
+
 		$data['menu_modules'] = array();
 
 		foreach ($menu_modules as $menu_module) {

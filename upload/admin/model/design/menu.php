@@ -86,7 +86,7 @@ class ModelDesignMenu extends Model {
 	public function getMenuDescriptions($menu_id) {
 		$menu_description_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE menut_id = '" . (int)$menu_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE menu_id = '" . (int)$menu_id . "'");
 
 		foreach ($query->rows as $result) {
 			$menu_description_data[$result['language_id']] = array('name' => $result['name']);

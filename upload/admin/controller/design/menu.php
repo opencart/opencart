@@ -175,7 +175,7 @@ class ControllerDesignMenu extends Controller {
 			$data['menus'][] = array(
 				'menu_id'    => $result['menu_id'],
 				'name'       => $result['name'],
-				'store'      => $result['store'],
+				'store'      => $result['store_id'],
 				'type'       => $result['type'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'sort_order' => $result['sort_order'],
@@ -430,7 +430,7 @@ class ControllerDesignMenu extends Controller {
 				);
 			}
 		}
-
+                 
 		if (isset($this->request->post['menu_module'])) {
 			$menu_modules = $this->request->post['menu_module'];
 		} elseif (isset($this->request->get['menu_id'])) {
@@ -438,7 +438,7 @@ class ControllerDesignMenu extends Controller {
 		} else {
 			$menu_modules = array();
 		}
-
+            
 		$data['menu_modules'] = array();
 
 		foreach ($menu_modules as $menu_module) {

@@ -27,6 +27,10 @@ class Pagination {
 
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
+		
+		if ($num_pages <= 1) {
+			return '';
+		}
 
 		$this->url = str_replace('%7Bpage%7D', '{page}', $this->url);
 
@@ -42,34 +46,32 @@ class Pagination {
 			}
 		}
 
-		if ($num_pages > 1) {
-			if ($num_pages <= $num_links) {
+		if ($num_pages <= $num_links) {
+			$start = 1;
+			$end = $num_pages;
+		} else {
+			$start = $page - floor($num_links / 2);
+			$end = $page + floor($num_links / 2);
+
+			if ($start < 1) {
+				$end += abs($start) + 1;
 				$start = 1;
-				$end = $num_pages;
-			} else {
-				$start = $page - floor($num_links / 2);
-				$end = $page + floor($num_links / 2);
-
-				if ($start < 1) {
-					$end += abs($start) + 1;
-					$start = 1;
-				}
-
-				if ($end > $num_pages) {
-					$start -= ($end - $num_pages);
-					$end = $num_pages;
-				}
 			}
 
-			for ($i = $start; $i <= $end; $i++) {
-				if ($page == $i) {
-					$output .= '<li class="active"><span>' . $i . '</span></li>';
+			if ($end > $num_pages) {
+				$start -= ($end - $num_pages);
+				$end = $num_pages;
+			}
+		}
+
+		for ($i = $start; $i <= $end; $i++) {
+			if ($page == $i) {
+				$output .= '<li class="active"><span>' . $i . '</span></li>';
+			} else {
+				if ($i === 1) {
+				$output .= '<li><a href="' . str_replace(array('&amp;page={page}', '&page={page}'), '', $this->url) . '">' . $i . '</a></li>';
 				} else {
-					if ($i === 1) {
-					$output .= '<li><a href="' . str_replace(array('&amp;page={page}', '&page={page}'), '', $this->url) . '">' . $i . '</a></li>';
-					} else {
-						$output .= '<li><a href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a></li>';
-					}
+					$output .= '<li><a href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a></li>';
 				}
 			}
 		}
@@ -81,10 +83,6 @@ class Pagination {
 
 		$output .= '</ul>';
 
-		if ($num_pages > 1) {
-			return $output;
-		} else {
-			return '';
-		}
+		return $output;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-class ControllerReportCustomerOnline extends Controller {
+class ControllerExtensionReportCustomerOnline extends Controller {
 	public function index() {
-		$this->load->language('report/customer_online');
+		$this->load->language('extension/report/customer_online');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerReportCustomerOnline extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, true),
+			'href' => $this->url->link('extension/report/customer_online', 'token=' . $this->session->data['token'] . $url, true),
 			'text' => $this->language->get('heading_title')
 		);
 
@@ -120,7 +120,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -133,6 +133,6 @@ class ControllerReportCustomerOnline extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/customer_online', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_online', $data));
 	}
 }

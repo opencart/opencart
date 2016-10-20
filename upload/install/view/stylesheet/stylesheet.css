@@ -1,0 +1,356 @@
+/*Reset*/
+html {
+	overflow: -moz-scrollbars-vertical;
+	margin: 0;
+	padding: 0;
+}
+*,h1,h2,h3,h4,h5,h6 {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	line-height: 1.5;
+	background: #F6F6F6 url('../image/background.png');
+}
+body, p, td, th, input, textarea, select, option {
+	color: #777777;
+	text-decoration: none;
+	font-size: 13px;
+}
+fieldset {
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+	margin-bottom: 20px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+fieldset table {
+	width: 100%;
+	border-collapse: collapse;
+}
+fieldset table.form tr td:first-child {
+	width: 250px;
+}
+fieldset table td {
+	padding: 5px;
+}
+select, input[type='text'], input[type='password'], textarea {
+	background: #FFFFFF;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid #DBDBDB;
+	padding: 4px;
+	color: #000;
+}
+option {
+	color: #000;
+}
+a, a:visited, a b {
+	color: #23A1D1;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: none;
+}
+b, strong {
+	color: #555;
+}
+label {
+	cursor: pointer;
+}
+div.required .control-label:before {
+	content: '* ';
+	color: #F00;
+	font-weight: bold;
+}
+
+/*Buttons*/
+a.button, input.button {
+	cursor: pointer;
+	color: #FFF;
+	font-size: 13px;
+	border: 1px solid #78883C;
+	background: url('../image/button.png') repeat-x;
+	text-shadow: 0px -1px #7A8A3D;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	-webkit-box-shadow: 1px 2px 2px #DDDDDD;
+	-moz-box-shadow: 1px 2px 2px #DDDDDD;
+	box-shadow: 1px 2px 2px #DDDDDD;
+	margin-bottom: 2px;
+}
+.buttons {
+	border: 1px solid #DBDBDB;
+	overflow: auto;
+	padding: 6px;
+	margin-bottom: 20px;
+}
+.btn {
+	padding: 10px 25px;
+	text-transform: uppercase;
+	font-weight: bold;
+	webkit-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.btn-default:visited,
+.btn-default {
+	border: none;
+	color: #777;
+	background: #ddd;
+}
+.btn-default:hover {
+	background: #ccc;
+	color: #777;
+}
+.btn-primary:visited,
+.btn-primary {
+	color: #fff;
+	background: #23a1d1;
+	border: none;
+}
+.btn-primary:hover {
+	background: #1f91bc;
+}
+.btn-secondary:visited,
+.btn-secondary {
+	color: #fff;
+	background: transparent;
+	border: 2px solid #fff;
+}
+.btn-secondary:hover {
+	border: 2px solid #fff;
+	background: #fff;
+	color: #23a1d1;
+}
+
+/*Transitions*/
+.transition {
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+
+/*Layout*/
+#column-right {
+	float: right;
+	width: 284px;
+	margin-left: 30px;
+	margin-bottom: 20px;
+	min-height: 350px;
+}
+#column-right ul, #column-right ul li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#column-right ul ul {
+	margin-left: 30px;
+}
+#column-right ul a, #column-right ul a b {
+	color: #777777;
+	text-decoration: none;
+}
+#column-right ul li {
+	display: block;
+	padding: 0px 8px 8px 22px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid #DBDBDB;
+	background: url('../image/bullet-arrow.png') 0px 5px no-repeat;
+}
+
+/*Header*/
+header {
+	padding: 50px;
+}
+header h1 {
+	margin: 0 25px 0 0;
+	font-size: 48px;
+}
+header h3 {
+	margin: 0;
+	float: left;
+}
+header h3 small {
+	margin: 10px 0 0 0;
+	display: block;
+}
+
+/*Visit*/
+.visit {
+	padding: 50px 0 50px 0;
+	color: #fff;
+	background: #23a1d1;
+}
+.visit p {
+	color: #FFF;
+	margin-bottom: 20px;
+}
+.visit i {
+	font-size: 100px;
+}
+.visit img {
+	height: 71px;
+	margin: 50px auto 25px auto;
+	display: block;
+}
+
+/*Modules*/
+.modules {
+	padding: 50px 50px 50px 50px;
+	background: #fff;
+}
+@media (min-width: 992px) {
+	.modules {
+		padding: 50px;
+	}
+}
+.modules h2 {
+	margin: 50px 0;
+}
+.modules .module {
+	margin: 0px 0 50px 0;
+}
+.modules .thumbnail {
+	margin: 0 25px 0 0;
+}
+
+/*Mailing list*/
+.mailing {
+	padding: 50px;
+	background: #23A1D1;
+	text-align: center;
+}
+.mailing i {
+	color: #FFF;
+}
+
+@media (min-width: 992px) {
+	.mailing {
+		padding: 50px 100px;
+		text-align: left;
+	}
+}
+@media (min-width: 992px) {
+	.mailing i {
+		margin: 0 50px 0 0;
+		float: left;
+	}
+}
+.mailing h3 {
+	margin: 25px 0;
+	color: #fff;
+}
+@media (min-width: 992px) {
+	.mailing h3 {
+		margin: 0;
+		float: left;
+	}
+}
+.mailing h3 small {
+	margin: 10px 0 0 0;
+	display: block;
+	color: #fff;
+}
+@media (min-width: 992px) {
+	.mailing a {
+		float: right;
+	}
+}
+
+/*Core modules*/
+.core-modules {
+	padding: 0 50px 50px 50px;
+	background: #fff;
+}
+@media (min-width: 992px) {
+	.core-modules {
+		padding: 0 100px 50px 100px;
+		background: #fff;
+	}
+}
+.core-modules h2 {
+	margin: 50px 0 0 0;
+}
+.core-modules img {
+	margin: 50px 0 0 0;
+}
+.core-modules p {
+	margin: 25px 0;
+}
+
+/*Support*/
+.support {
+	padding: 0 50px 50px 50px;
+	background: #173642;
+	color: #fff;
+}
+@media (min-width: 992px) {
+	.support {
+		padding: 0 100px 50px 100px;
+	}
+}
+.support p {
+	color: #fff;
+}
+.support a.icon {
+	margin: 50px auto 0 auto;
+	width: 100px;
+	height: 100px;
+	display: block;
+	border: 3px solid #23a1d1;
+	webkit-border-radius: 50px;
+	border-radius: 50px;
+	color: #fff;
+}
+.support a.icon:hover {
+	border: 3px solid #23a1d1;
+	background: #23a1d1;
+}
+.support .icon i {
+	line-height: 100px;
+}
+.support a:hover {
+	color: #fff;
+}
+
+/*Terms*/
+.terms {
+	background: #FFFFFF;
+	border: 1px solid #DBDBDB;
+	margin: 3px 0px 10px 0px;
+	padding: 4px;
+	height: 250px;
+	overflow-y: scroll;
+}
+.terms p, .terms ul, .terms ol {
+	color: #000000;
+}
+
+/*Alert*/
+.alert {
+	padding: 8px 14px 8px 14px;
+}
+
+/*Footer*/
+footer {
+	margin: 25px 0;
+	text-align: center;
+}
+footer a {
+	margin: 0px 5px;
+	line-height: 28px;
+}

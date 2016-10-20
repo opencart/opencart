@@ -1,0 +1,16 @@
+{
+	"name": "opencart/opencart",
+    "type": "project",
+    "description": "OpenCart",
+    "keywords": ["opencart", "ecommerce", "framework", "opensource"],
+    "homepage": "http://www.opencart.com",
+    "license": "GPL-3.0+",
+    "require": {
+        "cardinity/cardinity-sdk-php": "^1.0",
+        "braintree/braintree_php" : "3.2.0",
+        "leafo/scssphp": "0.0.12",
+        "divido/divido-php": ">=1.1.1",
+        "klarna/kco_rest": "^2.2",
+        "php": ">=5.4.0"
+    }
+}

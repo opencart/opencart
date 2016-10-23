@@ -1,0 +1,585 @@
+From 6e3b9ce6cd998f0306a522858c4c33867ea24adf Mon Sep 17 00:00:00 2001
+From: rodrigomanara <rodrigomanara@yahoo.co.uk>
+Date: Sun, 23 Oct 2016 18:08:51 +0100
+Subject: [PATCH] add twig on opencart also add it on composer, create new file
+ twig and left the old with wrong name as well
+
+---
+ .gitignore                              |   4 +-
+ composer.json                           |   1 +
+ upload/system/engine/loader.php         | 390 ++++++++++++++++----------------
+ upload/system/library/template.php      |  33 +--
+ upload/system/library/template/php.php  |  38 ++--
+ upload/system/library/template/twig.php |  39 ++++
+ 6 files changed, 281 insertions(+), 224 deletions(-)
+ create mode 100644 upload/system/library/template/twig.php
+
+diff --git a/.gitignore b/.gitignore
+index c8f0efc..1c4fe2f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -51,4 +51,6 @@
+ /tests/phpunit/bootstrap.php
+ 
+ # IDE Project files
+-/.idea
+\ No newline at end of file
++/.idea
++
++/nbproject
+\ No newline at end of file
+diff --git a/composer.json b/composer.json
+index ca3cc19..f993c39 100644
+--- a/composer.json
++++ b/composer.json
+@@ -9,6 +9,7 @@
+         "cardinity/cardinity-sdk-php": "^1.0",
+         "braintree/braintree_php" : "3.2.0",
+         "leafo/scssphp": "0.0.12",
++        "twig/twig": "^1.26",
+         "divido/divido-php": ">=1.1.1",
+         "klarna/kco_rest": "^2.2",
+         "php": ">=5.4.0"
+diff --git a/upload/system/engine/loader.php b/upload/system/engine/loader.php
+index 4072ca5..f19a2ad 100644
+--- a/upload/system/engine/loader.php
++++ b/upload/system/engine/loader.php
+@@ -1,193 +1,201 @@
+ <?php
++
+ final class Loader {
+-	protected $registry;
+-
+-	public function __construct($registry) {
+-		$this->registry = $registry;
+-	}
+-	
+-	public function controller($route, $data = array()) {
+-		// Sanitize the call
+-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+-		
+-		$output = null;
+-		
+-		// Trigger the pre events
+-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
+-		
+-		if ($result) {
+-			return $result;
+-		}
+-		
+-		if (!$output) {
+-			$action = new Action($route);
+-			$output = $action->execute($this->registry, array(&$data));
+-		}
+-			
+-		// Trigger the post events
+-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
+-		
+-		if ($output instanceof Exception) {
+-			return false;
+-		}
+-
+-		return $output;
+-	}
+-	
+-	public function model($route) {
+-		// Sanitize the call
+-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+-		
+-		// Trigger the pre events
+-		$this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
+-		
+-		if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
+-			$file  = DIR_APPLICATION . 'model/' . $route . '.php';
+-			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
+-			
+-			if (is_file($file)) {
+-				include_once($file);
+-	
+-				$proxy = new Proxy();
+-				
+-				foreach (get_class_methods($class) as $method) {
+-					$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
+-				}
+-				
+-				$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+-			} else {
+-				throw new \Exception('Error: Could not load model ' . $route . '!');
+-			}
+-		}
+-		
+-		// Trigger the post events
+-		$this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
+-	}
+-
+-	public function view($route, $data = array()) {
+-		$output = null;
+-		
+-		// Sanitize the call
+-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+-		
+-		// Trigger the pre events
+-		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
+-		
+-		if ($result) {
+-			return $result;
+-		}
+-		
+-		if (!$output) {
+-			$template = new Template($this->registry->get('config')->get('template_type'));
+-			
+-			foreach ($data as $key => $value) {
+-				$template->set($key, $value);
+-			}
+-		
+-			$output = $template->render($route . '.tpl');
+-		}
+-		
+-		// Trigger the post events
+-		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
+-		
+-		if ($result) {
+-			return $result;
+-		}
+-		
+-		return $output;
+-	}
+-
+-	public function library($route) {
+-		// Sanitize the call
+-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+-			
+-		$file = DIR_SYSTEM . 'library/' . $route . '.php';
+-		$class = str_replace('/', '\\', $route);
+-
+-		if (is_file($file)) {
+-			include_once($file);
+-
+-			$this->registry->set(basename($route), new $class($this->registry));
+-		} else {
+-			throw new \Exception('Error: Could not load library ' . $route . '!');
+-		}
+-	}
+-	
+-	public function helper($route) {
+-		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
+-
+-		if (is_file($file)) {
+-			include_once($file);
+-		} else {
+-			throw new \Exception('Error: Could not load helper ' . $route . '!');
+-		}
+-	}
+-	
+-	public function config($route) {
+-		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
+-		
+-		$this->registry->get('config')->load($route);
+-		
+-		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
+-	}
+-
+-	public function language($route) {
+-		$output = null;
+-		
+-		$this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$output));
+-		
+-		$output = $this->registry->get('language')->load($route);
+-		
+-		$this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
+-		
+-		return $output;
+-	}
+-	
+-	protected function callback($registry, $route) {
+-		return function($args) use($registry, &$route) {
+-			static $model = array(); 			
+-			
+-			$output = null;
+-			
+-			// Trigger the pre events
+-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
+-			
+-			if ($result) {
+-				return $result;
+-			}
+-			
+-			// Store the model object
+-			if (!isset($model[$route])) {
+-				$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
+-				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
+-
+-				if (is_file($file)) {
+-					include_once($file);
+-				
+-					$model[$route] = new $class($registry);
+-				} else {
+-					throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
+-				}
+-			}
+-
+-			$method = substr($route, strrpos($route, '/') + 1);
+-			
+-			$callable = array($model[$route], $method);
+-
+-			if (is_callable($callable)) {
+-				$output = call_user_func_array($callable, $args);
+-			} else {
+-				throw new \Exception('Error: Could not call model/' . $route . '!');
+-			}
+-			
+-			// Trigger the post events
+-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
+-			
+-			if ($result) {
+-				return $result;
+-			}
+-						
+-			return $output;
+-		};
+-	}	
+-}
+\ No newline at end of file
++
++    protected $registry;
++
++    public function __construct($registry) {
++        $this->registry = $registry;
++    }
++
++    public function controller($route, $data = array()) {
++        // Sanitize the call
++        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string) $route);
++
++        $output = null;
++
++        // Trigger the pre events
++        $result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
++
++        if ($result) {
++            return $result;
++        }
++
++        if (!$output) {
++            $action = new Action($route);
++            $output = $action->execute($this->registry, array(&$data));
++        }
++
++        // Trigger the post events
++        $result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
++
++        if ($output instanceof Exception) {
++            return false;
++        }
++
++        return $output;
++    }
++
++    public function model($route) {
++        // Sanitize the call
++        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string) $route);
++
++        // Trigger the pre events
++        $this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
++
++        if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
++            $file = DIR_APPLICATION . 'model/' . $route . '.php';
++            $class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
++
++            if (is_file($file)) {
++                include_once($file);
++
++                $proxy = new Proxy();
++
++                foreach (get_class_methods($class) as $method) {
++                    $proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
++                }
++
++                $this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string) $route), $proxy);
++            } else {
++                throw new \Exception('Error: Could not load model ' . $route . '!');
++            }
++        }
++
++        // Trigger the post events
++        $this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
++    }
++
++    public function view($route, $data = array(), $view = null) {
++        
++        $output = null;
++
++        //load view 
++        if (is_null($view))
++            $view = $this->registry->get('config')->get('template_type');
++
++        // Sanitize the call
++        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string) $route);
++
++        // Trigger the pre events
++        $result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
++
++        if ($result) {
++            return $result;
++        }
++
++        if (!$output) {
++            $template = new Template($view);
++
++            foreach ($data as $key => $value) {
++                $template->set($key, $value);
++            }
++
++            $output = $template->render($route);
++        }
++
++        // Trigger the post events
++        $result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
++
++        if ($result) {
++            return $result;
++        }
++
++        return $output;
++    }
++
++    public function library($route) {
++        // Sanitize the call
++        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string) $route);
++
++        $file = DIR_SYSTEM . 'library/' . $route . '.php';
++        $class = str_replace('/', '\\', $route);
++
++        if (is_file($file)) {
++            include_once($file);
++
++            $this->registry->set(basename($route), new $class($this->registry));
++        } else {
++            throw new \Exception('Error: Could not load library ' . $route . '!');
++        }
++    }
++
++    public function helper($route) {
++        $file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string) $route) . '.php';
++
++        if (is_file($file)) {
++            include_once($file);
++        } else {
++            throw new \Exception('Error: Could not load helper ' . $route . '!');
++        }
++    }
++
++    public function config($route) {
++        $this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
++
++        $this->registry->get('config')->load($route);
++
++        $this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
++    }
++
++    public function language($route) {
++        $output = null;
++
++        $this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$output));
++
++        $output = $this->registry->get('language')->load($route);
++
++        $this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
++
++        return $output;
++    }
++
++    protected function callback($registry, $route) {
++        return function($args) use($registry, &$route) {
++            static $model = array();
++
++            $output = null;
++
++            // Trigger the pre events
++            $result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
++
++            if ($result) {
++                return $result;
++            }
++
++            // Store the model object
++            if (!isset($model[$route])) {
++                $file = DIR_APPLICATION . 'model/' . substr($route, 0, strrpos($route, '/')) . '.php';
++                $class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
++
++                if (is_file($file)) {
++                    include_once($file);
++
++                    $model[$route] = new $class($registry);
++                } else {
++                    throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
++                }
++            }
++
++            $method = substr($route, strrpos($route, '/') + 1);
++
++            $callable = array($model[$route], $method);
++
++            if (is_callable($callable)) {
++                $output = call_user_func_array($callable, $args);
++            } else {
++                throw new \Exception('Error: Could not call model/' . $route . '!');
++            }
++
++            // Trigger the post events
++            $result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
++
++            if ($result) {
++                return $result;
++            }
++
++            return $output;
++        };
++    }
++
++}
+diff --git a/upload/system/library/template.php b/upload/system/library/template.php
+index 0ac737e..7969a67 100644
+--- a/upload/system/library/template.php
++++ b/upload/system/library/template.php
+@@ -1,22 +1,25 @@
+ <?php
++
+ class Template {
+-	private $adaptor;
+ 
+-  	public function __construct($adaptor) {
+-	    $class = 'Template\\' . $adaptor;
++    private $adaptor;
++
++    public function __construct($adaptor) {
++        $class = 'Template\\' . $adaptor;
++
++        if (class_exists($class)) {
++            $this->adaptor = new $class();
++        } else {
++            throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
++        }
++    }
+ 
+-		if (class_exists($class)) {
+-			$this->adaptor = new $class();
+-		} else {
+-			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
+-		}
+-	}
++    public function set($key, $value) {
++        $this->adaptor->set($key, $value);
++    }
+ 
+-	public function set($key, $value) {
+-		$this->adaptor->set($key, $value);
+-	}
++    public function render($template) {
++        return $this->adaptor->render($template);
++    }
+ 
+-	public function render($template) {
+-		return $this->adaptor->render($template);
+-	}
+ }
+diff --git a/upload/system/library/template/php.php b/upload/system/library/template/php.php
+index 66abbd9..43acaac 100644
+--- a/upload/system/library/template/php.php
++++ b/upload/system/library/template/php.php
+@@ -1,26 +1,30 @@
+ <?php
++
+ namespace Template;
++
+ final class PHP {
+-	private $data = array();
+-	
+-	public function set($key, $value) {
+-		$this->data[$key] = $value;
+-	}
+-	
+-	public function render($template) {
+-		$file = DIR_TEMPLATE . $template;
+ 
+-		if (is_file($file)) {
+-			extract($this->data);
++    private $data = array();
++
++    public function set($key, $value) {
++        $this->data[$key] = $value;
++    }
++
++    public function render($template) {
++        $file = DIR_TEMPLATE . $template . '.tpl';
++
++        if (is_file($file)) {
++            extract($this->data);
++
++            ob_start();
+ 
+-			ob_start();
++            require($file);
+ 
+-			require($file);
++            return ob_get_clean();
++        }
+ 
+-			return ob_get_clean();
+-		}
++        trigger_error('Error: Could not load template ' . $file . '!');
++        exit();
++    }
+ 
+-		trigger_error('Error: Could not load template ' . $file . '!');
+-		exit();
+-	}	
+ }
+diff --git a/upload/system/library/template/twig.php b/upload/system/library/template/twig.php
+new file mode 100644
+index 0000000..60f806a
+--- /dev/null
++++ b/upload/system/library/template/twig.php
+@@ -0,0 +1,39 @@
++<?php
++
++namespace Template;
++
++use \Twig_Loader_Filesystem;
++use \Twig_Environment;
++use \Twig_Extension_Debug;
++
++final class TWIG {
++
++    private $data = array();
++
++    /**
++     * 
++     * @param type $key
++     * @param type $value
++     */
++    public function set($key, $value) {
++        $this->data[$key] = $value;
++    }
++
++    /**
++     * 
++     * @param type $template
++     */
++    public function render($template) {
++
++        $loader = new Twig_Loader_Filesystem(DIR_TEMPLATE);
++        $twig = new Twig_Environment($loader, array(
++            'cache' => DIR_CACHE,
++            'debug' => true
++        ));
++
++        $twig->addExtension(new Twig_Extension_Debug());
++
++        return $twig->render($template . ".html.twig", $this->data);
++    }
++
++}
+-- 
+2.5.1.windows.1
+

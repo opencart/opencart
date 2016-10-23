@@ -52,3 +52,5 @@
 
 # IDE Project files
 /.idea
+
+/nbproject

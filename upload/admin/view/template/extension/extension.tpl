@@ -19,17 +19,11 @@
         <fieldset>
           <legend><?php echo $text_type; ?></legend>
           <div class="well">
-            <div class="input-group">
-              <select name="type" class="form-control">
-                <?php foreach ($categories as $category) { ?>
-                <?php if ($type == $category['code']) { ?>
-                <option value="<?php echo $category['href']; ?>" selected="selected"><?php echo $category['text']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $category['href']; ?>"><?php echo $category['text']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-              <span class="input-group-addon"><i class="fa fa-filter"></i> <?php echo $text_filter; ?></span>
+            <div class="btn-group ext-types">
+              <?php foreach ($categories as $category) { ?>
+              <?php $active = ($type == $category['code'])?' active':''; ?>
+              <button type="button" class="ext-type btn btn-default<?php echo $active; ?>" data-value="<?php echo $category['href']; ?>"><i class="fa fa-filter"></i> <?php echo $category['text']; ?></button>
+              <?php } ?>
             </div>
           </div>
         </fieldset>
@@ -37,20 +31,24 @@
       </div>
     </div>
   </div>
-  <?php if ($categories) { ?>
-  <script type="text/javascript"><!--
-$('select[name="type"]').on('change', function() {
+
+<?php if ($categories) { ?>
+<script type="text/javascript"><!--
+$('.ext-type').on('click', function() {
+	if ($(this).hasClass('active')) return;
+	$(this).addClass('active').siblings().removeClass('active');
+	$('.ext-types').trigger('change');
+});
+
+$('.ext-types').on('change', function() {
 	$.ajax({
-		url: $('select[name="type"]').val(),
+		url: $('.ext-type.active').attr('data-value'),
 		dataType: 'html',
 		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
+			$('.ext-type.active .fa-filter').addClass('fa-circle-o-notch fa-spin').removeClass('fa-filter');
 		},
 		complete: function() {
-			$('.fa-circle-o-notch').addClass('fa-filter');
-			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
-			
+			$('.ext-type.active .fa-circle-o-notch').addClass('fa-filter').removeClass('fa-circle-o-notch fa-spin');
 		},
 		success: function(html) {
 			$('#extension').html(html);
@@ -61,11 +59,15 @@ $('select[name="type"]').on('change', function() {
 	});
 });
 
-$('select[name="type"]').trigger('change');
+if ($('.ext-type.active').length > 0) {
+	$('.ext-types').trigger('change');
+} else {
+	$('.ext-type:first').click();
+}
 
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();
-	
+
 	var node = this;
 
 	$.ajax({
@@ -88,10 +90,10 @@ $('#extension').on('click', '.btn-success', function(e) {
 
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
-	
+
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
-	
+
 		$.ajax({
 			url: $(node).attr('href'),
 			dataType: 'html',
@@ -111,6 +113,7 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	}
 });
 //--></script>
-  <?php } ?>
+<?php } ?>
+
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

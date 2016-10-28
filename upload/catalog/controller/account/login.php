@@ -3,7 +3,19 @@ class ControllerAccountLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->model('account/customer');
+
+		if( isset($_SERVER['HTTP_REFERER'])) {
+			if(
+				strpos($_SERVER['HTTP_REFERER'],"product/product")
+				|| strpos($_SERVER['HTTP_REFERER'],"checkout/cart")
+				|| strpos($_SERVER['HTTP_REFERER'],"checkout/checkout")
+			)
+			{
+				$this->session->data['login_redirect'] = $_SERVER['HTTP_REFERER'];
+			}
+		}
+
+			$this->load->model('account/customer');
 
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
@@ -91,10 +103,10 @@ class ControllerAccountLogin extends Controller {
 			$this->model_account_activity->addActivity('login', $activity_data);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
-			if(!empty($this->session->data['redirect_after_login'])) {
-				$url = $this->session->data['redirect_after_login'];
-				unset($this->session->data['redirect_after_login']);
-				$this->redirect($this->session->data['redirect_after_login']);
+			if(!empty($this->session->data['login_redirect'])) {
+				$url = $this->session->data['login_redirect'];
+				unset($this->session->data['login_redirect']);
+				$this->response->redirect($url);
 			}
 			else if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));

@@ -13,7 +13,6 @@ class ControllerAccountForgotten extends Controller {
 
 		$this->load->model('account/customer');
 
-
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$this->load->language('mail/forgotten');
 
@@ -44,7 +43,6 @@ class ControllerAccountForgotten extends Controller {
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 
-			var_dump("1");
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			// Add to activity log

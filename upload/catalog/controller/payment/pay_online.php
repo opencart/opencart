@@ -16,8 +16,4 @@ class ControllerPaymentPayOnline extends Controller{
 
         return $this->load->view('payment/pay_online', $data);
     }
-
-    public function confirm() {
-        
-    }
 }

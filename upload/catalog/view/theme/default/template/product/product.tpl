@@ -1,18 +1,21 @@
 <?php echo $header; ?>
 
-<?php  if($ccttype==0) { ?>
+<?php  if ($ccttype==0) { ?>
 <div class="container product-bg" ></div>
-<?php  } else { ?>
+<?php  } elseif ($ccttype==1) { ?>
 <div class="container product-bg-cold" ></div>
+<?php  } else  { ?>
+<div class="container product-bg-candle" ></div>
 <?php  }  ?>
 
-
 <div class="container">
-  <!--<ul class="breadcrumb">
+  <?php /*>
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </ul>-->
+  </ul>
+  <*/?>
   <div class="row">
     <?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
@@ -60,10 +63,12 @@
               <?php } ?>
             </div>
             <div class="col-md-6">
-            <!--<div class="btn-group">
+              <?php /*
+           <div class="btn-group">
                    <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
                    <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
-               </div>-->
+               </div>
+            */ ?>
               <h3 class="product-import">
                 <?php echo $heading_title.'  pack (6 units)'; ?>
               </h3>
@@ -80,21 +85,26 @@
                   <?php echo $text_model; ?>
                   <?php echo $model; ?>
                 </li>
-                <!--<?php if ($reward) { ?>
+                <?php /*>
+                   <?php if ($reward) { ?>
                       <li><?php echo $text_reward; ?> <?php echo $reward; ?></li>
-                      <?php } ?>-->
+                      <?php } ?>
+                < */ ?>
                 <li>
                   <?php echo $text_stock; ?><span><?php echo $stock; ?></span> </li>
               </ul>
             </div>
           </div>
-          <!--<?php if ($attribute_groups) { ?>
+         <?php /*>
+           <?php if ($attribute_groups) { ?>
             <li><a href="#tab-specification" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
-            <?php } ?>-->
+            <?php } ?>
+        < */?>
           <div class="product_description">
             <?php echo $description; ?>
           </div>
-          <!--<?php if ($attribute_groups) { ?>
+         <?php /*
+         <?php if ($attribute_groups) { ?>
             <div class="tab-pane" id="tab-specification">
               <table class="table table-bordered">
                 <?php foreach ($attribute_groups as $attribute_group) { ?>
@@ -114,7 +124,8 @@
                 <?php } ?>
               </table>
             </div>
-            <?php } ?>-->
+            <?php } ?>
+        */ ?>
         </div>
         <?php if ($column_left || $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
@@ -146,20 +157,24 @@
                 </h3>
             </li>
             <?php } ?>
-            <!--<?php if ($tax) { ?>
+
+            <?php /*
+            <?php if ($tax) { ?>
             <li><?php echo $text_tax; ?> <?php echo $tax; ?></li>
             <?php } ?>
             <?php if ($points) { ?>
             <li><?php echo $text_points; ?> <?php echo $points; ?></li>
-            <?php } ?>-->
-            <!--<?php if ($discounts) { ?>
+            <?php } ?>
+           <?php if ($discounts) { ?>
             <li>
               <hr>
             </li>
             <?php foreach ($discounts as $discount) { ?>
             <li><?php echo $discount['quantity']; ?><?php echo $text_discount; ?><?php echo $discount['price']; ?></li>
             <?php } ?>
-            <?php } ?>-->
+            <?php } ?>
+            <*/?>
+
           </ul>
           <?php } ?>
           <div id="product">
@@ -324,16 +339,31 @@
                     <option value="4">4 pack (24 bulbs)</option>
                     <option value="5">5 pack (30 bulbs)</option>
                 </select>
-              <!--<input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />-->
-              <!--<div class="input-group spinner" data-trigger="spinner">
+
+               <?php /*>
+              <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />
+              <div class="input-group spinner" data-trigger="spinner">
                 <input type="text" name="quantity" class="form-control text-center" value="1" data-rule="quantity" data-max="5">
                 <div class="input-group-addon">
                   <a href="javascript:;" type="submit" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                   <a href="javascript:;" type="submit" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                 </div>
-              </div>-->
-              <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+              </div>
+              <*/?>
+
+              <!--energy conservation-->
+              <?php if($energy_price > 0) { ?>
+              <p>
+                <?php if($energy) { ?>
+                <input type="checkbox" name="energy_price" value="1" checked="checked" /> <?php echo $text_energy_conservation; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="energy_price" value="0" /> <?php echo $text_energy_conservation; ?>
+                <?php } ?>
+              </p>
+              <?php } else { ?>
               <br />
+              <?php } ?>
+              <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
               <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-cart-add btn-lg btn-block">
                   <i class="fa fa-shopping-cart"></i><?php echo $button_cart; ?>
               </button>
@@ -346,7 +376,9 @@
           </div>
           <?php if ($review_status) { ?>
           <div class="rating">
-            <!--<p>
+
+            <?php /*>
+              <p>
               <?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($rating < $i) { ?>
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -354,7 +386,9 @@
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } ?>
               <?php } ?>
-              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a></p>-->
+              <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $reviews; ?></a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;"><?php echo $text_write; ?></a></p>
+            <*/?>
+
             <hr>
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style" data-url="<?php echo $share; ?>">
@@ -488,8 +522,10 @@
           </div>
           <div class="button-group">
             <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
-            <!--<button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>-->
+            <?php /*>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+             < */ ?>
           </div>
         </div>
       </div>
@@ -676,11 +712,8 @@ $('button[id^=\'button-upload\']').on('click', function() {
 $('#review').delegate('.pagination a', 'click', function(e) {
     e.preventDefault();
 
-    //$('#review').fadeOut('slow');
-
     $('#review').load(this.href);
 
-    //$('#review').fadeIn('slow');
 });
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
@@ -744,20 +777,11 @@ $('#form-review a[name="rating"]').on('click',function(){
 });
 
 $(document).ready(function() {
-
-//  $('#pslider').Thumbelina({
-//    $bwdBut:$('#back'),    // Selector to left button.
-//    $fwdBut:$('#forward')    // Selector to right button.
-//    ,maxSpeed:5
-//  });
-
-	/*$('.thumbnails').magnificPopup({
-		type:'image',
-		delegate: 'a',
-		gallery: {
-			enabled:true
-		}
-	});*/
+  $('input[type="checkbox"][name="energy_price"]').on('click', function () {
+    var action = '<?php echo $action; ?>';
+    action = action.replace(/&amp;/g, '&');
+    location = action + '&energy=' + $('input[type="checkbox"][name="energy_price"]').prop("checked");
+  });
 });
 //--></script>
 <?php echo $footer; ?>

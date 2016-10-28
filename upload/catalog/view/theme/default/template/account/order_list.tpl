@@ -16,7 +16,10 @@
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <?php if ($orders) { ?>
-      <!--<div class="table-responsive">
+
+      <?php /*>
+      <!--
+      <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -43,7 +46,10 @@
             <?php } ?>
           </tbody>
         </table>
-      </div>-->
+      </div>
+      -->
+     <*/?>
+
       <div class="table-responsive">
         <table class="table" id="order_list">
           <thead>
@@ -136,9 +142,15 @@
                     <span class="order-canceled"><?php echo $text_order_canceled; ?></span></a>
                 </p>
                 <?php } ?>
-                <!--Completed->
-                <!--<?php if(isset($order_statuses['Complete']) && $order['status'] == $order_statuses['Complete']) { ?>
-                <?php } ?>-->
+                <!--Completed-->
+
+                <?php /*>
+                <!--
+                <?php if(isset($order_statuses['Complete']) && $order['status'] == $order_statuses['Complete']) { ?>
+                <?php } ?>
+                -->
+                <*/?>
+
                 <?php if(isset($order_statuses['Canceled']) && $order['status'] == $order_statuses['Canceled']) { ?>
                   <a href="<?php echo $order['reorder_href']; ?>" class="btn-reorder">
                     <i class="fa fa-bolt"></i> Reorder

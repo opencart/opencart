@@ -1,10 +1,40 @@
 <?php echo $header; ?>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3S5ffnhfnOotls360wQfkh3vSvFt8qjw">
+</script>
+
+<script>
+  function initialize()
+  {
+
+    var center=new google.maps.LatLng(43.477906,-80.5498247);
+    var mapProp = {
+      center:center,
+      zoom:14,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap")
+            ,mapProp);
+
+    marker=new google.maps.Marker({
+      position:center,
+      animation:google.maps.Animation.BOUNCE
+    });
+
+    marker.setMap(map);
+  }
+
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
 <div class="container">
-  <ul class="breadcrumb">
+  <?php /*>
+  <!--<ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </ul>
+  </ul>-->
+<*/?>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
@@ -15,7 +45,25 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <h3><?php echo $text_location; ?></h3>
+      <img src="<?php echo HTTPS_SERVER . 'image/catalog/xlight/about_us.jpg'; ?>">
+      <fieldset>
+        <legend><?php echo $text_location; ?></legend>
+        <div class="row">
+          <div class="col-md-7">
+            <div id="googleMap" style="height:380px;"> </div>
+          </div>
+          <div class="col-md-5 contact">
+            <p><strong><?php echo $store; ?></strong></p>
+            <p><?php echo $address; ?></p>
+            <br>
+            <p><strong>Email</strong></p>
+            <p><a href="mailto:sales@xlight.ca">sales@xlight.ca</a></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <?php /*>
+      <!--<h3><?php echo $text_location; ?></h3>
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
@@ -106,7 +154,9 @@
         </div>
         <?php } ?>
       </div>
-      <?php } ?>
+      <?php } ?>-->
+     <*/?>
+
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend><?php echo $text_contact; ?></legend>

@@ -6,9 +6,15 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <!--<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+
+  <?php /*>
+  <!--
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>-->
+  </div>
+  -->
+  <*/?>
+
   <div id="recorder" class="modal fade in">
     <div class="modal-dialog modal-cart cart-success">
       <div class="modal-content">
@@ -21,9 +27,13 @@
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <!--<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+  <?php /*>
+  <!--
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>-->
+  </div>
+  -->
+  <*/?>
   <div id="recorder" class="modal fade in">
     <div class="modal-dialog modal-cart cart-danger">
       <div class="modal-content">
@@ -61,7 +71,11 @@
             <td class="text-left" style="width: 50%;"><?php if ($invoice_no) { ?>
               <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
               <?php } ?>
-              <!--<b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />-->
+              <?php /*>
+              <!--
+              <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
+              -->
+              <*/?>
               <b><?php echo $text_order_no; ?>:</b> <?php echo $order_no; ?><br />
               <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
             <td class="text-left" style="width: 50%;"><?php if ($payment_method) { ?>

@@ -30,9 +30,12 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?>
-        <!--<?php if ($weight) { ?>
+        <?php /*
+        <?php if ($weight) { ?>
         &nbsp;(<?php echo $weight; ?>)
-        <?php } ?>-->
+        <?php } ?>
+        */?>
+
       </h1>
       <form id="cart_form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
@@ -82,10 +85,17 @@
                       </div>
                     </div>
                     <span class="unit_desc"><?php echo $text_unit; ?></span>
-                    <!--<input type="number" min="1" name="quantity[<?php echo $product['cart_id']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />-->
+
+                    <?php /*
+                    <input type="number" min="1" name="quantity[<?php echo $product['cart_id']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
+                    */ ?>
                     <span class="input-group-btn">
-                    <!--<button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>-->
-                    <!--<button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>-->
+
+                    <?php /*
+                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['cart_id']; ?>');"><i class="fa fa-times-circle"></i></button>
+                    */ ?>
+
                     </span>
                 </td>
                 <td class="text-right">
@@ -224,7 +234,10 @@
           </div>
         </div>
       </div>
-      <!--<img class="pull-right" src="<?php echo HTTPS_SERVER; ?>/catalog/view/theme/default/image/Norton-Secure-Logo.jpg" />-->
+
+      <?php /*
+      <img class="pull-right" src="<?php echo HTTPS_SERVER; ?>/catalog/view/theme/default/image/Norton-Secure-Logo.jpg" />
+      */?>
       <?php echo $content_bottom; ?></div>
       <?php echo $column_right; ?></div>
 </div>

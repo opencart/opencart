@@ -59,20 +59,22 @@
       <h1><a href="<?php echo $home; ?>"><?php echo $name; ?></a></h1>
       <?php } ?>
     </div>
-    <!--diaable currency select-->
-    <!--<?php echo $currency; ?>-->
+    <!--disable currency select-->
     <?php echo $language; ?>
     <div id="top-links" class="nav pull-right">
       <ul class="list-inline">
         <!--remove the contact-->
-        <!--<li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>-->
         <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $logindesc; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $logindesc; ?></span> <span class="caret"></span></a>
           <ul class="dropdown-menu dropdown-menu-left">
             <?php if ($logged) { ?>
             <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
             <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
-            <!--<li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
-            <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>-->
+
+            <?php /* >
+            <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
+            <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+            <*/?>
+
             <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
             <?php } else { ?>
             <li><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
@@ -81,13 +83,10 @@
           </ul>
         </li>
         <!--remove the wishlist-->
-        <!--<li><a href="<?php echo $wishlist; ?>" id="wishlist-total" title="<?php echo $text_wishlist; ?>"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a></li>-->
         <li>
-          <!--<a href="<?php echo $shopping_cart; ?>" title="<?php echo $text_shopping_cart; ?>"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a>-->
           <?php echo($cart) ?>
         </li>
         <!--remove checkout-->
-        <!-- <li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></li> -->
         <!-- add the bbs link 2016.09.12 start -->
         <li ><a href="http://bbs.xlight.ca/sso" target="_blank" class="sso"><i class="fa fa-commenting"></i>XFans</a></li>
         <!-- add the bbs link 2016.09.12 end -->
@@ -96,7 +95,8 @@
   </div>
 </nav>
 <!--remove the search -->
-<!--<header>
+<?php /* ?>
+<<header>
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
@@ -113,7 +113,8 @@
       <div class="col-sm-3"><?php echo $cart; ?></div>
     </div>
   </div>
-</header>-->
+</header>
+< */ ?>
 <?php if ($categories) { ?>
 <div class="container">
   <nav id="menu" class="navbar">

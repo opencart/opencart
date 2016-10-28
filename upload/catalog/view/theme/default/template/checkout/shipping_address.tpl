@@ -205,6 +205,9 @@
     </div>
   </div>
 </form>
+<hr />
+<h3><b><?php echo $text_shipping_time_title; ?></b></h3>
+<p><?php echo $text_shipping_time_content; ?></p>
 <script type="text/javascript"><!--
 $('input[name=\'shipping_address\']').on('change', function() {
 	if (this.value == 'new') {

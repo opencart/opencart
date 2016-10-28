@@ -7,7 +7,7 @@
     $('#button-confirm').on('click', function() {
         $.ajax({
             type: 'get',
-            url: 'index.php?route=payment/pay_online/confirm',
+            url: 'index.php?route=checkout/confirm/addOrder',
             cache: false,
             beforeSend: function() {
                 $('#button-confirm').button('loading');
@@ -15,8 +15,13 @@
             complete: function() {
                 $('#button-confirm').button('reset');
             },
-            success: function() {
-                location = '<?php echo $continue; ?>';
+            success: function(json) {
+                debugger;
+                if(json['success'] == 1) {
+                    location = '<?php echo $continue; ?>';
+                } else {
+                    location = json['redirect'];
+                }
             }
         });
     });

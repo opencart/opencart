@@ -71,7 +71,7 @@
               <?php } ?>
             </div>
           </div>
-
+          <?php /*>
           <!--<div class="form-group required">
             <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
             <div class="col-sm-10">
@@ -463,6 +463,7 @@
           <?php } ?>
           <?php } ?>
           <?php } ?>-->
+          <*/?>
         </fieldset>
         <fieldset>
           <legend><?php echo $text_your_password; ?></legend>
@@ -496,6 +497,8 @@
                 <label class="radio-inline">
                     <input type="radio" name="newsletter" value="0" />
                     <?php echo $text_no; ?></label>
+
+                <?php /* >
               <!--<?php if ($newsletter) { ?>
               <label class="radio-inline">
                 <input type="radio" name="newsletter" value="1" checked="checked" />
@@ -511,6 +514,7 @@
                 <input type="radio" name="newsletter" value="0" checked="checked" />
                 <?php echo $text_no; ?></label>
               <?php } ?>-->
+                <*/?>
             </div>
           </div>
         </fieldset>
@@ -593,8 +597,6 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 					$('#custom-field' + custom_field['custom_field_id']).addClass('required');
 				}
 			}
-
-
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

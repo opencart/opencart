@@ -32,6 +32,8 @@
                     </a>
                 </li>
             </ul>
+
+            <?php /*
             <!--<div class="row">
                 <div class="col-md-12">
                     <h2 class="text-danger">SandBox Test Account</h2>
@@ -46,7 +48,9 @@
                     <p><h3>Expiration Date: <b>10/2021</b></h3></p>
                     <p><h3>Card Security Code (CVV2): <b>123</b></h3></p>
                 </div>
-            </div>-->
+            </div>
+            */?>
+
             <?php echo $content_bottom; ?>
         </div>
         <?php echo $column_right; ?>

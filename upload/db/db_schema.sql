@@ -1,5 +1,5 @@
 /*
-*
+SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.5.50-0ubuntu0.14.04.1 : Database - shop
 *********************************************************************
 */
@@ -143,7 +143,7 @@ CREATE TABLE `oc_api_ip` (
   `api_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   PRIMARY KEY (`api_ip_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_api_session` */
 
@@ -159,7 +159,7 @@ CREATE TABLE `oc_api_session` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_session_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=273 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=279 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_attribute` */
 
@@ -255,7 +255,7 @@ CREATE TABLE `oc_cart` (
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`cart_id`),
   KEY `cart_id` (`customer_id`,`session_id`,`product_id`,`recurring_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=369 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=403 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_category` */
 
@@ -525,7 +525,7 @@ CREATE TABLE `oc_customer` (
   `tumblr_id` varchar(255) DEFAULT NULL,
   `yahoo_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_customer_activity` */
 
@@ -539,7 +539,7 @@ CREATE TABLE `oc_customer_activity` (
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_activity_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=332 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=348 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_customer_group` */
 
@@ -587,7 +587,7 @@ CREATE TABLE `oc_customer_ip` (
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_customer_login` */
 
@@ -603,7 +603,7 @@ CREATE TABLE `oc_customer_login` (
   PRIMARY KEY (`customer_login_id`),
   KEY `email` (`email`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_customer_online` */
 
@@ -701,7 +701,7 @@ CREATE TABLE `oc_extension` (
   `type` varchar(32) NOT NULL,
   `code` varchar(32) NOT NULL,
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_filter` */
 
@@ -1079,7 +1079,7 @@ CREATE TABLE `oc_order` (
   `date_modified` datetime NOT NULL,
   `order_no` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_order_custom_field` */
 
@@ -1109,7 +1109,7 @@ CREATE TABLE `oc_order_history` (
   `comment` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_history_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=272 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_order_option` */
 
@@ -1143,7 +1143,7 @@ CREATE TABLE `oc_order_product` (
   `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
   PRIMARY KEY (`order_product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=384 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_order_recurring` */
 
@@ -1211,7 +1211,7 @@ CREATE TABLE `oc_order_total` (
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`order_total_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=556 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=584 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_order_voucher` */
 
@@ -1422,7 +1422,7 @@ CREATE TABLE `oc_product_discount` (
   `date_end` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`product_discount_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=521 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=525 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_product_dtit` */
 
@@ -1434,6 +1434,7 @@ CREATE TABLE `oc_product_dtit` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   `shortdesc` varchar(500) DEFAULT NULL,
+  `energy_price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
@@ -1458,7 +1459,7 @@ CREATE TABLE `oc_product_image` (
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_image_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3664 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3718 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_product_option` */
 
@@ -1537,7 +1538,7 @@ CREATE TABLE `oc_product_saving_image` (
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) DEFAULT NULL,
   PRIMARY KEY (`product_saving_image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `oc_product_special` */
 
@@ -1553,7 +1554,7 @@ CREATE TABLE `oc_product_special` (
   `date_end` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`product_special_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=721 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=737 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_product_to_category` */
 
@@ -1718,7 +1719,7 @@ CREATE TABLE `oc_review` (
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`review_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_setting` */
 
@@ -1732,7 +1733,7 @@ CREATE TABLE `oc_setting` (
   `value` text NOT NULL,
   `serialized` tinyint(1) NOT NULL,
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5375 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5379 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_stock_status` */
 
@@ -1832,7 +1833,7 @@ CREATE TABLE `oc_url_alias` (
   PRIMARY KEY (`url_alias_id`),
   KEY `query` (`query`),
   KEY `keyword` (`keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=987 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=996 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `oc_user` */
 

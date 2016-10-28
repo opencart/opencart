@@ -35,6 +35,8 @@ $_['text_year']                = 'year';
 $_['text_per_bulb']             = '(CDN$%s per bulb)';
 // view chart
 $_['text_view_chart']       = 'Compare Brightness:';
+// energy conservation
+$_['text_energy_conservation'] = 'Energy Conservation';
 
 // Entry
 $_['entry_qty']                = 'QTY:';

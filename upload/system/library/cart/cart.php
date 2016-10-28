@@ -188,6 +188,13 @@ class Cart {
 					$price = $product_special_query->row['price'];
 				}
 
+				// if is energy conservation
+				$product_energy_query = $this->db->query("SELECT energy_price FROM " . DB_PREFIX . "product_dtit WHERE product_id = '" . (int)$cart['product_id'] . "'");
+
+				if(isset($product_energy_query->row['energy_price']) && isset($this->session->data['energy_price']) && $this->session->data['energy_price'] == 1) {
+					$price = $price - $product_energy_query->row['energy_price'];
+				}
+
 				// Reward Points
 				$product_reward_query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$cart['product_id'] . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
 

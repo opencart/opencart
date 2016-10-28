@@ -50,6 +50,9 @@ $_['text_safe_secured_content'] = 'The safety and security of your account infor
 $_['text_instant_help'] = 'Instant Help';
 $_['text_instant_help_content'] = 'We want your experience at <a href="https://xlight.ca">Xlight.ca</a> to be as enjoyable and simple as a visit to one of our stores. And in the same way there’s always a friendly Xlight representative to help in-store, we offer a complete Help Section online and an online form you can use to send us an email. We’re thinking up new ways to make our website easier and more fun to use all the time. If you come up with an idea of your own, be sure to let us know!';
 
+$_['text_shipping_time_title'] = 'Shipping Time Frame';
+$_['text_shipping_time_content'] = 'Sellers ship your item(s) within 2 business days of purchase. Domestic Standard shipments are expected to arrive within 7 to 10 business days after shipping. Shipments to the United States are expected to arrive 7 to 12 days after shipping. Marketplace shipping times are not guaranteed and the actual performance varies by seller.';
+
 // Column
 $_['column_name']                    = 'Product Name';
 $_['column_model']                   = 'Model';

@@ -129,7 +129,8 @@ class ModelCatalogProduct extends Model {
 //		add by terrylu 2016.09.24 for dtit ext but anti-pattern start
 		//add insert model
 		if (isset($data['ccttype']) && isset($data['shortdesc'] )) {
-			$this->db->query("INSERT INTO " . DB_PREFIX .  "product_dtit SET product_id = '" . (int)$product_id . "', ccttype = '" . (int) $data['ccttype']. "' ". ", shortdesc = '" . $this->db->escape($data['shortdesc'])."'".  ",date_added = NOW(),date_modified = NOW() " );
+			print_r($data['energy_price']);
+			$this->db->query("INSERT INTO " . DB_PREFIX .  "product_dtit SET product_id = '" . (int)$product_id . "', ccttype = '" . (int) $data['ccttype']. "' ". ", shortdesc = '" . $this->db->escape($data['shortdesc']) . "', energy_price='" . $this->db->escape($data['energy_price']) . "',date_added = NOW(),date_modified = NOW() " );
 		}
 //		add by terrylu 2016.09.24 for dtit ext but anti-pattern end
 
@@ -300,7 +301,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_dtit WHERE  product_id=" . (int)$product_id . "");
 		if (isset($data['ccttype'])&& isset($data['shortdesc'] )) {
-			$this->db->query("INSERT INTO " . DB_PREFIX .  "product_dtit SET product_id = '" . (int)$product_id . "', ccttype = '" . (int) $data['ccttype']. "' ". ", shortdesc = '" . $this->db->escape($data['shortdesc'])."'".  ",date_added = NOW(),date_modified = NOW() " );
+			$this->db->query("INSERT INTO " . DB_PREFIX .  "product_dtit SET product_id = '" . (int)$product_id . "', ccttype = '" . (int) $data['ccttype']. "' ". ", shortdesc = '" . $this->db->escape($data['shortdesc']) . "', energy_price='" . $this->db->escape($data['energy_price']) . "',date_added = NOW(),date_modified = NOW() " );
 		}
 //		add by terrylu 2016.09.24 for dtit ext but anti-pattern end
 		$this->cache->delete('product');

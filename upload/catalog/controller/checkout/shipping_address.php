@@ -19,6 +19,10 @@ class ControllerCheckoutShippingAddress extends Controller {
 		$data['entry_country'] = $this->language->get('entry_country');
 		$data['entry_zone'] = $this->language->get('entry_zone');
 
+		// shipping times
+		$data['text_shipping_time_title'] = $this->language->get('text_shipping_time_title');
+		$data['text_shipping_time_content'] = $this->language->get('text_shipping_time_content');
+
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_upload'] = $this->language->get('button_upload');
 

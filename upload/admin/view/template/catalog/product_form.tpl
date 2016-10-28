@@ -983,13 +983,24 @@
                     <?php echo $text_ccttypecold; ?>
                     <?php } ?>
                   </label>
+                  <label class="radio-inline">
+                    <?php if ($ccttype==2) { ?>
+                    <input type="radio" name="ccttype" value="2" checked="checked" />
+                    <?php echo $text_ccttypecandle; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="ccttype" value="2" />
+                    <?php echo $text_ccttypecandle; ?>
+                    <?php } ?>
+                  </label>
                 </div>
                 <label class="col-sm-2 control-label"><?php echo $entry_shortdesc; ?></label>
-
                 <div class="col-sm-10">
                   <input type="text" name="shortdesc" value="<?php echo $shortdesc; ?>" placeholder="<?php echo $entry_shortdesc; ?>" id="input-shortdesc" class="form-control" />
                 </div>
-
+                <label class="col-sm-2 control-label"><?php echo $entry_energy_price; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="energy_price" value="<?php echo $energy_price; ?>" placeholder="<?php echo $entry_energy_price; ?>" id="input-energy" class="form-control" />
+                </div>
               </div>
             </div>
 

@@ -466,13 +466,13 @@ class ControllerCheckoutConfirm extends Controller {
 				);
 			}
 
-			$this->load->model('checkout/order');
-
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			$this->session->data['order_data'] = $order_data;
+			//$this->load->model('checkout/order');
+			//$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
 			// update order status to pending
-			$this->load->model('checkout/order');
-			$this->model_checkout_order->updateOrderStatus($this->session->data['order_id'], $this->config->get('pp_express_pending_status_id'));
+			//$this->load->model('checkout/order');
+			//$this->model_checkout_order->updateOrderStatus($this->session->data['order_id'], $this->config->get('pp_express_pending_status_id'));
 
 			$totals = $data['results'];
 
@@ -523,5 +523,29 @@ class ControllerCheckoutConfirm extends Controller {
 				$R[$k]=$v;
 			}
 		}return $R;
+	}
+
+	function addOrder() {
+		$order_data = $this->session->data['order_data'];
+
+		$this->load->model('checkout/order');
+		$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+
+		// update order status to pending
+		$this->load->model('checkout/order');
+		$this->model_checkout_order->updateOrderStatus($this->session->data['order_id'], $this->config->get('pp_express_pending_status_id'));
+
+		$json = array();
+
+		if($this->session->data['order_id']) {
+			$json['success'] = 1;
+		} else {
+			$json['success'] = 0;
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+		}
+
+		// return result
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

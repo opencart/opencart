@@ -16,7 +16,7 @@ $_['text_percent']           = 'Percentage';
 $_['text_amount']            = 'Fixed Amount';
 $_['text_ccttypewarm']            = 'Warm';
 $_['text_ccttypecold']            = 'Cold';
-
+$_['text_ccttypecandle']            = 'Candle';
 // Column
 $_['column_name']            = 'Product Name';
 $_['column_model']           = 'Model';
@@ -84,6 +84,7 @@ $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
 $_['entry_ccttype']         = 'CCT Type';
 $_['entry_shortdesc']         = 'Shortdesc';
+$_['entry_energy_price']     = 'Energy Conservation Amount';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';

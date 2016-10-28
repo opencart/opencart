@@ -1309,13 +1309,19 @@ ul.social-login > li {
 
 .product-bg {
 	 height: 380px;
-	 background-image: url('../../../../../image/catalog/xlight/c1.jpg');
+	 background-image: url('../../../../../image/catalog/xlight/p_bg_warm.jpg');
 	 background-size: cover;
  }
 
-.product-bg {
+.product-bg-cold {
 	height: 380px;
 	background-image: url('../../../../../image/catalog/xlight/p_bg_cold.jpg');
+	background-size: cover;
+}
+
+.product-bg-candle {
+	height: 380px;
+	background-image: url('../../../../../image/catalog/xlight/p_bg_candle.jpg');
 	background-size: cover;
 }
 
@@ -1435,4 +1441,8 @@ ul.payment-methods > li {
 	height:120px;
 	border-top:1px solid #aaa;
 	border-bottom:1px solid #aaa;
+}
+
+.contact >p{
+	font-weight: 300;
 }

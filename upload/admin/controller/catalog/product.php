@@ -364,11 +364,12 @@ class ControllerCatalogProduct extends Controller {
 			}
 			$ccttype =0;
 			$shortdesc='';
+			$energy_price = 0;
 			$product_dtit = $this->model_catalog_product->getProductDtit($result['product_id']);
-			if(isset($product_dtit) &&  count($product_dtit)>0 )
-			{
-				$ccttype=(int)$product_dtit["ccttype"];
-				$shortdesc=$product_dtit["shortdesc"];
+			if(isset($product_dtit) && count($product_dtit) > 0) {
+				$ccttype = (int)$product_dtit["ccttype"];
+				$shortdesc = $product_dtit["shortdesc"];
+				$energy_price = $product_dtit["energy_price"];
 			}
 
 //			add by terrylu 2016.09.24 for dtit ext but anti-pattern start
@@ -388,6 +389,7 @@ class ControllerCatalogProduct extends Controller {
 			 //aet to data
 				'ccttype'      =>$ccttype,
 				 'shortdesc'  =>$shortdesc,
+				'energy'	=> $energy_price,
 //			add by terrylu 2016.09.24 for dtit ext but anti-pattern end
 				'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, true)
 			);
@@ -424,8 +426,10 @@ class ControllerCatalogProduct extends Controller {
 //		add by terrylu 2016.09.24 for dtit ext start
 		$data['entry_ccttype'] = $this->language->get('entry_ccttype');
 		$data['entry_shortdesc'] = $this->language->get('entry_shortdesc');
+		$data['entry_energy_price'] = $this->language->get('entry_energy_price');
 		$data['text_ccttpyewarm'] = $this->language->get('text_ccttpyewarm');
 		$data['text_ccttypecold'] = $this->language->get('text_ccttypecold');
+		$data['text_ccttypecandle'] = $this->language->get('text_ccttypecandle');
 //		add by terrylu 2016.09.24 for dtit ext end
 
 		$data['token'] = $this->session->data['token'];
@@ -663,8 +667,10 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_dtit'] = $this->language->get('tab_dtit');
 		$data['entry_ccttype'] = $this->language->get('entry_ccttype');
 		$data['entry_shortdesc'] = $this->language->get('entry_shortdesc');
+		$data['entry_energy_price'] = $this->language->get('entry_energy_price');
 		$data['text_ccttypewarm'] = $this->language->get('text_ccttypewarm');
 		$data['text_ccttypecold'] = $this->language->get('text_ccttypecold');
+		$data['text_ccttypecandle'] = $this->language->get('text_ccttypecandle');
 //		add by terrylu 2016.09.24 for dtit ext  end
 
 		if (isset($this->error['warning'])) {
@@ -1360,9 +1366,11 @@ class ControllerCatalogProduct extends Controller {
 	    if (!empty($data['product_dtit'])) {
 			$data['ccttype'] = $data['product_dtit']['ccttype'];
 			$data['shortdesc'] = $data['product_dtit']['shortdesc'];
+			$data['energy_price'] = $data['product_dtit']['energy_price'];
 		} else {
 			$data['ccttype'] = 0;
 			$data['shortdesc'] ='';
+			$data['energy_price'] = 0;
 		}
 
 

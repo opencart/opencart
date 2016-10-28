@@ -250,6 +250,7 @@ class ControllerProductProduct extends Controller {
 			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 			$data['text_loading'] = $this->language->get('text_loading');
 			$data['text_view_chart'] = $this->language->get('text_view_chart');
+			$data['text_energy_conservation'] = $this->language->get('text_energy_conservation');
 
 			$data['entry_qty'] = $this->language->get('entry_qty');
 			$data['entry_name'] = $this->language->get('entry_name');
@@ -306,6 +307,23 @@ class ControllerProductProduct extends Controller {
 			$data['ccttype'] = $product_info['ccttype'];
 			//add by terry 2016.10.05 end
 
+			if(isset($product_info['energy_price'])) {
+				$energy_price = $product_info['energy_price'];
+			} else {
+				$energy_price = 0;
+			}
+
+			$data['energy_price'] = $energy_price;
+
+			if(!isset($this->request->get['energy']) || $this->request->get['energy'] == "true") {
+				$data['energy'] = true;
+				$this->session->data['energy_price'] = 1;
+			} else {
+				$data['energy'] = false;
+				$this->session->data['energy_price'] = 0;
+			}
+
+
 			$data['images'] = array();
 
 			$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
@@ -331,23 +349,38 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$data['price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
 //				$per_price = $this->currency->format($product_info['price']/6, $this->session->data['currency']);
-				$per_price = $product_info['price']/6;
-				$data['text_per_bulb'] = sprintf($this->language->get('text_per_bulb'), $per_price);
+				if($data['energy']){
+					$data['price'] = $this->currency->format($product_info['price'] - $energy_price, $this->session->data['currency']);
+					$per_price =   number_format(($product_info['price'] - $energy_price) / 6,2);
+				} else {
+					$data['price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
+					$per_price = number_format($product_info['price']/6,2);
+				}
+
+				$data['text_per_bulb'] = sprintf($this->language->get('text_per_bulb'), round($per_price, 2));
 			} else {
 				$data['price'] = false;
 			}
 
 			if ((float)$product_info['special']) {
 				//$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				$data['special'] = $this->currency->format($product_info['special'], $this->session->data['currency']);
-				$per_price = $product_info['special']/6;
-				$data['text_per_bulb'] = sprintf($this->language->get('text_per_bulb'), $per_price);
+
+				if($data['energy']){
+					$data['special'] = $this->currency->format($product_info['special'] - $energy_price, $this->session->data['currency']);
+					$per_price = number_format(($product_info['special'] - $energy_price) / 6,2);
+				} else {
+					$data['special'] = $this->currency->format($product_info['special'], $this->session->data['currency']);
+					$per_price =number_format( $product_info['special'] / 6,2);
+				}
+
+				$data['text_per_bulb'] = sprintf($this->language->get('text_per_bulb'), round($per_price, 2));
 
 			} else {
 				$data['special'] = false;
 			}
+
+			$data['action'] = $this->url->link('product/product', 'product_id=' . $product_id);
 
 			if ($this->config->get('config_tax')) {
 				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);

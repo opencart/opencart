@@ -117,7 +117,11 @@ define('OAUTH_CALLBACK',TW_REDIRECTURI);
 // Build TwitterOAuth object with client credentials.
 $connection = new \Abraham\TwitterOAuth\TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 // Get temporary credentials
-$request_token = $connection->oauth('oauth/request_token', ['oauth_callback' => OAUTH_CALLBACK]);
+try {
+    $request_token = $connection->oauth('oauth/request_token', ['oauth_callback' => OAUTH_CALLBACK]);
+} catch (\Exception $e) {
+    $this->log->write($e);
+}
 
 // If last connection failed don't display authorization link.
 switch ($connection->getLastHttpCode()) {

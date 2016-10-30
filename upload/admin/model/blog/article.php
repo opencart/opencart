@@ -132,7 +132,7 @@ class ModelBlogArticle extends Model {
 		if (isset($data['main_blog_category_id']) && $data['main_blog_category_id'] > 0) {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "article_to_blog_category WHERE article_id = '" . (int)$article_id . "' AND blog_category_id = '" . (int)$data['main_blog_category_id'] . "'");
 			$this->db->query("INSERT INTO " . DB_PREFIX . "article_to_blog_category SET article_id = '" . (int)$article_id . "', blog_category_id = '" . (int)$data['main_blog_category_id'] . "', main_blog_category = 1");
-		} elseif (isset($data['article_category'])) {
+		} elseif (isset($data['article_category'][0])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "article_to_blog_category SET main_blog_category = 1 WHERE article_id = '" . (int)$article_id . "' AND blog_category_id = '" . (int)$data['article_category'][0] . "'");
 		}
 

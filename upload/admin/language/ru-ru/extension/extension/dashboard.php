@@ -5,18 +5,18 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']     = 'Dashboard';
+$_['heading_title']     = 'Панель состояния';
 
 // Text
-$_['text_success']      = 'Success: You have modified dashboards!';
-$_['text_list']         = 'Dashboard List';
+$_['text_success']      = 'Настройки успешно изменены!';
+$_['text_list']         = 'Список виджетов';
 
 // Column
-$_['column_name']       = 'Dashboard Name';
-$_['column_width']      = 'Width';
-$_['column_status']     = 'Status';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
+$_['column_name']       = 'Название виджета';
+$_['column_width']      = 'Ширина';
+$_['column_status']     = 'Статус';
+$_['column_sort_order'] = 'Порядок сортировки';
+$_['column_action']     = 'Действие';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify dashboards!';
+$_['error_permission']  = 'У вас недостаточно прав для внесения изменений!';

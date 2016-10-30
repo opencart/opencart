@@ -1,21 +1,26 @@
 <?php
+// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@forum	http://forum.opencart.pro
+// *	@source		See SOURCE.txt for source and other copyright.
+// *	@license	GNU General Public License version 3; see LICENSE.txt
+
 // Heading
-$_['heading_title']  = 'Extensions';
+$_['heading_title']  = 'Расширения';
 
 // Text
-$_['text_success']   = 'Success: You have modified extensions!';
-$_['text_list']      = 'Extension List';
-$_['text_type']      = 'Choose the extension type';
-$_['text_filter']    = 'Filter';
-$_['text_analytics'] = 'Analytics';
-$_['text_captcha']   = 'Captcha';
-$_['text_dashboard'] = 'Dashboard';
-$_['text_feed']      = 'Feeds';
-$_['text_fraud']     = 'Anti-Fraud';
-$_['text_module']    = 'Modules';
-$_['text_content']   = 'Content Modules';
-$_['text_menu']      = 'Menu Modules';
-$_['text_payment']   = 'Payments';
-$_['text_shipping']  = 'Shipping';
-$_['text_theme']     = 'Themes';
-$_['text_total']     = 'Order Totals';
+$_['text_success']   = 'Настройки успешно изменены!';
+$_['text_list']      = 'Список расширений';
+$_['text_type']      = 'Выберите тип расширения';
+$_['text_filter']    = 'Фильтр';
+$_['text_analytics'] = 'Аналитикс';
+$_['text_captcha']   = 'Капча';
+$_['text_dashboard'] = 'Панель состояния';
+$_['text_feed']      = 'Каналы продвижения';
+$_['text_fraud']     = 'Анти Фрод';
+$_['text_module']    = 'Модули';
+$_['text_content']   = 'Модули Контента';
+$_['text_menu']      = 'Модули Меню';
+$_['text_payment']   = 'Оплата';
+$_['text_shipping']  = 'Доставка';
+$_['text_theme']     = 'Шаблоны';
+$_['text_total']     = 'Учитывать в заказе';

@@ -5,14 +5,14 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']    = 'Analytics';
+$_['heading_title']    = 'Аналитика';
 
 // Text
 $_['text_success']     = 'Настройки успешно изменены!';
-$_['text_list']        = 'Список Analytics';
+$_['text_list']        = 'Список';
 
 // Column
-$_['column_name']      = 'Название Analytics';
+$_['column_name']      = 'Название Аналитики';
 $_['column_status']    = 'Статус';
 $_['column_action']    = 'Действие';
 

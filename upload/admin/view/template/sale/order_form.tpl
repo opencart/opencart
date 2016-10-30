@@ -2155,7 +2155,7 @@ $('#button-shipping-address').on('click', function() {
 											}
 										}
 									} else {
-										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
 									}
 
 									html += '</optgroup>';

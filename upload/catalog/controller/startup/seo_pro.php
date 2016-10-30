@@ -176,7 +176,7 @@ class ControllerStartupSeoPro extends Controller {
 				$url_info['scheme'] = 'http';
 			} else {
 				foreach ($this->ssl_routes as $ssl_route) {
-					if (stristr($route, $ssl_route)) {
+					if (stripos($route, $ssl_route) === 0) {
 						$url_info['scheme'] = 'https';
 					}
 				}

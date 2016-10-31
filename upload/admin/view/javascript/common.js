@@ -108,11 +108,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
-		$('body > .tooltip').remove();
-	});
-
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
 		var $element = $(this);
@@ -179,14 +174,9 @@ $(document).ready(function() {
 		});
 	});
 
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+});
 
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
-
+// Tooltips
 	// https://github.com/opencart/opencart/issues/2595
 	$.event.special.remove = {
 		remove: function(o) {
@@ -196,9 +186,30 @@ $(document).ready(function() {
 		}
 	}
 
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('destroy');
-	});
+var _tooltipsTO = null;
+var tooltipsInit = function(latency) {
+	clearTimeout(_tooltipsTO);
+	$("[data-toggle='tooltip']").tooltip('destroy');
+	_tooltipsTO = setTimeout(function() {
+	$("[data-toggle='tooltip']")
+		.tooltip({container: 'body', html: true})
+		.on('remove', function() {
+			$(this).tooltip('destroy');
+		})
+		.on('click', function(){
+			if ($(this).data('trigger') != 'click') {
+				tooltipsInit(300);
+			}
+		})
+	}, latency);
+}
+
+$(document).ready(function() {
+	tooltipsInit(30);
+});
+
+$(document).ajaxStop(function() {
+	tooltipsInit(100);
 });
 
 // Autocomplete */

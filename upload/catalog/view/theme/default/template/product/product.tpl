@@ -41,7 +41,7 @@
               <a id="zoom" class="cloud-zoom" rel="adjustX:10, adjustY:-4"    href="<?php echo $images[0]['large']; ?>"  title="<?php echo $heading_title; ?>">
                 <img src="<?php echo $images[0]['popup']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a>
               <?php } else { ?>
-              <a class="cloud-zoom" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a>
+              <a class="cloud-zoomnomb" title="<?php echo $heading_title; ?>"><img class="img-responsive" src="<?php echo $images[0]['popup']; ?>"  title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a>
               <?php } ?>
 
 
@@ -736,11 +736,14 @@ $('#form-review a[name="rating"]').on('click',function(){
   function fn_switch_image(obj, mobile) {
     var a = mobile;
     var imgPath = $(obj).data('img');
-    $('a.cloud-zoom > img').attr("src", imgPath);
     if(!mobile) {
+      $('a.cloud-zoom > img').attr("src", imgPath);
       $('a.cloud-zoom').attr('href', imgPath);
       $('.mousetrap').remove();
       $('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();
+    }
+    else{
+      $('a.cloud-zoomnomb > img').attr("src", imgPath);
     }
   }
 

@@ -239,11 +239,15 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['modules'] = array();
 			
-			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
+			$files = array_merge(glob(DIR_APPLICATION . 'controller/extension/total/*.php'), glob(DIR_APPLICATION . 'controller/total/*.php'));
 
 			if ($files) {
+				$modules = array();
 				foreach ($files as $file) {
-					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
+					$modules[] = basename($file, '.php');
+				}
+				foreach (array_unique($modules) as $module) {
+					$result = $this->load->controller('extension/total/' . $module);
 					
 					if ($result) {
 						$data['modules'][] = $result;

@@ -71,7 +71,9 @@ class User {
 
 	public function hasPermission($key, $value) {
 		if (isset($this->permission[$key])) {
-			return in_array($value, $this->permission[$key]);
+			$part = explode('/', $value);
+			unset($part[0]);
+			return (in_array($value, $this->permission[$key]) || in_array(implode('/', $part), $this->permission[$key])) ? true: false;
 		} else {
 			return false;
 		}

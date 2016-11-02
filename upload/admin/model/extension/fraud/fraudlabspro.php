@@ -72,8 +72,8 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 
 	public function uninstall() {
 		//$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "fraudlabspro`");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `name`='Fraud'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `name`='Fraud Review'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `name` = 'Fraud'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `name` = 'Fraud Review'");
 	}
 
 	public function getOrder($order_id) {

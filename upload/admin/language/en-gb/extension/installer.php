@@ -19,7 +19,7 @@ $_['entry_overwrite']      = 'Files that will be overwritten';
 $_['entry_progress']       = 'Progress';
 
 // Help
-$_['help_upload']          = 'Requires a modification file with extension ".ocmod.zip" or ".ocmod.xml".';
+$_['help_upload']          = 'Requires a modification file with extension \'.ocmod.zip\' or \'.ocmod.xml\'.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';

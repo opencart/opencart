@@ -33,6 +33,7 @@ $_['text_downloading_settlement']		 = 'Downloading settlement files...';
 $_['text_processing_orders']			 = 'Processing orders...';
 $_['text_processing_order']				 = 'Processing order';
 $_['text_no_files']						 = 'No files to download.';
+$_['text_version']						 = '1.1';
 
 // Column
 $_['column_order_id']					 = 'Order ID';
@@ -95,6 +96,7 @@ $_['entry_merchant_id']					 = 'Merchant ID (MID)';
 $_['entry_secret']						 = 'Shared Secret';
 $_['entry_environment']					 = 'Environment (Live/Test)';
 $_['entry_country']						 = 'Country';
+$_['entry_shipping']					 = 'Shipping Countries';
 $_['entry_api']							 = 'API Location';
 $_['entry_shipping_company']			 = 'Shipping Company';
 $_['entry_shipping_method']				 = 'Shipping Method';
@@ -107,6 +109,7 @@ $_['entry_sftp_username']				 = 'SFTP Username';
 $_['entry_sftp_password']				 = 'SFTP Password';
 $_['entry_process_settlement']			 = 'Process Settlement Files';
 $_['entry_settlement_order_status']		 = 'Order Status';
+$_['entry_version']						 = 'Extension Version';
 
 // Help
 $_['help_debug']						 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';
@@ -116,6 +119,7 @@ $_['help_api']							 = 'For Europe users, Klarna Checkout doesn\'t provide the 
 $_['help_sftp_username']				 = 'SFTP username provided by your account manager';
 $_['help_sftp_password']				 = 'SFTP password provided by your account manager';
 $_['help_settlement_order_status']		 = 'Order status that processed settlement orders will change to.';
+$_['help_shipping']                      = 'All countries within this geo zone will be available to select in the Klarna iFrame.';
 
 // Button
 $_['button_account_remove']				 = 'Remove Account';
@@ -139,7 +143,7 @@ $_['error_php_version']					 = 'Minimum version of PHP 5.4.0 is required!';
 $_['error_ssl']							 = 'You must enable "Use SSL" in the store settings and have an SSL certificate installed!';
 $_['error_account_minimum']				 = 'Please add at least one account.';
 $_['error_locale']						 = 'Please enter a valid locale.';
-$_['error_account_countries']			 = 'Account list contains one or more duplicate countries.';
+$_['error_account_currency']			 = 'Account list contains one or more duplicate currencies.';
 $_['error_merchant_id']					 = 'Merchant ID Required!';
 $_['error_secret']						 = 'Shared Secret Required!';
 

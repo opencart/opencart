@@ -155,13 +155,13 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function getConnector($accounts, $country_id, $currency) {
+	public function getConnector($accounts, $currency) {
 		$klarna_account = false;
 		$connector = false;
 
-		if ($accounts && $country_id && $currency) {
+		if ($accounts && $currency) {
 			foreach ($accounts as $account) {
-				if (($account['country'] == $country_id) && ($account['currency'] == $currency)) {
+				if ($account['currency'] == $currency) {
 					if ($account['environment'] == 'test') {
 						if ($account['api'] == 'NA') {
 							$base_url = KCConnectorInterface::NA_TEST_BASE_URL;

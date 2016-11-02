@@ -29,12 +29,6 @@ class Language {
 	public function load($filename, &$data = array()) {
 		$_ = array();
 
-		$file = DIR_LANGUAGE . 'english/' . $filename . '.php';
-		
-		if (is_file($file)) {
-			require($file);
-		}
-
 		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
 
 		if (is_file($file)) {
@@ -42,10 +36,10 @@ class Language {
 		}
 
 		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
-
+		
 		if (is_file($file)) {
 			require($file);
-		}
+		} 
 
 		$this->data = array_merge($this->data, $_);
 

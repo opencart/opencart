@@ -49,7 +49,7 @@ class ModelDesignMenu extends Model {
 
 		$sort_data = array(
 			'md.name',
-			'store',
+			'm.store_id',
 			'm.sort_order',
 			'm.status'
 		);
@@ -86,7 +86,7 @@ class ModelDesignMenu extends Model {
 	public function getMenuDescriptions($menu_id) {
 		$menu_description_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE menut_id = '" . (int)$menu_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE menu_id = '" . (int)$menu_id . "'");
 
 		foreach ($query->rows as $result) {
 			$menu_description_data[$result['language_id']] = array('name' => $result['name']);
@@ -100,4 +100,16 @@ class ModelDesignMenu extends Model {
 
 		return $query->row['total'];
 	}
+        
+        public function getMenuModules($menu_id) {
+                $menu_modules_data = array();
+
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_module WHERE menu_id = '" . (int)$menu_id . "'");
+
+                foreach ($query->rows as $result) {
+                        $menu_modules_data[$result['menu_module_id']] = array('code' => $result['code'], 'sort_order' => $result['sort_order']);
+                }
+
+                return $menu_modules_data;
+        }       
 }

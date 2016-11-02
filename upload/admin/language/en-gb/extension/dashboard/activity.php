@@ -29,6 +29,7 @@ $_['text_affiliate_register']      = '<a href="affiliate_id=%d">%s</a> registere
 // Entry
 $_['entry_status']                 = 'Status';
 $_['entry_sort_order']             = 'Sort Order';
+$_['entry_width']                  = 'Width';
 
 // Error
 $_['error_permission']             = 'Warning: You do not have permission to modify dashboard activity!';

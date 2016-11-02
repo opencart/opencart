@@ -351,7 +351,7 @@ $(document).delegate('.agree', 'click', function(e) {
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
-			html += '    </div';
+			html += '    </div>';
 			html += '  </div>';
 			html += '</div>';
 

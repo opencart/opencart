@@ -1,4 +1,5 @@
 <?php
+// Text
 $_['text_license']       = 'License';
 $_['text_installation']  = 'Pre-Installation';
 $_['text_configuration'] = 'Configuration';

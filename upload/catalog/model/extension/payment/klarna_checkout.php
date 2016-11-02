@@ -59,13 +59,13 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		return array();
 	}
 
-	public function getConnector($accounts, $country_id, $currency) {
+	public function getConnector($accounts, $currency) {
 		$klarna_account = false;
 		$connector = false;
 
-		if ($accounts && $country_id && $currency) {
+		if ($accounts && $currency) {
 			foreach ($accounts as $account) {
-				if (($account['country'] == $country_id) && ($account['currency'] == $currency)) {
+				if ($account['currency'] == $currency) {
 					if ($account['environment'] == 'test') {
 						if ($account['api'] == 'NA') {
 							$base_url = KCConnectorInterface::NA_TEST_BASE_URL;
@@ -132,9 +132,15 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 	}
 
 	public function getZoneByCode($code, $country_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE `code` = '" . $this->db->escape($code) . "' AND `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE (`code` = '" . $this->db->escape($code) . "' OR `name` = '" . $this->db->escape($code) . "') AND `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
 
 		return $query->row;
+	}
+
+	public function getCountriesByGeoZone($geo_zone_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$geo_zone_id . "' GROUP BY `country_id` ORDER BY `country_id` ASC");
+
+		return $query->rows;
 	}
 
 	public function getDefaultShippingMethod($shipping_methods) {

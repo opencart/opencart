@@ -58,6 +58,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$request['currency'] = $data['currency_code'];
 		$request['payment_mode'] = $data['payment_code'];
 		$request['user_order_id'] = $data['order_id'];
+		$request['flp_checksum'] = (isset($_COOKIE['flp_checksum'])) ? $_COOKIE['flp_checksum'] : '';
 		$request['format'] = 'json';
 		$request['source'] = 'opencart';
 		$request['source_version'] = '2.1.0.2';

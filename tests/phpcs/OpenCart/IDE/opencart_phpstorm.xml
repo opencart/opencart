@@ -1,0 +1,22 @@
+<code_scheme name="OpenCart">
+  <PHPCodeStyleSettings>
+    <option name="ALIGN_KEY_VALUE_PAIRS" value="true" />
+    <option name="ALIGN_PHPDOC_PARAM_NAMES" value="true" />
+    <option name="ALIGN_PHPDOC_COMMENTS" value="true" />
+    <option name="PHPDOC_BLANK_LINES_AROUND_PARAMETERS" value="true" />
+    <option name="UPPER_CASE_BOOLEAN_CONST" value="true" />
+    <option name="UPPER_CASE_NULL_CONST" value="true" />
+    <option name="BLANK_LINE_BEFORE_RETURN_STATEMENT" value="true" />
+    <option name="ALIGN_CLASS_CONSTANTS" value="true" />
+  </PHPCodeStyleSettings>
+  <codeStyleSettings language="PHP">
+    <option name="CLASS_BRACE_STYLE" value="1" />
+    <option name="METHOD_BRACE_STYLE" value="1" />
+    <option name="SPECIAL_ELSE_IF_TREATMENT" value="true" />
+    <option name="IF_BRACE_FORCE" value="3" />
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+      <option name="SMART_TABS" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+</code_scheme>

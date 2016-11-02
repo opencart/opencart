@@ -11,7 +11,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = rtrim(str_replace('*', '', $this->request->get['filter_name']), '/');
+			$filter_name = rtrim(str_replace(array('*', '/'), '', $this->request->get['filter_name']), '/');
 		} else {
 			$filter_name = null;
 		}
@@ -36,7 +36,7 @@ class ControllerCommonFileManager extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (substr(str_replace('\\', '/', realpath($directory . '/' . $filter_name)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+		if (substr(str_replace('\\', '/', realpath($directory) . '/' . $filter_name), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 			// Get directories
 			$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
 
@@ -250,7 +250,7 @@ class ControllerCommonFileManager extends Controller {
 					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
-					
+
 					// Allowed file extension types
 					$allowed = array(
 						'jpg',
@@ -258,11 +258,11 @@ class ControllerCommonFileManager extends Controller {
 						'gif',
 						'png'
 					);
-	
+
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
-					
+
 					// Allowed file mime types
 					$allowed = array(
 						'image/jpeg',
@@ -271,7 +271,7 @@ class ControllerCommonFileManager extends Controller {
 						'image/x-png',
 						'image/gif'
 					);
-	
+
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}

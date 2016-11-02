@@ -69,20 +69,20 @@ $_['entry_tax']             = 'Tax Class';
 $_['entry_geo_zone']        = 'Geo Zone';
 $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
-$_['entry_debug']      		= 'Debug Mode';
+$_['entry_debug']           = 'Debug Mode';
 
 // Help
 $_['help_dimension']        = 'Average package dimensions for shipping package. Product dimensions are not used for shipping at this time.';
 $_['help_display_time']     = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
 $_['help_display_weight']   = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
 $_['help_weight_class']     = 'Must be set to Pound.';
-$_['help_debug']      		= 'Saves send/recv data to the system log';
+$_['help_debug']            = 'Saves send/recv data to the system log';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify United States Postal Service!';
 $_['error_user_id']         = 'User ID Required!';
 $_['error_postcode']        = 'Zip Code Required!';
-$_['error_width']        	= 'Width Required!';
-$_['error_length']        	= 'Length Required!';
-$_['error_height']        	= 'Height Required!';
-$_['error_girth']        	= 'Girth Required!';
+$_['error_width']           = 'Width Required!';
+$_['error_length']          = 'Length Required!';
+$_['error_height']          = 'Height Required!';
+$_['error_girth']           = 'Girth Required!';

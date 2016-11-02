@@ -1591,7 +1591,7 @@ CREATE TABLE `oc_information_description` (
   `information_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
-  `description` text NOT NULL,
+  `description` mediumtext NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,

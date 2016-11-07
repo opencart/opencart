@@ -23,10 +23,6 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/analytics/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/analytics/' . $this->request->get['extension']);
 			
-			// Compatibility
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'analytics/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'analytics/' . $this->request->get['extension']);
-
 			// Call install method if it exsits
 			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/install');
 
@@ -83,7 +79,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -98,7 +94,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/analytics,analytics}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php', GLOB_BRACE);
 
 		if ($files) {
 			foreach ($files as $file) {

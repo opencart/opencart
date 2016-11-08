@@ -33,22 +33,71 @@ class ModelSettingSetting extends Model {
 	public function deleteSetting($code, $store_id = 0) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
-	
+
 	public function getSettingValue($key, $store_id = 0) {
 		$query = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return null;	
+			return null;
 		}
 	}
-	
+
 	public function editSettingValue($code = '', $key = '', $value = '', $store_id = 0) {
 		if (!is_array($value)) {
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape($value) . "', serialized = '0'  WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND store_id = '" . (int)$store_id . "'");
 		} else {
 			$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(json_encode($value)) . "', serialized = '1' WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND store_id = '" . (int)$store_id . "'");
 		}
+	}
+
+	public function getTimezones() {
+		static $regions = array(
+			DateTimeZone::AFRICA,
+			DateTimeZone::AMERICA,
+			DateTimeZone::ANTARCTICA,
+			DateTimeZone::ARCTIC,
+			DateTimeZone::ASIA,
+			DateTimeZone::ATLANTIC,
+			DateTimeZone::AUSTRALIA,
+			DateTimeZone::EUROPE,
+			DateTimeZone::INDIAN,
+			DateTimeZone::PACIFIC,
+		);
+
+		$timezones = array();
+
+		foreach ($regions as $region) {
+			$timezones = array_merge($timezones, DateTimeZone::listIdentifiers($region));
+		}
+
+		$timezone_offsets = array();
+
+		foreach ($timezones as $timezone) {
+			$tz = new DateTimeZone($timezone);
+			$timezone_offsets[$timezone] = $tz->getOffset(new DateTime);
+		}
+
+		// sort timezone by name
+		ksort($timezone_offsets);
+
+		$timezone_list = array();
+
+		foreach ($timezone_offsets as $timezone => $offset) {
+			$offset_prefix = $offset < 0 ? '-' : '+';
+			$offset_formatted = gmdate('H:i', abs($offset));
+
+			list ($region, $zone) = explode('/', $timezone, 2);
+
+			$timezone_list[$region][] = array(
+				'prefix'   => $offset_prefix,
+				'offset'   => $offset_formatted,
+				'zone'     => str_replace('_', ' ', $zone) . ' (' . $offset_prefix . $offset_formatted .')',
+				'timezone' => $timezone
+			);
+		}
+
+		return $timezone_list;
 	}
 }

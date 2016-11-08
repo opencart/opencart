@@ -1161,6 +1161,25 @@
                     <input type="text" name="config_compression" value="{{ config_compression }}" placeholder="{{ entry_compression }}" id="input-compression" class="form-control" />
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_timezone }}">{{ entry_timezone }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_timezone" id="input-timezone" class="form-control">
+                      <option value="">{{ text_none }}</option>
+                      {% for region, regions in timezones %}
+                      <optgroup label="{{ region }}">
+                        {% for timezone in regions %}
+                        {% if config_timezone == timezone.timezone %}
+                        <option value="{{ timezone.timezone }}" selected="selected">{{ timezone.zone }}</option>
+                        {% else %}
+                        <option value="{{ timezone.timezone }}">{{ timezone.zone }}</option>
+                        {% endif %}
+                        {% endfor %}
+                      </optgroup>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
               </fieldset>
               <fieldset>
                 <legend>{{ text_security }}</legend>
@@ -1330,64 +1349,64 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/theme&token={{ token }}&theme=' + this.value,
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(html) {
-			$('#theme').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+  $.ajax({
+    url: 'index.php?route=setting/setting/theme&token={{ token }}&theme=' + this.value,
+    dataType: 'html',
+    beforeSend: function() {
+      $('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+    },
+    complete: function() {
+      $('.fa-spin').remove();
+    },
+    success: function(html) {
+      $('#theme').attr('src', html);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
 });
 
 $('select[name=\'config_theme\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			html = '<option value="">{{ text_select }}</option>';
+  $.ajax({
+    url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + this.value,
+    dataType: 'json',
+    beforeSend: function() {
+      $('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+    },
+    complete: function() {
+      $('.fa-spin').remove();
+    },
+    success: function(json) {
+      html = '<option value="">{{ text_select }}</option>';
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-          			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+      if (json['zone'] && json['zone'] != '') {
+        for (i = 0; i < json['zone'].length; i++) {
+          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-            			html += ' selected="selected"';
-					}
+          if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
+            html += ' selected="selected"';
+          }
 
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected">{{ text_none }}</option>';
-			}
+          html += '>' + json['zone'][i]['name'] + '</option>';
+        }
+      } else {
+        html += '<option value="0" selected="selected">{{ text_none }}</option>';
+      }
 
-			$('select[name=\'config_zone_id\']').html(html);
-			
-			$('#button-save').prop('disabled', false);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+      $('select[name=\'config_zone_id\']').html(html);
+
+      $('#button-save').prop('disabled', false);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
 //--></script></div>
-{{ footer }} 
+{{ footer }}

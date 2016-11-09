@@ -22,6 +22,8 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_live'] = $this->language->get('text_live');
 		$data['text_test'] = $this->language->get('text_test');
@@ -34,8 +36,25 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['text_version'] = $this->language->get('text_version');
 
 		$data['entry_debug'] = $this->language->get('entry_debug');
+		$data['entry_colour_button'] = $this->language->get('entry_colour_button');
+		$data['entry_colour_button_text'] = $this->language->get('entry_colour_button_text');
+		$data['entry_colour_checkbox'] = $this->language->get('entry_colour_checkbox');
+		$data['entry_colour_checkbox_checkmark'] = $this->language->get('entry_colour_checkbox_checkmark');
+		$data['entry_colour_header'] = $this->language->get('entry_colour_header');
+		$data['entry_colour_link'] = $this->language->get('entry_colour_link');
+		$data['entry_separate_shipping_address'] = $this->language->get('entry_separate_shipping_address');
+		$data['entry_dob_mandatory'] = $this->language->get('entry_dob_mandatory');
+		$data['entry_title_mandatory'] = $this->language->get('entry_title_mandatory');
+		$data['entry_additional_text_box'] = $this->language->get('entry_additional_text_box');
 		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_order_status'] = $this->language->get('entry_order_status');
+		$data['entry_order_status_authorised'] = $this->language->get('entry_order_status_authorised');
+		$data['entry_order_status_part_captured'] = $this->language->get('entry_order_status_part_captured');
+		$data['entry_order_status_captured'] = $this->language->get('entry_order_status_captured');
+		$data['entry_order_status_cancelled'] = $this->language->get('entry_order_status_cancelled');
+		$data['entry_order_status_refund'] = $this->language->get('entry_order_status_refund');
+		$data['entry_order_status_fraud_rejected'] = $this->language->get('entry_order_status_fraud_rejected');
+		$data['entry_order_status_fraud_pending'] = $this->language->get('entry_order_status_fraud_pending');
+		$data['entry_order_status_fraud_accepted'] = $this->language->get('entry_order_status_fraud_accepted');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_terms'] = $this->language->get('entry_terms');
 		$data['entry_currency'] = $this->language->get('entry_currency');
@@ -53,6 +72,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['entry_version'] = $this->language->get('entry_version');
 
 		$data['help_debug'] = $this->language->get('help_debug');
+		$data['help_separate_shipping_address'] = $this->language->get('help_separate_shipping_address');
+		$data['help_dob_mandatory'] = $this->language->get('help_dob_mandatory');
+		$data['help_title_mandatory'] = $this->language->get('help_title_mandatory');
+		$data['help_additional_text_box'] = $this->language->get('help_additional_text_box');
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_locale'] = $this->language->get('help_locale');
 		$data['help_api'] = $this->language->get('help_api');
@@ -69,6 +92,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 		$data['tab_setting'] = $this->language->get('tab_setting');
+		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_settlement'] = $this->language->get('tab_settlement');
 
@@ -115,6 +139,14 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$this->load->model('extension/payment/klarna_checkout');
+
+		if ($this->model_extension_payment_klarna_checkout->checkForPaymentTaxes()) {
+			$data['error_tax_warning'] = $this->language->get('error_tax_warning');
+		} else {
+			$data['error_tax_warning'] = '';
+		}
+
 		if (isset($this->error['account_warning'])) {
 			$data['error_account_warning'] = $this->error['account_warning'];
 		} else {
@@ -159,16 +191,130 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$data['klarna_checkout_debug'] = $this->config->get('klarna_checkout_debug');
 		}
 
+		if (isset($this->request->post['klarna_checkout_colour_button'])) {
+			$data['klarna_checkout_colour_button'] = $this->request->post['klarna_checkout_colour_button'];
+		} elseif ($this->config->get('klarna_checkout_colour_button')) {
+			$data['klarna_checkout_colour_button'] = $this->config->get('klarna_checkout_colour_button');
+		} else {
+			$data['klarna_checkout_colour_button'] = '#0072cc';
+		}
+
+		if (isset($this->request->post['klarna_checkout_colour_button_text'])) {
+			$data['klarna_checkout_colour_button_text'] = $this->request->post['klarna_checkout_colour_button_text'];
+		} elseif ($this->config->get('klarna_checkout_colour_button_text')) {
+			$data['klarna_checkout_colour_button_text'] = $this->config->get('klarna_checkout_colour_button_text');
+		} else {
+			$data['klarna_checkout_colour_button_text'] = '#ffffff';
+		}
+
+		if (isset($this->request->post['klarna_checkout_colour_checkbox'])) {
+			$data['klarna_checkout_colour_checkbox'] = $this->request->post['klarna_checkout_colour_checkbox'];
+		} elseif ($this->config->get('klarna_checkout_colour_checkbox')) {
+			$data['klarna_checkout_colour_checkbox'] = $this->config->get('klarna_checkout_colour_checkbox');
+		} else {
+			$data['klarna_checkout_colour_checkbox'] = '#0072cc';
+		}
+
+		if (isset($this->request->post['klarna_checkout_colour_checkbox_checkmark'])) {
+			$data['klarna_checkout_colour_checkbox_checkmark'] = $this->request->post['klarna_checkout_colour_checkbox_checkmark'];
+		} elseif ($this->config->get('klarna_checkout_colour_checkbox_checkmark')) {
+			$data['klarna_checkout_colour_checkbox_checkmark'] = $this->config->get('klarna_checkout_colour_checkbox_checkmark');
+		} else {
+			$data['klarna_checkout_colour_checkbox_checkmark'] = '#ffffff';
+		}
+
+		if (isset($this->request->post['klarna_checkout_colour_header'])) {
+			$data['klarna_checkout_colour_header'] = $this->request->post['klarna_checkout_colour_header'];
+		} elseif ($this->config->get('klarna_checkout_colour_header')) {
+			$data['klarna_checkout_colour_header'] = $this->config->get('klarna_checkout_colour_header');
+		} else {
+			$data['klarna_checkout_colour_header'] = '#434343';
+		}
+
+		if (isset($this->request->post['klarna_checkout_colour_link'])) {
+			$data['klarna_checkout_colour_link'] = $this->request->post['klarna_checkout_colour_link'];
+		} elseif ($this->config->get('klarna_checkout_colour_link')) {
+			$data['klarna_checkout_colour_link'] = $this->config->get('klarna_checkout_colour_link');
+		} else {
+			$data['klarna_checkout_colour_link'] = '#0072cc';
+		}
+
+		if (isset($this->request->post['klarna_checkout_separate_shipping_address'])) {
+			$data['klarna_checkout_separate_shipping_address'] = $this->request->post['klarna_checkout_separate_shipping_address'];
+		} else {
+			$data['klarna_checkout_separate_shipping_address'] = $this->config->get('klarna_checkout_separate_shipping_address');
+		}
+
+		if (isset($this->request->post['klarna_checkout_dob_mandatory'])) {
+			$data['klarna_checkout_dob_mandatory'] = $this->request->post['klarna_checkout_dob_mandatory'];
+		} else {
+			$data['klarna_checkout_dob_mandatory'] = $this->config->get('klarna_checkout_dob_mandatory');
+		}
+
+		if (isset($this->request->post['klarna_checkout_title_mandatory'])) {
+			$data['klarna_checkout_title_mandatory'] = $this->request->post['klarna_checkout_title_mandatory'];
+		} else {
+			$data['klarna_checkout_title_mandatory'] = $this->config->get('klarna_checkout_title_mandatory');
+		}
+
+		if (isset($this->request->post['klarna_checkout_additional_text_box'])) {
+			$data['klarna_checkout_additional_text_box'] = $this->request->post['klarna_checkout_additional_text_box'];
+		} else {
+			$data['klarna_checkout_additional_text_box'] = $this->config->get('klarna_checkout_additional_text_box');
+		}
+
 		if (isset($this->request->post['klarna_checkout_total'])) {
 			$data['klarna_checkout_total'] = $this->request->post['klarna_checkout_total'];
 		} else {
 			$data['klarna_checkout_total'] = $this->config->get('klarna_checkout_total');
 		}
 
-		if (isset($this->request->post['klarna_checkout_order_status_id'])) {
-			$data['klarna_checkout_order_status_id'] = $this->request->post['klarna_checkout_order_status_id'];
+		if (isset($this->request->post['klarna_checkout_order_status_authorised_id'])) {
+			$data['klarna_checkout_order_status_authorised_id'] = $this->request->post['klarna_checkout_order_status_authorised_id'];
 		} else {
-			$data['klarna_checkout_order_status_id'] = $this->config->get('klarna_checkout_order_status_id');
+			$data['klarna_checkout_order_status_authorised_id'] = $this->config->get('klarna_checkout_order_status_authorised_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_part_captured_id'])) {
+			$data['klarna_checkout_order_status_part_captured_id'] = $this->request->post['klarna_checkout_order_status_part_captured_id'];
+		} else {
+			$data['klarna_checkout_order_status_part_captured_id'] = $this->config->get('klarna_checkout_order_status_part_captured_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_captured_id'])) {
+			$data['klarna_checkout_order_status_captured_id'] = $this->request->post['klarna_checkout_order_status_captured_id'];
+		} else {
+			$data['klarna_checkout_order_status_captured_id'] = $this->config->get('klarna_checkout_order_status_captured_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_cancelled_id'])) {
+			$data['klarna_checkout_order_status_cancelled_id'] = $this->request->post['klarna_checkout_order_status_cancelled_id'];
+		} else {
+			$data['klarna_checkout_order_status_cancelled_id'] = $this->config->get('klarna_checkout_order_status_cancelled_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_refund_id'])) {
+			$data['klarna_checkout_order_status_refund_id'] = $this->request->post['klarna_checkout_order_status_refund_id'];
+		} else {
+			$data['klarna_checkout_order_status_refund_id'] = $this->config->get('klarna_checkout_order_status_refund_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_fraud_rejected_id'])) {
+			$data['klarna_checkout_order_status_fraud_rejected_id'] = $this->request->post['klarna_checkout_order_status_fraud_rejected_id'];
+		} else {
+			$data['klarna_checkout_order_status_fraud_rejected_id'] = $this->config->get('klarna_checkout_order_status_fraud_rejected_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_fraud_pending_id'])) {
+			$data['klarna_checkout_order_status_fraud_pending_id'] = $this->request->post['klarna_checkout_order_status_fraud_pending_id'];
+		} else {
+			$data['klarna_checkout_order_status_fraud_pending_id'] = $this->config->get('klarna_checkout_order_status_fraud_pending_id');
+		}
+
+		if (isset($this->request->post['klarna_checkout_order_status_fraud_accepted_id'])) {
+			$data['klarna_checkout_order_status_fraud_accepted_id'] = $this->request->post['klarna_checkout_order_status_fraud_accepted_id'];
+		} else {
+			$data['klarna_checkout_order_status_fraud_accepted_id'] = $this->config->get('klarna_checkout_order_status_fraud_accepted_id');
 		}
 
 		if (isset($this->request->post['klarna_checkout_terms'])) {
@@ -263,7 +409,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			return;
 		}
 
-		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['currency_code']);
 
 		if (!$klarna_account || !$connector) {
 			return;
@@ -292,9 +438,11 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['text_new_refund_title'] = $this->language->get('text_new_refund_title');
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
+		$data['column_merchant_id'] = $this->language->get('column_merchant_id');
 		$data['column_capture_id'] = $this->language->get('column_capture_id');
 		$data['column_reference'] = $this->language->get('column_reference');
 		$data['column_status'] = $this->language->get('column_status');
+		$data['column_fraud_status'] = $this->language->get('column_fraud_status');
 		$data['column_merchant_reference_1'] = $this->language->get('column_merchant_reference_1');
 		$data['column_customer_details'] = $this->language->get('column_customer_details');
 		$data['column_billing_address'] = $this->language->get('column_billing_address');
@@ -366,6 +514,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['order_ref'] = $order_reference['order_ref'];
 		$data['token'] = $this->session->data['token'];
 		$data['order_id'] = $this->request->get['order_id'];
+		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
 		$extend_authorization_action = $cancel_action = $capture_action = $refund_action = $merchant_reference_action = $address_action = $release_authorization_action = false;
 
@@ -415,33 +564,33 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		);
 
 		$replace = array(
-			'title'           => $klarna_order['billing_address']['title'],
-			'given_name'      => $klarna_order['billing_address']['given_name'],
-			'family_name'     => $klarna_order['billing_address']['family_name'],
-			'street_address'  => $klarna_order['billing_address']['street_address'],
-			'street_address2' => $klarna_order['billing_address']['street_address2'],
-			'city'            => $klarna_order['billing_address']['city'],
-			'postcode'        => $klarna_order['billing_address']['postal_code'],
-			'region'          => $klarna_order['billing_address']['region'],
-			'country'         => $klarna_order['billing_address']['country'],
-			'email'           => $klarna_order['billing_address']['email'],
-			'phone'           => $klarna_order['billing_address']['phone']
+			'title'				=> $klarna_order['billing_address']['title'],
+			'given_name'		=> $klarna_order['billing_address']['given_name'],
+			'family_name'		=> $klarna_order['billing_address']['family_name'],
+			'street_address'	=> $klarna_order['billing_address']['street_address'],
+			'street_address2'	=> $klarna_order['billing_address']['street_address2'],
+			'city'				=> $klarna_order['billing_address']['city'],
+			'postcode'			=> $klarna_order['billing_address']['postal_code'],
+			'region'			=> $klarna_order['billing_address']['region'],
+			'country'			=> $klarna_order['billing_address']['country'],
+			'email'				=> $klarna_order['billing_address']['email'],
+			'phone'				=> $klarna_order['billing_address']['phone']
 		);
 
 		$billing_address_formatted = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
 		$replace = array(
-			'title'           => $klarna_order['shipping_address']['title'],
-			'given_name'      => $klarna_order['shipping_address']['given_name'],
-			'family_name'     => $klarna_order['shipping_address']['family_name'],
-			'street_address'  => $klarna_order['shipping_address']['street_address'],
-			'street_address2' => $klarna_order['shipping_address']['street_address2'],
-			'city'            => $klarna_order['shipping_address']['city'],
-			'postcode'        => $klarna_order['shipping_address']['postal_code'],
-			'region'          => $klarna_order['shipping_address']['region'],
-			'country'         => $klarna_order['shipping_address']['country'],
-			'email'           => $klarna_order['shipping_address']['email'],
-			'phone'           => $klarna_order['shipping_address']['phone']
+			'title'				=> $klarna_order['shipping_address']['title'],
+			'given_name'		=> $klarna_order['shipping_address']['given_name'],
+			'family_name'		=> $klarna_order['shipping_address']['family_name'],
+			'street_address'	=> $klarna_order['shipping_address']['street_address'],
+			'street_address2'	=> $klarna_order['shipping_address']['street_address2'],
+			'city'				=> $klarna_order['shipping_address']['city'],
+			'postcode'			=> $klarna_order['shipping_address']['postal_code'],
+			'region'			=> $klarna_order['shipping_address']['region'],
+			'country'			=> $klarna_order['shipping_address']['country'],
+			'email'				=> $klarna_order['shipping_address']['email'],
+			'phone'				=> $klarna_order['shipping_address']['phone']
 		);
 
 		$shipping_address_formatted = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
@@ -463,10 +612,20 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			);
 		}
 
+		$merchant_id = '';
+		if ($order_reference['data']) {
+			$klarna_checkout_order_data = json_decode($this->encryption->decrypt($order_reference['data']), true);
+			if ($klarna_checkout_order_data && $klarna_checkout_order_data['merchant_id']) {
+				$merchant_id = $klarna_checkout_order_data['merchant_id'];
+			}
+		}
+
 		$data['transaction'] = array(
 			'order_id'					 => $klarna_order['order_id'],
+			'merchant_id'				 => $merchant_id,
 			'reference'					 => $klarna_order['klarna_reference'],
 			'status'					 => $klarna_order['status'],
+			'fraud_status'				 => $klarna_order['fraud_status'],
 			'merchant_reference_1'		 => $klarna_order['merchant_reference1'],
 			'billing_address'			 => $klarna_order['billing_address'],
 			'shipping_address'			 => $klarna_order['shipping_address'],
@@ -486,15 +645,15 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		foreach ($klarna_order['captures'] as $capture) {
 			$data['captures'][] = array(
-				'capture_id'		     => $capture['capture_id'],
-				'shipping_info_title'    => sprintf($this->language->get('text_capture_shipping_info_title'), $capture['capture_id']),
-				'billing_address_title'  => sprintf($this->language->get('text_capture_billing_address_title'), $capture['capture_id']),
-				'date_added'	         => date($this->language->get('datetime_format'), strtotime($capture['captured_at'])),
-				'amount'			     => $this->currency->format($capture['captured_amount'] / 100, $order_info['currency_code'], '1.00000000', true),
-				'reference'		         => $capture['klarna_reference'],
-				'shipping_info'	         => $capture['shipping_info'],
-				'billing_address'        => $capture['billing_address'],
-				'shipping_address'       => $capture['shipping_address']
+				'capture_id'			=> $capture['capture_id'],
+				'shipping_info_title'	=> sprintf($this->language->get('text_capture_shipping_info_title'), $capture['capture_id']),
+				'billing_address_title'	=> sprintf($this->language->get('text_capture_billing_address_title'), $capture['capture_id']),
+				'date_added'			=> date($this->language->get('datetime_format'), strtotime($capture['captured_at'])),
+				'amount'				=> $this->currency->format($capture['captured_amount'] / 100, $order_info['currency_code'], '1.00000000', true),
+				'reference'				=> $capture['klarna_reference'],
+				'shipping_info'			=> $capture['shipping_info'],
+				'billing_address'		=> $capture['billing_address'],
+				'shipping_address'		=> $capture['shipping_address']
 			);
 		}
 
@@ -563,11 +722,19 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
-		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['shipping_country_id'], $order_info['currency_code']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['currency_code']);
 
 		if (!$klarna_account || !$connector) {
 			return;
 		}
+
+		$klarna_order = $this->model_extension_payment_klarna_checkout->omRetrieve($connector, $this->request->post['order_ref']);
+
+		if (!$klarna_order) {
+			return;
+		}
+
+		$old_klarna_status = $klarna_order['status'];
 
 		if ($this->request->post['type'] == 'cancel') {
 			$action = $this->model_extension_payment_klarna_checkout->omCancel($connector, $this->request->post['order_ref']);
@@ -616,6 +783,40 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$error = true;
 		}
 
+		$klarna_order = $this->model_extension_payment_klarna_checkout->omRetrieve($connector, $this->request->post['order_ref']);
+
+		if (!$klarna_order) {
+			return;
+		}
+
+		$new_klarna_status = $klarna_order['status'];
+
+		$order_status_id = '';
+		if ($old_klarna_status != $new_klarna_status) {
+			switch ($klarna_order['status']) {
+				case 'AUTHORIZED':
+					$order_status_id = $this->config->get('klarna_checkout_order_status_authorised_id');
+
+					if ($klarna_order['fraud_status'] == 'PENDING') {
+						$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_pending_id');
+					} elseif ($klarna_order['fraud_status'] == 'REJECTED') {
+						$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_rejected_id');
+					}
+					break;
+				case 'PART_CAPTURED':
+					$order_status_id = $this->config->get('klarna_checkout_order_status_part_captured_id');
+					break;
+				case 'CAPTURED':
+					$order_status_id = $this->config->get('klarna_checkout_order_status_captured_id');
+					break;
+				case 'CANCELLED':
+					$order_status_id = $this->config->get('klarna_checkout_order_status_cancelled_id');
+					break;
+			}
+		} elseif ($this->request->post['type'] == 'refund' && ($klarna_order['captured_amount'] - $klarna_order['refunded_amount'] == 0)) {
+			$order_status_id = $this->config->get('klarna_checkout_order_status_refund_id');
+		}
+
 		if (!$error && $action) {
 			$success = $this->language->get('text_success_action');
 		} elseif (!$error && $action && isset($action->message)) {
@@ -626,6 +827,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$json['success'] = $success;
 		$json['error'] = $error;
+		$json['order_status_id'] = $order_status_id;
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -765,15 +967,15 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		if (empty($this->request->post['klarna_checkout_account'])) {
 			$this->error['account_warning'] = $this->language->get('error_account_minimum');
 		} else {
-			$countries = array();
+			$currencies = array();
 
 			foreach ($this->request->post['klarna_checkout_account'] as $key => $account) {
-				if (in_array($account['country'], $countries)) {
-					$this->error['account_warning'] = $this->language->get('error_account_countries');
+				if (in_array($account['currency'], $currencies)) {
+					$this->error['account_warning'] = $this->language->get('error_account_currency');
 
 					break;
 				} else {
-					$countries[] = $account['country'];
+					$currencies[] = $account['currency'];
 				}
 
 				if (!$account['merchant_id']) {

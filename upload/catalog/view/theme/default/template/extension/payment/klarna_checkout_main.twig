@@ -1,3 +1,7 @@
-{% if klarna_checkout %}
+{% if redirect %}
+<script type="text/javascript"><!--
+location = '{{ redirect }}';
+//--></script>
+<?php } elseif ($klarna_checkout) { ?>
 {{ klarna_checkout }}
 {% endif %}

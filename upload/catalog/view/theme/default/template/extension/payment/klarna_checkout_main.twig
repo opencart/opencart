@@ -2,6 +2,6 @@
 <script type="text/javascript"><!--
 location = '{{ redirect }}';
 //--></script>
-<?php } elseif ($klarna_checkout) { ?>
+{% elseif klarna_checkout %}
 {{ klarna_checkout }}
 {% endif %}

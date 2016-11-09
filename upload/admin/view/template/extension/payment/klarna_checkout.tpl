@@ -19,6 +19,11 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+    <?php if ($error_tax_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_tax_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
@@ -27,6 +32,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-klarna-checkout" class="form-horizontal">
           <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#tab-setting" data-toggle="tab"><?php echo $tab_setting; ?></a></li>
+			<li><a href="#tab-order-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
 			<li><a href="#tab-account" data-toggle="tab"><?php echo $tab_account; ?></a></li>
 			<li><a href="#tab-settlement" data-toggle="tab"><?php echo $tab_settlement; ?></a></li>
           </ul>
@@ -53,23 +59,101 @@
                 </div>
               </div>
 			  <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-colour-button"><?php echo $entry_colour_button; ?></label>
+                <div class="col-sm-10">
+                  <input type="color" name="klarna_checkout_colour_button" value="<?php echo $klarna_checkout_colour_button; ?>" id="input-colour-button" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-colour-button-text"><?php echo $entry_colour_button_text; ?></label>
+                <div class="col-sm-10">
+                  <input type="color" name="klarna_checkout_colour_button_text" value="<?php echo $klarna_checkout_colour_button_text; ?>" id="input-colour-button-text" />
+                </div>
+              </div>
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label" for="input-colour-checkbox"><?php echo $entry_colour_checkbox; ?></label>
+			    <div class="col-sm-10">
+				  <input type="color" name="klarna_checkout_colour_checkbox" value="<?php echo $klarna_checkout_colour_checkbox; ?>" id="input-colour-checkbox" />
+			    </div>
+			  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-colour-checkbox-checkmark"><?php echo $entry_colour_checkbox_checkmark; ?></label>
+                <div class="col-sm-10">
+                  <input type="color" name="klarna_checkout_colour_checkbox_checkmark" value="<?php echo $klarna_checkout_colour_checkbox_checkmark; ?>" id="input-colour-checkbox-checkmark" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-colour-header"><?php echo $entry_colour_header; ?></label>
+                <div class="col-sm-10">
+                  <input type="color" name="klarna_checkout_colour_header" value="<?php echo $klarna_checkout_colour_header; ?>" id="input-colour-header" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-colour-link"><?php echo $entry_colour_link; ?></label>
+                <div class="col-sm-10">
+                  <input type="color" name="klarna_checkout_colour_link" value="<?php echo $klarna_checkout_colour_link; ?>" id="input-colour-link" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-separate-shipping-address"><span data-toggle="tooltip" title="<?php echo $help_separate_shipping_address; ?>"><?php echo $entry_separate_shipping_address; ?></span></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_separate_shipping_address" id="input-separate-shipping-address" class="form-control">
+                    <?php if ($klarna_checkout_separate_shipping_address) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-dob-mandatory"><span data-toggle="tooltip" title="<?php echo $help_dob_mandatory; ?>"><?php echo $entry_dob_mandatory; ?></span></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_dob_mandatory" id="input-dob-mandatory" class="form-control">
+                    <?php if ($klarna_checkout_dob_mandatory) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-title-mandatory"><span data-toggle="tooltip" title="<?php echo $help_title_mandatory; ?>"><?php echo $entry_title_mandatory; ?></span></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_title_mandatory" id="input-title-mandatory" class="form-control">
+                    <?php if ($klarna_checkout_title_mandatory) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-additional-text-box"><span data-toggle="tooltip" title="<?php echo $help_additional_text_box; ?>"><?php echo $entry_additional_text_box; ?></span></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_additional_text_box" id="input-additional-text-box" class="form-control">
+                    <?php if ($klarna_checkout_additional_text_box) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+			  <div class="form-group">
 			    <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
 			    <div class="col-sm-10">
 			  	  <input type="text" name="klarna_checkout_total" value="<?php echo $klarna_checkout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-				</div>
-			  </div>
-			  <div class="form-group">
-				<label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-				<div class="col-sm-10">
-				  <select name="klarna_checkout_order_status_id" id="input-order-status" class="form-control">
-					<?php foreach ($order_statuses as $order_status) { ?>
-					<?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_id) { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-					<?php } else { ?>
-					<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-					<?php } ?>
-					<?php } ?>
-				  </select>
 				</div>
 			  </div>
 			  <div class="form-group">
@@ -101,6 +185,120 @@
                 </div>
               </div>
             </div>
+			<div class="tab-pane" id="tab-order-status">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-authorised"><?php echo $entry_order_status_authorised; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_authorised_id" id="input-order-status-authorised" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_authorised_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-part-captured"><?php echo $entry_order_status_part_captured; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_part_captured_id" id="input-order-status-part-captured" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_part_captured_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-captured"><?php echo $entry_order_status_captured; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_captured_id" id="input-order-status-captured" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_captured_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-cancelled"><?php echo $entry_order_status_cancelled; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_cancelled_id" id="input-order-status-cancelled" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_cancelled_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-refund"><?php echo $entry_order_status_refund; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_refund_id" id="input-order-status-refund" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_refund_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-fraud-rejected"><?php echo $entry_order_status_fraud_rejected; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_fraud_rejected_id" id="input-order-status-fraud-rejected" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_fraud_rejected_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-fraud-pending"><?php echo $entry_order_status_fraud_pending; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_fraud_pending_id" id="input-order-status-fraud-pending" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_fraud_pending_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status-fraud-accepted"><?php echo $entry_order_status_fraud_accepted; ?></label>
+                <div class="col-sm-10">
+                  <select name="klarna_checkout_order_status_fraud_accepted_id" id="input-order-status-fraud-accepted" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $klarna_checkout_order_status_fraud_accepted_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+			</div>
 			<div class="tab-pane" id="tab-account">
 			  <?php if ($error_account_warning) { ?>
 			  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_warning; ?></div>
@@ -353,11 +551,13 @@ function addAccount() {
 	html += '    <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
+
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][shipping]" class="form-control">';
 	<?php foreach ($geo_zones as $geo_zone) { ?>
 	html += '    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo addslashes($geo_zone['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
+
 	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';
 	<?php foreach ($currencies as $currency) { ?>
 	html += '    <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>';
@@ -378,63 +578,63 @@ function addAccount() {
 }
 
 $(document).delegate('#button-ip-add', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
-		type: 'post',
-		data: 'ip=<?php echo $api_ip; ?>',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-ip-add').button('loading');
-		},
-		complete: function() {
-			$('#button-ip-add').button('reset');
-		},
-		success: function(json) {
-			$('.api-alert').remove();
+    $.ajax({
+        url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
+        type: 'post',
+        data: 'ip=<?php echo $api_ip; ?>',
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-ip-add').button('loading');
+        },
+        complete: function() {
+            $('#button-ip-add').button('reset');
+        },
+        success: function(json) {
+            $('.api-alert').remove();
 
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
 
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success api-alert"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success api-alert"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 var token = '';
 
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login',
-	type: 'post',
-	dataType: 'json',
-	data: 'key=<?php echo $api_key; ?>',
-	crossDomain: true,
-	success: function(json) {
-		$('.api-alert').remove();
+    url: '<?php echo $store_url; ?>index.php?route=api/login',
+    type: 'post',
+    dataType: 'json',
+    data: 'key=<?php echo $api_key; ?>',
+    crossDomain: true,
+    success: function(json) {
+        $('.api-alert').remove();
 
         if (json['error']) {
-    		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-    		}
+            if (json['error']['key']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
 
             if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
-    		}
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger api-alert"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+            }
         }
 
         if (json['token']) {
-			token = json['token'];
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
+            token = json['token'];
+        }
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
 });
 //--></script>
 <?php echo $footer; ?>

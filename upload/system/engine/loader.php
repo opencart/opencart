@@ -78,13 +78,13 @@ final class Loader {
 		}
 		
 		if (!$output) {
-			$template = new Template($this->registry->get('config')->get('template_type'));
+			$template = new Template($this->registry->get('config')->get('template_engine'));
 			
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
 		
-			$output = $template->render($route . '.tpl');
+			$output = $template->render($route);
 		}
 		
 		// Trigger the post events

@@ -24,4 +24,12 @@ class ModelExtensionExtension extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
+	
+	public function addPath($code, $path) {
+		$this->db->query("INSERT INTO " . DB_PREFIX . "extension_install SET `code` = '" . $this->db->escape($code) . "', `path` = '" . $this->db->escape($path) . "'");
+	}
+	
+	public function remove($code) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "extension_install WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY DESC");
+	}			
 }

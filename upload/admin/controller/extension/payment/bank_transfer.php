@@ -42,16 +42,11 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$this->load->model('localisation/language');
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			if (isset($this->error['bank' . $language['language_id']])) {
-				$data['error_bank' . $language['language_id']] = $this->error['bank' . $language['language_id']];
-			} else {
-				$data['error_bank' . $language['language_id']] = '';
-			}
+		if (isset($this->error['bank'])) {
+			$data['error_bank'] = $this->error['bank'];
+		} else {
+			$data['error_bank'] = array();
 		}
 
 		$data['breadcrumbs'] = array();
@@ -77,11 +72,15 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$this->load->model('localisation/language');
 
+		$data['bank_transfer'] = array();
+
+		$languages = $this->model_localisation_language->getLanguages();
+		
 		foreach ($languages as $language) {
 			if (isset($this->request->post['bank_transfer_bank' . $language['language_id']])) {
-				$data['bank_transfer_bank' . $language['language_id']] = $this->request->post['bank_transfer_bank' . $language['language_id']];
+				$data['bank_transfer_bank'][$language['language_id']] = $this->request->post['bank_transfer_bank' . $language['language_id']];
 			} else {
-				$data['bank_transfer_bank' . $language['language_id']] = $this->config->get('bank_transfer_bank' . $language['language_id']);
+				$data['bank_transfer_bank'][$language['language_id']] = $this->config->get('bank_transfer_bank' . $language['language_id']);
 			}
 		}
 
@@ -143,7 +142,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		foreach ($languages as $language) {
 			if (empty($this->request->post['bank_transfer_bank' . $language['language_id']])) {
-				$this->error['bank' .  $language['language_id']] = $this->language->get('error_bank');
+				$this->error['bank'][$language['language_id']] = $this->language->get('error_bank');
 			}
 		}
 

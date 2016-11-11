@@ -39,6 +39,17 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 			return false;
 		}
 
+		list($totals, $taxes, $total) = $this->model_extension_payment_klarna_checkout->getTotals();
+
+		if ($this->config->get('klarna_checkout_total') > 0 && $this->config->get('klarna_checkout_total') > $total) {
+			return false;
+		}
+
+		if ($this->model_extension_payment_klarna_checkout->checkForPaymentTaxes($products)) {
+			$this->model_extension_payment_klarna_checkout->log('Payment Address based taxes used.');
+			return false;
+		}
+
 		$this->setShipping();
 
 		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $this->session->data['currency']);

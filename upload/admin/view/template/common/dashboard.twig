@@ -1,0 +1,34 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_install %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_install }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% for row in rows %}
+    <div class="row">
+      {% for dashboard_1 in row %}
+      {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-3 col-sm-6') %}
+      {% for dashboard_2 in row %}
+      {% if dashboard_2.width > 3 %}
+      {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-12 col-sm-12') %}
+      {% endif %}
+      {% endfor %}
+      <div class="{{ class }}">{{ dashboard_1.output }}</div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{{ footer }}

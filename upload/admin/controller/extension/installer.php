@@ -21,6 +21,7 @@ class ControllerExtensionInstaller extends Controller {
         
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_progress'] = $this->language->get('text_progress');
 			
 		$data['entry_upload'] = $this->language->get('entry_upload');
 		$data['entry_overwrite'] = $this->language->get('entry_overwrite');
@@ -33,14 +34,6 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['token'] = $this->session->data['token'];
-
-		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
-
-		if ($directories) {
-			$data['error_warning'] = $this->language->get('error_temporary');
-		} else {
-			$data['error_warning'] = '';
-		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -94,14 +87,14 @@ class ControllerExtensionInstaller extends Controller {
 				if (file_exists($file)) {
 					$json['step'][] = array(
 						'text' => $this->language->get('text_xml'),
-						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
 						'path' => $path
 					);
 
 					// Clear temporary files
 					$json['step'][] = array(
 						'text' => $this->language->get('text_remove'),
-						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
 						'path' => $path
 					);
 				} else {
@@ -122,14 +115,14 @@ class ControllerExtensionInstaller extends Controller {
 						// Zip
 						$json['step'][] = array(
 							'text' => $this->language->get('text_unzip'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 
 						// FTP
 						$json['step'][] = array(
 							'text' => $this->language->get('text_ftp'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 
@@ -141,7 +134,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.sql') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_sql'),
-									'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -150,7 +143,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.xml') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_xml'),
-									'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -159,7 +152,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.php') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_php'),
-									'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -196,7 +189,7 @@ class ControllerExtensionInstaller extends Controller {
 						// Clear temporary files
 						$json['step'][] = array(
 							'text' => $this->language->get('text_remove'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 

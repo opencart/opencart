@@ -25,7 +25,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy');
+		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy', '', true);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

@@ -700,7 +700,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$transaction = array(
 						'paypal_order_id' => $paypal_order['paypal_order_id'],
 						'transaction_id' => '',
-						'parent_transaction_id' => $this->request->post['transaction_id'],
+						'parent_id' => $this->request->post['transaction_id'],
 						'note' => $this->request->post['refund_message'],
 						'msgsubid' => $call_data['MSGSUBID'],
 						'receipt_id' => '',

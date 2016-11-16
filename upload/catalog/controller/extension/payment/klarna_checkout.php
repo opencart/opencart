@@ -1072,7 +1072,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			$this->model_extension_payment_klarna_checkout->updateOcOrder($order_id, $order_data);
 
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('klarna_checkout_order_status_id'), '', true);
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 
 			http_response_code(200);
 		} else {

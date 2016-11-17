@@ -8,6 +8,9 @@ $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
 
+// Default Timezone
+date_default_timezone_set($config->get('config_timezone'));
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);
@@ -45,7 +48,7 @@ if ($config->get('session_autostart')) {
 
 $registry->set('session', $session);
 
-// Cache 
+// Cache
 $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url

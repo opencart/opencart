@@ -48,6 +48,9 @@ $_['config_error_display'] = true;
 $_['config_error_log']     = true;
 $_['config_error_filename'] = 'error.log';
 
+// Timezone
+$_['config_timezone']       = !ini_get('date.timezone') ? 'UTC' : ini_get('date.timezone');
+
 // Reponse
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');
 $_['response_compression'] = 0;

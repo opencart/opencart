@@ -32,7 +32,7 @@
       <div class="panel-body">
         <div class="well">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="form-group">
                 <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
                 <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
@@ -42,7 +42,7 @@
                 <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="form-group">
                 <label class="control-label" for="input-price"><?php echo $entry_price; ?></label>
                 <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
@@ -52,7 +52,22 @@
                 <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
+			  <div class="form-group">
+                <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
+                <select name="filter_category" id="input-category" class="form-control">
+                  <option value="*"></option>
+				  <?php foreach ($categories as $category) { ?>
+				  <?php if ($filter_category && $filter_category == $category['category_id']) { ?>
+                  <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+				  <?php } ?>
+				  <?php } ?>
+				</select>
+			  </div>
+            </div>
+            <div class="col-sm-3">
               <div class="form-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" id="input-status" class="form-control">
@@ -69,7 +84,7 @@
                   <?php } ?>
                 </select>
               </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -190,6 +205,13 @@ $('#button-filter').on('click', function() {
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
+	
+	var filter_category = $('select[name=\'filter_category\']').val();
+
+	if (filter_category != '*') {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+
 
 	location = url;
 });

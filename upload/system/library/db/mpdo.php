@@ -67,7 +67,10 @@ final class mPDO {
                 $this->rowCount = $this->statement->rowCount();
                 if($this->rowCount > 0)
                 {
-                    $data = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+                    try {
+                        $data = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+                    }
+                    catch(\Exception $ex){}
                 }
 
                 // free up resources

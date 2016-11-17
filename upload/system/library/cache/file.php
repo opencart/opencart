@@ -6,6 +6,10 @@ class File {
 	public function __construct($expire = 3600) {
 		$this->expire = $expire;
 
+		if(!file_exists(DIR_CACHE)) {
+            mkdir(DIR_CACHE,0777,true);
+        }
+
 		$files = glob(DIR_CACHE . 'cache.*');
 
 		if ($files) {

@@ -3,6 +3,11 @@ class Log {
 	private $handle;
 
 	public function __construct($filename) {
+
+		if(!is_dir(DIR_LOGS)) {
+            mkdir(DIR_LOGS,0777,true);
+        }
+        
 		$this->handle = fopen(DIR_LOGS . $filename, 'a');
 	}
 

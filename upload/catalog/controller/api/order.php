@@ -694,7 +694,7 @@ class ControllerApiOrder extends Controller {
 						$order_status_id = $this->config->get('config_order_status_id');
 					}
 
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id, $this->request->post['comment']);
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');

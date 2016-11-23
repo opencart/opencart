@@ -24,6 +24,7 @@ class ControllerCommonColumnLeft extends Controller {
 			} else {
 				$data['firstname'] = '';
 				$data['lastname'] = '';
+				$data['username'] = '';
 				$data['user_group'] = '';
 				$data['image'] = '';
 			}			

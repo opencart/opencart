@@ -174,49 +174,44 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
-	var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
-
-	var filter_name = $('input[name=\'filter_name\']').val();
-
-	if (filter_name) {
-		url += '&filter_name=' + encodeURIComponent(filter_name);
-	}
-
-	var filter_model = $('input[name=\'filter_model\']').val();
-
-	if (filter_model) {
-		url += '&filter_model=' + encodeURIComponent(filter_model);
-	}
-
-	var filter_price = $('input[name=\'filter_price\']').val();
-
-	if (filter_price) {
-		url += '&filter_price=' + encodeURIComponent(filter_price);
-	}
-
-	var filter_quantity = $('input[name=\'filter_quantity\']').val();
-
-	if (filter_quantity) {
-		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
-	}
-
-	var filter_status = $('select[name=\'filter_status\']').val();
-
-	if (filter_status != '*') {
-		url += '&filter_status=' + encodeURIComponent(filter_status);
-	}
-
-  var filter_image = $('select[name=\'filter_image\']').val();
-
-  if (filter_image != '*') {
-    url += '&filter_image=' + encodeURIComponent(filter_image);
-  }
-
-	location = url;
+$(document).keypress(function(e) {
+    if (e.which == 13) {
+        filterProducts();
+    }
 });
-//--></script>
-  <script type="text/javascript"><!--
+function filterProducts()
+{
+    var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
+    var filter_name = $('input[name=\'filter_name\']').val();
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+    var filter_model = $('input[name=\'filter_model\']').val();
+    if (filter_model) {
+        url += '&filter_model=' + encodeURIComponent(filter_model);
+    }
+    var filter_price = $('input[name=\'filter_price\']').val();
+    if (filter_price) {
+      url += '&filter_price=' + encodeURIComponent(filter_price);
+    }
+    var filter_quantity = $('input[name=\'filter_quantity\']').val();
+    if (filter_quantity) {
+        url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+    }
+    var filter_status = $('select[name=\'filter_status\']').val();
+    if (filter_status != '*') {
+        url += '&filter_status=' + encodeURIComponent(filter_status);
+    }
+    var filter_image = $('select[name=\'filter_image\']').val();if (filter_image != '*') {
+        url += '&filter_image=' + encodeURIComponent(filter_image);
+    }
+    location = url;
+}
+
+$('#button-filter').on('click', function() {
+    filterProducts();
+});
+
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -234,7 +229,8 @@ $('input[name=\'filter_name\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_name\']').val(item['label']);
-	}
+        filterProducts();
+    }
 });
 
 $('input[name=\'filter_model\']').autocomplete({
@@ -254,7 +250,8 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
-	}
+        filterProducts();
+    }
 });
 //--></script></div>
 <?php echo $footer; ?>

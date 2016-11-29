@@ -14,6 +14,7 @@ Read the instructions below before you create a bug report.
  4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
  5. Use [Google](http://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
+ 7. We now offer limited free support through our [support site](http://support.opencart.com/)
 
 If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=191)
 

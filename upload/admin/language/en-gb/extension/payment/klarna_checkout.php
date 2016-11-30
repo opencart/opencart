@@ -33,7 +33,7 @@ $_['text_downloading_settlement']		 = 'Downloading settlement files...';
 $_['text_processing_orders']			 = 'Processing orders...';
 $_['text_processing_order']				 = 'Processing order';
 $_['text_no_files']						 = 'No files to download.';
-$_['text_version']						 = '1.1';
+$_['text_version']						 = '1.2';
 
 // Column
 $_['column_order_id']					 = 'Order ID';
@@ -86,8 +86,27 @@ $_['column_return_tracking_uri']		 = 'Return Tracking URI';
 
 // Entry
 $_['entry_debug']						 = 'Debug Logging';
+$_['entry_colour_button']				 = 'Button Background Colour';
+$_['entry_colour_button_text']			 = 'Button Text Colour';
+$_['entry_colour_checkbox']				 = 'Checkbox Background Colour';
+$_['entry_colour_checkbox_checkmark']	 = 'Checkbox Tick Colour';
+$_['entry_colour_header']				 = 'Heading Text Colour';
+$_['entry_colour_link']					 = 'Link Text Colour';
+$_['entry_separate_shipping_address']	 = 'Allow Separate Shipping Address';
+$_['entry_dob_mandatory']				 = 'Date Of Birth Mandatory (UK stores only)';
+$_['entry_title_mandatory']				 = 'Title Mandatory (UK stores only)';
+$_['entry_additional_text_box']			 = 'Allow Newsletter Signup';
+
 $_['entry_total']						 = 'Total';
 $_['entry_order_status']				 = 'Order Status';
+$_['entry_order_status_authorised']		 = 'Authorized';
+$_['entry_order_status_part_captured']	 = 'Part Captured';
+$_['entry_order_status_captured']		 = 'Captured';
+$_['entry_order_status_cancelled']		 = 'Cancelled';
+$_['entry_order_status_refund']			 = 'Full Refund';
+$_['entry_order_status_fraud_rejected']	 = 'Fraud - Rejected';
+$_['entry_order_status_fraud_pending']	 = 'Fraud - Pending Decision';
+$_['entry_order_status_fraud_accepted']	 = 'Fraud - Accepted';
 $_['entry_status']						 = 'Status';
 $_['entry_terms']						 = 'Terms & Conditions';
 $_['entry_locale']						 = 'Locale';
@@ -113,13 +132,17 @@ $_['entry_version']						 = 'Extension Version';
 
 // Help
 $_['help_debug']						 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';
+$_['help_separate_shipping_address']	 = 'If yes, the consumer can enter different billing and shipping addresses.';
+$_['help_dob_mandatory']				 = 'If yes, the consumer cannot skip date of birth.';
+$_['help_title_mandatory']				 = 'If specified to no, title becomes optional in countries that by default require title.';
+$_['help_additional_text_box']			 = 'Allows newsletter signup within the iFrame for logged in users.';
 $_['help_total']						 = 'The checkout total the order must reach before this payment method becomes active.';
 $_['help_locale']						 = 'Locale code for each account. Two-letter language code combined with two-letter country code according to RFC 1766. (e.g. en-gb for British English or sv-se for Swedish)';
 $_['help_api']							 = 'For Europe users, Klarna Checkout doesn\'t provide the customer region. This means that region specific shipping options will not work (Country specific shipping is fine)';
 $_['help_sftp_username']				 = 'SFTP username provided by your account manager';
 $_['help_sftp_password']				 = 'SFTP password provided by your account manager';
 $_['help_settlement_order_status']		 = 'Order status that processed settlement orders will change to.';
-$_['help_shipping']                      = 'All countries within this geo zone will be available to select in the Klarna iFrame.';
+$_['help_shipping']						 = 'All countries within this geo zone will be available to select in the Klarna iFrame.';
 
 // Button
 $_['button_account_remove']				 = 'Remove Account';
@@ -146,8 +169,10 @@ $_['error_locale']						 = 'Please enter a valid locale.';
 $_['error_account_currency']			 = 'Account list contains one or more duplicate currencies.';
 $_['error_merchant_id']					 = 'Merchant ID Required!';
 $_['error_secret']						 = 'Shared Secret Required!';
+$_['error_tax_warning']					 = 'Warning: Some of your products use a Payment Address based Tax Class. Klarna Checkout will not work when any of these are placed in the cart.';
 
 // Tab
 $_['tab_setting']						 = 'Settings';
+$_['tab_order_status']					 = 'Order Statuses';
 $_['tab_account']						 = 'Accounts';
 $_['tab_settlement']					 = 'Settlement';

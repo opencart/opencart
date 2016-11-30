@@ -20,7 +20,7 @@ If you are not sure about your issue, it is always best to ask the community on 
 
 **Important!**
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
-- If you would like to report a security bug please do one of the following; PM an OpenCart moderator (Daniel or James) on the forum, send an email to the support desk at ![Support Email image](http://img4me.com/ZHj.png "Type our email into your mail client") or use the contact form on the [OpenCart website](https://www.opencart.com/index.php?route=support/contact). 
+- If you would like to report a security bug please do one of the following; PM an OpenCart moderator (Daniel or James) on the forum, send an email to the support desk at  ![Support Email image](http://img4me.com/ZHj.png "Type our email into your mail client") or use the contact form on the [OpenCart website](https://www.opencart.com/index.php?route=support/contact). 
 - Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it otherwise it is a huge drain on resources. Please DO NOT post security flaws in a public location like forums, twitter, Reddit
 - If you have found a bug / security issue it is very important to check if it is present in the latest version of OpenCart before reporting it, please check commit the history of the file(s) where the bug is to see if it is resolved.
 

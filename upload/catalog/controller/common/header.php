@@ -31,7 +31,6 @@ class ControllerCommonHeader extends Controller {
 		$data['keywords'] = $this->document->getKeywords();
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
-		$data['scripts'] = $this->document->getScripts();
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 

@@ -30,9 +30,6 @@
 {% for link in links %}
 <link href="{{ link.href }}" rel="{{ link.rel }}" />
 {% endfor %}
-{% for script in scripts %}
-<script src="{{ script }}" type="text/javascript"></script>
-{% endfor %}
 {% for analytic in analytics %}
 {{ analytic }}
 {% endfor %}

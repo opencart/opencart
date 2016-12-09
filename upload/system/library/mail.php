@@ -109,7 +109,8 @@ class Mail {
 			$mail->Port = $this->smtp_port;                                    // TCP port to connect to
 		}
 
-		$mail->setFrom($this->from);
+		$mail->setFrom($this->from, $this->sender);
+		$mail->addBCC($this->from, $this->sender);
 
 		if (!is_array($to)) {
 			$mail->addAddress((string)$this->to);     // Add a recipient
@@ -119,7 +120,11 @@ class Mail {
 			}
 		}
 
-		$mail->addReplyTo($this->from);
+		if (!$this->reply_to) {
+			$mail->addReplyTo($this->from);
+		} else {
+			$mail->addReplyTo($this->reply_to);
+		}
 
 		foreach ($this->attachments as $attachment) {
 			if (file_exists($attachment)) {

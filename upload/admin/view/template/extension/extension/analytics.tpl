@@ -30,7 +30,6 @@
             <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             <?php } ?></td>
         </tr>
-        <?php } ?>
         <?php if ($extension['installed']) { ?>
         <?php foreach ($extension['store'] as $store) { ?>
         <tr>
@@ -38,6 +37,7 @@
           <td class="text-left"><?php echo $store['status']; ?></td>
           <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
         </tr>
+        <?php } ?>
         <?php } ?>
         <?php } ?>
         <?php } else { ?>

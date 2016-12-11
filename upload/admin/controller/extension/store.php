@@ -8,25 +8,43 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$filter_search = $this->request->get['filter_search'];
 		} else {
-			$filter_search = null;
+			$filter_search = '';
 		}
-				
-		if (isset($this->request->get['filter_category'])) {
-			$filter_category = $this->request->get['filter_category'];
+							
+		if (isset($this->request->get['filter_category_id'])) {
+			$filter_category_id = $this->request->get['filter_category_id'];
 		} else {
-			$filter_category = 'all';
+			$filter_category_id = '';
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$filter_license = $this->request->get['filter_license'];
 		} else {
-			$filter_license = 'all';
+			$filter_license = '';
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$filter_username = $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_download_id'])) {
+			$filter_download_id = $this->request->get['filter_download_id'];
 		} else {
-			$filter_username = null;
+			$filter_download_id = '';
+		}
+
+		if (isset($this->request->get['filter_rating'])) {
+			$filter_rating = $this->request->get['filter_rating'];
+		} else {
+			$filter_rating = '';
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$filter_member_type = $this->request->get['filter_member_type'];
+		} else {
+			$filter_member_type = '';
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$filter_member = $this->request->get['filter_member'];
+		} else {
+			$filter_member = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -46,17 +64,29 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-		
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
+
+		if (isset($this->request->get['filter_category_id'])) {
+			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_download_id'])) {
+			$url .= '&filter_download_id=' . $this->request->get['filter_download_id'];
+		}
+
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {

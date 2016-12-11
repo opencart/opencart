@@ -11,22 +11,16 @@ class ControllerExtensionStore extends Controller {
 			$filter_search = '';
 		}
 							
-		if (isset($this->request->get['filter_category_id'])) {
-			$filter_category_id = $this->request->get['filter_category_id'];
+		if (isset($this->request->get['filter_category'])) {
+			$filter_category = $this->request->get['filter_category'];
 		} else {
-			$filter_category_id = '';
+			$filter_category = '';
 		}
 
 		if (isset($this->request->get['filter_license'])) {
 			$filter_license = $this->request->get['filter_license'];
 		} else {
 			$filter_license = '';
-		}
-
-		if (isset($this->request->get['filter_download_id'])) {
-			$filter_download_id = $this->request->get['filter_download_id'];
-		} else {
-			$filter_download_id = '';
 		}
 
 		if (isset($this->request->get['filter_rating'])) {
@@ -65,16 +59,12 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
 
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
 
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_download_id'])) {
-			$url .= '&filter_download_id=' . $this->request->get['filter_download_id'];
 		}
 
 		if (isset($this->request->get['filter_rating'])) {
@@ -109,16 +99,45 @@ class ControllerExtensionStore extends Controller {
 			'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);
 		
-		$data['token'] = $this->session->data['token'];
-
 		$data['extensions'] = array();
 		
-		$url .= '&api_key=' . $this->config->get('config_api_key'); 
-		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+		$url  = '?domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
 		$url .= '&version=' . VERSION;
 		
+		if (isset($this->request->get['filter_search'])) {
+			$url .= '&filter_search=' . $this->request->get['filter_search'];
+		}
+
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		}
+
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
+		}
+
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+				
 		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/v1' . $url);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -173,9 +192,17 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
-		}		
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -185,7 +212,7 @@ class ControllerExtensionStore extends Controller {
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_all'),
-			'value' => 'all',
+			'value' => '',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
@@ -254,13 +281,25 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-				
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 				
 		// Licenses
@@ -268,7 +307,7 @@ class ControllerExtensionStore extends Controller {
 		
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_all'),
-			'value' => 'all',
+			'value' => '',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
@@ -290,60 +329,64 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-			
+
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 		
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_modified'),
-			'value' => 'date_modified',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, true)
+			'text'  => 'Popularity',
+			'value' => 'popularity',
+			'href'  => $this->url->link('marketplace/extension', 'sort=popularity' . $url)
 		);
-		
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_added'),
-			'value' => 'date_added',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true)
-		);
-				
-		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_name'),
-			'value' => 'name',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true)
-		);
-		
-		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_rating'),
+			'text'  => 'Rating',
 			'value' => 'rating',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=rating' . $url, true)
-		);		
-		
+			'href'  => $this->url->link('marketplace/extension', 'sort=rating' . $url)
+		);
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_downloaded'),
-			'value' => 'downloaded',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=downloaded' . $url, true)
-		);	
-			
+			'text'  => 'Date Modified',
+			'value' => 'date_modified',
+			'href'  => $this->url->link('marketplace/extension', 'sort=date_modified' . $url)
+		);
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_price'),
+			'text'  => 'Date Added',
+			'value' => 'date_added',
+			'href'  => $this->url->link('marketplace/extension', 'sort=date_added' . $url)
+		);
+
+		$data['sorts'][] = array(
+			'text'  => 'Name',
+			'value' => 'name',
+			'href'  => $this->url->link('marketplace/extension', 'sort=name' . $url)
+		);
+
+		$data['sorts'][] = array(
+			'text'  => 'Price',
 			'value' => 'price',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=price' . $url, true)
-		);	
+			'href'  => $this->url->link('marketplace/extension', 'sort=price' . $url)
+		);
 		
 		// Pagination
 		$url = '';
@@ -351,17 +394,25 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-		
+
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -379,6 +430,8 @@ class ControllerExtensionStore extends Controller {
 		$data['filter_search'] = $filter_search;
 		$data['filter_category'] = $filter_category;
 		$data['filter_license'] = $filter_license;
+		$data['filter_member_type'] = $filter_member_type;
+		$data['filter_rating'] = $filter_rating;
 		$data['sort'] = $sort;
 		
 		$data['header'] = $this->load->controller('common/header');

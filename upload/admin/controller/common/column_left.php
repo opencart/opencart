@@ -156,7 +156,7 @@ class ControllerCommonColumnLeft extends Controller {
 	
 			// Extension
 			$extension = array();
-			/*
+			
 			if ($this->user->hasPermission('access', 'extension/store')) {		
 				$extension[] = array(
 					'name'	   => $this->language->get('text_store'),
@@ -164,7 +164,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
-			*/
+			
 			if ($this->user->hasPermission('access', 'extension/installer')) {		
 				$extension[] = array(
 					'name'	   => $this->language->get('text_installer'),

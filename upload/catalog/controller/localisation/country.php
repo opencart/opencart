@@ -1,5 +1,5 @@
 <?php
-class ControllerLocalisationCountryt extends Controller {
+class ControllerLocalisationCountry extends Controller {
 	public function index() {
 		$json = array();
 

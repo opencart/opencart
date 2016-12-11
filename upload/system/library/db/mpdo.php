@@ -6,7 +6,13 @@ final class mPDO {
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
-			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
+
+			$dsn = "mysql:host={$hostname};port={$port};dbname={$database};charset=UTF8";
+			$options = array(
+				\PDO::ATTR_PERSISTENT => true,
+				\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION);
+			
+			$this->connection = new \PDO($dsn, $username, $password, $options);
 		} catch(\PDOException $e) {
 			throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
 		}
@@ -15,6 +21,7 @@ final class mPDO {
 		$this->connection->exec("SET CHARACTER SET utf8");
 		$this->connection->exec("SET CHARACTER_SET_CONNECTION=utf8");
 		$this->connection->exec("SET SQL_MODE = ''");
+        $this->rowCount = 0;
 	}
 
 	public function prepare($sql) {
@@ -57,14 +64,23 @@ final class mPDO {
 			if ($this->statement && $this->statement->execute($params)) {
 				$data = array();
 
-				while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
-					$data[] = $row;
-				}
+                $this->rowCount = $this->statement->rowCount();
+                if($this->rowCount > 0)
+                {
+                    try {
+                        $data = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+                    }
+                    catch(\Exception $ex){}
+                }
+
+                // free up resources
+                $this->statement->closeCursor();
+                $this->statement = null;
 
 				$result = new \stdClass();
 				$result->row = (isset($data[0]) ? $data[0] : array());
 				$result->rows = $data;
-				$result->num_rows = $this->statement->rowCount();
+				$result->num_rows = $this->rowCount;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
@@ -89,7 +105,7 @@ final class mPDO {
 		if ($this->statement) {
 			return $this->statement->rowCount();
 		} else {
-			return 0;
+			return $this->rowCount;
 		}
 	}
 

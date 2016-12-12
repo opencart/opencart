@@ -77,7 +77,7 @@
                 <div class="extension-description"><?php echo $extension['description']; ?></div>
                 <img src="<?php echo $extension['image']; ?>" alt="<?php echo $extension['name']; ?>" title="<?php echo $extension['name']; ?>" class="img-responsive" /> </a> </div>
               <div class="extension-name">
-                <h4><a href="{{ <?php echo $extension['href']; ?> }}"><?php echo $extension['name']; ?></a></h4>
+                <h4><a href="<?php echo $extension['href']; ?>"><?php echo $extension['name']; ?></a></h4>
                 <?php echo $extension['price']; ?> </div>
               <div>
                 <div class="row">

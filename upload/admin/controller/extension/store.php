@@ -590,7 +590,6 @@ class ControllerExtensionStore extends Controller {
 
 			foreach ($response_info['images'] as $result) {
 				$data['images'][] = array(
-					'name'  => $result['name'],
 					'thumb' => $result['thumb'],
 					'popup' => $result['popup']
 				);

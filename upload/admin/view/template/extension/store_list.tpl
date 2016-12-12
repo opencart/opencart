@@ -1,5 +1,4 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -19,16 +18,21 @@
       <div class="panel-body">
         <div class="well">
           <div class="input-group">
-            <input type="text" name="search" value="" placeholder="{{ text_search }}" class="form-control" />
-            <div class="input-group-btn"><?php foreach ($categories as $category) { ?>
-              <?php if (category.value == filter_category) { ?>
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <span class="caret"></span></button>
-              {% endif %}
-              {% endfor %}
+            <input type="text" name="search" value="" placeholder="<?php echo $text_search; ?>" class="form-control" />
+            <div class="input-group-btn">
+              <?php foreach ($categories as $category) { ?>
+              <?php if ($category['value'] == $filter_category) { ?>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <?php $text_category; ?>
+              (
+              <?php $category['text']; ?>
+              ) <span class="caret"></span></button>
+              <?php } ?>
+              <?php } ?>
               <ul class="dropdown-menu">
-                {% for category in categories %}
-                <li><a href="{{ category.href }}">{{ category.text }}</a></li>
-                {% endfor %}
+                <?php foreach ($categories as $category) { ?>
+                <li><a href="<?php echo $category['href']; ?>"><?php echo $category['text']; ?></a></li>
+                <?php } ?>
               </ul>
               <button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i></button>
             </div>
@@ -37,63 +41,74 @@
         </fieldset>
         <div class="row">
           <div class="col-sm-9 col-xs-7">
-            <div class="btn-group">{% for license in licenses %}
-              {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
-              {% endfor %}</div>
+            <div class="btn-group">
+              <?php foreach ($licenses as $license) { ?>
+              <?php if ($license['value'] == $filter_license) { ?>
+              <a href="<?php echo $license['href']; ?>" class="btn btn-default active"><?php echo $license['text']; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $license['href']; ?>" class="btn btn-default"><?php echo $license['text']; ?></a>
+              <?php } ?>
+              <?php } ?>
+            </div>
           </div>
           <div class="col-sm-3 col-xs-5">
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
-                
-                
-                
-                  {% for sorts in sorts %}
-                  {% if sorts.value == sort %}
-                  
-                
-                <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                
-                
-                  {% else %}
-                  
-                
-                <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                
-                
-                  {% endif %}
-                  {% endfor %}
-                  
-              
+                <?php foreach ($sorts as $sorts) { ?>
+                <?php if ($sorts['value'] == $sort) { ?>
+                <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+                <?php } ?>
+                <?php } ?>
               </select>
             </div>
           </div>
         </div>
         <br />
-        {% if extensions %}
-        {% for extension in extensions|batch(3, '') %}
-        <div class="row"> {% for extension in extension %}
-          <div class="col-sm-4">
-            <div class="thumbnail"><a href="{{ extension.href }}"><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a>
-              <div class="caption">
-                <div>
-                  <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
-                  {{ extension.price }} </div>
-                {% for i in 1..5 %}
-                {% if i < extension.rating %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %} 
-                {% endfor %}
-                <div>{{ extension.comment_total }}</div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}</div>
-        {% endfor %}
+        <?php if ($extensions) { ?>
+        <?php foreach (array_chunk($extensions, 3) as $row) { ?>
         <div class="row">
-          <div class="col-sm-12 text-center">{{ pagination }}</div>
+          <?php foreach ($row as $extension) { ?>
+          <div class="col-sm-4">
+            <section>
+              <div class="extension-preview"> <a href="<?php echo $extension['href']; ?>">
+                <div class="extension-description"><?php echo $extension['description']; ?></div>
+                <img src="<?php echo $extension['image']; ?>" alt="<?php echo $extension['name']; ?>" title="<?php echo $extension['name']; ?>" class="img-responsive" /> </a> </div>
+              <div class="extension-name">
+                <h4><a href="{{ <?php echo $extension['href']; ?> }}"><?php echo $extension['name']; ?></a></h4>
+                <?php echo $extension['price']; ?> </div>
+              <div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <div>
+                      <?php for ($i = 1; $i < 5; $i++) { ?>
+                      <?php if ($i < $extension['rating']) { ?>
+                      <i class="fa fa-star"></i>
+                      <?php } else { ?>
+                      <i class="fa fa-star-o"></i>
+                      <?php } ?>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="text-right"><span><?php echo $extension['review_total']; ?> reviews</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <?php } ?>
         </div>
-        {% else %}
-        <div>{{ no_results }}</div>
-        {% endif %} </div>
+        <?php } ?>
+        <div class="row">
+          <div class="col-sm-12 text-center"><?php echo $pagination; ?></div>
+        </div>
+        <?php } else { ?>
+        <div><?php echo $text_no_results; ?></div>
+        <?php } ?>
+      </div>
     </div>
   </div>
 </div>

@@ -99,9 +99,7 @@ class ControllerExtensionStore extends Controller {
 			'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);
 		
-		$data['extensions'] = array();
-		
-		$url  = '?domain=' . $this->request->server['HTTP_HOST'];
+		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
 		$url .= '&version=' . VERSION;
@@ -138,41 +136,56 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 				
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/v1' . $url);
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_PORT, 80);
 			
 		$response = curl_exec($curl);
+		
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		
 		curl_close($curl);
 
 		$response_info = json_decode($response, true);
 
-		if ($response_info) {
-			$extension_total = $response_info['total'];
-			
-			$results = $response_info['extensions'];
-		} else {
-			$extension_total = 0;
-			
-			$results = array();
+		$extension_total = $response_info['total'];
+		
+		$data['promotions'] = array();
+		
+		if ($status == 200) {
+			foreach ($response_info['promotions'] as $result) {
+				$data['extensions'][] = array(
+					'name'         => $result['name'],
+					'description'  => $result['description'],
+					'image'        => $result['image'],
+					'license'      => $result['license'],
+					'price'        => $result['price'],
+					'rating'       => $result['rating'],
+					'review_total' => $result['review_total'],
+					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+				);
+			}
 		}
-
-		foreach ($results as $result) {
-			$data['extensions'][] = array(
-				'name'          => $result['name'],
-				'image'         => $result['image'],
-				'license'       => $result['license'],
-				'price'         => $result['price'],
-				'rating'        => $result['rating'],
-				'comment_total' => $result['comment_total'],
-				'href'          => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
-			);
+		
+		$data['extensions'] = array();
+		
+		if ($status == 200) {
+			foreach ($response_info['extensions'] as $result) {
+				$data['extensions'][] = array(
+					'name'         => $result['name'],
+					'description'  => $result['description'],
+					'image'        => $result['image'],
+					'license'      => $result['license'],
+					'price'        => $result['price'],
+					'rating'       => $result['rating'],
+					'review_total' => $result['review_total'],
+					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+				);
+			}
 		}
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -180,6 +193,8 @@ class ControllerExtensionStore extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
 		// Categories
 		$url = '';
@@ -251,7 +266,6 @@ class ControllerExtensionStore extends Controller {
 			'value' => 'total',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=total' . $url, true)
 		);	
-		
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_feed'),
@@ -442,24 +456,20 @@ class ControllerExtensionStore extends Controller {
 	}
 	
 	public function info() {
-		$url  = '&api_key=' . $this->config->get('config_api_key'); 
-		//$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		//$url .= '&language=' . $this->config->get('config_language');
-		//$url .= '&currency=' . $this->config->get('config_currency');
-		//$url .= '&version=' . VERSION;
+		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
+		$url .= '&language=' . $this->config->get('config_language');
+		$url .= '&currency=' . $this->config->get('config_currency');
+		$url .= '&version=' . VERSION;
 
-		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/info&extension_id=' . $this->request->get['extension_id'] . $url);
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $this->request->get['extension_id'] . $url);
 				
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_PORT, 80);
 			
 		$response = curl_exec($curl);
-		
-		echo $response;
 		
 		if (!$response) {
 			$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
@@ -481,8 +491,6 @@ class ControllerExtensionStore extends Controller {
 			$data['text_partner'] = $this->language->get('text_partner');
 			$data['text_support'] = $this->language->get('text_support');
 			$data['text_documentation'] = $this->language->get('text_documentation');
-			
-			
 			$data['text_rating'] = $this->language->get('text_rating');
 			$data['text_compatibility'] = $this->language->get('text_compatibility');
 			$data['text_date_added'] = $this->language->get('text_date_added');
@@ -540,17 +548,15 @@ class ControllerExtensionStore extends Controller {
 				'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 			);
 
-			$this->load->helper('bbcode');
-			
 			$data['banner'] = $response_info['banner'];
 			
 			$data['extension_id'] = (int)$this->request->get['extension_id'];
 			$data['name'] = $response_info['name'];
-			$data['description'] = nl2br(bbcode_decode($response_info['description']));
-			$data['documentation'] = nl2br(bbcode_decode($response_info['documentation']));
+			$data['description'] = $response_info['description'];
+			$data['documentation'] = $response_info['documentation'];
 			
 			$data['downloads'] = array();
-			
+			/*
 			if ($response_info['downloads']) {
 				//if (in_array(VERSION, $result['compatibility'])) {
 					foreach ($response_info['downloads'] as $result) {
@@ -562,7 +568,7 @@ class ControllerExtensionStore extends Controller {
 					}
 				//}
 			}		
-			
+			*/
 			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
 			$data['rating'] = $response_info['rating'];
@@ -570,19 +576,26 @@ class ControllerExtensionStore extends Controller {
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
-			$data['comment_total'] = $response_info['comment_total'];
+			//$data['comment_total'] = $response_info['comment_total'];
 	
-			$data['member'] = $response_info['member'];
-			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['username']);
+			$data['member_username'] = $response_info['member_username'];
+			$data['member_image'] = $response_info['member_image'];
+			$data['member_date_added'] = $response_info['member_date_added'];
+			
+			$data['filter_member'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_member=' . $response_info['member_username']);
 		
-			$data['compatibility'] = '';
-			
-			if ($response_info['downloads']) {
-				foreach ($response_info['downloads'] as $result) {
-					$data['compatibility'] .= implode(', ', $result['compatibility']);
-				}
+			$data['compatibility'] = $response_info['compatibility'];
+
+			$data['images'] = array();
+
+			foreach ($response_info['images'] as $result) {
+				$data['images'][] = array(
+					'name'  => $result['name'],
+					'thumb' => $result['thumb'],
+					'popup' => $result['popup']
+				);
 			}
-			
+						
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -607,7 +620,7 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			$extension_download_id = 0;
 		}
-				
+		
 		if (!$json) {		
 			$json['text'] = $this->language->get('text_download');
 					

@@ -645,3 +645,67 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 #filemanager .fa-folder.fa-5x {
 	font-size: 10.5em;
 }
+
+#extension-list {
+  color: #4b525d; }
+  #extension-list h2 {
+    margin-top: 54px;
+    margin-bottom: 44px; }
+  #extension-list section {
+    border: 1px solid #ddd; }
+  #extension-list section > div {
+    position: relative; }
+  #extension-list section > div + div {
+    border-top: 1px solid #ddd;
+    padding: 10px; }
+  #extension-list section:hover {
+    border: 1px solid #01afe8; }
+  #extension-list > .row {
+    margin-top: 40px; }
+  @media screen and (max-width: 991px) {
+    #extension-list > .row > div + div {
+      margin-top: 30px; } }
+  #extension-list .extension-preview {
+    min-height: 150px; }
+  #extension-list .extension-preview .extension-description {
+    position: absolute;
+    background-color: rgba(36, 45, 55, 0.9);
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 16px;
+    opacity: 0;
+    height: 100%;
+    width: 100%; }
+  #extension-list .extension-preview .extension-description:hover {
+    opacity: 1; }
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    #extension-list .extension-preview {
+      min-height: 123px; }
+      #extension-list .extension-preview .extension-description {
+        font-size: 12.5px;
+        padding: 6px; } }
+  #extension-list .extension-preview img {
+    margin: 0 auto; }
+  #extension-list .extension-name {
+    min-height: 100px; }
+  #extension-list .extension-name p {
+    color: #000;
+    margin-bottom: 0;
+    font-weight: 600; }
+  #extension-list .extension-name p:first-child {
+    font-size: 17px; }
+  #extension-list .extension-name p span {
+    color: #4b525d;
+    font-weight: 400; }
+    #extension-list .extension-name h4 a, #extension-list .extension-name p a {
+    color: #000; }
+  #extension-list .extension-name + div > .row {
+    margin-top: 0; }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      #extension-list .extension-name + div > .row {
+        font-size: 14px; } }
+  #extension-list i {
+    color: #10b4e9; }
+  #extension-list span {
+    font-weight: 600; }

@@ -71,7 +71,7 @@
         <?php foreach (array_chunk($extensions, 3) as $row) { ?>
         <div class="row">
           <?php foreach ($row as $extension) { ?>
-          <div class="col-sm-4">
+          <div class="col-md-4">
             <section>
               <div class="extension-preview"> <a href="<?php echo $extension['href']; ?>">
                 <div class="extension-description"><?php echo $extension['description']; ?></div>

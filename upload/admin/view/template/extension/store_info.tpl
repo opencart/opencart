@@ -18,7 +18,7 @@
       </div>
       <div class="panel-body">
         <?php if ($banner) { ?>
-        <div class="well well-sm"><img src="<?php echo $banner; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" class="img-responsive" /></div>
+        <div class="well well-sm text-center"><img src="<?php echo $banner; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" class="img-responsive" /></div>
         <?php } ?>
         <div>
           <?php foreach ($images as $image) { ?>
@@ -33,25 +33,26 @@
         </ul>
         <div class="tab-content">
           <div id="tab-description" class="tab-pane active">
-            
-
-            <button type="button" class="btn btn-primary btn-block"><?php echo $button_buy; ?></button>
             <table class="table table-bordered">
               <tbody>
-              
                 <tr>
                   <td><strong><?php echo $text_price; ?></strong></td>
                   <td><?php if ($license) { ?>
-                  
-                  <?php echo $price; ?>
-                       <?php } else { ?>
-                  Free
-                  <?php } ?>
-                  </td>
+                    <?php echo $price; ?>
+                    <?php } else { ?>
+                    Free
+                    <?php } ?></td>
                 </tr>
-                
-                
-                
+                <?php if ($license) { ?>
+                <tr>
+                  <td><strong><?php echo $text_license; ?></strong></td>
+                  <td><?php if ($license_period) { ?>
+                    <?php echo $license_period; ?>
+                    <?php } else { ?>
+                    Unlimited
+                    <?php } ?></td>
+                </tr>
+                <?php } ?>
                 <tr>
                   <td><strong>Developer</strong></td>
                   <td><a href="<?php echo $filter_member; ?>"><?php echo $member_username; ?></a></td>
@@ -78,18 +79,14 @@
                   <td><strong><?php echo $text_date_modified; ?></strong></td>
                   <td><?php echo $date_modified; ?></td>
                 </tr>
-                 <tr>
-                  <td><?php echo $sales; ?> <?php echo $text_sales; ?></td>
-                  <td></td>
-                </tr>  
-                  <tr>
-                  <td><?php echo $downloaded; ?> <?php echo $text_downloaded; ?></td>
-                  <td></td>
-                </tr>  
-                 <tr>
-                  <td></td>
-                  <td></td>
-                </tr>                                                
+                <tr>
+                  <td><strong><?php echo $text_sales; ?></strong></td>
+                  <td><?php echo $sales; ?></td>
+                </tr>
+                <tr>
+                  <td><strong><?php echo $text_downloaded; ?></strong></td>
+                  <td><?php echo $downloaded; ?></td>
+                </tr>
               </tbody>
             </table>
             <?php echo $description; ?></div>
@@ -105,30 +102,23 @@
               </div>
               <hr />
             </fieldset>
-            <table class="table table-bordered">
-              <tbody>
-                <?php foreach ($downloads as $download) { ?>
-                <tr>
-                  <td><?php echo $download['name']; ?></td>
-                  <td><button type="button" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-download"></i> Install</button></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <fieldset>
+              <legend>Available Installs</legend>
+              <button type="button" class="btn btn-primary btn-block"><?php echo $button_buy; ?></button>
+              <table class="table table-bordered">
+                <tbody>
+                  <?php foreach ($downloads as $download) { ?>
+                  <tr>
+                    <td><?php echo $download['name']; ?></td>
+                    <td><button type="button" data-loading="<?php echo $text_loading; ?>" class="btn btn-primary btn-block"><i class="fa fa-download"></i> Install</button></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </fieldset>
           </div>
           <div id="tab-comment" class="tab-pane"></div>
         </div>
-        
-        <div class="well well-sm">
-          <div class="row">
-            <div class="col-md-12">
-              <div class=""><i class="fa fa-check fa-fw text-success"></i> <?php echo $text_partner; ?></div>
-              <div class=""><i class="fa fa-check fa-fw text-success"></i> <?php echo $text_support; ?></div>
-              <div class=""><i class="fa fa-check fa-fw text-success"></i> <?php echo $text_documentation; ?></div>
-            </div>
-          </div>
-        </div>
-        
       </div>
     </div>
   </div>

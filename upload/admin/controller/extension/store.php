@@ -489,8 +489,6 @@ class ControllerExtensionStore extends Controller {
 			$data['text_loading'] = $this->language->get('text_loading');
 			$data['text_price'] = $this->language->get('text_price');
 			$data['text_partner'] = $this->language->get('text_partner');
-			$data['text_support'] = $this->language->get('text_support');
-			$data['text_documentation'] = $this->language->get('text_documentation');
 			$data['text_rating'] = $this->language->get('text_rating');
 			$data['text_downloaded'] = $this->language->get('text_downloaded');
 			$data['text_sales'] = $this->language->get('text_sales');
@@ -557,6 +555,7 @@ class ControllerExtensionStore extends Controller {
 			$data['documentation'] = $response_info['documentation'];
 			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
+			$data['license_period'] = $response_info['license_period'];
 			$data['rating'] = $response_info['rating'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
@@ -584,13 +583,13 @@ class ControllerExtensionStore extends Controller {
 				foreach ($response_info['downloads'] as $result) {
 					$compatibility = explode(', ', $result['compatibility']);
 					
-					if (in_array(VERSION, $compatibility)) {
+					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
 							'extension_download_id' => $result['extension_download_id'],
 							'name'                  => $result['name'],
-							'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
+							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 						);
-					}	
+					//}	
 				}
 			}
 									

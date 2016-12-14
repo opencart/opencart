@@ -492,11 +492,11 @@ class ControllerExtensionStore extends Controller {
 			$data['text_support'] = $this->language->get('text_support');
 			$data['text_documentation'] = $this->language->get('text_documentation');
 			$data['text_rating'] = $this->language->get('text_rating');
+			$data['text_downloaded'] = $this->language->get('text_downloaded');
+			$data['text_sales'] = $this->language->get('text_sales');
 			$data['text_compatibility'] = $this->language->get('text_compatibility');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
-			$data['text_sales'] = $this->language->get('text_sales');
-			$data['text_comment'] = $this->language->get('text_comment');
 			
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_install'] = $this->language->get('button_install');
@@ -504,6 +504,7 @@ class ControllerExtensionStore extends Controller {
 
 			$data['tab_description'] = $this->language->get('tab_description');
 			$data['tab_documentation'] = $this->language->get('tab_documentation');
+			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
 			
 			$data['token'] = $this->session->data['token'];
@@ -554,21 +555,6 @@ class ControllerExtensionStore extends Controller {
 			$data['name'] = $response_info['name'];
 			$data['description'] = $response_info['description'];
 			$data['documentation'] = $response_info['documentation'];
-			
-			$data['downloads'] = array();
-			/*
-			if ($response_info['downloads']) {
-				//if (in_array(VERSION, $result['compatibility'])) {
-					foreach ($response_info['downloads'] as $result) {
-						$data['downloads'][] = array(
-							'extension_download_id' => $result['extension_download_id'],
-							'name'                  => $result['name'],
-							'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
-						);	
-					}
-				//}
-			}		
-			*/
 			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
 			$data['rating'] = $response_info['rating'];
@@ -576,14 +562,11 @@ class ControllerExtensionStore extends Controller {
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
-			//$data['comment_total'] = $response_info['comment_total'];
-	
 			$data['member_username'] = $response_info['member_username'];
 			$data['member_image'] = $response_info['member_image'];
 			$data['member_date_added'] = $response_info['member_date_added'];
-			
 			$data['filter_member'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_member=' . $response_info['member_username']);
-		
+			$data['comment_total'] = $response_info['comment_total'];
 			$data['compatibility'] = $response_info['compatibility'];
 
 			$data['images'] = array();
@@ -594,7 +577,23 @@ class ControllerExtensionStore extends Controller {
 					'popup' => $result['popup']
 				);
 			}
-						
+			
+			$data['downloads'] = array();
+			
+			if ($response_info['downloads']) {
+				foreach ($response_info['downloads'] as $result) {
+					$compatibility = explode(', ', $result['compatibility']);
+					
+					if (in_array(VERSION, $compatibility)) {
+						$data['downloads'][] = array(
+							'extension_download_id' => $result['extension_download_id'],
+							'name'                  => $result['name'],
+							'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
+						);
+					}	
+				}
+			}
+									
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -603,6 +602,10 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			return new Action('error/not_found');
 		}	
+	}
+	
+	public function comment() {
+	
 	}
 	
 	public function install() {

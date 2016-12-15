@@ -2569,7 +2569,7 @@ CREATE TABLE `oc_product` (
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `viewed` int(5) NOT NULL DEFAULT '0',
-  `noindex` tinyint(1) NOT NULL DEFAULT '0',
+  `noindex` tinyint(1) NOT NULL DEFAULT '1',
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`product_id`)

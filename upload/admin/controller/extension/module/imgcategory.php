@@ -35,6 +35,8 @@ class ControllerExtensionModuleImgcategory extends Controller {
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_width'] = $this->language->get('entry_width');
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -54,6 +56,18 @@ class ControllerExtensionModuleImgcategory extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
+		}
+		
+		if (isset($this->error['width'])) {
+			$data['error_width'] = $this->error['width'];
+		} else {
+			$data['error_width'] = '';
+		}
+
+		if (isset($this->error['height'])) {
+			$data['error_height'] = $this->error['height'];
+		} else {
+			$data['error_height'] = '';
 		}
 
  		if (isset($this->error['warning'])) {
@@ -101,6 +115,22 @@ class ControllerExtensionModuleImgcategory extends Controller {
 			$data['category_id'] = $module_info['category_id'];
 		} else {
 			$data['category_id'] = '';
+		}
+		
+		if (isset($this->request->post['width'])) {
+			$data['width'] = $this->request->post['width'];
+		} elseif (!empty($module_info)) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = 200;
+		}
+
+		if (isset($this->request->post['height'])) {
+			$data['height'] = $this->request->post['height'];
+		} elseif (!empty($module_info)) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = 200;
 		}
 
 		if (isset($this->request->post['status'])) {

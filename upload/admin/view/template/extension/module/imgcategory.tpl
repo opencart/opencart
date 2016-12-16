@@ -48,6 +48,24 @@
                             </select>
                         </div>
                     </div>
+					<div class="form-group">
+            <label class="col-sm-2 control-label" for="input-width"><?php echo $entry_width; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
+              <?php if ($error_width) { ?>
+              <div class="text-danger"><?php echo $error_width; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-height"><?php echo $entry_height; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
+              <?php if ($error_height) { ?>
+              <div class="text-danger"><?php echo $error_height; ?></div>
+              <?php } ?>
+            </div>
+          </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                         <div class="col-sm-10">

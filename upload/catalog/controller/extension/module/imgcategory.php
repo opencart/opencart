@@ -5,8 +5,9 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 class ControllerExtensionModuleImgcategory extends Controller {
-
+	
 	public function index($setting) {
+		
 		$this->load->language('extension/module/imgcategory');
 
     	$data['heading_title'] = $this->language->get('heading_title');
@@ -15,24 +16,13 @@ class ControllerExtensionModuleImgcategory extends Controller {
 
 		$this->load->model('tool/image');
 
-		$data['categories'] = $this->getCategories($setting['category_id']);
-
-		return $this->load->view('extension/module/imgcategory', $data);
-  	}
-
-	protected function getCategories($parent_cat_id) {
-		$categories = array();
+		$data['categories'] = array();
 		
-		$results = $this->model_catalog_category->getCategories($parent_cat_id);
-
-        if (empty($results)) {
-            return $categories;
-        }
+		$results = $this->model_catalog_category->getCategories($setting['category_id']);
 		
-		$i = 0;
+		
 		foreach ($results as $result) {
-            $categories[$i]['href'] = $this->url->link('product/category', 'path=' . $result['category_id']);
-
+			
 			if ($result['image']) {
                 $image = $result['image'];
             } else {
@@ -40,13 +30,15 @@ class ControllerExtensionModuleImgcategory extends Controller {
             }
 			
 			
-			$categories[$i]['thumb'] = $this->model_tool_image->resize($image, $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
-            $categories[$i]['name'] = $result['name'];
-			
-            $i++;
+            $data['categories'][] = array (
+				'href' 	=> $this->url->link('product/category', 'path=' . $result['category_id']),
+				'thumb'	=> $this->model_tool_image->resize($image, $setting['width'], $setting['height']),
+				'name' 	=> $result['name'],
+			);
 		}
-		
-		return $categories;
-	}		
+	
+		return $this->load->view('extension/module/imgcategory', $data);
+  	}
+	
 }
 ?>

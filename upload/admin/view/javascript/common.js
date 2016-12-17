@@ -100,10 +100,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
-		$('body > .tooltip').remove();
-	});
+
 
 	// Image Manager
 	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
@@ -172,7 +169,11 @@ $(document).ready(function() {
 	});
 
 	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+	$('[data-toggle=\'tooltip\']')
+		.tooltip({container: 'body', html: true})
+		.on('show.bs.tooltip', function() {
+			$('[data-toggle=\'tooltip\']').not(this).tooltip('hide');
+			 });
 
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {

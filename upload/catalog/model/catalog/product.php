@@ -64,7 +64,7 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function getproducttab($product_id){
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab pt LEFT JOIN ".DB_PREFIX. "product_tab_desc ptd ON(pt.product_tab_id = ptd.product_tab_id) WHERE pt.product_id = '".$product_id."' AND ptd.language_id = '".$this->config->get('config_language_id')."' AND pt.status = 1 ORDER BY sort_order ASC");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab pt LEFT JOIN ".DB_PREFIX. "product_tab_desc ptd ON(pt.product_tab_id = ptd.product_tab_id) WHERE pt.product_id = " . $this->db->escape($product_id) . " AND ptd.language_id = '".$this->config->get('config_language_id')."' AND pt.status = 1 ORDER BY sort_order ASC");
 		return $query->rows;
 	}
 

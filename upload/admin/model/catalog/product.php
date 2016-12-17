@@ -12,7 +12,7 @@ class ModelCatalogProduct extends Model {
 		
 		if(isset($data['product_tab'])){
 			foreach($data['product_tab'] as $tabdata){
-			$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '".$tabdata['status']."',sort_order='".$tabdata['sort_order']."'");
+			$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '".(int)$tabdata['status']."',sort_order='".(int)$tabdata['sort_order']."'");
 			
 				$product_tab_id = $this->db->getLastId();
 					foreach($tabdata['description'] as $language_id => $value){
@@ -167,7 +167,7 @@ class ModelCatalogProduct extends Model {
 		
 		if(isset($data['product_tab'])){
 			foreach($data['product_tab'] as $tabdata){
-				$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '".$tabdata['status']."',sort_order='".$tabdata['sort_order']."'");
+				$this->db->query("INSERT INTO ". DB_PREFIX ."product_tab SET product_id = '".(int)$product_id."', status = '". (int)$tabdata['status']."',sort_order='". (int)$tabdata['sort_order']."'");
 		
 				$product_tab_id = $this->db->getLastId();
 			
@@ -429,7 +429,7 @@ class ModelCatalogProduct extends Model {
 				}
 				$product_tab_data[]=array(
 					'status' 	 => $result['status'],
-					'sort_order' => $result['status'],
+					'sort_order' => $result['sort_order'],
 					'description' => $description,
 				); 
 		}

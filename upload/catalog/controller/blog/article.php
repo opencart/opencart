@@ -354,20 +354,22 @@ class ControllerBlogArticle extends Controller {
 				$url .= '&filter_news_id=' . $this->request->get['filter_news_id'];
 			}
 								
-      		$data['breadcrumbs'][] = array(
-        		'text'      => $this->language->get('text_error'),
-				'href'      => $this->url->link('blog/article', $url . '&article_id=' . $article_id)
-      		);			
-		
-      		$this->document->setTitle($this->language->get('text_error'));
+				$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('product/product', $url . '&product_id=' . $article_id)
+			);
 
-      		$data['heading_title'] = $this->language->get('text_error');
+			$this->document->setTitle($this->language->get('text_error'));
 
-      		$data['text_error'] = $this->language->get('text_error');
+			$data['heading_title'] = $this->language->get('text_error');
 
-      		$data['button_continue'] = $this->language->get('button_continue');
+			$data['text_error'] = $this->language->get('text_error');
 
-      		$data['continue'] = $this->url->link('common/home');
+			$data['button_continue'] = $this->language->get('button_continue');
+
+			$data['continue'] = $this->url->link('common/home');
+
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -376,11 +378,7 @@ class ControllerBlogArticle extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found', $data));
     	}
   	}
 	

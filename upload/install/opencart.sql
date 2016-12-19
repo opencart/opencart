@@ -2112,7 +2112,6 @@ INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`) VALUES
 (33, 'Последние статьи', 'blog_latest', '{"name":"\\u041f\\u043e\\u0441\\u043b\\u0435\\u0434\\u043d\\u0438\\u0435 \\u0441\\u0442\\u0430\\u0442\\u044c\\u0438","limit":"2","width":"200","height":"200","status":"1"}'),
 (34, 'Рекомендуемые статьи', 'blog_featured', '{"name":"\\u0420\\u0435\\u043a\\u043e\\u043c\\u0435\\u043d\\u0434\\u0443\\u0435\\u043c\\u044b\\u0435 \\u0441\\u0442\\u0430\\u0442\\u044c\\u0438","article":["120","124"],"limit":"5","width":"200","height":"200","status":"1"}'),
 (35, 'Популярные статьи', 'blog_popular', '{"name":"\\u041f\\u043e\\u043f\\u0443\\u043b\\u044f\\u0440\\u043d\\u044b\\u0435 \\u0441\\u0442\\u0430\\u0442\\u044c\\u0438","limit":"4","width":"200","height":"200","status":"1"}'),
-(36, 'Категории (IMG)', 'imgcategory', '{"name":"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u0438 (IMG)","category_id":"0","status":"1"}'),
 (37, 'Популярные товары', 'popular', '{"name":"\\u041f\\u043e\\u043f\\u0443\\u043b\\u044f\\u0440\\u043d\\u044b\\u0435 \\u0442\\u043e\\u0432\\u0430\\u0440\\u044b","limit":"4","width":"200","height":"200","status":"1"}'),
 (38, 'Категории (IMG)', 'imgcategory', '{"name":"\\u041a\\u0430\\u0442\\u0435\\u0433\\u043e\\u0440\\u0438\\u0438 (IMG)","category_id":"0","width":"200","height":"200","status":"1"}');
 

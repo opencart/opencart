@@ -1775,12 +1775,10 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (103, 17, 'manufacturer', 'column_left', 0),
 (69, 10, 'affiliate', 'column_right', 1),
 (68, 6, 'account', 'column_right', 1),
-(76, 1, 'carousel.29', 'content_top', 3),
-(74, 1, 'slideshow.27', 'content_top', 0),
 (72, 3, 'category', 'column_left', 1),
 (73, 3, 'banner.30', 'column_left', 2),
-(100, 1, 'imgcategory.36', 'content_top', 1),
-(77, 1, 'product_tab.32', 'content_top', 2),
+(115, 1, 'product_tab.32', 'content_top', 2),
+(114, 1, 'imgcategory.38', 'content_top', 1),
 (78, 14, 'blog_category', 'column_left', 0),
 (79, 15, 'blog_category', 'column_left', 0),
 (84, 16, 'blog_popular.35', 'content_bottom', 0),
@@ -1790,7 +1788,9 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (94, 14, 'blog_featured.34', 'column_left', 1),
 (104, 17, 'category', 'column_left', 1),
 (105, 17, 'banner.30', 'column_left', 2),
-(108, 3, 'popular.37', 'content_bottom', 0);
+(108, 3, 'popular.37', 'content_bottom', 0),
+(113, 1, 'slideshow.27', 'content_top', 0),
+(116, 1, 'carousel.29', 'content_top', 3);
 
 -- --------------------------------------------------------
 
@@ -3394,8 +3394,8 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_ftp_username', '', 0),
 (0, 'config', 'config_ftp_port', '21', 0),
 (0, 'config', 'config_ftp_hostname', '', 0),
-(0, 'config', 'config_meta_title', 'Your Store', 0),
-(0, 'config', 'config_meta_description', 'My Store', 0),
+(0, 'config', 'config_meta_title', 'OPENCART.PRO', 0),
+(0, 'config', 'config_meta_description', 'OPENCART.PRO Профессиональная система для онлайн торговли', 0),
 (0, 'config', 'config_meta_keyword', '', 0),
 (0, 'config', 'config_theme', 'theme_default', 0),
 (0, 'config', 'config_layout_id', '4', 0),
@@ -3447,7 +3447,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_image', '', 0),
 (0, 'config', 'config_fax', '', 0),
 (0, 'config', 'config_telephone', '123456789', 0),
-(0, 'config', 'config_email', 'demo@opencart.com', 0),
+(0, 'config', 'config_email', 'demo@opencart.pro', 0),
 (0, 'config', 'config_geocode', '', 0),
 (0, 'config', 'config_owner', 'Your Name', 0),
 (0, 'config', 'config_address', 'Address 1', 0),

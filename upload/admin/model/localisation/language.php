@@ -35,10 +35,10 @@ class ModelLocalisationLanguage extends Model {
 		}
 		
 		// Menu Child
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custommenu_child_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
 		foreach ($query->rows as $menu_child) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu_child['name']) . "', link = '" . $this->db->escape($menu_child['link']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "custommenu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu_child['name']) . "', link = '" . $this->db->escape($menu_child['link']) . "'");
 		}
 
 		// Attribute
@@ -254,7 +254,7 @@ class ModelLocalisationLanguage extends Model {
 		$this->cache->delete('article');
 		$this->db->query("DELETE FROM " . DB_PREFIX . "blog_category_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "custommenu_child_description WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE language_id = '" . (int)$language_id . "'");

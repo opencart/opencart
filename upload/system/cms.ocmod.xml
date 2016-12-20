@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>CMS</name>
+	<code>OT_1.0</code>
+	<version>1.0.0</version>
+	<author>opencart.pro</author>
+	<link>http://opencart.pro</link>
+	<file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation>
+		<search><![CDATA[<base href="<?php echo $base; ?>" />]]></search>
+			<add position="before"><![CDATA[<?php if ($robots) { ?><meta name="robots" content="<?php echo $robots; ?>" /><?php } ?>
+			]]></add>
+		</operation>
+	</file>
+</modification>

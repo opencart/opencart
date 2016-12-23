@@ -24,7 +24,7 @@ class ControllerAccountForgotten extends Controller {
 
 			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_change') . "\n\n";
-			$message .= $this->url->link('account/reset', 'code=' . $code, true) . "\n\n";
+			$message .= html_entity_decode($this->url->link('account/reset', 'code=' . $code, true)) . "\n\n";
 			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 
 			$mail = new Mail();

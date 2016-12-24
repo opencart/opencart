@@ -18,8 +18,7 @@
         <apply executable="php" failonerror="true">
             <arg value="-l"/>
             <fileset dir="${basedir}/upload">
-                <include name="**/*.php"/>
-                <modified/>
+                <include name="**/*.php"/>               
             </fileset>
         </apply>
     </target>

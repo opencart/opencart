@@ -17,7 +17,7 @@
     <target name="lint" description="Perform syntax check of source code files">
         <apply executable="php" failonerror="true">
         	<!-- this must be of this form. <arg value="-l> -->
-            <arg value="-l  --include-path /opt/lampp/bin"/>
+            <arg value="-l"/>
             <fileset dir="upload">
                 <include name="**/*.php"/>
                

@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="OpenCart" default="build" basedir=".">
-    <property name="source" value="upload"/>
+	<property name="source" value="upload" />
 
-    <target name="clean" description="Cleanup build artifacts">
-        <delete dir="tests/docs"/>
-        <delete dir="tests/logs"/>
-        <delete dir="tests/testresults"/>
-    </target>
+	<target name="clean" description="Cleanup build artifacts">
+		<delete dir="tests/docs" />
+		<delete dir="tests/logs" />
+		<delete dir="tests/testresults" />
+	</target>
 
-    <target name="prepare" depends="clean" description="Prepare for build">
-        <mkdir dir="tests/docs"/>
-        <mkdir dir="tests/logs"/>
-        <mkdir dir="tests/testresults"/>
-    </target>
+	<target name="prepare" depends="clean" description="Prepare for build">
+		<mkdir dir="tests/docs" />
+		<mkdir dir="tests/logs" />
+		<mkdir dir="tests/testresults" />
+	</target>
 
-    <target name="lint" description="Perform syntax check of source code files">
-        <apply executable="php" failonerror="true">
-        	<!-- this must be of this form. <arg value="-l> -->
-            <arg value="-l"/>
-            <fileset dir="upload">
-                <include name="**/*.php"/>
-               
-            </fileset>
-        </apply>
-    </target>
+	<target name="lint" description="Perform syntax check of source code files">
+		<apply executable="php" failonerror="true">
+			<!-- this must be of this form. <arg value="-l> -->
+			<arg value="-l  --include-path /opt/lampp/bin" />
+			<fileset dir="upload">
+				<include name="**/*.php" />
 
-    <target name="csslint" description="Run the CSSLint tool on CSS files">
-        <fileset dir="upload" id="cssfiles.raw">
-            <include name="**/*.css" />
-        </fileset>
-        <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw" />
-        <exec executable="csslint" output="tests/csslint.xml">
-            <arg line="--warnings=box-model,floats --errors=ids,important --format=lint-xml ${cssfiles.clean}" />
-        </exec>
-    </target>
+			</fileset>
+		</apply>
+	</target>
 
-    <target name="phploc" description="Measure project size using PHPLOC">
-        <exec executable="phploc">
-            <arg value="--log-csv"/>
-            <arg value="tests/logs/phploc.csv"/>
-            <arg path="upload"/>
-        </exec>
-    </target>
 
-    <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
-        <exec executable="phpcs">
-            <arg line="--report=checkstyle --report-file=tests/checkstyle.xml --standard=tests/phpcs/OpenCart/ruleset.xml --extensions=php ${source}/"/>
-        </exec>
-    </target>
 
-    <target name="build" depends="prepare,phpcs,lint,phploc,csslint"/>
+	<target name="csslint" description="Run the CSSLint tool on CSS files">
+		<fileset dir="upload" id="cssfiles.raw">
+			<include name="**/*.css" />
+		</fileset>
+		<pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw" />
+		<exec executable="csslint" output="tests/csslint.xml">
+			<arg line="--warnings=box-model,floats --errors=ids,important --format=lint-xml ${cssfiles.clean}" />
+		</exec>
+	</target>
+
+	<target name="phploc" description="Measure project size using PHPLOC">
+		<exec executable="phploc">
+			<arg value="--log-csv" />
+			<arg value="tests/logs/phploc.csv" />
+			<arg path="upload" />
+		</exec>
+	</target>
+
+	<target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
+		<exec executable="phpcs">
+			<arg line="--report=checkstyle --report-file=tests/checkstyle.xml --standard=tests/phpcs/OpenCart/ruleset.xml --extensions=php ${source}/" />
+		</exec>
+	</target>
+
+	<target name="test">
+		<phpunit>
+			<formatter type="plain" usefile="false" />
+			<batchtest classpath="${build}">
+				<fileset dir="tests">
+					<include name="**/*Test.php" />
+					<exclude name="**/selenium/**/*Test.php"/>
+				</fileset>
+			</batchtest>
+		</phpunit>
+	</target>
+
+	<target name="build" depends="prepare,phpcs,lint,phploc,csslint,test" />
 </project>

@@ -875,7 +875,7 @@ class ControllerCommonColumnLeft extends Controller {
 	
 			$other_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $order_status_data)));
 	
-			if ($other_total) {
+			if ($other_total && $order_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);
 			} else {
 				$data['other_status'] = 0;

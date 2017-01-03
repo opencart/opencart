@@ -16,6 +16,7 @@ $_['text_rating']        = 'Rating';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_category']      = 'All Categories';
 $_['text_theme']         = 'Themes';
+$_['text_marketplace']   = 'Marketplace';
 $_['text_payment']       = 'Payment Gateways';
 $_['text_shipping']      = 'Shipping Methods';
 $_['text_module']        = 'Modules';

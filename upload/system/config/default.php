@@ -44,9 +44,9 @@ $_['session_name']         = 'PHPSESSID';
 $_['template_type']        = 'php';
 
 // Error
-$_['config_error_display'] = true;
-$_['config_error_log']     = true;
-$_['config_error_filename'] = 'error.log';
+$_['error_display']        = false;
+$_['error_log']            = true;
+$_['error_filename']       = 'error.log';
 
 // Reponse
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');

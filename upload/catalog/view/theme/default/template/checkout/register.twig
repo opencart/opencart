@@ -39,6 +39,11 @@
         <label class="control-label" for="input-payment-fax">{{ entry_fax }}</label>
         <input type="text" name="fax" value="" placeholder="{{ entry_fax }}" id="input-payment-fax" class="form-control" />
       </div>
+
+
+
+
+
       {% for custom_field in custom_fields %}
       
       {% if custom_field.location == 'account' %}
@@ -327,9 +332,11 @@
       {% endif %}
       
       {% endif %}
-      {% endfor %
+      {% endfor %}
     </fieldset>
-    {{ captcha }} </div>
+    
+    
+    {{ captcha }}</div>
 </div>
 <div class="checkbox">
   <label for="newsletter">
@@ -346,7 +353,9 @@
 {% if text_agree %}
 <div class="buttons clearfix">
   <div class="pull-right">{{ text_agree }} 
-  &nbsp;
+    klkl
+    
+    &nbsp;
     <input type="checkbox" name="agree" value="1" />
     <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>

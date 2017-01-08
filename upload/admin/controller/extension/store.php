@@ -456,12 +456,19 @@ class ControllerExtensionStore extends Controller {
 	}
 	
 	public function info() {
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+		
+		
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
 		$url .= '&version=' . VERSION;
 
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $this->request->get['extension_id'] . $url);
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
 				
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

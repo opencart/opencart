@@ -32,6 +32,12 @@ $_['text_documentation'] = 'Documentation Included';
 $_['text_sales']         = 'Sales';
 $_['text_comment']       = 'Comments';
 
+// Tab
+$_['tab_description']    = 'Description';
+$_['tab_documentation']  = 'Documentation';
+$_['tab_download']       = 'Download';
+$_['tab_comment']        = 'Comment';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
 $_['error_exists']       = 'The file %s already exists!';

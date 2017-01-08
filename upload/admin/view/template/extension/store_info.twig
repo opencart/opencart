@@ -16,36 +16,75 @@
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
       </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-sm-8">{% if banner %}
-            <div class="well well-sm"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
-            {% endif %}
-            <div>{% for image in images %}<a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
-              <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
-              <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }}</a></li>
-            </ul>
-            <div class="tab-content">
-              <div id="tab-description" class="tab-pane active">{{ description }}</div>
-              <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
-              <div id="tab-comment" class="tab-pane">{{ comment }}</div>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="well well-sm">
-              <button type="button" class="btn btn-primary btn-block">{{ button_buy }}</button>
-              <br />
-              <div class="dropdown">
-                <button type="button" data-loading="{{ text_loading }}" data-toggle="dropdown" class="btn btn-default btn-block">{{ button_install }} <span class="caret"></span></button>
-                <ul class="dropdown-menu pull-right">
-                  {% for download in downloads %}
-                  <li><a href="{{ download.extension_download_id }}"><i class="fa fa-download"></i> {{ download.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-              <br />
+      <div class="panel-body">{% if banner %}
+        <div class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+        {% endif %}
+        <div> {% for image in images %} <a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a> {% endfor %} </div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
+          <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
+          <li><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
+          <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-description" class="tab-pane active">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>{{ text_price }}</strong></td>
+                  <td>{% if license %}
+                    {{ price }}
+                    {% else %}
+                    Free
+                    {% endif %}</td>
+                </tr>
+              {% if license %}
+              <tr>
+                <td><strong>{{ text_license }}</strong></td>
+                <td>{% if license_period %}
+                  {{ license_period }}
+                  {% else %}
+                  Unlimited
+                  {% endif %}</td>
+              </tr>
+              {% endif %}
+              <tr>
+                <td><strong>Developer</strong></td>
+                <td><a href="{{ filter_member }}">{{ member_username }}</a></td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_compatibility }}</strong></td>
+                <td>{{ compatibility }}</td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_rating }}</strong></td>
+                <td>{% for i in 1..5 %}
+                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% endfor %}</td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_date_added }}</strong></td>
+                <td>{{ date_added }}</td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_date_modified }}</strong></td>
+                <td>{{ date_modified }}</td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_sales }}</strong></td>
+                <td>{{ sales }}</td>
+              </tr>
+              <tr>
+                <td><strong>{{ text_downloaded }}</strong></td>
+                <td>{{ downloaded }}</td>
+              </tr>
+              </tbody>
+            </table>
+            {{ description }}</div>
+          <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
+          <div id="tab-download" class="tab-pane">
+            <fieldset>
+              <legend>Progress</legend>
               <div id="progress">
                 <div class="progress">
                   <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -53,77 +92,37 @@
                 <div id="progress-text"></div>
               </div>
               <hr />
-              {% if license %}
-              <div class="row">
-                <div class="col-md-6">{{ text_price }}</div>
-                <div class="col-md-6 text-right">{{ price }}</div>
-              </div>
-              {% else %}
-              <div class="row">
-                <div class="col-md-6">{{ text_price }}</div>
-                <div class="col-md-6 text-right">Free</div>
-              </div>
-              {% endif %}
-              <hr />
-              <div class="row">
-                <div class="col-md-12">
-                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_partner }}</div>
-                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_support }}</div>
-                  <div class=""><i class="fa fa-check fa-fw text-success"></i> {{ text_documentation }}</div>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">{{ text_rating }}</div>
-                <div class="col-md-6 text-right">{% for i in 1..5 %}
-                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                  {% endfor %}</div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">{{ text_compatibility }}</div>
-                <div class="col-md-6 text-right">{{ compatibility }}</div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">{{ text_date_added }}</div>
-                <div class="col-md-6 text-right">{{ date_added }}</div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">{{ text_date_modified }}</div>
-                <div class="col-md-6 text-right">{{ date_modified }}</div>
-              </div>
-            </div>
-            {% if license %}
-            <div class="well well-sm">
-              <div class="row">
-                <div class="col-md-12"><i class="fa fa-shopping-cart fa-2x text-success"></i> {{ sales }} {{ text_sales }}</div>
-              </div>
-            </div>
-            {% else %}
-            <div class="well well-sm">
-              <div class="row">
-                <div class="col-md-12"><i class="fa fa-cloud-download fa-2x text-primary"></i> {{ downloaded }} {{ text_downloaded }}</div>
-              </div>
-            </div>
-            {% endif %}
-            <div class="well well-sm">
-              <div class="row">
-                <div class="col-md-12"><i class="fa fa-comment fa-2x text-info"></i> {{ comment_total }} {{ text_comment }}</div>
-              </div>
-            </div>
-            <div class="well well-sm"> <b>Developer</b> <a href="{ filter_username }}">{{ member }}</a> </div>
+            </fieldset>
+            <fieldset>
+              <legend>Available Installs</legend>
+
+              
+              <div class="alert alert-info"> you must buy a license.</div>
+              
+              <table class="table table-bordered">
+                <tbody>
+                
+                {% for download in downloads %}
+                <tr>
+                  <td>{{ download.name }}</td>
+                  <td><button type="button" value="{{ download.href }}" data-loading="{{ text_loading }}" class="btn btn-primary btn-block"><i class="fa fa-download"></i> Install</button></td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+                
+              </table>
+            </fieldset>
           </div>
+          <div id="tab-comment" class="tab-pane"></div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#button-install').parent().find('a').on('click', function(e) {
+$('#tab-download button').on('click', function(e) {
 	e.preventDefault();
 	
-	var node = this;
+	var element = this;
 	
 	// Reset everything
 	$('#progress-bar').css('width', '0%');
@@ -131,13 +130,13 @@ $('#button-install').parent().find('a').on('click', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=extension/store/download&token={{ token }}&extension_download_id=' + this.value,
+		url: this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-install').button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$('#button-install').button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			console.log(json);

@@ -912,8 +912,6 @@ class ControllerExtensionStore extends Controller {
 			}
 
 			if (!$json) { 
-		
-			
 				$this->load->model('extension/extension');
 				
 				foreach ($files as $file) {

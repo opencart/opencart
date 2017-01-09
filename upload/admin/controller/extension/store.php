@@ -872,7 +872,9 @@ class ControllerExtensionStore extends Controller {
 				$safe = false;
 				
 				foreach ($allowed as $value) {
-					if (substr(str_replace('\\', '/', realpath($destination)), 0, strlen($value)) == $value) {
+					$path = substr($value, 0, strlen($destination));
+					
+					if ($path == $destination) {
 						$safe = true;
 						
 						break;

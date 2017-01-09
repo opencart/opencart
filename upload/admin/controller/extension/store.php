@@ -860,24 +860,35 @@ class ControllerExtensionStore extends Controller {
 				// Check if the file is not going into an allowed directory
 				$allowed = array(
 					'admin/controller/extension/',
-					'admin/language/extension/',
 					'admin/model/extension/',
 					'admin/view/template/extension/',
 					'catalog/controller/extension/',
-					'catalog/language/extension/',
 					'catalog/model/extension/',
 					'catalog/view/theme/'
 				);
 				
+				$data['languages'] = array();
+				
+				$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
+			
+				foreach ($folders as $folder) {
+					$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
+					$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
+				}
+				
 				$safe = false;
 				
 				foreach ($allowed as $value) {
-					$path = substr($value, 0, strlen($destination));
-					
-					if ($path == $destination) {
+					if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
 						$safe = true;
 						
 						break;
+					}
+					
+					if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
+						$safe = true;
+						
+						break;						
 					}
 				}
 			
@@ -917,6 +928,8 @@ class ControllerExtensionStore extends Controller {
 				foreach ($files as $file) {
 					$destination = substr($file, strlen($directory . '/' . $download . '/upload/'));
 		
+					//echo 
+		
 					if (substr($destination, 0, 5) == 'admin') {
 						$destination = DIR_APPLICATION . substr($destination, 5);
 					}
@@ -955,7 +968,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 				
-			//$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
 			
 		$this->response->addHeader('Content-Type: application/json');

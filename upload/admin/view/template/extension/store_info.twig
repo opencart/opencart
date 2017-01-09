@@ -97,7 +97,7 @@
               <legend>Available Installs</legend>
 
               
-              <div class="alert alert-info"> you must buy a license.</div>
+              <div class="alert alert-info">You must buy a license.</div>
               
               <table class="table table-bordered">
                 <tbody>
@@ -130,7 +130,7 @@ $('#tab-download button').on('click', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: this.value,
+		url: $(this).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -140,12 +140,64 @@ $('#tab-download button').on('click', function(e) {
 		},
 		success: function(json) {
 			console.log(json);
-			
+			/*
 			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				
 			}
 			
+			if (json['success']) {
+				$.ajax({
+					url: 'index.php?route=martketplace/store/install&download=',
+					dataType: 'json',
+					success: function(json) {
+						console.log(json);
+						
+						$('#progress-bar').css('width', (Math.ceil(i * 1.6) * 100) + '%');
+						
+						if (json['error']) {
+						
+						}
+						
+						if (json['step']) {
+							
+							
+							for (i = 0; json['step'].length; i++) {
+								$.ajax({
+									url: $(this).attr('value'),
+									dataType: 'json',
+									beforeSend: function() {
+										$(element).button('loading');
+									},
+									complete: function() {
+										$(element).button('reset');
+									},
+									success: function(json) {
+								
+								
+								
+									},
+									error: function(xhr, ajaxOptions, thrownError) {
+										alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+									}
+								});
+											
+								
+								
+								
+								
+							}
+							
+							
+							next(json['next'], i = i + 1);
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+	
+			}		
+			*/
 			if (json['text']) {
 				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);

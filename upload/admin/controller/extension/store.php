@@ -926,24 +926,22 @@ class ControllerExtensionStore extends Controller {
 				$this->load->model('extension/extension');
 				
 				foreach ($files as $file) {
-					$destination = substr($file, strlen($directory . '/' . $download . '/upload/'));
-		
-					//echo 
+					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
 		
 					if (substr($destination, 0, 5) == 'admin') {
-						$destination = DIR_APPLICATION . substr($destination, 5);
+						$destination = DIR_APPLICATION . substr($destination, 6);
 					}
 		
 					if (substr($destination, 0, 7) == 'catalog') {
-						$destination = DIR_CATALOG . substr($destination, 7);
+						$destination = DIR_CATALOG . substr($destination, 8);
 					}
 		
 					if (substr($destination, 0, 5) == 'image') {
-						$destination = DIR_IMAGE . substr($destination, 5);
+						$destination = DIR_IMAGE . substr($destination, 6);
 					}
 		
 					if (substr($destination, 0, 6) == 'system') {
-						$destination = DIR_SYSTEM . substr($destination, 6);
+						$destination = DIR_SYSTEM . substr($destination, 7);
 					}
 	
 					if (is_dir($file) && !is_dir($destination)) {

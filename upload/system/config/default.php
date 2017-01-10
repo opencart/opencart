@@ -11,13 +11,13 @@ $_['language_default']     = 'en-gb';
 $_['language_autoload']    = array('en-gb');
 
 // Database
-$_['db_autostart']         = false;
 $_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';
 $_['db_database']          = '';
 $_['db_port']              = 3306;
+$_['db_autostart']         = false;
 
 // Mail
 $_['mail_protocol']        = 'mail'; // mail or smtp
@@ -37,6 +37,7 @@ $_['cache_engine']         = 'file'; // apc, file or mem
 $_['cache_expire']         = 3600;
 
 // Session
+$_['session_engine']       = 'php';
 $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 

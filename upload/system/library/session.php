@@ -3,7 +3,7 @@ class Session {
 	public $session_id = '';
 	public $data = array();
 
-	public function __construct($adaptor = 'native') {
+	public function __construct($adaptor = 'php') {
 		$class = 'Session\\' . $adaptor;
 		
 		if (class_exists($class)) {

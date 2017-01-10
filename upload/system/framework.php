@@ -68,6 +68,7 @@ $registry->set('request', new Request());
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
+$response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Database
@@ -76,7 +77,7 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
-$session = new Session();
+$session = new Session($config->get('session_engine'));
 
 if ($config->get('session_autostart')) {
 	$session->start();
@@ -142,5 +143,4 @@ if ($config->has('action_pre_action')) {
 $controller->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
 
 // Output
-$response->setCompression($config->get('config_compression'));
 $response->output();

@@ -78,7 +78,8 @@
                 <td><strong>{{ text_downloaded }}</strong></td>
                 <td>{{ downloaded }}</td>
               </tr>
-              </tbody>
+                </tbody>
+              
             </table>
             {{ description }}</div>
           <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
@@ -95,17 +96,19 @@
             </fieldset>
             <fieldset>
               <legend>Available Installs</legend>
-
-              
               <div class="alert alert-info">You must buy a license.</div>
-              
               <table class="table table-bordered">
                 <tbody>
                 
                 {% for download in downloads %}
                 <tr>
                   <td>{{ download.name }}</td>
-                  <td><button type="button" value="{{ download.href }}" data-loading="{{ text_loading }}" class="btn btn-primary btn-block"><i class="fa fa-download"></i> Install</button></td>
+                  <td>{% if download.install %}
+                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary btn-block"><i class="fa fa-download"></i> Install</button>
+                    {% endif %}
+                    {% if download.uninstall %}
+                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger btn-block"><i class="fa fa-upload"></i> Uninstall</button>
+                    {% endif %}</td>
                 </tr>
                 {% endfor %}
                   </tbody>

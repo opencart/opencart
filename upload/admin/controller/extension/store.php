@@ -580,28 +580,33 @@ class ControllerExtensionStore extends Controller {
 				);
 			}			
 			
+			$this->load->model('extension/extension');
+			
 			$data['downloads'] = array();
 			
 			if ($response_info['downloads']) {
-				foreach ($response_info['downloads'] as $result) {
-					$compatibility = explode(', ', $result['compatibility']);
+				foreach ($response_info['downloads'] as $result) {					
+					$path_total =  $this->model_extension_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id']);
 					
-					//$downlopad_extension_id =  $this->model_extension_extension->getExtensionLogsByCode();
+					if (!$path_total) {
+						$install = $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true);
+					} else {
+						$install = '';
+					}
 					
-					
-					//if ($downlopad_extension_id) {
-						
-					//} else {
-						
-					//}
-					
-					
-					
+					if ($path_total) {
+						$uninstall = $this->url->link('extension/store/download/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true);
+					} else {
+						$uninstall = '';
+					}
+															
 					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
-							'name'       => $result['name'],
-							'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'href'       => $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true)
+							'name'          => $result['name'],
+							'compatibility' => explode(', ', $result['compatibility']),
+							'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+							'install'       => $install,
+							'uninstall'     => $uninstall
 						);
 					//}	
 				}
@@ -685,9 +690,9 @@ class ControllerExtensionStore extends Controller {
 		
 				fclose($handle);
 				
-				$json['text'] = $this->language->get('text_install');
+				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . 'extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));		
 			} else {
 				$json['error'] = $this->language->get('error_download');
 			}
@@ -741,7 +746,7 @@ class ControllerExtensionStore extends Controller {
 			
 			$json['text'] = $this->language->get('text_move');
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -818,15 +823,6 @@ class ControllerExtensionStore extends Controller {
 				foreach ($folders as $folder) {
 					$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
 				}			
-				
-				// Theme
-				$folders = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
-			
-				foreach ($folders as $folder) {
-					$allowed[] = 'catalog/view/theme/' . basename($folder) . '/extension/';
-				}	
-				
-				print_r($allowed);
 							
 				$safe = false;
 				
@@ -900,7 +896,7 @@ class ControllerExtensionStore extends Controller {
 	
 					if (is_dir($file) && !is_dir($path)) {
 						if (mkdir($path, 0777)) {
-							$this->model_extension_extension->addPath($download, $destination);
+							$this->model_extension_extension->addPath($extension_download_id, $download, $destination);
 						} else {
 							$json['error'] = sprintf($this->language->get('error_directory'), $path);
 						}
@@ -908,7 +904,7 @@ class ControllerExtensionStore extends Controller {
 				
 					if (is_file($file)) {
 						if (rename($file, $path)) {
-							$this->model_extension_extension->addPath($download, $destination);
+							$this->model_extension_extension->addPath($extension_download_id, $download, $destination);
 						} else {
 							$json['error'] = sprintf($this->language->get('error_file'), $file);
 						}
@@ -920,7 +916,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 			
 		$this->response->addHeader('Content-Type: application/json');
@@ -932,6 +928,12 @@ class ControllerExtensionStore extends Controller {
 
 		$json = array();
 		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+				
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
 		} else {
@@ -1024,7 +1026,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$this->model_extension_modification->addModification($modification_data);
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 					
 		$this->response->addHeader('Content-Type: application/json');
@@ -1036,6 +1038,12 @@ class ControllerExtensionStore extends Controller {
 
 		$json = array();
 		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+				
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
 		} else {
@@ -1103,6 +1111,12 @@ class ControllerExtensionStore extends Controller {
 
 		$json = array();
 		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+				
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {

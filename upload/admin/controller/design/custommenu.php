@@ -5,13 +5,13 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 class ControllerDesignCustomMenu extends Controller {
-	
+
     private $error = array();
 
     public function index() {
         $this->load->language('design/custommenu');
         $this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
@@ -21,10 +21,10 @@ class ControllerDesignCustomMenu extends Controller {
 
 			$this->response->redirect($this->url->link('design/custommenu', 'token=' . $this->session->data['token'], 'SSL'));
 		}
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['text_list'] = $this->language->get('text_list');
-		
+
 		$data['text_success'] = $this->language->get('text_success');
 		$data['text_new_custommenu_item'] = $this->language->get('text_new_custommenu_item');
 		$data['text_category'] = $this->language->get('text_category');
@@ -33,66 +33,66 @@ class ControllerDesignCustomMenu extends Controller {
 		$data['text_information'] = $this->language->get('text_information');
 		$data['text_custom'] = $this->language->get('text_custom');
 		$data['text_confirm'] = $this->language->get('text_confirm');
-		
+
 		$data['text_custommenu_title'] = $this->language->get('text_custommenu_title');
 		$data['text_custommenu_description'] = $this->language->get('text_custommenu_description');
 		$data['text_sub_item'] = $this->language->get('text_sub_item');
 		$data['text_custommenu_name'] = $this->language->get('text_custommenu_name');
 		$data['text_custommenu_link'] = $this->language->get('text_custommenu_link');
-		
+
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
-		
+
 		$data['column_custom_name'] = $this->language->get('column_custom_name');
 		$data['column_custom_link'] = $this->language->get('column_custom_link');
 		$data['column_category_name'] = $this->language->get('column_category_name');
 		$data['column_product_name'] = $this->language->get('column_product_name');
 		$data['column_manufacturer_name'] = $this->language->get('column_manufacturer_name');
 		$data['column_information_name'] = $this->language->get('column_information_name');
-		
+
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_link'] = $this->language->get('entry_link');
 		$data['entry_columns'] = $this->language->get('entry_columns');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_store'] = $this->language->get('entry_store');
-		
+
 		$data['button_custom'] = $this->language->get('button_custom');
 		$data['button_categories'] = $this->language->get('button_categories');
 		$data['button_products'] = $this->language->get('button_products');
 		$data['button_manufacturers'] = $this->language->get('button_manufacturers');
 		$data['button_informations'] = $this->language->get('button_informations');
-		
+
 		$data['button_disable'] = $this->language->get('button_disable');
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_delete'] = $this->language->get('button_delete');
-		
+
 		$data['error_permission'] = $this->language->get('error_permission');
 		$data['error_name'] = $this->language->get('error_name');
 		$data['error_link'] = $this->language->get('error_link');
-		
+
 		$data['text_custommenu_enable'] = $this->language->get('text_custommenu_enable');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_default'] = $this->language->get('text_default');
-		
+
         $this->load->model('design/custommenu');
 
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
         $this->document->addStyle('view/stylesheet/custommenu.css');
         $this->document->addStyle('view/stylesheet/layout.css');
-		
+
 		$this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
         $this->document->addScript('view/javascript/custommenu/custommenu.js');
-		
+
 		$data['changecustommenuPosition'] = $this->url->link('design/custommenu/changecustommenuPosition', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$data['deletecustommenu'] = $this->url->link('design/custommenu/deletecustommenu', 'token=' . $this->session->data['token'], 'SSL');
 		$data['deleteChildcustommenu'] = $this->url->link('design/custommenu/deleteChildcustommenu', 'token=' . $this->session->data['token'], 'SSL');
-				
+
 		$data['enablecustommenu'] = $this->url->link('design/custommenu/enablecustommenu', 'token=' . $this->session->data['token'], 'SSL');
 		$data['enableChildcustommenu'] = $this->url->link('design/custommenu/enableChildcustommenu', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$data['disablecustommenu'] = $this->url->link('design/custommenu/disablecustommenu', 'token=' . $this->session->data['token'], 'SSL');
 		$data['disableChildcustommenu'] = $this->url->link('design/custommenu/disableChildcustommenu', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -162,9 +162,9 @@ class ControllerDesignCustomMenu extends Controller {
 		}
 
 		$data['token'] = $this->session->data['token'];
-		
+
 		$data['action'] = $this->url->link('design/custommenu', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		if (isset($this->request->post['configcustommenu_custommenu'])) {
 			$data['configcustommenu_custommenu'] = $this->request->post['configcustommenu_custommenu'];
 		} else {
@@ -182,7 +182,7 @@ class ControllerDesignCustomMenu extends Controller {
 		if (!$this->user->hasPermission('modify', 'design/custommenu')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-        
+
 		return !$this->error;
 	}
 
@@ -346,87 +346,87 @@ class ControllerDesignCustomMenu extends Controller {
         $this->load->language('design/custommenu');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('design/custommenu');
-        
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_design_custommenu->enablecustommenu($this->request->post['custommenu_id']);
 			$this->session->data['success'] = $this->language->get('text_success');
-			 
+
 		}
-		
+
 		$id = explode('-', $this->request->post['id']);
 
 		$button = "<a id=\"disablecustommenu-" . $id[1] . "\" onclick=\"statuscustommenu('disable', '" . $this->request->post['custommenu_id'] . "', 'custommenu-item-" .  $this->request->post['custommenu_id'] . "', 'disablecustommenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
-		
+
 		echo $button;
 		exit();
-	}	
+	}
 
 	public function disablecustommenu() {
         $this->load->language('design/custommenu');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('design/custommenu');
-        
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_design_custommenu->disablecustommenu($this->request->post['custommenu_id']);
 			$this->session->data['success'] = $this->language->get('text_success');
-			 
+
 		}
-		
+
 		$id = explode('-', $this->request->post['id']);
-		
+
 		$button = "<a id=\"enablecustommenu-" . $id[1] . "\" onclick=\"statuscustommenu('enable', '" . $this->request->post['custommenu_id'] . "', 'custommenu-item-" .  $this->request->post['custommenu_id'] . "', 'enablecustommenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
 
 		echo $button;
 		exit();
-	}	
-	
+	}
+
 	public function enableChildcustommenu() {
         $this->load->language('design/custommenu');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('design/custommenu');
-        
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_design_custommenu->enableChildcustommenu($this->request->post['custommenu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');	 
+			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
 		$id = explode('-', $this->request->post['id']);
-		
+
 		$button = "<a id=\"disablecustommenu-" . $id[1] . "\" onclick=\"statuscustommenu('disable', '" . $this->request->post['custommenu_id'] . "', 'custommenu-child-item-" .  $this->request->post['custommenu_id'] . "', 'disablecustommenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
 
 		echo $button;
 		exit();
-	}	
+	}
 
 	public function disableChildcustommenu() {
         $this->load->language('design/custommenu');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('design/custommenu');
-        
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_design_custommenu->disableChildcustommenu($this->request->post['custommenu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');	 
+			$this->session->data['success'] = $this->language->get('text_success');
 		}
-		
+
 		$id = explode('-', $this->request->post['id']);
 
 		$button = "<a id=\"enablecustommenu-" . $id[1] . "\" onclick=\"statuscustommenu('enable', '" . $this->request->post['custommenu_id'] . "', 'custommenu-child-item-" .  $this->request->post['custommenu_id'] . "', 'enablecustommenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
-		
+
 		echo $button;
 		exit();
-	}	
+	}
 
 	public function changecustommenuPosition() {
         $this->load->language('design/custommenu');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('design/custommenu');
-        
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_design_custommenu->changecustommenuPosition($this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 
 		}
-	}	
+	}
 
 	public function autocomplete() {
 		$json = array();
@@ -434,13 +434,13 @@ class ControllerDesignCustomMenu extends Controller {
 		#Category
 		if (isset($this->request->get['filter_category_name'])) {
 			$this->load->model('catalog/category');
-			
+
 			if (isset($this->request->get['filter_category_name'])) {
 				$filter_name = $this->request->get['filter_category_name'];
 			} else {
 				$filter_name = '';
 			}
-			
+
 			$filter_data = array(
 				'filter_name' => $filter_name,
 				'sort'        => 'name',
@@ -452,13 +452,13 @@ class ControllerDesignCustomMenu extends Controller {
 			$results = $this->model_catalog_category->getCategories($filter_data);
 
 			foreach ($results as $result) {
-				
+
 				$result['index'] = $result['name'];
 				if(strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
 					$result['name'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
 					$result['name'] = end($result['name']);
 				}
-				
+
 				$json[] = array(
 					'category_id' => $result['category_id'],
 					'index'		  => $result['index'],
@@ -466,7 +466,7 @@ class ControllerDesignCustomMenu extends Controller {
 				);
 			}
 		}
-		
+
 		#Product
 		if (isset($this->request->get['filter_product_name'])) {
 			$this->load->model('catalog/product');
@@ -493,17 +493,17 @@ class ControllerDesignCustomMenu extends Controller {
 				);
 			}
 		}
-		
+
 		#Manufacturer
 		if (isset($this->request->get['filter_manufacturer_name'])) {
 			$this->load->model('catalog/manufacturer');
-			
+
 			if (isset($this->request->get['filter_manufacturer_name'])) {
 				$filter_name = $this->request->get['filter_manufacturer_name'];
 			} else {
 				$filter_name = '';
 			}
-			
+
 			$filter_data = array(
 				'filter_name' => $filter_name,
 				'start'       => 0,
@@ -524,13 +524,13 @@ class ControllerDesignCustomMenu extends Controller {
 		#Information
 		if (isset($this->request->get['filter_information_name'])) {
 			$this->load->model('catalog/information');
-			
-			if (isset($this->request->get['filter_manufacturer_name'])) {
-				$filter_name = $this->request->get['filter_manufacturer_name'];
+
+			if (isset($this->request->get['filter_information_name'])) {
+				$filter_name = $this->request->get['filter_information_name'];
 			} else {
 				$filter_name = '';
 			}
-			
+
 			$filter_data = array(
 				'filter_name' => $filter_name,
 				'start'       => 0,
@@ -558,5 +558,5 @@ class ControllerDesignCustomMenu extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

@@ -25,7 +25,7 @@ class ModelCatalogInformation extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
 			}
 		}
-		
+
 		$this->cache->delete('seo_pro');
 		$this->cache->delete('seo_url');
 
@@ -40,7 +40,7 @@ class ModelCatalogInformation extends Model {
 
 	public function editInformation($information_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "' WHERE information_id = '" . (int)$information_id . "'");
-		
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
 
 		foreach ($data['information_description'] as $language_id => $value) {
@@ -64,7 +64,7 @@ class ModelCatalogInformation extends Model {
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
-		
+
 		$this->cache->delete('seo_pro');
 		$this->cache->delete('seo_url');
 
@@ -74,12 +74,12 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 	}
-	
+
 	public function editInformationStatus($information_id, $status) {
         $this->db->query("UPDATE " . DB_PREFIX . "information SET status = '" . (int)$status . "'WHERE information_id = '" . (int)$information_id . "'");
-        
+
 		$this->cache->delete('information');
-		
+
     }
 
 	public function deleteInformation($information_id) {
@@ -101,6 +101,10 @@ class ModelCatalogInformation extends Model {
 	public function getInformations($data = array()) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+			if (!empty($data['filter_name'])) {
+				$sql .= " AND id.title LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			}
 
 			$sort_data = array(
 				'id.title',

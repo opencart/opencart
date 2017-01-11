@@ -96,18 +96,19 @@
             </fieldset>
             <fieldset>
               <legend>Available Installs</legend>
-              <div class="alert alert-info">You must buy a license.</div>
+              <div class="alert alert-info"><i class="fa fa-alert"></i> You must buy a license.</div>
               <table class="table table-bordered">
                 <tbody>
                 
                 {% for download in downloads %}
                 <tr>
                   <td>{{ download.name }}</td>
-                  <td>{% if download.install %}
-                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary btn-block"><i class="fa fa-download"></i> Install</button>
+                  <td>{{ download.date_added }}</td>
+                  <td class="text-right">{% if download.install %}
+                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
                     {% endif %}
                     {% if download.uninstall %}
-                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger btn-block"><i class="fa fa-upload"></i> Uninstall</button>
+                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
                     {% endif %}</td>
                 </tr>
                 {% endfor %}

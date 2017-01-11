@@ -25,15 +25,15 @@ class ModelExtensionExtension extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
 	}	
 	
-	public function addPath($extension_download_id, $code, $path) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "extension_install SET `extension_download_id` = '" . (int)$extension_download_id . "', `code` = '" . $this->db->escape($code) . "', `path` = '" . $this->db->escape($path) . "', date_added = NOW()");
+	public function addPath($extension_download_id, $path) {
+		$this->db->query("INSERT INTO " . DB_PREFIX . "extension_install SET `extension_download_id` = '" . (int)$extension_download_id . "', `path` = '" . $this->db->escape($path) . "', date_added = NOW()");
 	}
 		
-	public function deletePath($extension_download_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "extension_install WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
+	public function deletePath($extension_install_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "extension_install WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 	
-	public function getPaths($extension_download_id) {
+	public function getPathsByExtensionDownloadId($extension_download_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "' ORDER BY date_added ASC");
 
 		return $query->rows;
@@ -44,4 +44,8 @@ class ModelExtensionExtension extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function deletePathsByExtensionDownloadId($extension_download_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "extension_install WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
+	}	
 }

@@ -599,11 +599,12 @@ class ControllerExtensionStore extends Controller {
 					} else {
 						$uninstall = '';
 					}
+					
+					$compatibility = explode(', ', $result['compatibility']);
 															
 					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
 							'name'          => $result['name'],
-							'compatibility' => explode(', ', $result['compatibility']),
 							'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 							'install'       => $install,
 							'uninstall'     => $uninstall
@@ -895,19 +896,19 @@ class ControllerExtensionStore extends Controller {
 					}
 	
 					if (is_dir($file) && !is_dir($path)) {
-						if (mkdir($path, 0777)) {
-							$this->model_extension_extension->addPath($extension_download_id, $download, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_directory'), $path);
-						}
+						//if (mkdir($path, 0777)) {
+							$this->model_extension_extension->addPath($extension_download_id, $destination);
+						//} else {
+						//	$json['error'] = sprintf($this->language->get('error_directory'), $path);
+						//}
 					}
 				
 					if (is_file($file)) {
-						if (rename($file, $path)) {
-							$this->model_extension_extension->addPath($extension_download_id, $download, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_file'), $file);
-						}
+						//if (rename($file, $path)) {
+							$this->model_extension_extension->addPath($extension_download_id, $destination);
+						//} else {
+						//	$json['error'] = sprintf($this->language->get('error_file'), $file);
+						//}
 					}
 				}
 			}
@@ -1013,10 +1014,6 @@ class ControllerExtensionStore extends Controller {
 						'xml'     => $xml,
 						'status'  => 1
 					);
-
-					if (!$json) {
-						$this->model_extension_modification->addModification($modification_data);
-					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
@@ -1026,7 +1023,9 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$this->model_extension_modification->addModification($modification_data);
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
+			$json['text'] = $this->language->get('text_remove');
+			
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
 					
 		$this->response->addHeader('Content-Type: application/json');
@@ -1037,12 +1036,6 @@ class ControllerExtensionStore extends Controller {
 		$this->load->language('extension/store');
 
 		$json = array();
-		
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
-		} else {
-			$extension_download_id = 0;
-		}
 				
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
@@ -1116,12 +1109,6 @@ class ControllerExtensionStore extends Controller {
 		} else {
 			$extension_download_id = 0;
 		}
-				
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = '';
-		}	
 		
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -1130,7 +1117,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$this->load->model('extension/extension');
 			
-			$results = $this->model_extension_extension->getPaths($code);
+			$results = $this->model_extension_extension->getPathsByExtensionDownloadId($extension_download_id);
 			
 			rsort($results);
 			
@@ -1157,7 +1144,7 @@ class ControllerExtensionStore extends Controller {
 				if (is_file($source)) {
 					unlink($source);
 					
-					$this->model_extension_extension->deletePath($result['extension_download_id']);
+					$this->model_extension_extension->deletePath($result['install_extension_id']);
 				}	
 				
 				if (is_dir($source)) {

@@ -613,31 +613,6 @@ class ControllerExtensionStore extends Controller {
 	public function comment() {
 	
 	}
-		
-	public function install() {
-		$this->load->language('extension/store');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-				
-		if (!$json) {
-			if (isset($this->request->get['extension_download_id'])) {
-				$extension_download_id = $this->request->get['extension_download_id'];
-			} else {
-				$extension_download_id = 0;
-			}			
-			
-			$json['text'] = $this->language->get('text_download');
-					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
-		}
-					
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
-	}
 	
 	public function download() {
 		$this->load->language('extension/store');
@@ -689,7 +664,32 @@ class ControllerExtensionStore extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
+
+	public function install() {
+		$this->load->language('extension/store');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+				
+		if (!$json) {
+			if (isset($this->request->get['extension_download_id'])) {
+				$extension_download_id = $this->request->get['extension_download_id'];
+			} else {
+				$extension_download_id = 0;
+			}			
 			
+			$json['text'] = $this->language->get('text_download');
+					
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
+	}
+				
 	public function unzip() {
 		$this->load->language('extension/store');
 
@@ -886,7 +886,7 @@ class ControllerExtensionStore extends Controller {
 						if (mkdir($path, 0777)) {
 							$this->model_extension_extension->addPath($extension_download_id, $destination);
 						} else {
-							$json['error'] = sprintf($this->language->get('error_directory'), $path);
+							$json['error'] = sprintf($this->language->get('error_move'), $path);
 						}
 					}
 				
@@ -894,7 +894,7 @@ class ControllerExtensionStore extends Controller {
 						if (rename($file, $path)) {
 							$this->model_extension_extension->addPath($extension_download_id, $destination);
 						} else {
-							$json['error'] = sprintf($this->language->get('error_file'), $file);
+							$json['error'] = sprintf($this->language->get('error_move'), $file);
 						}
 					}
 				}
@@ -935,8 +935,6 @@ class ControllerExtensionStore extends Controller {
 		$directory = ini_get('upload_tmp_dir');
 
 		if (is_file($directory . '/' . $download . '/install.xml') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/install.xml')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-			$this->load->model('extension/modification');
-
 			// If xml file just put it straight into the DB
 			$xml = file_get_contents($directory . '/' . $download . '/install.xml');
 
@@ -962,7 +960,7 @@ class ControllerExtensionStore extends Controller {
 						$modification_info = $this->model_extension_modification->getModificationByCode($code);
 
 						if ($modification_info) {
-							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
+							$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
 						}
 					} else {
 						$json['error'] = $this->language->get('error_code');
@@ -991,16 +989,22 @@ class ControllerExtensionStore extends Controller {
 					} else {
 						$link = '';
 					}
-
-					$modification_data = array(
-						'name'    => $name,
-						'code'    => $code,
-						'author'  => $author,
-						'version' => $version,
-						'link'    => $link,
-						'xml'     => $xml,
-						'status'  => 1
-					);
+					
+					if (!$json) {
+						$modification_data = array(
+							'name'    => $name,
+							'code'    => $code,
+							'author'  => $author,
+							'version' => $version,
+							'link'    => $link,
+							'xml'     => $xml,
+							'status'  => 1
+						);	
+						
+						$this->load->model('extension/modification');
+										
+						$this->model_extension_modification->addModification($modification_data);
+					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
@@ -1008,8 +1012,6 @@ class ControllerExtensionStore extends Controller {
 		}
 		
 		if (!$json) {
-			$this->model_extension_modification->addModification($modification_data);
-			
 			$json['text'] = $this->language->get('text_remove');
 			
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
@@ -1130,8 +1132,6 @@ class ControllerExtensionStore extends Controller {
 				
 				if (is_file($source)) {
 					unlink($source);
-					
-					$this->model_extension_extension->deletePath($result['extension_install_id']);
 				}	
 				
 				if (is_dir($source)) {
@@ -1171,7 +1171,7 @@ class ControllerExtensionStore extends Controller {
 				$this->model_extension_extension->deletePath($result['extension_install_id']);							
 			}
 			
-			$json['success'] = $this->language->get('text_uninstalled');
+			$json['success'] = $this->language->get('text_success');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

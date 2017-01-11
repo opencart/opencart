@@ -81,7 +81,7 @@
                 </tbody>
               
             </table>
-            {{ description }}</div>
+            {{ description }} </div>
           <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
           <div id="tab-download" class="tab-pane">
             <fieldset>
@@ -98,24 +98,27 @@
               <legend>Available Installs</legend>
               <div class="alert alert-info"><i class="fa fa-alert"></i> You must buy a license.</div>
               <table class="table table-bordered">
+                <thead>
+                <th>Download Name</th>
+                  <th>Date Added</th>
+                  <th class="text-right">Action</th>
+                    </thead>
                 <tbody>
                 
                 {% for download in downloads %}
                 <tr>
                   <td>{{ download.name }}</td>
                   <td>{{ download.date_added }}</td>
-                  <td class="text-right">
-                  
-                    {% if not download.installed %}
+                  <td class="text-right">{% if not download.installed %}
                     <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
-                    {% else %} 
+                    {% else %}
                     <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
                     {% endif %}
                     
                     
                     {% if download.installed %}
                     <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                    {% else %} 
+                    {% else %}
                     <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
                     {% endif %}</td>
                 </tr>
@@ -137,11 +140,11 @@ $('#tab-download .btn-primary').on('click', function(e) {
 	
 	var element = this;
 	
-	// Reset everything
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');
-
+	$('#progress-text').html('');	
+	
+	// Reset everything
 	$.ajax({
 		url: $(this).attr('value'),
 		dataType: 'json',
@@ -152,6 +155,9 @@ $('#tab-download .btn-primary').on('click', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
+			
+			
+			
 			console.log(json);
 			/*
 			if (json['error']) {
@@ -246,6 +252,7 @@ function next(url, i) {
 			}
 			
 			if (json['success']) {
+				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 			}
@@ -265,7 +272,11 @@ $('#tab-download .btn-danger').on('click', function(e) {
 	e.preventDefault();
 	
 	var element = this;
-
+	
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-text').html('');
+	
 	$.ajax({
 		url: $(this).attr('value'),
 		dataType: 'json',
@@ -279,11 +290,13 @@ $('#tab-download .btn-danger').on('click', function(e) {
 			console.log(json);
 			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#tab-download').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#progress-bar').css('width', '100%');
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<i class="fa fa-check-circle"></i> ' + json['success']);
 
 				$(element).hide();
 				
@@ -295,7 +308,6 @@ $('#tab-download .btn-danger').on('click', function(e) {
 		}
 	});
 });
-
 //--></script> 
 </div>
 {{ footer }} 

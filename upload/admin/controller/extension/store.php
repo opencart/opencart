@@ -586,28 +586,15 @@ class ControllerExtensionStore extends Controller {
 			
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {					
-					$path_total =  $this->model_extension_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id']);
-					
-					if (!$path_total) {
-						$install = $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true);
-					} else {
-						$install = '';
-					}
-					
-					if ($path_total) {
-						$uninstall = $this->url->link('extension/store/download/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true);
-					} else {
-						$uninstall = '';
-					}
-					
 					$compatibility = explode(', ', $result['compatibility']);
 															
 					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
-							'name'          => $result['name'],
-							'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'install'       => $install,
-							'uninstall'     => $uninstall
+							'name'       => $result['name'],
+							'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+							'install'    => $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'uninstall'  => $this->url->link('extension/store/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'installed'  => $this->model_extension_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id'])
 						);
 					//}	
 				}
@@ -896,19 +883,19 @@ class ControllerExtensionStore extends Controller {
 					}
 	
 					if (is_dir($file) && !is_dir($path)) {
-						//if (mkdir($path, 0777)) {
+						if (mkdir($path, 0777)) {
 							$this->model_extension_extension->addPath($extension_download_id, $destination);
-						//} else {
-						//	$json['error'] = sprintf($this->language->get('error_directory'), $path);
-						//}
+						} else {
+							$json['error'] = sprintf($this->language->get('error_directory'), $path);
+						}
 					}
 				
 					if (is_file($file)) {
-						//if (rename($file, $path)) {
+						if (rename($file, $path)) {
 							$this->model_extension_extension->addPath($extension_download_id, $destination);
-						//} else {
-						//	$json['error'] = sprintf($this->language->get('error_file'), $file);
-						//}
+						} else {
+							$json['error'] = sprintf($this->language->get('error_file'), $file);
+						}
 					}
 				}
 			}
@@ -1144,7 +1131,7 @@ class ControllerExtensionStore extends Controller {
 				if (is_file($source)) {
 					unlink($source);
 					
-					$this->model_extension_extension->deletePath($result['install_extension_id']);
+					$this->model_extension_extension->deletePath($result['extension_install_id']);
 				}	
 				
 				if (is_dir($source)) {
@@ -1181,7 +1168,7 @@ class ControllerExtensionStore extends Controller {
 					unlink($source);
 				}	
 				
-				$this->model_extension_extension->deletePath($code);							
+				$this->model_extension_extension->deletePath($result['extension_install_id']);							
 			}
 			
 			$json['success'] = $this->language->get('text_uninstalled');

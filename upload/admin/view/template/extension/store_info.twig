@@ -104,11 +104,19 @@
                 <tr>
                   <td>{{ download.name }}</td>
                   <td>{{ download.date_added }}</td>
-                  <td class="text-right">{% if download.install %}
+                  <td class="text-right">
+                  
+                    {% if not download.installed %}
                     <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                    {% else %} 
+                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
                     {% endif %}
-                    {% if download.uninstall %}
+                    
+                    
+                    {% if download.installed %}
                     <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                    {% else %} 
+                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
                     {% endif %}</td>
                 </tr>
                 {% endfor %}
@@ -123,7 +131,8 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#tab-download button').on('click', function(e) {
+// Install  
+$('#tab-download .btn-primary').on('click', function(e) {
 	e.preventDefault();
 	
 	var element = this;
@@ -250,6 +259,43 @@ function next(url, i) {
 		}
 	});
 }
+
+// Uninstall
+$('#tab-download .btn-danger').on('click', function(e) {
+	e.preventDefault();
+	
+	var element = this;
+
+	$.ajax({
+		url: $(this).attr('value'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			console.log(json);
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$(element).hide();
+				
+				$(element).parent().find('.btn-primary').show();
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 //--></script> 
 </div>
 {{ footer }} 

@@ -614,6 +614,31 @@ class ControllerExtensionStore extends Controller {
 	
 	}
 	
+	public function install() {
+		$this->load->language('extension/store');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+				
+		if (!$json) {
+			if (isset($this->request->get['extension_download_id'])) {
+				$extension_download_id = $this->request->get['extension_download_id'];
+			} else {
+				$extension_download_id = 0;
+			}			
+			
+			$json['text'] = $this->language->get('text_download');
+					
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
+	}
+		
 	public function download() {
 		$this->load->language('extension/store');
 
@@ -663,31 +688,6 @@ class ControllerExtensionStore extends Controller {
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
-	}
-
-	public function install() {
-		$this->load->language('extension/store');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-				
-		if (!$json) {
-			if (isset($this->request->get['extension_download_id'])) {
-				$extension_download_id = $this->request->get['extension_download_id'];
-			} else {
-				$extension_download_id = 0;
-			}			
-			
-			$json['text'] = $this->language->get('text_download');
-					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
 	}
 				
 	public function unzip() {

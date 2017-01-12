@@ -138,13 +138,14 @@
 $('#tab-download .btn-primary').on('click', function(e) {
 	e.preventDefault();
 	
+	var i = 1;
 	var element = this;
 	
+	// Reset everything
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('');	
 	
-	// Reset everything
 	$.ajax({
 		url: $(this).attr('value'),
 		dataType: 'json',
@@ -155,117 +156,67 @@ $('#tab-download .btn-primary').on('click', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			
-			
-			
-			console.log(json);
-			/*
-			if (json['error']) {
-				
-			}
-			
-			if (json['success']) {
-				$.ajax({
-					url: 'index.php?route=martketplace/store/install&download=',
-					dataType: 'json',
-					success: function(json) {
-						console.log(json);
-						
-						$('#progress-bar').css('width', (Math.ceil(i * 1.6) * 100) + '%');
-						
-						if (json['error']) {
-						
-						}
-						
-						if (json['step']) {
-							
-							
-							for (i = 0; json['step'].length; i++) {
-								$.ajax({
-									url: $(this).attr('value'),
-									dataType: 'json',
-									beforeSend: function() {
-										$(element).button('loading');
-									},
-									complete: function() {
-										$(element).button('reset');
-									},
-									success: function(json) {
-								
-								
-								
-									},
-									error: function(xhr, ajaxOptions, thrownError) {
-										alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-									}
-								});
-											
-								
-								
-								
-								
-							}
-							
-							
-							next(json['next'], i = i + 1);
-						}
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});
-	
-			}		
-			*/
-			if (json['text']) {
-				$('#progress-bar').css('width', '20%');
-				$('#progress-text').html(json['text']);
-			}
-			
-			if (json['next']) {
-				next(json['next'], i = 2);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-function next(url, i) {
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(json) {
-			console.log(json);
-			
-			$('#progress-bar').css('width', (Math.ceil(i * 1.6) * 100) + '%');
-			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
 			
 			if (json['text']) {
-				$('#progress-bar').css('width', '20%');
+				$('#progress-bar').css('width', Math.ceil(i * 2) * 100) + '%');
 				$('#progress-text').html(json['text']);
+				
+				i++;
+			}
+									
+			var next = '';
+			
+			if (json['next']) {
+				next = json['next'];
 			}
 			
-			if (json['success']) {
-				$('#progress-bar').css('width', '100%');
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-			}
+			while (next) {
+				
+				
+				console.log(json);
+			
+				$.ajax({
+					url: next,
+					dataType: 'json',
+					success: function(json) {
+						console.log(json);
+						
+						$('#progress-bar').css('width', (Math.ceil(i * 2) * 100) + '%');
+						
+						if (json['error']) {
+							$('#progress-bar').addClass('progress-bar-danger');
+							$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+						}
 
-			if (json['next']) {
-				next(json['next'], i = i + 1);
-			}
+						if (json['text']) {
+							$('#progress-text').html(json['text']);
+						}
+						
+						if (json['success']) {
+							$('#progress-bar').addClass('progress-bar-success');
+							$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+						}
+									
+						if (json['next']) {
+							next = json['next'];
+							i++;
+						}							
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-}
+});
 
 // Uninstall
 $('#tab-download .btn-danger').on('click', function(e) {
@@ -296,7 +247,7 @@ $('#tab-download .btn-danger').on('click', function(e) {
 			if (json['success']) {
 				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<i class="fa fa-check-circle"></i> ' + json['success']);
+				$('#progress-text').html(json['success']);
 
 				$(element).hide();
 				

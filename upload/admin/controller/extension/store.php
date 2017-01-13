@@ -992,13 +992,13 @@ class ControllerExtensionStore extends Controller {
 					
 					if (!$json) {
 						$modification_data = array(
-							'name'    => $name,
-							'code'    => $code,
-							'author'  => $author,
-							'version' => $version,
-							'link'    => $link,
-							'xml'     => $xml,
-							'status'  => 1
+							'extension_download_id' => $extension_download_id,
+							'name'                  => $name,
+							'code'                  => $code,
+							'author'                => $author,
+							'version'               => $version,
+							'link'                  => $link,
+							'xml'                   => $xml
 						);	
 						
 						$this->load->model('extension/modification');

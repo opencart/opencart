@@ -475,13 +475,14 @@ class ControllerExtensionInstaller extends Controller {
 					}
 
 					$modification_data = array(
-						'name'    => $name,
-						'code'    => $code,
-						'author'  => $author,
-						'version' => $version,
-						'link'    => $link,
-						'xml'     => $xml,
-						'status'  => 1
+						'extension_download_id' => $extension_download_id,
+						'name'                  => $name,
+						'code'                  => $code,
+						'author'                => $author,
+						'version'               => $version,
+						'link'                  => $link,
+						'xml'                   => $xml,
+						'status'                => 1
 					);
 
 					if (!$json) {

@@ -90,7 +90,9 @@
 </div>
 <script type="text/javascript"><!--
 $('table').on('click', '.btn-success', function(e) {
-	var node = this;
+	
+	var i = 0;
+	var element = this;
 	
 	// Reset the progress bar
 	$('.alert-success, .alert-danger').remove();		
@@ -99,12 +101,12 @@ $('table').on('click', '.btn-success', function(e) {
 	$('#progress-text').html('');
 				
 	$.ajax({
-		url: 'index.php?route=extension/translation/install&token={{ token }}&code=' + $(node).val(),
+		url: 'index.php?route=extension/translation/install&token={{ token }}&code=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('table button').prop('disabled', true);	
 			
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		success: function(json) {
 			if (json['error']) {
@@ -115,12 +117,12 @@ $('table').on('click', '.btn-success', function(e) {
 			}
 			
 			if (json['text']) {
-				$('#progress-bar').css('width', '20%');
+				$('#progress-bar').css('width', (i * 20) + '%');
 				$('#progress-text').html(json['text']);
 			}
 			
 			if (json['next']) {
-				next(json['next'], node, i = 2);
+				next(json['next'], element, i);
 			}			
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -131,7 +133,9 @@ $('table').on('click', '.btn-success', function(e) {
 	});
 });
 
-function next(url, node, i) {
+function next(url, element, i) {
+	i = i + 1;
+	
 	$.ajax({
 		url: url,
 		dataType: 'json',
@@ -162,7 +166,7 @@ function next(url, node, i) {
 			}
 
 			if (json['next']) {
-				next(json['next'], node, i = i + 1);
+				next(json['next'], element, i);
 			} else {
 				$('table button').prop('disabled', false);	
 			}

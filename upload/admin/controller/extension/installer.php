@@ -475,7 +475,7 @@ class ControllerExtensionInstaller extends Controller {
 					}
 
 					$modification_data = array(
-						'extension_download_id' => $extension_download_id,
+						'extension_download_id' => 0,
 						'name'                  => $name,
 						'code'                  => $code,
 						'author'                => $author,

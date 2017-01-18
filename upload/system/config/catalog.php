@@ -36,9 +36,6 @@ $_['action_pre_action'] = array(
 // Action Events
 $_['action_event'] = array(
 	'view/*/before'                         => 'event/theme',
-
-	//'language/extension/*/before'         => 'event/translation',
-	
 	//'controller/*/before'                 => 'event/debug/before',
 	//'controller/*/after'                  => 'event/debug/after'
 );

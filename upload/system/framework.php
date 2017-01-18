@@ -8,6 +8,45 @@ $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
 
+// Log
+$log = new Log($config->get('error_filename'));
+$registry->set('log', $log);
+
+set_error_handler(function($code, $message, $file, $line) use($log, $config) {
+	// error suppressed with @
+	if (error_reporting() === 0) {
+		return false;
+	}
+
+	switch ($code) {
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			$error = 'Notice';
+			break;
+		case E_WARNING:
+		case E_USER_WARNING:
+			$error = 'Warning';
+			break;
+		case E_ERROR:
+		case E_USER_ERROR:
+			$error = 'Fatal Error';
+			break;
+		default:
+			$error = 'Unknown';
+			break;
+	}
+
+	if ($config->get('error_display')) {
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+	}
+
+	if ($config->get('error_log')) {
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
+	}
+
+	return true;
+});
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);
@@ -33,7 +72,11 @@ $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	try {
+		$registry->set('db', new DB($config->get('db_type'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	} catch(Exception $e) {
+		$response->redirect($config->get('site_base') . 'maintenance.html');
+	}
 }
 
 // Session

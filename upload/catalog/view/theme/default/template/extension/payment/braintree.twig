@@ -1,0 +1,401 @@
+<style>
+    .form-control.braintree-hosted-fields-focused {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    }
+</style>
+{% if integration_type == 'hosted' %}
+  <div style="display: none;" id="braintree-choose" class="form-horizontal">
+    {% if vaulted_payment_methods %}
+    <div id="choose-card" class="form-group">
+      <label class="col-sm-2 control-label">{{ entry_card_choice }}</label>
+      <div class="col-sm-10">
+        <label class="radio-inline">
+          <input type="radio" name="existing_card" value="1" checked="checked" /> {{ entry_existing }}
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="existing_card" value="0"/> {{ entry_new }}
+        </label>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <i class="braintree-loading fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i>
+  <form style="display:none;" id="braintree-new" method="post" action="{{ payment_url }}" class="form-horizontal">
+    <fieldset>
+      <div class="form-group required">
+        <label class="col-sm-2 control-label" for="input-card-number">{{ entry_card }}</label>
+        <div class="col-sm-4">
+          <div id="input-card-number" class="form-control"></div>
+        </div>
+      <div class="col-sm-1">
+      <div id="card-type">
+        <img height="38" height="56" style="display: none;" class="card-logo" id="visa-logo" src="https://assets.braintreegateway.com/payment_method_logo/visa.png" alt="Visa" />
+        <img height="38" height="56" style="display: none;" class="card-logo" id="master-card-logo" src="https://assets.braintreegateway.com/payment_method_logo/mastercard.png" alt="MasterCard" />
+        <img height="38" height="56" style="display: none;" class="card-logo" id="american-express-logo" src="https://assets.braintreegateway.com/payment_method_logo/american_express.png" alt="American Express" />
+        <img height="38" height="56" style="display: none;" class="card-logo" id="discover-logo" src="https://assets.braintreegateway.com/payment_method_logo/discover.png" alt="Discover" />
+        <img height="38" height="56" style="display: none;" class="card-logo" id="jcb-image" src="https://assets.braintreegateway.com/payment_method_logo/jcb.png" alt="JCB" />
+        <img height="38" height="56" style="display: none;" class="card-logo" id="maestro-image" src="https://assets.braintreegateway.com/payment_method_logo/maestro.png" alt="Maestro" />
+      </div>
+        </div>
+      </div>
+      <div class="form-group required">
+        <label class="col-sm-2 control-label">{{ entry_expires }}</label>
+        <div class="col-sm-2">
+          <div id="input-card-expiration-month" class="form-control"></div>
+        </div>
+        <div class="col-sm-2">
+          <div id="input-card-expiration-year" class="form-control"></div>
+        </div>
+      </div>
+      <div class="form-group required">
+        <label class="col-sm-2 control-label">{{ entry_cvv }}</label>
+        <div class="col-sm-2">
+          <div id="input-card-cvv" class="form-control"></div>
+        </div>
+      </div>
+    {% if vault %}
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{ entry_remember_card }}</label>
+        <div class="col-sm-1" style="vertical-align: top;">
+          <input type="checkbox" id="input-vault-card" />
+        </div>
+      </div>
+    {% endif %}
+    </fieldset>
+    <div class="form-group">
+      <div class="col-sm-1 col-sm-offset-2">
+        <input disabled="disabled" type="submit" value="{{ button_confirm }}" class="btn btn-primary button-submit" />
+      </div>
+    </div>
+  </form>
+  <form style="display:none;" id="braintree-existing" method="post" action="{{ payment_url }}" class="form-horizontal">
+    {% if vaulted_payment_methods %}
+    <fieldset>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="vaulted_payment_method">{{ text_choose_card }}</label>
+        <div class="col-sm-1">
+            <img id="vaulted-card-logo" class="card-logo" src="{{ initial_card_image }}" />
+        </div>
+      <div class="col-sm-4">
+          <select name="vaulted_payment_method" class="form-control">
+            {% for vaulted_payment_method in vaulted_payment_methods %}
+              <option data-image="{{ vaulted_payment_method.imaeg }}" value="{{ vaulted_payment_method.token }}">{{ vaulted_payment_method.name }}</option>
+            {% endfor %}
+          </select>
+      </div>
+      <div class="col-sm-2">
+        <input type="button" value="{{ button_delete_card }}" id="button-delete" class="btn btn-primary" />
+      </div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <div class="col-sm-1 col-sm-offset-2">
+        <input id="hosted-submit-existing" disabled="disabled" type="submit" value="{{ button_confirm }}" class="btn btn-primary button-submit" />
+      </div>
+    </div>
+    {% endif %}
+  </form>
+{% elseif integration_type == 'dropin' %}
+  <!-- New Card & Checkout with PayPal -->
+  <form id="braintree-new" method="post" action="{{ payment_url }}" class="form-horizontal">
+    <div id="braintree-container"></div>
+    <div class="buttons">
+      <div class="pull-left">
+        <input disabled="disabled" type="submit" value="{{ button_confirm }}" class="btn btn-primary button-submit" />
+      </div>
+    </div>
+  </form>
+{% endif %}
+<script type="text/javascript"><!--
+  var clientToken = '{{ client_token }}';
+  
+  var threeDSecureStatus = '{{ three_d_secure_status }}';
+  
+  var environment = '{{ environment }}';
+  
+  var integrationType = '{{ integration_type }}';
+
+  var hasVaulted = false;
+
+  {% if vaulted_payment_methods %}
+    var hasVaulted = true;
+  {% endif %}
+  
+  $.getScript('{{ braintree_js }}', function(data, textStatus, jqxhr) {
+      $.getScript('https://js.braintreegateway.com/v1/braintree-data.js');
+  
+      if (integrationType === 'hosted') {
+          var options = {
+              id: 'braintree-new',
+              onPaymentMethodReceived: function(obj) {
+                  if (obj.type === 'CreditCard' && threeDSecureStatus === '1') {
+                      var client = new braintree.api.Client({
+                          clientToken: '{{ client_token }}'
+                      });
+  
+                      client.verify3DS({
+                          amount    : {{ total }},
+                          creditCard: obj.nonce
+                      }, function(error, response) {
+                          if (!error) {
+                              submitOrder($('#braintree-new'), response.nonce);
+                          }
+                      });
+                  } else {
+                      submitOrder($('#braintree-new'), obj.nonce);
+                  }
+              },
+              onReady: function() {
+                  $('.button-submit').prop('disabled', false);
+  
+                  if (hasVaulted) {
+                      $('#braintree-choose').show();
+                      $('#braintree-existing').show();
+                  } else {
+                      $('#braintree-new').show();
+                  }
+  
+                  $('.braintree-loading').hide();
+              },
+              hostedFields: {
+                  styles: {
+                      input: {
+                          'font-size': '12px',
+                          'font-family': 'Open Sans, sans-serif',
+                          'color': '#555'
+                      }
+                  },
+                  number: {
+                      selector: '#input-card-number',
+                      placeholder: '{{ entry_card_placeholder }}'
+                  },
+                  expirationMonth: {
+                      selector: '#input-card-expiration-month',
+                      placeholder: '{{ entry_month_placeholder }}'
+                  },
+                  expirationYear: {
+                      selector: '#input-card-expiration-year',
+                      placeholder: '{{ entry_year_placeholder }}'
+                  },
+                  cvv: {
+                      selector: '#input-card-cvv',
+                      placeholder: '{{ entry_cvv_placeholder }}'
+                  },
+                  onFieldEvent: function (event) {
+                    if (event.type === 'blur') {
+                      errorEvent(event);
+                    } else if (event.type === 'fieldStateChange') {
+                      errorEvent(event);
+  
+                      $('#card-type img').hide();
+  
+                      if (event.card) {
+                        if ($('#card-type #' + event.card.type + '-logo').length) {
+                          $('#card-type #' + event.card.type + '-logo').show();
+                        }
+                      }
+                    }
+                  }
+              }
+          };
+  
+      var errorEvent = function(event) {
+        var container = $(event.target.container).parent();
+  
+        if (!event.isValid) {
+          container.addClass('has-error');
+        } else {
+          container.removeClass('has-error');
+        }
+      };
+  
+          braintree.setup(clientToken, 'custom', options);
+      } else if (integrationType === 'dropin') {
+          var options = {
+              container: 'braintree-container',
+              form: 'braintree-new',
+              onPaymentMethodReceived: function(obj) {
+                  if (obj.type === 'CreditCard' && threeDSecureStatus === '1') {
+                      var client = new braintree.api.Client({
+                          clientToken: '{{ client_token }}'
+                      });
+  
+                      client.verify3DS({
+                          amount    : {{ total }},
+                          creditCard: obj.nonce
+                      }, function(error, response) {
+                          if (!error) {
+                              submitOrder($('#braintree-new'), response.nonce);
+                          }
+                      });
+                  } else {
+                      submitOrder($('#braintree-new'), obj.nonce);
+                  }
+              },
+              onReady: function() {
+                  $('.button-submit').prop('disabled', false);
+              }
+          };
+  
+          {% if checkout_with_paypal.status %}
+            options.paypal = {
+                singleUse: true,
+                amount   : {{ total }},
+                currency : '{{ checkout_with_paypal.currency }}',
+                enableShippingAddress: false
+            };
+  
+            {% if checkout_with_paypal.shipping %}
+              options.paypal.enableShippingAddress = true;
+              options.paypal.shippingAddressOverride = {
+                  recipientName    : '{{ checkout_with_paypal.shipping.recipientName }}',
+                  type             : 'Personal',
+                  streetAddress    : '{{ checkout_with_paypal.shipping.streetAddress }}',
+                  extendedAddress  : '{{ checkout_with_paypal.shipping.extendedAddress }}',
+                  locality         : '{{ checkout_with_paypal.shipping.locality }}',
+                  countryCodeAlpha2: '{{ checkout_with_paypal.shipping.countryCodeAlpha2 }}',
+                  postalCode       : '{{ checkout_with_paypal.shipping.postalCode }}',
+                  region           : '{{ checkout_with_paypal.shipping.region }}',
+                  phone            : '{{ checkout_with_paypal.shipping.phone }}',
+                  editable         : false
+              };
+            {% endif %}
+          {% endif %}
+  
+          braintree.setup(clientToken, 'dropin', options);
+      }
+  });
+  
+  //Use vaulted card
+  $('#hosted-submit-existing').on('click', function(e) {
+    e.preventDefault();
+  
+    var vaulted_payment_method = $('select[name=\'vaulted_payment_method\'] option:selected');
+  
+    $.ajax({
+      url: 'index.php?route=payment/braintree/vaulted',
+      type: 'post',
+      data: {
+        vaulted_payment_method: vaulted_payment_method.val()
+      },
+      dataType: 'json',
+      beforeSend: function() {
+        $('#button-submit-existing').button('loading');
+      },
+      success: function(json) {
+        if (json.success) {
+          if (json.payment_method.type === 'CreditCard' && threeDSecureStatus === '1') {
+            var client = new braintree.api.Client({
+              clientToken: '{{ client_token }}'
+            });
+  
+            client.verify3DS({
+              amount    : {{ total }},
+              creditCard: json.payment_method.nonce
+            }, function(error, response) {
+              if (!error) {
+                submitOrder($('#braintree-existing'), response.nonce);
+              }
+            });
+          } else {
+            submitOrder($('#braintree-existing'), json.payment_method.nonce);
+          }
+        }
+      }
+    });
+  });
+  
+  //Delete a card
+  $('#button-delete').on('click', function() {
+    var vaulted_payment_method = $('select[name=\'vaulted_payment_method\'] option:selected');
+  
+    if (confirm('{{ button_delete_card }} \n' + vaulted_payment_method.text())) {
+      $.ajax({
+        url: 'index.php?route=payment/braintree/deletePaymentMethod',
+        type: 'post',
+        data: {
+          vaulted_payment_method: vaulted_payment_method.val()
+        },
+        dataType: 'json',
+        beforeSend: function() {
+          $('#button-delete').button('loading');
+        },
+        complete: function() {
+          $('#button-delete').button('reset');
+        },
+        success: function(json) {
+          if (json.error) {
+            alert(json.error);
+          }
+  
+          if (json.success) {
+            alert(json.success);
+  
+            if (json.vaulted_payment_methods) {
+              vaulted_payment_method.remove();
+  
+              $('#vaulted-card-logo').attr('src', $('select[name=\'vaulted_payment_method\'] option:selected').attr('data-image'));
+            } else {
+              $('#braintree-choose').remove();
+              $('#braintree-existing').remove();
+  
+              $('#braintree-new').show();
+            }
+          }
+        }
+      });
+    }
+  });
+  
+  $('input[name=\'existing_card\']').on('change', function() {
+    if (this.value === '1') {
+      $('#braintree-existing').show();
+      $('#braintree-new').hide();
+    } else {
+      $('#braintree-existing').hide();
+      $('#braintree-new').show();
+    }
+  });
+  
+  $('select[name=\'vaulted_payment_method\']').on('change', function() {
+      $('#vaulted-card-logo').attr('src', $(this).find(':selected').attr('data-image'));
+  });
+  
+  function submitOrder(form, nonce) {
+    //Trigger Braintree data
+    if (environment === 'production') {
+      var btdEnv = BraintreeData.environments.production;
+    } else {
+      var btdEnv = BraintreeData.environments.sandbox;
+    }
+  
+    BraintreeData.setup('{{ merchant_id }}', form.attr('id'), btdEnv);
+  
+    //Disable submit button
+    $('.button-submit').prop('disabled', true);
+  
+    //Collect form data
+    var payment_method_nonce = $('<input>').attr('type', 'hidden').attr('name', 'payment_method_nonce').val(nonce);
+    
+    if (integrationType === 'hosted' && $('#input-vault-card').prop('checked')) {
+      var vault_card = $('<input>').attr('type', 'hidden').attr('name', 'vault_card').val('1');
+    } else {
+      var vault_card = $('<input>').attr('type', 'hidden').attr('name', 'vault_card').val('0');
+    }
+  
+    var device_data = $('<input>').attr('type', 'hidden').attr('name', 'device_data').val($('#device_data').val());
+  
+    $('#braintree-choose').hide();
+  
+    form.html('<i class="fa fa-spinner fa-spin fa-5x" style="text-align: center; margin: 0 auto; width: 100%; font-size: 5em;"></i>');
+  
+    form.append($(payment_method_nonce));
+    form.append($(vault_card));
+    form.append($(device_data));
+  
+    form.submit();
+  }
+//--></script>

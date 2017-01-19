@@ -64,8 +64,10 @@
         </div>
         <br />
         {% if extensions %}
-        {% for extension in extensions|batch(3, '') %}
-        <div class="row"> {% for extension in extension %}
+        {% for row in extensions|batch(3, '') %}
+        <div class="row">{% for extension in row %}
+        {% if extension %}
+        
           <div class="col-sm-4">
             <div class="thumbnail"><a href="{{ extension.href }}"><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a>
               <div class="caption">
@@ -79,6 +81,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}</div>
         {% endfor %}
         <div class="row">

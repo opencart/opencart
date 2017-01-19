@@ -50,13 +50,17 @@
           <option value="">{{ text_select }}</option>
           
           
+          
           {% for custom_field_value in custom_field.custom_field_value %}
+          
           
           
           <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
           
           
+          
           {% endfor %}
+        
         
         
         </select>
@@ -66,8 +70,7 @@
       {% if custom_field.type == 'radio' %}
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
-        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> 
-          {% for custom_field_value in custom_field.custom_field_value %}
+        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
           <div class="radio">
             <label>
               <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -80,15 +83,13 @@
       {% if custom_field.type == 'checkbox' %}
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
-        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> 
-          {% for custom_field_value in custom_field.custom_field_value %}
+        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
           <div class="checkbox">
             <label>
               <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
               {{ custom_field_value.name }}</label>
           </div>
-          {% endfor %}
-          </div>
+          {% endfor %} </div>
       </div>
       {% endif %}
       
@@ -193,21 +194,27 @@
           <option value="">{{ text_select }}</option>
           
           
+          
          {% for country in countries %}
           {% if country.country_id == country_id %}
+          
           
           
           <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
           
           
+          
           {% else %}
+          
           
           
           <option value="{{ country.country_id }}">{{ country.name }}</option>
           
           
+          
           {% endif %}
           {% endfor %}
+        
         
         
         </select>
@@ -217,7 +224,6 @@
         <select name="zone_id" id="input-payment-zone" class="form-control">
         </select>
       </div>
-      
       {% for custom_field in custom_fields %}
       
       {% if custom_field.location == 'address' %}
@@ -229,13 +235,17 @@
           <option value="">{{ text_select }}</option>
           
           
+          
           {% for custom_field_value in custom_field.custom_field_value %}
+          
           
           
           <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
           
           
+          
           {% endfor %}
+        
         
         
         </select>
@@ -245,8 +255,7 @@
       {% if custom_field.type == 'radio' %}
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
-        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> 
-          {% for custom_field_value in custom_field.custom_field_value %}
+        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
           <div class="radio">
             <label>
               <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -259,8 +268,7 @@
       {% if custom_field.type == 'checkbox' %}
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label">{{ custom_field.name }}</label>
-        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> 
-          {% for custom_field_value in custom_field.custom_field_value %}
+        <div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
           <div class="checkbox">
             <label>
               <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
@@ -327,9 +335,9 @@
       {% endif %}
       
       {% endif %}
-      {% endfor %
+      {% endfor %}
     </fieldset>
-    {{ captcha }} </div>
+    {{ captcha }}</div>
 </div>
 <div class="checkbox">
   <label for="newsletter">
@@ -346,7 +354,7 @@
 {% if text_agree %}
 <div class="buttons clearfix">
   <div class="pull-right">{{ text_agree }} 
-  &nbsp;
+    &nbsp;
     <input type="checkbox" name="agree" value="1" />
     <input type="button" value="{{ button_continue }}" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>

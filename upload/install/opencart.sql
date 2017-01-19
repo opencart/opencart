@@ -1477,6 +1477,22 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 
 -----------------------------------------------------------
 
+
+--
+-- Table structure for table `oc_extension_install`
+--
+
+DROP TABLE IF EXISTS `oc_extension_install`;
+CREATE TABLE `oc_extension_install` (
+  `extension_install_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extension_download_id` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`extension_install_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-----------------------------------------------------------
+
 --
 -- Table structure for table `oc_filter`
 --
@@ -1542,8 +1558,8 @@ CREATE TABLE `oc_geo_zone` (
   `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `date_modified` datetime NOT NULL,
   `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`geo_zone_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

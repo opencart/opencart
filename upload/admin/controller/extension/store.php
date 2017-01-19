@@ -8,25 +8,37 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$filter_search = $this->request->get['filter_search'];
 		} else {
-			$filter_search = null;
+			$filter_search = '';
 		}
 				
 		if (isset($this->request->get['filter_category'])) {
 			$filter_category = $this->request->get['filter_category'];
 		} else {
-			$filter_category = 'all';
+			$filter_category = '';
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$filter_license = $this->request->get['filter_license'];
 		} else {
-			$filter_license = 'all';
+			$filter_license = '';
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$filter_username = $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$filter_rating = $this->request->get['filter_rating'];
 		} else {
-			$filter_username = null;
+			$filter_rating = '';
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$filter_member_type = $this->request->get['filter_member_type'];
+		} else {
+			$filter_member_type = '';
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$filter_member = $this->request->get['filter_member'];
+		} else {
+			$filter_member = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -46,17 +58,25 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-		
+
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -78,59 +98,103 @@ class ControllerExtensionStore extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);
-		
-		$data['token'] = $this->session->data['token'];
-
-		$data['extensions'] = array();
-		
-		$url .= '&api_key=' . $this->config->get('config_api_key'); 
-		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+	
+		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&language=' . $this->config->get('config_language');
 		$url .= '&currency=' . $this->config->get('config_currency');
 		$url .= '&version=' . VERSION;
 		
-		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension' . $url);
+		if (isset($this->request->get['filter_search'])) {
+			$url .= '&filter_search=' . $this->request->get['filter_search'];
+		}
+
+		if (isset($this->request->get['filter_category'])) {
+			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		}
+
+		if (isset($this->request->get['filter_license'])) {
+			$url .= '&filter_license=' . $this->request->get['filter_license'];
+		}
+
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+				
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
 		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_PORT, 80);
 			
 		$response = curl_exec($curl);
+		
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		
 		curl_close($curl);
 
 		$response_info = json_decode($response, true);
 
-		if ($response_info) {
-			$extension_total = $response_info['total'];
-			
-			$results = $response_info['extensions'];
-		} else {
-			$extension_total = 0;
-			
-			$results = array();
-		}
-
-		foreach ($results as $result) {
-			$data['extensions'][] = array(
-				'name'          => $result['name'],
-				'image'         => $result['image'],
-				'license'       => $result['license'],
-				'price'         => $result['price'],
-				'rating'        => $result['rating'],
-				'comment_total' => $result['comment_total'],
-				'href'          => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
-			);
-		}
+		$extension_total = $response_info['total'];
 		
+		$data['promotions'] = array();
+		
+		if ($status == 200) {
+			foreach ($response_info['promotions'] as $result) {
+				$data['extensions'][] = array(
+					'name'         => $result['name'],
+					'description'  => $result['description'],
+					'image'        => $result['image'],
+					'license'      => $result['license'],
+					'price'        => $result['price'],
+					'rating'       => $result['rating'],
+					'review_total' => $result['review_total'],
+					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+				);
+			}
+		}		
+		
+		$data['extensions'] = array();
+		
+		if ($status == 200) {
+			foreach ($response_info['extensions'] as $result) {
+				$data['extensions'][] = array(
+					'name'         => $result['name'],
+					'description'  => $result['description'],
+					'image'        => $result['image'],
+					'license'      => $result['license'],
+					'price'        => $result['price'],
+					'rating'       => $result['rating'],
+					'review_total' => $result['review_total'],
+					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+				);
+			}
+		}
+				
 		$data['heading_title'] = $this->language->get('heading_title');
         
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_search'] = $this->language->get('text_search');
 		$data['text_category'] = $this->language->get('text_category');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
 		// Categories
 		$url = '';
@@ -143,19 +207,27 @@ class ControllerExtensionStore extends Controller {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
-		}		
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
-				
+		
 		$data['categories'] = array();
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_all'),
-			'value' => 'all',
+			'value' => '',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
@@ -195,7 +267,6 @@ class ControllerExtensionStore extends Controller {
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=total' . $url, true)
 		);	
 		
-		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_feed'),
 			'value' => 'feed',
@@ -224,21 +295,32 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-				
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 				
-		// Licenses
 		$data['licenses'] = array();
 		
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_all'),
-			'value' => 'all',
+			'value' => '',
 			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
@@ -260,60 +342,64 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-			
+
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 		
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_modified'),
-			'value' => 'date_modified',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, true)
+			'text'  => 'Popularity',
+			'value' => 'popularity',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=popularity')
 		);
-		
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_added'),
-			'value' => 'date_added',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true)
-		);
-				
-		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_name'),
-			'value' => 'name',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true)
-		);
-		
-		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_rating'),
+			'text'  => 'Rating',
 			'value' => 'rating',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=rating' . $url, true)
-		);		
-		
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=rating')
+		);
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_downloaded'),
-			'value' => 'downloaded',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=downloaded' . $url, true)
-		);	
-			
+			'text'  => 'Date Modified',
+			'value' => 'date_modified',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=date_modified')
+		);
+
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_price'),
+			'text'  => 'Date Added',
+			'value' => 'date_added',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=date_added')
+		);
+
+		$data['sorts'][] = array(
+			'text'  => 'Name',
+			'value' => 'name',
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=name')
+		);
+
+		$data['sorts'][] = array(
+			'text'  => 'Price',
 			'value' => 'price',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&sort=price' . $url, true)
-		);	
+			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=price')
+		);
 		
 		// Pagination
 		$url = '';
@@ -321,17 +407,25 @@ class ControllerExtensionStore extends Controller {
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
 		}
-		
+
 		if (isset($this->request->get['filter_category'])) {
 			$url .= '&filter_category=' . $this->request->get['filter_category'];
 		}
-		
+
 		if (isset($this->request->get['filter_license'])) {
 			$url .= '&filter_license=' . $this->request->get['filter_license'];
 		}
 
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . $this->request->get['filter_username'];
+		if (isset($this->request->get['filter_rating'])) {
+			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
+		}
+
+		if (isset($this->request->get['filter_member_type'])) {
+			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
+		}
+
+		if (isset($this->request->get['filter_member'])) {
+			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -349,6 +443,8 @@ class ControllerExtensionStore extends Controller {
 		$data['filter_search'] = $filter_search;
 		$data['filter_category'] = $filter_category;
 		$data['filter_license'] = $filter_license;
+		$data['filter_member_type'] = $filter_member_type;
+		$data['filter_rating'] = $filter_rating;
 		$data['sort'] = $sort;
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -359,28 +455,26 @@ class ControllerExtensionStore extends Controller {
 	}
 	
 	public function info() {
-		$url  = '&api_key=' . $this->config->get('config_api_key'); 
-		//$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		//$url .= '&language=' . $this->config->get('config_language');
-		//$url .= '&currency=' . $this->config->get('config_currency');
-		//$url .= '&version=' . VERSION;
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+				
+		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
+		$url .= '&language=' . $this->config->get('config_language');
+		$url .= '&currency=' . $this->config->get('config_currency');
+		$url .= '&version=' . VERSION;
 
-		$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/info&extension_id=' . $this->request->get['extension_id'] . $url);
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
 				
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_PORT, 80);
 			
 		$response = curl_exec($curl);
-		
-		echo $response;
-		
-		if (!$response) {
-			$json['error'] = sprintf($this->language->get('error_api'), curl_error($curl), curl_errno($curl));
-		}
 		
 		curl_close($curl);
 		
@@ -396,16 +490,12 @@ class ControllerExtensionStore extends Controller {
 			$data['text_loading'] = $this->language->get('text_loading');
 			$data['text_price'] = $this->language->get('text_price');
 			$data['text_partner'] = $this->language->get('text_partner');
-			$data['text_support'] = $this->language->get('text_support');
-			$data['text_documentation'] = $this->language->get('text_documentation');
-			
-			
 			$data['text_rating'] = $this->language->get('text_rating');
+			$data['text_downloaded'] = $this->language->get('text_downloaded');
+			$data['text_sales'] = $this->language->get('text_sales');
 			$data['text_compatibility'] = $this->language->get('text_compatibility');
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
-			$data['text_sales'] = $this->language->get('text_sales');
-			$data['text_comment'] = $this->language->get('text_comment');
 			
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_install'] = $this->language->get('button_install');
@@ -413,6 +503,7 @@ class ControllerExtensionStore extends Controller {
 
 			$data['tab_description'] = $this->language->get('tab_description');
 			$data['tab_documentation'] = $this->language->get('tab_documentation');
+			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
 			
 			$data['token'] = $this->session->data['token'];
@@ -463,42 +554,51 @@ class ControllerExtensionStore extends Controller {
 			
 			$data['extension_id'] = (int)$this->request->get['extension_id'];
 			$data['name'] = $response_info['name'];
-			$data['description'] = nl2br(bbcode_decode($response_info['description']));
-			$data['documentation'] = nl2br(bbcode_decode($response_info['documentation']));
-			
-			$data['downloads'] = array();
-			
-			if ($response_info['downloads']) {
-				//if (in_array(VERSION, $result['compatibility'])) {
-					foreach ($response_info['downloads'] as $result) {
-						$data['downloads'][] = array(
-							'extension_download_id' => $result['extension_download_id'],
-							'name'                  => $result['name'],
-							'date_added'            => date($this->language->get('short_date'), strtotime($result['date_added'])),
-						);	
-					}
-				//}
-			}		
-			
+			$data['description'] = $response_info['description'];
+			$data['documentation'] = $response_info['documentation'];
 			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
+			$data['license_period'] = $response_info['license_period'];
 			$data['rating'] = $response_info['rating'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
+			$data['member_username'] = $response_info['member_username'];
+			$data['member_image'] = $response_info['member_image'];
+			$data['member_date_added'] = $response_info['member_date_added'];
+			$data['filter_member'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_member=' . $response_info['member_username']);
 			$data['comment_total'] = $response_info['comment_total'];
-	
-			$data['member'] = $response_info['member'];
-			$data['filter_username'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_username=' . $response_info['username']);
-		
-			$data['compatibility'] = '';
+			$data['compatibility'] = $response_info['compatibility'];
+			
+			$data['images'] = array();
+
+			foreach ($response_info['images'] as $result) {
+				$data['images'][] = array(
+					'thumb' => $result['thumb'],
+					'popup' => $result['popup']
+				);
+			}			
+			
+			$this->load->model('extension/extension');
+			
+			$data['downloads'] = array();
 			
 			if ($response_info['downloads']) {
-				foreach ($response_info['downloads'] as $result) {
-					$data['compatibility'] .= implode(', ', $result['compatibility']);
+				foreach ($response_info['downloads'] as $result) {					
+					$compatibility = explode(', ', $result['compatibility']);
+															
+					//if (in_array(VERSION, $compatibility)) {
+						$data['downloads'][] = array(
+							'name'       => $result['name'],
+							'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+							'install'    => $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'uninstall'  => $this->url->link('extension/store/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'installed'  => $this->model_extension_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id'])
+						);
+					//}	
 				}
-			}
+			}		
 			
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -510,6 +610,10 @@ class ControllerExtensionStore extends Controller {
 		}	
 	}
 	
+	public function comment() {
+	
+	}
+	
 	public function install() {
 		$this->load->language('extension/store');
 
@@ -518,158 +622,54 @@ class ControllerExtensionStore extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+				
+		if (!$json) {
+			if (isset($this->request->get['extension_download_id'])) {
+				$extension_download_id = $this->request->get['extension_download_id'];
+			} else {
+				$extension_download_id = 0;
+			}			
+			
+			$json['text'] = $this->language->get('text_download');
+					
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
+	}
+		
+	public function download() {
+		$this->load->language('extension/store');
+
+		$json = array();
 		
 		if (isset($this->request->get['extension_download_id'])) {
 			$extension_download_id = $this->request->get['extension_download_id'];
 		} else {
 			$extension_download_id = 0;
 		}
-				
-		if (!$json) {		
-			$json['text'] = $this->language->get('text_download');
-					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));		
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));				
-	}
-	
-	public function uninstall() {
-		$this->load->language('extension/translation');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-		
-		if (!empty(trim($this->request->get['code']))) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = '';
-		}		
-	
-		if (!$json) {
-			$directories = array();
-					
-			$directory = DIR_APPLICATION . 'language';
-	
-			if (is_dir($directory . '/' . $code) && substr(str_replace('\\', '/', realpath($directory . '/' . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-				$directories[] = $directory . '/' . $code . '/';
-			}
-			
-			$directory = DIR_CATALOG . 'language';
-			
-			if (is_dir($directory . '/' . $code) && substr(str_replace('\\', '/', realpath($directory . '/' . $code)), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-				$directories[] = $directory . '/' . $code . '/';
-			}
-			
-			$directory = substr(DIR_CATALOG, 0, strrpos(rtrim(DIR_CATALOG, '/'), '/')) . '/install/language/';
-	
-			if (is_dir($directory . '/' . $code) && substr(str_replace('\\', '/', realpath($directory . '/' . $code)), 0, strlen($directory)) == $directory) {
-				$directories[] = $directory . '/' . $code . '/';
-			}			
-			
-			foreach ($directories as $directory) {
-				// Get a list of files ready to upload
-				$files = array();
-
-				$path = array($directory . '/');
-
-				while (count($path) != 0) {
-					$next = array_shift($path);
-
-					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-						$file = $next . '/' . $file;
-
-						if (is_dir($file)) {
-							$path[] = $file;
-						}
-
-						$files[] = $file;
-					}
-				}
-
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				if (is_dir($directory)) {
-					rmdir($directory);
-				}
-			}
-			
-			$this->load->model('localisation/language');
-			
-			$language_info = $this->model_localisation_language->getLanguageByCode($code);	
-			
-			if ($language_info) {
-				$this->model_localisation_language->deleteLanguage($language_info['language_id']);
-			}				
-			
-			$json['success'] = $this->language->get('text_uninstalled');
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));			
-	}
-			
-	public function download() {
-		$this->load->language('extension/store');
-
-		$json = array();
-				
+							
 		if (!$this->user->hasPermission('modify', 'extension/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
 		if (!$json) {
-			if (isset($this->request->get['extension_download_id'])) {
-				$extension_download_id = $this->request->get['extension_download_id'];
-			} else {
-				$extension_download_id = 0;
-			}
-			
-			/*
-			$curl = curl_init(HTTP_TEST . 'index.php?route=extension/extension/download&api_key=' . $this->config->get('config_api_key') .  '&extension_download_id=' . $extension_download_id);
-			//$curl = curl_init('http://localhost/test/test.ocmod.zip');
+			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_PORT, 80);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 					
 			$response = curl_exec($curl);
 			
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+			
 			curl_close($curl);
-		
-			$response_info = json_decode($response, true);
-			*/
 			
-			//if (isset($response_info['download'])) {
-				$curl = curl_init('http://localhost/test/test.ocmod.zip');
-				
-				//$curl = curl_init($response_info['download']);
-				
-				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-				curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-				curl_setopt($curl, CURLOPT_PORT, 80);
-						
-				$response = curl_exec($curl);
-			
-				curl_close($curl);
-			
+			if ($response && $status == 200) {
 				$file = tempnam(ini_get('upload_tmp_dir'), 'ext');
 			
 				$handle = fopen($file, 'w');
@@ -680,30 +680,36 @@ class ControllerExtensionStore extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&download=' . basename($file, '.tmp'), true));		
-			//} else {
-			//	$json['error'] = $this->language->get('error_download');
-			//}
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));		
+			} else {
+				$json['error'] = $this->language->get('error_download');
+			}
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
-		
+				
 	public function unzip() {
 		$this->load->language('extension/store');
 
 		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
+		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
 		}
-
+		
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
-		}		
+		}	
+				
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
 		// Sanitize the filename
 		$directory = ini_get('upload_tmp_dir');
@@ -728,37 +734,39 @@ class ControllerExtensionStore extends Controller {
 			
 			$json['text'] = $this->language->get('text_move');
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+		
 	public function move() {
 		$this->load->language('extension/store');
 
 		$json = array();
 		
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
 		}
-		
+				
 		if (isset($this->request->get['download'])) {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
 		}
+				
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 			
 		$directory = ini_get('upload_tmp_dir');
-
-		if (!is_dir($directory . '/' . $download . '/upload/') || substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/upload/')), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
-			$json['error'] = $this->language->get('error_directory');
-		}
 		
-		$files = array();
-		
-		if (!$json) {
+		if (is_dir($directory . '/' . $download . '/upload/') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/upload/')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+			$files = array();
+			
 			// Get a list of files ready to upload
 			$path = array($directory . '/' . $download . '/upload/*');
 
@@ -773,136 +781,160 @@ class ControllerExtensionStore extends Controller {
 					$files[] = $file;
 				}
 			}
-		}
+			
+			// First we need to do some checks
+			foreach ($files as $file) {
+				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
+				
+				// Check if the file is not going into an allowed directory
+				$allowed = array(
+					'admin/controller/extension/',
+					'admin/model/extension/',
+					'admin/view/template/extension/',
+					'catalog/controller/extension/',
+					'catalog/model/extension/',
+					'catalog/view/theme/'
+				);
+				
+				// Language Admin
+				$data['languages'] = array();
+				
+				$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
+			
+				foreach ($folders as $folder) {
+					$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
+				}
+				
+				// Language Catalog
+				$folders = glob(DIR_CATALOG . 'language/*', GLOB_ONLYDIR);
+			
+				foreach ($folders as $folder) {
+					$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
+				}			
+							
+				$safe = false;
+				
+				foreach ($allowed as $value) {
+					if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
+						$safe = true;
+						
+						break;
+					}
+					
+					if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
+						$safe = true;
+						
+						break;						
+					}
+				}
+			
+				if ($safe) {
+					// Check if the copy location exists or not	
+					if (substr($destination, 0, 5) == 'admin') {
+						$destination = DIR_APPLICATION . substr($destination, 6);
+					}
 		
-		// First we need to do some checks
-		foreach ($files as $file) {
-			$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
-			
-			// Check if the file is not going into an allowed directory
- 			$allowed = array(
-				'admin/controller/extension/',
-				'admin/language/extension/',
-				'admin/model/extension/',
-				'admin/view/template/extension/',
-				'catalog/controller/extension/',
-				'catalog/language/extension/',
-				'catalog/model/extension/',
-				'catalog/view/theme/'
-			);
-			
-			$safe = false;
-			
-			for ($i = 0; $i < count($allowed); $i++) {
-				if (substr(str_replace('\\', '/', realpath($destination)), 0, strlen($allowed[$i])) == $path) {
-					$safe = true;
+					if (substr($destination, 0, 7) == 'catalog') {
+						$destination = DIR_CATALOG . substr($destination, 8);
+					}
+		
+					if (substr($destination, 0, 5) == 'image') {
+						$destination = DIR_IMAGE . substr($destination, 6);
+					}
+		
+					if (substr($destination, 0, 6) == 'system') {
+						$destination = DIR_SYSTEM . substr($destination, 7);
+					}
+					
+					if (is_file($destination)) {
+						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+						
+						break;
+					}				
+				} else {
+					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
 					
 					break;
 				}
 			}
-		
-			if (!$safe) {
-				$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
-			}
-						
-			// Check if the copy location exists or not	
-			if (substr($destination, 0, 5) == 'admin') {
-				$destination = DIR_APPLICATION . substr($destination, 6);
-			}
 
-			if (substr($destination, 0, 7) == 'catalog') {
-				$destination = DIR_CATALOG . substr($destination, 8);
-			}
-
-			if (substr($destination, 0, 5) == 'image') {
-				$destination = DIR_IMAGE . substr($destination, 6);
-			}
-
-			if (substr($destination, 0, 6) == 'system') {
-				$destination = DIR_SYSTEM . substr($destination, 7);
-			}
-			
-			if (is_file($destination)) {
-				$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+			if (!$json) { 
+				$this->load->model('extension/extension');
 				
-				break;
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('extension/extension');
-			
-			foreach ($files as $file) {
-				$destination = substr($file, strlen($directory . '/' . $download . '/upload/'));
-	
-				if (substr($destination, 0, 5) == 'admin') {
-					$destination = DIR_APPLICATION . substr($destination, 5);
-				}
-	
-				if (substr($destination, 0, 7) == 'catalog') {
-					$destination = DIR_CATALOG . substr($destination, 7);
-				}
-	
-				if (substr($destination, 0, 5) == 'image') {
-					$destination = DIR_IMAGE . substr($destination, 5);
-				}
-	
-				if (substr($destination, 0, 6) == 'system') {
-					$destination = DIR_SYSTEM . substr($destination, 6);
-				}
-
-				if (is_dir($file) && !is_dir($destination)) {
-					if (!mkdir($destination, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-					} else {
-						$this->model_extension_extension->addPath($download, $destination);
+				foreach ($files as $file) {
+					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
+		
+					$path = '';
+					
+					if (substr($destination, 0, 5) == 'admin') {
+						$path = DIR_APPLICATION . substr($destination, 6);
 					}
-				}
-			
-				if (is_file($file)) {
-					if (!rename($file, $destination)) {
-						$json['error'] = sprintf($this->language->get('error_file'), $file);
-					} else {
-						$this->model_extension_extension->addPath($download, $destination);
+		
+					if (substr($destination, 0, 7) == 'catalog') {
+						$path = DIR_CATALOG . substr($destination, 8);
+					}
+		
+					if (substr($destination, 0, 5) == 'image') {
+						$path = DIR_IMAGE . substr($destination, 6);
+					}
+		
+					if (substr($destination, 0, 6) == 'system') {
+						$path = DIR_SYSTEM . substr($destination, 7);
+					}
+	
+					if (is_dir($file) && !is_dir($path)) {
+						if (mkdir($path, 0777)) {
+							$this->model_extension_extension->addPath($extension_download_id, $destination);
+						} else {
+							$json['error'] = sprintf($this->language->get('error_move'), $path);
+						}
+					}
+				
+					if (is_file($file)) {
+						if (rename($file, $path)) {
+							$this->model_extension_extension->addPath($extension_download_id, $destination);
+						} else {
+							$json['error'] = sprintf($this->language->get('error_move'), $file);
+						}
 					}
 				}
 			}
 		}
-	
+		
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function xml() {
 		$this->load->language('extension/store');
 
 		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
 		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+				
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
-		}		
+		}	
+		
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 				
 		$directory = ini_get('upload_tmp_dir');
 
-		if (is_file($directory . '/' . $download . '/install.xml') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/install.xml')), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
-			$json['error'] = $this->language->get('error_xml');
-		}
-
-		if (!$json) {
-			$this->load->model('extension/modification');
-
+		if (is_file($directory . '/' . $download . '/install.xml') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/install.xml')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
 			// If xml file just put it straight into the DB
 			$xml = file_get_contents($directory . '/' . $download . '/install.xml');
 
@@ -928,7 +960,7 @@ class ControllerExtensionStore extends Controller {
 						$modification_info = $this->model_extension_modification->getModificationByCode($code);
 
 						if ($modification_info) {
-							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
+							$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
 						}
 					} else {
 						$json['error'] = $this->language->get('error_code');
@@ -957,102 +989,51 @@ class ControllerExtensionStore extends Controller {
 					} else {
 						$link = '';
 					}
-
-					$modification_data = array(
-						'name'    => $name,
-						'code'    => $code,
-						'author'  => $author,
-						'version' => $version,
-						'link'    => $link,
-						'xml'     => $xml,
-						'status'  => 1
-					);
-
+					
 					if (!$json) {
+						$modification_data = array(
+							'extension_download_id' => $extension_download_id,
+							'name'                  => $name,
+							'code'                  => $code,
+							'author'                => $author,
+							'version'               => $version,
+							'link'                  => $link,
+							'xml'                   => $xml
+						);	
+						
+						$this->load->model('extension/modification');
+										
 						$this->model_extension_modification->addModification($modification_data);
-						
-						$json['text'] = $this->language->get('text_sql');
-						
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/sql', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
 			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}	
-		
-	public function sql() {
-		$this->load->language('extension/store');
-
-		$json = array();
-		
-		if ($this->request->get['download']) {
-			$download = $this->request->get['download'];
-		} else {
-			$download = '';
-		}
-				
-		$directory = ini_get('upload_tmp_dir');
-		
-		if (is_file($directory . '/' . $download . '/install.sql') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/install.sql')), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
-			$json['error'] = $this->language->get('error_file');
 		}
 		
 		if (!$json) {
-			$lines = file($file);
-
-			if ($lines) {
-				try {
-					foreach ($lines as $line) {
-						if (substr($line, 0, 14) == 'CREATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
-							$sql = '';
-							
-							$start = true;
-						}
-						
-						if ($start) {
-							$sql .= $line;
-						}
-						
-						if ($start && substr($line, -2) == ";\n") {
-							$this->db->query(str_replace(" `oc_", " `" . DB_PREFIX, substr($sql, 0, strlen($sql) -2)));
-							
-							$start = false;
-						}
-							
-						$i++;
-					}
-				} catch(Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-				}
-			}
-			
 			$json['text'] = $this->language->get('text_remove');
 			
 			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
-		
+					
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
+	}		
 	
 	public function remove() {
 		$this->load->language('extension/store');
 
 		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-		
+				
 		if ($this->request->get['download']) {
 			$download = $this->request->get['download'];
 		} else {
 			$download = '';
+		}
+		
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
 		}
 		
 		$directory = ini_get('upload_tmp_dir');
@@ -1105,5 +1086,95 @@ class ControllerExtensionStore extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}	
+	
+	public function uninstall() {
+		$this->load->language('extension/extension');
+
+		$json = array();
+		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+		
+		if (!$this->user->hasPermission('modify', 'extension/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+	
+		if (!$json) {
+			$this->load->model('extension/extension');
+			
+			$results = $this->model_extension_extension->getPathsByExtensionDownloadId($extension_download_id);
+			
+			rsort($results);
+			
+			foreach ($results as $result) {
+				$source = '';
+				
+				// Check if the copy location exists or not	
+				if (substr($result['path'], 0, 5) == 'admin') {
+					$source = DIR_APPLICATION . substr($result['path'], 6);
+				}
+	
+				if (substr($result['path'], 0, 7) == 'catalog') {
+					$source = DIR_CATALOG . substr($result['path'], 8);
+				}
+	
+				if (substr($result['path'], 0, 5) == 'image') {
+					$source = DIR_IMAGE . substr($result['path'], 6);
+				}
+	
+				if (substr($result['path'], 0, 6) == 'system') {
+					$source = DIR_SYSTEM . substr($result['path'], 7);
+				}
+				
+				if (is_file($source)) {
+					unlink($source);
+				}	
+				
+				if (is_dir($source)) {
+					// Get a list of files ready to upload
+					$files = array();
+		
+					$path = array($source);
+		
+					while (count($path) != 0) {
+						$next = array_shift($path);
+		
+						// We have to use scandir function because glob will not pick up dot files.
+						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+							$file = $next . '/' . $file;
+		
+							if (is_dir($file)) {
+								$path[] = $file;
+							}
+		
+							$files[] = $file;
+						}
+					}
+		
+					rsort($files);
+		
+					foreach ($files as $file) {
+						if (is_file($file)) {
+							unlink($file);
+						} elseif (is_dir($file)) {
+							rmdir($file);
+						}
+					}
+					
+					unlink($source);
+				}	
+				
+				$this->model_extension_extension->deletePath($result['extension_install_id']);							
+			}
+			
+			$json['success'] = $this->language->get('text_success');
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
 	}	
 }

@@ -26,6 +26,9 @@
 {% for style in styles %}
 <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
 {% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 {% for link in links %}
 <link href="{{ link.href }}" rel="{{ link.rel }}" />
@@ -87,10 +90,7 @@
         {% if category.children %}
         <li class="dropdown"><a href="{{ category.href }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
           <div class="dropdown-menu">
-            <div class="dropdown-inner"> 
-              {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
-              
-              
+            <div class="dropdown-inner"> {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
               <ul class="list-unstyled">
                 {% for child in children %}
                 <li><a href="{{ child.href }}">{{ child.name }}</a></li>

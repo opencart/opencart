@@ -1,6 +1,6 @@
 <?php
 namespace Session;
-class Native extends \SessionHandler {
+class PHP extends \SessionHandler {
     public function create_sid() {
         return parent::create_sid();
     }

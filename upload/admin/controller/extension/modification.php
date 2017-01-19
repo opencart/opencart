@@ -299,7 +299,6 @@ class ControllerExtensionModification extends Controller {
 															} else {
 																array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
 															}
-
 															break;
 														case 'before':
 															$new_lines = explode("\n", $add);

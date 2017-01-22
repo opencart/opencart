@@ -718,6 +718,7 @@ class ControllerCustomerCustomer extends Controller {
 		$data['button_reward_add'] = $this->language->get('button_reward_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 		$data['button_upload'] = $this->language->get('button_upload');
+		$data['button_download'] = $this->language->get('button_download');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_address'] = $this->language->get('tab_address');
@@ -849,6 +850,7 @@ class ControllerCustomerCustomer extends Controller {
 		}
 
 		$data['cancel'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . $url, true);
+		$data['download']  = $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$customer_info = $this->model_customer_customer->getCustomer($this->request->get['customer_id']);

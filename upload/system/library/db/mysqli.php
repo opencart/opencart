@@ -3,8 +3,12 @@ namespace DB;
 final class MySQLi {
 	private $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
+	public function __construct($hostname, $username, $password, $database, $port = '3306', $persistent = false) {
+		if($persistent) {
+			$this->connection = new \mysqli('p:'.$hostname, $username, $password, $database, $port);
+		} else {
+			$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
+		}
 
 		if ($this->connection->connect_error) {
 			throw new \Exception('Error: ' . $this->connection->error . '<br />Error No: ' . $this->connection->errno);

@@ -2,11 +2,11 @@
 class DB {
 	private $adaptor;
 
-	public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL) {
+	public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL, $persistent) {
 		$class = 'DB\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
+			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $persistent);
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}

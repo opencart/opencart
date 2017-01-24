@@ -18,6 +18,7 @@ $_['db_username']          = 'root';
 $_['db_password']          = '';
 $_['db_database']          = '';
 $_['db_port']              = 3306;
+$_['db_persistent']        = true;
 
 // Mail
 $_['mail_protocol']        = 'mail'; // mail or smtp

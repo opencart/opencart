@@ -1,6 +1,6 @@
 <?php
 // Site
-$_['site_base']         = HTTP_SERVER;
+$_['site_url']          = HTTP_SERVER;
 $_['site_ssl']          = HTTPS_SERVER;
 
 // Database

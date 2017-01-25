@@ -1,6 +1,6 @@
 <?php
 // Site
-$_['site_base']            = '';
+$_['site_url']             = '';
 $_['site_ssl']             = false;
 
 // Url
@@ -9,6 +9,9 @@ $_['url_autostart']        = true;
 // Language
 $_['language_default']     = 'en-gb';
 $_['language_autoload']    = array('en-gb');
+
+// Date
+$_['date_timezone']        = 'UTC';
 
 // Database
 $_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre

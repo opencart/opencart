@@ -12,6 +12,8 @@ $registry->set('config', $config);
 $log = new Log($config->get('error_filename'));
 $registry->set('log', $log);
 		
+date_default_timezone_set($config->get('date_timezone'));
+		
 set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	// error suppressed with @
 	if (error_reporting() === 0) {
@@ -90,7 +92,7 @@ $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('ca
 
 // Url
 if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_base'), $config->get('site_ssl')));
+	$registry->set('url', new Url($config->get('site_url'), $config->get('site_ssl')));
 }
 
 // Language

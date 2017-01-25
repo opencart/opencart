@@ -33,6 +33,8 @@ class Language {
 
 		$this->data = array_merge($this->data, $_);
 
+		$data = array_merge($data, $this->data);
+
 		return $this->data;
 	}
 }

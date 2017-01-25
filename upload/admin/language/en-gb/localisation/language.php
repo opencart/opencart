@@ -22,8 +22,8 @@ $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 
 // Help
-$_['help_locale']       = 'Example: en_US.UTF-8,en_US,en-gb,en_gb,english';
-$_['help_status']       = 'Hide/Show it in language dropdown';
+$_['help_locale']       = 'Example: en-US,en_US.UTF-8,en_US,en-gb,english';
+$_['help_status']       = 'Hide/Show it in language dropdown.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify languages!';

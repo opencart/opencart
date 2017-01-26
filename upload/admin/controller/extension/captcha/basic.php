@@ -55,10 +55,10 @@ class ControllerExtensionCaptchaBasicCaptcha extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true);
 
-		if (isset($this->request->post['basic_captcha_status'])) {
-			$data['basic_captcha_status'] = $this->request->post['basic_captcha_status'];
+		if (isset($this->request->post['captcha_basic_status'])) {
+			$data['captcha_basic_status'] = $this->request->post['captcha_basic_status'];
 		} else {
-			$data['basic_captcha_status'] = $this->config->get('basic_captcha_status');
+			$data['captcha_basic_status'] = $this->config->get('captcha_basic_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -65,10 +65,10 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=extension/feed/google_base';
 
-		if (isset($this->request->post['google_base_status'])) {
-			$data['google_base_status'] = $this->request->post['google_base_status'];
+		if (isset($this->request->post['feed_google_base_status'])) {
+			$data['feed_google_base_status'] = $this->request->post['feed_google_base_status'];
 		} else {
-			$data['google_base_status'] = $this->config->get('google_base_status');
+			$data['feed_google_base_status'] = $this->config->get('feed_google_base_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

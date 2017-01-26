@@ -52,10 +52,10 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['divido_calculator_status'])) {
-			$data['divido_calculator_status'] = $this->request->post['divido_calculator_status'];
+		if (isset($this->request->post['module_divido_calculator_status'])) {
+			$data['module_divido_calculator_status'] = $this->request->post['module_divido_calculator_status'];
 		} else {
-			$data['divido_calculator_status'] = $this->config->get('divido_calculator_status');
+			$data['module_divido_calculator_status'] = $this->config->get('module_divido_calculator_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

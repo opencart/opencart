@@ -53,10 +53,10 @@ class ControllerExtensionModulePilibabaButton extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['pilibaba_button_status'])) {
-			$data['pilibaba_button_status'] = $this->request->post['pilibaba_button_status'];
+		if (isset($this->request->post['module_pilibaba_button_status'])) {
+			$data['module_pilibaba_button_status'] = $this->request->post['module_pilibaba_button_status'];
 		} else {
-			$data['pilibaba_button_status'] = $this->config->get('pilibaba_button_status');
+			$data['module_pilibaba_button_status'] = $this->config->get('module_pilibaba_button_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

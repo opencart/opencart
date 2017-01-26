@@ -57,10 +57,10 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['klarna_checkout_module_status'])) {
-			$data['klarna_checkout_module_status'] = $this->request->post['klarna_checkout_module_status'];
+		if (isset($this->request->post['module_klarna_checkout_status'])) {
+			$data['module_klarna_checkout_status'] = $this->request->post['module_klarna_checkout_status'];
 		} else {
-			$data['klarna_checkout_module_status'] = $this->config->get('klarna_checkout_module_status');
+			$data['module_klarna_checkout_status'] = $this->config->get('module_klarna_checkout_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

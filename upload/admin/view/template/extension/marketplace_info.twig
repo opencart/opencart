@@ -78,10 +78,10 @@
                 <td><strong>{{ text_downloaded }}</strong></td>
                 <td>{{ downloaded }}</td>
               </tr>
-                </tbody>
-              
+            </tbody>
             </table>
-            {{ description }} </div>
+            {{ description }}
+          </div>
           <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
           <div id="tab-download" class="tab-pane">
             <fieldset>
@@ -96,35 +96,38 @@
             </fieldset>
             <fieldset>
               <legend>Available Installs</legend>
-              <div class="alert alert-info"><i class="fa fa-alert"></i> You must buy a license.</div>
+              {% if not license %}
+              <div class="alert alert-warning"><i class="fa fa-alert"></i> You must buy a license.
+                <button type="button" id="" class="btn btn-warning"><i class="fa fa-shopping-basket"></i> purchase</button>
+              </div>
+              {% endif %}
               <table class="table table-bordered">
                 <thead>
-                  <th>Download Name</th>
+                <th>Download Name</th>
                   <th>Date Added</th>
                   <th class="text-right">Action</th>
-                </thead>
+                    </thead>
                 <tbody>
                 
                 {% for download in downloads %}
-                  <tr>
-                    <td>{{ download.name }}</td>
-                    <td>{{ download.date_added }}</td>
-                    <td class="text-right">{% if not download.installed %}
-                      <button type="button" value="{{ download.install }}"  data-next="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
-                      {% else %}
-                      <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
-                      {% endif %}
+                <tr>
+                  <td>{{ download.name }}</td>
+                  <td>{{ download.date_added }}</td>
+                  <td class="text-right">{% if not download.installed %}
+                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                    {% else %}
+                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
+                    {% endif %}
                     
                     
-                      {% if download.installed %}
-                      <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                      {% else %}
-                      <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
-                      {% endif %}
-                    </td>
+                    {% if download.installed %}
+                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                    {% else %}
+                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
+                    {% endif %} </td>
                 </tr>
                 {% endfor %}
-              </tbody>
+                  </tbody>
                 
               </table>
             </fieldset>
@@ -170,65 +173,65 @@ $('#tab-download .btn-primary').on('click', function(e) {
 			}
 			
 			if (json['next']) {
-				$(element).attr('data-next', json['next']);
+				$(element).attr('value', json['next']);
+				
+				
 			}
 				
-			while ($(element).attr('data-next')) {
-				next = '';
-				
-				$(element).attr('data-next', '');
-				
-				$.ajax({
-					url: next,
-					dataType: 'json',
-					beforeSend: function() {
-						//$(element).button('loading');
-					},
-					complete: function() {
-						//$(element).button('reset');
-					},
-					success: function(json) {
-						$('#progress-bar').css('width', (i * 20) + '%');
+
+			next = '';
+			
+			$(element).attr('data-next', '');
+			
+			$.ajax({
+				url: next,
+				dataType: 'json',
+				beforeSend: function() {
+					//$(element).button('loading');
+				},
+				complete: function() {
+					//$(element).button('reset');
+				},
+				success: function(json) {
+					$('#progress-bar').css('width', (i * 20) + '%');
+					
+					if (json['error']) {
+						$('#progress-bar').addClass('progress-bar-danger');
+						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 						
-						if (json['error']) {
-							$('#progress-bar').addClass('progress-bar-danger');
-							$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-							
-							$(element).button('reset');
-						}
-			 
-						if (json['text']) {
-							$('#progress-text').html(json['text']);
-						}
-						
-						if (json['next']) {
-							$(element).attr('data-next', json['next']);
-							
-							
-						}
-						
-						if (json['success']) {
-							$('#progress-bar').addClass('progress-bar-success');
-							$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-							
-							$(element).hide();
-				
-							$(element).parent().find('.btn-danger').show();
-							
-							$(element).button('reset');
-						}
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						$(element).button('reset');
 					}
-				});
-			}
+		 
+					if (json['text']) {
+						$('#progress-text').html(json['text']);
+					}
+					
+					if (json['next']) {
+						$(element).attr('data-next', json['next']);
+						
+						
+					}
+					
+					if (json['success']) {
+						$('#progress-bar').addClass('progress-bar-success');
+						$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+						
+						$(element).hide();
+			
+						$(element).parent().find('.btn-danger').show();
+						
+						$(element).button('reset');
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	}).done(function(e) {
-		//$(element).button('reset');
 	});
 });
 
@@ -276,8 +279,6 @@ function next(url, element, i) {
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	}).done(function() {
-		
 	});
 }
 

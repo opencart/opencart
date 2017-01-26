@@ -28,8 +28,8 @@
 		  <div class="form-group">
             <label class="col-sm-2 control-label" for="input-module-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="klarna_checkout_module_status" id="input-module-status" class="form-control">
-				{% if klarna_checkout_module_status %}
+              <select name="module_klarna_checkout_status" id="input-module-status" class="form-control">
+				{% if module_klarna_checkout_status %}
 					<option value="1" selected="selected">{{ text_enabled }}</option>
 					<option value="0">{{ text_disabled }}</option>
 				{% else %}

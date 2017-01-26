@@ -155,10 +155,10 @@ class ControllerCommonColumnLeft extends Controller {
 			// Extension
 			$extension = array();
 			
-			if ($this->user->hasPermission('access', 'extension/store')) {		
+			if ($this->user->hasPermission('access', 'extension/marketplace')) {		
 				$extension[] = array(
-					'name'	   => $this->language->get('text_store'),
-					'href'     => $this->url->link('extension/store', 'token=' . $this->session->data['token'], true),
+					'name'	   => $this->language->get('text_marketplace'),
+					'href'     => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);					
 			}

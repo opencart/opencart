@@ -46,16 +46,16 @@ class Controller3rdPartyMaxmind extends Controller {
 			$data['error_score'] = '';
 		}
 
-		if (isset($this->request->post['maxmind_key'])) {
-			$data['maxmind_key'] = $this->request->post['maxmind_key'];
+		if (isset($this->request->post['fraud_maxmind_key'])) {
+			$data['fraud_maxmind_key'] = $this->request->post['fraud_maxmind_key'];
 		} else {
-			$data['maxmind_key'] = '';
+			$data['fraud_maxmind_key'] = '';
 		}
 
-		if (isset($this->request->post['maxmind_score'])) {
-			$data['maxmind_score'] = $this->request->post['maxmind_score'];
+		if (isset($this->request->post['fraud_maxmind_score'])) {
+			$data['fraud_maxmind_score'] = $this->request->post['fraud_maxmind_score'];
 		} else {
-			$data['maxmind_score'] = '80';
+			$data['fraud_maxmind_score'] = '80';
 		}
 
 		if (isset($this->request->post['maxmind_order_status_id'])) {
@@ -75,11 +75,11 @@ class Controller3rdPartyMaxmind extends Controller {
 	}
 
 	private function validate() {
-		if (!$this->request->post['maxmind_key']) {
+		if (!$this->request->post['fraud_maxmind_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->request->post['maxmind_score'] || (int)$this->request->post['maxmind_score'] > 100 || (int)$this->request->post['maxmind_score'] < 0) {
+		if (!$this->request->post['fraud_maxmind_score'] || (int)$this->request->post['fraud_maxmind_score'] > 100 || (int)$this->request->post['fraud_maxmind_score'] < 0) {
 			$this->error['score'] = $this->language->get('error_score');
 		}
 

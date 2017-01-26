@@ -4,7 +4,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 	public function index() {
 		$this->load->model('extension/payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
+		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
 			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
@@ -13,10 +13,10 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 			$this->document->addScript($amazon_payment_js);
 
-			$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
+			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 			$data['amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login', '', true);
-			if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
-				$data['amazon_login_pay_test'] = true;
+			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+				$data['payment_amazon_login_pay_test'] = true;
 			}
 
 			if ($this->config->get('amazon_login_button_type')) {
@@ -37,10 +37,10 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 				$data['amazon_login_button_size'] = 'medium';
 			}
 
-			if ($this->config->get('amazon_login_pay_language')) {
-				$data['amazon_login_pay_language'] = $this->config->get('amazon_login_pay_language');
+			if ($this->config->get('payment_amazon_login_pay_language')) {
+				$data['payment_amazon_login_pay_language'] = $this->config->get('payment_amazon_login_pay_language');
 			} else {
-				$data['amazon_login_pay_language'] = 'en-US';
+				$data['payment_amazon_login_pay_language'] = 'en-US';
 			}
 
 			return $this->load->view('extension/module/amazon_login', $data);

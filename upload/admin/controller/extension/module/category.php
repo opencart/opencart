@@ -55,10 +55,10 @@ class ControllerExtensionModuleCategory extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['category_status'])) {
-			$data['category_status'] = $this->request->post['category_status'];
+		if (isset($this->request->post['module_category_status'])) {
+			$data['module_category_status'] = $this->request->post['module_category_status'];
 		} else {
-			$data['category_status'] = $this->config->get('category_status');
+			$data['module_category_status'] = $this->config->get('module_category_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

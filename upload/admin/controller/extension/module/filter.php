@@ -55,10 +55,10 @@ class ControllerExtensionModulefilter extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['filter_status'])) {
-			$data['filter_status'] = $this->request->post['filter_status'];
+		if (isset($this->request->post['module_filter_status'])) {
+			$data['module_filter_status'] = $this->request->post['module_filter_status'];
 		} else {
-			$data['filter_status'] = $this->config->get('filter_status');
+			$data['module_filter_status'] = $this->config->get('module_filter_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -53,10 +53,10 @@ class ControllerExtensionModulePPButton extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['pp_button_status'])) {
-			$data['pp_button_status'] = $this->request->post['pp_button_status'];
+		if (isset($this->request->post['module_pp_button_status'])) {
+			$data['module_pp_button_status'] = $this->request->post['module_pp_button_status'];
 		} else {
-			$data['pp_button_status'] = $this->config->get('pp_button_status');
+			$data['module_pp_button_status'] = $this->config->get('module_pp_button_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -31,7 +31,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="google_captcha_key" value="{{ google_captcha_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              <input type="text" name="captcha_google_key" value="{{ captcha_google_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               {% endif %}
@@ -40,7 +40,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
             <div class="col-sm-10">
-              <input type="text" name="google_captcha_secret" value="{{ google_captcha_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
+              <input type="text" name="captcha_google_secret" value="{{ captcha_google_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control" />
               {% if error_secret %}
               <div class="text-danger">{{ error_secret }}</div>
               {% endif %}
@@ -49,8 +49,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="google_captcha_status" id="input-status" class="form-control">
-                {% if google_captcha_status %}
+              <select name="captcha_google_status" id="input-status" class="form-control">
+                {% if captcha_google_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

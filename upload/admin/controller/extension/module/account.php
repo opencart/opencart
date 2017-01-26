@@ -55,10 +55,10 @@ class ControllerExtensionModuleAccount extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['account_status'])) {
-			$data['account_status'] = $this->request->post['account_status'];
+		if (isset($this->request->post['module_account_status'])) {
+			$data['module_account_status'] = $this->request->post['module_account_status'];
 		} else {
-			$data['account_status'] = $this->config->get('account_status');
+			$data['module_account_status'] = $this->config->get('module_account_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

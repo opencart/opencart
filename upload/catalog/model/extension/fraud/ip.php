@@ -26,7 +26,7 @@ class ModelExtensionFraudIp extends Model {
         }
 
         if ($status) {
-            return $this->config->get('ip_order_status_id');
+            return $this->config->get('fraud_ip_order_status_id');
         }
     }
 }

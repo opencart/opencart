@@ -29,7 +29,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="maxmind_key" value="{{ maxmind_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              <input type="text" name="fraud_maxmind_key" value="{{ fraud_maxmind_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               {% endif %}
@@ -38,7 +38,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-score"><span data-toggle="tooltip" title="{{ help_score }}">{{ entry_score }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="maxmind_score" value="{{ maxmind_score }}" placeholder="{{ entry_score }}" id="input-score" class="form-control" />
+              <input type="text" name="fraud_maxmind_score" value="{{ fraud_maxmind_score }}" placeholder="{{ entry_score }}" id="input-score" class="form-control" />
             </div>
           </div>
           <div class="form-group">
@@ -58,8 +58,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="maxmind_status" id="input-status" class="form-control">
-                {% if maxmind_status %}
+              <select name="fraud_maxmind_status" id="input-status" class="form-control">
+                {% if fraud_maxmind_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

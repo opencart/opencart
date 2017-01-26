@@ -78,56 +78,56 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
-		if (isset($this->request->post['fraudlabspro_key'])) {
-			$data['fraudlabspro_key'] = $this->request->post['fraudlabspro_key'];
+		if (isset($this->request->post['fraud_fraudlabspro_key'])) {
+			$data['fraud_fraudlabspro_key'] = $this->request->post['fraud_fraudlabspro_key'];
 		} else {
-			$data['fraudlabspro_key'] = $this->config->get('fraudlabspro_key');
+			$data['fraud_fraudlabspro_key'] = $this->config->get('fraud_fraudlabspro_key');
 		}
 
-		if (isset($this->request->post['fraudlabspro_score'])) {
-			$data['fraudlabspro_score'] = $this->request->post['fraudlabspro_score'];
+		if (isset($this->request->post['fraud_fraudlabspro_score'])) {
+			$data['fraud_fraudlabspro_score'] = $this->request->post['fraud_fraudlabspro_score'];
 		} else {
-			$data['fraudlabspro_score'] = $this->config->get('fraudlabspro_score');
+			$data['fraud_fraudlabspro_score'] = $this->config->get('fraud_fraudlabspro_score');
 		}
 
-		if (isset($this->request->post['fraudlabspro_order_status_id'])) {
-			$data['fraudlabspro_order_status_id'] = $this->request->post['fraudlabspro_order_status_id'];
+		if (isset($this->request->post['fraud_fraudlabspro_order_status_id'])) {
+			$data['fraud_fraudlabspro_order_status_id'] = $this->request->post['fraud_fraudlabspro_order_status_id'];
 		} else {
-			$data['fraudlabspro_order_status_id'] = $this->config->get('fraudlabspro_order_status_id');
+			$data['fraud_fraudlabspro_order_status_id'] = $this->config->get('fraud_fraudlabspro_order_status_id');
 		}
 
-		if (isset($this->request->post['fraudlabspro_review_status_id'])) {
-			$data['fraudlabspro_review_status_id'] = $this->request->post['fraudlabspro_review_status_id'];
+		if (isset($this->request->post['fraud_fraudlabspro_review_status_id'])) {
+			$data['fraud_fraudlabspro_review_status_id'] = $this->request->post['fraud_fraudlabspro_review_status_id'];
 		} else {
-			$data['fraudlabspro_review_status_id'] = $this->config->get('fraudlabspro_review_status_id');
+			$data['fraud_fraudlabspro_review_status_id'] = $this->config->get('fraud_fraudlabspro_review_status_id');
 		}
 
-		if (isset($this->request->post['fraudlabspro_approve_status_id'])) {
-			$data['fraudlabspro_approve_status_id'] = $this->request->post['fraudlabspro_approve_status_id'];
+		if (isset($this->request->post['fraud_fraudlabspro_approve_status_id'])) {
+			$data['fraud_fraudlabspro_approve_status_id'] = $this->request->post['fraud_fraudlabspro_approve_status_id'];
 		} else {
-			$data['fraudlabspro_approve_status_id'] = $this->config->get('fraudlabspro_approve_status_id');
+			$data['fraud_fraudlabspro_approve_status_id'] = $this->config->get('fraud_fraudlabspro_approve_status_id');
 		}
 
-		if (isset($this->request->post['fraudlabspro_reject_status_id'])) {
-			$data['fraudlabspro_reject_status_id'] = $this->request->post['fraudlabspro_reject_status_id'];
+		if (isset($this->request->post['fraud_fraudlabspro_reject_status_id'])) {
+			$data['fraud_fraudlabspro_reject_status_id'] = $this->request->post['fraud_fraudlabspro_reject_status_id'];
 		} else {
-			$data['fraudlabspro_reject_status_id'] = $this->config->get('fraudlabspro_reject_status_id');
+			$data['fraud_fraudlabspro_reject_status_id'] = $this->config->get('fraud_fraudlabspro_reject_status_id');
 		}
 
-		if (isset($this->request->post['fraudlabspro_simulate_ip'])) {
-			$data['fraudlabspro_simulate_ip'] = $this->request->post['fraudlabspro_simulate_ip'];
+		if (isset($this->request->post['fraud_fraudlabspro_simulate_ip'])) {
+			$data['fraud_fraudlabspro_simulate_ip'] = $this->request->post['fraud_fraudlabspro_simulate_ip'];
 		} else {
-			$data['fraudlabspro_simulate_ip'] = $this->config->get('fraudlabspro_simulate_ip');
+			$data['fraud_fraudlabspro_simulate_ip'] = $this->config->get('fraud_fraudlabspro_simulate_ip');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['fraudlabspro_status'])) {
-			$data['fraudlabspro_status'] = $this->request->post['fraudlabspro_status'];
+		if (isset($this->request->post['fraud_fraudlabspro_status'])) {
+			$data['fraud_fraudlabspro_status'] = $this->request->post['fraud_fraudlabspro_status'];
 		} else {
-			$data['fraudlabspro_status'] = $this->config->get('fraudlabspro_status');
+			$data['fraud_fraudlabspro_status'] = $this->config->get('fraud_fraudlabspro_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -154,7 +154,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['fraudlabspro_key']) {
+		if (!$this->request->post['fraud_fraudlabspro_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 
@@ -172,10 +172,10 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$data['flp_status'] = $flp_status;
 
 			//Feedback FLP status to server
-			$fraudlabspro_key = $this->config->get('fraudlabspro_key');
+			$fraud_fraudlabspro_key = $this->config->get('fraud_fraudlabspro_key');
 
 			for($i=0; $i<3; $i++){
-				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status);
+				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraud_fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status);
 
 				if($result) break;
 			}
@@ -186,7 +186,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			//Update history record
 			if (strtolower($flp_status) == 'approve'){
 				$data_temp = array(
-					'order_status_id'=>$this->config->get('fraudlabspro_approve_status_id'),
+					'order_status_id'=>$this->config->get('fraud_fraudlabspro_approve_status_id'),
 					'notify'=>0,
 					'comment'=>'Approved using FraudLabs Pro.'
 				);
@@ -195,7 +195,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			}
 			else if (strtolower($flp_status) == "reject"){
 				$data_temp = array(
-					'order_status_id'=>$this->config->get('fraudlabspro_reject_status_id'),
+					'order_status_id'=>$this->config->get('fraud_fraudlabspro_reject_status_id'),
 					'notify'=>0,
 					'comment'=>'Rejected using FraudLabs Pro.'
 				);
@@ -366,8 +366,8 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 				$data['flp_credit_card_blacklist'] = '';
 			}
 
-			if ($fraud_info['fraudlabspro_score']) {
-				$data['flp_score'] = $fraud_info['fraudlabspro_score'];
+			if ($fraud_info['fraud_fraudlabspro_score']) {
+				$data['flp_score'] = $fraud_info['fraud_fraudlabspro_score'];
 			} else {
 				$data['flp_score'] = '';
 			}

@@ -70,22 +70,22 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=captcha', true);
 
-		if (isset($this->request->post['google_captcha_key'])) {
-			$data['google_captcha_key'] = $this->request->post['google_captcha_key'];
+		if (isset($this->request->post['captcha_google_key'])) {
+			$data['captcha_google_key'] = $this->request->post['captcha_google_key'];
 		} else {
-			$data['google_captcha_key'] = $this->config->get('google_captcha_key');
+			$data['captcha_google_key'] = $this->config->get('captcha_google_key');
 		}
 
-		if (isset($this->request->post['google_captcha_secret'])) {
-			$data['google_captcha_secret'] = $this->request->post['google_captcha_secret'];
+		if (isset($this->request->post['captcha_google_secret'])) {
+			$data['captcha_google_secret'] = $this->request->post['captcha_google_secret'];
 		} else {
-			$data['google_captcha_secret'] = $this->config->get('google_captcha_secret');
+			$data['captcha_google_secret'] = $this->config->get('captcha_google_secret');
 		}
 
-		if (isset($this->request->post['google_captcha_status'])) {
-			$data['google_captcha_status'] = $this->request->post['google_captcha_status'];
+		if (isset($this->request->post['captcha_google_status'])) {
+			$data['captcha_google_status'] = $this->request->post['captcha_google_status'];
 		} else {
-			$data['google_captcha_status'] = $this->config->get('google_captcha_status');
+			$data['captcha_google_status'] = $this->config->get('captcha_google_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -100,11 +100,11 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['google_captcha_key']) {
+		if (!$this->request->post['captcha_google_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->request->post['google_captcha_secret']) {
+		if (!$this->request->post['captcha_google_secret']) {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 

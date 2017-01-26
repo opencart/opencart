@@ -2,7 +2,7 @@
 <div class="container">{{ content_top }}
   <div style="text-align:center;">
     <h3>{{ heading_address }}</h3>
-    {% if amazon_login_pay_test %}
+    {% if payment_amazon_login_pay_test %}
     <label>Debug Error Code     :</label>
     <div id="errorCode"></div>
     <br>
@@ -25,7 +25,7 @@
   {{ content_bottom }} </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	amazon.Login.setClientId('{{ amazon_login_pay_client_id }}');
+	amazon.Login.setClientId('{{ payment_amazon_login_pay_client_id }}');
 
 	$('#continue-button').click(function() {
 		$('div.warning').remove();
@@ -49,7 +49,7 @@ $(document).ready(function() {
 	});
 
 	new OffAmazonPayments.Widgets.AddressBook({
-		sellerId: '{{ amazon_login_pay_merchant_id }}',
+		sellerId: '{{ payment_amazon_login_pay_merchant_id }}',
 		onOrderReferenceCreate: function(orderReference) {
 			window.AmazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
 		},

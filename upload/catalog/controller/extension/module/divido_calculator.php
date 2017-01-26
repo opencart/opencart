@@ -8,7 +8,7 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$product_selection = $this->config->get('divido_productselection');
 		$product_threshold = $this->config->get('divido_price_threshold');
 
-		if (!isset($this->request->get['product_id']) || !$this->config->get('divido_status') || !$this->config->get('divido_calculator_status')) {
+		if (!isset($this->request->get['product_id']) || !$this->config->get('divido_status') || !$this->config->get('module_divido_calculator_status')) {
 			return false;
 		}
 

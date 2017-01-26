@@ -55,10 +55,10 @@ class ControllerExtensionModuleAffiliate extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['affiliate_status'])) {
-			$data['affiliate_status'] = $this->request->post['affiliate_status'];
+		if (isset($this->request->post['module_affiliate_status'])) {
+			$data['module_affiliate_status'] = $this->request->post['module_affiliate_status'];
 		} else {
-			$data['affiliate_status'] = $this->config->get('affiliate_status');
+			$data['module_affiliate_status'] = $this->config->get('module_affiliate_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

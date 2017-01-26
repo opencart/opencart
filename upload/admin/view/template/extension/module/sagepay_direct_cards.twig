@@ -28,8 +28,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="sagepay_direct_cards_status" id="input-status" class="form-control">
-                {% if sagepay_direct_cards_status %}
+              <select name="module_sagepay_direct_cards_status" id="input-status" class="form-control">
+                {% if module_sagepay_direct_cards_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

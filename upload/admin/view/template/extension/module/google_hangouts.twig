@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="{{ help_code|escape('html') }}">{{ entry_code }}</span></label>
             <div class="col-sm-10">
-              <textarea name="google_hangouts_code" rows="5" id="input-code" class="form-control">{{ google_hangouts_code }}</textarea>
+              <textarea name="module_google_hangouts_code" rows="5" id="input-code" class="form-control">{{ module_google_hangouts_code }}</textarea>
               {% if error_code %}
               <div class="text-danger">{{ error_code }}</div>
               {% endif %}
@@ -37,8 +37,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="google_hangouts_status" id="input-status" class="form-control">
-                {% if google_hangouts_status %}
+              <select name="module_google_hangouts_status" id="input-status" class="form-control">
+                {% if module_google_hangouts_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

@@ -64,16 +64,16 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['google_hangouts_code'])) {
-			$data['google_hangouts_code'] = $this->request->post['google_hangouts_code'];
+		if (isset($this->request->post['module_google_hangouts_code'])) {
+			$data['module_google_hangouts_code'] = $this->request->post['module_google_hangouts_code'];
 		} else {
-			$data['google_hangouts_code'] = $this->config->get('google_hangouts_code');
+			$data['module_google_hangouts_code'] = $this->config->get('module_google_hangouts_code');
 		}
 
-		if (isset($this->request->post['google_hangouts_status'])) {
-			$data['google_hangouts_status'] = $this->request->post['google_hangouts_status'];
+		if (isset($this->request->post['module_google_hangouts_status'])) {
+			$data['module_google_hangouts_status'] = $this->request->post['module_google_hangouts_status'];
 		} else {
-			$data['google_hangouts_status'] = $this->config->get('google_hangouts_status');
+			$data['module_google_hangouts_status'] = $this->config->get('module_google_hangouts_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -88,7 +88,7 @@ class ControllerExtensionModuleGoogleHangouts extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['google_hangouts_code']) {
+		if (!$this->request->post['module_google_hangouts_code']) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 

@@ -70,16 +70,16 @@ class ControllerExtensionFraudMaxMind extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
-		if (isset($this->request->post['maxmind_key'])) {
-			$data['maxmind_key'] = $this->request->post['maxmind_key'];
+		if (isset($this->request->post['fraud_maxmind_key'])) {
+			$data['fraud_maxmind_key'] = $this->request->post['fraud_maxmind_key'];
 		} else {
-			$data['maxmind_key'] = $this->config->get('maxmind_key');
+			$data['fraud_maxmind_key'] = $this->config->get('fraud_maxmind_key');
 		}
 
-		if (isset($this->request->post['maxmind_score'])) {
-			$data['maxmind_score'] = $this->request->post['maxmind_score'];
+		if (isset($this->request->post['fraud_maxmind_score'])) {
+			$data['fraud_maxmind_score'] = $this->request->post['fraud_maxmind_score'];
 		} else {
-			$data['maxmind_score'] = $this->config->get('maxmind_score');
+			$data['fraud_maxmind_score'] = $this->config->get('fraud_maxmind_score');
 		}
 
 		if (isset($this->request->post['maxmind_order_status_id'])) {
@@ -92,10 +92,10 @@ class ControllerExtensionFraudMaxMind extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['maxmind_status'])) {
-			$data['maxmind_status'] = $this->request->post['maxmind_status'];
+		if (isset($this->request->post['fraud_maxmind_status'])) {
+			$data['fraud_maxmind_status'] = $this->request->post['fraud_maxmind_status'];
 		} else {
-			$data['maxmind_status'] = $this->config->get('maxmind_status');
+			$data['fraud_maxmind_status'] = $this->config->get('fraud_maxmind_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -122,7 +122,7 @@ class ControllerExtensionFraudMaxMind extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['maxmind_key']) {
+		if (!$this->request->post['fraud_maxmind_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

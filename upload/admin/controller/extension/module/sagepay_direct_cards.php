@@ -55,10 +55,10 @@ class ControllerExtensionModuleSagepayDirectCards extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['sagepay_direct_cards_status'])) {
-			$data['sagepay_direct_cards_status'] = $this->request->post['sagepay_direct_cards_status'];
+		if (isset($this->request->post['module_sagepay_direct_cards_status'])) {
+			$data['module_sagepay_direct_cards_status'] = $this->request->post['module_sagepay_direct_cards_status'];
 		} else {
-			$data['sagepay_direct_cards_status'] = $this->config->get('sagepay_direct_cards_status');
+			$data['module_sagepay_direct_cards_status'] = $this->config->get('module_sagepay_direct_cards_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

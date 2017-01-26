@@ -4,7 +4,7 @@ class ControllerExtensionModuleKlarnaCheckoutModule extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 
 		// If Payment Method or Module is disabled
-		if (!$this->config->get('klarna_checkout_module_status') || !$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('module_klarna_checkout_status') || !$this->config->get('klarna_checkout_status')) {
 			$this->model_extension_payment_klarna_checkout->log('Not shown due to Payment Method or Module being disabled');
 			return false;
 		}

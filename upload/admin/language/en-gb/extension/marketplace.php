@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']      = 'Extension Store';
+$_['heading_title']      = 'Extension Marketplace';
 
 // Text
 $_['text_success']       = 'Success: You have modified extensions!';

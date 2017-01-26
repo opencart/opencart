@@ -51,7 +51,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 
 		$data = array();
 
-		$data['x_login'] = $this->config->get('authorizenet_aim_login');
+		$data['x_login'] = $this->config->get('payment_authorizenet_aim_login');
 		$data['x_tran_key'] = $this->config->get('authorizenet_aim_key');
 		$data['x_version'] = '3.1';
 		$data['x_delim_data'] = 'true';
@@ -162,7 +162,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 					$message .= 'Cardholder Authentication Verification Response: ' . $response_info['40'] . "\n";
 				}
 
-				if (!$this->config->get('authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
+				if (!$this->config->get('authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('payment_authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
 					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
 				} else {
 					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'));

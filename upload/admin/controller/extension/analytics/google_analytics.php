@@ -65,10 +65,10 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		
 		$data['token'] = $this->session->data['token'];
 				
-		if (isset($this->request->post['google_analytics_code'])) {
-			$data['google_analytics_code'] = $this->request->post['google_analytics_code'];
+		if (isset($this->request->post['analytics_google_analytics_code'])) {
+			$data['analytics_google_analytics_code'] = $this->request->post['analytics_google_analytics_code'];
 		} else {
-			$data['google_analytics_code'] = $this->model_setting_setting->getSettingValue('google_analytics_code', $this->request->get['store_id']);
+			$data['analytics_google_analytics_code'] = $this->model_setting_setting->getSettingValue('analytics_google_analytics_code', $this->request->get['store_id']);
 		}
 		
 		if (isset($this->request->post['google_analytics_status'])) {
@@ -89,7 +89,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['google_analytics_code']) {
+		if (!$this->request->post['analytics_google_analytics_code']) {
 			$this->error['code'] = $this->language->get('error_code');
 		}			
 

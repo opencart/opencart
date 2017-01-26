@@ -4,22 +4,22 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$data['client_id'] = $this->config->get('pp_login_client_id');
+			$data['client_id'] = $this->config->get('module_pp_login_client_id');
 			$data['return_url'] = $this->url->link('extension/module/pp_login/login', '', true);
 
-			if ($this->config->get('pp_login_sandbox')) {
+			if ($this->config->get('module_pp_login_sandbox')) {
 				$data['sandbox'] = 'sandbox';
 			} else {
 				$data['sandbox'] = '';
 			}
 
-			if ($this->config->get('pp_login_button_colour') == 'grey') {
+			if ($this->config->get('module_pp_login_button_colour') == 'grey') {
 				$data['button_colour'] = 'neutral';
 			} else {
 				$data['button_colour'] = '';
 			}
 
-			$locale = $this->config->get('pp_login_locale');
+			$locale = $this->config->get('module_pp_login_locale');
 
 			$this->load->model('localisation/language');
 
@@ -42,7 +42,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 				'phone'
 			);
 
-			if ($this->config->get('pp_login_seamless')) {
+			if ($this->config->get('module_pp_login_seamless')) {
 				$scopes[] = 'https://uri.paypal.com/services/expresscheckout';
 			}
 
@@ -103,8 +103,8 @@ class ControllerExtensionModulePPLogin extends Controller {
 					$zone_id = 0;
 				}
 
-				if ($this->config->get('pp_login_customer_group_id')) {
-					$customer_group_id = $this->config->get('pp_login_customer_group_id');
+				if ($this->config->get('module_pp_login_customer_group_id')) {
+					$customer_group_id = $this->config->get('module_pp_login_customer_group_id');
 				} else {
 					$customer_group_id = $this->config->get('config_customer_group_id');
 				}
@@ -172,7 +172,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$this->model_account_activity->addActivity('login', $activity_data);
 		}
 
-		if ($this->config->get('pp_login_seamless')) {
+		if ($this->config->get('module_pp_login_seamless')) {
 			$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
 			$this->session->data['pp_login']['seamless']['access_token'] = $access_token;
 		} else {

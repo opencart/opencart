@@ -55,10 +55,10 @@ class ControllerExtensionModuleInformation extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['information_status'])) {
-			$data['information_status'] = $this->request->post['information_status'];
+		if (isset($this->request->post['module_information_status'])) {
+			$data['module_information_status'] = $this->request->post['module_information_status'];
 		} else {
-			$data['information_status'] = $this->config->get('information_status');
+			$data['module_information_status'] = $this->config->get('module_information_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

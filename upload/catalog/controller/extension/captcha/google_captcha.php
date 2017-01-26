@@ -13,7 +13,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 			$data['error_captcha'] = '';
 		}
 
-		$data['site_key'] = $this->config->get('google_captcha_key');
+		$data['site_key'] = $this->config->get('captcha_google_key');
 
         $data['route'] = $this->request->get['route']; 
 
@@ -24,7 +24,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		if (empty($this->session->data['gcapcha'])) {
 			$this->load->language('extension/captcha/google_captcha');
 
-			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
+			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('captcha_google_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
 	
 			$recaptcha = json_decode($recaptcha, true);
 	

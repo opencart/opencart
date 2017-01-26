@@ -23,7 +23,7 @@ class ControllerExtensionFraudIp extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip_add'] = $this->language->get('text_ip_add');
-		$data['text_ip_list'] = $this->language->get('text_ip_list');
+		$data['text_ip_list'] = $thilanguage->get('text_ip_list');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_ip'] = $this->language->get('entry_ip');
@@ -69,20 +69,20 @@ class ControllerExtensionFraudIp extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
-		if (isset($this->request->post['ip_order_status_id'])) {
-			$data['ip_order_status_id'] = $this->request->post['ip_order_status_id'];
+		if (isset($this->request->post['fraud_ip_order_status_id'])) {
+			$data['fraud_ip_order_status_id'] = $this->request->post['fraud_ip_order_status_id'];
 		} else {
-			$data['ip_order_status_id'] = $this->config->get('ip_order_status_id');
+			$data['fraud_ip_order_status_id'] = $this->config->get('fraud_ip_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['ip_status'])) {
-			$data['ip_status'] = $this->request->post['ip_status'];
+		if (isset($this->request->post['fraud_ip_status'])) {
+			$data['fraud_ip_status'] = $this->request->post['fraud_ip_status'];
 		} else {
-			$data['ip_status'] = $this->config->get('ip_status');
+			$data['fraud_ip_status'] = $this->config->get('fraud_ip_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionStore extends Controller {
+class ControllerExtensionMarketplace extends Controller {
 	public function index() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -96,7 +96,7 @@ class ControllerExtensionStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, true)
 		);
 	
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
@@ -166,7 +166,7 @@ class ControllerExtensionStore extends Controller {
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
 					'review_total' => $result['review_total'],
-					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+					'href'         => $this->url->link('extension/marketplace/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
 				);
 			}
 		}		
@@ -183,7 +183,7 @@ class ControllerExtensionStore extends Controller {
 					'price'        => $result['price'],
 					'rating'       => $result['rating'],
 					'review_total' => $result['review_total'],
-					'href'         => $this->url->link('extension/store/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
+					'href'         => $this->url->link('extension/marketplace/info', 'token=' . $this->session->data['token'] . '&extension_id=' . $result['extension_id'] . $url, true)
 				);
 			}
 		}
@@ -228,61 +228,61 @@ class ControllerExtensionStore extends Controller {
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_all'),
 			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_theme'),
 			'value' => 'theme',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=theme' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=theme' . $url, true)
 		);
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_marketplace'),
 			'value' => 'marketplace',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=marketplace' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=marketplace' . $url, true)
 		);		
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_payment'),
 			'value' => 'payment',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=payment' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=payment' . $url, true)
 		);	
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_shipping'),
 			'value' => 'shipping',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=shipping' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=shipping' . $url, true)
 		);		
 
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_module'),
 			'value' => 'module',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=module' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=module' . $url, true)
 		);	
 
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_total'),
 			'value' => 'total',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=total' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=total' . $url, true)
 		);	
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_feed'),
 			'value' => 'feed',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=feed' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=feed' . $url, true)
 		);			
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_report'),
 			'value' => 'report',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=report' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=report' . $url, true)
 		);		
 		
 		$data['categories'][] = array(
 			'text'  => $this->language->get('text_other'),
 			'value' => 'other',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_category=other' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_category=other' . $url, true)
 		);
 
 		// Licenses
@@ -321,19 +321,19 @@ class ControllerExtensionStore extends Controller {
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_all'),
 			'value' => '',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, true)
 		);	
 			
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_free'),
 			'value' => 'free',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=free' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_license=free' . $url, true)
 		);
 		
 		$data['licenses'][] = array(
 			'text'  => $this->language->get('text_paid'),
 			'value' => 'paid',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_license=paid' . $url, true)
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_license=paid' . $url, true)
 		);
 				
 		// Sort
@@ -368,37 +368,37 @@ class ControllerExtensionStore extends Controller {
 		$data['sorts'][] = array(
 			'text'  => 'Popularity',
 			'value' => 'popularity',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=popularity')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=popularity')
 		);
 
 		$data['sorts'][] = array(
 			'text'  => 'Rating',
 			'value' => 'rating',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=rating')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=rating')
 		);
 
 		$data['sorts'][] = array(
 			'text'  => 'Date Modified',
 			'value' => 'date_modified',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=date_modified')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=date_modified')
 		);
 
 		$data['sorts'][] = array(
 			'text'  => 'Date Added',
 			'value' => 'date_added',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=date_added')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=date_added')
 		);
 
 		$data['sorts'][] = array(
 			'text'  => 'Name',
 			'value' => 'name',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=name')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=name')
 		);
 
 		$data['sorts'][] = array(
 			'text'  => 'Price',
 			'value' => 'price',
-			'href'  => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&sort=price')
+			'href'  => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&sort=price')
 		);
 		
 		// Pagination
@@ -436,7 +436,7 @@ class ControllerExtensionStore extends Controller {
 		$pagination->total = $extension_total;
 		$pagination->page = $page;
 		$pagination->limit = 12;
-		$pagination->url = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		
@@ -451,7 +451,7 @@ class ControllerExtensionStore extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('extension/store_list', $data));
+		$this->response->setOutput($this->load->view('extension/marketplace_list', $data));
 	}
 	
 	public function info() {
@@ -481,7 +481,7 @@ class ControllerExtensionStore extends Controller {
 		$response_info = json_decode($response, true);
 		
 		if ($response_info) {
-			$this->load->language('extension/store');
+			$this->load->language('extension/marketplace');
 	
 			$this->document->setTitle($this->language->get('heading_title'));
 							
@@ -534,7 +534,7 @@ class ControllerExtensionStore extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$data['cancel'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true);
+			$data['cancel'] = $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, true);
 			
 			$data['breadcrumbs'] = array();
 	
@@ -545,7 +545,7 @@ class ControllerExtensionStore extends Controller {
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/store', 'token=' . $this->session->data['token'] . $url, true)
+				'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, true)
 			);
 
 			$this->load->helper('bbcode');
@@ -567,7 +567,7 @@ class ControllerExtensionStore extends Controller {
 			$data['member_username'] = $response_info['member_username'];
 			$data['member_image'] = $response_info['member_image'];
 			$data['member_date_added'] = $response_info['member_date_added'];
-			$data['filter_member'] = $this->url->link('extension/store', 'token=' . $this->session->data['token'] . '&filter_member=' . $response_info['member_username']);
+			$data['filter_member'] = $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . '&filter_member=' . $response_info['member_username']);
 			$data['comment_total'] = $response_info['comment_total'];
 			$data['compatibility'] = $response_info['compatibility'];
 			
@@ -592,8 +592,8 @@ class ControllerExtensionStore extends Controller {
 						$data['downloads'][] = array(
 							'name'       => $result['name'],
 							'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'install'    => $this->url->link('extension/store/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
-							'uninstall'  => $this->url->link('extension/store/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'install'    => $this->url->link('extension/marketplace/install', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
+							'uninstall'  => $this->url->link('extension/marketplace/uninstall', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $result['extension_download_id'], true),
 							'installed'  => $this->model_extension_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id'])
 						);
 					//}	
@@ -604,7 +604,7 @@ class ControllerExtensionStore extends Controller {
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 			
-			$this->response->setOutput($this->load->view('extension/store_info', $data));			
+			$this->response->setOutput($this->load->view('extension/marketplace_info', $data));			
 		} else {
 			return new Action('error/not_found');
 		}	
@@ -614,12 +614,20 @@ class ControllerExtensionStore extends Controller {
 	
 	}
 	
+	public function buy() {
+		$this->load->language('extension/marketplace');
+			
+			
+			
+			
+	}
+	
 	public function install() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 				
@@ -632,7 +640,7 @@ class ControllerExtensionStore extends Controller {
 			
 			$json['text'] = $this->language->get('text_download');
 					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/marketplace/download', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id, true));
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -640,7 +648,7 @@ class ControllerExtensionStore extends Controller {
 	}
 		
 	public function download() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 		
@@ -650,7 +658,7 @@ class ControllerExtensionStore extends Controller {
 			$extension_download_id = 0;
 		}
 							
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -680,7 +688,7 @@ class ControllerExtensionStore extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/unzip', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/marketplace/unzip', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));		
 			} else {
 				$json['error'] = $this->language->get('error_download');
 			}
@@ -691,7 +699,7 @@ class ControllerExtensionStore extends Controller {
 	}
 				
 	public function unzip() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 		
@@ -707,7 +715,7 @@ class ControllerExtensionStore extends Controller {
 			$download = '';
 		}	
 				
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -734,7 +742,7 @@ class ControllerExtensionStore extends Controller {
 			
 			$json['text'] = $this->language->get('text_move');
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/move', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/marketplace/move', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -742,7 +750,7 @@ class ControllerExtensionStore extends Controller {
 	}
 		
 	public function move() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 		
@@ -758,7 +766,7 @@ class ControllerExtensionStore extends Controller {
 			$download = '';
 		}
 				
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 			
@@ -904,7 +912,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/xml', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/marketplace/xml', 'token=' . $this->session->data['token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));		
 		}
 			
 		$this->response->addHeader('Content-Type: application/json');
@@ -912,7 +920,7 @@ class ControllerExtensionStore extends Controller {
 	}
 
 	public function xml() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 		
@@ -928,7 +936,7 @@ class ControllerExtensionStore extends Controller {
 			$download = '';
 		}	
 		
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 				
@@ -1014,7 +1022,7 @@ class ControllerExtensionStore extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_remove');
 			
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/store/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/marketplace/remove', 'token=' . $this->session->data['token'] . '&download=' . $download, true));		
 		}
 					
 		$this->response->addHeader('Content-Type: application/json');
@@ -1022,7 +1030,7 @@ class ControllerExtensionStore extends Controller {
 	}		
 	
 	public function remove() {
-		$this->load->language('extension/store');
+		$this->load->language('extension/marketplace');
 
 		$json = array();
 				
@@ -1032,7 +1040,7 @@ class ControllerExtensionStore extends Controller {
 			$download = '';
 		}
 		
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -1099,7 +1107,7 @@ class ControllerExtensionStore extends Controller {
 			$extension_download_id = 0;
 		}
 		
-		if (!$this->user->hasPermission('modify', 'extension/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 	

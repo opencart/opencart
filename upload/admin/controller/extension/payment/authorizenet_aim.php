@@ -83,10 +83,10 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 		$data['action'] = $this->url->link('extension/payment/authorizenet_aim', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['authorizenet_aim_login'])) {
-			$data['authorizenet_aim_login'] = $this->request->post['authorizenet_aim_login'];
+		if (isset($this->request->post['payment_authorizenet_aim_login'])) {
+			$data['payment_authorizenet_aim_login'] = $this->request->post['payment_authorizenet_aim_login'];
 		} else {
-			$data['authorizenet_aim_login'] = $this->config->get('authorizenet_aim_login');
+			$data['payment_authorizenet_aim_login'] = $this->config->get('payment_authorizenet_aim_login');
 		}
 
 		if (isset($this->request->post['authorizenet_aim_key'])) {
@@ -169,7 +169,7 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['authorizenet_aim_login']) {
+		if (!$this->request->post['payment_authorizenet_aim_login']) {
 			$this->error['login'] = $this->language->get('error_login');
 		}
 

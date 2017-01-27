@@ -261,11 +261,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 			$sub_total = $this->cart->getSubTotal();
 
 			// Special Delivery > 500
-			if ($this->config->get('royal_mail_special_delivery_500_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_special_delivery_500_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_500_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_special_delivery_500_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -282,11 +282,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_special_delivery');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance')) {
+					if ($this->config->get('shipping_royal_mail_display_insurance')) {
 						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(500, $this->session->data['currency']) . ')';
 					}
 
@@ -301,11 +301,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// Special Delivery > 1000
-			if ($this->config->get('royal_mail_special_delivery_1000_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_special_delivery_1000_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_1000_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_special_delivery_1000_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -322,11 +322,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_special_delivery');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance')) {
+					if ($this->config->get('shipping_royal_mail_display_insurance')) {
 						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(1000, $this->session->data['currency']) . ')';
 
 					}
@@ -342,11 +342,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// Special Delivery > 2500
-			if ($this->config->get('royal_mail_special_delivery_2500_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_special_delivery_2500_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_2500_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_special_delivery_2500_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -363,11 +363,11 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_special_delivery');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance')) {
+					if ($this->config->get('shipping_royal_mail_display_insurance')) {
 						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(2500, $this->session->data['currency']) . ')';
 					}
 
@@ -382,10 +382,10 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// 1st Class Signed
-			if ($this->config->get('royal_mail_1st_class_signed_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_1st_class_signed_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_signed_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_1st_class_signed_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -402,7 +402,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_1st_class_signed');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -417,10 +417,10 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// 2nd Class Signed
-			if ($this->config->get('royal_mail_2nd_class_signed_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_2nd_class_signed_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_2nd_class_signed_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_2nd_class_signed_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -437,7 +437,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_2nd_class_signed');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -452,10 +452,10 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// 1st Class Standard
-			if ($this->config->get('royal_mail_1st_class_standard_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_1st_class_standard_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_standard_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_1st_class_standard_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -472,7 +472,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_1st_class_standard');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -487,10 +487,10 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// 2nd Class Standard
-			if ($this->config->get('royal_mail_2nd_class_standard_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('shipping_royal_mail_2nd_class_standard_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_2nd_class_standard_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_2nd_class_standard_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -507,7 +507,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_2nd_class_standard');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -795,24 +795,24 @@ class ModelExtensionShippingRoyalMail extends Model {
 			);
 
 			// International Standard
-			if ($this->config->get('royal_mail_international_standard_status') && $address['iso_code_2'] != 'GB') {
+			if ($this->config->get('shipping_royal_mail_international_standard_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 
 				$rates = array();
 
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_standard_eu_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_standard_eu_rate'));
 				}
 
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_standard_zone_1_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_standard_zone_1_rate'));
 				}
 
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_standard_zone_2_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_standard_zone_2_rate'));
 				}
 
 				foreach ($rates as $rate) {
@@ -830,7 +830,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_standard');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -890,24 +890,24 @@ class ModelExtensionShippingRoyalMail extends Model {
 				'VA'
 			);
 
-			if ($this->config->get('royal_mail_international_tracked_signed_status') && in_array($address['iso_code_2'], $tracked_signed)) {
+			if ($this->config->get('shipping_royal_mail_international_tracked_signed_status') && in_array($address['iso_code_2'], $tracked_signed)) {
 				$cost = 0;
 
 				$rates = array();
 
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_eu_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_signed_eu_rate'));
 				}
 
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_zone_1_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_signed_zone_1_rate'));
 				}
 
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_zone_2_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_signed_zone_2_rate'));
 				}
 
 				foreach ($rates as $rate) {
@@ -925,7 +925,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_tracked_signed');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -976,29 +976,29 @@ class ModelExtensionShippingRoyalMail extends Model {
 				'US'
 			);
 
-			if ($this->config->get('royal_mail_international_tracked_status') && in_array($address['iso_code_2'], $tracked)) {
+			if ($this->config->get('shipping_royal_mail_international_tracked_status') && in_array($address['iso_code_2'], $tracked)) {
 				$cost = 0;
 
 				$rates = array();
 
 				// EU
 				if (in_array($address['iso_code_2'], $europe) && !in_array($address['iso_code_2'], $non_eu)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_eu_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_eu_rate'));
 				}
 
 				// Non EU
 				if (in_array($address['iso_code_2'], $non_eu)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_non_eu_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_non_eu_rate'));
 				}
 
 				// World Zones 1
 				if (in_array($address['iso_code_2'], $zone_1)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_zone_1_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_zone_1_rate'));
 				}
 
 				// World Zones 2
 				if (in_array($address['iso_code_2'], $zone_2)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_zone_2_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_tracked_zone_2_rate'));
 				}
 
 				foreach ($rates as $rate) {
@@ -1016,7 +1016,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_tracked');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -1226,14 +1226,14 @@ class ModelExtensionShippingRoyalMail extends Model {
 				'ZW'
 			);
 
-			if ($this->config->get('royal_mail_international_signed_status') && in_array($address['iso_code_2'], $signed)) {
+			if ($this->config->get('shipping_royal_mail_international_signed_status') && in_array($address['iso_code_2'], $signed)) {
 				$cost = 0;
 
 				$rates = array();
 
 				// EU
 				if (in_array($address['iso_code_2'], $europe)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_signed_eu_rate'));
+					$rates = explode(',', $this->config->get('shipping_royal_mail_international_signed_eu_rate'));
 				}
 
 				// World Zones 1
@@ -1261,7 +1261,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_signed');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
@@ -1276,10 +1276,10 @@ class ModelExtensionShippingRoyalMail extends Model {
 			}
 
 			// Economy
-			if ($this->config->get('royal_mail_international_economy_status') && $address['iso_code_2'] != 'GB') {
+			if ($this->config->get('shipping_royal_mail_international_economy_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_international_economy_rate'));
+				$rates = explode(',', $this->config->get('shipping_royal_mail_international_economy_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -1296,7 +1296,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_economy');
 
-					if ($this->config->get('royal_mail_display_weight')) {
+					if ($this->config->get('shipping_royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 

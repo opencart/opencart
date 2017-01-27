@@ -50,20 +50,20 @@
                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_weight }}">{{ entry_display_weight }}</span></label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        {% if royal_mail_display_weight %}
-                        <input type="radio" name="royal_mail_display_weight" value="1" checked="checked" />
+                        {% if shipping_royal_mail_display_weight %}
+                        <input type="radio" name="shipping_royal_mail_display_weight" value="1" checked="checked" />
                         {{ text_yes }}
                         {% else %}
-                        <input type="radio" name="royal_mail_display_weight" value="1" />
+                        <input type="radio" name="shipping_royal_mail_display_weight" value="1" />
                         {{ text_yes }}
                         {% endif %}
                       </label>
                       <label class="radio-inline">
-                        {% if not royal_mail_display_weight %}
-                        <input type="radio" name="royal_mail_display_weight" value="0" checked="checked" />
+                        {% if not shipping_royal_mail_display_weight %}
+                        <input type="radio" name="shipping_royal_mail_display_weight" value="0" checked="checked" />
                         {{ text_no }}
                         {% else %}
-                        <input type="radio" name="royal_mail_display_weight" value="0" />
+                        <input type="radio" name="shipping_royal_mail_display_weight" value="0" />
                         {{ text_no }}
                         {% endif %}
                       </label>
@@ -73,20 +73,20 @@
                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_display_insurance }}">{{ entry_display_insurance }}</span></label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        {% if royal_mail_display_insurance %}
-                        <input type="radio" name="royal_mail_display_insurance" value="1" checked="checked" />
+                        {% if shipping_royal_mail_display_insurance %}
+                        <input type="radio" name="shipping_royal_mail_display_insurance" value="1" checked="checked" />
                         {{ text_yes }}
                         {% else %}
-                        <input type="radio" name="royal_mail_display_insurance" value="1" />
+                        <input type="radio" name="shipping_royal_mail_display_insurance" value="1" />
                         {{ text_yes }}
                         {% endif %}
                       </label>
                       <label class="radio-inline">
-                        {% if not royal_mail_display_insurance %}
-                        <input type="radio" name="royal_mail_display_insurance" value="0" checked="checked" />
+                        {% if not shipping_royal_mail_display_insurance %}
+                        <input type="radio" name="shipping_royal_mail_display_insurance" value="0" checked="checked" />
                         {{ text_no }}
                         {% else %}
-                        <input type="radio" name="royal_mail_display_insurance" value="0" />
+                        <input type="radio" name="shipping_royal_mail_display_insurance" value="0" />
                         {{ text_no }}
                         {% endif %}
                       </label>
@@ -161,20 +161,20 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-500-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-500-rate" class="form-control">{{ royal_mail_special_delivery_500_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-500-rate" class="form-control">{{ shipping_royal_mail_special_delivery_500_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-500-insurance"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-500-insurance" class="form-control">{{ royal_mail_special_delivery_500_insurance }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-500-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_500_insurance }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-500-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_special_delivery_500_status" id="input-special-delivery-500-status" class="form-control">
-                        {% if royal_mail_special_delivery_500_status %}
+                      <select name="shipping_royal_mail_special_delivery_500_status" id="input-special-delivery-500-status" class="form-control">
+                        {% if shipping_royal_mail_special_delivery_500_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -189,20 +189,20 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-1000-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_1000_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-1000-rate" class="form-control">{{ royal_mail_special_delivery_1000_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_1000_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-1000-rate" class="form-control">{{ royal_mail_special_delivery_1000_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-1000-insurance"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_1000_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-1000-insurance" class="form-control">{{ royal_mail_special_delivery_1000_insurance }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_1000_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-1000-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_1000_insurance }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-1000-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_special_delivery_1000_status" id="input-special-delivery-1000-status" class="form-control">
-                        {% if royal_mail_special_delivery_1000_status %}
+                      <select name="shipping_royal_mail_special_delivery_1000_status" id="input-special-delivery-1000-status" class="form-control">
+                        {% if shipping_royal_mail_special_delivery_1000_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -217,20 +217,20 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-2500-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_2500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-2500-rate" class="form-control">{{ royal_mail_special_delivery_2500_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_2500_rate" rows="5" placeholder="{{ entry_rate }}" id="input-special-delivery-2500-rate" class="form-control">{{ shipping_royal_mail_special_delivery_2500_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-2500-insurance"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_special_delivery_2500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-2500-insurance" class="form-control">{{ royal_mail_special_delivery_2500_insurance }}</textarea>
+                      <textarea name="shipping_royal_mail_special_delivery_2500_insurance" rows="5" placeholder="{{ entry_insurance }}" id="input-special-delivery-2500-insurance" class="form-control">{{ shipping_royal_mail_special_delivery_2500_insurance }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-2500-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_special_delivery_2500_status" id="input-special-delivery-2500-status" class="form-control">
-                        {% if royal_mail_special_delivery_2500_status %}
+                      <select name="shipping_royal_mail_special_delivery_2500_status" id="input-special-delivery-2500-status" class="form-control">
+                        {% if shipping_royal_mail_special_delivery_2500_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -245,14 +245,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-1st-class-signed-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-signed-rate" class="form-control">{{ royal_mail_1st_class_signed_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_1st_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-signed-rate" class="form-control">{{ shipping_royal_mail_1st_class_signed_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-1st-class-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
-                        {% if royal_mail_1st_class_signed_status %}
+                      <select name="shipping_royal_mail_1st_class_signed_status" id="input-1st-class-signed-status" class="form-control">
+                        {% if shipping_royal_mail_1st_class_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -267,14 +267,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-signed-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-signed-rate" class="form-control">{{ royal_mail_2nd_class_signed_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_2nd_class_signed_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-signed-rate" class="form-control">{{ shipping_royal_mail_2nd_class_signed_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
-                        {% if royal_mail_2nd_class_signed_status %}
+                      <select name="shipping_royal_mail_2nd_class_signed_status" id="input-2nd-class-signed-status" class="form-control">
+                        {% if shipping_royal_mail_2nd_class_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -289,14 +289,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-1st-class-standard-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-standard-rate" class="form-control">{{ royal_mail_1st_class_standard_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_1st_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-1st-class-standard-rate" class="form-control">{{ shipping_royal_mail_1st_class_standard_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-input-1st-class-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_1st_class_standard_status" id="input-input-1st-class-standard-status" class="form-control">
-                        {% if royal_mail_1st_class_standard_status %}
+                      <select name="shipping_royal_mail_1st_class_standard_status" id="input-input-1st-class-standard-status" class="form-control">
+                        {% if shipping_royal_mail_1st_class_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -311,14 +311,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-standard-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-standard-rate" class="form-control">{{ royal_mail_2nd_class_standard_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_2nd_class_standard_rate" rows="5" placeholder="{{ entry_rate }}" id="input-2nd-class-standard-rate" class="form-control">{{ shipping_royal_mail_2nd_class_standard_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_2nd_class_standard_status" id="input-2nd-class-standard-status" class="form-control">
-                        {% if royal_mail_2nd_class_standard_status %}
+                      <select name="shipping_royal_mail_2nd_class_standard_status" id="input-2nd-class-standard-status" class="form-control">
+                        {% if shipping_royal_mail_2nd_class_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -333,26 +333,26 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-eu-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_eu }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-standard-eu-rate" class="form-control">{{ royal_mail_international_standard_eu_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_standard_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-standard-eu-rate" class="form-control">{{ shipping_royal_mail_international_standard_eu_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_zone_1 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ royal_mail_international_standard_zone_1_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_standard_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_standard_zone_1_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-zone-2-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_zone_2 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-standard-zone-2-rate" class="form-control">{{ royal_mail_international_standard_zone_2_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_standard_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-standard-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_standard_zone_2_rate }}</textarea>
                     </div>
                   </div>             
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_international_standard_status" id="input-international-standard-status" class="form-control">
-                        {% if royal_mail_international_standard_status %}
+                      <select name="shipping_royal_mail_international_standard_status" id="input-international-standard-status" class="form-control">
+                        {% if shipping_royal_mail_international_standard_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -368,26 +368,26 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-eu-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_eu }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-signed-eu-rate" class="form-control">{{ royal_mail_international_tracked_signed_eu_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_signed_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-signed-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_eu_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_zone_1 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ royal_mail_international_tracked_signed_zone_1_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-standard-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_zone_1_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-2-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_zone_2 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-signed-zone-2-rate" class="form-control">{{ royal_mail_international_tracked_signed_zone_2_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_signed_zone_2_rate }}</textarea>
                     </div>
                   </div>                     
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_international_tracked_signed_status" id="input-international-tracked-signed-status" class="form-control">
-                        {% if royal_mail_international_tracked_signed_status %}
+                      <select name="shipping_royal_mail_international_tracked_signed_status" id="input-international-tracked-signed-status" class="form-control">
+                        {% if shipping_royal_mail_international_tracked_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -403,32 +403,32 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-eu-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_eu }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-eu-rate" class="form-control">{{ royal_mail_international_tracked_eu_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_eu_rate" rows="5" placeholder="{{ entry_rate_eu }}" id="input-international-tracked-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_eu_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-non-eu-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_non_eu }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_non_eu_rate" rows="5" placeholder="{{ entry_rate_non_eu }}" id="input-international-tracked-non-eu-rate" class="form-control">{{ royal_mail_international_tracked_non_eu_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_non_eu_rate" rows="5" placeholder="{{ entry_rate_non_eu }}" id="input-international-tracked-non-eu-rate" class="form-control">{{ shipping_royal_mail_international_tracked_non_eu_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_zone_1 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-tracked-zone-1-rate" class="form-control">{{ royal_mail_international_tracked_zone_1_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_zone_1_rate" rows="5" placeholder="{{ entry_rate_zone_1 }}" id="input-international-tracked-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_tracked_zone_1_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-zone-2-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_zone_2 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-zone-2-rate" class="form-control">{{ royal_mail_international_tracked_zone_2_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="{{ entry_rate_zone_2 }}" id="input-international-tracked-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_tracked_zone_2_rate }}</textarea>
                     </div>
                   </div>                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_international_tracked_status" id="input-international-tracked-status" class="form-control">
-                        {% if royal_mail_international_tracked_status %}
+                      <select name="shipping_royal_mail_international_tracked_status" id="input-international-tracked-status" class="form-control">
+                        {% if shipping_royal_mail_international_tracked_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -444,26 +444,26 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-eu-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_eu }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_eu_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-eu-rate" class="form-control">{{ royal_mail_international_signed_eu_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_signed_eu_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-eu-rate" class="form-control">{{ shipping_royal_mail_international_signed_eu_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-zone-1-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate_zone_1 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-1-rate" class="form-control">{{ royal_mail_international_signed_zone_1_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_signed_zone_1_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-1-rate" class="form-control">{{ shipping_royal_mail_international_signed_zone_1_rate }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-zone-2-rate"><span data-toggle="tooltip" data-html="true" title="{{ help_rate }}">{{ entry_rate_zone_2 }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-2-rate" class="form-control">{{ royal_mail_international_signed_zone_2_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_signed_zone_2_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-signed-zone-2-rate" class="form-control">{{ shipping_royal_mail_international_signed_zone_2_rate }}</textarea>
                     </div>
                   </div>                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_international_signed_status" id="input-international-signed-status" class="form-control">
-                        {% if royal_mail_international_signed_status %}
+                      <select name="shipping_royal_mail_international_signed_status" id="input-international-signed-status" class="form-control">
+                        {% if shipping_royal_mail_international_signed_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -478,14 +478,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-rate">{{ entry_rate }}</label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_economy_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-economy-rate" class="form-control">{{ royal_mail_international_economy_rate }}</textarea>
+                      <textarea name="shipping_royal_mail_international_economy_rate" rows="5" placeholder="{{ entry_rate }}" id="input-international-economy-rate" class="form-control">{{ shipping_royal_mail_international_economy_rate }}</textarea>
                     </div>
                   </div>                 
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_international_economy_status" id="input-international-economy-status" class="form-control">
-                        {% if royal_mail_international_economy_status %}
+                      <select name="shipping_royal_mail_international_economy_status" id="input-international-economy-status" class="form-control">
+                        {% if shipping_royal_mail_international_economy_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}

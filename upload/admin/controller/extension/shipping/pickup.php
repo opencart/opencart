@@ -59,26 +59,26 @@ class ControllerExtensionShippingPickup extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['pickup_geo_zone_id'])) {
-			$data['pickup_geo_zone_id'] = $this->request->post['pickup_geo_zone_id'];
+		if (isset($this->request->post['shipping_pickup_geo_zone_id'])) {
+			$data['shipping_pickup_geo_zone_id'] = $this->request->post['shipping_pickup_geo_zone_id'];
 		} else {
-			$data['pickup_geo_zone_id'] = $this->config->get('pickup_geo_zone_id');
+			$data['shipping_pickup_geo_zone_id'] = $this->config->get('shipping_pickup_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['pickup_status'])) {
-			$data['pickup_status'] = $this->request->post['pickup_status'];
+		if (isset($this->request->post['shipping_pickup_status'])) {
+			$data['shipping_pickup_status'] = $this->request->post['shipping_pickup_status'];
 		} else {
-			$data['pickup_status'] = $this->config->get('pickup_status');
+			$data['shipping_pickup_status'] = $this->config->get('shipping_pickup_status');
 		}
 
-		if (isset($this->request->post['pickup_sort_order'])) {
-			$data['pickup_sort_order'] = $this->request->post['pickup_sort_order'];
+		if (isset($this->request->post['shipping_pickup_sort_order'])) {
+			$data['shipping_pickup_sort_order'] = $this->request->post['shipping_pickup_sort_order'];
 		} else {
-			$data['pickup_sort_order'] = $this->config->get('pickup_sort_order');
+			$data['shipping_pickup_sort_order'] = $this->config->get('shipping_pickup_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

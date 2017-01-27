@@ -119,128 +119,128 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['globalpay_remote_merchant_id'])) {
-			$data['globalpay_remote_merchant_id'] = $this->request->post['globalpay_remote_merchant_id'];
+		if (isset($this->request->post['payment_globalpay_remote_merchant_id'])) {
+			$data['payment_globalpay_remote_merchant_id'] = $this->request->post['payment_globalpay_remote_merchant_id'];
 		} else {
-			$data['globalpay_remote_merchant_id'] = $this->config->get('globalpay_remote_merchant_id');
+			$data['payment_globalpay_remote_merchant_id'] = $this->config->get('payment_globalpay_remote_merchant_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_secret'])) {
-			$data['globalpay_remote_secret'] = $this->request->post['globalpay_remote_secret'];
+		if (isset($this->request->post['payment_globalpay_remote_secret'])) {
+			$data['payment_globalpay_remote_secret'] = $this->request->post['payment_globalpay_remote_secret'];
 		} else {
-			$data['globalpay_remote_secret'] = $this->config->get('globalpay_remote_secret');
+			$data['payment_globalpay_remote_secret'] = $this->config->get('payment_globalpay_remote_secret');
 		}
 
-		if (isset($this->request->post['globalpay_remote_rebate_password'])) {
-			$data['globalpay_remote_rebate_password'] = $this->request->post['globalpay_remote_rebate_password'];
+		if (isset($this->request->post['payment_globalpay_remote_rebate_password'])) {
+			$data['payment_globalpay_remote_rebate_password'] = $this->request->post['payment_globalpay_remote_rebate_password'];
 		} else {
-			$data['globalpay_remote_rebate_password'] = $this->config->get('globalpay_remote_rebate_password');
+			$data['payment_globalpay_remote_rebate_password'] = $this->config->get('payment_globalpay_remote_rebate_password');
 		}
 
-		if (isset($this->request->post['globalpay_remote_geo_zone_id'])) {
-			$data['globalpay_remote_geo_zone_id'] = $this->request->post['globalpay_remote_geo_zone_id'];
+		if (isset($this->request->post['payment_globalpay_remote_geo_zone_id'])) {
+			$data['payment_globalpay_remote_geo_zone_id'] = $this->request->post['payment_globalpay_remote_geo_zone_id'];
 		} else {
-			$data['globalpay_remote_geo_zone_id'] = $this->config->get('globalpay_remote_geo_zone_id');
+			$data['payment_globalpay_remote_geo_zone_id'] = $this->config->get('payment_globalpay_remote_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['globalpay_remote_total'])) {
-			$data['globalpay_remote_total'] = $this->request->post['globalpay_remote_total'];
+		if (isset($this->request->post['payment_globalpay_remote_total'])) {
+			$data['payment_globalpay_remote_total'] = $this->request->post['payment_globalpay_remote_total'];
 		} else {
-			$data['globalpay_remote_total'] = $this->config->get('globalpay_remote_total');
+			$data['payment_globalpay_remote_total'] = $this->config->get('payment_globalpay_remote_total');
 		}
 
-		if (isset($this->request->post['globalpay_remote_sort_order'])) {
-			$data['globalpay_remote_sort_order'] = $this->request->post['globalpay_remote_sort_order'];
+		if (isset($this->request->post['payment_globalpay_remote_sort_order'])) {
+			$data['payment_globalpay_remote_sort_order'] = $this->request->post['payment_globalpay_remote_sort_order'];
 		} else {
-			$data['globalpay_remote_sort_order'] = $this->config->get('globalpay_remote_sort_order');
+			$data['payment_globalpay_remote_sort_order'] = $this->config->get('payment_globalpay_remote_sort_order');
 		}
 
-		if (isset($this->request->post['globalpay_remote_status'])) {
-			$data['globalpay_remote_status'] = $this->request->post['globalpay_remote_status'];
+		if (isset($this->request->post['payment_globalpay_remote_status'])) {
+			$data['payment_globalpay_remote_status'] = $this->request->post['payment_globalpay_remote_status'];
 		} else {
-			$data['globalpay_remote_status'] = $this->config->get('globalpay_remote_status');
+			$data['payment_globalpay_remote_status'] = $this->config->get('payment_globalpay_remote_status');
 		}
 
-		if (isset($this->request->post['globalpay_remote_card_data_status'])) {
-			$data['globalpay_remote_card_data_status'] = $this->request->post['globalpay_remote_card_data_status'];
+		if (isset($this->request->post['payment_globalpay_remote_card_data_status'])) {
+			$data['payment_globalpay_remote_card_data_status'] = $this->request->post['payment_globalpay_remote_card_data_status'];
 		} else {
-			$data['globalpay_remote_card_data_status'] = $this->config->get('globalpay_remote_card_data_status');
+			$data['payment_globalpay_remote_card_data_status'] = $this->config->get('payment_globalpay_remote_card_data_status');
 		}
 
-		if (isset($this->request->post['globalpay_remote_debug'])) {
-			$data['globalpay_remote_debug'] = $this->request->post['globalpay_remote_debug'];
+		if (isset($this->request->post['payment_globalpay_remote_debug'])) {
+			$data['payment_globalpay_remote_debug'] = $this->request->post['payment_globalpay_remote_debug'];
 		} else {
-			$data['globalpay_remote_debug'] = $this->config->get('globalpay_remote_debug');
+			$data['payment_globalpay_remote_debug'] = $this->config->get('payment_globalpay_remote_debug');
 		}
 
-		if (isset($this->request->post['globalpay_remote_account'])) {
-			$data['globalpay_remote_account'] = $this->request->post['globalpay_remote_account'];
+		if (isset($this->request->post['payment_globalpay_remote_account'])) {
+			$data['payment_globalpay_remote_account'] = $this->request->post['payment_globalpay_remote_account'];
 		} else {
-			$data['globalpay_remote_account'] = $this->config->get('globalpay_remote_account');
+			$data['payment_globalpay_remote_account'] = $this->config->get('payment_globalpay_remote_account');
 		}
 
-		if (isset($this->request->post['globalpay_remote_auto_settle'])) {
-			$data['globalpay_remote_auto_settle'] = $this->request->post['globalpay_remote_auto_settle'];
+		if (isset($this->request->post['payment_globalpay_remote_auto_settle'])) {
+			$data['payment_globalpay_remote_auto_settle'] = $this->request->post['payment_globalpay_remote_auto_settle'];
 		} else {
-			$data['globalpay_remote_auto_settle'] = $this->config->get('globalpay_remote_auto_settle');
+			$data['payment_globalpay_remote_auto_settle'] = $this->config->get('payment_globalpay_remote_auto_settle');
 		}
 
-		if (isset($this->request->post['globalpay_remote_tss_check'])) {
-			$data['globalpay_remote_tss_check'] = $this->request->post['globalpay_remote_tss_check'];
+		if (isset($this->request->post['payment_globalpay_remote_tss_check'])) {
+			$data['payment_globalpay_remote_tss_check'] = $this->request->post['payment_globalpay_remote_tss_check'];
 		} else {
-			$data['globalpay_remote_tss_check'] = $this->config->get('globalpay_remote_tss_check');
+			$data['payment_globalpay_remote_tss_check'] = $this->config->get('payment_globalpay_remote_tss_check');
 		}
 
-		if (isset($this->request->post['globalpay_remote_3d'])) {
-			$data['globalpay_remote_3d'] = $this->request->post['globalpay_remote_3d'];
+		if (isset($this->request->post['payment_globalpay_remote_3d'])) {
+			$data['payment_globalpay_remote_3d'] = $this->request->post['payment_globalpay_remote_3d'];
 		} else {
-			$data['globalpay_remote_3d'] = $this->config->get('globalpay_remote_3d');
+			$data['payment_globalpay_remote_3d'] = $this->config->get('payment_globalpay_remote_3d');
 		}
 
-		if (isset($this->request->post['globalpay_remote_liability'])) {
-			$data['globalpay_remote_liability'] = $this->request->post['globalpay_remote_liability'];
+		if (isset($this->request->post['payment_globalpay_remote_liability'])) {
+			$data['payment_globalpay_remote_liability'] = $this->request->post['payment_globalpay_remote_liability'];
 		} else {
-			$data['globalpay_remote_liability'] = $this->config->get('globalpay_remote_liability');
+			$data['payment_globalpay_remote_liability'] = $this->config->get('payment_globalpay_remote_liability');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_success_settled_id'])) {
-			$data['globalpay_remote_order_status_success_settled_id'] = $this->request->post['globalpay_remote_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_success_settled_id'])) {
+			$data['payment_globalpay_remote_order_status_success_settled_id'] = $this->request->post['payment_globalpay_remote_order_status_success_settled_id'];
 		} else {
-			$data['globalpay_remote_order_status_success_settled_id'] = $this->config->get('globalpay_remote_order_status_success_settled_id');
+			$data['payment_globalpay_remote_order_status_success_settled_id'] = $this->config->get('payment_globalpay_remote_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_success_unsettled_id'])) {
-			$data['globalpay_remote_order_status_success_unsettled_id'] = $this->request->post['globalpay_remote_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_success_unsettled_id'])) {
+			$data['payment_globalpay_remote_order_status_success_unsettled_id'] = $this->request->post['payment_globalpay_remote_order_status_success_unsettled_id'];
 		} else {
-			$data['globalpay_remote_order_status_success_unsettled_id'] = $this->config->get('globalpay_remote_order_status_success_unsettled_id');
+			$data['payment_globalpay_remote_order_status_success_unsettled_id'] = $this->config->get('payment_globalpay_remote_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_decline_id'])) {
-			$data['globalpay_remote_order_status_decline_id'] = $this->request->post['globalpay_remote_order_status_decline_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_decline_id'])) {
+			$data['payment_globalpay_remote_order_status_decline_id'] = $this->request->post['payment_globalpay_remote_order_status_decline_id'];
 		} else {
-			$data['globalpay_remote_order_status_decline_id'] = $this->config->get('globalpay_remote_order_status_decline_id');
+			$data['payment_globalpay_remote_order_status_decline_id'] = $this->config->get('payment_globalpay_remote_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_decline_pending_id'])) {
-			$data['globalpay_remote_order_status_decline_pending_id'] = $this->request->post['globalpay_remote_order_status_decline_pending_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_decline_pending_id'])) {
+			$data['payment_globalpay_remote_order_status_decline_pending_id'] = $this->request->post['payment_globalpay_remote_order_status_decline_pending_id'];
 		} else {
-			$data['globalpay_remote_order_status_decline_pending_id'] = $this->config->get('globalpay_remote_order_status_decline_pending_id');
+			$data['payment_globalpay_remote_order_status_decline_pending_id'] = $this->config->get('payment_globalpay_remote_order_status_decline_pending_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_decline_stolen_id'])) {
-			$data['globalpay_remote_order_status_decline_stolen_id'] = $this->request->post['globalpay_remote_order_status_decline_stolen_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_decline_stolen_id'])) {
+			$data['payment_globalpay_remote_order_status_decline_stolen_id'] = $this->request->post['payment_globalpay_remote_order_status_decline_stolen_id'];
 		} else {
-			$data['globalpay_remote_order_status_decline_stolen_id'] = $this->config->get('globalpay_remote_order_status_decline_stolen_id');
+			$data['payment_globalpay_remote_order_status_decline_stolen_id'] = $this->config->get('payment_globalpay_remote_order_status_decline_stolen_id');
 		}
 
-		if (isset($this->request->post['globalpay_remote_order_status_decline_bank_id'])) {
-			$data['globalpay_remote_order_status_decline_bank_id'] = $this->request->post['globalpay_remote_order_status_decline_bank_id'];
+		if (isset($this->request->post['payment_globalpay_remote_order_status_decline_bank_id'])) {
+			$data['payment_globalpay_remote_order_status_decline_bank_id'] = $this->request->post['payment_globalpay_remote_order_status_decline_bank_id'];
 		} else {
-			$data['globalpay_remote_order_status_decline_bank_id'] = $this->config->get('globalpay_remote_order_status_decline_bank_id');
+			$data['payment_globalpay_remote_order_status_decline_bank_id'] = $this->config->get('payment_globalpay_remote_order_status_decline_bank_id');
 		}
 
 		$this->load->model('localisation/order_status');
@@ -260,7 +260,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('globalpay_remote_status')) {
+		if ($this->config->get('payment_globalpay_remote_status')) {
 			$this->load->model('extension/payment/globalpay_remote');
 
 			$globalpay_order = $this->model_extension_payment_globalpay_remote->getOrder($this->request->get['order_id']);
@@ -441,11 +441,11 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['globalpay_remote_merchant_id']) {
+		if (!$this->request->post['payment_globalpay_remote_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['globalpay_remote_secret']) {
+		if (!$this->request->post['payment_globalpay_remote_secret']) {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 

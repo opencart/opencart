@@ -259,10 +259,10 @@ class ModelExtensionShippingECShip extends Model {
  		);
 
 		$service = array(
-			'ARM' => $this->config->get('ec_ship_air_registered_mail'),
-			'APL' => $this->config->get('ec_ship_air_parcel'),
-			'AEP' => $this->config->get('ec_ship_e_express_service_to_us'),
-			'AEC' => $this->config->get('ec_ship_e_express_service_to_canada'),
+			'ARM' => $this->config->get('shipping_ec_ship_air_registered_mail'),
+			'APL' => $this->config->get('shipping_ec_ship_air_parcel'),
+			'AEP' => $this->config->get('shipping_ec_ship_e_express_service_to_us'),
+			'AEC' => $this->config->get('shipping_ec_ship_e_express_service_to_canada'),
 			'AEG' => $this->config->get('ec_ship_e_express_service_to_united_kingdom'),
 			'AER' => $this->config->get('ec_ship_e_express_service_to_russia'),
 			'AE1' => $this->config->get('ec_ship_e_express_service_one'),
@@ -424,7 +424,7 @@ class ModelExtensionShippingECShip extends Model {
 				$error = $this->language->get('text_unavailable');
 			}
 
-			if (!$this->config->get('ec_ship_test')) {
+			if (!$this->config->get('shipping_ec_ship_test')) {
 				$url = 'https://www.ec-ship.hk/API/services/Calculator?wsdl';
 			} else {
 				$url = 'http://www.ec-ship.hk/API-trial/services/Calculator?wsdl';
@@ -440,8 +440,8 @@ class ModelExtensionShippingECShip extends Model {
 			$encoded_nonce = base64_encode(pack('H*', $simple_nonce));
 
 
-			$username   = $this->config->get('ec_ship_api_username');
-			$password   = $this->config->get('ec_ship_api_key');
+			$username   = $this->config->get('shipping_ec_ship_api_username');
+			$password   = $this->config->get('shipping_ec_ship_api_key');
 			$passdigest = base64_encode(pack('H*',sha1(pack('H*', $simple_nonce) . pack('a*', $tm_created) . pack('a*', $password))));
 
 
@@ -474,8 +474,8 @@ class ModelExtensionShippingECShip extends Model {
 			$objClient->__setSoapHeaders(array($objSoapVarWSSEHeader));
 
 			$request = array(
-				'ecshipUsername'     => $this->config->get('ec_ship_username'),
-				'integratorUsername' => $this->config->get('ec_ship_api_username'),
+				'ecshipUsername'     => $this->config->get('shipping_ec_ship_username'),
+				'integratorUsername' => $this->config->get('shipping_ec_ship_api_username'),
 				'countryCode'        => $address_to['country'],
 			    'shipCode' 			 => '',
 			    'weight'			 => $weight

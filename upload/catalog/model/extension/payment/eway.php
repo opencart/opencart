@@ -3,7 +3,7 @@ class ModelExtensionPaymentEway extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/eway');
 
-		if ($this->config->get('eway_status')) {
+		if ($this->config->get('payment_eway_status')) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 			if (!$this->config->get('payment_eway_standard_geo_zone_id')) {
 				$status = true;
@@ -23,7 +23,7 @@ class ModelExtensionPaymentEway extends Model {
 				'code' => 'eway',
 				'title' => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('eway_sort_order')
+				'sort_order' => $this->config->get('payment_eway_sort_order')
 			);
 		}
 
@@ -136,8 +136,8 @@ class ModelExtensionPaymentEway extends Model {
 	public function sendCurl($url, $data, $is_post=true) {
 		$ch = curl_init($url);
 
-		$eway_username = html_entity_decode($this->config->get('eway_username'), ENT_QUOTES, 'UTF-8');
-		$eway_password = html_entity_decode($this->config->get('eway_password'), ENT_QUOTES, 'UTF-8');
+		$eway_username = html_entity_decode($this->config->get('payment_eway_username'), ENT_QUOTES, 'UTF-8');
+		$eway_password = html_entity_decode($this->config->get('payment_eway_password'), ENT_QUOTES, 'UTF-8');
 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 		curl_setopt($ch, CURLOPT_USERPWD, $eway_username . ":" . $eway_password);

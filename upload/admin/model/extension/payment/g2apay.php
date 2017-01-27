@@ -56,7 +56,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 
 	public function refund($g2apay_order, $amount) {
 		if (!empty($g2apay_order) && $g2apay_order['refund_status'] != 1) {
-			if ($this->config->get('g2apay_environment') == 1) {
+			if ($this->config->get('payment_g2apay_environment') == 1) {
 				$url = 'https://pay.g2a.com/rest/transactions/' . $g2apay_order['g2apay_transaction_id'];
 			} else {
 				$url = 'https://www.test.pay.g2a.com/rest/transactions/' . $g2apay_order['g2apay_transaction_id'];
@@ -64,7 +64,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 
 			$refunded_amount = round($amount, 2);
 
-			$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . $refunded_amount . html_entity_decode($this->config->get('g2apay_secret'));
+			$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . $refunded_amount . html_entity_decode($this->config->get('payment_g2apay_secret'));
 			$hash = hash('sha256', $string);
 
 			$fields = array(
@@ -115,8 +115,8 @@ class ModelExtensionPaymentG2aPay extends Model {
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($fields));
 
-		$auth_hash = hash('sha256', $this->config->get('g2apay_api_hash') . $this->config->get('g2apay_username') . html_entity_decode($this->config->get('g2apay_secret')));
-		$authorization = $this->config->get('g2apay_api_hash') . ";" . $auth_hash;
+		$auth_hash = hash('sha256', $this->config->get('payment_g2apay_api_hash') . $this->config->get('payment_g2apay_username') . html_entity_decode($this->config->get('payment_g2apay_secret')));
+		$authorization = $this->config->get('payment_g2apay_api_hash') . ";" . $auth_hash;
 		curl_setopt(
 				$curl, CURLOPT_HTTPHEADER, array(
 			"Authorization: " . $authorization
@@ -134,7 +134,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('g2apay_debug') == 1) {
+		if ($this->config->get('payment_g2apay_debug') == 1) {
 			$log = new Log('g2apay.log');
 			$backtrace = debug_backtrace();
 			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);

@@ -219,7 +219,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 		}
 		if (isset($this->request->post['firstdata_remote_auto_settle'])) {
 			$data['firstdata_remote_auto_settle'] = $this->request->post['firstdata_remote_auto_settle'];
-		} elseif (!isset($this->request->post['firstdata_auto_settle']) && $this->config->get('firstdata_remote_auto_settle') != '') {
+		} elseif (!isset($this->request->post['payment_firstdata_auto_settle']) && $this->config->get('firstdata_remote_auto_settle') != '') {
 			$data['firstdata_remote_auto_settle'] = $this->config->get('firstdata_remote_auto_settle');
 		} else {
 			$data['firstdata_remote_auto_settle'] = 1;

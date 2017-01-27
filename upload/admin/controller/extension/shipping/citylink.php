@@ -63,44 +63,44 @@ class ControllerExtensionShippingCitylink extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['citylink_rate'])) {
-			$data['citylink_rate'] = $this->request->post['citylink_rate'];
-		} elseif ($this->config->get('citylink_rate')) {
-			$data['citylink_rate'] = $this->config->get('citylink_rate');
+		if (isset($this->request->post['shipping_citylink_rate'])) {
+			$data['shipping_citylink_rate'] = $this->request->post['shipping_citylink_rate'];
+		} elseif ($this->config->get('shipping_citylink_rate')) {
+			$data['shipping_citylink_rate'] = $this->config->get('shipping_citylink_rate');
 		} else {
-			$data['citylink_rate'] = '10:11.6,15:14.1,20:16.60,25:19.1,30:21.6,35:24.1,40:26.6,45:29.1,50:31.6,55:34.1,60:36.6,65:39.1,70:41.6,75:44.1,80:46.6,100:56.6,125:69.1,150:81.6,200:106.6';
+			$data['shipping_citylink_rate'] = '10:11.6,15:14.1,20:16.60,25:19.1,30:21.6,35:24.1,40:26.6,45:29.1,50:31.6,55:34.1,60:36.6,65:39.1,70:41.6,75:44.1,80:46.6,100:56.6,125:69.1,150:81.6,200:106.6';
 		}
 
-		if (isset($this->request->post['citylink_tax_class_id'])) {
-			$data['citylink_tax_class_id'] = $this->request->post['citylink_tax_class_id'];
+		if (isset($this->request->post['shipping_citylink_tax_class_id'])) {
+			$data['shipping_citylink_tax_class_id'] = $this->request->post['shipping_citylink_tax_class_id'];
 		} else {
-			$data['citylink_tax_class_id'] = $this->config->get('citylink_tax_class_id');
+			$data['shipping_citylink_tax_class_id'] = $this->config->get('shipping_citylink_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['citylink_geo_zone_id'])) {
-			$data['citylink_geo_zone_id'] = $this->request->post['citylink_geo_zone_id'];
+		if (isset($this->request->post['shipping_citylink_geo_zone_id'])) {
+			$data['shipping_citylink_geo_zone_id'] = $this->request->post['shipping_citylink_geo_zone_id'];
 		} else {
-			$data['citylink_geo_zone_id'] = $this->config->get('citylink_geo_zone_id');
+			$data['shipping_citylink_geo_zone_id'] = $this->config->get('shipping_citylink_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['citylink_status'])) {
-			$data['citylink_status'] = $this->request->post['citylink_status'];
+		if (isset($this->request->post['shipping_citylink_status'])) {
+			$data['shipping_citylink_status'] = $this->request->post['shipping_citylink_status'];
 		} else {
-			$data['citylink_status'] = $this->config->get('citylink_status');
+			$data['shipping_citylink_status'] = $this->config->get('shipping_citylink_status');
 		}
 
-		if (isset($this->request->post['citylink_sort_order'])) {
-			$data['citylink_sort_order'] = $this->request->post['citylink_sort_order'];
+		if (isset($this->request->post['shipping_citylink_sort_order'])) {
+			$data['shipping_citylink_sort_order'] = $this->request->post['shipping_citylink_sort_order'];
 		} else {
-			$data['citylink_sort_order'] = $this->config->get('citylink_sort_order');
+			$data['shipping_citylink_sort_order'] = $this->config->get('shipping_citylink_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

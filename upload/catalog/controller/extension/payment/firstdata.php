@@ -12,15 +12,15 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if ($this->config->get('firstdata_live_demo') == 1) {
-			$data['action'] = $this->config->get('firstdata_live_url');
+		if ($this->config->get('payment_firstdata_live_demo') == 1) {
+			$data['action'] = $this->config->get('payment_firstdata_live_url');
 		} else {
-			$data['action'] = $this->config->get('firstdata_demo_url');
+			$data['action'] = $this->config->get('payment_firstdata_demo_url');
 		}
 
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$data['currency'] = $this->model_extension_payment_firstdata->mapCurrency($order_info['currency_code']);
-		$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
+		$data['merchant_id'] = $this->config->get('payment_firstdata_merchant_id');
 		$data['timestamp'] = date('Y:m:d-H:i:s');
 		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 		$data['url_success'] = $this->url->link('checkout/success', '', true);
@@ -33,13 +33,13 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$data['mobile'] = false;
 		}
 
-		if ($this->config->get('firstdata_auto_settle') == 1) {
+		if ($this->config->get('payment_firstdata_auto_settle') == 1) {
 			$data['txntype'] = 'sale';
 		} else {
 			$data['txntype'] = 'preauth';
 		}
 
-		$tmp = $data['merchant_id'] . $data['timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret');
+		$tmp = $data['merchant_id'] . $data['timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('payment_firstdata_secret');
 		$ascii = bin2hex($tmp);
 		$data['hash'] = sha1($ascii);
 
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$data['szip'] = $order_info['payment_postcode'];
 		}
 
-		if ($this->config->get('firstdata_card_storage') == 1 && $this->customer->isLogged()) {
+		if ($this->config->get('payment_firstdata_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
 			$data['stored_cards'] = $this->model_extension_payment_firstdata->getStoredCards();
 			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s") . rand(10, 500));
@@ -94,7 +94,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$message = '';
 
-		if ($this->config->get('firstdata_debug') == 1) {
+		if ($this->config->get('payment_firstdata_debug') == 1) {
 			$this->model_extension_payment_firstdata->logger(print_r($this->request->post, 1));
 		}
 
@@ -184,20 +184,20 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 							$fd_order_id = $this->model_extension_payment_firstdata->addOrder($order_info, $this->request->post['oid'], $this->request->post['tdate']);
 
-							if ($this->config->get('firstdata_auto_settle') == 1) {
+							if ($this->config->get('payment_firstdata_auto_settle') == 1) {
 								$this->model_extension_payment_firstdata->addTransaction($fd_order_id, 'payment', $order_info);
 
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_order_status_success_settled_id'), $message, false);
 							} else {
 								$this->model_extension_payment_firstdata->addTransaction($fd_order_id, 'auth');
 
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_unsettled_id'), $message, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_order_status_success_unsettled_id'), $message, false);
 							}
 						} else {
 							$message = $this->request->post['fail_reason'] . '<br />';
 							$message .= $this->language->get('text_response_code_full') . $this->request->post['approval_code'];
 
-							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_decline_id'), $message);
+							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_order_status_decline_id'), $message);
 						}
 					}
 				}
@@ -210,7 +210,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 						$this->model_extension_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'void');
 
-						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_void_id'), $message, false);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_order_status_void_id'), $message, false);
 					}
 				}
 
@@ -222,7 +222,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 						$this->model_extension_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'payment', $order_info);
 
-						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_firstdata_order_status_success_settled_id'), $message, false);
 					}
 				}
 			} else {

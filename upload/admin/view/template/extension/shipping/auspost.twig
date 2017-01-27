@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="auspost_postcode" value="{{ auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4" />
+              <input type="text" name="shipping_auspost_postcode" value="{{ shipping_auspost_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" maxlength="4" />
               {% if error_postcode %}
               <div class="text-danger">{{ error_postcode }}</div>
               {% endif %}
@@ -37,8 +37,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-standard">{{ entry_standard }}</label>
             <div class="col-sm-10">
-              <select name="auspost_standard" id="input-standard" class="form-control">
-                {% if auspost_standard %}
+              <select name="shipping_auspost_standard" id="input-standard" class="form-control">
+                {% if shipping_auspost_standard %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -51,8 +51,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-express">{{ entry_express }}</label>
             <div class="col-sm-10">
-              <select name="auspost_express" id="input-express" class="form-control">
-                {% if auspost_express %}
+              <select name="shipping_auspost_express" id="input-express" class="form-control">
+                {% if shipping_auspost_express %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -65,8 +65,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-display-time"><span data-toggle="tooltip" title="{{ help_display_time }}">{{ entry_display_time }}</span></label>
             <div class="col-sm-10">
-              <select name="auspost_display_time" id="input-display-time" class="form-control">
-                {% if auspost_display_time %}
+              <select name="shipping_auspost_display_time" id="input-display-time" class="form-control">
+                {% if shipping_auspost_display_time %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -79,9 +79,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
             <div class="col-sm-10">
-              <select name="auspost_weight_class_id" id="input-weight-class" class="form-control">
+              <select name="shipping_auspost_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
-                {% if weight_class.weight_class_id == auspost_weight_class_id %}
+                {% if weight_class.weight_class_id == shipping_auspost_weight_class_id %}
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -93,10 +93,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
-              <select name="auspost_tax_class_id" id="input-tax-class" class="form-control">
+              <select name="shipping_auspost_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                {% if tax_class.tax_class_id == auspost_tax_class_id %}
+                {% if tax_class.tax_class_id == shipping_auspost_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -108,10 +108,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="auspost_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="shipping_auspost_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == auspost_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == shipping_auspost_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -123,8 +123,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="auspost_status" id="input-status" class="form-control">
-                {% if auspost_status %}
+              <select name="shipping_auspost_status" id="input-status" class="form-control">
+                {% if shipping_auspost_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -137,7 +137,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="auspost_sort_order" value="{{ auspost_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="shipping_auspost_sort_order" value="{{ shipping_auspost_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

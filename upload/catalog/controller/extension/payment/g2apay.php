@@ -75,7 +75,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 			$items[] = $item;
 		}
 
-		if ($this->config->get('g2apay_environment') == 1) {
+		if ($this->config->get('payment_g2apay_environment') == 1) {
 			$url = 'https://checkout.pay.g2a.com/index/createQuote';
 		} else {
 			$url = 'https://checkout.test.pay.g2a.com/index/createQuote';
@@ -83,10 +83,10 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$order_total = number_format($order_info['total'], 2);
 
-		$string = $this->session->data['order_id'] . $order_total . $order_info['currency_code'] . html_entity_decode($this->config->get('g2apay_secret'));
+		$string = $this->session->data['order_id'] . $order_total . $order_info['currency_code'] . html_entity_decode($this->config->get('payment_g2apay_secret'));
 
 		$fields = array(
-			'api_hash' => $this->config->get('g2apay_api_hash'),
+			'api_hash' => $this->config->get('payment_g2apay_api_hash'),
 			'hash' => hash('sha256', $string),
 			'order_id' => $this->session->data['order_id'],
 			'amount' => $order_total,
@@ -113,7 +113,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$this->model_extension_payment_g2apay->addG2aOrder($order_info);
 
-		if ($this->config->get('g2apay_environment') == 1) {
+		if ($this->config->get('payment_g2apay_environment') == 1) {
 			$this->response->redirect('https://checkout.pay.g2a.com/index/gateway?token=' . $response_data->token);
 		} else {
 			$this->response->redirect('https://checkout.test.pay.g2a.com/index/gateway?token=' . $response_data->token);
@@ -142,7 +142,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 			$this->model_extension_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);
 
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('g2apay_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_g2apay_order_status_id'));
 		}
 
 		$this->response->redirect($this->url->link('checkout/success'));
@@ -152,13 +152,13 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->load->model('extension/payment/g2apay');
 		$this->model_extension_payment_g2apay->logger('ipn');
 
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('g2apay_secret_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_g2apay_secret_token'), $this->request->get['token'])) {
 			$this->model_extension_payment_g2apay->logger('token success');
 
 			if (isset($this->request->post['userOrderId'])) {
 				$g2apay_order = $this->model_extension_payment_g2apay->getG2aOrder($this->request->post['userOrderId']);
 
-				$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . html_entity_decode($this->config->get('g2apay_secret'));
+				$string = $g2apay_order['g2apay_transaction_id'] . $g2apay_order['order_id'] . round($g2apay_order['total'], 2) . html_entity_decode($this->config->get('payment_g2apay_secret'));
 				$hash = hash('sha256', $string);
 				if($hash != $this->request->post['hash']){
 					$this->model_extension_payment_g2apay->logger('Hashes do not match, possible tampering!');
@@ -167,19 +167,19 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 				switch ($this->request->post['status']) {
 					case 'complete':
-						$order_status_id = $this->config->get('g2apay_complete_status_id');
+						$order_status_id = $this->config->get('payment_g2apay_complete_status_id');
 						break;
 					case 'rejected':
-						$order_status_id = $this->config->get('g2apay_rejected_status_id');
+						$order_status_id = $this->config->get('payment_g2apay_rejected_status_id');
 						break;
 					case 'canceled':
-						$order_status_id = $this->config->get('g2apay_cancelled_status_id');
+						$order_status_id = $this->config->get('payment_g2apay_cancelled_status_id');
 						break;
 					case 'partial_refunded':
-						$order_status_id = $this->config->get('g2apay_partially_refunded_status_id');
+						$order_status_id = $this->config->get('payment_g2apay_partially_refunded_status_id');
 						break;
 					case 'refunded':
-						$order_status_id = $this->config->get('g2apay_refunded_status_id');
+						$order_status_id = $this->config->get('payment_g2apay_refunded_status_id');
 						break;
 				}
 

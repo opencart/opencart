@@ -36,7 +36,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstdata_merchant_id" value="{{ firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
+                  <input type="text" name="payment_firstdata_merchant_id" value="{{ payment_firstdata_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control"/>
                   {% if error_merchant_id %}
                   <div class="text-danger">{{ error_merchant_id }}</div>
                   {% endif %}
@@ -45,7 +45,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-secret">{{ entry_secret }}</label>
                 <div class="col-sm-10">
-                  <input type="password" name="firstdata_secret" value="{{ firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
+                  <input type="password" name="payment_firstdata_secret" value="{{ payment_firstdata_secret }}" placeholder="{{ entry_secret }}" id="input-secret" class="form-control"/>
                   {% if error_secret %}
                   <div class="text-danger">{{ error_secret }}</div>
                   {% endif %}
@@ -54,8 +54,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_live_demo" id="input-live-demo" class="form-control">
-                    {% if firstdata_live_demo %}
+                  <select name="payment_firstdata_live_demo" id="input-live-demo" class="form-control">
+                    {% if payment_firstdata_live_demo %}
                     <option value="1" selected="selected">{{ text_live }}</option>
                     <option value="0">{{ text_demo }}</option>
                     {% else %}
@@ -68,10 +68,10 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_geo_zone_id" id="input-geo-zone" class="form-control">
+                  <select name="payment_firstdata_geo_zone_id" id="input-geo-zone" class="form-control">
                     <option value="0">{{ text_all_zones }}</option>
                     {% for geo_zone in geo_zones %}
-                    {% if geo_zone.geo_zone_id == firstdata_geo_zone_id %}
+                    {% if geo_zone.geo_zone_id == payment_firstdata_geo_zone_id %}
                     <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                     {% else %}
                     <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -83,8 +83,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
-                  <select name="firstdata_debug" id="input-debug" class="form-control">
-                    {% if firstdata_debug %}
+                  <select name="payment_firstdata_debug" id="input-debug" class="form-control">
+                    {% if payment_firstdata_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -97,8 +97,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_status" id="input-status" class="form-control">
-                    {% if firstdata_status %}
+                  <select name="payment_firstdata_status" id="input-status" class="form-control">
+                    {% if payment_firstdata_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -111,13 +111,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstdata_total" value="{{ firstdata_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                  <input type="text" name="payment_firstdata_total" value="{{ payment_firstdata_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstdata_sort_order" value="{{ firstdata_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                  <input type="text" name="payment_firstdata_sort_order" value="{{ payment_firstdata_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 </div>
               </div>
             </div>
@@ -125,9 +125,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-success-settled">{{ entry_status_success_settled }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
+                  <select name="payment_firstdata_order_status_success_settled_id" id="input-order-status-success-settled" class="form-control">
                     {% for order_status in order_statuses %}
-                    {% if order_status.order_status_id == firstdata_order_status_success_settled_id %}
+                    {% if order_status.order_status_id == payment_firstdata_order_status_success_settled_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -139,9 +139,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-success-unsettled">{{ entry_status_success_unsettled }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
+                  <select name="payment_firstdata_order_status_success_unsettled_id" id="input-order-status-success-unsettled" class="form-control">
                     {% for order_status in order_statuses %}
-                    {% if order_status.order_status_id == firstdata_order_status_success_unsettled_id %}
+                    {% if order_status.order_status_id == payment_firstdata_order_status_success_unsettled_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -153,9 +153,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-decline">{{ entry_status_decline }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_order_status_decline_id" id="input-order-status-decline" class="form-control">
+                  <select name="payment_firstdata_order_status_decline_id" id="input-order-status-decline" class="form-control">
                     {% for order_status in order_statuses %}
-                    {% if order_status.order_status_id == firstdata_order_status_decline_id %}
+                    {% if order_status.order_status_id == payment_firstdata_order_status_decline_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -167,9 +167,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-void">{{ entry_status_void }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_order_status_void_id" id="input-order-status-void" class="form-control">
+                  <select name="payment_firstdata_order_status_void_id" id="input-order-status-void" class="form-control">
                     {% for order_status in order_statuses %}
-                    {% if order_status.order_status_id == firstdata_order_status_void_id %}
+                    {% if order_status.order_status_id == payment_firstdata_order_status_void_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                     {% else %}
                     <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -183,8 +183,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="{{ help_settle }}">{{ entry_auto_settle }}</span></label>
                 <div class="col-sm-10">
-                  <select name="firstdata_auto_settle" id="input-auto-settle" class="form-control">
-                    {% if firstdata_auto_settle %}
+                  <select name="payment_firstdata_auto_settle" id="input-auto-settle" class="form-control">
+                    {% if payment_firstdata_auto_settle %}
                     <option value="1" selected="selected">{{ text_settle_auto }}</option>
                     <option value="0">{{ text_settle_delayed }}</option>
                     {% else %}
@@ -197,8 +197,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-card-store">{{ entry_enable_card_store }}</label>
                 <div class="col-sm-10">
-                  <select name="firstdata_card_storage" id="input-card-store" class="form-control">
-                    {% if firstdata_card_storage %}
+                  <select name="payment_firstdata_card_storage" id="input-card-store" class="form-control">
+                    {% if payment_firstdata_card_storage %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -213,7 +213,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-live-url">{{ entry_live_url }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstdata_live_url" value="{{ firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
+                  <input type="text" name="payment_firstdata_live_url" value="{{ payment_firstdata_live_url }}" placeholder="{{ entry_live_url }}" id="input-live-url" class="form-control"/>
                   {% if error_live_url %}
                   <div class="text-danger">{{ error_live_url }}</div>
                   {% endif %}
@@ -222,7 +222,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-demo-url">{{ entry_demo_url }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="firstdata_demo_url" value="{{ firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>
+                  <input type="text" name="payment_firstdata_demo_url" value="{{ payment_firstdata_demo_url }}" placeholder="{{ entry_demo_url }}" id="input-demo-url" class="form-control"/>
                   {% if error_demo_url %}
                   <div class="text-danger">{{ error_demo_url }}</div>
                   {% endif %}

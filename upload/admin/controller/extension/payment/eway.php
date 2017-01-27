@@ -159,16 +159,16 @@ class ControllerExtensionPaymentEway extends Controller {
 			$data['payment_eway_order_status_refunded_id'] = $this->config->get('payment_eway_order_status_refunded_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_auth_id'])) {
-			$data['eway_order_status_auth_id'] = $this->request->post['eway_order_status_auth_id'];
+		if (isset($this->request->post['payment_eway_order_status_auth_id'])) {
+			$data['payment_eway_order_status_auth_id'] = $this->request->post['payment_eway_order_status_auth_id'];
 		} else {
-			$data['eway_order_status_auth_id'] = $this->config->get('eway_order_status_auth_id');
+			$data['payment_eway_order_status_auth_id'] = $this->config->get('payment_eway_order_status_auth_id');
 		}
 
-		if (isset($this->request->post['eway_order_status_fraud_id'])) {
-			$data['eway_order_status_fraud_id'] = $this->request->post['eway_order_status_fraud_id'];
+		if (isset($this->request->post['payment_eway_order_status_fraud_id'])) {
+			$data['payment_eway_order_status_fraud_id'] = $this->request->post['payment_eway_order_status_fraud_id'];
 		} else {
-			$data['eway_order_status_fraud_id'] = $this->config->get('eway_order_status_fraud_id');
+			$data['payment_eway_order_status_fraud_id'] = $this->config->get('payment_eway_order_status_fraud_id');
 		}
 
 		if (isset($this->request->post['payment_eway_transaction_method'])) {
@@ -177,28 +177,28 @@ class ControllerExtensionPaymentEway extends Controller {
 			$data['payment_eway_transaction_method'] = $this->config->get('payment_eway_transaction_method');
 		}
 
-		if (isset($this->request->post['eway_username'])) {
-			$data['eway_username'] = $this->request->post['eway_username'];
+		if (isset($this->request->post['payment_eway_username'])) {
+			$data['payment_eway_username'] = $this->request->post['payment_eway_username'];
 		} else {
-			$data['eway_username'] = $this->config->get('eway_username');
+			$data['payment_eway_username'] = $this->config->get('payment_eway_username');
 		}
 
-		if (isset($this->request->post['eway_password'])) {
-			$data['eway_password'] = $this->request->post['eway_password'];
+		if (isset($this->request->post['payment_eway_password'])) {
+			$data['payment_eway_password'] = $this->request->post['payment_eway_password'];
 		} else {
-			$data['eway_password'] = $this->config->get('eway_password');
+			$data['payment_eway_password'] = $this->config->get('payment_eway_password');
 		}
 
-		if (isset($this->request->post['eway_status'])) {
-			$data['eway_status'] = $this->request->post['eway_status'];
+		if (isset($this->request->post['payment_eway_status'])) {
+			$data['payment_eway_status'] = $this->request->post['payment_eway_status'];
 		} else {
-			$data['eway_status'] = $this->config->get('eway_status');
+			$data['payment_eway_status'] = $this->config->get('payment_eway_status');
 		}
 
-		if (isset($this->request->post['eway_sort_order'])) {
-			$data['eway_sort_order'] = $this->request->post['eway_sort_order'];
+		if (isset($this->request->post['payment_eway_sort_order'])) {
+			$data['payment_eway_sort_order'] = $this->request->post['payment_eway_sort_order'];
 		} else {
-			$data['eway_sort_order'] = $this->config->get('eway_sort_order');
+			$data['payment_eway_sort_order'] = $this->config->get('payment_eway_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -229,7 +229,7 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('eway_status')) {
+		if ($this->config->get('payment_eway_status')) {
 			$this->load->model('extension/payment/eway');
 
 			$eway_order = $this->model_extension_payment_eway->getOrder($this->request->get['order_id']);
@@ -396,10 +396,10 @@ class ControllerExtensionPaymentEway extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/payment/eway')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		if (!$this->request->post['eway_username']) {
+		if (!$this->request->post['payment_eway_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
-		if (!$this->request->post['eway_password']) {
+		if (!$this->request->post['payment_eway_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 		if (!isset($this->request->post['payment_eway_payment_type'])) {

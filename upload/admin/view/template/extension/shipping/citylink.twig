@@ -28,16 +28,16 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-rate"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
             <div class="col-sm-10">
-              <textarea name="citylink_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate" class="form-control">{{ citylink_rate }}</textarea>
+              <textarea name="shipping_citylink_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate" class="form-control">{{ shipping_citylink_rate }}</textarea>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
-              <select name="citylink_tax_class_id" id="input-tax-class" class="form-control">
+              <select name="shipping_citylink_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                {% if tax_class.tax_class_id == citylink_tax_class_id %}
+                {% if tax_class.tax_class_id == shipping_citylink_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -49,10 +49,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="citylink_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="shipping_citylink_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == citylink_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == shipping_citylink_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -64,8 +64,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="citylink_status" id="input-status" class="form-control">
-                {% if citylink_status %}
+              <select name="shipping_citylink_status" id="input-status" class="form-control">
+                {% if shipping_citylink_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -78,7 +78,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="citylink_sort_order" value="{{ citylink_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="shipping_citylink_sort_order" value="{{ shipping_citylink_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

@@ -139,86 +139,86 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['globalpay_merchant_id'])) {
-			$data['globalpay_merchant_id'] = $this->request->post['globalpay_merchant_id'];
+		if (isset($this->request->post['payment_globalpay_merchant_id'])) {
+			$data['payment_globalpay_merchant_id'] = $this->request->post['payment_globalpay_merchant_id'];
 		} else {
-			$data['globalpay_merchant_id'] = $this->config->get('globalpay_merchant_id');
+			$data['payment_globalpay_merchant_id'] = $this->config->get('payment_globalpay_merchant_id');
 		}
 
-		if (isset($this->request->post['globalpay_secret'])) {
-			$data['globalpay_secret'] = $this->request->post['globalpay_secret'];
+		if (isset($this->request->post['payment_globalpay_secret'])) {
+			$data['payment_globalpay_secret'] = $this->request->post['payment_globalpay_secret'];
 		} else {
-			$data['globalpay_secret'] = $this->config->get('globalpay_secret');
+			$data['payment_globalpay_secret'] = $this->config->get('payment_globalpay_secret');
 		}
 
-		if (isset($this->request->post['globalpay_rebate_password'])) {
-			$data['globalpay_rebate_password'] = $this->request->post['globalpay_rebate_password'];
+		if (isset($this->request->post['payment_globalpay_rebate_password'])) {
+			$data['payment_globalpay_rebate_password'] = $this->request->post['payment_globalpay_rebate_password'];
 		} else {
-			$data['globalpay_rebate_password'] = $this->config->get('globalpay_rebate_password');
+			$data['payment_globalpay_rebate_password'] = $this->config->get('payment_globalpay_rebate_password');
 		}
 
-		if (isset($this->request->post['globalpay_live_demo'])) {
-			$data['globalpay_live_demo'] = $this->request->post['globalpay_live_demo'];
+		if (isset($this->request->post['payment_globalpay_live_demo'])) {
+			$data['payment_globalpay_live_demo'] = $this->request->post['payment_globalpay_live_demo'];
 		} else {
-			$data['globalpay_live_demo'] = $this->config->get('globalpay_live_demo');
+			$data['payment_globalpay_live_demo'] = $this->config->get('payment_globalpay_live_demo');
 		}
 
-		if (isset($this->request->post['globalpay_geo_zone_id'])) {
-			$data['globalpay_geo_zone_id'] = $this->request->post['globalpay_geo_zone_id'];
+		if (isset($this->request->post['payment_globalpay_geo_zone_id'])) {
+			$data['payment_globalpay_geo_zone_id'] = $this->request->post['payment_globalpay_geo_zone_id'];
 		} else {
-			$data['globalpay_geo_zone_id'] = $this->config->get('globalpay_geo_zone_id');
+			$data['payment_globalpay_geo_zone_id'] = $this->config->get('payment_globalpay_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['globalpay_total'])) {
-			$data['globalpay_total'] = $this->request->post['globalpay_total'];
+		if (isset($this->request->post['payment_globalpay_total'])) {
+			$data['payment_globalpay_total'] = $this->request->post['payment_globalpay_total'];
 		} else {
-			$data['globalpay_total'] = $this->config->get('globalpay_total');
+			$data['payment_globalpay_total'] = $this->config->get('payment_globalpay_total');
 		}
 
-		if (isset($this->request->post['globalpay_sort_order'])) {
-			$data['globalpay_sort_order'] = $this->request->post['globalpay_sort_order'];
+		if (isset($this->request->post['payment_globalpay_sort_order'])) {
+			$data['payment_globalpay_sort_order'] = $this->request->post['payment_globalpay_sort_order'];
 		} else {
-			$data['globalpay_sort_order'] = $this->config->get('globalpay_sort_order');
+			$data['payment_globalpay_sort_order'] = $this->config->get('payment_globalpay_sort_order');
 		}
 
-		if (isset($this->request->post['globalpay_status'])) {
-			$data['globalpay_status'] = $this->request->post['globalpay_status'];
+		if (isset($this->request->post['payment_globalpay_status'])) {
+			$data['payment_globalpay_status'] = $this->request->post['payment_globalpay_status'];
 		} else {
-			$data['globalpay_status'] = $this->config->get('globalpay_status');
+			$data['payment_globalpay_status'] = $this->config->get('payment_globalpay_status');
 		}
 
-		if (isset($this->request->post['globalpay_debug'])) {
-			$data['globalpay_debug'] = $this->request->post['globalpay_debug'];
+		if (isset($this->request->post['payment_globalpay_debug'])) {
+			$data['payment_globalpay_debug'] = $this->request->post['payment_globalpay_debug'];
 		} else {
-			$data['globalpay_debug'] = $this->config->get('globalpay_debug');
+			$data['payment_globalpay_debug'] = $this->config->get('payment_globalpay_debug');
 		}
 
-		if (isset($this->request->post['globalpay_account'])) {
-			$data['globalpay_account'] = $this->request->post['globalpay_account'];
+		if (isset($this->request->post['payment_globalpay_account'])) {
+			$data['payment_globalpay_account'] = $this->request->post['payment_globalpay_account'];
 		} else {
-			$data['globalpay_account'] = $this->config->get('globalpay_account');
+			$data['payment_globalpay_account'] = $this->config->get('payment_globalpay_account');
 		}
 
-		if (isset($this->request->post['globalpay_auto_settle'])) {
-			$data['globalpay_auto_settle'] = $this->request->post['globalpay_auto_settle'];
+		if (isset($this->request->post['payment_globalpay_auto_settle'])) {
+			$data['payment_globalpay_auto_settle'] = $this->request->post['payment_globalpay_auto_settle'];
 		} else {
-			$data['globalpay_auto_settle'] = $this->config->get('globalpay_auto_settle');
+			$data['payment_globalpay_auto_settle'] = $this->config->get('payment_globalpay_auto_settle');
 		}
 
-		if (isset($this->request->post['globalpay_card_select'])) {
-			$data['globalpay_card_select'] = $this->request->post['globalpay_card_select'];
+		if (isset($this->request->post['payment_globalpay_card_select'])) {
+			$data['payment_globalpay_card_select'] = $this->request->post['payment_globalpay_card_select'];
 		} else {
-			$data['globalpay_card_select'] = $this->config->get('globalpay_card_select');
+			$data['payment_globalpay_card_select'] = $this->config->get('payment_globalpay_card_select');
 		}
 
-		if (isset($this->request->post['globalpay_tss_check'])) {
-			$data['globalpay_tss_check'] = $this->request->post['globalpay_tss_check'];
+		if (isset($this->request->post['payment_globalpay_tss_check'])) {
+			$data['payment_globalpay_tss_check'] = $this->request->post['payment_globalpay_tss_check'];
 		} else {
-			$data['globalpay_tss_check'] = $this->config->get('globalpay_tss_check');
+			$data['payment_globalpay_tss_check'] = $this->config->get('payment_globalpay_tss_check');
 		}
 
 		if (isset($this->request->post['globalpay_order_status_success_settled_id'])) {
@@ -227,58 +227,58 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['globalpay_order_status_success_settled_id'] = $this->config->get('globalpay_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_success_unsettled_id'])) {
-			$data['globalpay_order_status_success_unsettled_id'] = $this->request->post['globalpay_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_success_unsettled_id'])) {
+			$data['payment_globalpay_order_status_success_unsettled_id'] = $this->request->post['payment_globalpay_order_status_success_unsettled_id'];
 		} else {
-			$data['globalpay_order_status_success_unsettled_id'] = $this->config->get('globalpay_order_status_success_unsettled_id');
+			$data['payment_globalpay_order_status_success_unsettled_id'] = $this->config->get('payment_globalpay_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_decline_id'])) {
-			$data['globalpay_order_status_decline_id'] = $this->request->post['globalpay_order_status_decline_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_decline_id'])) {
+			$data['payment_globalpay_order_status_decline_id'] = $this->request->post['payment_globalpay_order_status_decline_id'];
 		} else {
-			$data['globalpay_order_status_decline_id'] = $this->config->get('globalpay_order_status_decline_id');
+			$data['payment_globalpay_order_status_decline_id'] = $this->config->get('payment_globalpay_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_decline_pending_id'])) {
-			$data['globalpay_order_status_decline_pending_id'] = $this->request->post['globalpay_order_status_decline_pending_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_decline_pending_id'])) {
+			$data['payment_globalpay_order_status_decline_pending_id'] = $this->request->post['payment_globalpay_order_status_decline_pending_id'];
 		} else {
-			$data['globalpay_order_status_decline_pending_id'] = $this->config->get('globalpay_order_status_decline_pending_id');
+			$data['payment_globalpay_order_status_decline_pending_id'] = $this->config->get('payment_globalpay_order_status_decline_pending_id');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_decline_stolen_id'])) {
-			$data['globalpay_order_status_decline_stolen_id'] = $this->request->post['globalpay_order_status_decline_stolen_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_decline_stolen_id'])) {
+			$data['payment_globalpay_order_status_decline_stolen_id'] = $this->request->post['payment_globalpay_order_status_decline_stolen_id'];
 		} else {
-			$data['globalpay_order_status_decline_stolen_id'] = $this->config->get('globalpay_order_status_decline_stolen_id');
+			$data['payment_globalpay_order_status_decline_stolen_id'] = $this->config->get('payment_globalpay_order_status_decline_stolen_id');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_decline_bank_id'])) {
-			$data['globalpay_order_status_decline_bank_id'] = $this->request->post['globalpay_order_status_decline_bank_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_decline_bank_id'])) {
+			$data['payment_globalpay_order_status_decline_bank_id'] = $this->request->post['payment_globalpay_order_status_decline_bank_id'];
 		} else {
-			$data['globalpay_order_status_decline_bank_id'] = $this->config->get('globalpay_order_status_decline_bank_id');
+			$data['payment_globalpay_order_status_decline_bank_id'] = $this->config->get('payment_globalpay_order_status_decline_bank_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['globalpay_live_url'])) {
-			$data['globalpay_live_url'] = $this->request->post['globalpay_live_url'];
+		if (isset($this->request->post['payment_globalpay_live_url'])) {
+			$data['payment_globalpay_live_url'] = $this->request->post['payment_globalpay_live_url'];
 		} else {
-			$data['globalpay_live_url'] = $this->config->get('globalpay_live_url');
+			$data['payment_globalpay_live_url'] = $this->config->get('payment_globalpay_live_url');
 		}
 
-		if (empty($data['globalpay_live_url'])) {
-			$data['globalpay_live_url'] = 'https://hpp.globaliris.com/pay';
+		if (empty($data['payment_globalpay_live_url'])) {
+			$data['payment_globalpay_live_url'] = 'https://hpp.globaliris.com/pay';
 		}
 
-		if (isset($this->request->post['globalpay_demo_url'])) {
-			$data['globalpay_demo_url'] = $this->request->post['globalpay_demo_url'];
+		if (isset($this->request->post['payment_globalpay_demo_url'])) {
+			$data['payment_globalpay_demo_url'] = $this->request->post['payment_globalpay_demo_url'];
 		} else {
-			$data['globalpay_demo_url'] = $this->config->get('globalpay_demo_url');
+			$data['payment_globalpay_demo_url'] = $this->config->get('payment_globalpay_demo_url');
 		}
 
-		if (empty($data['globalpay_demo_url'])) {
-			$data['globalpay_demo_url'] = 'https://hpp.sandbox.globaliris.com/pay';
+		if (empty($data['payment_globalpay_demo_url'])) {
+			$data['payment_globalpay_demo_url'] = 'https://hpp.sandbox.globaliris.com/pay';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -295,7 +295,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('globalpay_status')) {
+		if ($this->config->get('payment_globalpay_status')) {
 			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_extension_payment_globalpay->getOrder($this->request->get['order_id']);
@@ -475,19 +475,19 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['globalpay_merchant_id']) {
+		if (!$this->request->post['payment_globalpay_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['globalpay_secret']) {
+		if (!$this->request->post['payment_globalpay_secret']) {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->request->post['globalpay_live_url']) {
+		if (!$this->request->post['payment_globalpay_live_url']) {
 			$this->error['error_live_url'] = $this->language->get('error_live_url');
 		}
 
-		if (!$this->request->post['globalpay_demo_url']) {
+		if (!$this->request->post['payment_globalpay_demo_url']) {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 

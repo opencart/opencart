@@ -121,52 +121,52 @@ class ControllerExtensionShippingECShip extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['ec_ship_api_key'])) {
-			$data['ec_ship_api_key'] = $this->request->post['ec_ship_api_key'];
+		if (isset($this->request->post['shipping_ec_ship_api_key'])) {
+			$data['shipping_ec_ship_api_key'] = $this->request->post['shipping_ec_ship_api_key'];
 		} else {
-			$data['ec_ship_api_key'] = $this->config->get('ec_ship_api_key');
+			$data['shipping_ec_ship_api_key'] = $this->config->get('shipping_ec_ship_api_key');
 		}
 
-		if (isset($this->request->post['ec_ship_username'])) {
-			$data['ec_ship_username'] = $this->request->post['ec_ship_username'];
+		if (isset($this->request->post['shipping_ec_ship_username'])) {
+			$data['shipping_ec_ship_username'] = $this->request->post['shipping_ec_ship_username'];
 		} else {
-			$data['ec_ship_username'] = $this->config->get('ec_ship_username');
+			$data['shipping_ec_ship_username'] = $this->config->get('shipping_ec_ship_username');
 		}
 
-		if (isset($this->request->post['ec_ship_api_username'])) {
-			$data['ec_ship_api_username'] = $this->request->post['ec_ship_api_username'];
+		if (isset($this->request->post['shipping_ec_ship_api_username'])) {
+			$data['shipping_ec_ship_api_username'] = $this->request->post['shipping_ec_ship_api_username'];
 		} else {
-			$data['ec_ship_api_username'] = $this->config->get('ec_ship_api_username');
+			$data['shipping_ec_ship_api_username'] = $this->config->get('shipping_ec_ship_api_username');
 		}
 
-		if (isset($this->request->post['ec_ship_test'])) {
-			$data['ec_ship_test'] = $this->request->post['ec_ship_test'];
+		if (isset($this->request->post['shipping_ec_ship_test'])) {
+			$data['shipping_ec_ship_test'] = $this->request->post['shipping_ec_ship_test'];
 		} else {
-			$data['ec_ship_test'] = $this->config->get('ec_ship_test');
+			$data['shipping_ec_ship_test'] = $this->config->get('shipping_ec_ship_test');
 		}
 
-		if (isset($this->request->post['ec_ship_air_registered_mail'])) {
-			$data['ec_ship_air_registered_mail'] = $this->request->post['ec_ship_air_registered_mail'];
+		if (isset($this->request->post['shipping_ec_ship_air_registered_mail'])) {
+			$data['shipping_ec_ship_air_registered_mail'] = $this->request->post['shipping_ec_ship_air_registered_mail'];
 		} else {
-			$data['ec_ship_air_registered_mail'] = $this->config->get('ec_ship_air_registered_mail');
+			$data['shipping_ec_ship_air_registered_mail'] = $this->config->get('shipping_ec_ship_air_registered_mail');
 		}
 
-		if (isset($this->request->post['ec_ship_air_parcel'])) {
-			$data['ec_ship_air_parcel'] = $this->request->post['ec_ship_air_parcel'];
+		if (isset($this->request->post['shipping_ec_ship_air_parcel'])) {
+			$data['shipping_ec_ship_air_parcel'] = $this->request->post['shipping_ec_ship_air_parcel'];
 		} else {
-			$data['ec_ship_air_parcel'] = $this->config->get('ec_ship_air_parcel');
+			$data['shipping_ec_ship_air_parcel'] = $this->config->get('shipping_ec_ship_air_parcel');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_to_us'])) {
-			$data['ec_ship_e_express_service_to_us'] = $this->request->post['ec_ship_e_express_service_to_us'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_to_us'])) {
+			$data['shipping_ec_ship_e_express_service_to_us'] = $this->request->post['shipping_ec_ship_e_express_service_to_us'];
 		} else {
-			$data['ec_ship_e_express_service_to_us'] = $this->config->get('ec_ship_e_express_service_to_us');
+			$data['shipping_ec_ship_e_express_service_to_us'] = $this->config->get('shipping_ec_ship_e_express_service_to_us');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_to_canada'])) {
-			$data['ec_ship_e_express_service_to_canada'] = $this->request->post['ec_ship_e_express_service_to_canada'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_to_canada'])) {
+			$data['shipping_ec_ship_e_express_service_to_canada'] = $this->request->post['shipping_ec_ship_e_express_service_to_canada'];
 		} else {
-			$data['ec_ship_e_express_service_to_canada'] = $this->config->get('ec_ship_e_express_service_to_canada');
+			$data['shipping_ec_ship_e_express_service_to_canada'] = $this->config->get('shipping_ec_ship_e_express_service_to_canada');
 		}
 
 		if (isset($this->request->post['ec_ship_e_express_service_to_united_kingdom'])) {
@@ -265,15 +265,15 @@ class ControllerExtensionShippingECShip extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['ec_ship_api_key']) {
+		if (!$this->request->post['shipping_ec_ship_api_key']) {
 			$this->error['api_key'] = $this->language->get('error_api_key');
 		}
 
-		if (!$this->request->post['ec_ship_username']) {
+		if (!$this->request->post['shipping_ec_ship_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 
-		if (!$this->request->post['ec_ship_api_username']) {
+		if (!$this->request->post['shipping_ec_ship_api_username']) {
 			$this->error['api_username'] = $this->language->get('error_api_username');
 		}
 

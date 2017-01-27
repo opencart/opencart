@@ -68,16 +68,16 @@ class ControllerExtensionPaymentFreeCheckout extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['free_checkout_status'])) {
-			$data['free_checkout_status'] = $this->request->post['free_checkout_status'];
+		if (isset($this->request->post['payment_free_checkout_status'])) {
+			$data['payment_free_checkout_status'] = $this->request->post['payment_free_checkout_status'];
 		} else {
-			$data['free_checkout_status'] = $this->config->get('free_checkout_status');
+			$data['payment_free_checkout_status'] = $this->config->get('payment_free_checkout_status');
 		}
 
-		if (isset($this->request->post['free_checkout_sort_order'])) {
-			$data['free_checkout_sort_order'] = $this->request->post['free_checkout_sort_order'];
+		if (isset($this->request->post['payment_free_checkout_sort_order'])) {
+			$data['payment_free_checkout_sort_order'] = $this->request->post['payment_free_checkout_sort_order'];
 		} else {
-			$data['free_checkout_sort_order'] = $this->config->get('free_checkout_sort_order');
+			$data['payment_free_checkout_sort_order'] = $this->config->get('payment_free_checkout_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

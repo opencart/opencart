@@ -16,7 +16,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		$data['help_issue'] = $this->language->get('help_issue');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$accounts = $this->config->get('globalpay_remote_account');
+		$accounts = $this->config->get('payment_globalpay_remote_account');
 
 		$card_types = array(
 			'visa' => $this->language->get('text_card_visa'),
@@ -94,10 +94,10 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);
 		$currency = $order_info['currency_code'];
 
-		$accounts = $this->config->get('globalpay_remote_account');
+		$accounts = $this->config->get('payment_globalpay_remote_account');
 
 		if (isset($accounts[$this->request->post['cc_type']]['default']) && $accounts[$this->request->post['cc_type']]['default'] == 1) {
-			$account = $this->config->get('globalpay_remote_merchant_id');
+			$account = $this->config->get('payment_globalpay_remote_merchant_id');
 		} else {
 			$account = $accounts[$this->request->post['cc_type']]['merchant_id'];
 		}
@@ -107,7 +107,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		$cavv = '';
 		$xid = '';
 
-		if ($this->config->get('globalpay_remote_3d') == 1) {
+		if ($this->config->get('payment_globalpay_remote_3d') == 1) {
 			if ($this->request->post['cc_type'] == 'visa' || $this->request->post['cc_type'] == 'mc' || $this->request->post['cc_type'] == 'amex') {
 				$verify_3ds = $this->model_extension_payment_globalpay_remote->checkEnrollment($account, $amount, $currency, $order_ref);
 
@@ -157,7 +157,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 				// Unable to Verify Enrollment. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result) && $verify_3ds->result == '110' && isset($verify_3ds->enrolled) && $verify_3ds->enrolled == 'U') {
-					if ($this->config->get('globalpay_remote_liability') != 1) {
+					if ($this->config->get('payment_globalpay_remote_liability') != 1) {
 						$this->load->language('extension/payment/globalpay_remote');
 
 						$json['error'] = $this->language->get('error_3d_unable');
@@ -180,7 +180,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 				// Invalid response from Enrollment Server. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result)  && $verify_3ds->result >= 500 && $verify_3ds->result < 600) {
-					if ($this->config->get('globalpay_remote_liability') != 1) {
+					if ($this->config->get('payment_globalpay_remote_liability') != 1) {
 						$this->load->language('extension/payment/globalpay_remote');
 
 						$json['error'] = (string)$verify_3ds->message;
@@ -289,7 +289,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$cavv = '';
 				}
 
-				if ($this->config->get('globalpay_remote_liability') != 1) {
+				if ($this->config->get('payment_globalpay_remote_liability') != 1) {
 					// this is the check for liability shift - if the merchant does not want to accept, redirect to checkout with message
 					$this->load->language('extension/payment/globalpay_remote');
 
@@ -298,14 +298,14 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . (string)strftime("%Y%m%d%H%M%S");
 					$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> ' . (string)$md['order_ref'];
 
-					if ($this->config->get('globalpay_remote_card_data_status') == 1) {
+					if ($this->config->get('payment_globalpay_remote_card_data_status') == 1) {
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_type') . ':</strong> ' . (string)$md['cc_type'];
 						$message .= '<br /><strong>' . $this->language->get('text_last_digits') . ':</strong> ' . (string)substr($md['cc_number'], -4);
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_expire_date') . ':</strong> ' . (string)$md['cc_expire'];
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_name') . ':</strong> ' . (string)$md['cc_name'];
 					}
 
-					$this->model_extension_payment_globalpay_remote->addHistory($md['order_id'], $this->config->get('globalpay_remote_order_status_decline_id'), $message);
+					$this->model_extension_payment_globalpay_remote->addHistory($md['order_id'], $this->config->get('payment_globalpay_remote_order_status_decline_id'), $message);
 
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 

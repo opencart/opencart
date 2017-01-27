@@ -131,110 +131,110 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['firstdata_merchant_id'])) {
-			$data['firstdata_merchant_id'] = $this->request->post['firstdata_merchant_id'];
+		if (isset($this->request->post['payment_firstdata_merchant_id'])) {
+			$data['payment_firstdata_merchant_id'] = $this->request->post['payment_firstdata_merchant_id'];
 		} else {
-			$data['firstdata_merchant_id'] = $this->config->get('firstdata_merchant_id');
+			$data['payment_firstdata_merchant_id'] = $this->config->get('payment_firstdata_merchant_id');
 		}
 
-		if (isset($this->request->post['firstdata_secret'])) {
-			$data['firstdata_secret'] = $this->request->post['firstdata_secret'];
+		if (isset($this->request->post['payment_firstdata_secret'])) {
+			$data['payment_firstdata_secret'] = $this->request->post['payment_firstdata_secret'];
 		} else {
-			$data['firstdata_secret'] = $this->config->get('firstdata_secret');
+			$data['payment_firstdata_secret'] = $this->config->get('payment_firstdata_secret');
 		}
 
-		if (isset($this->request->post['firstdata_live_demo'])) {
-			$data['firstdata_live_demo'] = $this->request->post['firstdata_live_demo'];
+		if (isset($this->request->post['payment_firstdata_live_demo'])) {
+			$data['payment_firstdata_live_demo'] = $this->request->post['payment_firstdata_live_demo'];
 		} else {
-			$data['firstdata_live_demo'] = $this->config->get('firstdata_live_demo');
+			$data['payment_firstdata_live_demo'] = $this->config->get('payment_firstdata_live_demo');
 		}
 
-		if (isset($this->request->post['firstdata_geo_zone_id'])) {
-			$data['firstdata_geo_zone_id'] = $this->request->post['firstdata_geo_zone_id'];
+		if (isset($this->request->post['payment_firstdata_geo_zone_id'])) {
+			$data['payment_firstdata_geo_zone_id'] = $this->request->post['payment_firstdata_geo_zone_id'];
 		} else {
-			$data['firstdata_geo_zone_id'] = $this->config->get('firstdata_geo_zone_id');
+			$data['payment_firstdata_geo_zone_id'] = $this->config->get('payment_firstdata_geo_zone_id');
 		}
 
-		if (isset($this->request->post['firstdata_total'])) {
-			$data['firstdata_total'] = $this->request->post['firstdata_total'];
+		if (isset($this->request->post['payment_firstdata_total'])) {
+			$data['payment_firstdata_total'] = $this->request->post['payment_firstdata_total'];
 		} else {
-			$data['firstdata_total'] = $this->config->get('firstdata_total');
+			$data['payment_firstdata_total'] = $this->config->get('payment_firstdata_total');
 		}
 
-		if (isset($this->request->post['firstdata_sort_order'])) {
-			$data['firstdata_sort_order'] = $this->request->post['firstdata_sort_order'];
+		if (isset($this->request->post['payment_firstdata_sort_order'])) {
+			$data['payment_firstdata_sort_order'] = $this->request->post['payment_firstdata_sort_order'];
 		} else {
-			$data['firstdata_sort_order'] = $this->config->get('firstdata_sort_order');
+			$data['payment_firstdata_sort_order'] = $this->config->get('payment_firstdata_sort_order');
 		}
 
-		if (isset($this->request->post['firstdata_status'])) {
-			$data['firstdata_status'] = $this->request->post['firstdata_status'];
+		if (isset($this->request->post['payment_firstdata_status'])) {
+			$data['payment_firstdata_status'] = $this->request->post['payment_firstdata_status'];
 		} else {
-			$data['firstdata_status'] = $this->config->get('firstdata_status');
+			$data['payment_firstdata_status'] = $this->config->get('payment_firstdata_status');
 		}
 
-		if (isset($this->request->post['firstdata_debug'])) {
-			$data['firstdata_debug'] = $this->request->post['firstdata_debug'];
+		if (isset($this->request->post['payment_firstdata_debug'])) {
+			$data['payment_firstdata_debug'] = $this->request->post['payment_firstdata_debug'];
 		} else {
-			$data['firstdata_debug'] = $this->config->get('firstdata_debug');
+			$data['payment_firstdata_debug'] = $this->config->get('payment_firstdata_debug');
 		}
 
-		if (isset($this->request->post['firstdata_auto_settle'])) {
-			$data['firstdata_auto_settle'] = $this->request->post['firstdata_auto_settle'];
-		} elseif (!isset($this->request->post['firstdata_auto_settle']) && $this->config->get('firstdata_auto_settle') != '') {
-			$data['firstdata_auto_settle'] = $this->config->get('firstdata_auto_settle');
+		if (isset($this->request->post['payment_firstdata_auto_settle'])) {
+			$data['payment_firstdata_auto_settle'] = $this->request->post['payment_firstdata_auto_settle'];
+		} elseif (!isset($this->request->post['payment_firstdata_auto_settle']) && $this->config->get('payment_firstdata_auto_settle') != '') {
+			$data['payment_firstdata_auto_settle'] = $this->config->get('payment_firstdata_auto_settle');
 		} else {
-			$data['firstdata_auto_settle'] = 1;
+			$data['payment_firstdata_auto_settle'] = 1;
 		}
 
-		if (isset($this->request->post['firstdata_order_status_success_settled_id'])) {
-			$data['firstdata_order_status_success_settled_id'] = $this->request->post['firstdata_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_firstdata_order_status_success_settled_id'])) {
+			$data['payment_firstdata_order_status_success_settled_id'] = $this->request->post['payment_firstdata_order_status_success_settled_id'];
 		} else {
-			$data['firstdata_order_status_success_settled_id'] = $this->config->get('firstdata_order_status_success_settled_id');
+			$data['payment_firstdata_order_status_success_settled_id'] = $this->config->get('payment_firstdata_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['firstdata_order_status_success_unsettled_id'])) {
-			$data['firstdata_order_status_success_unsettled_id'] = $this->request->post['firstdata_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_firstdata_order_status_success_unsettled_id'])) {
+			$data['payment_firstdata_order_status_success_unsettled_id'] = $this->request->post['payment_firstdata_order_status_success_unsettled_id'];
 		} else {
-			$data['firstdata_order_status_success_unsettled_id'] = $this->config->get('firstdata_order_status_success_unsettled_id');
+			$data['payment_firstdata_order_status_success_unsettled_id'] = $this->config->get('payment_firstdata_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['firstdata_order_status_decline_id'])) {
-			$data['firstdata_order_status_decline_id'] = $this->request->post['firstdata_order_status_decline_id'];
+		if (isset($this->request->post['payment_firstdata_order_status_decline_id'])) {
+			$data['payment_firstdata_order_status_decline_id'] = $this->request->post['payment_firstdata_order_status_decline_id'];
 		} else {
-			$data['firstdata_order_status_decline_id'] = $this->config->get('firstdata_order_status_decline_id');
+			$data['payment_firstdata_order_status_decline_id'] = $this->config->get('payment_firstdata_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['firstdata_order_status_void_id'])) {
-			$data['firstdata_order_status_void_id'] = $this->request->post['firstdata_order_status_void_id'];
+		if (isset($this->request->post['payment_firstdata_order_status_void_id'])) {
+			$data['payment_firstdata_order_status_void_id'] = $this->request->post['payment_firstdata_order_status_void_id'];
 		} else {
-			$data['firstdata_order_status_void_id'] = $this->config->get('firstdata_order_status_void_id');
+			$data['payment_firstdata_order_status_void_id'] = $this->config->get('payment_firstdata_order_status_void_id');
 		}
 
-		if (isset($this->request->post['firstdata_live_url'])) {
-			$data['firstdata_live_url'] = $this->request->post['firstdata_live_url'];
+		if (isset($this->request->post['payment_firstdata_live_url'])) {
+			$data['payment_firstdata_live_url'] = $this->request->post['payment_firstdata_live_url'];
 		} else {
-			$data['firstdata_live_url'] = $this->config->get('firstdata_live_url');
+			$data['payment_firstdata_live_url'] = $this->config->get('payment_firstdata_live_url');
 		}
 
-		if (empty($data['firstdata_live_url'])) {
-			$data['firstdata_live_url'] = 'https://ipg-online.com/connect/gateway/processing';
+		if (empty($data['payment_firstdata_live_url'])) {
+			$data['payment_firstdata_live_url'] = 'https://ipg-online.com/connect/gateway/processing';
 		}
 
-		if (isset($this->request->post['firstdata_demo_url'])) {
-			$data['firstdata_demo_url'] = $this->request->post['firstdata_demo_url'];
+		if (isset($this->request->post['payment_firstdata_demo_url'])) {
+			$data['payment_firstdata_demo_url'] = $this->request->post['payment_firstdata_demo_url'];
 		} else {
-			$data['firstdata_demo_url'] = $this->config->get('firstdata_demo_url');
+			$data['payment_firstdata_demo_url'] = $this->config->get('payment_firstdata_demo_url');
 		}
 
-		if (isset($this->request->post['firstdata_card_storage'])) {
-			$data['firstdata_card_storage'] = $this->request->post['firstdata_card_storage'];
+		if (isset($this->request->post['payment_firstdata_card_storage'])) {
+			$data['payment_firstdata_card_storage'] = $this->request->post['payment_firstdata_card_storage'];
 		} else {
-			$data['firstdata_card_storage'] = $this->config->get('firstdata_card_storage');
+			$data['payment_firstdata_card_storage'] = $this->config->get('payment_firstdata_card_storage');
 		}
 
-		if (empty($data['firstdata_demo_url'])) {
-			$data['firstdata_demo_url'] = 'https://test.ipg-online.com/connect/gateway/processing';
+		if (empty($data['payment_firstdata_demo_url'])) {
+			$data['payment_firstdata_demo_url'] = 'https://test.ipg-online.com/connect/gateway/processing';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -255,7 +255,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('firstdata_status')) {
+		if ($this->config->get('payment_firstdata_status')) {
 			$this->load->model('extension/payment/firstdata');
 
 			$firstdata_order = $this->model_extension_payment_firstdata->getOrder($this->request->get['order_id']);
@@ -268,22 +268,22 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 				$firstdata_order['total_captured_formatted'] = $this->currency->format($firstdata_order['total_captured'], $firstdata_order['currency_code'], 1, true);
 
 				$data['firstdata_order'] = $firstdata_order;
-				$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
+				$data['merchant_id'] = $this->config->get('payment_firstdata_merchant_id');
 				$data['currency'] = $this->model_extension_payment_firstdata->mapCurrency($firstdata_order['currency_code']);
 				$data['amount'] = number_format($firstdata_order['total'], 2);
 
 				$data['request_timestamp'] = date("Y:m:d-H:i:s");
 
-				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret')));
+				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('payment_firstdata_secret')));
 
 				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'token=' . $this->session->data['token'], true);
 				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
 				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
-				if ($this->config->get('firstdata_live_demo') == 1) {
-					$data['action_url'] = $this->config->get('firstdata_live_url');
+				if ($this->config->get('payment_firstdata_live_demo') == 1) {
+					$data['action_url'] = $this->config->get('payment_firstdata_live_url');
 				} else {
-					$data['action_url'] = $this->config->get('firstdata_demo_url');
+					$data['action_url'] = $this->config->get('payment_firstdata_demo_url');
 				}
 
 				if (isset($this->session->data['void_success'])) {
@@ -384,19 +384,19 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['firstdata_merchant_id']) {
+		if (!$this->request->post['payment_firstdata_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['firstdata_secret']) {
+		if (!$this->request->post['payment_firstdata_secret']) {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->request->post['firstdata_live_url']) {
+		if (!$this->request->post['payment_firstdata_live_url']) {
 			$this->error['error_live_url'] = $this->language->get('error_live_url');
 		}
 
-		if (!$this->request->post['firstdata_demo_url']) {
+		if (!$this->request->post['payment_firstdata_demo_url']) {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 

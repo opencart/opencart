@@ -3,9 +3,9 @@ class ModelExtensionShippingECShip extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/ec_ship');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('ec_ship_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_ec_ship_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if (!$this->config->get('ec_ship_geo_zone_id')) {
+		if (!$this->config->get('shipping_ec_ship_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -263,13 +263,13 @@ class ModelExtensionShippingECShip extends Model {
 			'APL' => $this->config->get('shipping_ec_ship_air_parcel'),
 			'AEP' => $this->config->get('shipping_ec_ship_e_express_service_to_us'),
 			'AEC' => $this->config->get('shipping_ec_ship_e_express_service_to_canada'),
-			'AEG' => $this->config->get('ec_ship_e_express_service_to_united_kingdom'),
-			'AER' => $this->config->get('ec_ship_e_express_service_to_russia'),
-			'AE1' => $this->config->get('ec_ship_e_express_service_one'),
-			'AE2' => $this->config->get('ec_ship_e_express_service_two'),
-			'EMS' => $this->config->get('ec_ship_speed_post'),
-			'SMP' => $this->config->get('ec_ship_smart_post'),
-			'LCP' => $this->config->get('ec_ship_local_courier_post')
+			'AEG' => $this->config->get('shipping_ec_ship_e_express_service_to_united_kingdom'),
+			'AER' => $this->config->get('shipping_ec_ship_e_express_service_to_russia'),
+			'AE1' => $this->config->get('shipping_ec_ship_e_express_service_one'),
+			'AE2' => $this->config->get('shipping_ec_ship_e_express_service_two'),
+			'EMS' => $this->config->get('shipping_ec_ship_speed_post'),
+			'SMP' => $this->config->get('shipping_ec_ship_smart_post'),
+			'LCP' => $this->config->get('shipping_ec_ship_local_courier_post')
 		);
 
 		//Countries available service
@@ -374,8 +374,8 @@ class ModelExtensionShippingECShip extends Model {
 		$error = '';
 
 		if ($status) {
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('ec_ship_weight_class_id'));
-			$weight_code = strtolower($this->weight->getUnit($this->config->get('ec_ship_weight_class_id')));
+			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('shipping_ec_ship_weight_class_id'));
+			$weight_code = strtolower($this->weight->getUnit($this->config->get('shipping_ec_ship_weight_class_id')));
 
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 
@@ -502,8 +502,8 @@ class ModelExtensionShippingECShip extends Model {
 							'code'         => 'ec_ship.' . $key,
 							'title'        => $value['getTotalPostageReturn']['serviceName'],
 							'cost'         => $value['getTotalPostageReturn']['totalPostage'],
-							'tax_class_id' => $this->config->get('ec_ship_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($value['getTotalPostageReturn']['totalPostage'], 'HKD', $this->session->data['currency']), $this->config->get('ec_ship_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
+							'tax_class_id' => $this->config->get('shipping_ec_ship_tax_class_id'),
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($value['getTotalPostageReturn']['totalPostage'], 'HKD', $this->session->data['currency']), $this->config->get('shipping_ec_ship_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);
 					}
 				}
@@ -513,7 +513,7 @@ class ModelExtensionShippingECShip extends Model {
 					'code'       => 'ec_ship',
 					'title'      => $this->language->get('text_title'),
 					'quote'      => $quote_data,
-					'sort_order' => $this->config->get('ec_ship_sort_order'),
+					'sort_order' => $this->config->get('shipping_ec_ship_sort_order'),
 					'error'      => $error
 				);
 			}

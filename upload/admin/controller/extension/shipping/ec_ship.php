@@ -169,88 +169,88 @@ class ControllerExtensionShippingECShip extends Controller {
 			$data['shipping_ec_ship_e_express_service_to_canada'] = $this->config->get('shipping_ec_ship_e_express_service_to_canada');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_to_united_kingdom'])) {
-			$data['ec_ship_e_express_service_to_united_kingdom'] = $this->request->post['ec_ship_e_express_service_to_united_kingdom'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_to_united_kingdom'])) {
+			$data['shipping_ec_ship_e_express_service_to_united_kingdom'] = $this->request->post['shipping_ec_ship_e_express_service_to_united_kingdom'];
 		} else {
-			$data['ec_ship_e_express_service_to_united_kingdom'] = $this->config->get('ec_ship_e_express_service_to_united_kingdom');
+			$data['shipping_ec_ship_e_express_service_to_united_kingdom'] = $this->config->get('shipping_ec_ship_e_express_service_to_united_kingdom');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_to_russia'])) {
-			$data['ec_ship_e_express_service_to_russia'] = $this->request->post['ec_ship_e_express_service_to_russia'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_to_russia'])) {
+			$data['shipping_ec_ship_e_express_service_to_russia'] = $this->request->post['shipping_ec_ship_e_express_service_to_russia'];
 		} else {
-			$data['ec_ship_e_express_service_to_russia'] = $this->config->get('ec_ship_e_express_service_to_russia');
+			$data['shipping_ec_ship_e_express_service_to_russia'] = $this->config->get('shipping_ec_ship_e_express_service_to_russia');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_one'])) {
-			$data['ec_ship_e_express_service_one'] = $this->request->post['ec_ship_e_express_service_one'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_one'])) {
+			$data['shipping_ec_ship_e_express_service_one'] = $this->request->post['shipping_ec_ship_e_express_service_one'];
 		} else {
-			$data['ec_ship_e_express_service_one'] = $this->config->get('ec_ship_e_express_service_one');
+			$data['shipping_ec_ship_e_express_service_one'] = $this->config->get('shipping_ec_ship_e_express_service_one');
 		}
 
-		if (isset($this->request->post['ec_ship_e_express_service_two'])) {
-			$data['ec_ship_e_express_service_two'] = $this->request->post['ec_ship_e_express_service_two'];
+		if (isset($this->request->post['shipping_ec_ship_e_express_service_two'])) {
+			$data['shipping_ec_ship_e_express_service_two'] = $this->request->post['shipping_ec_ship_e_express_service_two'];
 		} else {
-			$data['ec_ship_e_express_service_two'] = $this->config->get('ec_ship_e_express_service_two');
+			$data['shipping_ec_ship_e_express_service_two'] = $this->config->get('shipping_ec_ship_e_express_service_two');
 		}
 
-		if (isset($this->request->post['ec_ship_speed_post'])) {
-			$data['ec_ship_speed_post'] = $this->request->post['ec_ship_speed_post'];
+		if (isset($this->request->post['shipping_ec_ship_speed_post'])) {
+			$data['shipping_ec_ship_speed_post'] = $this->request->post['shipping_ec_ship_speed_post'];
 		} else {
-			$data['ec_ship_speed_post'] = $this->config->get('ec_ship_speed_post');
+			$data['shipping_ec_ship_speed_post'] = $this->config->get('shipping_ec_ship_speed_post');
 		}
 
-		if (isset($this->request->post['ec_ship_smart_post'])) {
-			$data['ec_ship_smart_post'] = $this->request->post['ec_ship_smart_post'];
+		if (isset($this->request->post['shipping_ec_ship_smart_post'])) {
+			$data['shipping_ec_ship_smart_post'] = $this->request->post['shipping_ec_ship_smart_post'];
 		} else {
-			$data['ec_ship_smart_post'] = $this->config->get('ec_ship_smart_post');
+			$data['shipping_ec_ship_smart_post'] = $this->config->get('shipping_ec_ship_smart_post');
 		}
 
-		if (isset($this->request->post['ec_ship_local_courier_post'])) {
-			$data['ec_ship_local_courier_post'] = $this->request->post['ec_ship_local_courier_post'];
+		if (isset($this->request->post['shipping_ec_ship_local_courier_post'])) {
+			$data['shipping_ec_ship_local_courier_post'] = $this->request->post['shipping_ec_ship_local_courier_post'];
 		} else {
-			$data['ec_ship_local_courier_post'] = $this->config->get('ec_ship_local_courier_post');
+			$data['shipping_ec_ship_local_courier_post'] = $this->config->get('shipping_ec_ship_local_courier_post');
 		}
 
-		if (isset($this->request->post['ec_ship_weight_class_id'])) {
-			$data['ec_ship_weight_class_id'] = $this->request->post['ec_ship_weight_class_id'];
+		if (isset($this->request->post['shipping_ec_ship_weight_class_id'])) {
+			$data['shipping_ec_ship_weight_class_id'] = $this->request->post['shipping_ec_ship_weight_class_id'];
 		} else {
-			$data['ec_ship_weight_class_id'] = $this->config->get('ec_ship_weight_class_id');
+			$data['shipping_ec_ship_weight_class_id'] = $this->config->get('shipping_ec_ship_weight_class_id');
 		}
 
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 
-		if (isset($this->request->post['ec_ship_tax_class_id'])) {
-			$data['ec_ship_tax_class_id'] = $this->request->post['ec_ship_tax_class_id'];
+		if (isset($this->request->post['shipping_ec_ship_tax_class_id'])) {
+			$data['shipping_ec_ship_tax_class_id'] = $this->request->post['shipping_ec_ship_tax_class_id'];
 		} else {
-			$data['ec_ship_tax_class_id'] = $this->config->get('ec_ship_tax_class_id');
+			$data['shipping_ec_ship_tax_class_id'] = $this->config->get('shipping_ec_ship_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['ec_ship_geo_zone_id'])) {
-			$data['ec_ship_geo_zone_id'] = $this->request->post['ec_ship_geo_zone_id'];
+		if (isset($this->request->post['shipping_ec_ship_geo_zone_id'])) {
+			$data['shipping_ec_ship_geo_zone_id'] = $this->request->post['shipping_ec_ship_geo_zone_id'];
 		} else {
-			$data['ec_ship_geo_zone_id'] = $this->config->get('ec_ship_geo_zone_id');
+			$data['shipping_ec_ship_geo_zone_id'] = $this->config->get('shipping_ec_ship_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['ec_ship_status'])) {
-			$data['ec_ship_status'] = $this->request->post['ec_ship_status'];
+		if (isset($this->request->post['shipping_ec_ship_status'])) {
+			$data['shipping_ec_ship_status'] = $this->request->post['shipping_ec_ship_status'];
 		} else {
-			$data['ec_ship_status'] = $this->config->get('ec_ship_status');
+			$data['shipping_ec_ship_status'] = $this->config->get('shipping_ec_ship_status');
 		}
 
-		if (isset($this->request->post['ec_ship_sort_order'])) {
-			$data['ec_ship_sort_order'] = $this->request->post['ec_ship_sort_order'];
+		if (isset($this->request->post['shipping_ec_ship_sort_order'])) {
+			$data['shipping_ec_ship_sort_order'] = $this->request->post['shipping_ec_ship_sort_order'];
 		} else {
-			$data['ec_ship_sort_order'] = $this->config->get('ec_ship_sort_order');
+			$data['shipping_ec_ship_sort_order'] = $this->config->get('shipping_ec_ship_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

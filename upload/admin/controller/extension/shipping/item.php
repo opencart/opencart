@@ -61,26 +61,26 @@ class ControllerExtensionShippingItem extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['item_cost'])) {
-			$data['item_cost'] = $this->request->post['item_cost'];
+		if (isset($this->request->post['shipping_item_cost'])) {
+			$data['shipping_item_cost'] = $this->request->post['shipping_item_cost'];
 		} else {
-			$data['item_cost'] = $this->config->get('item_cost');
+			$data['shipping_item_cost'] = $this->config->get('shipping_item_cost');
 		}
 
-		if (isset($this->request->post['item_tax_class_id'])) {
-			$data['item_tax_class_id'] = $this->request->post['item_tax_class_id'];
+		if (isset($this->request->post['shipping_item_tax_class_id'])) {
+			$data['shipping_item_tax_class_id'] = $this->request->post['shipping_item_tax_class_id'];
 		} else {
-			$data['item_tax_class_id'] = $this->config->get('item_tax_class_id');
+			$data['shipping_item_tax_class_id'] = $this->config->get('shipping_item_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['item_geo_zone_id'])) {
-			$data['item_geo_zone_id'] = $this->request->post['item_geo_zone_id'];
+		if (isset($this->request->post['shipping_item_geo_zone_id'])) {
+			$data['shipping_item_geo_zone_id'] = $this->request->post['shipping_item_geo_zone_id'];
 		} else {
-			$data['item_geo_zone_id'] = $this->config->get('item_geo_zone_id');
+			$data['shipping_item_geo_zone_id'] = $this->config->get('shipping_item_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');

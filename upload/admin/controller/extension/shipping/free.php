@@ -62,32 +62,32 @@ class ControllerExtensionShippingFree extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['free_total'])) {
-			$data['free_total'] = $this->request->post['free_total'];
+		if (isset($this->request->post['shipping_free_total'])) {
+			$data['shipping_free_total'] = $this->request->post['shipping_free_total'];
 		} else {
-			$data['free_total'] = $this->config->get('free_total');
+			$data['shipping_free_total'] = $this->config->get('shipping_free_total');
 		}
 
-		if (isset($this->request->post['free_geo_zone_id'])) {
-			$data['free_geo_zone_id'] = $this->request->post['free_geo_zone_id'];
+		if (isset($this->request->post['shipping_free_geo_zone_id'])) {
+			$data['shipping_free_geo_zone_id'] = $this->request->post['shipping_free_geo_zone_id'];
 		} else {
-			$data['free_geo_zone_id'] = $this->config->get('free_geo_zone_id');
+			$data['shipping_free_geo_zone_id'] = $this->config->get('shipping_free_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['free_status'])) {
-			$data['free_status'] = $this->request->post['free_status'];
+		if (isset($this->request->post['shipping_free_status'])) {
+			$data['shipping_free_status'] = $this->request->post['shipping_free_status'];
 		} else {
-			$data['free_status'] = $this->config->get('free_status');
+			$data['shipping_free_status'] = $this->config->get('shipping_free_status');
 		}
 
-		if (isset($this->request->post['free_sort_order'])) {
-			$data['free_sort_order'] = $this->request->post['free_sort_order'];
+		if (isset($this->request->post['shipping_free_sort_order'])) {
+			$data['shipping_free_sort_order'] = $this->request->post['shipping_free_sort_order'];
 		} else {
-			$data['free_sort_order'] = $this->config->get('free_sort_order');
+			$data['shipping_free_sort_order'] = $this->config->get('shipping_free_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

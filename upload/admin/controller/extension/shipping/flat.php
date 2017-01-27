@@ -61,42 +61,42 @@ class ControllerExtensionShippingFlat extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['flat_cost'])) {
-			$data['flat_cost'] = $this->request->post['flat_cost'];
+		if (isset($this->request->post['shipping_flat_cost'])) {
+			$data['shipping_flat_cost'] = $this->request->post['shipping_flat_cost'];
 		} else {
-			$data['flat_cost'] = $this->config->get('flat_cost');
+			$data['shipping_flat_cost'] = $this->config->get('shipping_flat_cost');
 		}
 
-		if (isset($this->request->post['flat_tax_class_id'])) {
-			$data['flat_tax_class_id'] = $this->request->post['flat_tax_class_id'];
+		if (isset($this->request->post['shipping_flat_tax_class_id'])) {
+			$data['shipping_flat_tax_class_id'] = $this->request->post['shipping_flat_tax_class_id'];
 		} else {
-			$data['flat_tax_class_id'] = $this->config->get('flat_tax_class_id');
+			$data['shipping_flat_tax_class_id'] = $this->config->get('shipping_flat_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['flat_geo_zone_id'])) {
-			$data['flat_geo_zone_id'] = $this->request->post['flat_geo_zone_id'];
+		if (isset($this->request->post['shipping_flat_geo_zone_id'])) {
+			$data['shipping_flat_geo_zone_id'] = $this->request->post['shipping_flat_geo_zone_id'];
 		} else {
-			$data['flat_geo_zone_id'] = $this->config->get('flat_geo_zone_id');
+			$data['shipping_flat_geo_zone_id'] = $this->config->get('shipping_flat_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['flat_status'])) {
-			$data['flat_status'] = $this->request->post['flat_status'];
+		if (isset($this->request->post['shipping_flat_status'])) {
+			$data['shipping_flat_status'] = $this->request->post['shipping_flat_status'];
 		} else {
-			$data['flat_status'] = $this->config->get('flat_status');
+			$data['shipping_flat_status'] = $this->config->get('shipping_flat_status');
 		}
 
-		if (isset($this->request->post['flat_sort_order'])) {
-			$data['flat_sort_order'] = $this->request->post['flat_sort_order'];
+		if (isset($this->request->post['shipping_flat_sort_order'])) {
+			$data['shipping_flat_sort_order'] = $this->request->post['shipping_flat_sort_order'];
 		} else {
-			$data['flat_sort_order'] = $this->config->get('flat_sort_order');
+			$data['shipping_flat_sort_order'] = $this->config->get('shipping_flat_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

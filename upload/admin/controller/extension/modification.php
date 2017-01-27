@@ -113,7 +113,7 @@ class ControllerExtensionModification extends Controller {
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
 
-			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
+			// This is purly for developers so they can run mods directly and have them run without upload after each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
 			if ($files) {
@@ -137,7 +137,7 @@ class ControllerExtensionModification extends Controller {
 				if (empty($xml)){
 					continue;
 				}
-				
+
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);

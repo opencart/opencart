@@ -85,68 +85,68 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['authorizenet_sim_merchant'])) {
-			$data['authorizenet_sim_merchant'] = $this->request->post['authorizenet_sim_merchant'];
+		if (isset($this->request->post['payment_authorizenet_sim_merchant'])) {
+			$data['payment_authorizenet_sim_merchant'] = $this->request->post['payment_authorizenet_sim_merchant'];
 		} else {
-			$data['authorizenet_sim_merchant'] = $this->config->get('authorizenet_sim_merchant');
+			$data['payment_authorizenet_sim_merchant'] = $this->config->get('payment_authorizenet_sim_merchant');
 		}
 
-		if (isset($this->request->post['authorizenet_sim_key'])) {
-			$data['authorizenet_sim_key'] = $this->request->post['authorizenet_sim_key'];
+		if (isset($this->request->post['payment_authorizenet_sim_key'])) {
+			$data['payment_authorizenet_sim_key'] = $this->request->post['payment_authorizenet_sim_key'];
 		} else {
-			$data['authorizenet_sim_key'] = $this->config->get('authorizenet_sim_key');
+			$data['payment_authorizenet_sim_key'] = $this->config->get('payment_authorizenet_sim_key');
 		}
 
-		if (isset($this->request->post['authorizenet_sim_test'])) {
-			$data['authorizenet_sim_test'] = $this->request->post['authorizenet_sim_test'];
+		if (isset($this->request->post['payment_authorizenet_sim_test'])) {
+			$data['payment_authorizenet_sim_test'] = $this->request->post['payment_authorizenet_sim_test'];
 		} else {
-			$data['authorizenet_sim_test'] = $this->config->get('authorizenet_sim_test');
+			$data['payment_authorizenet_sim_test'] = $this->config->get('payment_authorizenet_sim_test');
 		}
 
 		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/authorizenet_sim/callback';
 
-		if (isset($this->request->post['authorizenet_sim_md5'])) {
-			$data['authorizenet_sim_md5'] = $this->request->post['authorizenet_sim_md5'];
+		if (isset($this->request->post['payment_authorizenet_sim_md5'])) {
+			$data['payment_authorizenet_sim_md5'] = $this->request->post['payment_authorizenet_sim_md5'];
 		} else {
-			$data['authorizenet_sim_md5'] = $this->config->get('authorizenet_sim_md5');
+			$data['payment_authorizenet_sim_md5'] = $this->config->get('payment_authorizenet_sim_md5');
 		}
 
-		if (isset($this->request->post['authorizenet_sim_total'])) {
-			$data['authorizenet_sim_total'] = $this->request->post['authorizenet_sim_total'];
+		if (isset($this->request->post['payment_authorizenet_sim_total'])) {
+			$data['payment_authorizenet_sim_total'] = $this->request->post['payment_authorizenet_sim_total'];
 		} else {
-			$data['authorizenet_sim_total'] = $this->config->get('authorizenet_sim_total');
+			$data['payment_authorizenet_sim_total'] = $this->config->get('payment_authorizenet_sim_total');
 		}
 
-		if (isset($this->request->post['authorizenet_sim_order_status_id'])) {
-			$data['authorizenet_sim_order_status_id'] = $this->request->post['authorizenet_sim_order_status_id'];
+		if (isset($this->request->post['payment_authorizenet_sim_order_status_id'])) {
+			$data['payment_authorizenet_sim_order_status_id'] = $this->request->post['payment_authorizenet_sim_order_status_id'];
 		} else {
-			$data['authorizenet_sim_order_status_id'] = $this->config->get('authorizenet_sim_order_status_id');
+			$data['payment_authorizenet_sim_order_status_id'] = $this->config->get('payment_authorizenet_sim_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['authorizenet_sim_geo_zone_id'])) {
-			$data['authorizenet_sim_geo_zone_id'] = $this->request->post['authorizenet_sim_geo_zone_id'];
+		if (isset($this->request->post['payment_authorizenet_sim_geo_zone_id'])) {
+			$data['payment_authorizenet_sim_geo_zone_id'] = $this->request->post['payment_authorizenet_sim_geo_zone_id'];
 		} else {
-			$data['authorizenet_sim_geo_zone_id'] = $this->config->get('authorizenet_sim_geo_zone_id');
+			$data['payment_authorizenet_sim_geo_zone_id'] = $this->config->get('payment_authorizenet_sim_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['authorizenet_sim_status'])) {
-			$data['authorizenet_sim_status'] = $this->request->post['authorizenet_sim_status'];
+		if (isset($this->request->post['payment_authorizenet_sim_status'])) {
+			$data['payment_authorizenet_sim_status'] = $this->request->post['payment_authorizenet_sim_status'];
 		} else {
-			$data['authorizenet_sim_status'] = $this->config->get('authorizenet_sim_status');
+			$data['payment_authorizenet_sim_status'] = $this->config->get('payment_authorizenet_sim_status');
 		}
 
-		if (isset($this->request->post['authorizenet_sim_sort_order'])) {
-			$data['authorizenet_sim_sort_order'] = $this->request->post['authorizenet_sim_sort_order'];
+		if (isset($this->request->post['payment_authorizenet_sim_sort_order'])) {
+			$data['payment_authorizenet_sim_sort_order'] = $this->request->post['payment_authorizenet_sim_sort_order'];
 		} else {
-			$data['authorizenet_sim_sort_order'] = $this->config->get('authorizenet_sim_sort_order');
+			$data['payment_authorizenet_sim_sort_order'] = $this->config->get('payment_authorizenet_sim_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -161,11 +161,11 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['authorizenet_sim_merchant']) {
+		if (!$this->request->post['payment_authorizenet_sim_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 
-		if (!$this->request->post['authorizenet_sim_key']) {
+		if (!$this->request->post['payment_authorizenet_sim_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

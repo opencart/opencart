@@ -43,13 +43,13 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->load->model('extension/payment/divido');
 		$this->load->model('checkout/order');
 
-		$api_key   = $this->config->get('divido_api_key');
+		$api_key   = $this->config->get('payment_divido_api_key');
 		$key_parts = explode('.', $api_key);
 		$js_key    = strtolower(array_shift($key_parts));
 
 		list($total, $totals) = $this->model_extension_payment_divido->getOrderTotals();
 
-		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
 		foreach ($plans as $key => $plan) {
@@ -122,7 +122,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		}
 
 		if ($data->status == self::STATUS_SIGNED) {
-			$status_override = $this->config->get('divido_order_status_id');
+			$status_override = $this->config->get('payment_divido_order_status_id');
 			if (!empty($status_override)) {
 				$this->status_id[self::STATUS_SIGNED] = $status_override;
 			}
@@ -151,9 +151,9 @@ class ControllerExtensionPaymentDivido extends Controller {
 			return false;
 		}
 
-		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
-		$api_key   = $this->config->get('divido_api_key');
+		$api_key   = $this->config->get('payment_divido_api_key');
 
 		$deposit = $this->request->post['deposit'];
 		$finance = $this->request->post['finance'];
@@ -279,10 +279,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 			return null;
 		}
 
-		$this->model_extension_payment_divido->setMerchant($this->config->get('divido_api_key'));
+		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
-		$product_selection = $this->config->get('divido_productselection');
-		$price_threshold   = $this->config->get('divido_price_threshold');
+		$product_selection = $this->config->get('payment_divido_productselection');
+		$price_threshold   = $this->config->get('payment_divido_price_threshold');
 		$product_id        = $args['product_id'];
 		$product_price     = $args['price'];
 		$type              = $args['type'];

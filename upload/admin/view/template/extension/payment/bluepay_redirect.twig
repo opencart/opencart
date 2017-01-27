@@ -28,16 +28,16 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-vendor">{{ entry_vendor }}</label>
             <div class="col-sm-10">
-              <input type="text" name="bluepay_redirect_account_id" value="{{ bluepay_redirect_account_id }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control" />
+              <input type="text" name="payment_bluepay_redirect_account_id" value="{{ payment_bluepay_redirect_account_id }}" placeholder="{{ entry_vendor }}" id="input-vendor" class="form-control" />
               {% if error_account_id %}
               <div class="text-danger">{{ error_account_id }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="bluepay_redirect_secret_key">{{ entry_secret_key }}</label>
+            <label class="col-sm-2 control-label" for="payment_bluepay_redirect_secret_key">{{ entry_secret_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="bluepay_redirect_secret_key" value="{{ bluepay_redirect_secret_key }}" placeholder="{{ entry_secret_key }}" id="bluepay_redirect_secret_key" class="form-control" />
+              <input type="text" name="payment_bluepay_redirect_secret_key" value="{{ payment_bluepay_redirect_secret_key }}" placeholder="{{ entry_secret_key }}" id="payment_bluepay_redirect_secret_key" class="form-control" />
               {% if error_secret_key %}
               <div class="text-danger">{{ error_secret_key }}</div>
               {% endif %}
@@ -46,13 +46,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_test" id="input-test" class="form-control">
-                {% if bluepay_redirect_test == 'test' %}
+              <select name="payment_bluepay_redirect_test" id="input-test" class="form-control">
+                {% if payment_bluepay_redirect_test == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
                 {% endif %}
-                {% if bluepay_redirect_test == 'live' %}
+                {% if payment_bluepay_redirect_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
@@ -63,13 +63,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="{{ help_transaction }}">{{ entry_transaction }}</span></label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_transaction" id="input-transaction" class="form-control">
-                {% if bluepay_redirect_transaction == 'SALE' %}
+              <select name="payment_bluepay_redirect_transaction" id="input-transaction" class="form-control">
+                {% if payment_bluepay_redirect_transaction == 'SALE' %}
                 <option value="SALE" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="SALE">{{ text_sale }}</option>
                 {% endif %}
-                {% if bluepay_redirect_transaction == 'AUTH' %}
+                {% if payment_bluepay_redirect_transaction == 'AUTH' %}
                 <option value="AUTH" selected="selected">{{ text_authenticate }}</option>
                 {% else %}
                 <option value="AUTH">{{ text_authenticate }}</option>
@@ -80,14 +80,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="bluepay_redirect_total" value="{{ bluepay_redirect_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_bluepay_redirect_total" value="{{ payment_bluepay_redirect_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-card">{{ entry_card }}</label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_card" id="input-card" class="form-control">
-                {% if bluepay_redirect_card %}
+              <select name="payment_bluepay_redirect_card" id="input-card" class="form-control">
+                {% if payment_bluepay_redirect_card %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -100,9 +100,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_bluepay_redirect_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == bluepay_redirect_order_status_id %}
+                {% if order_status.order_status_id == payment_bluepay_redirect_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -114,10 +114,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_bluepay_redirect_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == bluepay_redirect_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_bluepay_redirect_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -129,8 +129,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_debug" id="input-debug" class="form-control">
-                {% if bluepay_redirect_debug %}
+              <select name="payment_bluepay_redirect_debug" id="input-debug" class="form-control">
+                {% if payment_bluepay_redirect_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -143,8 +143,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="bluepay_redirect_status" id="input-status" class="form-control">
-                {% if bluepay_redirect_status %}
+              <select name="payment_bluepay_redirect_status" id="input-status" class="form-control">
+                {% if payment_bluepay_redirect_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

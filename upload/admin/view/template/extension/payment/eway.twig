@@ -29,8 +29,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-paymode">{{ entry_paymode }}</label>
             <div class="col-sm-10">
-              <select name="eway_paymode" id="input-test" class="form-control">
-				{% if eway_paymode == 'iframe' %}
+              <select name="payment_eway_paymode" id="input-test" class="form-control">
+				{% if payment_eway_paymode == 'iframe' %}
 				  <option value="iframe" selected="selected">{{ text_iframe }}</option>
 				  <option value="transparent">{{ text_transparent }}</option>
 				{% else %}
@@ -43,8 +43,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-test"><span data-toggle="tooltip" title="{{ help_testmode }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
-              <select name="eway_test" id="input-test" class="form-control">
-				{% if eway_test %}
+              <select name="payment_eway_test" id="input-test" class="form-control">
+				{% if payment_eway_test %}
 				  <option value="1" selected="selected">{{ text_yes }}</option>
 				  <option value="0">{{ text_no }}</option>
 				{% else %}
@@ -89,8 +89,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-transaction-method"><span data-toggle="tooltip" title="{{ help_transaction_method }}">{{ entry_transaction_method }}</span></label>
             <div class="col-sm-10">
-              <select name="eway_transaction_method" id="input-transaction-method" class="form-control">
-				{% if eway_transaction_method == 'auth' %}
+              <select name="payment_eway_transaction_method" id="input-transaction-method" class="form-control">
+				{% if payment_eway_transaction_method == 'auth' %}
 				  <option value="payment">{{ text_sale }}</option>
 				  <option value="auth" selected="selected">{{ text_authorisation }}</option>
 				{% else %}
@@ -104,32 +104,32 @@
             <label class="col-sm-2 control-label" for="eway_payment_type">{{ entry_payment_type }}</label>
             <div class="col-sm-10">
               <p>
-                <input type="hidden" name="eway_payment_type[visa]" value="0" />
-                <input type='checkbox' name='eway_payment_type[visa]' id="eway_payment_type" value='1' {{ eway_payment_type.visa is defined and eway_payment_type.visa == 1 ? 'checked="checked"' : '' }} /> CC - Visa
+                <input type="hidden" name="payment_eway_payment_type[visa]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[visa]' id="eway_payment_type" value='1' {{ payment_eway_payment_type.visa is defined and payment_eway_payment_type.visa == 1 ? 'checked="checked"' : '' }} /> CC - Visa
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[mastercard]" value="0" />
-                <input type='checkbox' name='eway_payment_type[mastercard]' value='1' {{ eway_payment_type.mastercard is defined and eway_payment_type.mastercard == 1 ? 'checked="checked"' : '' }} /> CC - MasterCard
+                <input type="hidden" name="payment_eway_payment_type[mastercard]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[mastercard]' value='1' {{ payment_eway_payment_type.mastercard is defined and payment_eway_payment_type.mastercard == 1 ? 'checked="checked"' : '' }} /> CC - MasterCard
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[amex]" value="0" />
-                <input type='checkbox' name='eway_payment_type[amex]' value='1' {{ eway_payment_type.amex is defined and eway_payment_type.amex == 1 ? 'checked="checked"' : '' }} /> CC - Amex
+                <input type="hidden" name="payment_eway_payment_type[amex]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[amex]' value='1' {{ payment_eway_payment_type.amex is defined and payment_eway_payment_type.amex == 1 ? 'checked="checked"' : '' }} /> CC - Amex
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[diners]" value="0" />
-                <input type='checkbox' name='eway_payment_type[diners]' value='1' {{ eway_payment_type.diners is defined and eway_payment_type.diners == 1 ? 'checked="checked"' : '' }} /> CC - Diners Club
+                <input type="hidden" name="payment_eway_payment_type[diners]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[diners]' value='1' {{ payment_eway_payment_type.diners is defined and payment_eway_payment_type.diners == 1 ? 'checked="checked"' : '' }} /> CC - Diners Club
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[jcb]" value="0" />
-                <input type='checkbox' name='eway_payment_type[jcb]' value='1' {{ eway_payment_type.jcb is defined and eway_payment_type.jcb == 1 ? 'checked="checked"' : '' }} /> CC - JCB
+                <input type="hidden" name="payment_eway_payment_type[jcb]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[jcb]' value='1' {{ payment_eway_payment_type.jcb is defined and payment_eway_payment_type.jcb == 1 ? 'checked="checked"' : '' }} /> CC - JCB
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[paypal]" value="0" />
-                <input type='checkbox' name='eway_payment_type[paypal]' value='1' {{ eway_payment_type.paypal is defined and eway_payment_type.paypal == 1 ? 'checked="checked"' : '' }} /> PayPal
+                <input type="hidden" name="payment_eway_payment_type[paypal]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[paypal]' value='1' {{ payment_eway_payment_type.paypal is defined and payment_eway_payment_type.paypal == 1 ? 'checked="checked"' : '' }} /> PayPal
               </p>
               <p>
-                <input type="hidden" name="eway_payment_type[masterpass]" value="0" />
-                <input type='checkbox' name='eway_payment_type[masterpass]' value='1' {{ eway_payment_type.masterpass is defined and eway_payment_type.masterpass == 1 ? 'checked="checked"' : '' }} /> MasterPass
+                <input type="hidden" name="payment_eway_payment_type[masterpass]" value="0" />
+                <input type='checkbox' name='payment_eway_payment_type[masterpass]' value='1' {{ payment_eway_payment_type.masterpass is defined and payment_eway_payment_type.masterpass == 1 ? 'checked="checked"' : '' }} /> MasterPass
               </p>
 			  {% if error_payment_type %}
 			    <div class="text-danger">{{ error_payment_type }}</div>
@@ -139,10 +139,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="eway_standard_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_eway_standard_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
 				{% for geo_zone in geo_zones %}
-				  {% if geo_zone.geo_zone_id == eway_standard_geo_zone_id %}
+				  {% if geo_zone.geo_zone_id == payment_eway_standard_geo_zone_id %}
 				    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
 				  {% else %}
 				    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -154,9 +154,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="eway_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_eway_order_status_id" id="input-order-status" class="form-control">
 				{% for order_status in order_statuses %}
-                  {% if order_status.order_status_id == eway_order_status_id %}
+                  {% if order_status.order_status_id == payment_eway_order_status_id %}
 				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 				  {% else %}
 				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -168,9 +168,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
             <div class="col-sm-10">
-              <select name="eway_order_status_refunded_id" id="input-order-status-refund" class="form-control">
+              <select name="payment_eway_order_status_refunded_id" id="input-order-status-refund" class="form-control">
 				{% for order_status in order_statuses %}
-				  {% if order_status.order_status_id == eway_order_status_refunded_id %}
+				  {% if order_status.order_status_id == payment_eway_order_status_refunded_id %}
 				    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
 				  {% else %}
 				    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

@@ -24,7 +24,7 @@ class ModelExtensionPaymentDivido extends Model {
 			return array();
 		}
 
-		$cart_threshold = $this->config->get('divido_cart_threshold');
+		$cart_threshold = $this->config->get('payment_divido_cart_threshold');
 		if ($cart_threshold > $total) {
 			return array();
 		}
@@ -45,7 +45,7 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$title = $this->language->get('text_checkout_title');
-		if ($title_override = $this->config->get('divido_title')) {
+		if ($title_override = $this->config->get('payment_divido_title')) {
 			$title = $title_override;
 		}
 
@@ -53,7 +53,7 @@ class ModelExtensionPaymentDivido extends Model {
 			'code' => 'divido',
 			'title' => $title,
 			'terms' => '',
-			'sort_order' => $this->config->get('divido_sort_order')
+			'sort_order' => $this->config->get('payment_divido_sort_order')
 		);
 
 		return $method_data;
@@ -64,8 +64,8 @@ class ModelExtensionPaymentDivido extends Model {
 	}
 
 	public function isEnabled() {
-		$api_key = $this->config->get('divido_api_key');
-		$enabled = $this->config->get('divido_status');
+		$api_key = $this->config->get('payment_divido_api_key');
+		$enabled = $this->config->get('payment_divido_status');
 
 		return !empty($api_key) && $enabled == 1;
 	}
@@ -116,13 +116,13 @@ class ModelExtensionPaymentDivido extends Model {
 	}
 	public function getGlobalSelectedPlans() {
 		$all_plans     = $this->getAllPlans();
-		$display_plans = $this->config->get('divido_planselection');
+		$display_plans = $this->config->get('payment_divido_planselection');
 
 		if ($display_plans == 'all' || empty($display_plans)) {
 			return $all_plans;
 		}
 
-		$selected_plans = $this->config->get('divido_plans_selected');
+		$selected_plans = $this->config->get('payment_divido_plans_selected');
 		if (!$selected_plans) {
 			return array();
 		}
@@ -148,7 +148,7 @@ class ModelExtensionPaymentDivido extends Model {
 			return $plans;
 		}
 
-		$api_key = $this->config->get('divido_api_key');
+		$api_key = $this->config->get('payment_divido_api_key');
 		if (!$api_key) {
 			throw new Exception("No Divido api-key defined");
 		}
@@ -257,9 +257,9 @@ class ModelExtensionPaymentDivido extends Model {
 
 		$product_info       = $this->model_catalog_product->getProduct($product_id);
 		$settings           = $this->getProductSettings($product_id);
-		$product_selection  = $this->config->get('divido_productselection');
-		$divido_categories  = $this->config->get('divido_categories');
-		$price_threshold    = $this->config->get('divido_price_threshold');
+		$product_selection  = $this->config->get('payment_divido_productselection');
+		$divido_categories  = $this->config->get('payment_divido_categories');
+		$price_threshold    = $this->config->get('payment_divido_price_threshold');
 
 		if ($divido_categories) {
 			$product_categories = $this->model_catalog_product->getCategories($product_id);

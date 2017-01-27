@@ -69,48 +69,48 @@ class ControllerExtensionPaymentCheque extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cheque_payable'])) {
-			$data['cheque_payable'] = $this->request->post['cheque_payable'];
+		if (isset($this->request->post['payment_cheque_payable'])) {
+			$data['payment_cheque_payable'] = $this->request->post['payment_cheque_payable'];
 		} else {
-			$data['cheque_payable'] = $this->config->get('cheque_payable');
+			$data['payment_cheque_payable'] = $this->config->get('payment_cheque_payable');
 		}
 
-		if (isset($this->request->post['cheque_total'])) {
-			$data['cheque_total'] = $this->request->post['cheque_total'];
+		if (isset($this->request->post['payment_cheque_total'])) {
+			$data['payment_cheque_total'] = $this->request->post['payment_cheque_total'];
 		} else {
-			$data['cheque_total'] = $this->config->get('cheque_total');
+			$data['payment_cheque_total'] = $this->config->get('payment_cheque_total');
 		}
 
-		if (isset($this->request->post['cheque_order_status_id'])) {
-			$data['cheque_order_status_id'] = $this->request->post['cheque_order_status_id'];
+		if (isset($this->request->post['payment_cheque_order_status_id'])) {
+			$data['payment_cheque_order_status_id'] = $this->request->post['payment_cheque_order_status_id'];
 		} else {
-			$data['cheque_order_status_id'] = $this->config->get('cheque_order_status_id');
+			$data['payment_cheque_order_status_id'] = $this->config->get('payment_cheque_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['cheque_geo_zone_id'])) {
-			$data['cheque_geo_zone_id'] = $this->request->post['cheque_geo_zone_id'];
+		if (isset($this->request->post['payment_cheque_geo_zone_id'])) {
+			$data['payment_cheque_geo_zone_id'] = $this->request->post['payment_cheque_geo_zone_id'];
 		} else {
-			$data['cheque_geo_zone_id'] = $this->config->get('cheque_geo_zone_id');
+			$data['payment_cheque_geo_zone_id'] = $this->config->get('payment_cheque_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['cheque_status'])) {
-			$data['cheque_status'] = $this->request->post['cheque_status'];
+		if (isset($this->request->post['payment_cheque_status'])) {
+			$data['payment_cheque_status'] = $this->request->post['payment_cheque_status'];
 		} else {
-			$data['cheque_status'] = $this->config->get('cheque_status');
+			$data['payment_cheque_status'] = $this->config->get('payment_cheque_status');
 		}
 
-		if (isset($this->request->post['cheque_sort_order'])) {
-			$data['cheque_sort_order'] = $this->request->post['cheque_sort_order'];
+		if (isset($this->request->post['payment_cheque_sort_order'])) {
+			$data['payment_cheque_sort_order'] = $this->request->post['payment_cheque_sort_order'];
 		} else {
-			$data['cheque_sort_order'] = $this->config->get('cheque_sort_order');
+			$data['payment_cheque_sort_order'] = $this->config->get('payment_cheque_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -125,7 +125,7 @@ class ControllerExtensionPaymentCheque extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['cheque_payable']) {
+		if (!$this->request->post['payment_cheque_payable']) {
 			$this->error['payable'] = $this->language->get('error_payable');
 		}
 

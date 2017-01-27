@@ -37,9 +37,9 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 	}
 
 	public function send() {
-		if ($this->config->get('authorizenet_aim_server') == 'live') {
+		if ($this->config->get('payment_authorizenet_aim_server') == 'live') {
 			$url = 'https://secure.authorize.net/gateway/transact.dll';
-		} elseif ($this->config->get('authorizenet_aim_server') == 'test') {
+		} elseif ($this->config->get('payment_authorizenet_aim_server') == 'test') {
 			$url = 'https://test.authorize.net/gateway/transact.dll';
 		}
 
@@ -52,7 +52,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 		$data = array();
 
 		$data['x_login'] = $this->config->get('payment_authorizenet_aim_login');
-		$data['x_tran_key'] = $this->config->get('authorizenet_aim_key');
+		$data['x_tran_key'] = $this->config->get('payment_authorizenet_aim_key');
 		$data['x_version'] = '3.1';
 		$data['x_delim_data'] = 'true';
 		$data['x_delim_char'] = '|';
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
 		$data['x_currency_code'] = $this->session->data['currency'];
 		$data['x_method'] = 'CC';
-		$data['x_type'] = ($this->config->get('authorizenet_aim_method') == 'capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY';
+		$data['x_type'] = ($this->config->get('payment_authorizenet_aim_method') == 'capture') ? 'AUTH_CAPTURE' : 'AUTH_ONLY';
 		$data['x_card_num'] = str_replace(' ', '', $this->request->post['cc_number']);
 		$data['x_exp_date'] = $this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year'];
 		$data['x_card_code'] = $this->request->post['cc_cvv2'];
@@ -101,7 +101,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 			$data['x_ship_to_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
 		}
 
-		if ($this->config->get('authorizenet_aim_mode') == 'test') {
+		if ($this->config->get('payment_authorizenet_aim_mode') == 'test') {
 			$data['x_test_request'] = 'true';
 		}
 
@@ -162,8 +162,8 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 					$message .= 'Cardholder Authentication Verification Response: ' . $response_info['40'] . "\n";
 				}
 
-				if (!$this->config->get('authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('payment_authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
-					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
+				if (!$this->config->get('payment_authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('payment_authorizenet_aim_hash') . $this->config->get('payment_authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
+					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_authorizenet_aim_order_status_id'), $message, false);
 				} else {
 					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 				}

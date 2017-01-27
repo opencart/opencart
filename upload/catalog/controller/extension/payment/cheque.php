@@ -11,7 +11,7 @@ class ControllerExtensionPaymentCheque extends Controller {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['payable'] = $this->config->get('cheque_payable');
+		$data['payable'] = $this->config->get('payment_cheque_payable');
 		$data['address'] = nl2br($this->config->get('config_address'));
 
 		$data['continue'] = $this->url->link('checkout/success');
@@ -26,12 +26,12 @@ class ControllerExtensionPaymentCheque extends Controller {
 			$this->load->model('checkout/order');
 
 			$comment  = $this->language->get('text_payable') . "\n";
-			$comment .= $this->config->get('cheque_payable') . "\n\n";
+			$comment .= $this->config->get('payment_cheque_payable') . "\n\n";
 			$comment .= $this->language->get('text_address') . "\n";
 			$comment .= $this->config->get('config_address') . "\n\n";
 			$comment .= $this->language->get('text_payment') . "\n";
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cheque_order_status_id'), $comment, true);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cheque_order_status_id'), $comment, true);
 		}
 	}
 }

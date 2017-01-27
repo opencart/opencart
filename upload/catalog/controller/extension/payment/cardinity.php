@@ -74,7 +74,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			);
 
 			try {
-				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $payment_data);
+				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $payment_data);
 			} catch (Cardinity\Exception\Declined $exception) {
 				$this->failedOrder($this->language->get('error_payment_declined'), $this->language->get('error_payment_declined'));
 
@@ -107,7 +107,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 						$encryption_data = array(
 							'order_id' => $this->session->data['order_id'],
-							'secret'   => $this->config->get('cardinity_secret')
+							'secret'   => $this->config->get('payment_cardinity_secret')
 						);
 
 						$hash = $this->encryption->encrypt(json_encode($encryption_data));
@@ -143,7 +143,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$encryption_data = array(
 			'order_id' => $this->session->data['order_id'],
-			'secret'   => $this->config->get('cardinity_secret')
+			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
 		$hash = $this->encryption->encrypt(json_encode($encryption_data));
@@ -178,7 +178,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$encryption_data = array(
 			'order_id' => $this->session->data['order_id'],
-			'secret'   => $this->config->get('cardinity_secret')
+			'secret'   => $this->config->get('payment_cardinity_secret')
 		);
 
 		$hash = $this->encryption->encrypt(json_encode($encryption_data));
@@ -187,7 +187,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$order = $this->model_extension_payment_cardinity->getOrder($encryption_data['order_id']);
 
 			if ($order && $order['payment_id']) {
-				$payment = $this->model_extension_payment_cardinity->finalizePayment($this->config->get('cardinity_key'), $this->config->get('cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
+				$payment = $this->model_extension_payment_cardinity->finalizePayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $order['payment_id'], $this->request->post['PaRes']);
 
 				if ($payment && $payment->getStatus() == 'approved') {
 					$success = true;
@@ -217,7 +217,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$this->load->language('extension/payment/cardinity');
 
-		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cardinity_order_status_id'));
+		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cardinity_order_status_id'));
 
 		$this->model_extension_payment_cardinity->log($this->language->get('text_payment_success'));
 		$this->model_extension_payment_cardinity->log($payment);

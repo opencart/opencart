@@ -137,7 +137,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 						}
 
 						$data = array(
-							'merchid'    => $this->config->get('cardconnect_merchant_id'),
+							'merchid'    => $this->config->get('payment_cardconnect_merchant_id'),
 							'accttype'   => $accttype,
 							'account'    => $account,
 							'expiry'     => $expiry,
@@ -311,7 +311,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			if (isset($this->request->get['token']) && hash_equals($this->config->get('cardconnect_token'), $this->request->get['token'])) {
 				$date = date('md', strtotime('yesterday'));
 
-				$responses = $this->model_extension_payment_cardconnect->getSettlementStatuses($this->config->get('cardconnect_merchant_id'), $date);
+				$responses = $this->model_extension_payment_cardconnect->getSettlementStatuses($this->config->get('payment_cardconnect_merchant_id'), $date);
 
 				foreach($responses as $response) {
 					foreach($response['txns'] as $transaction) {

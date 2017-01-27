@@ -89,72 +89,72 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 			$data['payment_authorizenet_aim_login'] = $this->config->get('payment_authorizenet_aim_login');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_key'])) {
-			$data['authorizenet_aim_key'] = $this->request->post['authorizenet_aim_key'];
+		if (isset($this->request->post['payment_authorizenet_aim_key'])) {
+			$data['payment_authorizenet_aim_key'] = $this->request->post['payment_authorizenet_aim_key'];
 		} else {
-			$data['authorizenet_aim_key'] = $this->config->get('authorizenet_aim_key');
+			$data['payment_authorizenet_aim_key'] = $this->config->get('payment_authorizenet_aim_key');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_hash'])) {
-			$data['authorizenet_aim_hash'] = $this->request->post['authorizenet_aim_hash'];
+		if (isset($this->request->post['payment_authorizenet_aim_hash'])) {
+			$data['payment_authorizenet_aim_hash'] = $this->request->post['payment_authorizenet_aim_hash'];
 		} else {
-			$data['authorizenet_aim_hash'] = $this->config->get('authorizenet_aim_hash');
+			$data['payment_authorizenet_aim_hash'] = $this->config->get('payment_authorizenet_aim_hash');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_server'])) {
-			$data['authorizenet_aim_server'] = $this->request->post['authorizenet_aim_server'];
+		if (isset($this->request->post['payment_authorizenet_aim_server'])) {
+			$data['payment_authorizenet_aim_server'] = $this->request->post['payment_authorizenet_aim_server'];
 		} else {
-			$data['authorizenet_aim_server'] = $this->config->get('authorizenet_aim_server');
+			$data['payment_authorizenet_aim_server'] = $this->config->get('payment_authorizenet_aim_server');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_mode'])) {
-			$data['authorizenet_aim_mode'] = $this->request->post['authorizenet_aim_mode'];
+		if (isset($this->request->post['payment_authorizenet_aim_mode'])) {
+			$data['payment_authorizenet_aim_mode'] = $this->request->post['payment_authorizenet_aim_mode'];
 		} else {
-			$data['authorizenet_aim_mode'] = $this->config->get('authorizenet_aim_mode');
+			$data['payment_authorizenet_aim_mode'] = $this->config->get('payment_authorizenet_aim_mode');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_method'])) {
-			$data['authorizenet_aim_method'] = $this->request->post['authorizenet_aim_method'];
+		if (isset($this->request->post['payment_authorizenet_aim_method'])) {
+			$data['payment_authorizenet_aim_method'] = $this->request->post['payment_authorizenet_aim_method'];
 		} else {
-			$data['authorizenet_aim_method'] = $this->config->get('authorizenet_aim_method');
+			$data['payment_authorizenet_aim_method'] = $this->config->get('payment_authorizenet_aim_method');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_total'])) {
-			$data['authorizenet_aim_total'] = $this->request->post['authorizenet_aim_total'];
+		if (isset($this->request->post['payment_authorizenet_aim_total'])) {
+			$data['payment_authorizenet_aim_total'] = $this->request->post['payment_authorizenet_aim_total'];
 		} else {
-			$data['authorizenet_aim_total'] = $this->config->get('authorizenet_aim_total');
+			$data['payment_authorizenet_aim_total'] = $this->config->get('payment_authorizenet_aim_total');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_order_status_id'])) {
-			$data['authorizenet_aim_order_status_id'] = $this->request->post['authorizenet_aim_order_status_id'];
+		if (isset($this->request->post['payment_authorizenet_aim_order_status_id'])) {
+			$data['payment_authorizenet_aim_order_status_id'] = $this->request->post['payment_authorizenet_aim_order_status_id'];
 		} else {
-			$data['authorizenet_aim_order_status_id'] = $this->config->get('authorizenet_aim_order_status_id');
+			$data['payment_authorizenet_aim_order_status_id'] = $this->config->get('payment_authorizenet_aim_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['authorizenet_aim_geo_zone_id'])) {
-			$data['authorizenet_aim_geo_zone_id'] = $this->request->post['authorizenet_aim_geo_zone_id'];
+		if (isset($this->request->post['payment_authorizenet_aim_geo_zone_id'])) {
+			$data['payment_authorizenet_aim_geo_zone_id'] = $this->request->post['payment_authorizenet_aim_geo_zone_id'];
 		} else {
-			$data['authorizenet_aim_geo_zone_id'] = $this->config->get('authorizenet_aim_geo_zone_id');
+			$data['payment_authorizenet_aim_geo_zone_id'] = $this->config->get('payment_authorizenet_aim_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['authorizenet_aim_status'])) {
-			$data['authorizenet_aim_status'] = $this->request->post['authorizenet_aim_status'];
+		if (isset($this->request->post['payment_authorizenet_aim_status'])) {
+			$data['payment_authorizenet_aim_status'] = $this->request->post['payment_authorizenet_aim_status'];
 		} else {
-			$data['authorizenet_aim_status'] = $this->config->get('authorizenet_aim_status');
+			$data['payment_authorizenet_aim_status'] = $this->config->get('payment_authorizenet_aim_status');
 		}
 
-		if (isset($this->request->post['authorizenet_aim_sort_order'])) {
-			$data['authorizenet_aim_sort_order'] = $this->request->post['authorizenet_aim_sort_order'];
+		if (isset($this->request->post['payment_authorizenet_aim_sort_order'])) {
+			$data['payment_authorizenet_aim_sort_order'] = $this->request->post['payment_authorizenet_aim_sort_order'];
 		} else {
-			$data['authorizenet_aim_sort_order'] = $this->config->get('authorizenet_aim_sort_order');
+			$data['payment_authorizenet_aim_sort_order'] = $this->config->get('payment_authorizenet_aim_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -173,7 +173,7 @@ class ControllerExtensionPaymentAuthorizenetAim extends Controller {
 			$this->error['login'] = $this->language->get('error_login');
 		}
 
-		if (!$this->request->post['authorizenet_aim_key']) {
+		if (!$this->request->post['payment_authorizenet_aim_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

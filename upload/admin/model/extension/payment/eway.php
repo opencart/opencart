@@ -86,7 +86,7 @@ class ModelExtensionPaymentEway extends Model {
 			$capture_data->Payment->CurrencyCode = $currency;
 			$capture_data->TransactionID = $eway_order['transaction_id'];
 
-			if ($this->config->get('eway_test')) {
+			if ($this->config->get('payment_eway_test')) {
 				$url = 'https://api.sandbox.ewaypayments.com/CapturePayment';
 			} else {
 				$url = 'https://api.ewaypayments.com/CapturePayment';
@@ -116,7 +116,7 @@ class ModelExtensionPaymentEway extends Model {
 			$data = new stdClass();
 			$data->TransactionID = $eway_order['transaction_id'];
 
-			if ($this->config->get('eway_test')) {
+			if ($this->config->get('payment_eway_test')) {
 				$url = 'https://api.sandbox.ewaypayments.com/CancelAuthorisation';
 			} else {
 				$url = 'https://api.ewaypayments.com/CancelAuthorisation';
@@ -145,7 +145,7 @@ class ModelExtensionPaymentEway extends Model {
 			$refund_data->Refund->TotalAmount = (int)number_format($refund_amount, 2, '.', '') * 100;
 			$refund_data->Refund->TransactionID = $eway_order['transaction_id'];
 
-			if ($this->config->get('eway_test')) {
+			if ($this->config->get('payment_eway_test')) {
 				$url = 'https://api.sandbox.ewaypayments.com/Transaction/' . $eway_order['transaction_id'] . '/Refund';
 			} else {
 				$url = 'https://api.ewaypayments.com/Transaction/' . $eway_order['transaction_id'] . '/Refund';

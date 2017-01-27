@@ -4,8 +4,8 @@ class ModelExtensionPaymentEway extends Model {
 		$this->load->language('extension/payment/eway');
 
 		if ($this->config->get('eway_status')) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-			if (!$this->config->get('eway_standard_geo_zone_id')) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+			if (!$this->config->get('payment_eway_standard_geo_zone_id')) {
 				$status = true;
 			} elseif ($query->num_rows) {
 				$status = true;
@@ -33,7 +33,7 @@ class ModelExtensionPaymentEway extends Model {
 	public function addOrder($order_data) {
 
 		$cap = '';
-		if ($this->config->get('eway_transaction_method') == 'payment') {
+		if ($this->config->get('payment_eway_transaction_method') == 'payment') {
 			$cap = ",`capture_status` = '1'";
 		}
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_order` SET `order_id` = '" . (int)$order_data['order_id'] . "', `created` = NOW(), `modified` = NOW(), `debug_data` = '" . $this->db->escape($order_data['debug_data']) . "', `amount` = '" . $this->currency->format($order_data['amount'], $order_data['currency_code'], false, false) . "', `currency_code` = '" . $this->db->escape($order_data['currency_code']) . "', `transaction_id` = '" . $this->db->escape($order_data['transaction_id']) . "'{$cap}");
@@ -95,7 +95,7 @@ class ModelExtensionPaymentEway extends Model {
 	}
 
 	public function getAccessCode($request) {
-		if ($this->config->get('eway_test')) {
+		if ($this->config->get('payment_eway_test')) {
 			$url = 'https://api.sandbox.ewaypayments.com/AccessCodes';
 		} else {
 			$url = 'https://api.ewaypayments.com/AccessCodes';
@@ -108,7 +108,7 @@ class ModelExtensionPaymentEway extends Model {
 	}
 
 	public function getSharedAccessCode($request) {
-		if ($this->config->get('eway_test')) {
+		if ($this->config->get('payment_eway_test')) {
 			$url = 'https://api.sandbox.ewaypayments.com/AccessCodesShared';
 		} else {
 			$url = 'https://api.ewaypayments.com/AccessCodesShared';
@@ -121,7 +121,7 @@ class ModelExtensionPaymentEway extends Model {
 	}
 
 	public function getAccessCodeResult($access_code) {
-		if ($this->config->get('eway_test')) {
+		if ($this->config->get('payment_eway_test')) {
 			$url = 'https://api.sandbox.ewaypayments.com/AccessCode/' . $access_code;
 		} else {
 			$url = 'https://api.ewaypayments.com/AccessCode/' . $access_code;

@@ -3323,7 +3323,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'tax', 'tax_sort_order', '5', 0),
 (0, 'free_checkout', 'free_checkout_sort_order', '1', 0),
 (0, 'cod', 'cod_sort_order', '5', 0),
-(0, 'cod', 'cod_total', '0.01', 0),
+(0, 'cod', 'payment_cod_total', '0.01', 0),
 (0, 'cod', 'cod_order_status_id', '1', 0),
 (0, 'cod', 'cod_geo_zone_id', '0', 0),
 (0, 'cod', 'cod_status', '1', 0),

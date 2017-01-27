@@ -62,10 +62,10 @@ class ControllerExtensionPaymentCod extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cod_total'])) {
-			$data['cod_total'] = $this->request->post['cod_total'];
+		if (isset($this->request->post['payment_cod_total'])) {
+			$data['payment_cod_total'] = $this->request->post['payment_cod_total'];
 		} else {
-			$data['cod_total'] = $this->config->get('cod_total');
+			$data['payment_cod_total'] = $this->config->get('payment_cod_total');
 		}
 
 		if (isset($this->request->post['cod_order_status_id'])) {

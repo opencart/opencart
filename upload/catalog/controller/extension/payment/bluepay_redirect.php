@@ -48,7 +48,7 @@ class ControllerExtensionPaymentBluePayRedirect extends Controller {
 			);
 		}
 
-		if ($this->config->get('bluepay_redirect_card') == '1') {
+		if ($this->config->get('payment_bluepay_redirect_card') == '1') {
 			$data['bluepay_redirect_card'] = true;
 		} else {
 			$data['bluepay_redirect_card'] = false;
@@ -76,9 +76,9 @@ class ControllerExtensionPaymentBluePayRedirect extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$post_data = $this->request->post;
 
-		$post_data['MERCHANT'] = $this->config->get('bluepay_redirect_account_id');
-		$post_data["TRANSACTION_TYPE"] = $this->config->get('bluepay_redirect_transaction');
-		$post_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
+		$post_data['MERCHANT'] = $this->config->get('payment_bluepay_redirect_account_id');
+		$post_data["TRANSACTION_TYPE"] = $this->config->get('payment_bluepay_redirect_transaction');
+		$post_data["MODE"] = strtoupper($this->config->get('payment_bluepay_redirect_test'));
 		$post_data["AMOUNT"] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 
 		if (isset($this->request->post['RRNO'])) {
@@ -104,7 +104,7 @@ class ControllerExtensionPaymentBluePayRedirect extends Controller {
 			$post_data["REMOTE_IP"] = $this->request->server["REMOTE_ADDR"];
 		}
 
-		$tamper_proof_data = $this->config->get('bluepay_redirect_secret_key') . $post_data['MERCHANT'] . $post_data["TRANSACTION_TYPE"] . $post_data['AMOUNT'] . $post_data["RRNO"] . $post_data["MODE"];
+		$tamper_proof_data = $this->config->get('payment_bluepay_redirect_secret_key') . $post_data['MERCHANT'] . $post_data["TRANSACTION_TYPE"] . $post_data['AMOUNT'] . $post_data["RRNO"] . $post_data["MODE"];
 
 		$post_data["TAMPER_PROOF_SEAL"] = md5($tamper_proof_data);
 
@@ -113,13 +113,13 @@ class ControllerExtensionPaymentBluePayRedirect extends Controller {
 		if ($response_data['Result'] == 'APPROVED') {
 			$bluepay_redirect_order_id = $this->model_extension_payment_bluepay_redirect->addOrder($order_info, $response_data);
 
-			if ($this->config->get('bluepay_redirect_transaction') == 'SALE') {
+			if ($this->config->get('payment_bluepay_redirect_transaction') == 'SALE') {
 				$this->model_extension_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'payment', $order_info);
 			} else {
 				$this->model_extension_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, 'auth', $order_info);
 			}
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_redirect_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_bluepay_redirect_order_status_id'));
 
 			$json['redirect'] = $this->url->link('checkout/success', '', true);
 		} else {

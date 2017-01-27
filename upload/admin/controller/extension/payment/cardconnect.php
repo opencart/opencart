@@ -91,10 +91,10 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['cardconnect_merchant_id'])) {
-			$data['cardconnect_merchant_id'] = $this->request->post['cardconnect_merchant_id'];
+		if (isset($this->request->post['payment_cardconnect_merchant_id'])) {
+			$data['payment_cardconnect_merchant_id'] = $this->request->post['payment_cardconnect_merchant_id'];
 		} else {
-			$data['cardconnect_merchant_id'] = $this->config->get('cardconnect_merchant_id');
+			$data['payment_cardconnect_merchant_id'] = $this->config->get('payment_cardconnect_merchant_id');
 		}
 
 		if (isset($this->request->post['cardconnect_api_username'])) {
@@ -217,10 +217,10 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->error['cardconnect_merchant_id'])) {
-			$data['error_cardconnect_merchant_id'] = $this->error['cardconnect_merchant_id'];
+		if (isset($this->error['payment_cardconnect_merchant_id'])) {
+			$data['error_payment_cardconnect_merchant_id'] = $this->error['payment_cardconnect_merchant_id'];
 		} else {
-			$data['error_cardconnect_merchant_id'] = '';
+			$data['error_payment_cardconnect_merchant_id'] = '';
 		}
 
 		if (isset($this->error['cardconnect_api_username'])) {
@@ -557,8 +557,8 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['cardconnect_merchant_id']) {
-			$this->error['cardconnect_merchant_id'] = $this->language->get('error_merchant_id');
+		if (!$this->request->post['payment_cardconnect_merchant_id']) {
+			$this->error['payment_cardconnect_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
 		if (!$this->request->post['cardconnect_api_username']) {

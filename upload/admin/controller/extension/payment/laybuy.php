@@ -118,57 +118,57 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['laybuys_membership_id'])) {
-			$data['laybuys_membership_id'] = $this->request->post['laybuys_membership_id'];
+		if (isset($this->request->post['payment_laybuys_membership_id'])) {
+			$data['payment_laybuys_membership_id'] = $this->request->post['payment_laybuys_membership_id'];
 		} else {
-			$data['laybuys_membership_id'] = $this->config->get('laybuys_membership_id');
+			$data['payment_laybuys_membership_id'] = $this->config->get('payment_laybuys_membership_id');
 		}
 
-		if (isset($this->request->post['laybuy_token'])) {
-			$data['laybuy_token'] = $this->request->post['laybuy_token'];
-		} elseif ($this->config->has('laybuy_token')) {
-			$data['laybuy_token'] = $this->config->get('laybuy_token');
+		if (isset($this->request->post['payment_laybuy_token'])) {
+			$data['payment_laybuy_token'] = $this->request->post['payment_laybuy_token'];
+		} elseif ($this->config->has('payment_laybuy_token')) {
+			$data['payment_laybuy_token'] = $this->config->get('payment_laybuy_token');
 		} else {
-			$data['laybuy_token'] = md5(time());
+			$data['payment_laybuy_token'] = md5(time());
 		}
 
-		if (isset($this->request->post['laybuy_min_deposit'])) {
-			$data['laybuy_min_deposit'] = $this->request->post['laybuy_min_deposit'];
-		} elseif ($this->config->get('laybuy_min_deposit')) {
-			$data['laybuy_min_deposit'] = $this->config->get('laybuy_min_deposit');
+		if (isset($this->request->post['payment_laybuy_min_deposit'])) {
+			$data['payment_laybuy_min_deposit'] = $this->request->post['payment_laybuy_min_deposit'];
+		} elseif ($this->config->get('payment_laybuy_min_deposit')) {
+			$data['payment_laybuy_min_deposit'] = $this->config->get('payment_laybuy_min_deposit');
 		} else {
-			$data['laybuy_min_deposit'] = '20';
+			$data['payment_laybuy_min_deposit'] = '20';
 		}
 
-		if (isset($this->request->post['laybuy_max_deposit'])) {
-			$data['laybuy_max_deposit'] = $this->request->post['laybuy_max_deposit'];
-		} elseif ($this->config->get('laybuy_max_deposit')) {
-			$data['laybuy_max_deposit'] = $this->config->get('laybuy_max_deposit');
+		if (isset($this->request->post['payment_laybuy_max_deposit'])) {
+			$data['payment_laybuy_max_deposit'] = $this->request->post['payment_laybuy_max_deposit'];
+		} elseif ($this->config->get('payment_laybuy_max_deposit')) {
+			$data['payment_laybuy_max_deposit'] = $this->config->get('payment_laybuy_max_deposit');
 		} else {
-			$data['laybuy_max_deposit'] = '50';
+			$data['payment_laybuy_max_deposit'] = '50';
 		}
 
-		if (isset($this->request->post['laybuy_max_months'])) {
-			$data['laybuy_max_months'] = $this->request->post['laybuy_max_months'];
-		} elseif ($this->config->get('laybuy_max_months')) {
-			$data['laybuy_max_months'] = $this->config->get('laybuy_max_months');
+		if (isset($this->request->post['payment_laybuy_max_months'])) {
+			$data['payment_laybuy_max_months'] = $this->request->post['payment_laybuy_max_months'];
+		} elseif ($this->config->get('payment_laybuy_max_months')) {
+			$data['payment_laybuy_max_months'] = $this->config->get('payment_laybuy_max_months');
 		} else {
-			$data['laybuy_max_months'] = '3';
+			$data['payment_laybuy_max_months'] = '3';
 		}
 
-		if (isset($this->request->post['laybuy_category'])) {
-			$data['laybuy_category'] = $this->request->post['laybuy_category'];
-		} elseif ($this->config->get('laybuy_category')) {
-			$data['laybuy_category'] = $this->config->get('laybuy_category');
+		if (isset($this->request->post['payment_laybuy_category'])) {
+			$data['payment_laybuy_category'] = $this->request->post['payment_laybuy_category'];
+		} elseif ($this->config->get('payment_laybuy_category')) {
+			$data['payment_laybuy_category'] = $this->config->get('payment_laybuy_category');
 		} else {
-			$data['laybuy_category'] = array();
+			$data['payment_laybuy_category'] = array();
 		}
 
 		$data['categories'] = array();
 
 		$this->load->model('catalog/category');
 
-		foreach ($data['laybuy_category'] as $category_id) {
+		foreach ($data['payment_laybuy_category'] as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
 			if ($category_info) {
@@ -179,25 +179,25 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			}
 		}
 
-		if (isset($this->request->post['laybuy_xproducts'])) {
-			$data['laybuy_xproducts'] = $this->request->post['laybuy_xproducts'];
+		if (isset($this->request->post['payment_laybuy_xproducts'])) {
+			$data['payment_laybuy_xproducts'] = $this->request->post['payment_laybuy_xproducts'];
 		} else {
-			$data['laybuy_xproducts'] = $this->config->get('laybuy_xproducts');
+			$data['payment_laybuy_xproducts'] = $this->config->get('payment_laybuy_xproducts');
 		}
 
-		if (isset($this->request->post['laybuy_customer_group'])) {
-			$data['laybuy_customer_group'] = $this->request->post['laybuy_customer_group'];
-		} elseif ($this->config->get('laybuy_customer_group')) {
-			$data['laybuy_customer_group'] = $this->config->get('laybuy_customer_group');
+		if (isset($this->request->post['payment_laybuy_customer_group'])) {
+			$data['payment_laybuy_customer_group'] = $this->request->post['payment_laybuy_customer_group'];
+		} elseif ($this->config->get('payment_laybuy_customer_group')) {
+			$data['payment_laybuy_customer_group'] = $this->config->get('payment_laybuy_customer_group');
 		} else {
-			$data['laybuy_customer_group'] = array();
+			$data['payment_laybuy_customer_group'] = array();
 		}
 
 		$data['customer_groups'] = array();
 
 		$this->load->model('customer/customer_group');
 
-		foreach ($data['laybuy_customer_group'] as $customer_group_id) {
+		foreach ($data['payment_laybuy_customer_group'] as $customer_group_id) {
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info) {
@@ -208,77 +208,77 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			}
 		}
 
-		if (isset($this->request->post['laybuy_logging'])) {
-			$data['laybuy_logging'] = $this->request->post['laybuy_logging'];
+		if (isset($this->request->post['payment_laybuy_logging'])) {
+			$data['payment_laybuy_logging'] = $this->request->post['payment_laybuy_logging'];
 		} else {
-			$data['laybuy_logging'] = $this->config->get('laybuy_logging');
+			$data['payment_laybuy_logging'] = $this->config->get('payment_laybuy_logging');
 		}
 
-		if (isset($this->request->post['laybuy_total'])) {
-			$data['laybuy_total'] = $this->request->post['laybuy_total'];
+		if (isset($this->request->post['payment_laybuy_total'])) {
+			$data['payment_laybuy_total'] = $this->request->post['payment_laybuy_total'];
 		} else {
-			$data['laybuy_total'] = $this->config->get('laybuy_total');
+			$data['payment_laybuy_total'] = $this->config->get('payment_laybuy_total');
 		}
 
-		if (isset($this->request->post['laybuy_order_status_id_pending'])) {
-			$data['laybuy_order_status_id_pending'] = $this->request->post['laybuy_order_status_id_pending'];
-		} elseif ($this->config->get('laybuy_order_status_id_pending')) {
-			$data['laybuy_order_status_id_pending'] = $this->config->get('laybuy_order_status_id_pending');
+		if (isset($this->request->post['payment_laybuy_order_status_id_pending'])) {
+			$data['payment_laybuy_order_status_id_pending'] = $this->request->post['payment_laybuy_order_status_id_pending'];
+		} elseif ($this->config->get('payment_laybuy_order_status_id_pending')) {
+			$data['payment_laybuy_order_status_id_pending'] = $this->config->get('payment_laybuy_order_status_id_pending');
 		} else {
-			$data['laybuy_order_status_id_pending'] = '1';
+			$data['payment_laybuy_order_status_id_pending'] = '1';
 		}
 
-		if (isset($this->request->post['laybuy_order_status_id_canceled'])) {
-			$data['laybuy_order_status_id_canceled'] = $this->request->post['laybuy_order_status_id_canceled'];
-		} elseif ($this->config->get('laybuy_order_status_id_canceled')) {
-			$data['laybuy_order_status_id_canceled'] = $this->config->get('laybuy_order_status_id_canceled');
+		if (isset($this->request->post['payment_laybuy_order_status_id_canceled'])) {
+			$data['payment_laybuy_order_status_id_canceled'] = $this->request->post['payment_laybuy_order_status_id_canceled'];
+		} elseif ($this->config->get('payment_laybuy_order_status_id_canceled')) {
+			$data['payment_laybuy_order_status_id_canceled'] = $this->config->get('payment_laybuy_order_status_id_canceled');
 		} else {
-			$data['laybuy_order_status_id_canceled'] = '7';
+			$data['payment_laybuy_order_status_id_canceled'] = '7';
 		}
 
-		if (isset($this->request->post['laybuy_order_status_id_processing'])) {
-			$data['laybuy_order_status_id_processing'] = $this->request->post['laybuy_order_status_id_processing'];
-		} elseif ($this->config->get('laybuy_order_status_id_processing')) {
-			$data['laybuy_order_status_id_processing'] = $this->config->get('laybuy_order_status_id_processing');
+		if (isset($this->request->post['payment_laybuy_order_status_id_processing'])) {
+			$data['payment_laybuy_order_status_id_processing'] = $this->request->post['payment_laybuy_order_status_id_processing'];
+		} elseif ($this->config->get('payment_laybuy_order_status_id_processing')) {
+			$data['payment_laybuy_order_status_id_processing'] = $this->config->get('payment_laybuy_order_status_id_processing');
 		} else {
-			$data['laybuy_order_status_id_processing'] = '2';
+			$data['payment_laybuy_order_status_id_processing'] = '2';
 		}
 
-		if (isset($this->request->post['laybuy_gateway_url'])) {
-			$data['laybuy_gateway_url'] = $this->request->post['laybuy_gateway_url'];
-		} elseif ($this->config->get('laybuy_gateway_url')) {
-			$data['laybuy_gateway_url'] = $this->config->get('laybuy_gateway_url');
+		if (isset($this->request->post['payment_laybuy_gateway_url'])) {
+			$data['payment_laybuy_gateway_url'] = $this->request->post['payment_laybuy_gateway_url'];
+		} elseif ($this->config->get('payment_laybuy_gateway_url')) {
+			$data['payment_laybuy_gateway_url'] = $this->config->get('payment_laybuy_gateway_url');
 		} else {
-			$data['laybuy_gateway_url'] = 'http://lay-buys.com/gateway/';
+			$data['payment_laybuy_gateway_url'] = 'http://lay-buys.com/gateway/';
 		}
 
-		if (isset($this->request->post['laybuy_api_url'])) {
-			$data['laybuy_api_url'] = $this->request->post['laybuy_api_url'];
-		} elseif ($this->config->get('laybuy_api_url')) {
-			$data['laybuy_api_url'] = $this->config->get('laybuy_api_url');
+		if (isset($this->request->post['payment_laybuy_api_url'])) {
+			$data['payment_laybuy_api_url'] = $this->request->post['payment_laybuy_api_url'];
+		} elseif ($this->config->get('payment_laybuy_api_url')) {
+			$data['payment_laybuy_api_url'] = $this->config->get('payment_laybuy_api_url');
 		} else {
-			$data['laybuy_api_url'] = 'https://lay-buys.com/report/';
+			$data['payment_laybuy_api_url'] = 'https://lay-buys.com/report/';
 		}
 
-		if (isset($this->request->post['laybuy_geo_zone'])) {
-			$data['laybuy_geo_zone'] = $this->request->post['laybuy_geo_zone'];
+		if (isset($this->request->post['payment_laybuy_geo_zone_id'])) {
+			$data['payment_laybuy_geo_zone_id'] = $this->request->post['payment_laybuy_geo_zone_id'];
 		} else {
-			$data['laybuy_geo_zone'] = $this->config->get('laybuy_geo_zone');
+			$data['payment_laybuy_geo_zone_id'] = $this->config->get('payment_laybuy_geo_zone_id');
 		}
 
-		if (isset($this->request->post['laybuy_status'])) {
-			$data['laybuy_status'] = $this->request->post['laybuy_status'];
+		if (isset($this->request->post['payment_laybuy_status'])) {
+			$data['payment_laybuy_status'] = $this->request->post['payment_laybuy_status'];
 		} else {
-			$data['laybuy_status'] = $this->config->get('laybuy_status');
+			$data['payment_laybuy_status'] = $this->config->get('payment_laybuy_status');
 		}
 
-		if (isset($this->request->post['laybuy_sort_order'])) {
-			$data['laybuy_sort_order'] = $this->request->post['laybuy_sort_order'];
+		if (isset($this->request->post['payment_laybuy_sort_order'])) {
+			$data['payment_laybuy_sort_order'] = $this->request->post['payment_laybuy_sort_order'];
 		} else {
-			$data['laybuy_sort_order'] = $this->config->get('laybuy_sort_order');
+			$data['payment_laybuy_sort_order'] = $this->config->get('payment_laybuy_sort_order');
 		}
 
-		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['laybuy_token'];
+		$data['laybuy_cron_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/cron&token=' . $data['payment_laybuy_token'];
 
 		if ($this->config->get('laybuy_cron_time')) {
 			$data['laybuy_cron_time'] = date($this->language->get('datetime_format'), strtotime($this->config->get('laybuy_cron_time')));
@@ -575,14 +575,14 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$paypal_profile_ids = rtrim($paypal_profile_ids, ',');
 
-				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
+				$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('laybuy_api_url'));
+				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('payment_laybuy_api_url'));
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_api_url'));
+				curl_setopt($ch, CURLOPT_URL, $this->config->get('payment_laybuy_api_url'));
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -675,7 +675,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 						switch ($status) {
 							case -1: // Cancel
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' canceled');
-								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_canceled'), $this->language->get('text_comment'));
+								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('payment_laybuy_order_status_id_canceled'), $this->language->get('text_comment'));
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '7', $report_content, $start_index);
 								$fetched++;
 								break;
@@ -686,7 +686,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 								break;
 							case 1: // Paid
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' paid');
-								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'));
+								$this->model_extension_payment_laybuy->updateOrderStatus($order_id, $this->config->get('payment_laybuy_order_status_id_processing'), $this->language->get('text_comment'));
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '5', $report_content, $start_index);
 								$fetched++;
 								break;
@@ -930,7 +930,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			}
 
 			if (!$cancel) {
-				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'paypal_profile_id=' . $transaction_info['paypal_profile_id'];
+				$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'paypal_profile_id=' . $transaction_info['paypal_profile_id'];
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
@@ -977,7 +977,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$json['order_id'] = $transaction_info['order_id'];
 
-				$json['order_status_id'] = $this->config->get('laybuy_order_status_id_canceled');
+				$json['order_status_id'] = $this->config->get('payment_laybuy_order_status_id_canceled');
 
 				$json['comment'] = sprintf($this->language->get('text_comment_canceled'), $transaction_info['paypal_profile_id']);
 			} else {
@@ -1085,7 +1085,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$data = array();
 
-				$data['mid']       = $this->config->get('laybuys_membership_id');
+				$data['mid']       = $this->config->get('payment_laybuys_membership_id');
 				$data['eml']       = $revised_transaction['email'];
 				$data['prc']       = $revised_transaction['amount'];
 				$data['curr']      = $revised_transaction['currency'];
@@ -1094,7 +1094,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data['init']      = $initial;
 				$data['mnth']      = $months;
 				$data['convrate']  = '1';
-				$data['id']        = $revised_transaction['laybuy_revise_request_id'] . '-' . $revised_transaction['order_id'] . ':' . md5($this->config->get('laybuy_token'));
+				$data['id']        = $revised_transaction['laybuy_revise_request_id'] . '-' . $revised_transaction['order_id'] . ':' . md5($this->config->get('payment_laybuy_token'));
 				$data['RETURNURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCallback';
 				$data['CANCELURL'] = HTTPS_CATALOG . 'index.php?route=extension/payment/laybuy/reviseCancel';
 
@@ -1173,7 +1173,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('laybuy_status')) {
+		if ($this->config->get('payment_laybuy_status')) {
 			$this->load->model('extension/payment/laybuy');
 
 			$this->load->language('extension/payment/laybuy');
@@ -1223,15 +1223,15 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['laybuys_membership_id']) {
+		if (!$this->request->post['payment_laybuys_membership_id']) {
 			$this->error['laybuys_membership_id'] = $this->language->get('error_membership_id');
 		}
 
-		if (!$this->request->post['laybuy_token']) {
+		if (!$this->request->post['payment_laybuy_token']) {
 			$this->error['laybuy_token'] = $this->language->get('error_token');
 		}
 
-		if ($this->request->post['laybuy_min_deposit'] > $this->request->post['laybuy_max_deposit']) {
+		if ($this->request->post['payment_laybuy_min_deposit'] > $this->request->post['payment_laybuy_max_deposit']) {
 			$this->error['laybuy_min_deposit'] = $this->language->get('error_min_deposit');
 		}
 

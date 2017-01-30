@@ -95,9 +95,9 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-weight-class">{{ entry_weight_class }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_weight_class_id" id="input-weight-class" class="form-control">
+                      <select name="shipping_royal_mail_weight_class_id" id="input-weight-class" class="form-control">
                         {% for weight_class in weight_classes %}
-                        {% if weight_class.weight_class_id == royal_mail_weight_class_id %}
+                        {% if weight_class.weight_class_id == shipping_royal_mail_weight_class_id %}
                         <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                         {% else %}
                         <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -109,10 +109,10 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_tax_class_id" id="input-tax-class" class="form-control">
+                      <select name="shipping_royal_mail_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                        {% if tax_class.tax_class_id == royal_mail_tax_class_id %}
+                        {% if tax_class.tax_class_id == shipping_royal_mail_tax_class_id %}
                         <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                         {% else %}
                         <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -124,10 +124,10 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
+                      <select name="shipping_royal_mail_geo_zone_id" id="input-geo-zone" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
                         {% for geo_zone in geo_zones %}
-                        {% if geo_zone.geo_zone_id == royal_mail_geo_zone_id %}
+                        {% if geo_zone.geo_zone_id == shipping_royal_mail_geo_zone_id %}
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                         {% else %}
                         <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -139,8 +139,8 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="royal_mail_status" id="input-status" class="form-control">
-                        {% if royal_mail_status %}
+                      <select name="shipping_royal_mail_status" id="input-status" class="form-control">
+                        {% if shipping_royal_mail_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -153,7 +153,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="royal_mail_sort_order" value="{{ royal_mail_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                      <input type="text" name="shipping_royal_mail_sort_order" value="{{ shipping_royal_mail_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                     </div>
                   </div>
                 </div>

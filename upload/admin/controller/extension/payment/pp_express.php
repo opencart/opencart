@@ -149,28 +149,28 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['signup'] = 'https://www.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=9PDNYE4RZBVFJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('extension/payment/pp_express/live', 'token=' . $this->session->data['token'], true))) . '&subIntegrationType=S';
 		$data['sandbox'] = 'https://www.sandbox.paypal.com/webapps/merchantboarding/webflow/externalpartnerflow?countryCode=' . $country_info['iso_code_2'] . '&integrationType=F&merchantId=David111&displayMode=minibrowser&partnerId=T4E8WSXT43QPJ&productIntentID=addipmt&receiveCredentials=TRUE&returnToPartnerUrl=' . base64_encode(html_entity_decode($this->url->link('extension/payment/pp_express/sandbox', 'token=' . $this->session->data['token'], true))) . '&subIntegrationType=S';
 
-		if (isset($this->request->post['pp_express_username'])) {
-			$data['pp_express_username'] = $this->request->post['pp_express_username'];
+		if (isset($this->request->post['payment_pp_express_username'])) {
+			$data['payment_pp_express_username'] = $this->request->post['payment_pp_express_username'];
 		} else {
-			$data['pp_express_username'] = $this->config->get('pp_express_username');
+			$data['payment_pp_express_username'] = $this->config->get('payment_pp_express_username');
 		}
 
-		if (isset($this->request->post['pp_express_password'])) {
-			$data['pp_express_password'] = $this->request->post['pp_express_password'];
+		if (isset($this->request->post['payment_pp_express_password'])) {
+			$data['payment_pp_express_password'] = $this->request->post['payment_pp_express_password'];
 		} else {
-			$data['pp_express_password'] = $this->config->get('pp_express_password');
+			$data['payment_pp_express_password'] = $this->config->get('payment_pp_express_password');
 		}
 
-		if (isset($this->request->post['pp_express_signature'])) {
-			$data['pp_express_signature'] = $this->request->post['pp_express_signature'];
+		if (isset($this->request->post['payment_pp_express_signature'])) {
+			$data['payment_pp_express_signature'] = $this->request->post['payment_pp_express_signature'];
 		} else {
-			$data['pp_express_signature'] = $this->config->get('pp_express_signature');
+			$data['payment_pp_express_signature'] = $this->config->get('payment_pp_express_signature');
 		}
 
-		if (isset($this->request->post['pp_express_sandbox_username'])) {
-			$data['pp_express_sandbox_username'] = $this->request->post['pp_express_sandbox_username'];
+		if (isset($this->request->post['payment_pp_express_sandbox_username'])) {
+			$data['payment_pp_express_sandbox_username'] = $this->request->post['payment_pp_express_sandbox_username'];
 		} else {
-			$data['pp_express_sandbox_username'] = $this->config->get('pp_express_sandbox_username');
+			$data['payment_pp_express_sandbox_username'] = $this->config->get('payment_pp_express_sandbox_username');
 		}
 
 		if (isset($this->request->post['pp_express_sandbox_password'])) {
@@ -356,7 +356,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		if ($this->request->post['pp_express_test']) {
-			if (!$this->request->post['pp_express_sandbox_username']) {
+			if (!$this->request->post['payment_pp_express_sandbox_username']) {
 				$this->error['sandbox_username'] = $this->language->get('error_sandbox_username');
 			}
 
@@ -368,15 +368,15 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$this->error['sandbox_signature'] = $this->language->get('error_sandbox_signature');
 			}
 		} else {
-			if (!$this->request->post['pp_express_username']) {
+			if (!$this->request->post['payment_pp_express_username']) {
 				$this->error['username'] = $this->language->get('error_username');
 			}
 
-			if (!$this->request->post['pp_express_password']) {
+			if (!$this->request->post['payment_pp_express_password']) {
 				$this->error['password'] = $this->language->get('error_password');
 			}
 
-			if (!$this->request->post['pp_express_signature']) {
+			if (!$this->request->post['payment_pp_express_signature']) {
 				$this->error['signature'] = $this->language->get('error_signature');
 			}
 		}
@@ -831,14 +831,14 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_sandbox_username');
+				$api_username = $this->config->get('payment_pp_express_sandbox_username');
 				$api_password = $this->config->get('pp_express_sandbox_password');
 				$api_signature = $this->config->get('pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_username');
-				$api_password = $this->config->get('pp_express_password');
-				$api_signature = $this->config->get('pp_express_signature');
+				$api_username = $this->config->get('payment_pp_express_username');
+				$api_password = $this->config->get('payment_pp_express_password');
+				$api_signature = $this->config->get('payment_pp_express_signature');
 			}
 
 			$request = array(
@@ -1313,9 +1313,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_username', $user_info->api_user_name);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_password', $user_info->api_password);
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_signature', $user_info->signature);
+				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_password', $user_info->api_password);
+				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_signature', $user_info->signature);
 			} else {
 				$this->session->data['error_api'] = $this->language->get('error_api');
 			}
@@ -1340,7 +1340,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			}
 
 			if (isset($user_info->api_user_name)) {
-				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_username', $user_info->api_user_name);
+				$this->model_setting_setting->editSettingValue('pp_express', 'payment_pp_express_sandbox_username', $user_info->api_user_name);
 				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_password', $user_info->api_password);
 				$this->model_setting_setting->editSettingValue('pp_express', 'pp_express_sandbox_signature', $user_info->signature);
 			} else {

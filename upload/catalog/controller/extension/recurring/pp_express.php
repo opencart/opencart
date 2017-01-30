@@ -50,14 +50,14 @@ class ControllerExtensionRecurringPPExpress extends Controller {
 		if ($recurring_info && $recurring_info['reference']) {
 			if ($this->config->get('pp_express_test')) {
 				$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_sandbox_username');
+				$api_username = $this->config->get('payment_pp_express_sandbox_username');
 				$api_password = $this->config->get('pp_express_sandbox_password');
 				$api_signature = $this->config->get('pp_express_sandbox_signature');
 			} else {
 				$api_url = 'https://api-3t.paypal.com/nvp';
-				$api_username = $this->config->get('pp_express_username');
-				$api_password = $this->config->get('pp_express_password');
-				$api_signature = $this->config->get('pp_express_signature');
+				$api_username = $this->config->get('payment_pp_express_username');
+				$api_password = $this->config->get('payment_pp_express_password');
+				$api_signature = $this->config->get('payment_pp_express_signature');
 			}
 		
 			$request = array(

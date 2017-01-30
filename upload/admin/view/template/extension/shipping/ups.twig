@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key"><span data-toggle="tooltip" title="{{ help_key }}">{{ entry_key }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_key" value="{{ ups_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              <input type="text" name="shipping_ups_key" value="{{ shipping_ups_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               {% endif %}
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-username"><span data-toggle="tooltip" title="{{ help_username }}">{{ entry_username }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_username" value="{{ ups_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
+              <input type="text" name="shipping_ups_username" value="{{ shipping_ups_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
               {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
               {% endif %}
@@ -46,7 +46,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_password" value="{{ ups_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+              <input type="text" name="shipping_ups_password" value="{{ shipping_ups_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               {% endif %}
@@ -55,9 +55,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-pickup"><span data-toggle="tooltip" title="{{ help_pickup }}">{{ entry_pickup }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_pickup" id="input-pickup" class="form-control">
+              <select name="shipping_ups_pickup" id="input-pickup" class="form-control">
                 {% for pickup in pickups %}
-                {% if pickup.value == ups_pickup %}
+                {% if pickup.value == shipping_ups_pickup %}
                 <option value="{{ pickup.value }}" selected="selected">{{ pickup.text }}</option>
                 {% else %}
                 <option value="{{ pickup.value }}">{{ pickup.text }}</option>
@@ -69,9 +69,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-packaging"><span data-toggle="tooltip" title="{{ help_packaging }}">{{ entry_packaging }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_packaging" id="input-packaging" class="form-control">
+              <select name="shipping_ups_packaging" id="input-packaging" class="form-control">
                 {% for package in packages %}
-                {% if package.value == ups_packaging %}
+                {% if package.value == shipping_ups_packaging %}
                 <option value="{{ package.value }}" selected="selected">{{ package.text }}</option>
                 {% else %}
                 <option value="{{ package.value }}">{{ package.text }}</option>
@@ -83,9 +83,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-classification"><span data-toggle="tooltip" title="{{ help_classification }}">{{ entry_classification }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_classification" id="input-classification" class="form-control">
+              <select name="shipping_ups_classification" id="input-classification" class="form-control">
                 {% for classification in classifications %}
-                {% if classification.value == ups_classification %}
+                {% if classification.value == shipping_ups_classification %}
                 <option value="{{ classification.value }}" selected="selected">{{ classification.text }}</option>
                 {% else %}
                 <option value="{{ classification.value }}">{{ classification.text }}</option>
@@ -97,9 +97,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-origin"><span data-toggle="tooltip" title="{{ help_origin }}">{{ entry_origin }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_origin" id="input-origin" class="form-control">
+              <select name="shipping_ups_origin" id="input-origin" class="form-control">
                 {% for origin in origins %}
-                {% if origin.value == ups_origin %}
+                {% if origin.value == shipping_ups_origin %}
                 <option value="{{ origin.value }}" selected="selected">{{ origin.text }}</option>
                 {% else %}
                 <option value="{{ origin.value }}">{{ origin.text }}</option>
@@ -111,7 +111,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-city"><span data-toggle="tooltip" title="{{ help_city }}">{{ entry_city }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_city" value="{{ ups_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
+              <input type="text" name="shipping_ups_city" value="{{ shipping_ups_city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
               {% if error_city %}
               <div class="text-danger">{{ error_city }}</div>
               {% endif %}
@@ -120,7 +120,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-state"><span data-toggle="tooltip" title="{{ help_state }}">{{ entry_state }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_state" value="{{ ups_state }}" placeholder="{{ entry_state }}" id="input-state" class="form-control" maxlength="2" />
+              <input type="text" name="shipping_ups_state" value="{{ shipping_ups_state }}" placeholder="{{ entry_state }}" id="input-state" class="form-control" maxlength="2" />
               {% if error_state %}
               <div class="text-danger">{{ error_state }}</div>
               {% endif %}
@@ -129,7 +129,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-country"><span data-toggle="tooltip" title="{{ help_country }}">{{ entry_country }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_country" value="{{ ups_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control" maxlength="2" />
+              <input type="text" name="shipping_ups_country" value="{{ shipping_ups_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control" maxlength="2" />
               {% if error_country %}
               <div class="text-danger">{{ error_country }}</div>
               {% endif %}
@@ -138,27 +138,27 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-postcode"><span data-toggle="tooltip" title="{{ help_postcode }}">{{ entry_postcode }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="ups_postcode" value="{{ ups_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+              <input type="text" name="shipping_ups_postcode" value="{{ shipping_ups_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if ups_test %}
-                <input type="radio" name="ups_test" value="1" checked="checked" />
+                {% if shipping_ups_test %}
+                <input type="radio" name="shipping_ups_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
-                <input type="radio" name="ups_test" value="1" />
+                <input type="radio" name="shipping_ups_test" value="1" />
                 {{ text_yes }}
                 {% endif %}
               </label>
               <label class="radio-inline">
-                {% if not ups_test %}
-                <input type="radio" name="ups_test" value="0" checked="checked" />
+                {% if not shipping_ups_test %}
+                <input type="radio" name="shipping_ups_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
-                <input type="radio" name="ups_test" value="0" />
+                <input type="radio" name="shipping_ups_test" value="0" />
                 {{ text_no }}
                 {% endif %}
               </label>
@@ -167,9 +167,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-quote-type"><span data-toggle="tooltip" title="{{ help_quote_type }}">{{ entry_quote_type }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_quote_type" id="input-quote-type" class="form-control">
+              <select name="shipping_ups_quote_type" id="input-quote-type" class="form-control">
                 {% for quote_type in quote_types %}
-                {% if quote_type.value == ups_quote_type %}
+                {% if quote_type.value == shipping_ups_quote_type %}
                 <option value="{{ quote_type.value }}" selected="selected">{{ quote_type.text }}</option>
                 {% else %}
                 <option value="{{ quote_type.value }}">{{ quote_type.text }}</option>
@@ -185,132 +185,132 @@
                 <div id="US">
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_01 %}
-                      <input type="checkbox" name="ups_us_01" value="1" checked="checked" />
+                      {% if shipping_ups_us_01 %}
+                      <input type="checkbox" name="shipping_ups_us_01" value="1" checked="checked" />
                       {{ text_next_day_air }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_01" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_01" value="1" />
                       {{ text_next_day_air }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_02 %}
-                      <input type="checkbox" name="ups_us_02" value="1" checked="checked" />
+                      {% if shipping_ups_us_02 %}
+                      <input type="checkbox" name="shipping_ups_us_02" value="1" checked="checked" />
                       {{ text_2nd_day_air }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_02" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_02" value="1" />
                       {{ text_2nd_day_air }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_03 %}
-                      <input type="checkbox" name="ups_us_03" value="1" checked="checked" />
+                      {% if shipping_ups_us_03 %}
+                      <input type="checkbox" name="shipping_ups_us_03" value="1" checked="checked" />
                       {{ text_ground }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_03" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_03" value="1" />
                       {{ text_ground }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_07 %}
-                      <input type="checkbox" name="ups_us_07" value="1" checked="checked" />
+                      {% if shipping_ups_us_07 %}
+                      <input type="checkbox" name="shipping_ups_us_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_07" value="1" />
                       {{ text_worldwide_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_08 %}
-                      <input type="checkbox" name="ups_us_08" value="1" checked="checked" />
+                      {% if shipping_ups_us_08 %}
+                      <input type="checkbox" name="shipping_ups_us_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_08" value="1" />
                       {{ text_worldwide_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_11 %}
-                      <input type="checkbox" name="ups_us_11" value="1" checked="checked" />
+                      {% if shipping_ups_us_11 %}
+                      <input type="checkbox" name="shipping_ups_us_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_11" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_11" value="1" />
                       {{ text_standard }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_12 %}
-                      <input type="checkbox" name="ups_us_12" value="1" checked="checked" />
+                      {% if shipping_ups_us_12 %}
+                      <input type="checkbox" name="shipping_ups_us_12" value="1" checked="checked" />
                       {{ text_3_day_select }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_12" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_12" value="1" />
                       {{ text_3_day_select }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_13 %}
-                      <input type="checkbox" name="ups_us_13" value="1" checked="checked" />
+                      {% if shipping_ups_us_13 %}
+                      <input type="checkbox" name="shipping_ups_us_13" value="1" checked="checked" />
                       {{ text_next_day_air_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_13" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_13" value="1" />
                       {{ text_next_day_air_saver }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_14 %}
-                      <input type="checkbox" name="ups_us_14" value="1" checked="checked" />
+                      {% if shipping_ups_us_14 %}
+                      <input type="checkbox" name="shipping_ups_us_14" value="1" checked="checked" />
                       {{ text_next_day_air_early_am }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_14" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_14" value="1" />
                       {{ text_next_day_air_early_am }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_54 %}
-                      <input type="checkbox" name="ups_us_54" value="1" checked="checked" />
+                      {% if shipping_ups_us_54 %}
+                      <input type="checkbox" name="shipping_ups_us_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_59 %}
-                      <input type="checkbox" name="ups_us_59" value="1" checked="checked" />
+                      {% if shipping_ups_us_59 %}
+                      <input type="checkbox" name="shipping_ups_us_59" value="1" checked="checked" />
                       {{ text_2nd_day_air_am }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_59" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_59" value="1" />
                       {{ text_2nd_day_air_am }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_us_65 %}
-                      <input type="checkbox" name="ups_us_65" value="1" checked="checked" />
+                      {% if shipping_ups_us_65 %}
+                      <input type="checkbox" name="shipping_ups_us_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_us_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_us_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
@@ -319,88 +319,88 @@
                 <div id="PR">
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_01 %}
-                      <input type="checkbox" name="ups_pr_01" value="1" checked="checked" />
+                      {% if shipping_ups_pr_01 %}
+                      <input type="checkbox" name="shipping_ups_pr_01" value="1" checked="checked" />
                       {{ text_next_day_air }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_01" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_01" value="1" />
                       {{ text_next_day_air }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_02 %}
-                      <input type="checkbox" name="ups_pr_02" value="1" checked="checked" />
+                      {% if shipping_ups_pr_02 %}
+                      <input type="checkbox" name="shipping_ups_pr_02" value="1" checked="checked" />
                       {{ text_2nd_day_air }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_02" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_02" value="1" />
                       {{ text_2nd_day_air }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_03 %}
-                      <input type="checkbox" name="ups_pr_03" value="1" checked="checked" />
+                      {% if shipping_ups_pr_03 %}
+                      <input type="checkbox" name="shipping_ups_pr_03" value="1" checked="checked" />
                       {{ text_ground }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_03" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_03" value="1" />
                       {{ text_ground }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_07 %}
-                      <input type="checkbox" name="ups_pr_07" value="1" checked="checked" />
+                      {% if shipping_ups_pr_07 %}
+                      <input type="checkbox" name="shipping_ups_pr_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_07" value="1" />
                       {{ text_worldwide_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_08 %}
-                      <input type="checkbox" name="ups_pr_08" value="1" checked="checked" />
+                      {% if shipping_ups_pr_08 %}
+                      <input type="checkbox" name="shipping_ups_pr_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_08" value="1" />
                       {{ text_worldwide_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_14 %}
-                      <input type="checkbox" name="ups_pr_14" value="1" checked="checked" />
+                      {% if shipping_ups_pr_14 %}
+                      <input type="checkbox" name="shipping_ups_pr_14" value="1" checked="checked" />
                       {{ text_next_day_air_early_am }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_14" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_14" value="1" />
                       {{ text_next_day_air_early_am }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_54 %}
-                      <input type="checkbox" name="ups_pr_54" value="1" checked="checked" />
+                      {% if shipping_ups_pr_54 %}
+                      <input type="checkbox" name="shipping_ups_pr_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_pr_65 %}
-                      <input type="checkbox" name="ups_pr_65" value="1" checked="checked" />
+                      {% if shipping_ups_pr_65 %}
+                      <input type="checkbox" name="shipping_ups_pr_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_pr_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_pr_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
@@ -409,110 +409,110 @@
                 <div id="CA">
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_01 %}
-                      <input type="checkbox" name="ups_ca_01" value="1" checked="checked" />
+                      {% if shipping_ups_ca_01 %}
+                      <input type="checkbox" name="shipping_ups_ca_01" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_01" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_01" value="1" />
                       {{ text_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_02 %}
-                      <input type="checkbox" name="ups_ca_02" value="1" checked="checked" />
+                      {% if shipping_ups_ca_02 %}
+                      <input type="checkbox" name="shipping_ups_ca_02" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_02" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_02" value="1" />
                       {{ text_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_07 %}
-                      <input type="checkbox" name="ups_ca_07" value="1" checked="checked" />
+                      {% if shipping_ups_ca_07 %}
+                      <input type="checkbox" name="shipping_ups_ca_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_07" value="1" />
                       {{ text_worldwide_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_08 %}
-                      <input type="checkbox" name="ups_ca_08" value="1" checked="checked" />
+                      {% if shipping_ups_ca_08 %}
+                      <input type="checkbox" name="shipping_ups_ca_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_08" value="1" />
                       {{ text_worldwide_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_11 %}
-                      <input type="checkbox" name="ups_ca_11" value="1" checked="checked" />
+                      {% if shipping_ups_ca_11 %}
+                      <input type="checkbox" name="shipping_ups_ca_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_11" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_11" value="1" />
                       {{ text_standard }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_12 %}
-                      <input type="checkbox" name="ups_ca_12" value="1" checked="checked" />
+                      {% if shipping_ups_ca_12 %}
+                      <input type="checkbox" name="shipping_ups_ca_12" value="1" checked="checked" />
                       {{ text_3_day_select }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_12" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_12" value="1" />
                       {{ text_3_day_select }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_13 %}
-                      <input type="checkbox" name="ups_ca_13" value="1" checked="checked" />
+                      {% if shipping_ups_ca_13 %}
+                      <input type="checkbox" name="shipping_ups_ca_13" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_13" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_13" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_14 %}
-                      <input type="checkbox" name="ups_ca_14" value="1" checked="checked" />
+                      {% if shipping_ups_ca_14 %}
+                      <input type="checkbox" name="shipping_ups_ca_14" value="1" checked="checked" />
                       {{ text_express_early_am }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_14" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_14" value="1" />
                       {{ text_express_early_am }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_54 %}
-                      <input type="checkbox" name="ups_ca_54" value="1" checked="checked" />
+                      {% if shipping_ups_ca_54 %}
+                      <input type="checkbox" name="shipping_ups_ca_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_ca_65 %}
-                      <input type="checkbox" name="ups_ca_65" value="1" checked="checked" />
+                      {% if shipping_ups_ca_65 %}
+                      <input type="checkbox" name="shipping_ups_ca_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_ca_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_ca_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
@@ -521,44 +521,44 @@
                 <div id="MX">
                   <div class="checkbox">
                     <label>
-                      {% if ups_mx_07 %}
-                      <input type="checkbox" name="ups_mx_07" value="1" checked="checked" />
+                      {% if shipping_ups_mx_07 %}
+                      <input type="checkbox" name="shipping_ups_mx_07" value="1" checked="checked" />
                       {{ text_worldwide_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_mx_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_mx_07" value="1" />
                       {{ text_worldwide_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_mx_08 %}
-                      <input type="checkbox" name="ups_mx_08" value="1" checked="checked" />
+                      {% if shipping_ups_mx_08 %}
+                      <input type="checkbox" name="shipping_ups_mx_08" value="1" checked="checked" />
                       {{ text_worldwide_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_mx_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_mx_08" value="1" />
                       {{ text_worldwide_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_mx_54 %}
-                      <input type="checkbox" name="ups_mx_54" value="1" checked="checked" />
+                      {% if shipping_ups_mx_54 %}
+                      <input type="checkbox" name="shipping_ups_mx_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_mx_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_mx_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_mx_65 %}
-                      <input type="checkbox" name="ups_mx_65" value="1" checked="checked" />
+                      {% if shipping_ups_mx_65 %}
+                      <input type="checkbox" name="shipping_ups_mx_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_mx_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_mx_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
@@ -567,110 +567,110 @@
                 <div id="EU">
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_07 %}
-                      <input type="checkbox" name="ups_eu_07" value="1" checked="checked" />
+                      {% if shipping_ups_eu_07 %}
+                      <input type="checkbox" name="shipping_ups_eu_07" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_07" value="1" />
                       {{ text_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_08 %}
-                      <input type="checkbox" name="ups_eu_08" value="1" checked="checked" />
+                      {% if shipping_ups_eu_08 %}
+                      <input type="checkbox" name="shipping_ups_eu_08" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_08" value="1" />
                       {{ text_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_11 %}
-                      <input type="checkbox" name="ups_eu_11" value="1" checked="checked" />
+                      {% if shipping_ups_eu_11 %}
+                      <input type="checkbox" name="shipping_ups_eu_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_11" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_11" value="1" />
                       {{ text_standard }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_54 %}
-                      <input type="checkbox" name="ups_eu_54" value="1" checked="checked" />
+                      {% if shipping_ups_eu_54 %}
+                      <input type="checkbox" name="shipping_ups_eu_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_65 %}
-                      <input type="checkbox" name="ups_eu_65" value="1" checked="checked" />
+                      {% if shipping_ups_eu_65 %}
+                      <input type="checkbox" name="shipping_ups_eu_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_82 %}
-                      <input type="checkbox" name="ups_eu_82" value="1" checked="checked" />
+                      {% if shipping_ups_eu_82 %}
+                      <input type="checkbox" name="shipping_ups_eu_82" value="1" checked="checked" />
                       {{ text_today_standard }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_82" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_82" value="1" />
                       {{ text_today_standard }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_83 %}
-                      <input type="checkbox" name="ups_eu_83" value="1" checked="checked" />
+                      {% if shipping_ups_eu_83 %}
+                      <input type="checkbox" name="shipping_ups_eu_83" value="1" checked="checked" />
                       {{ text_today_dedicated_courier }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_83" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_83" value="1" />
                       {{ text_today_dedicated_courier }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_84 %}
-                      <input type="checkbox" name="ups_eu_84" value="1" checked="checked" />
+                      {% if shipping_ups_eu_84 %}
+                      <input type="checkbox" name="shipping_ups_eu_84" value="1" checked="checked" />
                       {{ text_today_intercity }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_84" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_84" value="1" />
                       {{ text_today_intercity }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_85 %}
-                      <input type="checkbox" name="ups_eu_85" value="1" checked="checked" />
+                      {% if shipping_ups_eu_85 %}
+                      <input type="checkbox" name="shipping_ups_eu_85" value="1" checked="checked" />
                       {{ text_today_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_85" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_85" value="1" />
                       {{ text_today_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_eu_86 %}
-                      <input type="checkbox" name="ups_eu_86" value="1" checked="checked" />
+                      {% if shipping_ups_eu_86 %}
+                      <input type="checkbox" name="shipping_ups_eu_86" value="1" checked="checked" />
                       {{ text_today_express_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_eu_86" value="1" />
+                      <input type="checkbox" name="shipping_ups_eu_86" value="1" />
                       {{ text_today_express_saver }}
                       {% endif %}
                     </label>
@@ -679,55 +679,55 @@
                 <div id="other">
                   <div class="checkbox">
                     <label>
-                      {% if ups_other_07 %}
-                      <input type="checkbox" name="ups_other_07" value="1" checked="checked" />
+                      {% if shipping_ups_other_07 %}
+                      <input type="checkbox" name="shipping_ups_other_07" value="1" checked="checked" />
                       {{ text_express }}
                       {% else %}
-                      <input type="checkbox" name="ups_other_07" value="1" />
+                      <input type="checkbox" name="shipping_ups_other_07" value="1" />
                       {{ text_express }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_other_08 %}
-                      <input type="checkbox" name="ups_other_08" value="1" checked="checked" />
+                      {% if shipping_ups_other_08 %}
+                      <input type="checkbox" name="shipping_ups_other_08" value="1" checked="checked" />
                       {{ text_expedited }}
                       {% else %}
-                      <input type="checkbox" name="ups_other_08" value="1" />
+                      <input type="checkbox" name="shipping_ups_other_08" value="1" />
                       {{ text_expedited }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_other_11 %}
-                      <input type="checkbox" name="ups_other_11" value="1" checked="checked" />
+                      {% if shipping_ups_other_11 %}
+                      <input type="checkbox" name="shipping_ups_other_11" value="1" checked="checked" />
                       {{ text_standard }}
                       {% else %}
-                      <input type="checkbox" name="ups_other_11" value="1" />
+                      <input type="checkbox" name="shipping_ups_other_11" value="1" />
                       {{ text_standard }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_other_54 %}
-                      <input type="checkbox" name="ups_other_54" value="1" checked="checked" />
+                      {% if shipping_ups_other_54 %}
+                      <input type="checkbox" name="shipping_ups_other_54" value="1" checked="checked" />
                       {{ text_worldwide_express_plus }}
                       {% else %}
-                      <input type="checkbox" name="ups_other_54" value="1" />
+                      <input type="checkbox" name="shipping_ups_other_54" value="1" />
                       {{ text_worldwide_express_plus }}
                       {% endif %}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      {% if ups_other_65 %}
-                      <input type="checkbox" name="ups_other_65" value="1" checked="checked" />
+                      {% if shipping_ups_other_65 %}
+                      <input type="checkbox" name="shipping_ups_other_65" value="1" checked="checked" />
                       {{ text_saver }}
                       {% else %}
-                      <input type="checkbox" name="ups_other_65" value="1" />
+                      <input type="checkbox" name="shipping_ups_other_65" value="1" />
                       {{ text_saver }}
                       {% endif %}
                     </label>
@@ -740,20 +740,20 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_insurance }}">{{ entry_insurance }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if ups_insurance %}
-                <input type="radio" name="ups_insurance" value="1" checked="checked" />
+                {% if shipping_ups_insurance %}
+                <input type="radio" name="shipping_ups_insurance" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
-                <input type="radio" name="ups_insurance" value="1" />
+                <input type="radio" name="shipping_ups_insurance" value="1" />
                 {{ text_yes }}
                 {% endif %}
               </label>
               <label class="radio-inline">
-                {% if not ups_insurance %}
-                <input type="radio" name="ups_insurance" value="0" checked="checked" />
+                {% if not shipping_ups_insurance %}
+                <input type="radio" name="shipping_ups_insurance" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
-                <input type="radio" name="ups_insurance" value="0" />
+                <input type="radio" name="shipping_ups_insurance" value="0" />
                 {{ text_no }}
                 {% endif %}
               </label>
@@ -763,20 +763,20 @@
             <label class="col-sm-2 control-label">{{ entry_display_weight }}</label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if ups_display_weight %}
-                <input type="radio" name="ups_display_weight" value="1" checked="checked" />
+                {% if shipping_ups_display_weight %}
+                <input type="radio" name="shipping_ups_display_weight" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
-                <input type="radio" name="ups_display_weight" value="1" />
+                <input type="radio" name="shipping_ups_display_weight" value="1" />
                 {{ text_yes }}
                 {% endif %}
               </label>
               <label class="radio-inline">
-                {% if not ups_display_weight %}
-                <input type="radio" name="ups_display_weight" value="0" checked="checked" />
+                {% if not shipping_ups_display_weight %}
+                <input type="radio" name="shipping_ups_display_weight" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
-                <input type="radio" name="ups_display_weight" value="0" />
+                <input type="radio" name="shipping_ups_display_weight" value="0" />
                 {{ text_no }}
                 {% endif %}
               </label>
@@ -785,9 +785,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="{{ help_weight_class }}">{{ entry_weight_class }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_weight_class_id" id="input-weight-class" class="form-control">
+              <select name="shipping_ups_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
-                {% if weight_class.weight_class_id == ups_weight_class_id %}
+                {% if weight_class.weight_class_id == shipping_ups_weight_class_id %}
                 <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
                 {% else %}
                 <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
@@ -799,9 +799,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="{{ help_length_class }}">{{ entry_length_class }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_length_class_id" id="input-length-class" class="form-control">
+              <select name="shipping_ups_length_class_id" id="input-length-class" class="form-control">
                 {% for length_class in length_classes %}
-                {% if length_class.length_class_id == ups_length_class_id %}
+                {% if length_class.length_class_id == shipping_ups_length_class_id %}
                 <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
                 {% else %}
                 <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
@@ -815,13 +815,13 @@
             <div class="col-sm-10">
               <div class="row">
                 <div class="col-sm-4">
-                  <input type="text" name="ups_length" value="{{ ups_length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control" />
+                  <input type="text" name="shipping_ups_length" value="{{ shipping_ups_length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control" />
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" name="ups_width" value="{{ ups_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
+                  <input type="text" name="shipping_ups_width" value="{{ shipping_ups_width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" name="ups_height" value="{{ ups_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
+                  <input type="text" name="shipping_ups_height" value="{{ shipping_ups_height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
                 </div>
               </div>
               {% if error_dimension %}
@@ -832,10 +832,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
             <div class="col-sm-10">
-              <select name="ups_tax_class_id" id="input-tax-class" class="form-control">
+              <select name="shipping_ups_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
                 {% for tax_class in tax_classes %}
-                {% if tax_class.tax_class_id == ups_tax_class_id %}
+                {% if tax_class.tax_class_id == shipping_ups_tax_class_id %}
                 <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                 {% else %}
                 <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -847,10 +847,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="ups_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="shipping_ups_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == ups_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == shipping_ups_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -862,8 +862,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="ups_status" id="input-status" class="form-control">
-                {% if ups_status %}
+              <select name="shipping_ups_status" id="input-status" class="form-control">
+                {% if shipping_ups_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -876,14 +876,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="ups_sort_order" value="{{ ups_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="shipping_ups_sort_order" value="{{ shipping_ups_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
-              <select name="ups_debug" id="input-debug" class="form-control">
-                {% if ups_debug %}
+              <select name="shipping_ups_debug" id="input-debug" class="form-control">
+                {% if shipping_ups_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -898,12 +898,12 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('select[name=\'ups_origin\']').on('change', function() {
+$('select[name=\'shipping_ups_origin\']').on('change', function() {
 	$('#service > div').hide();	
 										 
 	$('#' + this.value).show();	
 });
 
-$('select[name=\'ups_origin\']').trigger('change');
+$('select[name=\'shipping_ups_origin\']').trigger('change');
 //--></script></div>
 {{ footer }}

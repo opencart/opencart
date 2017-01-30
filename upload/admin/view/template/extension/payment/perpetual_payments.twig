@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-auth-id">{{ entry_auth_id }}</label>
             <div class="col-sm-10">
-              <input type="text" name="perpetual_payments_auth_id" value="{{ perpetual_payments_auth_id }}" placeholder="{{ entry_auth_id }}" id="input-auth-id" class="form-control" />
+              <input type="text" name="payment_perpetual_payments_auth_id" value="{{ payment_perpetual_payments_auth_id }}" placeholder="{{ entry_auth_id }}" id="input-auth-id" class="form-control" />
               {% if error_auth_id %}
               <div class="text-danger">{{ error_auth_id }}</div>
               {% endif %}
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-auth-pass">{{ entry_auth_pass }}</label>
             <div class="col-sm-10">
-              <input type="text" name="perpetual_payments_auth_pass" value="{{ perpetual_payments_auth_pass }}" placeholder="{{ entry_auth_pass }}" id="input-auth-pass" class="form-control" />
+              <input type="text" name="payment_perpetual_payments_auth_pass" value="{{ payment_perpetual_payments_auth_pass }}" placeholder="{{ entry_auth_pass }}" id="input-auth-pass" class="form-control" />
               {% if error_auth_pass %}
               <div class="text-danger">{{ error_auth_pass }}</div>
               {% endif %}
@@ -47,20 +47,20 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                {% if perpetual_payments_test %}
-                <input type="radio" name="perpetual_payments_test" value="1" checked="checked" />
+                {% if payment_perpetual_payments_test %}
+                <input type="radio" name="payment_perpetual_payments_test" value="1" checked="checked" />
                 {{ text_yes }}
                 {% else %}
-                <input type="radio" name="perpetual_payments_test" value="1" />
+                <input type="radio" name="payment_perpetual_payments_test" value="1" />
                 {{ text_yes }}
                 {% endif %}
               </label>
               <label class="radio-inline">
-                {% if not perpetual_payments_test %}
-                <input type="radio" name="perpetual_payments_test" value="0" checked="checked" />
+                {% if not payment_perpetual_payments_test %}
+                <input type="radio" name="payment_perpetual_payments_test" value="0" checked="checked" />
                 {{ text_no }}
                 {% else %}
-                <input type="radio" name="perpetual_payments_test" value="0" />
+                <input type="radio" name="payment_perpetual_payments_test" value="0" />
                 {{ text_no }}
                 {% endif %}
               </label>
@@ -69,15 +69,15 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total">{{ entry_total }}</label>
             <div class="col-sm-10">
-              <input type="text" name="perpetual_payments_total" value="{{ perpetual_payments_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_perpetual_payments_total" value="{{ payment_perpetual_payments_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="perpetual_payments_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_perpetual_payments_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == perpetual_payments_order_status_id %}
+                {% if order_status.order_status_id == payment_perpetual_payments_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -89,10 +89,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="perpetual_payments_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_perpetual_payments_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == perpetual_payments_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_perpetual_payments_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -104,8 +104,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="perpetual_payments_status" id="input-status" class="form-control">
-                {% if perpetual_payments_status %}
+              <select name="payment_perpetual_payments_status" id="input-status" class="form-control">
+                {% if payment_perpetual_payments_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -118,7 +118,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="perpetual_payments_sort_order" value="{{ perpetual_payments_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="payment_perpetual_payments_sort_order" value="{{ payment_perpetual_payments_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

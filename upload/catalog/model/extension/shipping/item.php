@@ -38,7 +38,7 @@ class ModelExtensionShippingItem extends Model {
 				'code'       => 'item',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,
-				'sort_order' => $this->config->get('item_sort_order'),
+				'sort_order' => $this->config->get('shipping_item_sort_order'),
 				'error'      => false
 			);
 		}

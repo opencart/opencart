@@ -19,9 +19,9 @@ class ModelExtensionPaymentLaybuy extends Model {
 	}
 
 	public function getInitialPayments() {
-		$minimum = $this->config->get('laybuy_min_deposit') ? $this->config->get('laybuy_min_deposit') : 20;
+		$minimum = $this->config->get('payment_laybuy_min_deposit') ? $this->config->get('payment_laybuy_min_deposit') : 20;
 
-		$maximum = $this->config->get('laybuy_max_deposit') ? $this->config->get('laybuy_max_deposit') : 50;
+		$maximum = $this->config->get('payment_laybuy_max_deposit') ? $this->config->get('payment_laybuy_max_deposit') : 50;
 
 		$initial_payments = array();
 
@@ -35,11 +35,11 @@ class ModelExtensionPaymentLaybuy extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/laybuy');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('laybuy_geo_zone') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_laybuy_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('laybuy_total') > 0 && $this->config->get('laybuy_total') > $total) {
+		if ($this->config->get('payment_laybuy_total') > 0 && $this->config->get('payment_laybuy_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('laybuy_geo_zone')) {
+		} elseif (!$this->config->get('payment_laybuy_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -48,15 +48,15 @@ class ModelExtensionPaymentLaybuy extends Model {
 		}
 
 		/* Condition for customer group */
-		if ($status && $this->config->get('laybuy_customer_group')) {
-			if (isset($this->session->data['guest']) && in_array(0, $this->config->get('laybuy_customer_group'))) {
+		if ($status && $this->config->get('payment_laybuy_customer_group')) {
+			if (isset($this->session->data['guest']) && in_array(0, $this->config->get('payment_laybuy_customer_group'))) {
 				$status = true;
 			} elseif ($this->customer->isLogged() && $this->session->data['customer_id']) {
 				$this->load->model('account/customer');
 
 				$customer = $this->model_account_customer->getCustomer($this->session->data['customer_id']);
 
-				if (in_array($customer['customer_group_id'], $this->config->get('laybuy_customer_group'))) {
+				if (in_array($customer['customer_group_id'], $this->config->get('payment_laybuy_customer_group'))) {
 					$this->session->data['customer_group_id'] = $customer['customer_group_id'];
 
 					$status = true;
@@ -69,10 +69,10 @@ class ModelExtensionPaymentLaybuy extends Model {
 		}
 
 		/* Condition for categories and products */
-		if ($status && $this->config->get('laybuy_category')) {
-			$allowed_categories = $this->config->get('laybuy_category');
+		if ($status && $this->config->get('payment_laybuy_category')) {
+			$allowed_categories = $this->config->get('payment_laybuy_category');
 
-			$xproducts = explode(',', $this->config->get('laybuy_xproducts'));
+			$xproducts = explode(',', $this->config->get('payment_laybuy_xproducts'));
 
 			$cart_products = $this->cart->getProducts();
 
@@ -104,7 +104,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 				'code'			=> 'laybuy',
 				'title'			=> $this->language->get('text_title'),
 				'terms'			=> '',
-				'sort_order'	=> $this->config->get('laybuy_sort_order')
+				'sort_order'	=> $this->config->get('payment_laybuy_sort_order')
 			);
 		}
 
@@ -114,7 +114,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 	public function getMonths() {
 		$this->load->language('extension/payment/laybuy');
 
-		$max_months = $this->config->get('laybuy_max_months');
+		$max_months = $this->config->get('payment_laybuy_max_months');
 
 		if (!$max_months) {
 			$max_months = 3;
@@ -161,7 +161,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 	}
 
 	public function log($data, $step = 6) {
-		if ($this->config->get('laybuy_logging')) {
+		if ($this->config->get('payment_laybuy_logging')) {
 			$backtrace = debug_backtrace();
 
 			$log = new Log('laybuy.log');

@@ -174,7 +174,7 @@ class ModelExtensionTotalCoupon extends Model {
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
-						'sort_order' => $this->config->get('coupon_sort_order')
+						'sort_order' => $this->config->get('total_coupon_sort_order')
 					);
 
 					$total['total'] -= $discount_total;

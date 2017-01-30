@@ -36,22 +36,22 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-total{{ country.code }}">{{ entry_total }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="klarna_fee[{{ country.code }}][total]" value="{{ klarna_fee[country.code] ? klarna_fee[country.code].total }}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
+                  <input type="text" name="total_klarna_fee[{{ country.code }}][total]" value="{{ total_klarna_fee[country.code] ? total_klarna_fee[country.code].total }}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-fee{{ country.code }}">{{ entry_fee }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="klarna_fee[{{ country.code }}][fee]" value="{{ klarna_fee[country.code] ? klarna_fee[country.code].fee }}" placeholder="{{ entry_fee }}" id="input-fee{{ country.code }}" class="form-control" />
+                  <input type="text" name="total_klarna_fee[{{ country.code }}][fee]" value="{{ total_klarna_fee[country.code] ? total_klarna_fee[country.code].fee }}" placeholder="{{ entry_fee }}" id="input-fee{{ country.code }}" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-tax-class{{ country.code }}">{{ entry_tax_class }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_fee[{{ country.code }}][tax_class_id]" id="input-tax-class{{ country.code }}" class="form-control">
+                  <select name="total_klarna_fee[{{ country.code }}][tax_class_id]" id="input-tax-class{{ country.code }}" class="form-control">
                     <option value="0">{{ text_none }}</option>
                     {% for tax_class in tax_classes %}
-                    {% if klarna_fee[country.code] and klarna_fee[country.code].tax_class_id == tax_class.tax_class_id %}
+                    {% if total_klarna_fee[country.code] and total_klarna_fee[country.code].tax_class_id == tax_class.tax_class_id %}
                     <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                     {% else %}
                     <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -63,8 +63,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_fee[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
-                    {% if klarna_fee[country.code] and klarna_fee[country.code].status %}
+                  <select name="total_klarna_fee[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
+                    {% if total_klarna_fee[country.code] and total_klarna_fee[country.code].status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -77,7 +77,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order{{ country.code }}">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="klarna_fee[{{ country.code }}][sort_order]" value="{{ klarna_fee[country.code] ? klarna_fee[country.code].sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
+                  <input type="text" name="total_klarna_fee[{{ country.code }}][sort_order]" value="{{ total_klarna_fee[country.code] ? total_klarna_fee[country.code].sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
                 </div>
               </div>
             </div>

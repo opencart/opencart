@@ -56,16 +56,16 @@ class ControllerExtensionTotalCoupon extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['coupon_status'])) {
-			$data['coupon_status'] = $this->request->post['coupon_status'];
+		if (isset($this->request->post['total_coupon_status'])) {
+			$data['total_coupon_status'] = $this->request->post['total_coupon_status'];
 		} else {
-			$data['coupon_status'] = $this->config->get('coupon_status');
+			$data['total_coupon_status'] = $this->config->get('total_coupon_status');
 		}
 
-		if (isset($this->request->post['coupon_sort_order'])) {
-			$data['coupon_sort_order'] = $this->request->post['coupon_sort_order'];
+		if (isset($this->request->post['total_coupon_sort_order'])) {
+			$data['total_coupon_sort_order'] = $this->request->post['total_coupon_sort_order'];
 		} else {
-			$data['coupon_sort_order'] = $this->config->get('coupon_sort_order');
+			$data['total_coupon_sort_order'] = $this->config->get('total_coupon_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -77,34 +77,34 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['paypoint_merchant'])) {
-			$data['paypoint_merchant'] = $this->request->post['paypoint_merchant'];
+		if (isset($this->request->post['payment_paypoint_merchant'])) {
+			$data['payment_paypoint_merchant'] = $this->request->post['payment_paypoint_merchant'];
 		} else {
-			$data['paypoint_merchant'] = $this->config->get('paypoint_merchant');
+			$data['payment_paypoint_merchant'] = $this->config->get('payment_paypoint_merchant');
 		}
 
-		if (isset($this->request->post['paypoint_password'])) {
-			$data['paypoint_password'] = $this->request->post['paypoint_password'];
+		if (isset($this->request->post['payment_paypoint_password'])) {
+			$data['payment_paypoint_password'] = $this->request->post['payment_paypoint_password'];
 		} else {
-			$data['paypoint_password'] = $this->config->get('paypoint_password');
+			$data['payment_paypoint_password'] = $this->config->get('payment_paypoint_password');
 		}
 
-		if (isset($this->request->post['paypoint_test'])) {
-			$data['paypoint_test'] = $this->request->post['paypoint_test'];
+		if (isset($this->request->post['payment_paypoint_test'])) {
+			$data['payment_paypoint_test'] = $this->request->post['payment_paypoint_test'];
 		} else {
-			$data['paypoint_test'] = $this->config->get('paypoint_test');
+			$data['payment_paypoint_test'] = $this->config->get('payment_paypoint_test');
 		}
 
-		if (isset($this->request->post['paypoint_total'])) {
-			$data['paypoint_total'] = $this->request->post['paypoint_total'];
+		if (isset($this->request->post['payment_paypoint_total'])) {
+			$data['payment_paypoint_total'] = $this->request->post['payment_paypoint_total'];
 		} else {
-			$data['paypoint_total'] = $this->config->get('paypoint_total');
+			$data['payment_paypoint_total'] = $this->config->get('payment_paypoint_total');
 		}
 
-		if (isset($this->request->post['paypoint_order_status_id'])) {
-			$data['paypoint_order_status_id'] = $this->request->post['paypoint_order_status_id'];
+		if (isset($this->request->post['payment_paypoint_order_status_id'])) {
+			$data['payment_paypoint_order_status_id'] = $this->request->post['payment_paypoint_order_status_id'];
 		} else {
-			$data['paypoint_order_status_id'] = $this->config->get('paypoint_order_status_id');
+			$data['payment_paypoint_order_status_id'] = $this->config->get('payment_paypoint_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
@@ -145,7 +145,7 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['paypoint_merchant']) {
+		if (!$this->request->post['payment_paypoint_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 

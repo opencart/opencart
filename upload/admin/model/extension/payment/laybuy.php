@@ -17,9 +17,9 @@ class ModelExtensionPaymentLaybuy extends Model {
 	}
 
 	public function getInitialPayments() {
-		$minimum = $this->config->get('laybuy_min_deposit') ? $this->config->get('laybuy_min_deposit') : 20;
+		$minimum = $this->config->get('payment_laybuy_min_deposit') ? $this->config->get('payment_laybuy_min_deposit') : 20;
 
-		$maximum = $this->config->get('laybuy_max_deposit') ? $this->config->get('laybuy_max_deposit') : 50;
+		$maximum = $this->config->get('payment_laybuy_max_deposit') ? $this->config->get('payment_laybuy_max_deposit') : 50;
 
 		$initial_payments = array();
 
@@ -33,7 +33,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 	public function getMonths() {
 		$this->load->language('extension/payment/laybuy');
 
-		$max_months = $this->config->get('laybuy_max_months');
+		$max_months = $this->config->get('payment_laybuy_max_months');
 
 		if (!$max_months) {
 			$max_months = 3;
@@ -323,7 +323,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 	}
 
 	public function log($data, $step = 6) {
-		if ($this->config->get('laybuy_logging')) {
+		if ($this->config->get('payment_laybuy_logging')) {
 			$backtrace = debug_backtrace();
 
 			$log = new Log('laybuy.log');

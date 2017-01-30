@@ -102,10 +102,10 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 			'code' => 'FIN'
 		);
 
-		if (isset($this->request->post['klarna_fee'])) {
-			$data['klarna_fee'] = $this->request->post['klarna_fee'];
+		if (isset($this->request->post['total_klarna_fee'])) {
+			$data['total_klarna_fee'] = $this->request->post['total_klarna_fee'];
 		} else {
-			$data['klarna_fee'] = $this->config->get('klarna_fee');
+			$data['total_klarna_fee'] = $this->config->get('total_klarna_fee');
 		}
 
 		$this->load->model('localisation/tax_class');

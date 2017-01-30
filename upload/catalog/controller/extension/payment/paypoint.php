@@ -7,12 +7,12 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['merchant'] = $this->config->get('paypoint_merchant');
+		$data['merchant'] = $this->config->get('payment_paypoint_merchant');
 		$data['trans_id'] = $this->session->data['order_id'];
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
-		if ($this->config->get('paypoint_password')) {
-			$data['digest'] = md5($this->session->data['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $this->config->get('paypoint_password'));
+		if ($this->config->get('payment_paypoint_password')) {
+			$data['digest'] = md5($this->session->data['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $this->config->get('payment_paypoint_password'));
 		} else {
 			$data['digest'] = '';
 		}
@@ -48,7 +48,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 		$data['currency'] = $this->session->data['currency'];
 		$data['callback'] = $this->url->link('extension/payment/paypoint/callback', '', true);
 
-		switch ($this->config->get('paypoint_test')) {
+		switch ($this->config->get('payment_paypoint_test')) {
 			case 'live':
 				$status = 'live';
 				break;
@@ -78,9 +78,9 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		// Validate the request is from PayPoint
-		if ($this->config->get('paypoint_password')) {
+		if ($this->config->get('payment_paypoint_password')) {
 			if (!empty($this->request->get['hash'])) {
-				$status = ($this->request->get['hash'] == md5(str_replace('hash=' . $this->request->get['hash'], '', htmlspecialchars_decode($this->request->server['REQUEST_URI'], ENT_COMPAT)) . $this->config->get('paypoint_password')));
+				$status = ($this->request->get['hash'] == md5(str_replace('hash=' . $this->request->get['hash'], '', htmlspecialchars_decode($this->request->server['REQUEST_URI'], ENT_COMPAT)) . $this->config->get('payment_paypoint_password')));
 			} else {
 				$status = false;
 			}
@@ -135,7 +135,7 @@ class ControllerExtensionPaymentPaypoint extends Controller {
 
 				$this->load->model('checkout/order');
 
-				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_paypoint_order_status_id'), $message, false);
 
 				$data['continue'] = $this->url->link('checkout/success');
 

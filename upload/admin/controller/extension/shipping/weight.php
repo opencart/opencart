@@ -68,41 +68,41 @@ class ControllerExtensionShippingWeight extends Controller {
 		$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
 
 		foreach ($geo_zones as $geo_zone) {
-			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'])) {
-				$data['weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_rate'];
+			if (isset($this->request->post['shipping_weight_' . $geo_zone['geo_zone_id'] . '_rate'])) {
+				$data['shipping_weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->request->post['shipping_weight_' . $geo_zone['geo_zone_id'] . '_rate'];
 			} else {
-				$data['weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_rate');
+				$data['shipping_weight_geo_zone_rate'][$geo_zone['geo_zone_id']] = $this->config->get('shipping_weight_' . $geo_zone['geo_zone_id'] . '_rate');
 			}
 
-			if (isset($this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'])) {
-				$data['weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->request->post['weight_' . $geo_zone['geo_zone_id'] . '_status'];
+			if (isset($this->request->post['shipping_weight_' . $geo_zone['geo_zone_id'] . '_status'])) {
+				$data['shipping_weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->request->post['shipping_weight_' . $geo_zone['geo_zone_id'] . '_status'];
 			} else {
-				$data['weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->config->get('weight_' . $geo_zone['geo_zone_id'] . '_status');
+				$data['shipping_weight_geo_zone_status'][$geo_zone['geo_zone_id']] = $this->config->get('shipping_weight_' . $geo_zone['geo_zone_id'] . '_status');
 			}
 		}
 
 		$data['geo_zones'] = $geo_zones;
 
-		if (isset($this->request->post['weight_tax_class_id'])) {
-			$data['weight_tax_class_id'] = $this->request->post['weight_tax_class_id'];
+		if (isset($this->request->post['shipping_weight_tax_class_id'])) {
+			$data['shipping_weight_tax_class_id'] = $this->request->post['shipping_weight_tax_class_id'];
 		} else {
-			$data['weight_tax_class_id'] = $this->config->get('weight_tax_class_id');
+			$data['shipping_weight_tax_class_id'] = $this->config->get('shipping_weight_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['weight_status'])) {
-			$data['weight_status'] = $this->request->post['weight_status'];
+		if (isset($this->request->post['shipping_weight_status'])) {
+			$data['shipping_weight_status'] = $this->request->post['shipping_weight_status'];
 		} else {
-			$data['weight_status'] = $this->config->get('weight_status');
+			$data['shipping_weight_status'] = $this->config->get('shipping_weight_status');
 		}
 
-		if (isset($this->request->post['weight_sort_order'])) {
-			$data['weight_sort_order'] = $this->request->post['weight_sort_order'];
+		if (isset($this->request->post['shipping_weight_sort_order'])) {
+			$data['shipping_weight_sort_order'] = $this->request->post['shipping_weight_sort_order'];
 		} else {
-			$data['weight_sort_order'] = $this->config->get('weight_sort_order');
+			$data['shipping_weight_sort_order'] = $this->config->get('shipping_weight_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -391,46 +391,46 @@ class ControllerExtensionShippingRoyalMail extends Controller {
 			$data['shipping_royal_mail_display_insurance'] = $this->config->get('shipping_royal_mail_display_insurance');
 		}
 
-		if (isset($this->request->post['royal_mail_weight_class_id'])) {
-			$data['royal_mail_weight_class_id'] = $this->request->post['royal_mail_weight_class_id'];
+		if (isset($this->request->post['shipping_royal_mail_weight_class_id'])) {
+			$data['shipping_royal_mail_weight_class_id'] = $this->request->post['shipping_royal_mail_weight_class_id'];
 		} else {
-			$data['royal_mail_weight_class_id'] = $this->config->get('royal_mail_weight_class_id');
+			$data['shipping_royal_mail_weight_class_id'] = $this->config->get('shipping_royal_mail_weight_class_id');
 		}
 
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 
-		if (isset($this->request->post['royal_mail_tax_class_id'])) {
-			$data['royal_mail_tax_class_id'] = $this->request->post['royal_mail_tax_class_id'];
+		if (isset($this->request->post['shipping_royal_mail_tax_class_id'])) {
+			$data['shipping_royal_mail_tax_class_id'] = $this->request->post['shipping_royal_mail_tax_class_id'];
 		} else {
-			$data['royal_mail_tax_class_id'] = $this->config->get('royal_mail_tax_class_id');
+			$data['shipping_royal_mail_tax_class_id'] = $this->config->get('shipping_royal_mail_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['royal_mail_geo_zone_id'])) {
-			$data['royal_mail_geo_zone_id'] = $this->request->post['royal_mail_geo_zone_id'];
+		if (isset($this->request->post['shipping_royal_mail_geo_zone_id'])) {
+			$data['shipping_royal_mail_geo_zone_id'] = $this->request->post['shipping_royal_mail_geo_zone_id'];
 		} else {
-			$data['royal_mail_geo_zone_id'] = $this->config->get('royal_mail_geo_zone_id');
+			$data['shipping_royal_mail_geo_zone_id'] = $this->config->get('shipping_royal_mail_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['royal_mail_status'])) {
-			$data['royal_mail_status'] = $this->request->post['royal_mail_status'];
+		if (isset($this->request->post['shipping_royal_mail_status'])) {
+			$data['shipping_royal_mail_status'] = $this->request->post['shipping_royal_mail_status'];
 		} else {
-			$data['royal_mail_status'] = $this->config->get('royal_mail_status');
+			$data['shipping_royal_mail_status'] = $this->config->get('shipping_royal_mail_status');
 		}
 
-		if (isset($this->request->post['royal_mail_sort_order'])) {
-			$data['royal_mail_sort_order'] = $this->request->post['royal_mail_sort_order'];
+		if (isset($this->request->post['shipping_royal_mail_sort_order'])) {
+			$data['shipping_royal_mail_sort_order'] = $this->request->post['shipping_royal_mail_sort_order'];
 		} else {
-			$data['royal_mail_sort_order'] = $this->config->get('royal_mail_sort_order');
+			$data['shipping_royal_mail_sort_order'] = $this->config->get('shipping_royal_mail_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

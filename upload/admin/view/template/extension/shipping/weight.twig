@@ -40,10 +40,10 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
                     <div class="col-sm-10">
-                      <select name="weight_tax_class_id" id="input-tax-class" class="form-control">
+                      <select name="shipping_weight_tax_class_id" id="input-tax-class" class="form-control">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                        {% if tax_class.tax_class_id == weight_tax_class_id %}
+                        {% if tax_class.tax_class_id == shipping_weight_tax_class_id %}
                         <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
                         {% else %}
                         <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
@@ -55,8 +55,8 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="weight_status" id="input-status" class="form-control">
-                        {% if weight_status %}
+                      <select name="shipping_weight_status" id="input-status" class="form-control">
+                        {% if shipping_weight_status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -69,7 +69,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="weight_sort_order" value="{{ weight_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                      <input type="text" name="shipping_weight_sort_order" value="{{ shipping_weight_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                     </div>
                   </div>
                 </div>
@@ -78,14 +78,14 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-rate{{ geo_zone.geo_zone_id }}"><span data-toggle="tooltip" title="{{ help_rate }}">{{ entry_rate }}</span></label>
                     <div class="col-sm-10">
-                      <textarea name="weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control">{{ weight_geo_zone_rate[geo_zone.geo_zone_id] ? weight_geo_zone_rate[geo_zone.geo_zone_id] }}</textarea>
+                      <textarea name="shipping_weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control">{{ shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] ? shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-status{{ geo_zone.geo_zone_id }}">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-control">
-                        {% if weight_geo_zone_status[geo_zone.geo_zone_id] %}
+                      <select name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-control">
+                        {% if shipping_weight_geo_zone_status[geo_zone.geo_zone_id] %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}

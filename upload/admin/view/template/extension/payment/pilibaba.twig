@@ -43,7 +43,7 @@
 		      <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-pilibaba-email-address"><span data-toggle="tooltip" title="{{ help_email_address }}">{{ entry_email_address }}</span></label>
                 <div class="col-sm-10">
-			    <input type="email" name="pilibaba_email_address" value="" placeholder="{{ entry_email_address }}" id="input-pilibaba-email-address" class="form-control" />
+			    <input type="email" name="payment_pilibaba_email_address" value="" placeholder="{{ entry_email_address }}" id="input-pilibaba-email-address" class="form-control" />
 		        </div>
 		      </div>
 		      <div class="form-group required">
@@ -100,7 +100,7 @@
 		      <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-pilibaba-merchant-number"><span data-toggle="tooltip" title="{{ help_merchant_number }}">{{ entry_merchant_number }}</span></label>
                 <div class="col-sm-10">
-			    <input type="text" name="pilibaba_merchant_number" value="{{ pilibaba_merchant_number }}" placeholder="{{ entry_merchant_number }}" id="input-pilibaba-merchant-number" class="form-control" />
+			    <input type="text" name="payment_pilibaba_merchant_number" value="{{ payment_pilibaba_merchant_number }}" placeholder="{{ entry_merchant_number }}" id="input-pilibaba-merchant-number" class="form-control" />
 			    {% if error_pilibaba_merchant_number %}
                   <div class="text-danger">{{ error_pilibaba_merchant_number }}</div>
                 {% endif %}
@@ -109,7 +109,7 @@
 		      <div class="form-group required">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-secret-key"><span data-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span></label>
 			    <div class="col-sm-10">
-			    <input type="text" name="pilibaba_secret_key" value="{{ pilibaba_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-pilibaba-secret-key" class="form-control" />
+			    <input type="text" name="payment_pilibaba_secret_key" value="{{ payment_pilibaba_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-pilibaba-secret-key" class="form-control" />
 			    {% if error_pilibaba_secret_key %}
                   <div class="text-danger">{{ error_pilibaba_secret_key }}</div>
                 {% endif %}
@@ -118,13 +118,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-pilibaba-environment">{{ entry_environment }}</label>
                 <div class="col-sm-10">
-                  <select name="pilibaba_environment" id="input-pilibaba-environment" class="form-control">
-                    {% if pilibaba_environment == 'live' %}
+                  <select name="payment_pilibaba_environment" id="input-pilibaba-environment" class="form-control">
+                    {% if payment_pilibaba_environment == 'live' %}
                       <option value="live" selected="selected">{{ text_live }}</option>
                     {% else %}
                       <option value="live">{{ text_live }}</option>
                     {% endif %}
-                    {% if pilibaba_environment == 'test' %}
+                    {% if payment_pilibaba_environment == 'test' %}
                       <option value="test" selected="selected">{{ text_test }}</option>
                     {% else %}
                       <option value="test">{{ text_test }}</option>
@@ -135,7 +135,7 @@
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-shipping-fee"><span data-toggle="tooltip" title="{{ help_shipping_fee }}">{{ entry_shipping_fee }}</span></label>
 			    <div class="col-sm-10">
-			      <input type="text" name="pilibaba_shipping_fee" value="{{ pilibaba_shipping_fee }}" placeholder="{{ entry_shipping_fee }} (e.g. 4.99)" id="input-pilibaba-shipping-fee" class="form-control" />
+			      <input type="text" name="payment_pilibaba_shipping_fee" value="{{ payment_pilibaba_shipping_fee }}" placeholder="{{ entry_shipping_fee }} (e.g. 4.99)" id="input-pilibaba-shipping-fee" class="form-control" />
 			      {% if error_pilibaba_shipping_fee %}
                     <div class="text-danger">{{ error_pilibaba_shipping_fee }}</div>
                   {% endif %}
@@ -144,9 +144,9 @@
 		      <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-pilibaba-order-status"><span data-toggle="tooltip" title="{{ help_order_status }}">{{ entry_order_status }}</span></label>
                 <div class="col-sm-10">
-                  <select name="pilibaba_order_status_id" id="input-pilibaba-order-status" class="form-control">
+                  <select name="payment_pilibaba_order_status_id" id="input-pilibaba-order-status" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == pilibaba_order_status_id %}
+                      {% if order_status.order_status_id == payment_pilibaba_order_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -158,8 +158,8 @@
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-status">{{ entry_status }}</label>
 		        <div class="col-sm-10">
-		          <select name="pilibaba_status" id="input-pilibaba-status" class="form-control">
-                    {% if pilibaba_status %}
+		          <select name="payment_pilibaba_status" id="input-pilibaba-status" class="form-control">
+                    {% if payment_pilibaba_status %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -172,8 +172,8 @@
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-logging"><span data-toggle="tooltip" title="{{ help_logging }}">{{ entry_logging }}</span></label>
 			    <div class="col-sm-10">
-		          <select name="pilibaba_logging" id="input-pilibaba-logging" class="form-control">
-                    {% if pilibaba_logging %}
+		          <select name="payment_pilibaba_logging" id="input-pilibaba-logging" class="form-control">
+                    {% if payment_pilibaba_logging %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -186,13 +186,13 @@
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-sort-order">{{ entry_sort_order }}</label>
 		        <div class="col-sm-10">
-			      <input type="text" name="pilibaba_sort_order" value="{{ pilibaba_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-pilibaba-sort-order" class="form-control" />
+			      <input type="text" name="payment_pilibaba_sort_order" value="{{ payment_pilibaba_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-pilibaba-sort-order" class="form-control" />
 			    </div>
 		      </div>
 		      <div class="form-group" style="display:none">
 		        <label class="col-sm-2 control-label" for="input-pilibaba-email-address"></label>
 		        <div class="col-sm-10">
-			      <input type="text" name="pilibaba_email_address" value="{{ pilibaba_email_address }}" placeholder="" id="input-pilibaba-email-address" class="form-control" />
+			      <input type="text" name="payment_pilibaba_email_address" value="{{ payment_pilibaba_email_address }}" placeholder="" id="input-pilibaba-email-address" class="form-control" />
 			    </div>
 		      </div>
 		    </div>

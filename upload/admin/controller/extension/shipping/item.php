@@ -87,16 +87,16 @@ class ControllerExtensionShippingItem extends Controller {
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['item_status'])) {
-			$data['item_status'] = $this->request->post['item_status'];
+		if (isset($this->request->post['shipping_item_status'])) {
+			$data['shipping_item_status'] = $this->request->post['shipping_item_status'];
 		} else {
-			$data['item_status'] = $this->config->get('item_status');
+			$data['shipping_item_status'] = $this->config->get('shipping_item_status');
 		}
 
-		if (isset($this->request->post['item_sort_order'])) {
-			$data['item_sort_order'] = $this->request->post['item_sort_order'];
+		if (isset($this->request->post['shipping_item_sort_order'])) {
+			$data['shipping_item_sort_order'] = $this->request->post['shipping_item_sort_order'];
 		} else {
-			$data['item_sort_order'] = $this->config->get('item_sort_order');
+			$data['shipping_item_sort_order'] = $this->config->get('shipping_item_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

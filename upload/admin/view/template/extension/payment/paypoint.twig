@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-merchant">{{ entry_merchant }}</label>
             <div class="col-sm-10">
-              <input type="text" name="paypoint_merchant" value="{{ paypoint_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
+              <input type="text" name="payment_paypoint_merchant" value="{{ payment_paypoint_merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant" class="form-control" />
               {% if error_merchant %}
               <div class="text-danger">{{ error_merchant }}</div>
               {% endif %}
@@ -37,24 +37,24 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="paypoint_password" value="{{ paypoint_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+              <input type="text" name="payment_paypoint_password" value="{{ payment_paypoint_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
             <div class="col-sm-10">
-              <select name="paypoint_test" id="input-test" class="form-control">
-                {% if paypoint_test == 'live' %}
+              <select name="payment_paypoint_test" id="input-test" class="form-control">
+                {% if payment_paypoint_test == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 {% endif %}
-                {% if paypoint_test == 'successful' %}
+                {% if payment_paypoint_test == 'successful' %}
                 <option value="successful" selected="selected">{{ text_successful }}</option>
                 {% else %}
                 <option value="successful">{{ text_successful }}</option>
                 {% endif %}
-                {% if paypoint_test == 'fail' %}
+                {% if payment_paypoint_test == 'fail' %}
                 <option value="fail" selected="selected">{{ text_fail }}</option>
                 {% else %}
                 <option value="fail">{{ text_fail }}</option>
@@ -65,15 +65,15 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="paypoint_total" value="{{ paypoint_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_paypoint_total" value="{{ payment_paypoint_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="paypoint_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_paypoint_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == paypoint_order_status_id %}
+                {% if order_status.order_status_id == payment_paypoint_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>

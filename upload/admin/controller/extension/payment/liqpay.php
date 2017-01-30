@@ -85,60 +85,60 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['liqpay_merchant'])) {
-			$data['liqpay_merchant'] = $this->request->post['liqpay_merchant'];
+		if (isset($this->request->post['payment_liqpay_merchant'])) {
+			$data['payment_liqpay_merchant'] = $this->request->post['payment_liqpay_merchant'];
 		} else {
-			$data['liqpay_merchant'] = $this->config->get('liqpay_merchant');
+			$data['payment_liqpay_merchant'] = $this->config->get('payment_liqpay_merchant');
 		}
 
-		if (isset($this->request->post['liqpay_signature'])) {
-			$data['liqpay_signature'] = $this->request->post['liqpay_signature'];
+		if (isset($this->request->post['payment_liqpay_signature'])) {
+			$data['payment_liqpay_signature'] = $this->request->post['payment_liqpay_signature'];
 		} else {
-			$data['liqpay_signature'] = $this->config->get('liqpay_signature');
+			$data['payment_liqpay_signature'] = $this->config->get('payment_liqpay_signature');
 		}
 
-		if (isset($this->request->post['liqpay_type'])) {
-			$data['liqpay_type'] = $this->request->post['liqpay_type'];
+		if (isset($this->request->post['payment_liqpay_type'])) {
+			$data['payment_liqpay_type'] = $this->request->post['payment_liqpay_type'];
 		} else {
-			$data['liqpay_type'] = $this->config->get('liqpay_type');
+			$data['payment_liqpay_type'] = $this->config->get('payment_liqpay_type');
 		}
 
-		if (isset($this->request->post['liqpay_total'])) {
-			$data['liqpay_total'] = $this->request->post['liqpay_total'];
+		if (isset($this->request->post['payment_liqpay_total'])) {
+			$data['payment_liqpay_total'] = $this->request->post['payment_liqpay_total'];
 		} else {
-			$data['liqpay_total'] = $this->config->get('liqpay_total');
+			$data['payment_liqpay_total'] = $this->config->get('payment_liqpay_total');
 		}
 
-		if (isset($this->request->post['liqpay_order_status_id'])) {
-			$data['liqpay_order_status_id'] = $this->request->post['liqpay_order_status_id'];
+		if (isset($this->request->post['payment_liqpay_order_status_id'])) {
+			$data['payment_liqpay_order_status_id'] = $this->request->post['payment_liqpay_order_status_id'];
 		} else {
-			$data['liqpay_order_status_id'] = $this->config->get('liqpay_order_status_id');
+			$data['payment_liqpay_order_status_id'] = $this->config->get('payment_liqpay_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['liqpay_geo_zone_id'])) {
-			$data['liqpay_geo_zone_id'] = $this->request->post['liqpay_geo_zone_id'];
+		if (isset($this->request->post['payment_liqpay_geo_zone_id'])) {
+			$data['payment_liqpay_geo_zone_id'] = $this->request->post['payment_liqpay_geo_zone_id'];
 		} else {
-			$data['liqpay_geo_zone_id'] = $this->config->get('liqpay_geo_zone_id');
+			$data['payment_liqpay_geo_zone_id'] = $this->config->get('payment_liqpay_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['liqpay_status'])) {
-			$data['liqpay_status'] = $this->request->post['liqpay_status'];
+		if (isset($this->request->post['payment_liqpay_status'])) {
+			$data['payment_liqpay_status'] = $this->request->post['payment_liqpay_status'];
 		} else {
-			$data['liqpay_status'] = $this->config->get('liqpay_status');
+			$data['payment_liqpay_status'] = $this->config->get('payment_liqpay_status');
 		}
 
-		if (isset($this->request->post['liqpay_sort_order'])) {
-			$data['liqpay_sort_order'] = $this->request->post['liqpay_sort_order'];
+		if (isset($this->request->post['payment_liqpay_sort_order'])) {
+			$data['payment_liqpay_sort_order'] = $this->request->post['payment_liqpay_sort_order'];
 		} else {
-			$data['liqpay_sort_order'] = $this->config->get('liqpay_sort_order');
+			$data['payment_liqpay_sort_order'] = $this->config->get('payment_liqpay_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -153,11 +153,11 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['liqpay_merchant']) {
+		if (!$this->request->post['payment_liqpay_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 
-		if (!$this->request->post['liqpay_signature']) {
+		if (!$this->request->post['payment_liqpay_signature']) {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 

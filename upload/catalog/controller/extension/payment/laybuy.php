@@ -60,16 +60,16 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 				$data = array();
 
 				$data['VERSION']      = '0.2';
-				$data['MEMBER']       = $this->config->get('laybuys_membership_id');
+				$data['MEMBER']       = $this->config->get('payment_laybuys_membership_id');
 				$data['RETURNURL']    = $this->url->link('extension/payment/laybuy/callback', '', true);
 				$data['CANCELURL']    = $this->url->link('extension/payment/laybuy/cancel', '', true);
 				$data['AMOUNT']       = round(floatval($order_info['total']), 2, PHP_ROUND_HALF_DOWN);
 				$data['CURRENCY']     = $order_info['currency_code'];
 				$data['INIT']         = (int)$this->request->post['INIT'];
 				$data['MONTHS']       = (int)$this->request->post['MONTHS'];
-				$data['MIND']         = ((int)$this->config->get('laybuy_min_deposit')) ? (int)$this->config->get('laybuy_min_deposit') : 20;
-				$data['MAXD']         = ((int)$this->config->get('laybuy_max_deposit')) ? (int)$this->config->get('laybuy_max_deposit') : 50;
-				$data['CUSTOM']       = $order_info['order_id'] . ':' . md5($this->config->get('laybuy_token'));
+				$data['MIND']         = ((int)$this->config->get('payment_laybuy_min_deposit')) ? (int)$this->config->get('payment_laybuy_min_deposit') : 20;
+				$data['MAXD']         = ((int)$this->config->get('payment_laybuy_max_deposit')) ? (int)$this->config->get('payment_laybuy_max_deposit') : 50;
+				$data['CUSTOM']       = $order_info['order_id'] . ':' . md5($this->config->get('payment_laybuy_token'));
 				$data['EMAIL']        = $order_info['email'];
 
 				$data_string = '';
@@ -82,10 +82,10 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_extension_payment_laybuy->log('Gateway URL: ' . $this->config->get('laybuy_gateway_url'));
+				$this->model_extension_payment_laybuy->log('Gateway URL: ' . $this->config->get('payment_laybuy_gateway_url'));
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_gateway_url'));
+				curl_setopt($ch, CURLOPT_URL, $this->config->get('payment_laybuy_gateway_url'));
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -105,7 +105,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 			 	if (isset($result['ACK']) && isset($result['TOKEN']) && $result['ACK'] == 'SUCCESS') {
 					$this->model_extension_payment_laybuy->log('Success response. Redirecting to PayPal.');
 
-					$this->response->redirect($this->config->get('laybuy_gateway_url') . '?TOKEN=' . $result['TOKEN']);
+					$this->response->redirect($this->config->get('payment_laybuy_gateway_url') . '?TOKEN=' . $result['TOKEN']);
 				} else {
 					$this->model_extension_payment_laybuy->log('Failure response. Redirecting to checkout/failure.');
 
@@ -141,15 +141,15 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 			$this->model_extension_payment_laybuy->log('Received Token: ' . $token);
 
-			$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
+			$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('payment_laybuy_token')));
 
-			if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
+			if (hash_equals(md5($this->config->get('payment_laybuy_token')), $token)) {
 				$this->model_extension_payment_laybuy->log('Order ID: ' . $order_id);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
 				if ($order_info) {
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_pending'));
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_pending'));
 
 					$transaction_report = $this->model_extension_payment_laybuy->prepareTransactionReport($this->request->post);
 
@@ -210,9 +210,9 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$this->model_extension_payment_laybuy->log('Received Token: ' . $token);
 
-				$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('laybuy_token')));
+				$this->model_extension_payment_laybuy->log('Actual Token: ' . md5($this->config->get('payment_laybuy_token')));
 
-				if (hash_equals(md5($this->config->get('laybuy_token')), $token)) {
+				if (hash_equals(md5($this->config->get('payment_laybuy_token')), $token)) {
 					$this->model_extension_payment_laybuy->log('Order ID: ' . $order_id);
 
 					$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -245,7 +245,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 							$status = 5;
 
-							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'));
+							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_processing'), $this->language->get('text_comment'));
 						} else {
 							$this->model_extension_payment_laybuy->log('Lay-Buy');
 						}
@@ -271,7 +271,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 						if ($old_transaction['paypal_profile_id']) {
 							$this->model_extension_payment_laybuy->log('Canceling transaction');
 
-							$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'paypal_profile_id=' . $old_transaction['paypal_profile_id'];
+							$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'paypal_profile_id=' . $old_transaction['paypal_profile_id'];
 
 							$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
@@ -355,7 +355,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->model_extension_payment_laybuy->log('Running cron');
 
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('laybuy_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_laybuy_token'), $this->request->get['token'])) {
 			$paypal_profile_id_array = $this->model_extension_payment_laybuy->getPayPalProfileIds();
 
 			if ($paypal_profile_id_array) {
@@ -367,14 +367,14 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$paypal_profile_ids = rtrim($paypal_profile_ids, ',');
 
-				$data_string = 'mid=' . $this->config->get('laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
+				$data_string = 'mid=' . $this->config->get('payment_laybuys_membership_id') . '&' . 'profileIds=' . $paypal_profile_ids;
 
 				$this->model_extension_payment_laybuy->log('Data String: ' . $data_string);
 
-				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('laybuy_api_url'));
+				$this->model_extension_payment_laybuy->log('API URL: ' . $this->config->get('payment_laybuy_api_url'));
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->config->get('laybuy_api_url'));
+				curl_setopt($ch, CURLOPT_URL, $this->config->get('payment_laybuy_api_url'));
 				curl_setopt($ch, CURLOPT_POST, true);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -469,7 +469,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 						switch ($status) {
 							case -1: // Cancel
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' canceled');
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_canceled'), $this->language->get('text_comment'), false, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_canceled'), $this->language->get('text_comment'), false, false);
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '7', $report_content, $start_index);
 								break;
 							case 0: // Pending
@@ -478,7 +478,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 								break;
 							case 1: // Paid
 								$this->model_extension_payment_laybuy->log('Transaction #' . $transaction['laybuy_transaction_id'] . ' paid');
-								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('laybuy_order_status_id_processing'), $this->language->get('text_comment'), false, false);
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_laybuy_order_status_id_processing'), $this->language->get('text_comment'), false, false);
 								$this->model_extension_payment_laybuy->updateTransaction($transaction['laybuy_transaction_id'], '5', $report_content, $start_index);
 								break;
 						}

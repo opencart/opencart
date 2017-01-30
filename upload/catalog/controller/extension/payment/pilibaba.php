@@ -11,7 +11,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['version']      = 'V2.0.01';
-		$data['merchantNo']   = $this->config->get('pilibaba_merchant_number');
+		$data['merchantNo']   = $this->config->get('payment_pilibaba_merchant_number');
 		$data['currencyType'] = $order_info['currency_code'];
 		$data['orderNo']      = $order_info['order_id'];
 		$data['orderAmount']  = intval(round($order_info['total'], 2) * 100);
@@ -23,7 +23,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 		$data['shipper']      = 0;
 		$data['tax']          = ($this->config->get('config_tax')) ? 0 : $this->model_extension_payment_pilibaba->getOrderTaxAmount($order_info['order_id']);
 		$data['signType']     = 'MD5';
-		$data['signMsg']      = strtoupper(md5($data['version'] . $data['merchantNo'] . $data['currencyType'] . $data['orderNo'] . $data['orderAmount'] . $data['orderTime'] . $data['pageUrl'] . $data['serverUrl'] . $data['redirectUrl'] . $data['notifyType'] . $data['shipper'] . $data['tax'] . $data['signType'] . $this->config->get('pilibaba_secret_key')));
+		$data['signMsg']      = strtoupper(md5($data['version'] . $data['merchantNo'] . $data['currencyType'] . $data['orderNo'] . $data['orderAmount'] . $data['orderTime'] . $data['pageUrl'] . $data['serverUrl'] . $data['redirectUrl'] . $data['notifyType'] . $data['shipper'] . $data['tax'] . $data['signType'] . $this->config->get('payment_pilibaba_secret_key')));
 
 		$products = array();
 
@@ -50,7 +50,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['goodsList'] = urlencode(json_encode($products));
 
-		if ($this->config->get('pilibaba_environment') == 'live') {
+		if ($this->config->get('payment_pilibaba_environment') == 'live') {
 			$data['url'] = 'https://www.pilibaba.com/pilipay/payreq';
 		} else {
 			$data['url'] = 'http://pre.pilibaba.com/pilipay/payreq';
@@ -75,7 +75,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$this->model_extension_payment_pilibaba->log('Express called');
 
-		if ($this->config->get('pilibaba_status')) {
+		if ($this->config->get('payment_pilibaba_status')) {
 			if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 				$this->model_extension_payment_pilibaba->log('No physical products. Redirecting to checkout/cart');
 
@@ -308,7 +308,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 				$data['version']      = 'V2.0.01';
-				$data['merchantNo']   = $this->config->get('pilibaba_merchant_number');
+				$data['merchantNo']   = $this->config->get('payment_pilibaba_merchant_number');
 				$data['currencyType'] = $order_info['currency_code'];
 				$data['orderNo']      = $order_info['order_id'];
 				$data['orderAmount']  = intval(round($order_info['total'], 2) * 100);
@@ -317,10 +317,10 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 				$data['serverUrl']    = $this->url->link('extension/payment/pilibaba/callback', '', true);
 				$data['redirectUrl']  = $this->url->link('checkout/success', '', true);
 				$data['notifyType']   = 'json';
-				$data['shipper']      = intval(round($this->config->get('pilibaba_shipping_fee'), 2) * 100);
+				$data['shipper']      = intval(round($this->config->get('payment_pilibaba_shipping_fee'), 2) * 100);
 				$data['tax']          = ($this->config->get('config_tax')) ? 0 : $this->model_extension_payment_pilibaba->getOrderTaxAmount($order_info['order_id']);
 				$data['signType']     = 'MD5';
-				$data['signMsg']      = strtoupper(md5($data['version'] . $data['merchantNo'] . $data['currencyType'] . $data['orderNo'] . $data['orderAmount'] . $data['orderTime'] . $data['pageUrl'] . $data['serverUrl'] . $data['redirectUrl'] . $data['notifyType'] . $data['shipper'] . $data['tax'] . $data['signType'] . $this->config->get('pilibaba_secret_key')));
+				$data['signMsg']      = strtoupper(md5($data['version'] . $data['merchantNo'] . $data['currencyType'] . $data['orderNo'] . $data['orderAmount'] . $data['orderTime'] . $data['pageUrl'] . $data['serverUrl'] . $data['redirectUrl'] . $data['notifyType'] . $data['shipper'] . $data['tax'] . $data['signType'] . $this->config->get('payment_pilibaba_secret_key')));
 
 				$products = array();
 
@@ -347,7 +347,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 				$data['goodsList'] = urlencode(json_encode($products));
 
-				if ($this->config->get('pilibaba_environment') == 'live') {
+				if ($this->config->get('payment_pilibaba_environment') == 'live') {
 					$data['url'] = 'https://www.pilibaba.com/pilipay/payreq';
 				} else {
 					$data['url'] = 'http://pre.pilibaba.com/pilipay/payreq';
@@ -378,7 +378,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$this->model_extension_payment_pilibaba->log('Response: ' . print_r($response_data, true));
 
-		$sign_msg = strtoupper(md5($this->config->get('pilibaba_merchant_number') . $response_data['orderNo'] . $response_data['orderAmount'] . 'MD5' . $response_data['fee'] . $response_data['orderTime'] . $response_data['customerMail'] . $this->config->get('pilibaba_secret_key')));
+		$sign_msg = strtoupper(md5($this->config->get('payment_pilibaba_merchant_number') . $response_data['orderNo'] . $response_data['orderAmount'] . 'MD5' . $response_data['fee'] . $response_data['orderTime'] . $response_data['customerMail'] . $this->config->get('payment_pilibaba_secret_key')));
 
 		$this->model_extension_payment_pilibaba->log('signMsg: ' . $sign_msg);
 
@@ -402,7 +402,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 				$this->model_extension_payment_pilibaba->log('Adding order history');
 
-				$this->model_checkout_order->addOrderHistory($response_data['orderNo'], $this->config->get('pilibaba_order_status_id'));
+				$this->model_checkout_order->addOrderHistory($response_data['orderNo'], $this->config->get('payment_pilibaba_order_status_id'));
 
 				$this->model_extension_payment_pilibaba->log('Order history added');
 			} else {

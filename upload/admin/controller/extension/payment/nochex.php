@@ -83,72 +83,72 @@ class ControllerExtensionPaymentNOCHEX extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['nochex_email'])) {
-			$data['nochex_email'] = $this->request->post['nochex_email'];
+		if (isset($this->request->post['payment_nochex_email'])) {
+			$data['payment_nochex_email'] = $this->request->post['payment_nochex_email'];
 		} else {
-			$data['nochex_email'] = $this->config->get('nochex_email');
+			$data['payment_nochex_email'] = $this->config->get('payment_nochex_email');
 		}
 
-		if (isset($this->request->post['nochex_account'])) {
-			$data['nochex_account'] = $this->request->post['nochex_account'];
+		if (isset($this->request->post['payment_nochex_account'])) {
+			$data['payment_nochex_account'] = $this->request->post['payment_nochex_account'];
 		} else {
-			$data['nochex_account'] = $this->config->get('nochex_account');
+			$data['payment_nochex_account'] = $this->config->get('payment_nochex_account');
 		}
 
-		if (isset($this->request->post['nochex_merchant'])) {
-			$data['nochex_merchant'] = $this->request->post['nochex_merchant'];
+		if (isset($this->request->post['payment_nochex_merchant'])) {
+			$data['payment_nochex_merchant'] = $this->request->post['payment_nochex_merchant'];
 		} else {
-			$data['nochex_merchant'] = $this->config->get('nochex_merchant');
+			$data['payment_nochex_merchant'] = $this->config->get('payment_nochex_merchant');
 		}
 
-		if (isset($this->request->post['nochex_template'])) {
-			$data['nochex_template'] = $this->request->post['nochex_template'];
+		if (isset($this->request->post['payment_nochex_template'])) {
+			$data['payment_nochex_template'] = $this->request->post['payment_nochex_template'];
 		} else {
-			$data['nochex_template'] = $this->config->get('nochex_template');
+			$data['payment_nochex_template'] = $this->config->get('payment_nochex_template');
 		}
 
-		if (isset($this->request->post['nochex_test'])) {
-			$data['nochex_test'] = $this->request->post['nochex_test'];
+		if (isset($this->request->post['payment_nochex_test'])) {
+			$data['payment_nochex_test'] = $this->request->post['payment_nochex_test'];
 		} else {
-			$data['nochex_test'] = $this->config->get('nochex_test');
+			$data['payment_nochex_test'] = $this->config->get('payment_nochex_test');
 		}
 
-		if (isset($this->request->post['nochex_total'])) {
-			$data['nochex_total'] = $this->request->post['nochex_total'];
+		if (isset($this->request->post['payment_nochex_total'])) {
+			$data['payment_nochex_total'] = $this->request->post['payment_nochex_total'];
 		} else {
-			$data['nochex_total'] = $this->config->get('nochex_total');
+			$data['payment_nochex_total'] = $this->config->get('payment_nochex_total');
 		}
 
-		if (isset($this->request->post['nochex_order_status_id'])) {
-			$data['nochex_order_status_id'] = $this->request->post['nochex_order_status_id'];
+		if (isset($this->request->post['payment_nochex_order_status_id'])) {
+			$data['payment_nochex_order_status_id'] = $this->request->post['payment_nochex_order_status_id'];
 		} else {
-			$data['nochex_order_status_id'] = $this->config->get('nochex_order_status_id');
+			$data['payment_nochex_order_status_id'] = $this->config->get('payment_nochex_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['nochex_geo_zone_id'])) {
-			$data['nochex_geo_zone_id'] = $this->request->post['nochex_geo_zone_id'];
+		if (isset($this->request->post['payment_nochex_geo_zone_id'])) {
+			$data['payment_nochex_geo_zone_id'] = $this->request->post['payment_nochex_geo_zone_id'];
 		} else {
-			$data['nochex_geo_zone_id'] = $this->config->get('nochex_geo_zone_id');
+			$data['payment_nochex_geo_zone_id'] = $this->config->get('payment_nochex_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['nochex_status'])) {
-			$data['nochex_status'] = $this->request->post['nochex_status'];
+		if (isset($this->request->post['payment_nochex_status'])) {
+			$data['payment_nochex_status'] = $this->request->post['payment_nochex_status'];
 		} else {
-			$data['nochex_status'] = $this->config->get('nochex_status');
+			$data['payment_nochex_status'] = $this->config->get('payment_nochex_status');
 		}
 
-		if (isset($this->request->post['nochex_sort_order'])) {
-			$data['nochex_sort_order'] = $this->request->post['nochex_sort_order'];
+		if (isset($this->request->post['payment_nochex_sort_order'])) {
+			$data['payment_nochex_sort_order'] = $this->request->post['payment_nochex_sort_order'];
 		} else {
-			$data['nochex_sort_order'] = $this->config->get('nochex_sort_order');
+			$data['payment_nochex_sort_order'] = $this->config->get('payment_nochex_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -163,11 +163,11 @@ class ControllerExtensionPaymentNOCHEX extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['nochex_email']) {
+		if (!$this->request->post['payment_nochex_email']) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if (!$this->request->post['nochex_merchant']) {
+		if (!$this->request->post['payment_nochex_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 

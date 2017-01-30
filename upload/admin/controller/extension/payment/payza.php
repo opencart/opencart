@@ -78,56 +78,56 @@ class ControllerExtensionPaymentPayza extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['payza_merchant'])) {
-			$data['payza_merchant'] = $this->request->post['payza_merchant'];
+		if (isset($this->request->post['payment_payza_merchant'])) {
+			$data['payment_payza_merchant'] = $this->request->post['payment_payza_merchant'];
 		} else {
-			$data['payza_merchant'] = $this->config->get('payza_merchant');
+			$data['payment_payza_merchant'] = $this->config->get('payment_payza_merchant');
 		}
 
-		if (isset($this->request->post['payza_security'])) {
-			$data['payza_security'] = $this->request->post['payza_security'];
+		if (isset($this->request->post['payment_payza_security'])) {
+			$data['payment_payza_security'] = $this->request->post['payment_payza_security'];
 		} else {
-			$data['payza_security'] = $this->config->get('payza_security');
+			$data['payment_payza_security'] = $this->config->get('payment_payza_security');
 		}
 
 		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/payza/callback';
 
-		if (isset($this->request->post['payza_total'])) {
-			$data['payza_total'] = $this->request->post['payza_total'];
+		if (isset($this->request->post['payment_payza_total'])) {
+			$data['payment_payza_total'] = $this->request->post['payment_payza_total'];
 		} else {
-			$data['payza_total'] = $this->config->get('payza_total');
+			$data['payment_payza_total'] = $this->config->get('payment_payza_total');
 		}
 
-		if (isset($this->request->post['payza_order_status_id'])) {
-			$data['payza_order_status_id'] = $this->request->post['payza_order_status_id'];
+		if (isset($this->request->post['payment_payza_order_status_id'])) {
+			$data['payment_payza_order_status_id'] = $this->request->post['payment_payza_order_status_id'];
 		} else {
-			$data['payza_order_status_id'] = $this->config->get('payza_order_status_id');
+			$data['payment_payza_order_status_id'] = $this->config->get('payment_payza_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['payza_geo_zone_id'])) {
-			$data['payza_geo_zone_id'] = $this->request->post['payza_geo_zone_id'];
+		if (isset($this->request->post['payment_payza_geo_zone_id'])) {
+			$data['payment_payza_geo_zone_id'] = $this->request->post['payment_payza_geo_zone_id'];
 		} else {
-			$data['payza_geo_zone_id'] = $this->config->get('payza_geo_zone_id');
+			$data['payment_payza_geo_zone_id'] = $this->config->get('payment_payza_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['payza_status'])) {
-			$data['payza_status'] = $this->request->post['payza_status'];
+		if (isset($this->request->post['payment_payza_status'])) {
+			$data['payment_payza_status'] = $this->request->post['payment_payza_status'];
 		} else {
-			$data['payza_status'] = $this->config->get('payza_status');
+			$data['payment_payza_status'] = $this->config->get('payment_payza_status');
 		}
 
-		if (isset($this->request->post['payza_sort_order'])) {
-			$data['payza_sort_order'] = $this->request->post['payza_sort_order'];
+		if (isset($this->request->post['payment_payza_sort_order'])) {
+			$data['payment_payza_sort_order'] = $this->request->post['payment_payza_sort_order'];
 		} else {
-			$data['payza_sort_order'] = $this->config->get('payza_sort_order');
+			$data['payment_payza_sort_order'] = $this->config->get('payment_payza_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -142,11 +142,11 @@ class ControllerExtensionPaymentPayza extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['payza_merchant']) {
+		if (!$this->request->post['payment_payza_merchant']) {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 
-		if (!$this->request->post['payza_security']) {
+		if (!$this->request->post['payment_payza_security']) {
 			$this->error['security'] = $this->language->get('error_security');
 		}
 

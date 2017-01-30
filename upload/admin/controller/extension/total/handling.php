@@ -62,38 +62,38 @@ class ControllerExtensionTotalHandling extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['handling_total'])) {
-			$data['handling_total'] = $this->request->post['handling_total'];
+		if (isset($this->request->post['total_handling_total'])) {
+			$data['total_handling_total'] = $this->request->post['total_handling_total'];
 		} else {
-			$data['handling_total'] = $this->config->get('handling_total');
+			$data['total_handling_total'] = $this->config->get('total_handling_total');
 		}
 
-		if (isset($this->request->post['handling_fee'])) {
-			$data['handling_fee'] = $this->request->post['handling_fee'];
+		if (isset($this->request->post['total_handling_fee'])) {
+			$data['total_handling_fee'] = $this->request->post['total_handling_fee'];
 		} else {
-			$data['handling_fee'] = $this->config->get('handling_fee');
+			$data['total_handling_fee'] = $this->config->get('total_handling_fee');
 		}
 
-		if (isset($this->request->post['handling_tax_class_id'])) {
-			$data['handling_tax_class_id'] = $this->request->post['handling_tax_class_id'];
+		if (isset($this->request->post['total_handling_tax_class_id'])) {
+			$data['total_handling_tax_class_id'] = $this->request->post['total_handling_tax_class_id'];
 		} else {
-			$data['handling_tax_class_id'] = $this->config->get('handling_tax_class_id');
+			$data['total_handling_tax_class_id'] = $this->config->get('total_handling_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['handling_status'])) {
-			$data['handling_status'] = $this->request->post['handling_status'];
+		if (isset($this->request->post['total_handling_status'])) {
+			$data['total_handling_status'] = $this->request->post['total_handling_status'];
 		} else {
-			$data['handling_status'] = $this->config->get('handling_status');
+			$data['total_handling_status'] = $this->config->get('total_handling_status');
 		}
 
-		if (isset($this->request->post['handling_sort_order'])) {
-			$data['handling_sort_order'] = $this->request->post['handling_sort_order'];
+		if (isset($this->request->post['total_handling_sort_order'])) {
+			$data['total_handling_sort_order'] = $this->request->post['total_handling_sort_order'];
 		} else {
-			$data['handling_sort_order'] = $this->config->get('handling_sort_order');
+			$data['total_handling_sort_order'] = $this->config->get('total_handling_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -243,7 +243,7 @@ class ControllerBlogLatest extends Controller {
 			$data['limits'][] = array(
 				'text'  => $value,
 				'value' => $value,
-				'href'  => $this->url->link('blog/article', $url . '&limit=' . $value)
+				'href'  => $this->url->link('blog/latest', $url . '&limit=' . $value)
 			);
 		}
 

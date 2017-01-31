@@ -5,21 +5,21 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']   = 'Upgrade';
-$_['heading_success'] = 'Upgrade - Complete!';
+$_['heading_title']   = 'Обновление базы данных';
+$_['heading_success'] = 'Обновление - Завершено!';
 
 // Text
-$_['text_upgrade']    = 'Prepare for your upgrade';
-$_['text_server']     = 'Check your server is set-up correctly';
-$_['text_steps']      = 'Upgrade Progress';
-$_['text_error']      = 'Post any upgrade script errors problems in the forums';
-$_['text_clear']      = 'After upgrade, clear any cookies in your browser to avoid getting token errors.';
-$_['text_admin']      = 'Load the admin page & press Ctrl+F5 twice to force the browser to update the css changes.';
-$_['text_user']       = 'Goto Admin -> Users -> User Groups and Edit the Top Adminstrator group. Check All boxes.';
-$_['text_setting']    = 'Goto Admin and Edit the main System Settings. Update all fields and click save, even if nothing changed.';
-$_['text_store']      = 'Load the store front & press Ctrl+F5 twice to force the browser to update the css changes.';
-$_['text_progress']   = 'Patch %s has been applied (%s of %s)';
-$_['text_success']    = 'Congratulations! You have successfuly upgraded your OpenCart installation!';
+$_['text_upgrade']    = 'Подготовьтесь к обновлению';
+$_['text_server']     = 'Проверьте настройки вашего хостинга';
+$_['text_steps']      = 'Процесс обновления';
+$_['text_error']      = 'О любых ошибках и проблемах при обновлении сообщите на форуме';
+$_['text_clear']      = 'После обновления, удалите все куки в своем браузере, чтобы избежать ошибок с токенами.';
+$_['text_admin']      = 'Перейдите в Административную панель и дважды нажмите Ctrl+F5 для обновления кешированных CSS стилей.';
+$_['text_user']       = 'Перейдите в разделе Система->Пользователи->Группы пользователей к редактированию группы Главный администратор и отметьте все чекбоксы.';
+$_['text_setting']    = 'Перейдите в разделе Система->Настройки к редактированию настроек магазина. Проверьте все значения настроек и нажмите кнопку Сохранить даже если ничего не меняли.';
+$_['text_store']      = 'Перейдите в Публичную часть и дважды нажмите Ctrl+F5 для обновления кешированных CSS стилей.';
+$_['text_progress']   = 'Патч %s установлен (%s из %s)';
+$_['text_success']    = 'Поздравляем! Вы обновили ваш магазин!';
 
 // Entry
-$_['entry_progress']  = 'Progress';
+$_['entry_progress']  = 'Процесс';

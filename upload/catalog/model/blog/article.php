@@ -346,7 +346,7 @@ class ModelBlogArticle extends Model {
 		if (!$article_data) {
 			$sql = "SELECT COUNT(DISTINCT p.article_id) AS total FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id) LEFT JOIN " . DB_PREFIX . "article_to_store p2s ON (p.article_id = p2s.article_id)";
 	
-			if (!empty($data['filter_category_id'])) {
+			if (!empty($data['filter_blog_category_id'])) {
 				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category p2c ON (p.article_id = p2c.article_id)";			
 			}
 						
@@ -402,11 +402,11 @@ class ModelBlogArticle extends Model {
 				}				
 			}
 						
-			if (!empty($data['filter_category_id'])) {
-				if (!empty($data['filter_sub_category'])) {
+			if (!empty($data['filter_blog_category_id'])) {
+				if (!empty($data['filter_sub_blog_category'])) {
 					$implode_data = array();
 					
-					$implode_data[] = (int)$data['filter_category_id'];
+					$implode_data[] = (int)$data['filter_blog_category_id'];
 					
 					$this->load->model('blog/category');
 					
@@ -418,7 +418,7 @@ class ModelBlogArticle extends Model {
 								
 					$sql .= " AND p2c.blog_category_id IN (" . implode(', ', $implode_data) . ")";			
 				} else {
-					$sql .= " AND p2c.blog_category_id = '" . (int)$data['filter_category_id'] . "'";
+					$sql .= " AND p2c.blog_category_id = '" . (int)$data['filter_blog_category_id'] . "'";
 				}
 			}		
 			

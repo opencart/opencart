@@ -28,17 +28,17 @@ class ModelLocalisationLanguage extends Model {
 		}
 		
 		// Menu
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custommenu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
-		foreach ($query->rows as $menu) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu['name']) . "', link = '" . $this->db->escape($menu['link']) . "'");
+		foreach ($query->rows as $custommenu) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "custommenu_description SET custommenu_id = '" . (int)$custommenu['custommenu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($custommenu['name']) . "', link = '" . $this->db->escape($custommenu['link']) . "'");
 		}
 		
 		// Menu Child
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custommenu_child_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		
-		foreach ($query->rows as $menu_child) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "custommenu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($menu_child['name']) . "', link = '" . $this->db->escape($menu_child['link']) . "'");
+		foreach ($query->rows as $custommenu_child) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "custommenu_child_description SET custommenu_child_id = '" . (int)$custommenu_child['custommenu_child_id'] . "', custommenu_id = '" . (int)$custommenu_child['custommenu_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($custommenu_child['name']) . "', link = '" . $this->db->escape($custommenu_child['link']) . "'");
 		}
 
 		// Attribute
@@ -253,7 +253,7 @@ class ModelLocalisationLanguage extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "article_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->cache->delete('article');
 		$this->db->query("DELETE FROM " . DB_PREFIX . "blog_category_description WHERE language_id = '" . (int)$language_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "custommenu_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "custommenu_child_description WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE language_id = '" . (int)$language_id . "'");

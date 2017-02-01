@@ -81,66 +81,66 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 		$data['action'] = $this->url->link('extension/payment/web_payment_software', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['web_payment_software_login'])) {
-			$data['web_payment_software_merchant_name'] = $this->request->post['web_payment_software_merchant_name'];
+		if (isset($this->request->post['payment_web_payment_software_merchant_name'])) {
+			$data['payment_web_payment_software_merchant_name'] = $this->request->post['payment_web_payment_software_merchant_name'];
 		} else {
-			$data['web_payment_software_merchant_name'] = $this->config->get('web_payment_software_merchant_name');
+			$data['payment_web_payment_software_merchant_name'] = $this->config->get('payment_web_payment_software_merchant_name');
 		}
 
-		if (isset($this->request->post['web_payment_software_merchant_key'])) {
-			$data['web_payment_software_merchant_key'] = $this->request->post['web_payment_software_merchant_key'];
+		if (isset($this->request->post['payment_web_payment_software_merchant_key'])) {
+			$data['payment_web_payment_software_merchant_key'] = $this->request->post['payment_web_payment_software_merchant_key'];
 		} else {
-			$data['web_payment_software_merchant_key'] = $this->config->get('web_payment_software_merchant_key');
+			$data['payment_web_payment_software_merchant_key'] = $this->config->get('payment_web_payment_software_merchant_key');
 		}
 
-		if (isset($this->request->post['web_payment_software_mode'])) {
-			$data['web_payment_software_mode'] = $this->request->post['web_payment_software_mode'];
+		if (isset($this->request->post['payment_web_payment_software_mode'])) {
+			$data['payment_web_payment_software_mode'] = $this->request->post['payment_web_payment_software_mode'];
 		} else {
-			$data['web_payment_software_mode'] = $this->config->get('web_payment_software_mode');
+			$data['payment_web_payment_software_mode'] = $this->config->get('payment_web_payment_software_mode');
 		}
 
-		if (isset($this->request->post['web_payment_software_method'])) {
-			$data['web_payment_software_method'] = $this->request->post['web_payment_software_method'];
+		if (isset($this->request->post['payment_web_payment_software_method'])) {
+			$data['payment_web_payment_software_method'] = $this->request->post['payment_web_payment_software_method'];
 		} else {
-			$data['web_payment_software_method'] = $this->config->get('web_payment_software_method');
+			$data['payment_web_payment_software_method'] = $this->config->get('payment_web_payment_software_method');
 		}
 
-		if (isset($this->request->post['web_payment_software_order_status_id'])) {
-			$data['web_payment_software_order_status_id'] = $this->request->post['web_payment_software_order_status_id'];
+		if (isset($this->request->post['payment_web_payment_software_order_status_id'])) {
+			$data['payment_web_payment_software_order_status_id'] = $this->request->post['payment_web_payment_software_order_status_id'];
 		} else {
-			$data['web_payment_software_order_status_id'] = $this->config->get('web_payment_software_order_status_id');
+			$data['payment_web_payment_software_order_status_id'] = $this->config->get('payment_web_payment_software_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['web_payment_software_geo_zone_id'])) {
-			$data['web_payment_software_geo_zone_id'] = $this->request->post['web_payment_software_geo_zone_id'];
+		if (isset($this->request->post['payment_web_payment_software_geo_zone_id'])) {
+			$data['payment_web_payment_software_geo_zone_id'] = $this->request->post['payment_web_payment_software_geo_zone_id'];
 		} else {
-			$data['web_payment_software_geo_zone_id'] = $this->config->get('web_payment_software_geo_zone_id');
+			$data['payment_web_payment_software_geo_zone_id'] = $this->config->get('payment_web_payment_software_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['web_payment_software_status'])) {
-			$data['web_payment_software_status'] = $this->request->post['web_payment_software_status'];
+		if (isset($this->request->post['payment_web_payment_software_status'])) {
+			$data['payment_web_payment_software_status'] = $this->request->post['payment_web_payment_software_status'];
 		} else {
-			$data['web_payment_software_status'] = $this->config->get('web_payment_software_status');
+			$data['payment_web_payment_software_status'] = $this->config->get('payment_web_payment_software_status');
 		}
 
-		if (isset($this->request->post['web_payment_software_total'])) {
-			$data['web_payment_software_total'] = $this->request->post['web_payment_software_total'];
+		if (isset($this->request->post['payment_web_payment_software_total'])) {
+			$data['payment_web_payment_software_total'] = $this->request->post['payment_web_payment_software_total'];
 		} else {
-			$data['web_payment_software_total'] = $this->config->get('web_payment_software_total');
+			$data['payment_web_payment_software_total'] = $this->config->get('payment_web_payment_software_total');
 		}
 
-		if (isset($this->request->post['web_payment_software_sort_order'])) {
-			$data['web_payment_software_sort_order'] = $this->request->post['web_payment_software_sort_order'];
+		if (isset($this->request->post['payment_web_payment_software_sort_order'])) {
+			$data['payment_web_payment_software_sort_order'] = $this->request->post['payment_web_payment_software_sort_order'];
 		} else {
-			$data['web_payment_software_sort_order'] = $this->config->get('web_payment_software_sort_order');
+			$data['payment_web_payment_software_sort_order'] = $this->config->get('payment_web_payment_software_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -155,11 +155,11 @@ class ControllerExtensionPaymentWebPaymentSoftware extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['web_payment_software_merchant_name']) {
+		if (!$this->request->post['payment_web_payment_software_merchant_name']) {
 			$this->error['login'] = $this->language->get('error_login');
 		}
 
-		if (!$this->request->post['web_payment_software_merchant_key']) {
+		if (!$this->request->post['payment_web_payment_software_merchant_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

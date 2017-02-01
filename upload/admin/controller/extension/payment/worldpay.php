@@ -96,22 +96,22 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['worldpay_service_key'])) {
-			$data['worldpay_service_key'] = $this->request->post['worldpay_service_key'];
+		if (isset($this->request->post['payment_worldpay_service_key'])) {
+			$data['payment_worldpay_service_key'] = $this->request->post['payment_worldpay_service_key'];
 		} else {
-			$data['worldpay_service_key'] = $this->config->get('worldpay_service_key');
+			$data['payment_worldpay_service_key'] = $this->config->get('payment_worldpay_service_key');
 		}
 
-		if (isset($this->request->post['worldpay_client_key'])) {
-			$data['worldpay_client_key'] = $this->request->post['worldpay_client_key'];
+		if (isset($this->request->post['payment_worldpay_client_key'])) {
+			$data['payment_worldpay_client_key'] = $this->request->post['payment_worldpay_client_key'];
 		} else {
-			$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
+			$data['payment_worldpay_client_key'] = $this->config->get('payment_worldpay_client_key');
 		}
 
-		if (isset($this->request->post['worldpay_total'])) {
-			$data['worldpay_total'] = $this->request->post['worldpay_total'];
+		if (isset($this->request->post['payment_worldpay_total'])) {
+			$data['payment_worldpay_total'] = $this->request->post['payment_worldpay_total'];
 		} else {
-			$data['worldpay_total'] = $this->config->get('worldpay_total');
+			$data['payment_worldpay_total'] = $this->config->get('payment_worldpay_total');
 		}
 
 		if (isset($this->request->post['worldpay_card'])) {
@@ -347,11 +347,11 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['worldpay_service_key']) {
+		if (!$this->request->post['payment_worldpay_service_key']) {
 			$this->error['error_service_key'] = $this->language->get('error_service_key');
 		}
 
-		if (!$this->request->post['worldpay_client_key']) {
+		if (!$this->request->post['payment_worldpay_client_key']) {
 			$this->error['error_client_key'] = $this->language->get('error_client_key');
 		}
 

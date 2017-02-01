@@ -93,88 +93,88 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$data['payment_sagepay_server_vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		}
 
-		if (isset($this->request->post['sagepay_server_password'])) {
-			$data['sagepay_server_password'] = $this->request->post['sagepay_server_password'];
+		if (isset($this->request->post['payment_sagepay_server_password'])) {
+			$data['payment_sagepay_server_password'] = $this->request->post['payment_sagepay_server_password'];
 		} else {
-			$data['sagepay_server_password'] = $this->config->get('sagepay_server_password');
+			$data['payment_sagepay_server_password'] = $this->config->get('payment_sagepay_server_password');
 		}
 
-		if (isset($this->request->post['sagepay_server_test'])) {
-			$data['sagepay_server_test'] = $this->request->post['sagepay_server_test'];
+		if (isset($this->request->post['payment_sagepay_server_test'])) {
+			$data['payment_sagepay_server_test'] = $this->request->post['payment_sagepay_server_test'];
 		} else {
-			$data['sagepay_server_test'] = $this->config->get('sagepay_server_test');
+			$data['payment_sagepay_server_test'] = $this->config->get('payment_sagepay_server_test');
 		}
 
-		if (isset($this->request->post['sagepay_server_transaction'])) {
-			$data['sagepay_server_transaction'] = $this->request->post['sagepay_server_transaction'];
+		if (isset($this->request->post['payment_sagepay_server_transaction'])) {
+			$data['payment_sagepay_server_transaction'] = $this->request->post['payment_sagepay_server_transaction'];
 		} else {
-			$data['sagepay_server_transaction'] = $this->config->get('sagepay_server_transaction');
+			$data['payment_sagepay_server_transaction'] = $this->config->get('payment_sagepay_server_transaction');
 		}
 
-		if (isset($this->request->post['sagepay_server_total'])) {
-			$data['sagepay_server_total'] = $this->request->post['sagepay_server_total'];
+		if (isset($this->request->post['payment_sagepay_server_total'])) {
+			$data['payment_sagepay_server_total'] = $this->request->post['payment_sagepay_server_total'];
 		} else {
-			$data['sagepay_server_total'] = $this->config->get('sagepay_server_total');
+			$data['payment_sagepay_server_total'] = $this->config->get('payment_sagepay_server_total');
 		}
 
-		if (isset($this->request->post['sagepay_server_card'])) {
-			$data['sagepay_server_card'] = $this->request->post['sagepay_server_card'];
+		if (isset($this->request->post['payment_sagepay_server_card'])) {
+			$data['payment_sagepay_server_card'] = $this->request->post['payment_sagepay_server_card'];
 		} else {
-			$data['sagepay_server_card'] = $this->config->get('sagepay_server_card');
+			$data['payment_sagepay_server_card'] = $this->config->get('payment_sagepay_server_card');
 		}
 
-		if (isset($this->request->post['sagepay_server_order_status_id'])) {
-			$data['sagepay_server_order_status_id'] = $this->request->post['sagepay_server_order_status_id'];
+		if (isset($this->request->post['payment_sagepay_server_order_status_id'])) {
+			$data['payment_sagepay_server_order_status_id'] = $this->request->post['payment_sagepay_server_order_status_id'];
 		} else {
-			$data['sagepay_server_order_status_id'] = $this->config->get('sagepay_server_order_status_id');
+			$data['payment_sagepay_server_order_status_id'] = $this->config->get('payment_sagepay_server_order_status_id');
 		}
 
-		if (isset($this->request->post['sagepay_server_cron_job_token'])) {
-			$data['sagepay_server_cron_job_token'] = $this->request->post['sagepay_server_cron_job_token'];
-		} elseif ($this->config->get('sagepay_server_cron_job_token')) {
-			$data['sagepay_server_cron_job_token'] = $this->config->get('sagepay_server_cron_job_token');
+		if (isset($this->request->post['payment_sagepay_server_cron_job_token'])) {
+			$data['payment_sagepay_server_cron_job_token'] = $this->request->post['payment_sagepay_server_cron_job_token'];
+		} elseif ($this->config->get('payment_sagepay_server_cron_job_token')) {
+			$data['payment_sagepay_server_cron_job_token'] = $this->config->get('payment_sagepay_server_cron_job_token');
 		} else {
-			$data['sagepay_server_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
+			$data['payment_sagepay_server_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['sagepay_server_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_server/cron&token=' . $data['sagepay_server_cron_job_token'];
+		$data['sagepay_server_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_server/cron&token=' . $data['payment_sagepay_server_cron_job_token'];
 
-		if ($this->config->get('sagepay_server_last_cron_job_run')) {
-			$data['sagepay_server_last_cron_job_run'] = $this->config->get('sagepay_server_last_cron_job_run');
+		if ($this->config->get('payment_sagepay_server_last_cron_job_run')) {
+			$data['payment_sagepay_server_last_cron_job_run'] = $this->config->get('payment_sagepay_server_last_cron_job_run');
 		} else {
-			$data['sagepay_server_last_cron_job_run'] = '';
+			$data['payment_sagepay_server_last_cron_job_run'] = '';
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['sagepay_server_geo_zone_id'])) {
-			$data['sagepay_server_geo_zone_id'] = $this->request->post['sagepay_server_geo_zone_id'];
+		if (isset($this->request->post['payment_sagepay_server_geo_zone_id'])) {
+			$data['payment_sagepay_server_geo_zone_id'] = $this->request->post['payment_sagepay_server_geo_zone_id'];
 		} else {
-			$data['sagepay_server_geo_zone_id'] = $this->config->get('sagepay_server_geo_zone_id');
+			$data['payment_sagepay_server_geo_zone_id'] = $this->config->get('payment_sagepay_server_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['sagepay_server_status'])) {
-			$data['sagepay_server_status'] = $this->request->post['sagepay_server_status'];
+		if (isset($this->request->post['payment_sagepay_server_status'])) {
+			$data['payment_sagepay_server_status'] = $this->request->post['payment_sagepay_server_status'];
 		} else {
-			$data['sagepay_server_status'] = $this->config->get('sagepay_server_status');
+			$data['payment_sagepay_server_status'] = $this->config->get('payment_sagepay_server_status');
 		}
 
-		if (isset($this->request->post['sagepay_server_debug'])) {
-			$data['sagepay_server_debug'] = $this->request->post['sagepay_server_debug'];
+		if (isset($this->request->post['payment_sagepay_server_debug'])) {
+			$data['payment_sagepay_server_debug'] = $this->request->post['payment_sagepay_server_debug'];
 		} else {
-			$data['sagepay_server_debug'] = $this->config->get('sagepay_server_debug');
+			$data['payment_sagepay_server_debug'] = $this->config->get('payment_sagepay_server_debug');
 		}
 
-		if (isset($this->request->post['sagepay_server_sort_order'])) {
-			$data['sagepay_server_sort_order'] = $this->request->post['sagepay_server_sort_order'];
+		if (isset($this->request->post['payment_sagepay_server_sort_order'])) {
+			$data['payment_sagepay_server_sort_order'] = $this->request->post['payment_sagepay_server_sort_order'];
 		} else {
-			$data['sagepay_server_sort_order'] = $this->config->get('sagepay_server_sort_order');
+			$data['payment_sagepay_server_sort_order'] = $this->config->get('payment_sagepay_server_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -196,7 +196,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 	public function order() {
 
-		if ($this->config->get('sagepay_server_status')) {
+		if ($this->config->get('payment_sagepay_server_status')) {
 			$this->load->model('extension/payment/sagepay_server');
 
 			$sagepay_server_order = $this->model_extension_payment_sagepay_server->getOrder($this->request->get['order_id']);

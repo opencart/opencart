@@ -77,13 +77,13 @@ class ModelExtensionPaymentSagepayServer extends Model {
 
 			$void_data = array();
 
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/void.vsp';
 				$void_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/void.vsp';
 				$void_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorVoidTx';
 				$void_data['VPSProtocol'] = '2.23';
 			}
@@ -114,13 +114,13 @@ class ModelExtensionPaymentSagepayServer extends Model {
 		if (!empty($sagepay_server_order) && $sagepay_server_order['release_status'] == 0 && ($total_released + $amount <= $sagepay_server_order['total'])) {
 			$release_data = array();
 
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/release.vsp';
 				$release_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/release.vsp';
 				$release_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorReleaseTx';
 				$release_data['VPSProtocol'] = '2.23';
 			}
@@ -156,13 +156,13 @@ class ModelExtensionPaymentSagepayServer extends Model {
 
 			$refund_data = array();
 
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/refund.vsp';
 				$refund_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'test') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/refund.vsp';
 				$refund_data['VPSProtocol'] = '3.00';
-			} elseif ($this->config->get('sagepay_server_test') == 'sim') {
+			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRefundTx';
 				$refund_data['VPSProtocol'] = '2.23';
 			}
@@ -258,7 +258,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 	}
 
 	public function logger($title, $data) {
-		if ($this->config->get('sagepay_server_debug')) {
+		if ($this->config->get('payment_sagepay_server_debug')) {
 			$log = new Log('sagepay_server.log');
 			$log->write($title . ': ' . print_r($data, 1));
 		}

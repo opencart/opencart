@@ -81,66 +81,66 @@ class ControllerExtensionPaymentTwoCheckout extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['twocheckout_account'])) {
-			$data['twocheckout_account'] = $this->request->post['twocheckout_account'];
+		if (isset($this->request->post['payment_twocheckout_account'])) {
+			$data['payment_twocheckout_account'] = $this->request->post['payment_twocheckout_account'];
 		} else {
-			$data['twocheckout_account'] = $this->config->get('twocheckout_account');
+			$data['payment_twocheckout_account'] = $this->config->get('payment_twocheckout_account');
 		}
 
-		if (isset($this->request->post['twocheckout_secret'])) {
-			$data['twocheckout_secret'] = $this->request->post['twocheckout_secret'];
+		if (isset($this->request->post['payment_twocheckout_secret'])) {
+			$data['payment_twocheckout_secret'] = $this->request->post['payment_twocheckout_secret'];
 		} else {
-			$data['twocheckout_secret'] = $this->config->get('twocheckout_secret');
+			$data['payment_twocheckout_secret'] = $this->config->get('payment_twocheckout_secret');
 		}
 
-		if (isset($this->request->post['twocheckout_display'])) {
-			$data['twocheckout_display'] = $this->request->post['twocheckout_display'];
+		if (isset($this->request->post['payment_twocheckout_display'])) {
+			$data['payment_twocheckout_display'] = $this->request->post['payment_twocheckout_display'];
 		} else {
-			$data['twocheckout_display'] = $this->config->get('twocheckout_display');
+			$data['payment_twocheckout_display'] = $this->config->get('payment_twocheckout_display');
 		}
 
-		if (isset($this->request->post['twocheckout_test'])) {
-			$data['twocheckout_test'] = $this->request->post['twocheckout_test'];
+		if (isset($this->request->post['payment_twocheckout_test'])) {
+			$data['payment_twocheckout_test'] = $this->request->post['payment_twocheckout_test'];
 		} else {
-			$data['twocheckout_test'] = $this->config->get('twocheckout_test');
+			$data['payment_twocheckout_test'] = $this->config->get('payment_twocheckout_test');
 		}
 
-		if (isset($this->request->post['twocheckout_total'])) {
-			$data['twocheckout_total'] = $this->request->post['twocheckout_total'];
+		if (isset($this->request->post['payment_twocheckout_total'])) {
+			$data['payment_twocheckout_total'] = $this->request->post['payment_twocheckout_total'];
 		} else {
-			$data['twocheckout_total'] = $this->config->get('twocheckout_total');
+			$data['payment_twocheckout_total'] = $this->config->get('payment_twocheckout_total');
 		}
 
-		if (isset($this->request->post['twocheckout_order_status_id'])) {
-			$data['twocheckout_order_status_id'] = $this->request->post['twocheckout_order_status_id'];
+		if (isset($this->request->post['payment_twocheckout_order_status_id'])) {
+			$data['payment_twocheckout_order_status_id'] = $this->request->post['payment_twocheckout_order_status_id'];
 		} else {
-			$data['twocheckout_order_status_id'] = $this->config->get('twocheckout_order_status_id');
+			$data['payment_twocheckout_order_status_id'] = $this->config->get('payment_twocheckout_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['twocheckout_geo_zone_id'])) {
-			$data['twocheckout_geo_zone_id'] = $this->request->post['twocheckout_geo_zone_id'];
+		if (isset($this->request->post['payment_twocheckout_geo_zone_id'])) {
+			$data['payment_twocheckout_geo_zone_id'] = $this->request->post['payment_twocheckout_geo_zone_id'];
 		} else {
-			$data['twocheckout_geo_zone_id'] = $this->config->get('twocheckout_geo_zone_id');
+			$data['payment_twocheckout_geo_zone_id'] = $this->config->get('payment_twocheckout_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['twocheckout_status'])) {
-			$data['twocheckout_status'] = $this->request->post['twocheckout_status'];
+		if (isset($this->request->post['payment_twocheckout_status'])) {
+			$data['payment_twocheckout_status'] = $this->request->post['payment_twocheckout_status'];
 		} else {
-			$data['twocheckout_status'] = $this->config->get('twocheckout_status');
+			$data['payment_twocheckout_status'] = $this->config->get('payment_twocheckout_status');
 		}
 
-		if (isset($this->request->post['twocheckout_sort_order'])) {
-			$data['twocheckout_sort_order'] = $this->request->post['twocheckout_sort_order'];
+		if (isset($this->request->post['payment_twocheckout_sort_order'])) {
+			$data['payment_twocheckout_sort_order'] = $this->request->post['payment_twocheckout_sort_order'];
 		} else {
-			$data['twocheckout_sort_order'] = $this->config->get('twocheckout_sort_order');
+			$data['payment_twocheckout_sort_order'] = $this->config->get('payment_twocheckout_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -155,11 +155,11 @@ class ControllerExtensionPaymentTwoCheckout extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['twocheckout_account']) {
+		if (!$this->request->post['payment_twocheckout_account']) {
 			$this->error['account'] = $this->language->get('error_account');
 		}
 
-		if (!$this->request->post['twocheckout_secret']) {
+		if (!$this->request->post['payment_twocheckout_secret']) {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 

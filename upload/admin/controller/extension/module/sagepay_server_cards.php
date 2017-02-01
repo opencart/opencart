@@ -3,7 +3,7 @@ class ControllerExtensionModuleSagepayServerCards extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/module/sagepay_server_cards');
+		$this->load->language('extension/module/payment_sagepay_server_cards');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

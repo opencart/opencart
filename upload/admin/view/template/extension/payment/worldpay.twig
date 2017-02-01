@@ -25,7 +25,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-service-key">{{ entry_service_key }}</label>
               <div class="col-sm-10">
-                <input type="text" name="worldpay_service_key" value="{{ worldpay_service_key }}" placeholder="{{ entry_service_key }}" id="input-service-key" class="form-control" />
+                <input type="text" name="payment_worldpay_service_key" value="{{ payment_worldpay_service_key }}" placeholder="{{ entry_service_key }}" id="input-service-key" class="form-control" />
                 {% if error_service_key %}
                 <div class="text-danger">{{ error_service_key }}</div>
                 {% endif %} </div>
@@ -33,7 +33,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-client-key">{{ entry_client_key }}</label>
               <div class="col-sm-10">
-                <input type="text" name="worldpay_client_key" value="{{ worldpay_client_key }}" placeholder="{{ entry_client_key }}" id="input-client-key" class="form-control" />
+                <input type="text" name="payment_worldpay_client_key" value="{{ payment_worldpay_client_key }}" placeholder="{{ entry_client_key }}" id="input-client-key" class="form-control" />
                 {% if error_client_key %}
                 <div class="text-danger">{{ error_client_key }}</div>
                 {% endif %} </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-total">{{ entry_total }} </label>
               <div class="col-sm-10">
-                <input type="text" name="worldpay_total" value="{{ worldpay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+                <input type="text" name="payment_worldpay_total" value="{{ payment_worldpay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
                 <span class="help-block">{{ help_total }}</span> </div>
             </div>
             <div class="form-group">

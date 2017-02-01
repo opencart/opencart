@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-login">{{ entry_login }}</label>
             <div class="col-sm-10">
-              <input type="text" name="web_payment_software_merchant_name" value="{{ web_payment_software_merchant_name }}" placeholder="{{ entry_login }}" id="input-login" class="form-control" />
+              <input type="text" name="payment_web_payment_software_merchant_name" value="{{ payment_web_payment_software_merchant_name }}" placeholder="{{ entry_login }}" id="input-login" class="form-control" />
               {% if error_login %}
               <div class="text-danger">{{ error_login }}</div>
               {% endif %}
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <input type="text" name="web_payment_software_merchant_key" value="{{ web_payment_software_merchant_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              <input type="text" name="payment_web_payment_software_merchant_key" value="{{ payment_web_payment_software_merchant_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
               {% if error_key %}
               <div class="text-danger">{{ error_key }}</div>
               {% endif %}
@@ -46,13 +46,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-mode">{{ entry_mode }}</label>
             <div class="col-sm-10">
-              <select name="web_payment_software_mode" id="input-mode" class="form-control">
-                {% if web_payment_software_mode == 'live' %}
+              <select name="payment_web_payment_software_mode" id="input-mode" class="form-control">
+                {% if payment_web_payment_software_mode == 'live' %}
                 <option value="live" selected="selected">{{ text_live }}</option>
                 {% else %}
                 <option value="live">{{ text_live }}</option>
                 {% endif %}
-                {% if web_payment_software_mode == 'test' %}
+                {% if payment_web_payment_software_mode == 'test' %}
                 <option value="test" selected="selected">{{ text_test }}</option>
                 {% else %}
                 <option value="test">{{ text_test }}</option>
@@ -63,13 +63,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-method">{{ entry_method }}</label>
             <div class="col-sm-10">
-              <select name="web_payment_software_method" id="input-method" class="form-control">
-                {% if web_payment_software_method == 'authorization' %}
+              <select name="payment_web_payment_software_method" id="input-method" class="form-control">
+                {% if payment_web_payment_software_method == 'authorization' %}
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
                 {% else %}
                 <option value="authorization">{{ text_authorization }}</option>
                 {% endif %}
-                {% if web_payment_software_method == 'capture' %}
+                {% if payment_web_payment_software_method == 'capture' %}
                 <option value="capture" selected="selected">{{ text_capture }}</option>
                 {% else %}
                 <option value="capture">{{ text_capture }}</option>
@@ -80,15 +80,15 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="web_payment_software_total" value="{{ web_payment_software_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_web_payment_software_total" value="{{ payment_web_payment_software_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="web_payment_software_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_web_payment_software_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == web_payment_software_order_status_id %}
+                {% if order_status.order_status_id == payment_web_payment_software_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -100,10 +100,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="web_payment_software_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_web_payment_software_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == web_payment_software_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_web_payment_software_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -115,8 +115,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="web_payment_software_status" id="input-status" class="form-control">
-                {% if web_payment_software_status %}
+              <select name="payment_web_payment_software_status" id="input-status" class="form-control">
+                {% if payment_web_payment_software_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -129,7 +129,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="web_payment_software_sort_order" value="{{ web_payment_software_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="payment_web_payment_software_sort_order" value="{{ payment_web_payment_software_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

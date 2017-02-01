@@ -50,7 +50,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 			$data['cards'] = array();
 
-			foreach ($this->config->get('securetrading_ws_cards_accepted') as $card_type) {
+			foreach ($this->config->get('payment_securetrading_ws_cards_accepted') as $card_type) {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
@@ -67,10 +67,10 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			if ($this->config->get('securetrading_ws_3d_secure')) {
+			if ($this->config->get('payment_securetrading_ws_3d_secure')) {
 				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
-				$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 				$request_node = $requestblock_xml->addChild('request');
 				$request_node->addAttribute('type', 'THREEDQUERY');
@@ -80,9 +80,9 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 				$merchant_node->addChild('termurl', $this->url->link('extension/payment/securetrading_ws/threedreturn', '', true));
 
 				$settlement_node = $request_node->addChild('settlement');
-				$settlement_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('securetrading_ws_settle_due_date') . ' days'));
+				$settlement_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('payment_securetrading_ws_settle_due_date') . ' days'));
 				$settlement_node->addChild('settleduedate', $settlement_date);
-				$settlement_node->addChild('settlestatus', $this->config->get('securetrading_ws_settle_status'));
+				$settlement_node->addChild('settlestatus', $this->config->get('payment_securetrading_ws_settle_status'));
 
 				$customer_node = $request_node->addChild('customer');
 				$customer_node->addChild('useragent', $order_info['user_agent']);
@@ -106,7 +106,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 				$payment_node->addChild('securitycode', $this->request->post['cvv2']);
 
 				$operation_node = $request_node->addChild('operation');
-				$operation_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+				$operation_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 				$operation_node->addChild('accounttypedescription', 'ECOM');
 
 				$response = $this->model_extension_payment_securetrading_ws->call($requestblock_xml->asXML());
@@ -135,7 +135,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 							} else {
 								$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 								$requestblock_xml->addAttribute('version', '3.67');
-								$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+								$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 								$request_node = $requestblock_xml->addChild('request');
 								$request_node->addAttribute('type', 'AUTH');
@@ -144,7 +144,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 								$operation_node = $request_node->addChild('operation');
 								$operation_node->addChild('parenttransactionreference', (string)$response_xml->response->transactionreference);
-								$operation_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+								$operation_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 
 								$response = $this->model_extension_payment_securetrading_ws->call($requestblock_xml->asXML());
 
@@ -169,21 +169,21 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
-				$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 				$request_node = $requestblock_xml->addChild('request');
 				$request_node->addAttribute('type', 'AUTH');
 				$operation_node = $request_node->addChild('operation');
-				$operation_node->addChild('sitereference', $this->config->get('securetrading_ws_site_reference'));
+				$operation_node->addChild('sitereference', $this->config->get('payment_securetrading_ws_site_reference'));
 				$operation_node->addChild('accounttypedescription', 'ECOM');
 
 				$merchant_node = $request_node->addChild('merchant');
 				$merchant_node->addChild('orderreference', $order_info['order_id']);
 
 				$settlement_node = $request_node->addChild('settlement');
-				$settlement_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('securetrading_ws_settle_due_date') . ' days'));
+				$settlement_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('payment_securetrading_ws_settle_due_date') . ' days'));
 				$settlement_node->addChild('settleduedate', $settlement_date);
-				$settlement_node->addChild('settlestatus', $this->config->get('securetrading_ws_settle_status'));
+				$settlement_node->addChild('settlestatus', $this->config->get('payment_securetrading_ws_settle_status'));
 
 				$billing_node = $request_node->addChild('billing');
 				$billing_node->addChild('premise', $order_info['payment_address_1']);
@@ -230,7 +230,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			if ($order_id) {
 				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
-				$requestblock_xml->addChild('alias', $this->config->get('securetrading_ws_username'));
+				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
 				$request_node = $requestblock_xml->addChild('request');
 				$request_node->addAttribute('type', 'AUTH');
@@ -278,12 +278,12 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 						$transaction_reference = (string)$response_xml->response->transactionreference;
 						$this->model_extension_payment_securetrading_ws->updateReference($order_id, $transaction_reference);
 
-						$this->model_extension_payment_securetrading_ws->confirmOrder($order_id, $this->config->get('securetrading_ws_order_status_id'));
-						$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_order_status_id'), $message);
+						$this->model_extension_payment_securetrading_ws->confirmOrder($order_id, $this->config->get('payment_securetrading_ws_order_status_id'));
+						$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('payment_securetrading_ws_order_status_id'), $message);
 
 						$this->response->redirect($this->url->link('checkout/success', '', true));
 					} else {
-						$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_declined_order_status_id'));
+						$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('payment_securetrading_ws_declined_order_status_id'));
 
 						$this->session->data['error'] = $this->language->get('text_transaction_declined');
 						$this->response->redirect($this->url->link('checkout/checkout', '', true));
@@ -332,19 +332,19 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 					$transaction_reference = (string)$response_xml->response->transactionreference;
 					$this->model_extension_payment_securetrading_ws->updateReference($order_id, $transaction_reference);
 
-					$this->model_extension_payment_securetrading_ws->confirmOrder($order_id, $this->config->get('securetrading_ws_order_status_id'));
-					$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_order_status_id'), $message);
+					$this->model_extension_payment_securetrading_ws->confirmOrder($order_id, $this->config->get('payment_securetrading_ws_order_status_id'));
+					$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('payment_securetrading_ws_order_status_id'), $message);
 
 					$json['redirect'] = $this->url->link('checkout/success');
 					$json['status'] = 1;
 				} else {
-					$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_declined_order_status_id'));
+					$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('payment_securetrading_ws_declined_order_status_id'));
 
 					$json['message'] = $this->language->get('text_transaction_declined');
 					$json['status'] = 0;
 				}
 			} else {
-				$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('securetrading_ws_failed_order_status_id'));
+				$this->model_extension_payment_securetrading_ws->updateOrder($order_id, $this->config->get('payment_securetrading_ws_failed_order_status_id'));
 
 				$json['message'] = $this->language->get('text_transaction_failed');
 				$json['status'] = 0;

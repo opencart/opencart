@@ -21,7 +21,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/sagepay_server/send', '', true);
 
-		if ($this->config->get('sagepay_server_card') == '1') {
+		if ($this->config->get('payment_sagepay_server_card') == '1') {
 			$data['sagepay_server_card'] = true;
 		} else {
 			$data['sagepay_server_card'] = false;
@@ -42,15 +42,15 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_server_test') == 'live') {
+		if ($this->config->get('payment_sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/vspserver-register.vsp';
 
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_server_test') == 'test') {
+		} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/vspserver-register.vsp';
 
 			$payment_data['VPSProtocol'] = '3.00';
-		} elseif ($this->config->get('sagepay_server_test') == 'sim') {
+		} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRegisterTx';
 
 			$payment_data['VPSProtocol'] = '2.23';
@@ -69,7 +69,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
 		$payment_data['NotificationURL'] = $this->url->link('extension/payment/sagepay_server/callback', '', true);
-		$payment_data['TxType'] = $this->config->get('sagepay_server_transaction');
+		$payment_data['TxType'] = $this->config->get('payment_sagepay_server_transaction');
 
 		$payment_data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
 		$payment_data['BillingFirstnames'] = substr($order_info['payment_firstname'], 0, 20);
@@ -180,7 +180,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 			$this->model_extension_payment_sagepay_server->addOrder($order_info);
 
-			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
+			if ($this->config->get('payment_sagepay_server_transaction') == 'PAYMENT') {
 				$recurring_products = $this->cart->getRecurringProducts();
 
 				//loop through any products that are recurring items
@@ -404,11 +404,11 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		}
 		$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
 
-		$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
+		$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_sagepay_server_order_status_id'), $comment);
 
 		$this->model_extension_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
 
-		$this->model_extension_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
+		$this->model_extension_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('payment_sagepay_server_transaction'), $order_info);
 
 		if (!empty($str_token)) {
 			$data['customer_id'] = $order_info['customer_id'];
@@ -432,7 +432,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		if (isset($this->session->data['order_id'])) {
 			$order_details = $this->model_extension_payment_sagepay_server->getOrder($this->session->data['order_id']);
 
-			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
+			if ($this->config->get('payment_sagepay_server_transaction') == 'PAYMENT') {
 				$recurring_products = $this->model_extension_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
 
 				//loop through any products that are recurring items
@@ -463,7 +463,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$card = $this->model_extension_payment_sagepay_server->getCard(false, $this->request->post['Token']);
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
@@ -488,7 +488,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 	}
 
 	public function cron() {
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('sagepay_server_cron_job_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_sagepay_server_cron_job_token'), $this->request->get['token'])) {
 			$this->load->model('extension/payment/sagepay_server');
 
 			$orders = $this->model_extension_payment_sagepay_server->cronPayment();

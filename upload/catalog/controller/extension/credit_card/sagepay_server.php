@@ -54,7 +54,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_back'] = $this->language->get('button_back');
 
-		if ($this->config->get('sagepay_server_card')) {
+		if ($this->config->get('payment_sagepay_server_card')) {
 			$data['cards'] = $this->model_extension_payment_sagepay_server->getCards($this->customer->getId());
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'card_id=', true);
 
@@ -102,7 +102,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$card = $this->model_extension_payment_sagepay_server->getCard($this->request->get['card_id'], '');
 
 		if (!empty($card['token'])) {
-			if ($this->config->get('sagepay_server_test') == 'live') {
+			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
@@ -135,7 +135,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 
 		$payment_data = array();
 
-		if ($this->config->get('sagepay_server_test') == 'live') {
+		if ($this->config->get('payment_sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/token.vsp';
 		} else {
 			$url = 'https://test.sagepay.com/gateway/service/token.vsp';

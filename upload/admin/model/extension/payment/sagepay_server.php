@@ -89,7 +89,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 			}
 
 			$void_data['TxType'] = 'VOID';
-			$void_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$void_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 			$void_data['VendorTxCode'] = $sagepay_server_order['VendorTxCode'];
 			$void_data['VPSTxId'] = $sagepay_server_order['VPSTxId'];
 			$void_data['SecurityKey'] = $sagepay_server_order['SecurityKey'];
@@ -126,7 +126,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 			}
 
 			$release_data['TxType'] = 'RELEASE';
-			$release_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$release_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 			$release_data['VendorTxCode'] = $sagepay_server_order['VendorTxCode'];
 			$release_data['VPSTxId'] = $sagepay_server_order['VPSTxId'];
 			$release_data['SecurityKey'] = $sagepay_server_order['SecurityKey'];
@@ -168,7 +168,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 			}
 
 			$refund_data['TxType'] = 'REFUND';
-			$refund_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$refund_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 			$refund_data['VendorTxCode'] = $sagepay_server_order['sagepay_server_order_id'] . rand();
 			$refund_data['Amount'] = $amount;
 			$refund_data['Currency'] = $sagepay_server_order['currency_code'];

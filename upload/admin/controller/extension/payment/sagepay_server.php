@@ -87,10 +87,10 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['sagepay_server_vendor'])) {
-			$data['sagepay_server_vendor'] = $this->request->post['sagepay_server_vendor'];
+		if (isset($this->request->post['payment_sagepay_server_vendor'])) {
+			$data['payment_sagepay_server_vendor'] = $this->request->post['payment_sagepay_server_vendor'];
 		} else {
-			$data['sagepay_server_vendor'] = $this->config->get('sagepay_server_vendor');
+			$data['payment_sagepay_server_vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		}
 
 		if (isset($this->request->post['sagepay_server_password'])) {
@@ -375,7 +375,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['sagepay_server_vendor']) {
+		if (!$this->request->post['payment_sagepay_server_vendor']) {
 			$this->error['vendor'] = $this->language->get('error_vendor');
 		}
 

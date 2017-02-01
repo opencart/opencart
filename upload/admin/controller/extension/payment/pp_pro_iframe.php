@@ -94,137 +94,137 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['pp_pro_iframe_sig'])) {
-			$data['pp_pro_iframe_sig'] = $this->request->post['pp_pro_iframe_sig'];
+		if (isset($this->request->post['payment_pp_pro_iframe_sig'])) {
+			$data['payment_pp_pro_iframe_sig'] = $this->request->post['payment_pp_pro_iframe_sig'];
 		} else {
-			$data['pp_pro_iframe_sig'] = $this->config->get('pp_pro_iframe_sig');
+			$data['payment_pp_pro_iframe_sig'] = $this->config->get('payment_pp_pro_iframe_sig');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_user'])) {
-			$data['pp_pro_iframe_user'] = $this->request->post['pp_pro_iframe_user'];
+		if (isset($this->request->post['payment_pp_pro_iframe_user'])) {
+			$data['payment_pp_pro_iframe_user'] = $this->request->post['payment_pp_pro_iframe_user'];
 		} else {
-			$data['pp_pro_iframe_user'] = $this->config->get('pp_pro_iframe_user');
+			$data['payment_pp_pro_iframe_user'] = $this->config->get('payment_pp_pro_iframe_user');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_password'])) {
-			$data['pp_pro_iframe_password'] = $this->request->post['pp_pro_iframe_password'];
+		if (isset($this->request->post['payment_pp_pro_iframe_password'])) {
+			$data['payment_pp_pro_iframe_password'] = $this->request->post['payment_pp_pro_iframe_password'];
 		} else {
-			$data['pp_pro_iframe_password'] = $this->config->get('pp_pro_iframe_password');
+			$data['payment_pp_pro_iframe_password'] = $this->config->get('payment_pp_pro_iframe_password');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_transaction_method'])) {
-			$data['pp_pro_iframe_transaction_method'] = $this->request->post['pp_pro_iframe_transaction_method'];
+		if (isset($this->request->post['payment_pp_pro_iframe_transaction_method'])) {
+			$data['payment_pp_pro_iframe_transaction_method'] = $this->request->post['payment_pp_pro_iframe_transaction_method'];
 		} else {
-			$data['pp_pro_iframe_transaction_method'] = $this->config->get('pp_pro_iframe_transaction_method');
+			$data['payment_pp_pro_iframe_transaction_method'] = $this->config->get('payment_pp_pro_iframe_transaction_method');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_test'])) {
-			$data['pp_pro_iframe_test'] = $this->request->post['pp_pro_iframe_test'];
+		if (isset($this->request->post['payment_pp_pro_iframe_test'])) {
+			$data['payment_pp_pro_iframe_test'] = $this->request->post['payment_pp_pro_iframe_test'];
 		} else {
-			$data['pp_pro_iframe_test'] = $this->config->get('pp_pro_iframe_test');
+			$data['payment_pp_pro_iframe_test'] = $this->config->get('payment_pp_pro_iframe_test');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_total'])) {
-			$data['pp_pro_iframe_total'] = $this->request->post['pp_pro_iframe_total'];
+		if (isset($this->request->post['payment_pp_pro_iframe_total'])) {
+			$data['payment_pp_pro_iframe_total'] = $this->request->post['payment_pp_pro_iframe_total'];
 		} else {
-			$data['pp_pro_iframe_total'] = $this->config->get('pp_pro_iframe_total');
+			$data['payment_pp_pro_iframe_total'] = $this->config->get('payment_pp_pro_iframe_total');
 		}
 
 		$this->load->model('localisation/order_status');
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['pp_pro_iframe_canceled_reversal_status_id'])) {
-			$data['pp_pro_iframe_canceled_reversal_status_id'] = $this->request->post['pp_pro_iframe_canceled_reversal_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_canceled_reversal_status_id'])) {
+			$data['payment_pp_pro_iframe_canceled_reversal_status_id'] = $this->request->post['payment_pp_pro_iframe_canceled_reversal_status_id'];
 		} else {
-			$data['pp_pro_iframe_canceled_reversal_status_id'] = $this->config->get('pp_pro_iframe_canceled_reversal_status_id');
+			$data['payment_pp_pro_iframe_canceled_reversal_status_id'] = $this->config->get('payment_pp_pro_iframe_canceled_reversal_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_completed_status_id'])) {
-			$data['pp_pro_iframe_completed_status_id'] = $this->request->post['pp_pro_iframe_completed_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_completed_status_id'])) {
+			$data['payment_pp_pro_iframe_completed_status_id'] = $this->request->post['payment_pp_pro_iframe_completed_status_id'];
 		} else {
-			$data['pp_pro_iframe_completed_status_id'] = $this->config->get('pp_pro_iframe_completed_status_id');
+			$data['payment_pp_pro_iframe_completed_status_id'] = $this->config->get('payment_pp_pro_iframe_completed_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_denied_status_id'])) {
-			$data['pp_pro_iframe_denied_status_id'] = $this->request->post['pp_pro_iframe_denied_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_denied_status_id'])) {
+			$data['payment_pp_pro_iframe_denied_status_id'] = $this->request->post['payment_pp_pro_iframe_denied_status_id'];
 		} else {
-			$data['pp_pro_iframe_denied_status_id'] = $this->config->get('pp_pro_iframe_denied_status_id');
+			$data['payment_pp_pro_iframe_denied_status_id'] = $this->config->get('payment_pp_pro_iframe_denied_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_expired_status_id'])) {
-			$data['pp_pro_iframe_expired_status_id'] = $this->request->post['pp_pro_iframe_expired_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_expired_status_id'])) {
+			$data['payment_pp_pro_iframe_expired_status_id'] = $this->request->post['payment_pp_pro_iframe_expired_status_id'];
 		} else {
-			$data['pp_pro_iframe_expired_status_id'] = $this->config->get('pp_pro_iframe_expired_status_id');
+			$data['payment_pp_pro_iframe_expired_status_id'] = $this->config->get('payment_pp_pro_iframe_expired_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_failed_status_id'])) {
-			$data['pp_pro_iframe_failed_status_id'] = $this->request->post['pp_pro_iframe_failed_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_failed_status_id'])) {
+			$data['payment_pp_pro_iframe_failed_status_id'] = $this->request->post['payment_pp_pro_iframe_failed_status_id'];
 		} else {
-			$data['pp_pro_iframe_failed_status_id'] = $this->config->get('pp_pro_iframe_failed_status_id');
+			$data['payment_pp_pro_iframe_failed_status_id'] = $this->config->get('payment_pp_pro_iframe_failed_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_pending_status_id'])) {
-			$data['pp_pro_iframe_pending_status_id'] = $this->request->post['pp_pro_iframe_pending_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_pending_status_id'])) {
+			$data['payment_pp_pro_iframe_pending_status_id'] = $this->request->post['payment_pp_pro_iframe_pending_status_id'];
 		} else {
-			$data['pp_pro_iframe_pending_status_id'] = $this->config->get('pp_pro_iframe_pending_status_id');
+			$data['payment_pp_pro_iframe_pending_status_id'] = $this->config->get('payment_pp_pro_iframe_pending_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_processed_status_id'])) {
-			$data['pp_pro_iframe_processed_status_id'] = $this->request->post['pp_pro_iframe_processed_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_processed_status_id'])) {
+			$data['payment_pp_pro_iframe_processed_status_id'] = $this->request->post['payment_pp_pro_iframe_processed_status_id'];
 		} else {
-			$data['pp_pro_iframe_processed_status_id'] = $this->config->get('pp_pro_iframe_processed_status_id');
+			$data['payment_pp_pro_iframe_processed_status_id'] = $this->config->get('payment_pp_pro_iframe_processed_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_refunded_status_id'])) {
-			$data['pp_pro_iframe_refunded_status_id'] = $this->request->post['pp_pro_iframe_refunded_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_processed_status_id'])) {
+			$data['payment_pp_pro_iframe_processed_status_id'] = $this->request->post['payment_pp_pro_iframe_processed_status_id'];
 		} else {
-			$data['pp_pro_iframe_refunded_status_id'] = $this->config->get('pp_pro_iframe_refunded_status_id');
+			$data['payment_pp_pro_iframe_processed_status_id'] = $this->config->get('payment_pp_pro_iframe_processed_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_reversed_status_id'])) {
-			$data['pp_pro_iframe_reversed_status_id'] = $this->request->post['pp_pro_iframe_reversed_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_reversed_status_id'])) {
+			$data['payment_pp_pro_iframe_reversed_status_id'] = $this->request->post['payment_pp_pro_iframe_reversed_status_id'];
 		} else {
-			$data['pp_pro_iframe_reversed_status_id'] = $this->config->get('pp_pro_iframe_reversed_status_id');
+			$data['payment_pp_pro_iframe_reversed_status_id'] = $this->config->get('payment_pp_pro_iframe_reversed_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_voided_status_id'])) {
-			$data['pp_pro_iframe_voided_status_id'] = $this->request->post['pp_pro_iframe_voided_status_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_voided_status_id'])) {
+			$data['payment_pp_pro_iframe_voided_status_id'] = $this->request->post['payment_pp_pro_iframe_voided_status_id'];
 		} else {
-			$data['pp_pro_iframe_voided_status_id'] = $this->config->get('pp_pro_iframe_voided_status_id');
+			$data['payment_pp_pro_iframe_voided_status_id'] = $this->config->get('payment_pp_pro_iframe_voided_status_id');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_geo_zone_id'])) {
-			$data['pp_pro_iframe_geo_zone_id'] = $this->request->post['pp_pro_iframe_geo_zone_id'];
+		if (isset($this->request->post['payment_pp_pro_iframe_geo_zone_id'])) {
+			$data['payment_pp_pro_iframe_geo_zone_id'] = $this->request->post['payment_pp_pro_iframe_geo_zone_id'];
 		} else {
-			$data['pp_pro_iframe_geo_zone_id'] = $this->config->get('pp_pro_iframe_geo_zone_id');
+			$data['payment_pp_pro_iframe_geo_zone_id'] = $this->config->get('payment_pp_pro_iframe_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['pp_pro_iframe_status'])) {
-			$data['pp_pro_iframe_status'] = $this->request->post['pp_pro_iframe_status'];
+		if (isset($this->request->post['payment_pp_pro_iframe_status'])) {
+			$data['payment_pp_pro_iframe_status'] = $this->request->post['payment_pp_pro_iframe_status'];
 		} else {
-			$data['pp_pro_iframe_status'] = $this->config->get('pp_pro_iframe_status');
+			$data['payment_pp_pro_iframe_status'] = $this->config->get('payment_pp_pro_iframe_status');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_sort_order'])) {
-			$data['pp_pro_iframe_sort_order'] = $this->request->post['pp_pro_iframe_sort_order'];
+		if (isset($this->request->post['payment_pp_pro_iframe_sort_order'])) {
+			$data['payment_pp_pro_iframe_sort_order'] = $this->request->post['payment_pp_pro_iframe_sort_order'];
 		} else {
-			$data['pp_pro_iframe_sort_order'] = $this->config->get('pp_pro_iframe_sort_order');
+			$data['payment_pp_pro_iframe_sort_order'] = $this->config->get('payment_pp_pro_iframe_sort_order');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_checkout_method'])) {
-			$data['pp_pro_iframe_checkout_method'] = $this->request->post['pp_pro_iframe_checkout_method'];
+		if (isset($this->request->post['payment_pp_pro_iframe_checkout_method'])) {
+			$data['payment_pp_pro_iframe_checkout_method'] = $this->request->post['payment_pp_pro_iframe_checkout_method'];
 		} else {
-			$data['pp_pro_iframe_checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
+			$data['payment_pp_pro_iframe_checkout_method'] = $this->config->get('payment_pp_pro_iframe_checkout_method');
 		}
 
-		if (isset($this->request->post['pp_pro_iframe_debug'])) {
-			$data['pp_pro_iframe_debug'] = $this->request->post['pp_pro_iframe_debug'];
+		if (isset($this->request->post['payment_pp_pro_iframe_debug'])) {
+			$data['payment_pp_pro_iframe_debug'] = $this->request->post['payment_pp_pro_iframe_debug'];
 		} else {
-			$data['pp_pro_iframe_debug'] = $this->config->get('pp_pro_iframe_debug');
+			$data['payment_pp_pro_iframe_debug'] = $this->config->get('payment_pp_pro_iframe_debug');
 		}
 
 		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_pro_iframe/notify';
@@ -253,15 +253,15 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['pp_pro_iframe_sig']) {
+		if (!$this->request->post['payment_pp_pro_iframe_sig']) {
 			$this->error['sig'] = $this->language->get('error_sig');
 		}
 
-		if (!$this->request->post['pp_pro_iframe_user']) {
+		if (!$this->request->post['payment_pp_pro_iframe_user']) {
 			$this->error['user'] = $this->language->get('error_user');
 		}
 
-		if (!$this->request->post['pp_pro_iframe_password']) {
+		if (!$this->request->post['payment_pp_pro_iframe_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
@@ -501,7 +501,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 						//redirect back to the order
 						$this->response->redirect($this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $paypal_order['order_id'], true));
 					} else {
-						if ($this->config->get('pp_pro_iframe_debug')) {
+						if ($this->config->get('payment_pp_pro_iframe_debug')) {
 							$log = new Log('pp_pro_iframe.log');
 							$log->write(json_encode($result));
 						}

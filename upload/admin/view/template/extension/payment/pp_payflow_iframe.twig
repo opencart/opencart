@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-vender"><span data-toggle="tooltip" title="{{ help_vendor }}">{{ entry_vendor }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_vendor" value="{{ pp_payflow_iframe_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vender" class="form-control"/>
+              <input type="text" name="payment_pp_payflow_iframe_vendor" value="{{ payment_pp_payflow_iframe_vendor }}" placeholder="{{ entry_vendor }}" id="entry-vender" class="form-control"/>
               {% if error_vendor %}
               <div class="text-danger">{{ error_vendor }}</div>
               {% endif %}
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-user"><span data-toggle="tooltip" title="{{ help_user }}">{{ entry_user }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_user" value="{{ pp_payflow_iframe_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
+              <input type="text" name="payment_pp_payflow_iframe_user" value="{{ payment_pp_payflow_iframe_user }}" placeholder="{{ entry_user }}" id="entry-user" class="form-control"/>
               {% if error_user %}
               <div class="text-danger">{{ error_user }}</div>
               {% endif %}
@@ -46,7 +46,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_password" value="{{ pp_payflow_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
+              <input type="text" name="payment_pp_payflow_iframe_password" value="{{ payment_pp_payflow_iframe_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               {% endif %}
@@ -55,7 +55,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-partner"><span data-toggle="tooltip" title="{{ help_partner }}">{{ entry_partner }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_partner" value="{{ pp_payflow_iframe_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>
+              <input type="text" name="payment_pp_payflow_iframe_partner" value="{{ payment_pp_payflow_iframe_partner }}" placeholder="{{ entry_partner }}" id="entry-partner" class="form-control"/>
               {% if error_partner %}
               <div class="text-danger">{{ error_partner }}</div>
               {% endif %}
@@ -64,8 +64,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_test" id="input-live-demo" class="form-control">
-                {% if pp_payflow_iframe_test %}
+              <select name="payment_pp_payflow_iframe_test" id="input-live-demo" class="form-control">
+                {% if payment_pp_payflow_iframe_test %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -78,8 +78,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_transaction_method" id="input-transaction" class="form-control">
-                {% if pp_payflow_iframe_transaction_method == 'authorization' %}
+              <select name="payment_pp_payflow_iframe_transaction_method" id="input-transaction" class="form-control">
+                {% if payment_pp_payflow_iframe_transaction_method == 'authorization' %}
                 <option value="sale">{{ text_sale }}</option>
                 <option value="authorization" selected="selected">{{ text_authorization }}</option>
                 {% else %}
@@ -92,8 +92,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_debug" id="input-debug" class="form-control">
-                {% if pp_payflow_iframe_debug %}
+              <select name="payment_pp_payflow_iframe_debug" id="input-debug" class="form-control">
+                {% if payment_pp_payflow_iframe_debug %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -106,8 +106,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="{{ help_checkout_method }}">{{ entry_checkout_method }}</span></label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_checkout_method" id="input-checkout-method" class="form-control">
-                {% if pp_payflow_iframe_checkout_method == 'iframe' %}
+              <select name="payment_pp_payflow_iframe_checkout_method" id="input-checkout-method" class="form-control">
+                {% if payment_pp_payflow_iframe_checkout_method == 'iframe' %}
                 <option value="iframe" selected="selected">{{ text_iframe }}</option>
                 <option value="redirect">{{ text_redirect }}</option>
                 {% else %}
@@ -120,9 +120,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_pp_payflow_iframe_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == pp_payflow_iframe_order_status_id %}
+                {% if order_status.order_status_id == payment_pp_payflow_iframe_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -134,22 +134,22 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_total" value="{{ pp_payflow_iframe_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_pp_payflow_iframe_total" value="{{ payment_pp_payflow_iframe_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="pp_payflow_iframe_sort_order" value="{{ pp_payflow_iframe_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="payment_pp_payflow_iframe_sort_order" value="{{ payment_pp_payflow_iframe_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_pp_payflow_iframe_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == pp_payflow_iframe_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_pp_payflow_iframe_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -161,8 +161,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="pp_payflow_iframe_status" id="input-status" class="form-control">
-                {% if pp_payflow_iframe_status %}
+              <select name="payment_pp_payflow_iframe_status" id="input-status" class="form-control">
+                {% if payment_pp_payflow_iframe_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

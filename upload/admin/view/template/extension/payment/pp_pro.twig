@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-username">{{ entry_username }}</label>
             <div class="col-sm-10">
-              <input type="text" name="pp_pro_username" value="{{ pp_pro_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
+              <input type="text" name="payment_pp_pro_username" value="{{ payment_pp_pro_username }}" placeholder="{{ entry_username }}" id="entry-username" class="form-control"/>
               {% if error_username %}
               <div class="text-danger">{{ error_username }}</div>
               {% endif %}
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-password">{{ entry_password }}</label>
             <div class="col-sm-10">
-              <input type="text" name="pp_pro_password" value="{{ pp_pro_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
+              <input type="text" name="payment_pp_pro_password" value="{{ payment_pp_pro_password }}" placeholder="{{ entry_password }}" id="entry-password" class="form-control"/>
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               {% endif %}
@@ -46,7 +46,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-signature">{{ entry_signature }}</label>
             <div class="col-sm-10">
-              <input type="text" name="pp_pro_signature" value="{{ pp_pro_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
+              <input type="text" name="payment_pp_pro_signature" value="{{ payment_pp_pro_signature }}" placeholder="{{ entry_signature }}" id="entry-signature" class="form-control"/>
               {% if error_signature %}
               <div class="text-danger">{{ error_signature }}</div>
               {% endif %}
@@ -55,8 +55,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
             <div class="col-sm-10">
-              <select name="pp_pro_test" id="input-live-demo" class="form-control">
-                {% if pp_pro_test %}
+              <select name="payment_pp_pro_test" id="input-live-demo" class="form-control">
+                {% if payment_pp_pro_test %}
                 <option value="1" selected="selected">{{ text_yes }}</option>
                 <option value="0">{{ text_no }}</option>
                 {% else %}
@@ -69,9 +69,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="pp_pro_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_pp_pro_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == pp_pro_order_status_id %}
+                {% if order_status.order_status_id == payment_pp_pro_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -83,13 +83,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
             <div class="col-sm-10">
-              <select name="pp_pro_transaction" id="input-transaction" class="form-control">
-                {% if not pp_pro_transaction %}
+              <select name="payment_pp_pro_transaction" id="input-transaction" class="form-control">
+                {% if not payment_pp_pro_transaction %}
                 <option value="0" selected="selected">{{ text_authorization }}</option>
                 {% else %}
                 <option value="0">{{ text_authorization }}</option>
                 {% endif %}
-                {% if pp_pro_transaction %}
+                {% if payment_pp_pro_transaction %}
                 <option value="1" selected="selected">{{ text_sale }}</option>
                 {% else %}
                 <option value="1">{{ text_sale }}</option>
@@ -100,22 +100,22 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_pro_total" value="{{ pp_pro_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+              <input type="text" name="payment_pp_pro_total" value="{{ payment_pp_pro_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="pp_pro_sort_order" value="{{ pp_pro_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="payment_pp_pro_sort_order" value="{{ payment_pp_pro_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="pp_pro_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_pp_pro_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == pp_pro_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_pp_pro_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -127,8 +127,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="pp_pro_status" id="input-status" class="form-control">
-                {% if pp_pro_status %}
+              <select name="payment_pp_pro_status" id="input-status" class="form-control">
+                {% if payment_pp_pro_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}

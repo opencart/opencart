@@ -8,7 +8,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if ($this->config->get('pp_payflow_iframe_test')) {
+		if ($this->config->get('payment_pp_payflow_iframe_test')) {
 			$mode = 'TEST';
 		} else {
 			$mode = 'LIVE';
@@ -16,7 +16,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 
 		$payflow_url = 'https://payflowlink.paypal.com';
 
-		if ($this->config->get('pp_payflow_iframe_transaction_method') == 'sale') {
+		if ($this->config->get('payment_pp_payflow_iframe_transaction_method') == 'sale') {
 			$transaction_type = 'S';
 		} else {
 			$transaction_type = 'A';
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		);
 
 		$data['iframe_url'] = $payflow_url . '?' . http_build_query($iframe_params, '', "&");
-		$data['checkout_method'] = $this->config->get('pp_payflow_iframe_checkout_method');
+		$data['checkout_method'] = $this->config->get('payment_pp_payflow_iframe_checkout_method');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['create'] = HTTPS_SERVER . 'index.php?route=extension/payment/pp_pro_iframe/create';
 
@@ -102,7 +102,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		$this->load->model('extension/payment/pp_payflow_iframe');
 		$this->load->model('checkout/order');
 
-		if ($this->config->get('pp_pro_iframe_debug')) {
+		if ($this->config->get('payment_pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
 			$log->write('POST: ' . print_r($this->request->post, 1));
 		}
@@ -121,7 +121,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 			$response_params = $this->model_extension_payment_pp_payflow_iframe->call($url_params);
 
 			if ($order_info['order_status_id'] == 0 && $response_params['RESULT'] == '0' && $this->request->post['RESULT'] == 0) {
-				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('pp_payflow_iframe_order_status_id'));
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_pp_payflow_iframe_order_status_id'));
 
 				if ($this->request->post['TYPE'] == 'S') {
 					$complete = 1;

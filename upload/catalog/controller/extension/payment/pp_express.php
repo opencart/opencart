@@ -68,11 +68,11 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'CANCELURL'          => $this->url->link('checkout/cart', '', true),
 			'REQCONFIRMSHIPPING' => 0,
 			'NOSHIPPING'         => $shipping,
-			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note'),
+			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note'),
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('pp_express_logo'), 750, 90),
-			'PAYFLOWCOLOR'       => $this->config->get('pp_express_colour'),
+			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant'
 		);
 
@@ -102,7 +102,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
 
-		if ($this->config->get('pp_express_test') == 1) {
+		if ($this->config->get('payment_pp_express_test') == 1) {
 			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN']);
 		} else {
 			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN']);
@@ -1100,34 +1100,34 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				//handle order status
 				switch($result['PAYMENTINFO_0_PAYMENTSTATUS']) {
 					case 'Canceled_Reversal':
-						$order_status_id = $this->config->get('pp_express_canceled_reversal_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_canceled_reversal_status_id');
 						break;
 					case 'Completed':
-						$order_status_id = $this->config->get('pp_express_completed_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_completed_status_id');
 						break;
 					case 'Denied':
-						$order_status_id = $this->config->get('pp_express_denied_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_denied_status_id');
 						break;
 					case 'Expired':
-						$order_status_id = $this->config->get('pp_express_expired_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_expired_status_id');
 						break;
 					case 'Failed':
-						$order_status_id = $this->config->get('pp_express_failed_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_failed_status_id');
 						break;
 					case 'Pending':
-						$order_status_id = $this->config->get('pp_express_pending_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_pending_status_id');
 						break;
 					case 'Processed':
-						$order_status_id = $this->config->get('pp_express_processed_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_processed_status_id');
 						break;
 					case 'Refunded':
-						$order_status_id = $this->config->get('pp_express_refunded_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_refunded_status_id');
 						break;
 					case 'Reversed':
-						$order_status_id = $this->config->get('pp_express_reversed_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_reversed_status_id');
 						break;
 					case 'Voided':
-						$order_status_id = $this->config->get('pp_express_voided_status_id');
+						$order_status_id = $this->config->get('payment_pp_express_voided_status_id');
 						break;
 				}
 
@@ -1136,7 +1136,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				//add order to paypal table
 				$paypal_order_data = array(
 					'order_id'         => $order_id,
-					'capture_status'   => ($this->config->get('pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
+					'capture_status'   => ($this->config->get('payment_pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
 					'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 					'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 					'total'            => $result['PAYMENTINFO_0_AMT']
@@ -1155,7 +1155,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
 					'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
 					'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
-					'transaction_entity'    => ($this->config->get('pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
+					'transaction_entity'    => ($this->config->get('payment_pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
 					'amount'                => $result['PAYMENTINFO_0_AMT'],
 					'debug_data'            => json_encode($result)
 				);
@@ -1252,7 +1252,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						$this->session->data['paypal_redirect_count'] = 1;
 					}
 
-					if ($this->config->get('pp_express_test') == 1) {
+					if ($this->config->get('payment_pp_express_test') == 1) {
 						$this->response->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 					} else {
 						$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
@@ -1322,10 +1322,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			'NOSHIPPING'         => $shipping,
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
-			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('pp_express_logo'), 750, 90),
-			'PAYFLOWCOLOR'       => $this->config->get('pp_express_colour'),
+			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('payment_pp_express_logo'), 750, 90),
+			'PAYFLOWCOLOR'       => $this->config->get('payment_pp_express_colour'),
 			'CHANNELTYPE'        => 'Merchant',
-			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')
+			'ALLOWNOTE'          => $this->config->get('payment_pp_express_allow_note')
 		);
 
 		$data = array_merge($data, $data_shipping);
@@ -1355,7 +1355,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
 
-		if ($this->config->get('pp_express_test') == 1) {
+		if ($this->config->get('payment_pp_express_test') == 1) {
 			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
 		} else {
 			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
@@ -1396,34 +1396,34 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			//handle order status
 			switch($result['PAYMENTINFO_0_PAYMENTSTATUS']) {
 				case 'Canceled_Reversal':
-					$order_status_id = $this->config->get('pp_express_canceled_reversal_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_canceled_reversal_status_id');
 					break;
 				case 'Completed':
-					$order_status_id = $this->config->get('pp_express_completed_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_completed_status_id');
 					break;
 				case 'Denied':
-					$order_status_id = $this->config->get('pp_express_denied_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_denied_status_id');
 					break;
 				case 'Expired':
-					$order_status_id = $this->config->get('pp_express_expired_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_expired_status_id');
 					break;
 				case 'Failed':
-					$order_status_id = $this->config->get('pp_express_failed_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_failed_status_id');
 					break;
 				case 'Pending':
-					$order_status_id = $this->config->get('pp_express_pending_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_pending_status_id');
 					break;
 				case 'Processed':
-					$order_status_id = $this->config->get('pp_express_processed_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_processed_status_id');
 					break;
 				case 'Refunded':
-					$order_status_id = $this->config->get('pp_express_refunded_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_refunded_status_id');
 					break;
 				case 'Reversed':
-					$order_status_id = $this->config->get('pp_express_reversed_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_reversed_status_id');
 					break;
 				case 'Voided':
-					$order_status_id = $this->config->get('pp_express_voided_status_id');
+					$order_status_id = $this->config->get('payment_pp_express_voided_status_id');
 					break;
 			}
 
@@ -1432,7 +1432,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			//add order to paypal table
 			$paypal_order_data = array(
 				'order_id'         => $order_id,
-				'capture_status'   => ($this->config->get('pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
+				'capture_status'   => ($this->config->get('payment_pp_express_transaction') == 'Sale' ? 'Complete' : 'NotComplete'),
 				'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 				'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 				'total'            => $result['PAYMENTINFO_0_AMT']
@@ -1451,7 +1451,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
 				'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
 				'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
-				'transaction_entity'    => ($this->config->get('pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
+				'transaction_entity'    => ($this->config->get('payment_pp_express_transaction') == 'Sale' ? 'payment' : 'auth'),
 				'amount'                => $result['PAYMENTINFO_0_AMT'],
 				'debug_data'            => json_encode($result)
 			);
@@ -1546,7 +1546,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					$this->session->data['paypal_redirect_count'] = 1;
 				}
 
-				if ($this->config->get('pp_express_test') == 1) {
+				if ($this->config->get('payment_pp_express_test') == 1) {
 					$this->response->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 				} else {
 					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
@@ -1600,7 +1600,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
 		}
 
-		if ($this->config->get('pp_express_test') == 1) {
+		if ($this->config->get('payment_pp_express_test') == 1) {
 			$curl = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
 		} else {
 			$curl = curl_init('https://www.paypal.com/cgi-bin/webscr');

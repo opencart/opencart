@@ -118,128 +118,128 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 		$data['action'] = $this->url->link('extension/payment/realex_remote', 'token=' . $this->session->data['token'], true);
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['realex_remote_merchant_id'])) {
-			$data['realex_remote_merchant_id'] = $this->request->post['realex_remote_merchant_id'];
+		if (isset($this->request->post['payment_realex_remote_merchant_id'])) {
+			$data['payment_realex_remote_merchant_id'] = $this->request->post['payment_realex_remote_merchant_id'];
 		} else {
-			$data['realex_remote_merchant_id'] = $this->config->get('realex_remote_merchant_id');
+			$data['payment_realex_remote_merchant_id'] = $this->config->get('payment_realex_remote_merchant_id');
 		}
 
-		if (isset($this->request->post['realex_remote_secret'])) {
-			$data['realex_remote_secret'] = $this->request->post['realex_remote_secret'];
+		if (isset($this->request->post['payment_realex_remote_secret'])) {
+			$data['payment_realex_remote_secret'] = $this->request->post['payment_realex_remote_secret'];
 		} else {
-			$data['realex_remote_secret'] = $this->config->get('realex_remote_secret');
+			$data['payment_realex_remote_secret'] = $this->config->get('payment_realex_remote_secret');
 		}
 
-		if (isset($this->request->post['realex_remote_rebate_password'])) {
-			$data['realex_remote_rebate_password'] = $this->request->post['realex_remote_rebate_password'];
+		if (isset($this->request->post['payment_realex_remote_rebate_password'])) {
+			$data['payment_realex_remote_rebate_password'] = $this->request->post['payment_realex_remote_rebate_password'];
 		} else {
-			$data['realex_remote_rebate_password'] = $this->config->get('realex_remote_rebate_password');
+			$data['payment_realex_remote_rebate_password'] = $this->config->get('payment_realex_remote_rebate_password');
 		}
 
-		if (isset($this->request->post['realex_remote_geo_zone_id'])) {
-			$data['realex_remote_geo_zone_id'] = $this->request->post['realex_remote_geo_zone_id'];
+		if (isset($this->request->post['payment_realex_remote_geo_zone_id'])) {
+			$data['payment_realex_remote_geo_zone_id'] = $this->request->post['payment_realex_remote_geo_zone_id'];
 		} else {
-			$data['realex_remote_geo_zone_id'] = $this->config->get('realex_remote_geo_zone_id');
+			$data['payment_realex_remote_geo_zone_id'] = $this->config->get('payment_realex_remote_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['realex_remote_total'])) {
-			$data['realex_remote_total'] = $this->request->post['realex_remote_total'];
+		if (isset($this->request->post['payment_realex_remote_total'])) {
+			$data['payment_realex_remote_total'] = $this->request->post['payment_realex_remote_total'];
 		} else {
-			$data['realex_remote_total'] = $this->config->get('realex_remote_total');
+			$data['payment_realex_remote_total'] = $this->config->get('payment_realex_remote_total');
 		}
 
-		if (isset($this->request->post['realex_remote_sort_order'])) {
-			$data['realex_remote_sort_order'] = $this->request->post['realex_remote_sort_order'];
+		if (isset($this->request->post['payment_realex_remote_sort_order'])) {
+			$data['payment_realex_remote_sort_order'] = $this->request->post['payment_realex_remote_sort_order'];
 		} else {
-			$data['realex_remote_sort_order'] = $this->config->get('realex_remote_sort_order');
+			$data['payment_realex_remote_sort_order'] = $this->config->get('payment_realex_remote_sort_order');
 		}
 
-		if (isset($this->request->post['realex_remote_status'])) {
-			$data['realex_remote_status'] = $this->request->post['realex_remote_status'];
+		if (isset($this->request->post['payment_realex_remote_status'])) {
+			$data['payment_realex_remote_status'] = $this->request->post['payment_realex_remote_status'];
 		} else {
-			$data['realex_remote_status'] = $this->config->get('realex_remote_status');
+			$data['payment_realex_remote_status'] = $this->config->get('payment_realex_remote_status');
 		}
 
-		if (isset($this->request->post['realex_remote_card_data_status'])) {
-			$data['realex_remote_card_data_status'] = $this->request->post['realex_remote_card_data_status'];
+		if (isset($this->request->post['payment_realex_remote_card_data_status'])) {
+			$data['payment_realex_remote_card_data_status'] = $this->request->post['payment_realex_remote_card_data_status'];
 		} else {
-			$data['realex_remote_card_data_status'] = $this->config->get('realex_remote_card_data_status');
+			$data['payment_realex_remote_card_data_status'] = $this->config->get('payment_realex_remote_card_data_status');
 		}
 
-		if (isset($this->request->post['realex_remote_debug'])) {
-			$data['realex_remote_debug'] = $this->request->post['realex_remote_debug'];
+		if (isset($this->request->post['payment_realex_remote_debug'])) {
+			$data['payment_realex_remote_debug'] = $this->request->post['payment_realex_remote_debug'];
 		} else {
-			$data['realex_remote_debug'] = $this->config->get('realex_remote_debug');
+			$data['payment_realex_remote_debug'] = $this->config->get('payment_realex_remote_debug');
 		}
 
-		if (isset($this->request->post['realex_remote_account'])) {
-			$data['realex_remote_account'] = $this->request->post['realex_remote_account'];
+		if (isset($this->request->post['payment_realex_remote_account'])) {
+			$data['payment_realex_remote_account'] = $this->request->post['payment_realex_remote_account'];
 		} else {
-			$data['realex_remote_account'] = $this->config->get('realex_remote_account');
+			$data['payment_realex_remote_account'] = $this->config->get('payment_realex_remote_account');
 		}
 
-		if (isset($this->request->post['realex_remote_auto_settle'])) {
-			$data['realex_remote_auto_settle'] = $this->request->post['realex_remote_auto_settle'];
+		if (isset($this->request->post['payment_realex_remote_auto_settle'])) {
+			$data['payment_realex_remote_auto_settle'] = $this->request->post['payment_realex_remote_auto_settle'];
 		} else {
-			$data['realex_remote_auto_settle'] = $this->config->get('realex_remote_auto_settle');
+			$data['payment_realex_remote_auto_settle'] = $this->config->get('payment_realex_remote_auto_settle');
 		}
 
-		if (isset($this->request->post['realex_remote_tss_check'])) {
-			$data['realex_remote_tss_check'] = $this->request->post['realex_remote_tss_check'];
+		if (isset($this->request->post['payment_realex_remote_tss_check'])) {
+			$data['payment_realex_remote_tss_check'] = $this->request->post['payment_realex_remote_tss_check'];
 		} else {
-			$data['realex_remote_tss_check'] = $this->config->get('realex_remote_tss_check');
+			$data['payment_realex_remote_tss_check'] = $this->config->get('payment_realex_remote_tss_check');
 		}
 
-		if (isset($this->request->post['realex_remote_3d'])) {
-			$data['realex_remote_3d'] = $this->request->post['realex_remote_3d'];
+		if (isset($this->request->post['payment_realex_remote_3d'])) {
+			$data['payment_realex_remote_3d'] = $this->request->post['payment_realex_remote_3d'];
 		} else {
-			$data['realex_remote_3d'] = $this->config->get('realex_remote_3d');
+			$data['payment_realex_remote_3d'] = $this->config->get('payment_realex_remote_3d');
 		}
 
-		if (isset($this->request->post['realex_remote_liability'])) {
-			$data['realex_remote_liability'] = $this->request->post['realex_remote_liability'];
+		if (isset($this->request->post['payment_realex_remote_liability'])) {
+			$data['payment_realex_remote_liability'] = $this->request->post['payment_realex_remote_liability'];
 		} else {
-			$data['realex_remote_liability'] = $this->config->get('realex_remote_liability');
+			$data['payment_realex_remote_liability'] = $this->config->get('payment_realex_remote_liability');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_success_settled_id'])) {
-			$data['realex_remote_order_status_success_settled_id'] = $this->request->post['realex_remote_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_success_settled_id'])) {
+			$data['payment_realex_remote_order_status_success_settled_id'] = $this->request->post['payment_realex_remote_order_status_success_settled_id'];
 		} else {
-			$data['realex_remote_order_status_success_settled_id'] = $this->config->get('realex_remote_order_status_success_settled_id');
+			$data['payment_realex_remote_order_status_success_settled_id'] = $this->config->get('payment_realex_remote_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_success_unsettled_id'])) {
-			$data['realex_remote_order_status_success_unsettled_id'] = $this->request->post['realex_remote_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_success_unsettled_id'])) {
+			$data['payment_realex_remote_order_status_success_unsettled_id'] = $this->request->post['payment_realex_remote_order_status_success_unsettled_id'];
 		} else {
-			$data['realex_remote_order_status_success_unsettled_id'] = $this->config->get('realex_remote_order_status_success_unsettled_id');
+			$data['payment_realex_remote_order_status_success_unsettled_id'] = $this->config->get('payment_realex_remote_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_decline_id'])) {
-			$data['realex_remote_order_status_decline_id'] = $this->request->post['realex_remote_order_status_decline_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_decline_id'])) {
+			$data['payment_realex_remote_order_status_decline_id'] = $this->request->post['payment_realex_remote_order_status_decline_id'];
 		} else {
-			$data['realex_remote_order_status_decline_id'] = $this->config->get('realex_remote_order_status_decline_id');
+			$data['payment_realex_remote_order_status_decline_id'] = $this->config->get('payment_realex_remote_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_decline_pending_id'])) {
-			$data['realex_remote_order_status_decline_pending_id'] = $this->request->post['realex_remote_order_status_decline_pending_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_decline_pending_id'])) {
+			$data['payment_realex_remote_order_status_decline_pending_id'] = $this->request->post['payment_realex_remote_order_status_decline_pending_id'];
 		} else {
-			$data['realex_remote_order_status_decline_pending_id'] = $this->config->get('realex_remote_order_status_decline_pending_id');
+			$data['payment_realex_remote_order_status_decline_pending_id'] = $this->config->get('payment_realex_remote_order_status_decline_pending_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_decline_stolen_id'])) {
-			$data['realex_remote_order_status_decline_stolen_id'] = $this->request->post['realex_remote_order_status_decline_stolen_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_decline_stolen_id'])) {
+			$data['payment_realex_remote_order_status_decline_stolen_id'] = $this->request->post['payment_realex_remote_order_status_decline_stolen_id'];
 		} else {
-			$data['realex_remote_order_status_decline_stolen_id'] = $this->config->get('realex_remote_order_status_decline_stolen_id');
+			$data['payment_realex_remote_order_status_decline_stolen_id'] = $this->config->get('payment_realex_remote_order_status_decline_stolen_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_decline_bank_id'])) {
-			$data['realex_remote_order_status_decline_bank_id'] = $this->request->post['realex_remote_order_status_decline_bank_id'];
+		if (isset($this->request->post['payment_realex_remote_order_status_decline_bank_id'])) {
+			$data['payment_realex_remote_order_status_decline_bank_id'] = $this->request->post['payment_realex_remote_order_status_decline_bank_id'];
 		} else {
-			$data['realex_remote_order_status_decline_bank_id'] = $this->config->get('realex_remote_order_status_decline_bank_id');
+			$data['payment_realex_remote_order_status_decline_bank_id'] = $this->config->get('payment_realex_remote_order_status_decline_bank_id');
 		}
 
 		$this->load->model('localisation/order_status');
@@ -259,7 +259,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('realex_remote_status')) {
+		if ($this->config->get('payment_realex_remote_status')) {
 			$this->load->model('extension/payment/realex_remote');
 
 			$realex_order = $this->model_extension_payment_realex_remote->getOrder($this->request->get['order_id']);
@@ -440,11 +440,11 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['realex_remote_merchant_id']) {
+		if (!$this->request->post['payment_realex_remote_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['realex_remote_secret']) {
+		if (!$this->request->post['payment_realex_remote_secret']) {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 

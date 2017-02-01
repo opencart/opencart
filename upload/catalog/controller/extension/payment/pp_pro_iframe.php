@@ -6,12 +6,12 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$this->load->language('extension/payment/pp_pro_iframe');
 
-		if ($this->config->get('pp_pro_iframe_checkout_method') == 'redirect') {
+		if ($this->config->get('payment_pp_pro_iframe_checkout_method') == 'redirect') {
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 			$hosted_button_id = $this->constructButtonData($order_info);
 
-			if ($this->config->get('pp_pro_iframe_test')) {
+			if ($this->config->get('payment_pp_pro_iframe_test')) {
 				$data['url'] = 'https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			} else {
 				$data['url'] = 'https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
@@ -27,7 +27,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$data['create'] = HTTPS_SERVER.'index.php?route=extension/payment/pp_pro_iframe/create';
 
-		$data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
+		$data['checkout_method'] = $this->config->get('payment_pp_pro_iframe_checkout_method');
 
 		return $this->load->view('extension/payment/pp_pro_iframe', $data);
 	}
@@ -46,7 +46,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		if ($hosted_button_id) {
 			$data['code'] = $hosted_button_id;
 
-			if ($this->config->get('pp_pro_iframe_test')) {
+			if ($this->config->get('payment_pp_pro_iframe_test')) {
 				$data['url'] = 'https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			} else {
 				$data['url'] = 'https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
@@ -102,57 +102,57 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 			$response = curl_exec($curl);
 
 			if (curl_errno($curl)) {
-				if ($this->config->get('pp_pro_iframe_debug')) {
+				if ($this->config->get('payment_pp_pro_iframe_debug')) {
 					$log = new Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
 				}				
 			} else {
-				if ($this->config->get('pp_pro_iframe_debug')) {
+				if ($this->config->get('payment_pp_pro_iframe_debug')) {
 					$log = new Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: IPN REQUEST: ' . $request);
 					$log->write('pp_pro_iframe :: IPN RESPONSE: ' . $response);
 				}				
 
 				if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
-					$order_status_id = $this->config->get('pp_pro_iframe_canceled_reversal_status_id');
+					$order_status_id = $this->config->get('payment_pp_pro_iframe_canceled_reversal_status_id');
 
 					switch ($this->request->post['payment_status']) {
 						case 'Canceled_Reversal':
-							$order_status_id = $this->config->get('pp_pro_iframe_canceled_reversal_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_canceled_reversal_status_id');
 							break;
 						case 'Completed':
-							$order_status_id = $this->config->get('pp_pro_iframe_completed_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_completed_status_id');
 							break;
 						case 'Denied':
-							$order_status_id = $this->config->get('pp_pro_iframe_denied_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_denied_status_id');
 							break;
 						case 'Expired':
-							$order_status_id = $this->config->get('pp_pro_iframe_expired_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_expired_status_id');
 							break;
 						case 'Failed':
-							$order_status_id = $this->config->get('pp_pro_iframe_failed_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_failed_status_id');
 							break;
 						case 'Pending':
-							$order_status_id = $this->config->get('pp_pro_iframe_pending_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_pending_status_id');
 							break;
 						case 'Processed':
-							$order_status_id = $this->config->get('pp_pro_iframe_processed_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_processed_status_id');
 							break;
 						case 'Refunded':
-							$order_status_id = $this->config->get('pp_pro_iframe_refunded_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_processed_status_id');
 							break;
 						case 'Reversed':
-							$order_status_id = $this->config->get('pp_pro_iframe_reversed_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_reversed_status_id');
 							break;
 						case 'Voided':
-							$order_status_id = $this->config->get('pp_pro_iframe_voided_status_id');
+							$order_status_id = $this->config->get('payment_pp_pro_iframe_voided_status_id');
 							break;
 					}
 
 					if (!$order_info['order_status_id']) {
 						$paypal_order_data = array(
 							'order_id'         => $order_id,
-							'capture_status'   => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'Complete' : 'NotComplete'),
+							'capture_status'   => ($this->config->get('payment_pp_pro_iframe_transaction_method') == 'sale' ? 'Complete' : 'NotComplete'),
 							'currency_code'    => $this->request->post['mc_currency'],
 							'authorization_id' => $this->request->post['txn_id'],
 							'total'            => $this->request->post['mc_gross'],
@@ -170,7 +170,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 							'payment_type'           => $this->request->post['payment_type'],
 							'payment_status'         => $this->request->post['payment_status'],
 							'pending_reason'         => (isset($this->request->post['pending_reason']) ? $this->request->post['pending_reason'] : ''),
-							'transaction_entity'     => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'payment' : 'auth'),
+							'transaction_entity'     => ($this->config->get('payment_pp_pro_iframe_transaction_method') == 'sale' ? 'payment' : 'auth'),
 							'amount'                 => $this->request->post['mc_gross'],
 							'debug_data'             => json_encode($this->request->post),
 						);
@@ -199,9 +199,9 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['BUTTONLANGUAGE'] = 'en';
 		$s_data['BUTTONSOURCE'] = 'OpenCart_2.0_HSS';
 
-		$s_data['USER'] = $this->config->get('pp_pro_iframe_user');
-		$s_data['SIGNATURE'] = $this->config->get('pp_pro_iframe_sig');
-		$s_data['PWD'] = $this->config->get('pp_pro_iframe_password');
+		$s_data['USER'] = $this->config->get('payment_pp_pro_iframe_user');
+		$s_data['SIGNATURE'] = $this->config->get('payment_pp_pro_iframe_sig');
+		$s_data['PWD'] = $this->config->get('payment_pp_pro_iframe_password');
 
 		$s_data['BUTTONTYPE'] = 'PAYMENT';
 		$s_data['L_BUTTONVAR0'] = 'subtotal=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
@@ -240,7 +240,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('extension/payment/pp_pro_iframe/notify', '', true);
 		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', true);
-		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('pp_pro_iframe_transaction_method');
+		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('payment_pp_pro_iframe_transaction_method');
 		$s_data['L_BUTTONVAR23'] = 'currency_code=' . urlencode($order_info['currency_code']);
 		$s_data['L_BUTTONVAR26'] = 'showBillingAddress=false';
 		$s_data['L_BUTTONVAR27'] = 'showShippingAddress=false';
@@ -262,7 +262,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', true);
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
 
-		if ($this->config->get('pp_pro_iframe_test')) {
+		if ($this->config->get('payment_pp_pro_iframe_test')) {
 			$url = 'https://api-3t.sandbox.paypal.com/nvp';
 		} else {
 			$url = 'https://api-3t.paypal.com/nvp';
@@ -286,7 +286,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 		parse_str($response, $response_data);
 		
-		if ($this->config->get('pp_pro_iframe_debug')) {
+		if ($this->config->get('payment_pp_pro_iframe_debug')) {
 			$log = new Log('pp_pro_iframe.log');
 			$log->write(print_r(json_encode($response_data), 1));
 		}

@@ -203,7 +203,7 @@ class ModelExtensionPaymentSagePayServer extends Model {
 		}
 
 		$payment_data['TxType'] = 'REPEAT';
-		$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];

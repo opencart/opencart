@@ -139,146 +139,146 @@ class ControllerExtensionPaymentRealex extends Controller {
 		
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['realex_merchant_id'])) {
-			$data['realex_merchant_id'] = $this->request->post['realex_merchant_id'];
+		if (isset($this->request->post['payment_realex_merchant_id'])) {
+			$data['payment_realex_merchant_id'] = $this->request->post['payment_realex_merchant_id'];
 		} else {
-			$data['realex_merchant_id'] = $this->config->get('realex_merchant_id');
+			$data['payment_realex_merchant_id'] = $this->config->get('payment_realex_merchant_id');
 		}
 
-		if (isset($this->request->post['realex_secret'])) {
-			$data['realex_secret'] = $this->request->post['realex_secret'];
+		if (isset($this->request->post['payment_realex_secret'])) {
+			$data['payment_realex_secret'] = $this->request->post['payment_realex_secret'];
 		} else {
-			$data['realex_secret'] = $this->config->get('realex_secret');
+			$data['payment_realex_secret'] = $this->config->get('payment_realex_secret');
 		}
 
-		if (isset($this->request->post['realex_rebate_password'])) {
-			$data['realex_rebate_password'] = $this->request->post['realex_rebate_password'];
+		if (isset($this->request->post['payment_realex_rebate_password'])) {
+			$data['payment_realex_rebate_password'] = $this->request->post['payment_realex_rebate_password'];
 		} else {
-			$data['realex_rebate_password'] = $this->config->get('realex_rebate_password');
+			$data['payment_realex_rebate_password'] = $this->config->get('payment_realex_rebate_password');
 		}
 
-		if (isset($this->request->post['realex_live_demo'])) {
-			$data['realex_live_demo'] = $this->request->post['realex_live_demo'];
+		if (isset($this->request->post['payment_realex_live_demo'])) {
+			$data['payment_realex_live_demo'] = $this->request->post['payment_realex_live_demo'];
 		} else {
-			$data['realex_live_demo'] = $this->config->get('realex_live_demo');
+			$data['payment_realex_live_demo'] = $this->config->get('payment_realex_live_demo');
 		}
 
-		if (isset($this->request->post['realex_geo_zone_id'])) {
-			$data['realex_geo_zone_id'] = $this->request->post['realex_geo_zone_id'];
+		if (isset($this->request->post['payment_realex_geo_zone_id'])) {
+			$data['payment_realex_geo_zone_id'] = $this->request->post['payment_realex_geo_zone_id'];
 		} else {
-			$data['realex_geo_zone_id'] = $this->config->get('realex_geo_zone_id');
+			$data['payment_realex_geo_zone_id'] = $this->config->get('payment_realex_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['realex_total'])) {
-			$data['realex_total'] = $this->request->post['realex_total'];
+		if (isset($this->request->post['payment_realex_total'])) {
+			$data['payment_realex_total'] = $this->request->post['payment_realex_total'];
 		} else {
-			$data['realex_total'] = $this->config->get('realex_total');
+			$data['payment_realex_total'] = $this->config->get('payment_realex_total');
 		}
 
-		if (isset($this->request->post['realex_sort_order'])) {
-			$data['realex_sort_order'] = $this->request->post['realex_sort_order'];
+		if (isset($this->request->post['payment_realex_sort_order'])) {
+			$data['payment_realex_sort_order'] = $this->request->post['payment_realex_sort_order'];
 		} else {
-			$data['realex_sort_order'] = $this->config->get('realex_sort_order');
+			$data['payment_realex_sort_order'] = $this->config->get('payment_realex_sort_order');
 		}
 
-		if (isset($this->request->post['realex_status'])) {
-			$data['realex_status'] = $this->request->post['realex_status'];
+		if (isset($this->request->post['payment_realex_status'])) {
+			$data['payment_realex_status'] = $this->request->post['payment_realex_status'];
 		} else {
-			$data['realex_status'] = $this->config->get('realex_status');
+			$data['payment_realex_status'] = $this->config->get('payment_realex_status');
 		}
 
-		if (isset($this->request->post['realex_debug'])) {
-			$data['realex_debug'] = $this->request->post['realex_debug'];
+		if (isset($this->request->post['payment_realex_debug'])) {
+			$data['payment_realex_debug'] = $this->request->post['payment_realex_debug'];
 		} else {
-			$data['realex_debug'] = $this->config->get('realex_debug');
+			$data['payment_realex_debug'] = $this->config->get('payment_realex_debug');
 		}
 
-		if (isset($this->request->post['realex_account'])) {
-			$data['realex_account'] = $this->request->post['realex_account'];
+		if (isset($this->request->post['payment_realex_account'])) {
+			$data['payment_realex_account'] = $this->request->post['payment_realex_account'];
 		} else {
-			$data['realex_account'] = $this->config->get('realex_account');
+			$data['payment_realex_account'] = $this->config->get('payment_realex_account');
 		}
 
-		if (isset($this->request->post['realex_auto_settle'])) {
-			$data['realex_auto_settle'] = $this->request->post['realex_auto_settle'];
+		if (isset($this->request->post['payment_realex_auto_settle'])) {
+			$data['payment_realex_auto_settle'] = $this->request->post['payment_realex_auto_settle'];
 		} else {
-			$data['realex_auto_settle'] = $this->config->get('realex_auto_settle');
+			$data['payment_realex_auto_settle'] = $this->config->get('payment_realex_auto_settle');
 		}
 
-		if (isset($this->request->post['realex_card_select'])) {
-			$data['realex_card_select'] = $this->request->post['realex_card_select'];
+		if (isset($this->request->post['payment_realex_card_select'])) {
+			$data['payment_realex_card_select'] = $this->request->post['payment_realex_card_select'];
 		} else {
-			$data['realex_card_select'] = $this->config->get('realex_card_select');
+			$data['payment_realex_card_select'] = $this->config->get('payment_realex_card_select');
 		}
 
-		if (isset($this->request->post['realex_tss_check'])) {
-			$data['realex_tss_check'] = $this->request->post['realex_tss_check'];
+		if (isset($this->request->post['payment_realex_tss_check'])) {
+			$data['payment_realex_tss_check'] = $this->request->post['payment_realex_tss_check'];
 		} else {
-			$data['realex_tss_check'] = $this->config->get('realex_tss_check');
+			$data['payment_realex_tss_check'] = $this->config->get('payment_realex_tss_check');
 		}
 
-		if (isset($this->request->post['realex_order_status_success_settled_id'])) {
-			$data['realex_order_status_success_settled_id'] = $this->request->post['realex_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_realex_order_status_success_settled_id'])) {
+			$data['payment_realex_order_status_success_settled_id'] = $this->request->post['payment_realex_order_status_success_settled_id'];
 		} else {
-			$data['realex_order_status_success_settled_id'] = $this->config->get('realex_order_status_success_settled_id');
+			$data['payment_realex_order_status_success_settled_id'] = $this->config->get('payment_realex_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_success_unsettled_id'])) {
-			$data['realex_order_status_success_unsettled_id'] = $this->request->post['realex_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_realex_order_status_success_unsettled_id'])) {
+			$data['payment_realex_order_status_success_unsettled_id'] = $this->request->post['payment_realex_order_status_success_unsettled_id'];
 		} else {
-			$data['realex_order_status_success_unsettled_id'] = $this->config->get('realex_order_status_success_unsettled_id');
+			$data['payment_realex_order_status_success_unsettled_id'] = $this->config->get('payment_realex_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_decline_id'])) {
-			$data['realex_order_status_decline_id'] = $this->request->post['realex_order_status_decline_id'];
+		if (isset($this->request->post['payment_realex_order_status_decline_id'])) {
+			$data['payment_realex_order_status_decline_id'] = $this->request->post['payment_realex_order_status_decline_id'];
 		} else {
-			$data['realex_order_status_decline_id'] = $this->config->get('realex_order_status_decline_id');
+			$data['payment_realex_order_status_decline_id'] = $this->config->get('payment_realex_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_decline_pending_id'])) {
-			$data['realex_order_status_decline_pending_id'] = $this->request->post['realex_order_status_decline_pending_id'];
+		if (isset($this->request->post['payment_realex_order_status_decline_pending_id'])) {
+			$data['payment_realex_order_status_decline_pending_id'] = $this->request->post['payment_realex_order_status_decline_pending_id'];
 		} else {
-			$data['realex_order_status_decline_pending_id'] = $this->config->get('realex_order_status_decline_pending_id');
+			$data['payment_realex_order_status_decline_pending_id'] = $this->config->get('payment_realex_order_status_decline_pending_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_decline_stolen_id'])) {
-			$data['realex_order_status_decline_stolen_id'] = $this->request->post['realex_order_status_decline_stolen_id'];
+		if (isset($this->request->post['payment_realex_order_status_decline_stolen_id'])) {
+			$data['payment_realex_order_status_decline_stolen_id'] = $this->request->post['payment_realex_order_status_decline_stolen_id'];
 		} else {
-			$data['realex_order_status_decline_stolen_id'] = $this->config->get('realex_order_status_decline_stolen_id');
+			$data['payment_realex_order_status_decline_stolen_id'] = $this->config->get('payment_realex_order_status_decline_stolen_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_decline_bank_id'])) {
-			$data['realex_order_status_decline_bank_id'] = $this->request->post['realex_order_status_decline_bank_id'];
+		if (isset($this->request->post['payment_realex_order_status_decline_bank_id'])) {
+			$data['payment_realex_order_status_decline_bank_id'] = $this->request->post['payment_realex_order_status_decline_bank_id'];
 		} else {
-			$data['realex_order_status_decline_bank_id'] = $this->config->get('realex_order_status_decline_bank_id');
+			$data['payment_realex_order_status_decline_bank_id'] = $this->config->get('payment_realex_order_status_decline_bank_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['realex_live_url'])) {
-			$data['realex_live_url'] = $this->request->post['realex_live_url'];
+		if (isset($this->request->post['payment_realex_live_url'])) {
+			$data['payment_realex_live_url'] = $this->request->post['payment_realex_live_url'];
 		} else {
-			$data['realex_live_url'] = $this->config->get('realex_live_url');
+			$data['payment_realex_live_url'] = $this->config->get('payment_realex_live_url');
 		}
 
-		if (empty($data['realex_live_url'])) {
-			$data['realex_live_url'] = 'https://hpp.realexpayments.com/pay';
+		if (empty($data['payment_realex_live_url'])) {
+			$data['payment_realex_live_url'] = 'https://hpp.realexpayments.com/pay';
 		}
 
-		if (isset($this->request->post['realex_demo_url'])) {
-			$data['realex_demo_url'] = $this->request->post['realex_demo_url'];
+		if (isset($this->request->post['payment_realex_demo_url'])) {
+			$data['payment_realex_demo_url'] = $this->request->post['payment_realex_demo_url'];
 		} else {
-			$data['realex_demo_url'] = $this->config->get('realex_demo_url');
+			$data['payment_realex_demo_url'] = $this->config->get('payment_realex_demo_url');
 		}
 
-		if (empty($data['realex_demo_url'])) {
-			$data['realex_demo_url'] = 'https://hpp.sandbox.realexpayments.com/pay';
+		if (empty($data['payment_realex_demo_url'])) {
+			$data['payment_realex_demo_url'] = 'https://hpp.sandbox.realexpayments.com/pay';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -295,7 +295,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 	}
 
 	public function order() {
-		if ($this->config->get('realex_status')) {
+		if ($this->config->get('payment_realex_status')) {
 			$this->load->model('extension/payment/realex');
 
 			$realex_order = $this->model_extension_payment_realex->getOrder($this->request->get['order_id']);
@@ -475,19 +475,19 @@ class ControllerExtensionPaymentRealex extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['realex_merchant_id']) {
+		if (!$this->request->post['payment_realex_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['realex_secret']) {
+		if (!$this->request->post['payment_realex_secret']) {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->request->post['realex_live_url']) {
+		if (!$this->request->post['payment_realex_live_url']) {
 			$this->error['error_live_url'] = $this->language->get('error_live_url');
 		}
 
-		if (!$this->request->post['realex_demo_url']) {
+		if (!$this->request->post['payment_realex_demo_url']) {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 

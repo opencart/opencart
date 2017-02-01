@@ -168,7 +168,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function log($data, $title = null) {
-		if ($this->config->get('pp_express_debug')) {
+		if ($this->config->get('payment_pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
 	}
@@ -267,11 +267,11 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-		if ($this->config->get('pp_express_test') == 1) {
+		if ($this->config->get('payment_pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 			$user = $this->config->get('payment_pp_express_sandbox_username');
-			$password = $this->config->get('pp_express_sandbox_password');
-			$signature = $this->config->get('pp_express_sandbox_signature');
+			$password = $this->config->get('payment_pp_express_sandbox_password');
+			$signature = $this->config->get('payment_pp_express_sandbox_signature');
 		} else {
 			$api_endpoint = 'https://api-3t.paypal.com/nvp';
 			$user = $this->config->get('payment_pp_express_username');

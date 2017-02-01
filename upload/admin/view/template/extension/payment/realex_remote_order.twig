@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <td>{{ text_total_captured }}</td>
-    <td id="realex_total_captured">{{ realex_order.total_captured_formatted }}</td>
+    <td id="payment_realex_total_captured">{{ realex_order.total_captured_formatted }}</td>
   </tr>
   <tr>
     <td>{{ text_capture_status }}</td>
@@ -131,7 +131,7 @@
             html += '</tr>';
 
             $('#realex_transactions').append(html);
-            $('#realex_total_captured').text(data.data.total_formatted);
+            $('#payment_realex_total_captured').text(data.data.total_formatted);
 
             if (data.data.capture_status == 1) {
               $('#button-void').hide();
@@ -186,7 +186,7 @@
             html += '</tr>';
 
             $('#realex_transactions').append(html);
-            $('#realex_total_captured').text(data.data.total_captured);
+            $('#payment_realex_total_captured').text(data.data.total_captured);
 
             if (data.data.rebate_status == 1) {
               $('.rebate_text').text('{{ text_yes }}');

@@ -86,94 +86,94 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
-		if (isset($this->request->post['sagepay_direct_vendor'])) {
-			$data['sagepay_direct_vendor'] = $this->request->post['sagepay_direct_vendor'];
+		if (isset($this->request->post['payment_sagepay_direct_vendor'])) {
+			$data['payment_sagepay_direct_vendor'] = $this->request->post['payment_sagepay_direct_vendor'];
 		} else {
-			$data['sagepay_direct_vendor'] = $this->config->get('sagepay_direct_vendor');
+			$data['payment_sagepay_direct_vendor'] = $this->config->get('payment_sagepay_direct_vendor');
 		}
 
-		if (isset($this->request->post['sagepay_direct_password'])) {
-			$data['sagepay_direct_password'] = $this->request->post['sagepay_direct_password'];
+		if (isset($this->request->post['payment_sagepay_direct_password'])) {
+			$data['payment_sagepay_direct_password'] = $this->request->post['payment_sagepay_direct_password'];
 		} else {
-			$data['sagepay_direct_password'] = $this->config->get('sagepay_direct_password');
+			$data['payment_sagepay_direct_password'] = $this->config->get('payment_sagepay_direct_password');
 		}
 
-		if (isset($this->request->post['sagepay_direct_test'])) {
-			$data['sagepay_direct_test'] = $this->request->post['sagepay_direct_test'];
+		if (isset($this->request->post['payment_sagepay_direct_test'])) {
+			$data['payment_sagepay_direct_test'] = $this->request->post['payment_sagepay_direct_test'];
 		} else {
-			$data['sagepay_direct_test'] = $this->config->get('sagepay_direct_test');
+			$data['payment_sagepay_direct_test'] = $this->config->get('payment_sagepay_direct_test');
 		}
 
-		if (isset($this->request->post['sagepay_direct_transaction'])) {
-			$data['sagepay_direct_transaction'] = $this->request->post['sagepay_direct_transaction'];
+		if (isset($this->request->post['payment_sagepay_direct_transaction'])) {
+			$data['payment_sagepay_direct_transaction'] = $this->request->post['payment_sagepay_direct_transaction'];
 		} else {
-			$data['sagepay_direct_transaction'] = $this->config->get('sagepay_direct_transaction');
+			$data['payment_sagepay_direct_transaction'] = $this->config->get('payment_sagepay_direct_transaction');
 		}
 
-		if (isset($this->request->post['sagepay_direct_total'])) {
-			$data['sagepay_direct_total'] = $this->request->post['sagepay_direct_total'];
+		if (isset($this->request->post['payment_sagepay_direct_total'])) {
+			$data['payment_sagepay_direct_total'] = $this->request->post['payment_sagepay_direct_total'];
 		} else {
-			$data['sagepay_direct_total'] = $this->config->get('sagepay_direct_total');
+			$data['payment_sagepay_direct_total'] = $this->config->get('payment_sagepay_direct_total');
 		}
 
-		if (isset($this->request->post['sagepay_direct_card'])) {
-			$data['sagepay_direct_card'] = $this->request->post['sagepay_direct_card'];
+		if (isset($this->request->post['payment_sagepay_direct_card'])) {
+			$data['payment_sagepay_direct_card'] = $this->request->post['payment_sagepay_direct_card'];
 		} else {
-			$data['sagepay_direct_card'] = $this->config->get('sagepay_direct_card');
+			$data['payment_sagepay_direct_card'] = $this->config->get('payment_sagepay_direct_card');
 		}
 
-		if (isset($this->request->post['sagepay_direct_order_status_id'])) {
-			$data['sagepay_direct_order_status_id'] = $this->request->post['sagepay_direct_order_status_id'];
+		if (isset($this->request->post['payment_sagepay_direct_order_status_id'])) {
+			$data['payment_sagepay_direct_order_status_id'] = $this->request->post['payment_sagepay_direct_order_status_id'];
 		} else {
-			$data['sagepay_direct_order_status_id'] = $this->config->get('sagepay_direct_order_status_id');
+			$data['payment_sagepay_direct_order_status_id'] = $this->config->get('payment_sagepay_direct_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['sagepay_direct_geo_zone_id'])) {
-			$data['sagepay_direct_geo_zone_id'] = $this->request->post['sagepay_direct_geo_zone_id'];
+		if (isset($this->request->post['payment_sagepay_direct_geo_zone_id'])) {
+			$data['payment_sagepay_direct_geo_zone_id'] = $this->request->post['payment_sagepay_direct_geo_zone_id'];
 		} else {
-			$data['sagepay_direct_geo_zone_id'] = $this->config->get('sagepay_direct_geo_zone_id');
+			$data['payment_sagepay_direct_geo_zone_id'] = $this->config->get('payment_sagepay_direct_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['sagepay_direct_status'])) {
-			$data['sagepay_direct_status'] = $this->request->post['sagepay_direct_status'];
+		if (isset($this->request->post['payment_sagepay_direct_status'])) {
+			$data['payment_sagepay_direct_status'] = $this->request->post['payment_sagepay_direct_status'];
 		} else {
-			$data['sagepay_direct_status'] = $this->config->get('sagepay_direct_status');
+			$data['payment_sagepay_direct_status'] = $this->config->get('payment_sagepay_direct_status');
 		}
 
-		if (isset($this->request->post['sagepay_direct_debug'])) {
-			$data['sagepay_direct_debug'] = $this->request->post['sagepay_direct_debug'];
+		if (isset($this->request->post['payment_sagepay_direct_debug'])) {
+			$data['payment_sagepay_direct_debug'] = $this->request->post['payment_sagepay_direct_debug'];
 		} else {
-			$data['sagepay_direct_debug'] = $this->config->get('sagepay_direct_debug');
+			$data['payment_sagepay_direct_debug'] = $this->config->get('payment_sagepay_direct_debug');
 		}
 
-		if (isset($this->request->post['sagepay_direct_sort_order'])) {
-			$data['sagepay_direct_sort_order'] = $this->request->post['sagepay_direct_sort_order'];
+		if (isset($this->request->post['payment_sagepay_direct_sort_order'])) {
+			$data['payment_sagepay_direct_sort_order'] = $this->request->post['payment_sagepay_direct_sort_order'];
 		} else {
-			$data['sagepay_direct_sort_order'] = $this->config->get('sagepay_direct_sort_order');
+			$data['payment_sagepay_direct_sort_order'] = $this->config->get('payment_sagepay_direct_sort_order');
 		}
 
-		if (isset($this->request->post['sagepay_direct_cron_job_token'])) {
-			$data['sagepay_direct_cron_job_token'] = $this->request->post['sagepay_direct_cron_job_token'];
-		} elseif ($this->config->get('sagepay_direct_cron_job_token')) {
-			$data['sagepay_direct_cron_job_token'] = $this->config->get('sagepay_direct_cron_job_token');
+		if (isset($this->request->post['payment_sagepay_direct_cron_job_token'])) {
+			$data['payment_sagepay_direct_cron_job_token'] = $this->request->post['payment_sagepay_direct_cron_job_token'];
+		} elseif ($this->config->get('payment_sagepay_direct_cron_job_token')) {
+			$data['payment_sagepay_direct_cron_job_token'] = $this->config->get('payment_sagepay_direct_cron_job_token');
 		} else {
-			$data['sagepay_direct_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
+			$data['payment_sagepay_direct_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
 		}
 
-		$data['sagepay_direct_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_direct/cron&token=' . $data['sagepay_direct_cron_job_token'];
+		$data['sagepay_direct_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/sagepay_direct/cron&token=' . $data['payment_sagepay_direct_cron_job_token'];
 
-		if ($this->config->get('sagepay_direct_last_cron_job_run')) {
-			$data['sagepay_direct_last_cron_job_run'] = $this->config->get('sagepay_direct_last_cron_job_run');
+		if ($this->config->get('payment_sagepay_direct_last_cron_job_run')) {
+			$data['payment_sagepay_direct_last_cron_job_run'] = $this->config->get('payment_sagepay_direct_last_cron_job_run');
 		} else {
-			$data['sagepay_direct_last_cron_job_run'] = '';
+			$data['payment_sagepay_direct_last_cron_job_run'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -195,7 +195,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 
 	public function order() {
 
-		if ($this->config->get('sagepay_direct_status')) {
+		if ($this->config->get('payment_sagepay_direct_status')) {
 
 			$this->load->model('extension/payment/sagepay_direct');
 
@@ -375,7 +375,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['sagepay_direct_vendor']) {
+		if (!$this->request->post['payment_sagepay_direct_vendor']) {
 			$this->error['vendor'] = $this->language->get('error_vendor');
 		}
 

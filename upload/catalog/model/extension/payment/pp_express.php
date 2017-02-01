@@ -3,11 +3,11 @@ class ModelExtensionPaymentPPExpress extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/pp_express');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('pp_express_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_pp_express_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('pp_express_total') > $total) {
+		if ($this->config->get('payment_pp_express_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('pp_express_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_pp_express_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 				'code'       => 'pp_express',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('pp_express_sort_order')
+				'sort_order' => $this->config->get('payment_pp_express_sort_order')
 			);
 		}
 
@@ -71,7 +71,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 		$data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
 		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->session->data['currency'];
-		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('pp_express_transaction');
+		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('payment_pp_express_transaction');
 
 		$i = 0;
 		$item_total = 0;
@@ -261,11 +261,11 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-		if ($this->config->get('pp_express_test')) {
+		if ($this->config->get('payment_pp_express_test')) {
 			$api_url = 'https://api-3t.sandbox.paypal.com/nvp';
 			$api_user = $this->config->get('payment_pp_express_sandbox_username');
-			$api_password = $this->config->get('pp_express_sandbox_password');
-			$api_signature = $this->config->get('pp_express_sandbox_signature');
+			$api_password = $this->config->get('payment_pp_express_sandbox_password');
+			$api_signature = $this->config->get('payment_pp_express_sandbox_signature');
 		} else {
 			$api_url = 'https://api-3t.paypal.com/nvp';
 			$api_user = $this->config->get('payment_pp_express_username');
@@ -334,7 +334,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function log($data, $title = null) {
-		if ($this->config->get('pp_express_debug')) {
+		if ($this->config->get('payment_pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
 	}

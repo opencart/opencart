@@ -10,7 +10,7 @@ class ControllerExtensionTotalTax extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('total', 'tax', $this->request->post);
+			$this->model_setting_setting->editSetting('total_tax', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,16 +56,16 @@ class ControllerExtensionTotalTax extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['tax_status'])) {
-			$data['tax_status'] = $this->request->post['tax_status'];
+		if (isset($this->request->post['total_tax_status'])) {
+			$data['total_tax_status'] = $this->request->post['total_tax_status'];
 		} else {
-			$data['tax_status'] = $this->config->get('tax_status');
+			$data['total_tax_status'] = $this->config->get('total_tax_status');
 		}
 
-		if (isset($this->request->post['tax_sort_order'])) {
-			$data['tax_sort_order'] = $this->request->post['tax_sort_order'];
+		if (isset($this->request->post['total_tax_sort_order'])) {
+			$data['total_tax_sort_order'] = $this->request->post['total_tax_sort_order'];
 		} else {
-			$data['tax_sort_order'] = $this->config->get('tax_sort_order');
+			$data['total_tax_sort_order'] = $this->config->get('total_tax_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

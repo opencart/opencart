@@ -1,6 +1,6 @@
 <?php
 class ControllerEventTheme extends Controller {
-	public function index(&$view, &$data, &$output) {
+	public function index(&$view, &$args, &$output) {
 		if (!$this->config->get($this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');
 		}
@@ -36,7 +36,7 @@ class ControllerEventTheme extends Controller {
 
 			$template = $twig->createTemplate(html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8'));
 			
-			$output = $template->render($data);
+			$output = $template->render($args);
 		} else {
 			if (is_file(DIR_TEMPLATE . $theme . '/template/' . $view . '.twig')) { 
 				$view = $theme . '/template/' . $view;

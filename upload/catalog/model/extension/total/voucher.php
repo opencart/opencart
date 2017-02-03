@@ -84,7 +84,7 @@ class ModelExtensionTotalVoucher extends Model {
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,
-						'sort_order' => $this->config->get('voucher_sort_order')
+						'sort_order' => $this->config->get('total_voucher_sort_order')
 					);
 
 					$total['total'] -= $amount;

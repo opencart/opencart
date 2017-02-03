@@ -10,7 +10,7 @@ class ControllerExtensionTotalTotal extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('total', 'total', $this->request->post);
+			$this->model_setting_setting->editSetting('total_total', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,16 +56,16 @@ class ControllerExtensionTotalTotal extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['total_status'])) {
-			$data['total_status'] = $this->request->post['total_status'];
+		if (isset($this->request->post['total_total_status'])) {
+			$data['total_total_status'] = $this->request->post['total_total_status'];
 		} else {
-			$data['total_status'] = $this->config->get('total_status');
+			$data['total_total_status'] = $this->config->get('total_total_status');
 		}
 
-		if (isset($this->request->post['total_sort_order'])) {
-			$data['total_sort_order'] = $this->request->post['total_sort_order'];
+		if (isset($this->request->post['total_total_sort_order'])) {
+			$data['total_total_sort_order'] = $this->request->post['total_total_sort_order'];
 		} else {
-			$data['total_sort_order'] = $this->config->get('total_sort_order');
+			$data['total_total_sort_order'] = $this->config->get('total_total_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

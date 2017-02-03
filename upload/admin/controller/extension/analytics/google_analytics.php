@@ -10,7 +10,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('analytics', 'google_analytics', $this->request->post, $this->request->get['store_id']);
+			$this->model_setting_setting->editSetting('analytics_google_analytics', $this->request->post, $this->request->get['store_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

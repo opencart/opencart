@@ -202,7 +202,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/feed/google_base')) {
 			$json['error'] = $this->language->get('error_permission');
 		} elseif (!empty($this->request->post['google_base_category_id']) && !empty($this->request->post['category_id'])) {
 			$this->load->model('extension/feed/google_base');
@@ -221,7 +221,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/feed/google_base')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('extension/feed/google_base');

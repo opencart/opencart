@@ -4,6 +4,7 @@ class ControllerAccountLogout extends Controller {
 		if ($this->customer->isLogged()) {
 			$this->customer->logout();
 
+			unset($this->session->data['csrf_token']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

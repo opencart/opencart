@@ -53,6 +53,8 @@ class ControllerAccountLogin extends Controller {
 			// Unset guest
 			unset($this->session->data['guest']);
 
+			$this->session->data['csrf_token'] = token(32);
+
 			// Default Shipping Address
 			$this->load->model('account/address');
 

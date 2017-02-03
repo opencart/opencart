@@ -10,7 +10,7 @@ class ControllerExtensionTotalReward extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('reward', $this->request->post);
+			$this->model_setting_setting->editSetting('total', 'reward', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,16 +56,16 @@ class ControllerExtensionTotalReward extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['reward_status'])) {
-			$data['reward_status'] = $this->request->post['reward_status'];
+		if (isset($this->request->post['total_reward_status'])) {
+			$data['total_reward_status'] = $this->request->post['total_reward_status'];
 		} else {
-			$data['reward_status'] = $this->config->get('reward_status');
+			$data['total_reward_status'] = $this->config->get('total_reward_status');
 		}
 
-		if (isset($this->request->post['reward_sort_order'])) {
-			$data['reward_sort_order'] = $this->request->post['reward_sort_order'];
+		if (isset($this->request->post['total_reward_sort_order'])) {
+			$data['total_reward_sort_order'] = $this->request->post['total_reward_sort_order'];
 		} else {
-			$data['reward_sort_order'] = $this->config->get('reward_sort_order');
+			$data['total_reward_sort_order'] = $this->config->get('total_reward_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

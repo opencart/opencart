@@ -11,7 +11,7 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->load->model('extension/payment/divido');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
-			$this->model_setting_setting->editSetting('divido', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'divido', $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			

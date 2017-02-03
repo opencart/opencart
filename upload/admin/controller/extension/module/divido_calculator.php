@@ -9,7 +9,7 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('divido_calculator', $this->request->post);
+			$this->model_setting_setting->editSetting('module', 'divido_calculator', $this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}

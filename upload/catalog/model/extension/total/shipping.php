@@ -6,7 +6,7 @@ class ModelExtensionTotalShipping extends Model {
 				'code'       => 'shipping',
 				'title'      => $this->session->data['shipping_method']['title'],
 				'value'      => $this->session->data['shipping_method']['cost'],
-				'sort_order' => $this->config->get('shipping_sort_order')
+				'sort_order' => $this->config->get('total_shipping_sort_order')
 			);
 
 			if ($this->session->data['shipping_method']['tax_class_id']) {

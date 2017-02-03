@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionTotalShipping extends Controller {
 	public function index() {
-		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
+		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('extension/total/shipping');
 
 			$data['heading_title'] = $this->language->get('heading_title');

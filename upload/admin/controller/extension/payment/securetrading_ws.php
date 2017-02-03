@@ -13,7 +13,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			$this->request->post['payment_securetrading_ws_site_reference'] = trim($this->request->post['payment_securetrading_ws_site_reference']);
 			$this->request->post['payment_securetrading_ws_username'] = trim($this->request->post['payment_securetrading_ws_username']);
 
-			$this->model_setting_setting->editSetting('securetrading_ws', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'securetrading_ws', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

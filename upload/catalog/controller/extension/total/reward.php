@@ -11,7 +11,7 @@ class ControllerExtensionTotalReward extends Controller {
 			}
 		}
 
-		if ($points && $points_total && $this->config->get('reward_status')) {
+		if ($points && $points_total && $this->config->get('total_reward_status')) {
 			$this->load->language('extension/total/reward');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);

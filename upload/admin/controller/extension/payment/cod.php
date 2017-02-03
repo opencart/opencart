@@ -10,7 +10,7 @@ class ControllerExtensionPaymentCod extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('cod', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'cod', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

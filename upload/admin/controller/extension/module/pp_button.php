@@ -8,7 +8,7 @@ class ControllerExtensionModulePPButton extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_button', $this->request->post);
+			$this->model_setting_setting->editSetting('module', 'pp_button', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

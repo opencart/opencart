@@ -11,7 +11,7 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->request->post['payment_securetrading_pp_site_reference'] = trim($this->request->post['payment_securetrading_pp_site_reference']);
 
-			$this->model_setting_setting->editSetting('securetrading_pp', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'securetrading_pp', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

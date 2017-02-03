@@ -11,7 +11,7 @@ class ControllerExtensionModuleBanner extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!isset($this->request->get['module_id'])) {
-				$this->model_extension_module->addModule('banner', $this->request->post);
+				$this->model_extension_module->addModule('module', 'banner', $this->request->post);
 			} else {
 				$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 			}

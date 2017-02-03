@@ -134,7 +134,7 @@ class ControllerCheckoutCart extends Controller {
 						'week'       => $this->language->get('text_week'),
 						'semi_month' => $this->language->get('text_semi_month'),
 						'month'      => $this->language->get('text_month'),
-						'year'       => $this->language->get('text_year'),
+						'year'       => $this->language->get('text_year')
 					);
 
 					if ($product['recurring']['trial']) {

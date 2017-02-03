@@ -10,7 +10,7 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('low_order_fee', $this->request->post);
+			$this->model_setting_setting->editSetting('total', 'low_order_fee', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -62,38 +62,38 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['low_order_fee_total'])) {
-			$data['low_order_fee_total'] = $this->request->post['low_order_fee_total'];
+		if (isset($this->request->post['total_low_order_fee_total'])) {
+			$data['total_low_order_fee_total'] = $this->request->post['total_low_order_fee_total'];
 		} else {
-			$data['low_order_fee_total'] = $this->config->get('low_order_fee_total');
+			$data['total_low_order_fee_total'] = $this->config->get('total_low_order_fee_total');
 		}
 
-		if (isset($this->request->post['low_order_fee_fee'])) {
-			$data['low_order_fee_fee'] = $this->request->post['low_order_fee_fee'];
+		if (isset($this->request->post['total_low_order_fee_fee'])) {
+			$data['total_low_order_fee_fee'] = $this->request->post['total_low_order_fee_fee'];
 		} else {
-			$data['low_order_fee_fee'] = $this->config->get('low_order_fee_fee');
+			$data['total_low_order_fee_fee'] = $this->config->get('total_low_order_fee_fee');
 		}
 
-		if (isset($this->request->post['low_order_fee_tax_class_id'])) {
-			$data['low_order_fee_tax_class_id'] = $this->request->post['low_order_fee_tax_class_id'];
+		if (isset($this->request->post['total_low_order_fee_tax_class_id'])) {
+			$data['total_low_order_fee_tax_class_id'] = $this->request->post['total_low_order_fee_tax_class_id'];
 		} else {
-			$data['low_order_fee_tax_class_id'] = $this->config->get('low_order_fee_tax_class_id');
+			$data['total_low_order_fee_tax_class_id'] = $this->config->get('total_low_order_fee_tax_class_id');
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['low_order_fee_status'])) {
-			$data['low_order_fee_status'] = $this->request->post['low_order_fee_status'];
+		if (isset($this->request->post['total_low_order_fee_status'])) {
+			$data['total_low_order_fee_status'] = $this->request->post['total_low_order_fee_status'];
 		} else {
-			$data['low_order_fee_status'] = $this->config->get('low_order_fee_status');
+			$data['total_low_order_fee_status'] = $this->config->get('total_low_order_fee_status');
 		}
 
-		if (isset($this->request->post['low_order_fee_sort_order'])) {
-			$data['low_order_fee_sort_order'] = $this->request->post['low_order_fee_sort_order'];
+		if (isset($this->request->post['total_low_order_fee_sort_order'])) {
+			$data['total_low_order_fee_sort_order'] = $this->request->post['total_low_order_fee_sort_order'];
 		} else {
-			$data['low_order_fee_sort_order'] = $this->config->get('low_order_fee_sort_order');
+			$data['total_low_order_fee_sort_order'] = $this->config->get('total_low_order_fee_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

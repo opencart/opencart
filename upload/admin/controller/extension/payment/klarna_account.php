@@ -26,7 +26,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				'klarna_account_status'   => $status
 			);
 
-			$this->model_setting_setting->editSetting('klarna_account', array_merge($this->request->post, $klarna_data));
+			$this->model_setting_setting->editSetting('payment', 'klarna_account', array_merge($this->request->post, $klarna_data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

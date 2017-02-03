@@ -10,7 +10,7 @@ class ControllerExtensionTotalShipping extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('shipping', $this->request->post);
+			$this->model_setting_setting->editSetting('total', 'shipping', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -57,22 +57,22 @@ class ControllerExtensionTotalShipping extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['shipping_estimator'])) {
-			$data['shipping_estimator'] = $this->request->post['shipping_estimator'];
+		if (isset($this->request->post['total_shipping_estimator'])) {
+			$data['total_shipping_estimator'] = $this->request->post['total_shipping_estimator'];
 		} else {
-			$data['shipping_estimator'] = $this->config->get('shipping_estimator');
+			$data['total_shipping_estimator'] = $this->config->get('total_shipping_estimator');
 		}
 
-		if (isset($this->request->post['shipping_status'])) {
-			$data['shipping_status'] = $this->request->post['shipping_status'];
+		if (isset($this->request->post['total_shipping_status'])) {
+			$data['total_shipping_status'] = $this->request->post['total_shipping_status'];
 		} else {
-			$data['shipping_status'] = $this->config->get('shipping_status');
+			$data['total_shipping_status'] = $this->config->get('total_shipping_status');
 		}
 
-		if (isset($this->request->post['shipping_sort_order'])) {
-			$data['shipping_sort_order'] = $this->request->post['shipping_sort_order'];
+		if (isset($this->request->post['total_shipping_sort_order'])) {
+			$data['total_shipping_sort_order'] = $this->request->post['total_shipping_sort_order'];
 		} else {
-			$data['shipping_sort_order'] = $this->config->get('shipping_sort_order');
+			$data['total_shipping_sort_order'] = $this->config->get('total_shipping_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

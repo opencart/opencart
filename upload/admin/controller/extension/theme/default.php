@@ -3,14 +3,14 @@ class ControllerExtensionThemeThemeDefault extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/theme/theme_default');
+		$this->load->language('extension/theme/default');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('theme_default', $this->request->post, $this->request->get['store_id']);
+			$this->model_setting_setting->editSetting('theme', 'default', $this->request->post, $this->request->get['store_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -142,15 +142,15 @@ class ControllerExtensionThemeThemeDefault extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
+			'href' => $this->url->link('extension/theme/default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/theme/theme_default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
+		$data['action'] = $this->url->link('extension/theme/default', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=theme', true);
 
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get['store_id']);
+			$setting_info = $this->model_setting_setting->getSetting('default', $this->request->get['store_id']);
 		}
 		
 		if (isset($this->request->post['theme_default_directory'])) {

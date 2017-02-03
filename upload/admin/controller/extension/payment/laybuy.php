@@ -14,7 +14,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			unset($this->request->post['laybuy_cron_url'], $this->request->post['laybuy_cron_time']);
 
-			$this->model_setting_setting->editSetting('laybuy', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'laybuy', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -10,7 +10,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('klarna_checkout', $this->request->post);
+			$this->model_setting_setting->editSetting('payment', 'klarna_checkout', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

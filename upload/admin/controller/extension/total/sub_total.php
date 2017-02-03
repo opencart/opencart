@@ -10,7 +10,7 @@ class ControllerExtensionTotalSubTotal extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('sub_total', $this->request->post);
+			$this->model_setting_setting->editSetting('total', 'sub_total', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -56,10 +56,10 @@ class ControllerExtensionTotalSubTotal extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
-		if (isset($this->request->post['sub_total_status'])) {
-			$data['sub_total_status'] = $this->request->post['sub_total_status'];
+		if (isset($this->request->post['total_sub_total_status'])) {
+			$data['total_sub_total_status'] = $this->request->post['total_sub_total_status'];
 		} else {
-			$data['sub_total_status'] = $this->config->get('sub_total_status');
+			$data['total_sub_total_status'] = $this->config->get('total_sub_total_status');
 		}
 
 		if (isset($this->request->post['sub_total_sort_order'])) {

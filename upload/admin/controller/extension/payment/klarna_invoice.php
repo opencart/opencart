@@ -25,7 +25,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 				'klarna_invoice_status'   => $status
 			);
 
-			$this->model_setting_setting->editSetting('klarna_invoice', array_merge($this->request->post, $klarna_data));
+			$this->model_setting_setting->editSetting('payment', 'klarna_invoice', array_merge($this->request->post, $klarna_data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -5,6 +5,12 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
+  <?php if ($error_csrf_token) { ?>
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation-circle"></i> <?php echo $error_csrf_token; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  <?php } ?>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
@@ -37,6 +43,7 @@
             </div>
           </div>
         </fieldset>
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>" id="input-csrf-token" class="form-control" />
         <div class="buttons clearfix">
           <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
           <div class="pull-right">

@@ -73,6 +73,12 @@ class ControllerAccountEdit extends Controller {
 		$data['button_back'] = $this->language->get('button_back');
 		$data['button_upload'] = $this->language->get('button_upload');
 
+		if (isset($this->error['csrf_token'])) {
+			$data['error_csrf_token'] = $this->error['csrf_token'];
+		} else {
+			$data['error_csrf_token'] = '';
+		}
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -176,11 +182,16 @@ class ControllerAccountEdit extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		$data['csrf_token'] = $this->session->data['csrf_token'];
 
 		$this->response->setOutput($this->load->view('account/edit', $data));
 	}
 
 	protected function validate() {
+		if ($this->request->post['csrf_token'] != $this->session->data['csrf_token']) {
+			$this->error['csrf_token'] = $this->language->get('error_csrf_token');
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

@@ -34,9 +34,9 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
             <div class="col-sm-10">
-              <select name="cod_order_status_id" id="input-order-status" class="form-control">
+              <select name="payment_cod_order_status_id" id="input-order-status" class="form-control">
                 {% for order_status in order_statuses %}
-                {% if order_status.order_status_id == cod_order_status_id %}
+                {% if order_status.order_status_id == payment_cod_order_status_id %}
                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                 {% else %}
                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -48,10 +48,10 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="cod_geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="payment_cod_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                {% if geo_zone.geo_zone_id == cod_geo_zone_id %}
+                {% if geo_zone.geo_zone_id == payment_cod_geo_zone_id %}
                 <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                 {% else %}
                 <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -63,8 +63,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="cod_status" id="input-status" class="form-control">
-                {% if cod_status %}
+              <select name="payment_cod_status" id="input-status" class="form-control">
+                {% if payment_cod_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -77,7 +77,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="cod_sort_order" value="{{ cod_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="payment_cod_sort_order" value="{{ payment_cod_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

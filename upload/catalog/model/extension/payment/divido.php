@@ -227,13 +227,13 @@ class ModelExtensionPaymentDivido extends Model {
 		$results = $this->model_extension_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 		}
 
 		array_multisort($sort_order, SORT_ASC, $results);
 
 		foreach ($results as $result) {
-			if ($this->config->get($result['code'] . '_status')) {
+			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/total/' . $result['code']);
 
 				// We have to put the totals in an array so that they pass by reference.

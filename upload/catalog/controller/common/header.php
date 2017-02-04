@@ -9,8 +9,8 @@ class ControllerCommonHeader extends Controller {
 		$analytics = $this->model_extension_extension->getExtensions('analytics');
 
 		foreach ($analytics as $analytic) {
-			if ($this->config->get($analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('extension/analytics/' . $analytic['code'], $this->config->get($analytic['code'] . '_status'));
+			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
+				$data['analytics'][] = $this->load->controller('extension/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
 			}
 		}
 

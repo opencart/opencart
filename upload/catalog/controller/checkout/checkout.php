@@ -32,7 +32,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		// Required by klarna
-		if ($this->config->get('klarna_account') || $this->config->get('klarna_invoice')) {
+		if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {
 			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
 		}
 

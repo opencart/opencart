@@ -561,7 +561,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				if (!empty($results)) {
 					foreach ($results as $result) {
-						if ($this->config->get($result['code'] . '_status')) {
+						if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
 							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($shipping_address);
@@ -634,13 +634,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
@@ -683,7 +683,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$results = $this->model_extension_extension->getExtensions('payment');
 
 		foreach ($results as $result) {
-			if ($this->config->get($result['code'] . '_status')) {
+			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/payment/' . $result['code']);
 
 				$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($payment_address, $total);
@@ -825,13 +825,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.

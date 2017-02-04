@@ -12,7 +12,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$status = false;
 
-			foreach ($this->request->post['klarna_invoice'] as $klarna_invoice) {
+			foreach ($this->request->post['payment_klarna_invoice'] as $klarna_invoice) {
 				if ($klarna_invoice['status']) {
 					$status = true;
 
@@ -25,7 +25,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 				'klarna_invoice_status'   => $status
 			);
 
-			$this->model_setting_setting->editSetting('payment', 'klarna_invoice', array_merge($this->request->post, $klarna_data));
+			$this->model_setting_setting->editSetting('payment_klarna_invoice', array_merge($this->request->post, $klarna_data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -135,10 +135,10 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 			'code' => 'FIN'
 		);
 
-		if (isset($this->request->post['klarna_invoice'])) {
-			$data['klarna_invoice'] = $this->request->post['klarna_invoice'];
+		if (isset($this->request->post['payment_klarna_invoice'])) {
+			$data['payment_klarna_invoice'] = $this->request->post['payment_klarna_invoice'];
 		} else {
-			$data['klarna_invoice'] = $this->config->get('klarna_invoice');
+			$data['payment_klarna_invoice'] = $this->config->get('payment_klarna_invoice');
 		}
 
 		$this->load->model('localisation/geo_zone');

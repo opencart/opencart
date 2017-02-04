@@ -133,7 +133,7 @@ class ControllerExtensionTotalShipping extends Controller {
 			$results = $this->model_extension_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);

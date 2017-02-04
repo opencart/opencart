@@ -10,7 +10,7 @@ class ControllerExtensionPaymentPerpetualPayments extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment', 'perpetual_payments', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_perpetual_payments', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

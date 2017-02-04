@@ -14,7 +14,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment', 'amazon_login_pay', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_amazon_login_pay', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -54,7 +54,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_status'] = 1;
-		$this->model_setting_setting->editSetting('feed', 'openbaypro', $settings);
+		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
 		$this->model_extension_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
 
@@ -69,7 +69,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_status'] = 0;
-		$this->model_setting_setting->editSetting('feed', 'openbaypro', $settings);
+		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
 		$this->model_extension_event->deleteEvent('openbay_product_del_after');
 		$this->model_extension_event->deleteEvent('openbay_product_edit_after');

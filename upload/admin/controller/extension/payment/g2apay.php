@@ -12,7 +12,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment', 'g2apay', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_g2apay', $this->request->post);
 
 			$this->session->data['complete'] = $this->language->get('text_complete');
 

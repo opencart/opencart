@@ -261,7 +261,7 @@ class ModelCheckoutOrder extends Model {
 				$extensions = $this->model_extension_extension->getExtensions('fraud');
 
 				foreach ($extensions as $extension) {
-					if ($this->config->get($extension['code'] . '_status')) {
+					if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
 						$this->load->model('extension/fraud/' . $extension['code']);
 
 						$fraud_status_id = $this->{'model_extension_fraud_' . $extension['code']}->check($order_info);

@@ -10,7 +10,7 @@ class ControllerExtensionPaymentCod extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment', 'cod', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_cod', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -68,36 +68,36 @@ class ControllerExtensionPaymentCod extends Controller {
 			$data['payment_cod_total'] = $this->config->get('payment_cod_total');
 		}
 
-		if (isset($this->request->post['cod_order_status_id'])) {
-			$data['cod_order_status_id'] = $this->request->post['cod_order_status_id'];
+		if (isset($this->request->post['payment_cod_order_status_id'])) {
+			$data['payment_cod_order_status_id'] = $this->request->post['payment_cod_order_status_id'];
 		} else {
-			$data['cod_order_status_id'] = $this->config->get('cod_order_status_id');
+			$data['payment_cod_order_status_id'] = $this->config->get('payment_cod_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['cod_geo_zone_id'])) {
-			$data['cod_geo_zone_id'] = $this->request->post['cod_geo_zone_id'];
+		if (isset($this->request->post['payment_cod_geo_zone_id'])) {
+			$data['payment_cod_geo_zone_id'] = $this->request->post['payment_cod_geo_zone_id'];
 		} else {
-			$data['cod_geo_zone_id'] = $this->config->get('cod_geo_zone_id');
+			$data['payment_cod_geo_zone_id'] = $this->config->get('payment_cod_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['cod_status'])) {
-			$data['cod_status'] = $this->request->post['cod_status'];
+		if (isset($this->request->post['payment_cod_status'])) {
+			$data['payment_cod_status'] = $this->request->post['payment_cod_status'];
 		} else {
-			$data['cod_status'] = $this->config->get('cod_status');
+			$data['payment_cod_status'] = $this->config->get('payment_cod_status');
 		}
 
-		if (isset($this->request->post['cod_sort_order'])) {
-			$data['cod_sort_order'] = $this->request->post['cod_sort_order'];
+		if (isset($this->request->post['payment_cod_sort_order'])) {
+			$data['payment_cod_sort_order'] = $this->request->post['payment_cod_sort_order'];
 		} else {
-			$data['cod_sort_order'] = $this->config->get('cod_sort_order');
+			$data['payment_cod_sort_order'] = $this->config->get('payment_cod_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

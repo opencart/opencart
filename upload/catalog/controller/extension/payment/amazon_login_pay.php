@@ -195,7 +195,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 				$code = $value['key'];
 			}
 
-			$sort_order[$key] = $this->config->get($code . '_sort_order');
+			$sort_order[$key] = $this->config->get('total_' . $code . '_sort_order');
 		}
 
 		array_multisort($sort_order, SORT_ASC, $results);
@@ -207,7 +207,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 				$code = $result['key'];
 			}
 
-			if ($this->config->get($code . '_status')) {
+			if ($this->config->get('total_' . $code . '_status')) {
 				$this->load->model('extension/total/' . $code);
 
 				// We have to put the totals in an array so that they pass by reference.
@@ -729,7 +729,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 					$code = $result['key'];
 				}
 
-				if ($this->config->get($code . '_status')) {
+				if ($this->config->get('shipping_' . $code . '_status')) {
 					$this->load->model('extension/shipping/' . $code);
 
 					$quote = $this->{'model_extension_shipping_' . $code}->getQuote($address);

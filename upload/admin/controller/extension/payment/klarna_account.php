@@ -13,7 +13,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$status = false;
 
-			foreach ($this->request->post['klarna_account'] as $klarna_account) {
+			foreach ($this->request->post['payment_klarna_account_'] as $klarna_account) {
 				if ($klarna_account['status']) {
 					$status = true;
 
@@ -26,7 +26,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				'klarna_account_status'   => $status
 			);
 
-			$this->model_setting_setting->editSetting('payment', 'klarna_account', array_merge($this->request->post, $klarna_data));
+			$this->model_setting_setting->editSetting('payment_klarna_account', array_merge($this->request->post, $klarna_data));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -136,10 +136,10 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			'code' => 'FIN'
 		);
 
-		if (isset($this->request->post['klarna_account'])) {
-			$data['klarna_account'] = $this->request->post['klarna_account'];
+		if (isset($this->request->post['payment_klarna_account'])) {
+			$data['payment_klarna_account'] = $this->request->post['payment_klarna_account'];
 		} else {
-			$data['klarna_account'] = $this->config->get('klarna_account');
+			$data['payment_klarna_account'] = $this->config->get('payment_klarna_account');
 		}
 
 		$this->load->model('localisation/geo_zone');

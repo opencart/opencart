@@ -47,25 +47,25 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-merchant{{ country.code }}"><span data-toggle="tooltip" title="{{ help_merchant }}">{{ entry_merchant }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_invoice[{{ country.code }}][merchant]" value="{{ klarna_invoice[country.code] ? klarna_invoice[country.code].merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant{{ country.code }}" class="form-control" />
+                      <input type="text" name="payment_klarna_invoice[{{ country.code }}][merchant]" value="{{ payment_klarna_invoice[country.code] ? payment_klarna_invoice[country.code].merchant }}" placeholder="{{ entry_merchant }}" id="input-merchant{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-secret{{ country.code }}"><span data-toggle="tooltip" title="{{ help_secret }}">{{ entry_secret }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_invoice[{{ country.code }}][secret]" value="{{ klarna_invoice[country.code] ? klarna_invoice[country.code].secret }}" placeholder="{{ entry_secret }}" id="input-secret{{ country.code }}" class="form-control" />
+                      <input type="text" name="payment_klarna_invoice[{{ country.code }}][secret]" value="{{ payment_klarna_invoice[country.code] ? payment_klarna_invoice[country.code].secret }}" placeholder="{{ entry_secret }}" id="input-secret{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-server{{ country.code }}">{{ entry_server }}</label>
                     <div class="col-sm-10">
-                      <select name="klarna_invoice[{{ country.code }}][server]" id="input-server{{ country.code }}" class="form-control">
-                        {% if klarna_invoice[country.code] is defined and klarna_invoice[country.code].server == 'live' %}
+                      <select name="payment_klarna_invoice[{{ country.code }}][server]" id="input-server{{ country.code }}" class="form-control">
+                        {% if payment_klarna_invoice[country.code] is defined and payment_klarna_invoice[country.code].server == 'live' %}
                         <option value="live" selected="selected">{{ text_live }}</option>
                         {% else %}
                         <option value="live">{{ text_live }}</option>
                         {% endif %}
-                        {% if klarna_invoice[country.code] is defined and klarna_invoice[country.code].server == 'beta' %}
+                        {% if payment_klarna_invoice[country.code] is defined and payment_klarna_invoice[country.code].server == 'beta' %}
                         <option value="beta" selected="selected">{{ text_beta }}</option>
                         {% else %}
                         <option value="beta">{{ text_beta }}</option>
@@ -76,15 +76,15 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-total{{ country.code }}"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_invoice[{{ country.code }}][total]" value="{{ klarna_invoice[country.code] ? klarna_invoice[country.code].total }}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
+                      <input type="text" name="payment_klarna_invoice[{{ country.code }}][total]" value="{{ payment_klarna_invoice[country.code] ? payment_klarna_invoice[country.code].total }}" placeholder="{{ entry_total }}" id="input-total{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-pending-status{{ country.code }}">{{ entry_pending_status }}</label>
                     <div class="col-sm-10">
-                      <select name="klarna_invoice[{{ country.code }}][pending_status_id]" id="input-pending-status{{ country.code }}" class="form-control">
+                      <select name="payment_klarna_invoice[{{ country.code }}][pending_status_id]" id="input-pending-status{{ country.code }}" class="form-control">
                         {% for order_status in order_statuses %}
-                        {% if klarna_invoice[country.code] is defined and order_status.order_status_id == klarna_invoice[country.code].pending_status_id %}
+                        {% if payment_klarna_invoice[country.code] is defined and order_status.order_status_id == payment_klarna_invoice[country.code].pending_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                         {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -96,9 +96,9 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-accepted-status{{ country.code }}">{{ entry_accepted_status }}</label>
                     <div class="col-sm-10">
-                      <select name="klarna_invoice[{{ country.code }}][accepted_status_id]" id="input-accepted-status{{ country.code }}" class="form-control">
+                      <select name="payment_klarna_invoice[{{ country.code }}][accepted_status_id]" id="input-accepted-status{{ country.code }}" class="form-control">
                         {% for order_status in order_statuses %}
-                        {% if klarna_invoice[country.code] is defined and order_status.order_status_id == klarna_invoice[country.code].accepted_status_id %}
+                        {% if payment_klarna_invoice[country.code] is defined and order_status.order_status_id == payment_klarna_invoice[country.code].accepted_status_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                         {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -110,10 +110,10 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-geo-zone{{ country.code }}">{{ entry_geo_zone }}</label>
                     <div class="col-sm-10">
-                      <select name="klarna_invoice[{{ country.code }}][geo_zone_id]" id="input-geo-zone{{ country.code }}" class="form-control">
+                      <select name="payment_klarna_invoice[{{ country.code }}][geo_zone_id]" id="input-geo-zone{{ country.code }}" class="form-control">
                         <option value="0">{{ text_all_zones }}</option>
                         {% for geo_zone in geo_zones %}
-                        {% if klarna_invoice[country.code] is defined and geo_zone.geo_zone_id == klarna_invoice[country.code].geo_zone_id %}
+                        {% if payment_klarna_invoice[country.code] is defined and geo_zone.geo_zone_id == payment_klarna_invoice[country.code].geo_zone_id %}
                         <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                         {% else %}
                         <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -125,8 +125,8 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-status{{ country.code }}">{{ entry_status }}</label>
                     <div class="col-sm-10">
-                      <select name="klarna_invoice[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
-                        {% if klarna_invoice[country.code] and klarna_invoice[country.code].status %}
+                      <select name="payment_klarna_invoice[{{ country.code }}][status]" id="input-status{{ country.code }}" class="form-control">
+                        {% if payment_klarna_invoice[country.code] and payment_klarna_invoice[country.code].status %}
                         <option value="1" selected="selected">{{ text_enabled }}</option>
                         <option value="0">{{ text_disabled }}</option>
                         {% else %}
@@ -139,7 +139,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-sort-order{{ country.code }}">{{ entry_sort_order }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="klarna_invoice[{{ country.code }}][sort_order]" value="{{ klarna_invoice[country.code] ? klarna_invoice[country.code].sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
+                      <input type="text" name="payment_klarna_invoice[{{ country.code }}][sort_order]" value="{{ payment_klarna_invoice[country.code] ? payment_klarna_invoice[country.code].sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order{{ country.code }}" class="form-control" />
                     </div>
                   </div>
                 </div>

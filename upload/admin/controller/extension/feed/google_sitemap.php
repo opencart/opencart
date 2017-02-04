@@ -10,7 +10,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('feed', 'google_sitemap', $this->request->post);
+			$this->model_setting_setting->editSetting('feed_google_sitemap', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

@@ -384,7 +384,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$results = $this->model_extension_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 		}
 
 		array_multisort($sort_order, SORT_ASC, $results);
@@ -505,7 +505,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 			}
 
 			array_multisort($sort_order, SORT_ASC, $results);
@@ -694,7 +694,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 					$results = $this->model_extension_extension->getExtensions('shipping');
 
 					foreach ($results as $result) {
-						if ($this->config->get($result['code'] . '_status')) {
+						if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 							$this->load->model('extension/shipping/' . $result['code']);
 
 							$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
@@ -1410,7 +1410,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$results = $this->model_extension_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
+				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 					$this->load->model('extension/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);

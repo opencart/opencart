@@ -11,7 +11,7 @@ class ControllerExtensionModuleEbayListing extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('module', 'ebay_listing', $this->request->post);
+			$this->model_setting_setting->editSetting('module_ebay_listing', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

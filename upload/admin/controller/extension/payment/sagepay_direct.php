@@ -10,7 +10,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment', 'sagepay_direct', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_sagepay_direct', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

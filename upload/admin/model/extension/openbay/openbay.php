@@ -247,7 +247,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 		} else {
 			$settings = $this->model_setting_setting->getSetting('openbay');
 			$settings['openbay_version'] = $data['version'];
-			$this->model_setting_setting->editSetting('feed', 'openbay', $settings);
+			$this->model_setting_setting->editSetting('feed_openbay', $settings);
 			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => $this->language->get('text_updated_ok') . $data['version']);
 		}
 	}
@@ -448,7 +448,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 					$openbay_settings = $this->model_setting_setting->getSetting('openbay');
 					$openbay_settings['openbay_version'] = $files['version'];
-					$this->model_setting_setting->editSetting('feed', 'openbay', $openbay_settings);
+					$this->model_setting_setting->editSetting('feed_openbay', $openbay_settings);
 
 					@ftp_close($connection);
 

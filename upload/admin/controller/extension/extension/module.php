@@ -138,7 +138,7 @@ class ControllerExtensionExtensionModule extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/module,module}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/module/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

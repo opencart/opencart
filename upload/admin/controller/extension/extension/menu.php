@@ -136,7 +136,7 @@ class ControllerExtensionExtensionMenu extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/menu,menu}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/menu/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

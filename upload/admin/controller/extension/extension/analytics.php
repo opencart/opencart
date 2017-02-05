@@ -112,14 +112,14 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->link('extension/analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
-					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+					'status' => $this->config->get('analytics_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);
 				
 				foreach ($stores as $store) {
 					$store_data[] = array(
 						'name'   => $store['name'],
 						'edit'   => $this->url->link('extension/analytics/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
-						'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+						'status' => $this->model_setting_setting->getSettingValue('analytics_' . $extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					);
 				}
 

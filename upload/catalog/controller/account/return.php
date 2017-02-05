@@ -503,7 +503,7 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
+		if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
 			$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
 		} else {
 			$data['captcha'] = '';
@@ -574,7 +574,7 @@ class ControllerAccountReturn extends Controller {
 			$this->error['reason'] = $this->language->get('error_reason');
 		}
 
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
+		if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
 			$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
 
 			if ($captcha) {

@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
+class ControllerExtensionCaptchaGoogle extends Controller {
     public function index($error = array()) {
-        $this->load->language('extension/captcha/google_captcha');
+        $this->load->language('extension/captcha/google');
 
 		$data['text_captcha'] = $this->language->get('text_captcha');
 
@@ -17,12 +17,12 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 
         $data['route'] = $this->request->get['route']; 
 
-		return $this->load->view('extension/captcha/google_captcha', $data);
+		return $this->load->view('extension/captcha/google', $data);
     }
 
     public function validate() {
 		if (empty($this->session->data['gcapcha'])) {
-			$this->load->language('extension/captcha/google_captcha');
+			$this->load->language('extension/captcha/google');
 
 			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('captcha_google_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
 	

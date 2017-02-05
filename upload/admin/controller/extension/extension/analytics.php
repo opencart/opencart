@@ -98,7 +98,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/analytics,analytics}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

@@ -89,7 +89,7 @@ class ControllerExtensionExtensionFraud extends Controller {
 		$data['extensions'] = array();
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/{extension/fraud,fraud}/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

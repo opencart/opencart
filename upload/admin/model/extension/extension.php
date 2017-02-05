@@ -22,7 +22,7 @@ class ModelExtensionExtension extends Model {
 
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
 	}	
 	
 	public function addPath($extension_download_id, $path) {

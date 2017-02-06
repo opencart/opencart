@@ -322,37 +322,37 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
-			$filter_order_id = null;
+			$filter_order_id = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = null;
+			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_dp_percent'])) {
 			$filter_dp_percent = $this->request->get['filter_dp_percent'];
 		} else {
-			$filter_dp_percent = null;
+			$filter_dp_percent = '';
 		}
 
 		if (isset($this->request->get['filter_months'])) {
 			$filter_months = $this->request->get['filter_months'];
 		} else {
-			$filter_months = null;
+			$filter_months = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
-			$filter_status = null;
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
-			$filter_date_added = null;
+			$filter_date_added = '';
 		}
 
 		if (isset($this->request->get['sort'])) {

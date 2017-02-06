@@ -1321,7 +1321,7 @@ class ControllerSaleOrder extends Controller {
 				if (is_file(DIR_CATALOG . 'controller/extension/payment/' . $order_info['payment_code'] . '.php')) {
 					$content = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/order');
 				} else {
-					$content = null;
+					$content = '';
 				}
 
 				if ($content) {

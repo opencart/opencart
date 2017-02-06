@@ -65,13 +65,13 @@ class ControllerToolUpload extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
-			$filter_name = null;
+			$filter_name = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
-			$filter_date_added = null;
+			$filter_date_added = '';
 		}
 
 		if (isset($this->request->get['sort'])) {

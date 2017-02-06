@@ -23,13 +23,36 @@ final class Twig {
 	
 	public function render($template) {
 		try {
-			// load template
 			$template = $this->twig->loadTemplate($template . '.twig');
-			
+		} catch(\Exception $exception) {
+			echo $template;
+			echo $exception->getMessage();
+			die();
+		}
+
+
+		try {
+			// load template
+
 			return $template->render($this->data);
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
+			echo $template;
+			echo $e->getMessage();
+
+			die();
 			trigger_error('Error: Could not load template ' . $template . '!');
-			exit();	
-		}	
+			exit();
+		}
+
+//		} catch(Twig_Error_Loader $e) {
+//				//throw new \Exception('Unable to load template ' . $template);
+//				echo 'Unable to load template ' . $template;
+//		} catch(Twig_Error_Syntax $e) {
+//				//throw new \Exception($e->getMessage());
+//				echo $e->getMessage();
+//		} catch(Twig_Error_Runtime $e) {
+//				//throw new \Exception($e->getMessage());
+//				echo $e->getMessage();
+//		}
 	}	
 }

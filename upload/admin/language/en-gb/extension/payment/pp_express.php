@@ -49,7 +49,7 @@ $_['entry_voided_status']			 = 'Voided Status';
 $_['entry_allow_notes']				 = 'Allow notes';
 $_['entry_colour']	      			 = 'Page background colour';
 $_['entry_logo']					 = 'Logo';
-$_['entry_incontext']				 = 'Use In-Context Checkout';
+$_['entry_incontext']				 = 'Disable In-Context Checkout';
 
 // Tab
 $_['tab_api']				         = 'API Details';

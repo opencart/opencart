@@ -203,10 +203,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['pp_express_debug'] = $this->config->get('pp_express_debug');
 		}
 
-		if (isset($this->request->post['pp_express_incontext'])) {
-			$data['pp_express_incontext'] = $this->request->post['pp_express_incontext'];
+		if (isset($this->request->post['pp_express_incontext_disable'])) {
+			$data['pp_express_incontext_disable'] = $this->request->post['pp_express_incontext_disable'];
 		} else {
-			$data['pp_express_incontext'] = $this->config->get('pp_express_incontext');
+			$data['pp_express_incontext_disable'] = $this->config->get('pp_express_incontext_disable');
 		}
 
 		if (isset($this->request->post['pp_express_currency'])) {

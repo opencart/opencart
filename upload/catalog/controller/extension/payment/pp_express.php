@@ -5,7 +5,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['pp_express_incontext'] = $this->config->get('pp_express_incontext');
+		$data['pp_express_incontext_disable'] = $this->config->get('pp_express_incontext_disable');
 
 		if ($this->config->get('pp_express_test') == 1) {
 			$data['username'] = $this->config->get('pp_express_sandbox_username');

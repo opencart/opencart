@@ -584,31 +584,31 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
-			$filter_order_id = null;
+			$filter_order_id = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = null;
+			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
 			$filter_order_status_id = $this->request->get['filter_order_status_id'];
 		} else {
-			$filter_order_status_id = null;
+			$filter_order_status_id = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
-			$filter_date_added = null;
+			$filter_date_added = '';
 		}
 
 		if (isset($this->request->get['filter_channel'])) {
 			$filter_channel = $this->request->get['filter_channel'];
 		} else {
-			$filter_channel = null;
+			$filter_channel = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -1178,73 +1178,73 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
-			$filter_name = null;
+			$filter_name = '';
 		}
 
 		if (isset($this->request->get['filter_model'])) {
 			$filter_model = $this->request->get['filter_model'];
 		} else {
-			$filter_model = null;
+			$filter_model = '';
 		}
 
 		if (isset($this->request->get['filter_price'])) {
 			$filter_price = $this->request->get['filter_price'];
 		} else {
-			$filter_price = null;
+			$filter_price = '';
 		}
 
 		if (isset($this->request->get['filter_price_to'])) {
 			$filter_price_to = $this->request->get['filter_price_to'];
 		} else {
-			$filter_price_to = null;
+			$filter_price_to = '';
 		}
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$filter_quantity = $this->request->get['filter_quantity'];
 		} else {
-			$filter_quantity = null;
+			$filter_quantity = '';
 		}
 
 		if (isset($this->request->get['filter_quantity_to'])) {
 			$filter_quantity_to = $this->request->get['filter_quantity_to'];
 		} else {
-			$filter_quantity_to = null;
+			$filter_quantity_to = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
-			$filter_status = null;
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['filter_sku'])) {
 			$filter_sku = $this->request->get['filter_sku'];
 		} else {
-			$filter_sku = null;
+			$filter_sku = '';
 		}
 
 		if (isset($this->request->get['filter_desc'])) {
 			$filter_desc = $this->request->get['filter_desc'];
 		} else {
-			$filter_desc = null;
+			$filter_desc = '';
 		}
 
 		if (isset($this->request->get['filter_category'])) {
 			$filter_category = $this->request->get['filter_category'];
 		} else {
-			$filter_category = null;
+			$filter_category = '';
 		}
 
 		if (isset($this->request->get['filter_manufacturer'])) {
 			$filter_manufacturer = $this->request->get['filter_manufacturer'];
 		} else {
-			$filter_manufacturer = null;
+			$filter_manufacturer = '';
 		}
 
 		if (isset($this->request->get['filter_marketplace'])) {
 			$filter_marketplace = $this->request->get['filter_marketplace'];
 		} else {
-			$filter_marketplace = null;
+			$filter_marketplace = '';
 		}
 
 		if (isset($this->request->get['sort'])) {

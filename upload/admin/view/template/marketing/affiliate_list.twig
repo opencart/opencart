@@ -45,13 +45,13 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_status %}
+                  <option value=""></option>
+                  {% if filter_status == '0' %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if not filter_status %}
+                  {% if filter_status == '1' %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -61,13 +61,13 @@
               <div class="form-group">
                 <label class="control-label" for="input-approved">{{ entry_approved }}</label>
                 <select name="filter_approved" id="input-approved" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_approved %}
+                  <option value=""></option>
+                  {% if filter_approved == '1' %}
                   <option value="1" selected="selected">{{ text_yes }}</option>
                   {% else %}
                   <option value="1">{{ text_yes }}</option>
                   {% endif %}
-                  {% if not filter_approved %}
+                  {% if filter_approved == '0' %}
                   <option value="0" selected="selected">{{ text_no }}</option>
                   {% else %}
                   <option value="0">{{ text_no }}</option>
@@ -181,13 +181,13 @@ $('#button-filter').on('click', function() {
 		
 	var filter_status = $('select[name=\'filter_status\']').val();
 	
-	if (filter_status != '*') {
+	if (filter_status !== '') {
 		url += '&filter_status=' + encodeURIComponent(filter_status); 
 	}	
 	
 	var filter_approved = $('select[name=\'filter_approved\']').val();
 	
-	if (filter_approved != '*') {
+	if (filter_approved !== '') {
 		url += '&filter_approved=' + encodeURIComponent(filter_approved);
 	}	
 	

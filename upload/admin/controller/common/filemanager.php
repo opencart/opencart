@@ -13,7 +13,7 @@ class ControllerCommonFileManager extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = rtrim(str_replace(array('*', '/'), '', $this->request->get['filter_name']), '/');
 		} else {
-			$filter_name = null;
+			$filter_name = '';
 		}
 
 		// Make sure we have the correct directory

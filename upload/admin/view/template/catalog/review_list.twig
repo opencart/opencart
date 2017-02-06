@@ -45,13 +45,13 @@
               <div class="form-group">
                 <label class="control-label" for="input-status">{{ entry_status }}</label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <option value="*"></option>
-                  {% if filter_status %}
+                  <option value=""></option>
+                  {% if filter_status == '1' %}
                   <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                   <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if not filter_status %}
+                  {% if filter_status == '0' %}
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                   <option value="0">{{ text_disabled }}</option>
@@ -155,7 +155,7 @@ $('#button-filter').on('click', function() {
 	
 	var filter_status = $('select[name=\'filter_status\']').val();
 	
-	if (filter_status != '*') {
+	if (filter_status !== '') {
 		url += '&filter_status=' + encodeURIComponent(filter_status); 
 	}		
 			

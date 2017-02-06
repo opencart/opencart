@@ -491,7 +491,8 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 			$this->load->model('extension/module/openstock');
 			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
 
-			$option = null;
+			$option = '';
+			
 			foreach ($option_stocks as $option_iterator) {
 				if ($option_iterator['sku'] === $var) {
 					$option = $option_iterator;
@@ -499,7 +500,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 				}
 			}
 
-			if ($option != null) {
+			if ($option != '') {
 				$defaults['sku'] = $option['sku'];
 				$defaults['quantity'] = $option['stock'];
 				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, '.', '');

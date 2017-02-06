@@ -162,25 +162,25 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['filter_product'])) {
 			$filter_product = $this->request->get['filter_product'];
 		} else {
-			$filter_product = null;
+			$filter_product = '';
 		}
 
 		if (isset($this->request->get['filter_author'])) {
 			$filter_author = $this->request->get['filter_author'];
 		} else {
-			$filter_author = null;
+			$filter_author = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
-			$filter_status = null;
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
-			$filter_date_added = null;
+			$filter_date_added = '';
 		}
 
 		if (isset($this->request->get['order'])) {

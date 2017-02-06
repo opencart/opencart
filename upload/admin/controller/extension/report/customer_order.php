@@ -20,7 +20,7 @@ class ControllerReportCustomerOrder extends Controller {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = null;
+			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {

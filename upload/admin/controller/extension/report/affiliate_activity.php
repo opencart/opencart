@@ -8,13 +8,13 @@ class ControllerReportAffiliateActivity extends Controller {
 		if (isset($this->request->get['filter_affiliate'])) {
 			$filter_affiliate = $this->request->get['filter_affiliate'];
 		} else {
-			$filter_affiliate = null;
+			$filter_affiliate = '';
 		}
 
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];
 		} else {
-			$filter_ip = null;
+			$filter_ip = '';
 		}
 
 		if (isset($this->request->get['filter_date_start'])) {

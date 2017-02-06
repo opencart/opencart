@@ -100,11 +100,11 @@ class ModelCustomerCustomer extends Model {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}
 
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && $data['filter_approved'] !== '') {
 			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
 		}
 
@@ -304,11 +304,11 @@ class ModelCustomerCustomer extends Model {
 			$implode[] = "customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}
 
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && $data['filter_approved'] !== '') {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
 		}
 

@@ -20,19 +20,19 @@ class ControllerReportCustomerSearch extends Controller {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = $this->request->get['filter_keyword'];
 		} else {
-			$filter_keyword = null;
+			$filter_keyword = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = null;
+			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];
 		} else {
-			$filter_ip = null;
+			$filter_ip = '';
 		}
 
 		if (isset($this->request->get['page'])) {

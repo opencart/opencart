@@ -5,7 +5,7 @@
 <script type="text/javascript"><!--
 function getTransaction() {
 	$.ajax({
-		url: 'index.php?route=payment/braintree/getTransaction&token={{ token }}',
+		url: 'index.php?route=extension/payment/braintree/getTransaction&token={{ token }}',
 		dataType: 'html',
 		data: {
 			order_id: '{{ order_id }}'

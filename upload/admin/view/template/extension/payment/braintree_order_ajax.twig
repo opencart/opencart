@@ -45,22 +45,22 @@
 		<td>{{ column_avs_response }}</td>
 		<td>{{ transaction.avs_response }}</td>
   </tr>
-{% if transaction.3ds_status %}
+{% if transaction.threeds_status %}
   <tr>
 		<td>{{ column_3ds_enrolled }}</td>
-		<td>{{ transaction.3ds_enrolled }}</td>
+		<td>{{ transaction.threeds_enrolled }}</td>
   </tr>
   <tr>
 		<td>{{ column_3ds_status }}</td>
-		<td>{{ transaction.3ds_status }}</td>
+		<td>{{ transaction.threeds_status }}</td>
   </tr>
   <tr>
 		<td>{{ column_3ds_shifted }}</td>
-		<td>{{ transaction.3ds_shifted }}</td>
+		<td>{{ transaction.threeds_shifted }}</td>
   </tr>
   <tr>
 		<td>{{ column_3ds_shift_possible }}</td>
-		<td>{{ transaction.3ds_shift_possible }}</td>
+		<td>{{ transaction.threeds_shift_possible }}</td>
   </tr>
 {% endif %}
   <tr>
@@ -180,7 +180,7 @@ $('.button-command').on('click', function() {
 
 	if (confirm(confirm_text)) {
 		$.ajax({
-			url: 'index.php?route=payment/braintree/transactionCommand&token={{ token }}',
+			url: 'index.php?route=extension/payment/braintree/transactionCommand&token={{ token }}',
 			type: 'post',
 			data: {
 				type: type,

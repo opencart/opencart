@@ -1,11 +1,9 @@
 <?php
 class ModelExtensionPaymentBraintree extends Model {
-	private $gateway = null;
-
-	public function generateToken($data) {
+	public function generateToken($gateway, $data) {
 		try {
-			if ($this->gateway != null) {
-				$client_token = $this->gateway->clientToken->generate($data);
+			if ($gateway != null) {
+				$client_token = $gateway->clientToken()->generate($data);
 			} else {
 				$client_token = Braintree_ClientToken::generate($data);
 			}
@@ -18,10 +16,10 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function addTransaction($data) {
+	public function addTransaction($gateway, $data) {
 		try {
-			if ($this->gateway != null) {
-				$transaction = $this->gateway->transaction->sale($data);
+			if ($gateway != null) {
+				$transaction = $gateway->transaction()->sale($data);
 			} else {
 				$transaction = Braintree_Transaction::sale($data);
 			}
@@ -34,10 +32,10 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function getCustomer($customer_id, $log = true) {
+	public function getCustomer($gateway, $customer_id, $log = true) {
 		try {
-			if ($this->gateway != null) {
-				$customer = $this->gateway->customer->find($customer_id);
+			if ($gateway != null) {
+				$customer = $gateway->customer()->find($customer_id);
 			} else {
 				$customer = Braintree_Customer::find($customer_id);
 			}
@@ -52,10 +50,10 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function getPaymentMethod($token) {
+	public function getPaymentMethod($gateway, $token) {
 		try {
-			if ($this->gateway != null) {
-				$payment_method = $this->gateway->paymentMethod->find($token);
+			if ($gateway != null) {
+				$payment_method = $gateway->paymentMethod()->find($token);
 			} else {
 				$payment_method = Braintree_PaymentMethod::find($token);
 			}
@@ -68,10 +66,10 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function addPaymentMethod($data) {
+	public function addPaymentMethod($gateway, $data) {
 		try {
-			if ($this->gateway != null) {
-				$payment_method = $this->gateway->paymentMethod->create($data);
+			if ($gateway != null) {
+				$payment_method = $gateway->paymentMethod()->create($data);
 			} else {
 				$payment_method = Braintree_PaymentMethod::create($data);
 			}
@@ -84,10 +82,10 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function deletePaymentMethod($token) {
+	public function deletePaymentMethod($gateway, $token) {
 		try {
-			if ($this->gateway != null) {
-				$this->gateway->paymentMethod->delete($token);
+			if ($gateway != null) {
+				$gateway->paymentMethod()->delete($token);
 			} else {
 				Braintree_PaymentMethod::delete($token);
 			}
@@ -100,15 +98,15 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function getPaymentMethodNonce($token) {
+	public function getPaymentMethodNonce($gateway, $token) {
 		try {
-			if ($this->gateway != null) {
-				$payment_method = $this->gateway->paymentMethodNonce->find($token);
+			if ($gateway != null) {
+				$response = $gateway->paymentMethodNonce()->find($token);
 			} else {
-				$payment_method = Braintree_PaymentMethodNonce::find($token);
+				$response = Braintree_PaymentMethodNonce::find($token);
 			}
 
-			return $payment_method;
+			return $response;
 		} catch (Exception $e) {
 			$this->log($e->getMessage());
 
@@ -116,15 +114,15 @@ class ModelExtensionPaymentBraintree extends Model {
 		}
 	}
 
-	public function addPaymentMethodNonce($token) {
+	public function createPaymentMethodNonce($gateway, $token) {
 		try {
-			if ($this->gateway != null) {
-				$payment_method = $this->gateway->paymentMethodNonce->create($token);
+			if ($gateway != null) {
+				$response = $gateway->paymentMethodNonce()->create($token);
 			} else {
-				$payment_method = Braintree_PaymentMethodNonce::create($token);
+				$response = Braintree_PaymentMethodNonce::create($token);
 			}
 
-			return $payment_method;
+			return $response;
 		} catch (Exception $e) {
 			$this->log($e->getMessage());
 
@@ -133,20 +131,18 @@ class ModelExtensionPaymentBraintree extends Model {
 	}
 
 	public function setCredentials() {
-		if ($this->config->get('braintree_access_token') != '') {
-			$this->gateway = new Braintree_Gateway([
-				'accessToken' => $this->config->get('braintree_access_token'),
-			]);
-		} else {
-			Braintree_Configuration::environment($this->config->get('braintree_environment'));
-			Braintree_Configuration::merchantId($this->config->get('braintree_merchant_id'));
-			Braintree_Configuration::publicKey($this->config->get('braintree_public_key'));
-			Braintree_Configuration::privateKey($this->config->get('braintree_private_key'));
-		}
+		Braintree_Configuration::environment($this->config->get('braintree_environment'));
+		Braintree_Configuration::merchantId($this->config->get('braintree_merchant_id'));
+		Braintree_Configuration::publicKey($this->config->get('braintree_public_key'));
+		Braintree_Configuration::privateKey($this->config->get('braintree_private_key'));
+	}
+
+	public function setGateway($access_token) {
+		return new Braintree_Gateway(array('accessToken' => $access_token));
 	}
 
 	public function getMethod($address, $total) {
-		$this->load->language('payment/braintree');
+		$this->load->language('extension/payment/braintree');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('braintree_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -157,10 +153,6 @@ class ModelExtensionPaymentBraintree extends Model {
 		} elseif ($query->num_rows) {
 			$status = true;
 		} else {
-			$status = false;
-		}
-
-		if (!in_array($this->currency->getCode(), $this->getSupportedCurrencies())) {
 			$status = false;
 		}
 
@@ -192,9 +184,8 @@ class ModelExtensionPaymentBraintree extends Model {
 
 	public function log($data) {
 		if ($this->config->get('braintree_debug')) {
-			$backtrace = debug_backtrace();
 			$log = new Log('braintree.log');
-			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . print_r($data, true));
+			$log->write(print_r($data, true));
 		}
 	}
 }

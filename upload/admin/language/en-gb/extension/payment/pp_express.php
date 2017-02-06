@@ -11,6 +11,13 @@ $_['text_authorization']			 = 'Authorization';
 $_['text_sale']						 = 'Sale';
 $_['text_signup']                    = 'Sign up for PayPal - save your settings first as this page will be refreshed';
 $_['text_sandbox']                   = 'Sign up for PayPal Sandbox - save your settings first as this page will be refreshed';
+$_['text_configure_live']            = 'Configure Live';
+$_['text_configure_sandbox']         = 'Configure Sandbox';
+$_['text_show_advanced']             = 'Show Advanced';
+$_['text_show_quick_setup']          = 'Show Quick Setup';
+$_['text_quick_setup']             	 = 'Quick setup - Link an existing or create a new PayPal account to start accepting payments in minutes';
+$_['text_paypal_consent']		 	 = 'By using the quick setup tool you allow PayPal to receive information about your store';
+$_['text_success_connect']			 = 'Success: You have connected your PayPal account!';
 
 // Entry
 $_['entry_username']				 = 'API Username';
@@ -42,6 +49,7 @@ $_['entry_voided_status']			 = 'Voided Status';
 $_['entry_allow_notes']				 = 'Allow notes';
 $_['entry_colour']	      			 = 'Page background colour';
 $_['entry_logo']					 = 'Logo';
+$_['entry_incontext']				 = 'Use In-Context Checkout';
 
 // Tab
 $_['tab_api']				         = 'API Details';
@@ -65,3 +73,4 @@ $_['error_sandbox_password']		 = 'API Sandbox Password Required!';
 $_['error_sandbox_signature']		 = 'API Sandbox Signature Required!';
 $_['error_api']						 = 'Paypal Authorization Error';
 $_['error_api_sandbox']				 = 'Paypal Sandbox Authorization Error';
+$_['error_consent']				 	 = 'To use quick setup you need to permit PayPal to use your store information';

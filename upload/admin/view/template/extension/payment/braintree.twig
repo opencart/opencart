@@ -29,21 +29,22 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
-        <div class="row">
-          <div class="col-sm-12" id="bt-connect" style="display: none;"></div>
-        </div>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-braintree" class="form-horizontal">
           <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#tab-setting" data-toggle="tab">{{ tab_setting }}</a></li>
-            <li><a href="#tab-currency" data-toggle="tab">{{ tab_currency }}</a></li>
+            {% if braintree_access_token is empty %}
+              <li><a href="#tab-currency" data-toggle="tab">{{ tab_currency }}</a></li>
+            {% endif %}
 			      <li><a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a></li>
             <li><a href="#tab-3ds" data-toggle="tab">{{ tab_3ds }}</a></li>
+            <li><a href="#tab-vault" data-toggle="tab">{{ tab_vault }}</a></li>
+            <li><a href="#tab-paypal" data-toggle="tab">{{ tab_paypal }}</a></li>
             <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
               {% if braintree_access_token is not empty %}
-                <input type="hidden" name="braintree_auth_token" value="{{ braintree_access_token }}" />
+                <input type="hidden" name="braintree_access_token" value="{{ braintree_access_token }}" />
                 <input type="hidden" name="braintree_refresh_token" value="{{ braintree_refresh_token }}" />
                 <input type="hidden" name="braintree_merchant_id" value="{{ braintree_merchant_id }}" />
                 <input type="hidden" name="braintree_public_key" value="" />
@@ -57,6 +58,10 @@
                   </div>
                 </div>
               {% else %}
+                <div class="form-group">
+                  <label class="col-sm-2">{{ text_braintree_learn }}</label>
+                  <div class="col-sm-10" id="bt-connect"></div>
+                </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                   <div class="col-sm-10">
@@ -92,43 +97,15 @@
               {% endif %}
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-settlement-type"><span data-toggle="tooltip" title="{{ help_settlement_type }}">{{ entry_settlement_type }}</span></label>
+                <label class="col-sm-2 control-label" for="input-settlement-immediate"><span data-toggle="tooltip" title="{{ help_settlement_type }}">{{ entry_settlement_type }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_settlement_type" id="input-settlement-type" class="form-control">
-                    {% if braintree_settlement_type == 'deferred' %}
-					            <option value="immediate">{{ text_immediate }}</option>
-                      <option value="deferred" selected="selected">{{ text_deferred }}</option>
+                  <select name="braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
+                    {% if braintree_settlement_immediate == 1 %}
+					            <option value="1">{{ text_immediate }}</option>
+                      <option value="0" selected="selected">{{ text_deferred }}</option>
                     {% else %}
-					            <option value="immediate" selected="selected">{{ text_immediate }}</option>
-                      <option value="deferred">{{ text_deferred }}</option>
-                    {% endif %}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-integration-type">{{ entry_integration_type }}</label>
-                <div class="col-sm-10">
-                  <select name="braintree_integration_type" id="input-integration-type" class="form-control">
-                    {% if braintree_integration_type == 'hosted' %}
-					            <option value="hosted" selected="selected">{{ text_hosted }}</option>
-                      <option value="dropin">{{ text_dropin }}</option>
-                    {% else %}
-					            <option value="hosted">{{ text_hosted }}</option>
-                      <option value="dropin" selected="selected">{{ text_dropin }}</option>
-                    {% endif %}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-vault"><span data-toggle="tooltip" title="{{ help_vault }}">{{ entry_vault }}</span></label>
-                <div class="col-sm-10">
-                  <select name="braintree_vault" id="input-vault" class="form-control">
-                    {% if braintree_vault %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
+					            <option value="1" selected="selected">{{ text_immediate }}</option>
+                      <option value="0">{{ text_deferred }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -394,7 +371,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-3ds-full-liability-shift">{{ entry_3ds_full_liability_shift }}</label>
+                <label class="col-sm-2 control-label" for="input-3ds-full-liability-shift"><span data-toggle="tooltip" title="{{ help_3ds_full_liability_shift }}">{{ entry_3ds_full_liability_shift }}</span></label>
                 <div class="col-sm-10">
                   <select name="braintree_3ds_full_liability_shift" id="input-3ds-full-liability-shift" class="form-control">
                     {% if braintree_3ds_full_liability_shift == 1 %}
@@ -405,6 +382,108 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-vault">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-vault"><span data-toggle="tooltip" title="{{ help_vault }}">{{ entry_vault }}</span></label>
+                <div class="col-sm-10">
+                  <select name="braintree_vault" id="input-vault" class="form-control">
+                    {% if braintree_vault %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-vault-cvv-3ds"><span data-toggle="tooltip" title="{{ help_vault_cvv_3ds }}">{{ entry_vault_cvv_3ds }}</span></label>
+                <div class="col-sm-10">
+                  <select name="braintree_vault_cvv_3ds" id="input-vault-cvv-3ds" class="form-control">
+                    {% if braintree_vault_cvv_3ds == "cvv" %}
+                      <option value="0">{{ text_disabled }}</option>
+                      <option value="cvv" selected="selected">{{ text_cvv }}</option>
+                      <option value="3ds">{{ text_3ds }}</option>
+                    {% elseif braintree_vault_cvv_3ds == "3ds" %}
+                      <option value="0">{{ text_disabled }}</option>
+                      <option value="cvv">{{ text_cvv }}</option>
+                      <option value="3ds" selected="selected">{{ text_3ds }}</option>
+                    {% else %}
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="cvv">{{ text_cvv }}</option>
+                      <option value="3ds">{{ text_3ds }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-paypal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-option"><span data-toggle="tooltip" title="{{ help_paypal_option }}">{{ entry_paypal_option }}</span></label>
+                <div class="col-sm-10">
+                  <select name="braintree_paypal_option" id="input-vault" class="form-control">
+                    {% if braintree_paypal_option %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-billing-agreement"><span data-toggle="tooltip" title="{{ help_paypal_billing_agreement }}">{{ entry_paypal_billing_agreement }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="braintree_billing_agreement" value="{{ braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
+                    <option value="gold"{% if braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
+                    <option value="blue"{% if braintree_paypal_button_colour == "blue" %} selected="selected"{% endif %}>{{ text_paypal_blue }}</option>
+                    <option value="silver"{% if braintree_paypal_button_colour == "silver" %} selected="selected"{% endif %}>{{ text_paypal_silver }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
+                    <option value="tiny"{% if braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
+                    <option value="small"{% if braintree_paypal_button_size == "small" %} selected="selected"{% endif %}>{{ text_paypal_small }}</option>
+                    <option value="medium"{% if braintree_paypal_button_size == "medium" %} selected="selected"{% endif %}>{{ text_paypal_medium }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
+                    <option value="pill"{% if braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
+                    <option value="rect"{% if braintree_paypal_button_shape == "rect" %} selected="selected"{% endif %}>{{ text_paypal_rectangular }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ text_paypal_preview }}</label>
+                <div class="col-sm-10">
+                  <script src="https://www.paypalobjects.com/api/button.js?"
+                     data-merchant="braintree"
+                     data-id="paypal-button"
+                     data-button="checkout"
+                     data-color="{{ braintree_paypal_button_colour }}"
+                     data-size="{{ braintree_paypal_button_size }}"
+                     data-shape="{{ braintree_paypal_button_shape }}"
+                     data-button_type="submit"
+                     data-button_disabled="true"
+                 ></script>
                 </div>
               </div>
             </div>
@@ -529,10 +608,10 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 
-$('#button-filter').on('click', function(e) {
-	e.preventDefault();
+$('#button-filter').on('click', function(event) {
+	event.preventDefault();
 
-	var url = 'index.php?route=payment/braintree/search&token={{ token }}';
+	var url = 'index.php?route=extension/payment/braintree/search&token={{ token }}';
 
 	var filter_transaction_id = $('input[name=\'filter_transaction_id\']').val();
 
@@ -623,7 +702,7 @@ $('#button-filter').on('click', function(e) {
 				$(json.transactions).each(function(i) {
 					html += '<tr>';
 					html += '<td><a href="#" class="transaction-id" data-id="' + this.transaction_id + '">' + this.transaction_id + '</a></td>';
-					html += '<td>' + this.amount + '</td>';
+					html += '<td>' + this.amount + ' ' + this.currency_iso + '</td>';
 					html += '<td>' + this.status + '</td>';
 					html += '<td>' + this.type + '</td>';
 
@@ -653,15 +732,15 @@ $('#button-filter').on('click', function(e) {
 	});
 });
 
-$(document).on('click', '.transaction-id', function(e) {
-	e.preventDefault();
+$(document).on('click', '.transaction-id', function(event) {
+	event.preventDefault();
 
 	getTransaction($(this).attr('data-id'));
 });
 
 function getTransaction(transaction_id) {
 	$.ajax({
-		url: 'index.php?route=payment/braintree/getTransaction&token={{ token }}',
+		url: 'index.php?route=extension/payment/braintree/getTransaction&token={{ token }}',
 		dataType: 'html',
 		data: {
 			transaction_id: transaction_id
@@ -683,19 +762,17 @@ function getTransaction(transaction_id) {
 
 {% if auth_connect_url %}
   <script src="https://assets.braintreegateway.com/v1/braintree-oauth-connect.js"></script>
-  <script>
-  var connectUrl = '{{ auth_connect_url }}';
-  var partner = new BraintreeOAuthConnect({
-    connectUrl: connectUrl,
-    // the ID of a DOM element, a DOM node, or a jQuery object
-    container: 'bt-connect',
-    onError: function (errorObject) {
-        alert(errorObject.message);
-      console.warn(errorObject.message);
-    }
-  });
+  <script type="text/javascript"><!--
+    var connect_url = '{{ auth_connect_url }}';
+    var partner = new BraintreeOAuthConnect({
+      connectUrl: connect_url,
+      container: 'bt-connect',
+      onError: function (error) {
+        alert(error.message);
+      }
+    });
 
-  $('#bt-connect').show();
-  </script>
+    $('#bt-connect').show();
+  //--></script>
 {% endif %}
 {{ footer }}

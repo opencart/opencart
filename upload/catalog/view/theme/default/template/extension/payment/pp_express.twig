@@ -1,10 +1,27 @@
+{% if pp_express_incontext == 1 %}
+<div class="buttons">
+  <div class="pull-right">
+    <a id="button-confirm" href="{{ continue }}"></a>
+  </div>
+</div>
+<script type="text/javascript"><!--
+window.paypalCheckoutReady = function () {
+  paypal.checkout.setup('{{ username }}', {
+    container: 'button-confirm',
+    environment: 'sandbox'
+  });
+};
+//--></script>
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+{% else %}
 <div class="buttons">
   <div class="pull-right">
     <a href="{{ continue }}" class="btn btn-primary" id="button-confirm" data-loading-text="{{ text_loading }}">{{ button_continue }}</a>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').on('click', function() {
-	$('#button-confirm').button('loading');
-});
+    $('#button-confirm').on('click', function() {
+        $('#button-confirm').button('loading');
+    });
 //--></script>
+{% endif %}

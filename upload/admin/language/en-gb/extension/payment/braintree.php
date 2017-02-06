@@ -12,8 +12,6 @@ $_['text_sandbox']					 = 'Sandbox';
 $_['text_currency']					 = 'Currency';
 $_['text_immediate']				 = 'Immediate';
 $_['text_deferred']					 = 'Deferred';
-$_['text_hosted']					 = 'Hosted Fields';
-$_['text_dropin']					 = 'Drop-in UI';
 $_['text_merchant_account_id']		 = 'Merchant Account ID (Leave blank to use default merchant account)';
 $_['text_payment_info']				 = 'Payment information';
 $_['text_confirm_void']				 = 'Are you sure you want to void this transaction?';
@@ -34,7 +32,19 @@ $_['text_yes']						 = 'Yes';
 $_['text_no']						 = 'No';
 $_['text_no_refund']				 = 'No refund history';
 $_['text_app_connected']		     = 'Module is connected via Braintree auth';
-$_['text_braintree']        		 = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><img width="100" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/paypal-braintree.png" alt="PayPal powered by Braintree" style="border: 1px solid #EEEEEE;"></a>';
+$_['text_braintree']        		 = '<img width="100" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/paypal-braintree.png" alt="PayPal powered by Braintree" style="border: 1px solid #EEEEEE;">';
+$_['text_paypal_gold'] 				 = 'Gold';
+$_['text_paypal_blue'] 				 = 'Blue';
+$_['text_paypal_silver'] 			 = 'Silver';
+$_['text_paypal_tiny']		 		 = 'Tiny';
+$_['text_paypal_small']		 		 = 'Small';
+$_['text_paypal_medium']		 	 = 'Medium';
+$_['text_paypal_pill']		 		 = 'Pill';
+$_['text_paypal_rectangular']		 = 'Rectangular';
+$_['text_paypal_preview']		 	 = 'Button preview';
+$_['text_braintree_learn']		 	 = 'To start accepting credit/debit cards and PayPal, click Connect with Braintree. <a href="https://www.braintreepayments.com/partners/learn-more" target="_blank">Learn more</a>';
+$_['text_3ds']		 	 			 = '3D Secure';
+$_['text_cvv']		 	 			 = 'CVV Number';
 
 // Column
 $_['column_void']					 = 'Void';
@@ -70,8 +80,8 @@ $_['entry_public_key']				 = 'Public Key';
 $_['entry_private_key']				 = 'Private Key';
 $_['entry_environment']				 = 'Environment';
 $_['entry_settlement_type']			 = 'Settlement Type';
-$_['entry_integration_type']		 = 'Integration Type';
-$_['entry_vault']					 = 'Allow Vaulted Cards?';
+$_['entry_vault']					 = 'Enable vault';
+$_['entry_vault_cvv_3ds']			 = 'Require CVV2 or 3D secure?';
 $_['entry_debug']					 = 'Debug Logging';
 $_['entry_total']					 = 'Total';
 $_['entry_geo_zone']				 = 'Geo Zone';
@@ -89,7 +99,7 @@ $_['entry_settling']				 = 'Settling';
 $_['entry_submitted_for_settlement'] = 'Submitted For Settlement';
 $_['entry_voided']					 = 'Voided';
 $_['entry_3ds_status']				 = 'Enable 3-D Secure';
-$_['entry_3ds_full_liability_shift'] = 'Accept only transactions with full liability shift?';
+$_['entry_3ds_full_liability_shift'] = 'Full Liability Shift Required?';
 $_['entry_transaction_id']			 = 'Transaction ID';
 $_['entry_transaction_type']		 = 'Transaction Type';
 $_['entry_date_from']				 = 'Date From';
@@ -100,13 +110,22 @@ $_['entry_amount_from']				 = 'Amount From';
 $_['entry_amount_to']				 = 'Amount To';
 $_['entry_transaction_status']		 = 'Transaction Status';
 $_['entry_merchant_account_id']		 = 'Merchant Account ID';
-$_['entry_connection']		 		 = 'API connection status';
+$_['entry_connection']		 		 = 'API Connection Status';
+$_['entry_paypal_option']		     = 'Display PayPal Option';
+$_['entry_paypal_button_colour']	 = 'Button Colour';
+$_['entry_paypal_button_shape']		 = 'Button Shape';
+$_['entry_paypal_button_size']		 = 'Button Size';
+$_['entry_paypal_billing_agreement'] = 'Billing agreement description';
 
 // Help
 $_['help_settlement_type']			 = 'Immediate will Submit For Settlement straight away. Deferred will set the transaction to Authorized and the merchant must Submit For Settlement manually in the OpenCart order details.';
-$_['help_vault']					 = 'Allows customers to securely save cards to the website. (Hosted Fields with Credit/Debit Cards only)';
-$_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';
-$_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active.';
+$_['help_vault']					 = 'Allow customer to remember their credit card or PayPal account';
+$_['help_vault_cvv_3ds']			 = 'This will require customers using a vaulted card to re-enter the CVV2 number or use 3D secure. It is not possible to enable both options for a vaulted card.';
+$_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
+$_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
+$_['help_paypal_option']			 = 'If you have your PayPal account linked with Braintree you can display the PayPal payment option as well';
+$_['help_paypal_billing_agreement']	 = 'You can add a billing agreement description that will be shown to users in the PayPal window when opting to vault their PayPal account';
+$_['help_3ds_full_liability_shift']	 = 'Only transactions that pass 3D Secure checks and shift the liability (of charge backs) to the bank';
 
 // Button
 $_['button_void']					 = 'Void';
@@ -127,6 +146,8 @@ $_['error_warning']					 = 'Warning: Please check the form carefully for errors!
 // Tab
 $_['tab_setting']					 = 'Settings';
 $_['tab_currency']					 = 'Currencies';
-$_['tab_order_status']				 = 'Order Statuses (New orders)';
+$_['tab_order_status']				 = 'Order Statuses (New Orders)';
 $_['tab_3ds']						 = '3-D Secure';
-$_['tab_transaction']				 = 'Transactions';
+$_['tab_transaction']				 = 'Transaction Search';
+$_['tab_vault']				 	 	 = 'Vault';
+$_['tab_paypal']				 	 = 'PayPal';

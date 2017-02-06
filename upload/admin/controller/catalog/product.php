@@ -255,12 +255,6 @@ class ControllerCatalogProduct extends Controller {
 			$filter_status = '';
 		}
 
-		if (isset($this->request->get['filter_image'])) {
-			$filter_image = $this->request->get['filter_image'];
-		} else {
-			$filter_image = '';
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -301,14 +295,6 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_image'])) {
-			$url .= '&filter_image=' . $this->request->get['filter_image'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
@@ -341,7 +327,6 @@ class ControllerCatalogProduct extends Controller {
 			'filter_price'	  => $filter_price,
 			'filter_quantity' => $filter_quantity,
 			'filter_status'   => $filter_status,
-			'filter_image'    => $filter_image,
 			'sort'            => $sort,
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
@@ -459,10 +444,6 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_image'])) {
-			$url .= '&filter_image=' . $this->request->get['filter_image'];
-		}
-
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -502,10 +483,6 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_image'])) {
-			$url .= '&filter_image=' . $this->request->get['filter_image'];
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -529,7 +506,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_price'] = $filter_price;
 		$data['filter_quantity'] = $filter_quantity;
 		$data['filter_status'] = $filter_status;
-		$data['filter_image'] = $filter_image;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

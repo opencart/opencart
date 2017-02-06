@@ -351,24 +351,16 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.model LIKE '" . $this->db->escape($data['filter_model']) . "%'";
 		}
 
-		if (isset($data['filter_price']) && !is_null($data['filter_price'])) {
+		if (!empty($data['filter_price'])) {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
 
-		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
+		if (!empty($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (isset($data['filter_image']) && !is_null($data['filter_image'])) {
-			if ($data['filter_image'] == 1) {
-				$sql .= " AND (p.image IS NOT NULL AND p.image <> '' AND p.image <> 'no_image.png')";
-			} else {
-				$sql .= " AND (p.image IS NULL OR p.image = '' OR p.image = 'no_image.png')";
-			}
 		}
 
 		$sql .= " GROUP BY p.product_id";
@@ -405,6 +397,8 @@ class ModelCatalogProduct extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
+
+		echo $sql;
 
 		$query = $this->db->query($sql);
 
@@ -635,14 +629,6 @@ class ModelCatalogProduct extends Model {
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (isset($data['filter_image']) && !is_null($data['filter_image'])) {
-			if ($data['filter_image'] == 1) {
-				$sql .= " AND (p.image IS NOT NULL AND p.image <> '' AND p.image <> 'no_image.png')";
-			} else {
-				$sql .= " AND (p.image IS NULL OR p.image = '' OR p.image = 'no_image.png')";
-			}
 		}
 
 		$query = $this->db->query($sql);

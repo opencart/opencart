@@ -63,7 +63,7 @@
 					alert("<?php echo $error_event_missing; ?>");
 				} else {
 					Checkout.configure(<?php echo $configuration_json; ?>);
-					debugger;
+
 					<?php if ($onclick == 'lightbox') { ?>
 						Checkout.showLightbox();
 					<?php } else { ?>

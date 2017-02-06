@@ -1308,7 +1308,7 @@ class ControllerSaleOrder extends Controller {
 			$extensions = $this->model_extension_extension->getInstalled('fraud');
 
 			foreach ($extensions as $extension) {
-				if ($this->config->get($extension . '_status')) {
+				if ($this->config->get('fraud_' . $extension . '_status')) {
 					$this->load->language('extension/fraud/' . $extension);
 
 					$content = $this->load->controller('extension/fraud/' . $extension . '/order');

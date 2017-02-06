@@ -82,10 +82,10 @@ class ControllerExtensionFraudMaxMind extends Controller {
 			$data['fraud_maxmind_score'] = $this->config->get('fraud_maxmind_score');
 		}
 
-		if (isset($this->request->post['maxmind_order_status_id'])) {
-			$data['maxmind_order_status_id'] = $this->request->post['maxmind_order_status_id'];
+		if (isset($this->request->post['fraud_maxmind_order_status_id'])) {
+			$data['fraud_maxmind_order_status_id'] = $this->request->post['fraud_maxmind_order_status_id'];
 		} else {
-			$data['maxmind_order_status_id'] = $this->config->get('maxmind_order_status_id');
+			$data['fraud_maxmind_order_status_id'] = $this->config->get('fraud_maxmind_order_status_id');
 		}
 
 		$this->load->model('localisation/order_status');

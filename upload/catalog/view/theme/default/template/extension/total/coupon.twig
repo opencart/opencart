@@ -35,6 +35,9 @@ $('#button-coupon').on('click', function() {
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

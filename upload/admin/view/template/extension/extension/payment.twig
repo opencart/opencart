@@ -11,38 +11,12 @@
   </div>
   {% endif %}
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> PayPal Express Checkout</h3>
-          </div>
-          <div class="panel-body">
-            <div style="width: 100%; height: 150px;">
-              <img class="pull-right" width="150" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo">
-            </div>
-          </div>
-        </div>
+    {% if promoted_solution_1 is not empty and promoted_solution_2 is not empty %}
+      <div class="row">
+        {{ promoted_solution_1 }}
+        {{ promoted_solution_2 }}
       </div>
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> PayPal powered by Braintree</h3>
-          </div>
-          <div class="panel-body">
-            <p>Easily accept credit and debit cards and PayPal on multiple devices with no setup or monthly fees. Click the button below to connect your account</p>
-            <ul>
-              <li>Accept credit cards and PayPal with one click</li>
-              <li>Accept payments from around the world</li>
-              <li>Improve conversion with PayPal One Touch</li>
-              <li>Achieve PCI DSS v3.0 SAQ-A compliance using Hosted Fields functionality for card detail collection</li>
-              <li>Help detect and prevent fraud by enabling 3-D Secure, AVS, CVV and custom risk thresholds</li>
-            </ul>
-            <img class="pull-right" width="150" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/paypal-braintree.png" alt="PayPal powered by Braintree">
-          </div>
-        </div>
-      </div>
-    </div>
+    {% endif %}
   </div>
   <legend>{{ heading_title }}</legend>
   <div class="table-responsive">

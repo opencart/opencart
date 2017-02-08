@@ -763,15 +763,13 @@ function getTransaction(transaction_id) {
 {% if auth_connect_url %}
   <script src="https://assets.braintreegateway.com/v1/braintree-oauth-connect.js"></script>
   <script type="text/javascript"><!--
-    var connect_url = '{{ auth_connect_url }}';
-    var partner = new BraintreeOAuthConnect({
-      connectUrl: connect_url,
+    new BraintreeOAuthConnect({
+      connectUrl: '{{ auth_connect_url }}',
       container: 'bt-connect',
       onError: function (error) {
         alert(error.message);
       }
     });
-
     $('#bt-connect').show();
   //--></script>
 {% endif %}

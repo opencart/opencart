@@ -18,6 +18,12 @@ $_['text_show_quick_setup']          = 'Show Quick Setup';
 $_['text_quick_setup']             	 = 'Quick setup - Link an existing or create a new PayPal account to start accepting payments in minutes';
 $_['text_paypal_consent']		 	 = 'By using the quick setup tool you allow PayPal to receive information about your store';
 $_['text_success_connect']			 = 'Success: You have connected your PayPal account!';
+$_['text_preferred_main']		 	 = 'Express Checkout allows merchants and developers to minimize the number of steps customers must complete when they checkout.  Buyers can pay with PayPal or credit and debit cards.';
+$_['text_preferred_li_1']			 = 'Accept credit cards and PayPal';
+$_['text_preferred_li_2']			 = 'Accept payments from around the world';
+$_['text_preferred_li_3']			 = 'Achieve PCI DSS v3.0 SAQ-A compliance easily as all payments are done off-site';
+$_['text_preferred_li_4']			 = 'Use in-context checkout so a user never has to leave your site while paying with PayPal';
+$_['text_connect_paypal']			 = 'Connect with PayPal';
 
 // Entry
 $_['entry_username']				 = 'API Username';

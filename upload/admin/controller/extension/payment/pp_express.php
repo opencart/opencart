@@ -354,6 +354,29 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 
 		if (isset($this->request->get['retrieve_code']) && isset($this->request->get['merchant_id'])) {
+
+
+			/**
+			 * @todo
+			 *
+			 * check module installed, if nmot it is returning from the auth flow
+			 *
+			 * install module before anything else
+			 *
+			 * $this->load->controller('extension/extension/payment/install');
+			 */
+
+
+
+
+
+
+
+
+
+
+
+
 			$curl = curl_init($this->opencart_retrieve_url);
 
 			$post_data = array(
@@ -1494,5 +1517,69 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 
 		return $this->load->view('sale/recurring_button', $data);
+	}
+
+	public function connectRedirect() {
+		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/pp_express')) {
+			// do not enable connect link!
+
+			$this->load->model('localisation/country');
+
+			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+			$post_data = array(
+				'return_url' => $this->url->link('extension/payment/pp_express', 'token=' . $this->session->data['token'], true),
+				'store_url' => HTTPS_CATALOG,
+				'store_version' => VERSION,
+				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
+			);
+
+			// Create Live link
+			$curl = curl_init($this->opencart_connect_url);
+
+			$post_data['environment'] = 'live';
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
+
+			$curl_response = curl_exec($curl);
+			$curl_response = json_decode($curl_response, true);
+
+			curl_close($curl);
+
+			if (isset($curl_response['url']) && !empty($curl_response['url'])) {
+				$this->response->redirect($curl_response['url']);
+			} else {
+				$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			}
+		} else {
+			$this->response->redirect($this->url->link('error/permission', 'token=' . $this->session->data['token'], true));
+		}
+	}
+
+	public function preferredSolution() {
+		$this->load->language('extension/payment/pp_express');
+
+		$data = [];
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
+		$data['text_connect_paypal'] = $this->language->get('text_connect_paypal');
+		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');
+		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
+		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
+		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
+
+		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/pp_express')) {
+			$data['connect_link'] = $this->url->link('extension/payment/pp_express/connectRedirect', 'token=' . $this->session->data['token'], true);
+		} else {
+			// user does not have permission to modify, show no link
+			$data['connect_link'] = '';
+		}
+
+		return $this->load->view('extension/payment/pp_express_preferred', $data);
 	}
 }

@@ -45,6 +45,12 @@ $_['text_paypal_preview']		 	 = 'Button preview';
 $_['text_braintree_learn']		 	 = 'To start accepting credit/debit cards and PayPal, click Connect with Braintree. <a href="https://www.braintreepayments.com/partners/learn-more" target="_blank">Learn more</a>';
 $_['text_3ds']		 	 			 = '3D Secure';
 $_['text_cvv']		 	 			 = 'CVV Number';
+$_['text_preferred_main']		 	 = 'Easily accept credit and debit cards and PayPal on multiple devices with no setup or monthly fees. Click the button below to connect your account';
+$_['text_preferred_li_1']			 = 'Accept credit cards and PayPal with one click';
+$_['text_preferred_li_2']			 = 'Accept payments from around the world';
+$_['text_preferred_li_3']			 = 'Improve conversion with PayPal One Touch';
+$_['text_preferred_li_4']			 = 'Achieve PCI DSS v3.0 SAQ-A compliance using Hosted Fields';
+$_['text_learn_more']			 	 = 'Learn more';
 
 // Column
 $_['column_void']					 = 'Void';

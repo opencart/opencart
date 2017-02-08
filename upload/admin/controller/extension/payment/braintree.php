@@ -953,6 +953,65 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function connectRedirect() {
+		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/braintree')) {
+			$curl = curl_init($this->opencart_connect_url);
+
+			$this->load->model('localisation/country');
+			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+			$post_data = array(
+				'return_url' => $this->url->link('extension/payment/braintree', 'token=' . $this->session->data['token'], true),
+				'store_url' => HTTPS_CATALOG,
+				'store_version' => VERSION,
+				'store_country' => (isset($country['iso_code_3']) ? $country['iso_code_3'] : ''),
+			);
+
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+
+			$curl_response = curl_exec($curl);
+
+			$curl_response = json_decode($curl_response, true);
+
+			curl_close($curl);
+
+			if ($curl_response['url']) {
+				$this->response->redirect($curl_response['url']);
+			} else {
+				$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			}
+		} else {
+			$this->response->redirect($this->url->link('error/permission', 'token=' . $this->session->data['token'], true));
+		}
+	}
+
+	public function preferredSolution() {
+		$this->load->language('extension/payment/braintree');
+
+		$data = [];
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
+		$data['text_learn_more'] = $this->language->get('text_learn_more');
+		$data['text_preferred_li_1'] = $this->language->get('text_preferred_li_1');
+		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
+		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
+		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
+
+		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/braintree')) {
+			$data['connect_link'] = $this->url->link('extension/payment/braintree/connectRedirect', 'token=' . $this->session->data['token'], true);
+		} else {
+			// user does not have permission to modify, show no link
+			$data['connect_link'] = '';
+		}
+
+		return $this->load->view('extension/payment/braintree_preferred', $data);
+	}
+
 	protected function validate() {
 		$this->load->model('extension/payment/braintree');
 

@@ -1,0 +1,29 @@
+<div class="col-lg-6 col-md-12 col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><img class="pull-right" width="135" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_200x51.png" alt="PayPal Logo"></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <p>{{ text_preferred_main }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9">
+          <ul>
+            <li>{{ text_preferred_li_1 }}</li>
+            <li>{{ text_preferred_li_2 }}</li>
+            <li>{{ text_preferred_li_3 }}</li>
+            <li>{{ text_preferred_li_4 }}</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          {% if connect_link is not empty %}
+              <a class="btn btn-primary pull-right" href="{{ connect_link }}" target="_blank" title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

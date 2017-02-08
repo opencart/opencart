@@ -955,6 +955,11 @@ class ControllerExtensionPaymentBraintree extends Controller {
 
 	public function connectRedirect() {
 		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/braintree')) {
+			// Install the module before doing the redirect
+			$this->load->model('extension/extension');
+
+			$this->model_extension_extension->install('payment', 'braintree');
+
 			$curl = curl_init($this->opencart_connect_url);
 
 			$this->load->model('localisation/country');

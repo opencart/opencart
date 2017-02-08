@@ -19,11 +19,10 @@
           </ul>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
-            <img class="pull-right" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/payment-methods.png" alt="Accept Visa, Mastercard, Discover, American Express, and PayPal payments" width="200"></p>
-
-            {% if connect_link is not empty %}
-              <br /><br /><a href="{{ connect_link }}" target="_blank" class="pull-right"><img src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/connect-braintree.png" alt="Connect with Braintree" width="200"></a>
-            {% endif %}
+          <img class="pull-right img-responsive" src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/payment-methods.png" alt="Accept Visa, Mastercard, Discover, American Express, and PayPal payments" />
+          {% if connect_link is not empty %}
+            <br /><br /><a href="{{ connect_link }}" target="_blank" class="pull-right" style="margin-top:10px;"><img src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/connect-braintree.png" alt="Connect with Braintree" class="img-responsive"></a>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -354,29 +354,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 
 		if (isset($this->request->get['retrieve_code']) && isset($this->request->get['merchant_id'])) {
-
-
-			/**
-			 * @todo
-			 *
-			 * check module installed, if nmot it is returning from the auth flow
-			 *
-			 * install module before anything else
-			 *
-			 * $this->load->controller('extension/extension/payment/install');
-			 */
-
-
-
-
-
-
-
-
-
-
-
-
 			$curl = curl_init($this->opencart_retrieve_url);
 
 			$post_data = array(
@@ -1521,7 +1498,12 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 	public function connectRedirect() {
 		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/pp_express')) {
-			// do not enable connect link!
+			// Install the module before doing the redirect
+			$this->load->model('extension/extension');
+
+			$this->model_extension_extension->install('payment', 'pp_express');
+
+			$this->install();
 
 			$this->load->model('localisation/country');
 

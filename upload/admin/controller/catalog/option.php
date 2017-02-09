@@ -470,7 +470,8 @@ class ControllerCatalogOption extends Controller {
 			$filter_data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 5
+				'sort'        => 'o.sort_order',
+				'limit'       => 10
 			);
 
 			$options = $this->model_catalog_option->getOptions($filter_data);
@@ -495,13 +496,6 @@ class ControllerCatalogOption extends Controller {
 						);
 					}
 
-					$sort_order = array();
-
-					foreach ($option_value_data as $key => $value) {
-						$sort_order[$key] = $value['name'];
-					}
-
-					array_multisort($sort_order, SORT_ASC, $option_value_data);
 				}
 
 				$type = '';
@@ -527,18 +521,26 @@ class ControllerCatalogOption extends Controller {
 					'name'         => strip_tags(html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8')),
 					'category'     => $type,
 					'type'         => $option['type'],
+					'sort_order'   => $option['sort_order'],
 					'option_value' => $option_value_data
 				);
 			}
 		}
 
-		$sort_order = array();
+		$sort_order_type = array();
+		$sort_order_sort = array();
+		$sort_order_name = array();
 
 		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
+			$sort_order_type[$key] = $value['category'];
+			$sort_order_sort[$key] = $value['sort_order'];
+			$sort_order_name[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $json);
+		array_multisort($sort_order_type, SORT_ASC, SORT_NATURAL,
+						$sort_order_sort, SORT_ASC, SORT_NUMERIC,
+						$sort_order_name, SORT_ASC, SORT_NATURAL,
+						$json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -357,7 +357,7 @@ class ControllerExtensionThemeDefault extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/theme/theme_default', $data));
+		$this->response->setOutput($this->load->view('extension/theme/default', $data));
 	}
 
 	protected function validate() {

@@ -629,14 +629,6 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
-			
-			if ($this->user->hasPermission('access', 'tool/maintenance')) {
-				$system[] = array(
-					'name'	   => $this->language->get('text_maintenance'),
-					'href'     => $this->url->link('tool/maintenance', 'token=' . $this->session->data['token'], true),
-					'children' => array()		
-				);
-			}	
 						
 			if ($this->user->hasPermission('access', 'tool/log')) {
 				$system[] = array(

@@ -7,8 +7,6 @@ class ControllerExtensionExtensionMenu extends Controller {
 
 		$this->load->model('extension/extension');
 
-		$this->load->model('extension/menu');
-
 		$this->getList();
 	}
 
@@ -16,8 +14,6 @@ class ControllerExtensionExtensionMenu extends Controller {
 		$this->load->language('extension/extension/menu');
 
 		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
 
 		if ($this->validate()) {
 			$this->model_extension_extension->install('menu', $this->request->get['extension']);
@@ -41,49 +37,11 @@ class ControllerExtensionExtensionMenu extends Controller {
 
 		$this->load->model('extension/extension');
 
-		$this->load->model('extension/menu');
-
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('menu', $this->request->get['extension']);
 
-			$this->model_extension_menu->deleteMenusByCode($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/menu/' . $this->request->get['extension'] . '/uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->getList();
-	}
-	
-	public function add() {
-		$this->load->language('extension/extension/menu');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
-
-		if ($this->validate()) {
-			$this->load->language('menu' . '/' . $this->request->get['extension']);
-			
-			$this->model_extension_menu->addMenu($this->request->get['extension'], $this->language->get('heading_title'));
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->getList();
-	}
-
-	public function delete() {
-		$this->load->language('extension/extension/menu');
-
-		$this->load->model('extension/extension');
-
-		$this->load->model('extension/menu');
-
-		if (isset($this->request->get['menu_id']) && $this->validate()) {
-			$this->model_extension_menu->deletemenu($this->request->get['menu_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -99,6 +57,7 @@ class ControllerExtensionExtensionMenu extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_add'] = $this->language->get('button_add');
@@ -144,22 +103,9 @@ class ControllerExtensionExtensionMenu extends Controller {
 
 				$this->load->language('extension/menu/' . $extension);
 
-				$menu_data = array();
-
-				$menus = $this->model_extension_menu->getmenusByCode($extension);
-
-				foreach ($menus as $menu) {
-					$menu_data[] = array(
-						'menu_id' => $menu['menu_id'],
-						'name'      => $menu['name'],
-						'edit'      => $this->url->link('extension/extension/menu/' . $extension, 'token=' . $this->session->data['token'] . '&menu_id=' . $menu['menu_id'], true),
-						'delete'    => $this->url->link('extension/extension/menu/delete', 'token=' . $this->session->data['token'] . '&menu_id=' . $menu['menu_id'], true)
-					);
-				}
-
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'menu'    => $menu_data,
+					'status'    => $this->config->get('menu_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/extension/menu/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->link('extension/extension/menu/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),

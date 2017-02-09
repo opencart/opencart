@@ -156,9 +156,9 @@ class ControllerExtensionMarketplace extends Controller {
 		
 		$data['promotions'] = array();
 		
-		if ($status == 200) {
+		if ($status == 200 && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
-				$data['extensions'][] = array(
+				$data['promotions'][] = array(
 					'name'         => $result['name'],
 					'description'  => $result['description'],
 					'image'        => $result['image'],
@@ -488,6 +488,7 @@ class ControllerExtensionMarketplace extends Controller {
 			$data['heading_title'] = $this->language->get('heading_title');
 			
 			$data['text_loading'] = $this->language->get('text_loading');
+			$data['text_pin'] = $this->language->get('text_pin');
 			$data['text_price'] = $this->language->get('text_price');
 			$data['text_partner'] = $this->language->get('text_partner');
 			$data['text_rating'] = $this->language->get('text_rating');
@@ -497,11 +498,13 @@ class ControllerExtensionMarketplace extends Controller {
 			$data['text_date_added'] = $this->language->get('text_date_added');
 			$data['text_date_modified'] = $this->language->get('text_date_modified');
 			
+			$data['entry_pin'] = $this->language->get('entry_pin');
+			
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_install'] = $this->language->get('button_install');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
-			$data['tab_description'] = $this->language->get('tab_description');
+			$data['tab_general'] = $this->language->get('tab_general');
 			$data['tab_documentation'] = $this->language->get('tab_documentation');
 			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
@@ -614,12 +617,64 @@ class ControllerExtensionMarketplace extends Controller {
 	
 	}
 	
-	public function buy() {
+	public function purchase() {
 		$this->load->language('extension/marketplace');
 			
+		$json = array();
 			
+		if (!$this->request->get['extension_id']) {
+			$extension_id = $this->request->post['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!$this->request->post['pin']) {
+			$json['error'] = $this->language->get('error_pin');
+		}
+						
+		if ($json) {
+			$this->load->model('extension/marketplace');
 			
+			$extension_info = $this->model_extension_marketplace->getExtension($extension_id);			
 			
+			$string  = $this->config->get('api_key') . "\n";
+			$string .= time() . "\n";
+			$string .= $extension_id . "\n";
+			$string .= $this->request->post['pin'] . "\n";
+			
+			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('api_secret'), 1));
+			
+			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/purchase&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
+			
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+					
+			$response = curl_exec($curl);
+			
+			curl_close($curl);
+			
+			$response_info = json_decode($response, true);
+			
+			if ($response_info) {
+				if (isset($response_info['success'])) {
+					$json['success'] = $response_info['success'];
+				}
+				
+				if (isset($response_info['error'])) {
+					$json['error'] = $response_info['success'];
+				}	
+			}		
+		}
+			
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
 	}
 	
 	public function install() {

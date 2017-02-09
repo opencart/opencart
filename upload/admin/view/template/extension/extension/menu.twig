@@ -20,25 +20,17 @@
         </tr>
       </thead>
       <tbody>
-        {% if menus %}
-        {% for menu in menus %}
+        {% if extensions %}
+        {% for extension in extensions %}
         <tr>
-          <td class="text-left" colspan="2"><b>{{ menu.name }}</b></td>
-          <td class="text-right">{% if not menu.installed %}
-            <a href="{{ menu.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+          <td class="text-left">{{ extension.name }}</b></td>
+          <td class="text-left">{{ extension.status }}</td>
+          <td class="text-right">{% if not extension.installed %}
+            <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
             {% else %}
             <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
             {% endif %}</td>
         </tr>
-        {% if menu.installed %}
-        {% for store in menu.store %}
-        <tr>
-          <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-          <td class="text-left">{{ store.status }}</td>
-          <td class="text-right"><a href="{{ store.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-        </tr>
-        {% endfor %}
-        {% endif %}
         {% endfor %}
         {% else %}
         <tr>

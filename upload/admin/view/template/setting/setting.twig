@@ -1102,6 +1102,24 @@
             </div>
             <div class="tab-pane" id="tab-server">
               <fieldset>
+                <legend>{{ text_api }}</legend>
+                <div class="alert alert-info">You must register your store on opencart.com before </div>
+                
+                
+                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-api-key">{{ entry_api_key }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_api_key" value="{{ config_api_key }}" placeholder="{{ entry_api_key }}" id="input-api-key" class="form-control" />
+                  </div>
+                </div>                   
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-api-secret">{{ entry_api_secret }}</label>
+                  <div class="col-sm-10">
+                    <textarea name="config_api_secret" rows="5" placeholder="{{ entry_api_secret }}" id="input-api-secret" class="form-control">{{ config_api_secret }}</textarea>
+                  </div>
+                </div>              
+              </fieldset>
+              <fieldset>
                 <legend>{{ text_general }}</legend>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_maintenance }}">{{ entry_maintenance }}</span></label>

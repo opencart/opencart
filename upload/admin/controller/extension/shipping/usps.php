@@ -14,7 +14,7 @@ class ControllerExtensionShippingUsps extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -129,7 +129,7 @@ class ControllerExtensionShippingUsps extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -139,7 +139,7 @@ class ControllerExtensionShippingUsps extends Controller {
 
 		$data['action'] = $this->url->link('extension/shipping/usps', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
 
 		if (isset($this->request->post['shipping_usps_user_id'])) {
 			$data['shipping_usps_user_id'] = $this->request->post['shipping_usps_user_id'];

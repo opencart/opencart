@@ -5,7 +5,7 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('total', $this->request->get['extension']);
+			$this->model_setting_extension->install('total', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -34,10 +34,10 @@ class ControllerExtensionExtensionTotal extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/total');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 
 			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/uninstall');
 
@@ -75,13 +75,13 @@ class ControllerExtensionExtensionTotal extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('total');
+		$extensions = $this->model_setting_extension->getInstalled('total');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/total/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('total', $value);
+				$this->model_setting_extension->uninstall('total', $value);
 
 				unset($extensions[$key]);
 			}

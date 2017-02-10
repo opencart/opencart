@@ -7,18 +7,18 @@ class ControllerExtensionModuleHTML extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!isset($this->request->get['module_id'])) {
-				$this->model_extension_module->addModule('html', $this->request->post);
+				$this->model_setting_module->addModule('html', $this->request->post);
 			} else {
-				$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
+				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -56,7 +56,7 @@ class ControllerExtensionModuleHTML extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
 		);
 
 		if (!isset($this->request->get['module_id'])) {
@@ -77,10 +77,10 @@ class ControllerExtensionModuleHTML extends Controller {
 			$data['action'] = $this->url->link('extension/module/html', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
+			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
 		if (isset($this->request->post['name'])) {

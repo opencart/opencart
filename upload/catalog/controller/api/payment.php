@@ -174,11 +174,11 @@ class ControllerApiPayment extends Controller {
 					'total'  => &$total
 				);
 
-				$this->load->model('extension/extension');
+				$this->load->model('setting/extension');
 
 				$sort_order = array();
 
-				$results = $this->model_extension_extension->getExtensions('total');
+				$results = $this->model_setting_extension->getExtensions('total');
 
 				foreach ($results as $key => $value) {
 					$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
@@ -198,9 +198,9 @@ class ControllerApiPayment extends Controller {
 				// Payment Methods
 				$json['payment_methods'] = array();
 
-				$this->load->model('extension/extension');
+				$this->load->model('setting/extension');
 
-				$results = $this->model_extension_extension->getExtensions('payment');
+				$results = $this->model_setting_extension->getExtensions('payment');
 
 				$recurring = $this->cart->hasRecurringProducts();
 

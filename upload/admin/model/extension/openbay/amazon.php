@@ -1,9 +1,9 @@
 <?php
 class ModelExtensionOpenBayAmazon extends Model {
 	public function install() {
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
-		$this->model_extension_event->addEvent('openbay_amazon_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/amazon/eventAddOrderHistory');
+		$this->model_setting_event->addEvent('openbay_amazon_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/amazon/eventAddOrderHistory');
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
@@ -101,8 +101,8 @@ class ModelExtensionOpenBayAmazon extends Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazon'");
 
-		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbay_amazon_add_order');
+		$this->load->model('setting/event');
+		$this->model_setting_event->deleteEvent('openbay_amazon_add_order');
 	}
 
 	public function patch() {
@@ -389,7 +389,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 			$this->load->model('tool/image');
 
 			foreach ($product_links as $key => $product_link) {
-				$variants = $this->model_extension_module_openstock->getVariants($product_link['product_id']);
+				$variants = $this->model_setting_module_openstock->getVariants($product_link['product_id']);
 
 				if (!empty($variants)) {
 					foreach($variants as $variant) {
@@ -421,7 +421,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
-					$stock_opts = $this->model_extension_module_openstock->getVariants($row['product_id']);
+					$stock_opts = $this->model_setting_module_openstock->getVariants($row['product_id']);
 					foreach($stock_opts as $opt) {
 						if ($this->productLinkExists($row['product_id'], $opt['sku'])) {
 							continue;
@@ -523,7 +523,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('extension/module/openstock');
-			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
+			$option_stocks = $this->model_setting_module_openstock->getVariants($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
@@ -696,7 +696,7 @@ class ModelExtensionOpenBayAmazon extends Model {
 			$combinations = array();
 
 			if (isset($row['pov_id']) && !empty($row['pov_id'])) {
-				$variants = (isset($row['pov_id']) ? $this->model_extension_module_openstock->getVariant($row['pov_id']) : '');
+				$variants = (isset($row['pov_id']) ? $this->model_setting_module_openstock->getVariant($row['pov_id']) : '');
 
 				foreach ($variants as $variant) {
 					$combinations[] =  $variant['option_value_name'];

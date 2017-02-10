@@ -196,7 +196,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('extension/module/openstock');
-			$data['options'] = $this->model_extension_module_openstock->getVariants($product_id);
+			$data['options'] = $this->model_setting_module_openstock->getVariants($product_id);
 		} else {
 			$data['options'] = array();
 		}
@@ -489,7 +489,7 @@ class ControllerExtensionOpenbayAmazonProduct extends Controller {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('extension/module/openstock');
-			$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
+			$option_stocks = $this->model_setting_module_openstock->getVariants($product_id);
 
 			$option = '';
 			

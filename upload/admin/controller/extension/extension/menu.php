@@ -5,7 +5,7 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('menu', $this->request->get['extension']);
+			$this->model_setting_extension->install('menu', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionMenu extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/menu');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('menu', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('menu', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/menu/' . $this->request->get['extension'] . '/uninstall');
@@ -80,11 +80,11 @@ class ControllerExtensionExtensionMenu extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('menu');
+		$extensions = $this->model_setting_extension->getInstalled('menu');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/menu/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/menu/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('menu', $value);
+				$this->model_setting_extension->uninstall('menu', $value);
 
 				unset($extensions[$key]);
 				

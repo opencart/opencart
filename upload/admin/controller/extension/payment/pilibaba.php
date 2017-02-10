@@ -22,7 +22,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -34,7 +34,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -86,7 +86,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/pilibaba', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_pilibaba_merchant_number'])) {
 			$data['payment_pilibaba_merchant_number'] = $this->request->post['payment_pilibaba_merchant_number'];
@@ -220,7 +220,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 	}
 
 	public function install() {
-		if ($this->user->hasPermission('modify', 'extension/extension')) {
+		if ($this->user->hasPermission('modify', 'marketplace/extension')) {
 			$this->load->model('extension/payment/pilibaba');
 
 			$this->model_extension_payment_pilibaba->install();
@@ -228,7 +228,7 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 	}
 
 	public function uninstall() {
-		if ($this->user->hasPermission('modify', 'extension/extension')) {
+		if ($this->user->hasPermission('modify', 'marketplace/extension')) {
 			$this->load->model('extension/payment/pilibaba');
 
 			$this->model_extension_payment_pilibaba->uninstall();

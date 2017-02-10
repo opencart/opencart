@@ -5,7 +5,7 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('shipping', $this->request->get['extension']);
+			$this->model_setting_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionShipping extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/shipping');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('shipping', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/shipping/' . $this->request->get['extension'] . '/uninstall');
@@ -77,13 +77,13 @@ class ControllerExtensionExtensionShipping extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('shipping');
+		$extensions = $this->model_setting_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/shipping/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('shipping', $value);
+				$this->model_setting_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
 			}

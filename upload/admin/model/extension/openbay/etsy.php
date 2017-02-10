@@ -1,9 +1,9 @@
 <?php
 class ModelExtensionOpenBayEtsy extends Model{
 	public function install() {
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
-		$this->model_extension_event->addEvent('openbay_etsy_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/etsy/eventAddOrderHistory');
+		$this->model_setting_event->addEvent('openbay_etsy_add_order', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/etsy/eventAddOrderHistory');
 
 		$settings                 = array();
 		$settings["etsy_token"]   = '';
@@ -53,8 +53,8 @@ class ModelExtensionOpenBayEtsy extends Model{
 	}
 
 	public function uninstall() {
-		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('openbay_etsy_add_order');
+		$this->load->model('setting/event');
+		$this->model_setting_event->deleteEvent('openbay_etsy_add_order');
 	}
 
 	public function patch() {

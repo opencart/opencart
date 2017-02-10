@@ -1,10 +1,10 @@
 <?php
 class ModelExtensionOpenBayFba extends Model {
     public function install() {
-        $this->load->model('extension/event');
+        $this->load->model('setting/event');
 
-		$this->model_extension_event->addEvent('openbay_fba_add_order', 'catalog/model/checkout/order/addOrder/after', 'extension/openbay/fba/eventAddOrder');
-		$this->model_extension_event->addEvent('openbay_fba_add_orderhistory', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/fba/eventAddOrderHistory');
+		$this->model_setting_event->addEvent('openbay_fba_add_order', 'catalog/model/checkout/order/addOrder/after', 'extension/openbay/fba/eventAddOrder');
+		$this->model_setting_event->addEvent('openbay_fba_add_orderhistory', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/openbay/fba/eventAddOrderHistory');
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
@@ -46,9 +46,9 @@ class ModelExtensionOpenBayFba extends Model {
     public function uninstall() {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_fba'");
 
-        $this->load->model('extension/event');
-        $this->model_extension_event->deleteEvent('openbay_fba_add_order');
-        $this->model_extension_event->deleteEvent('openbay_fba_add_orderhistory');
+        $this->load->model('setting/event');
+        $this->model_setting_event->deleteEvent('openbay_fba_add_order');
+        $this->model_setting_event->deleteEvent('openbay_fba_add_orderhistory');
     }
 
     public function patch() {

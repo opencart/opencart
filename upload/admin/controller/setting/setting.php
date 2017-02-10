@@ -53,7 +53,6 @@ class ControllerSettingSetting extends Controller {
 		$data['text_mail_order']  = $this->language->get('text_mail_order');
 		$data['text_mail_review'] = $this->language->get('text_mail_review');
 		$data['text_general'] = $this->language->get('text_general');
-		$data['text_api'] = $this->language->get('text_api');
 		$data['text_security'] = $this->language->get('text_security');
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_error'] = $this->language->get('text_error');
@@ -130,15 +129,12 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_mail_alert'] = $this->language->get('entry_mail_alert');
 		$data['entry_mail_alert_email'] = $this->language->get('entry_mail_alert_email');
 		$data['entry_alert_email'] = $this->language->get('entry_alert_email');
-		$data['entry_api_key'] = $this->language->get('entry_api_key');
-		$data['entry_api_secret'] = $this->language->get('entry_secret');
 		$data['entry_secure'] = $this->language->get('entry_secure');
 		$data['entry_shared'] = $this->language->get('entry_shared');
 		$data['entry_robots'] = $this->language->get('entry_robots');
 		$data['entry_file_max_size'] = $this->language->get('entry_file_max_size');
 		$data['entry_file_ext_allowed'] = $this->language->get('entry_file_ext_allowed');
 		$data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');
-		$data['entry_api_key'] = $this->language->get('entry_api_key');
 		$data['entry_maintenance'] = $this->language->get('entry_maintenance');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_encryption'] = $this->language->get('entry_encryption');
@@ -391,9 +387,9 @@ class ControllerSettingSetting extends Controller {
 
 		$data['themes'] = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/theme/' . $code);
@@ -818,12 +814,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_captcha'] = $this->config->get('config_captcha');
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$data['captchas'] = array();
 
 		// Get a list of installed captchas
-		$extensions = $this->model_extension_extension->getInstalled('captcha');
+		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/captcha/' . $code);
@@ -979,18 +975,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_alert_email'] = $this->request->post['config_alert_email'];
 		} else {
 			$data['config_alert_email'] = $this->config->get('config_alert_email');
-		}
-
-		if (isset($this->request->post['config_api_key'])) {
-			$data['config_api_key'] = $this->request->post['config_api_key'];
-		} else {
-			$data['config_api_key'] = $this->config->get('config_api_key');
-		}
-		
-		if (isset($this->request->post['config_api_secret'])) {
-			$data['config_api_secret'] = $this->request->post['config_api_secret'];
-		} else {
-			$data['config_api_secret'] = $this->config->get('config_api_secret');
 		}
 		
 		if (isset($this->request->post['config_secure'])) {

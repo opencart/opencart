@@ -354,14 +354,14 @@ class ControllerDesignLayout extends Controller {
 			$data['layout_routes'] = array();
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		$data['extensions'] = array();
 
 		// Get a list of installed modules
-		$extensions = $this->model_extension_extension->getInstalled('module');
+		$extensions = $this->model_setting_extension->getInstalled('module');
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
@@ -369,7 +369,7 @@ class ControllerDesignLayout extends Controller {
 
 			$module_data = array();
 
-			$modules = $this->model_extension_module->getModulesByCode($code);
+			$modules = $this->model_setting_module->getModulesByCode($code);
 
 			foreach ($modules as $module) {
 				$module_data[] = array(
@@ -413,7 +413,7 @@ class ControllerDesignLayout extends Controller {
 					'sort_order' => $layout_module['sort_order']
 				);
 			} else {
-				$module_info = $this->model_extension_module->getModule($part[1]);
+				$module_info = $this->model_setting_module->getModule($part[1]);
 				
 				if ($module_info) {
 					$data['layout_modules'][] = array(

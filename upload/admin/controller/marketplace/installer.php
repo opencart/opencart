@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionInstaller extends Controller {
+class ControllerMarketplaceInstaller extends Controller {
 	public function index() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -14,7 +14,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/installer', 'token=' . $this->session->data['token'], true)
 		);
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -39,16 +39,16 @@ class ControllerExtensionInstaller extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('extension/installer', $data));
+		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 	
 	public function upload() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
 		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -87,14 +87,14 @@ class ControllerExtensionInstaller extends Controller {
 				if (file_exists($file)) {
 					$json['step'][] = array(
 						'text' => $this->language->get('text_xml'),
-						'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'token=' . $this->session->data['token'], true)),
 						'path' => $path
 					);
 
 					// Clear temporary files
 					$json['step'][] = array(
 						'text' => $this->language->get('text_remove'),
-						'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'token=' . $this->session->data['token'], true)),
 						'path' => $path
 					);
 				} else {
@@ -115,14 +115,14 @@ class ControllerExtensionInstaller extends Controller {
 						// Zip
 						$json['step'][] = array(
 							'text' => $this->language->get('text_unzip'),
-							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/unzip', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 
 						// FTP
 						$json['step'][] = array(
 							'text' => $this->language->get('text_ftp'),
-							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/ftp', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 
@@ -134,7 +134,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.sql') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_sql'),
-									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/sql', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -143,7 +143,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.xml') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_xml'),
-									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -152,7 +152,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.php') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_php'),
-									'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/php', 'token=' . $this->session->data['token'], true)),
 									'path' => $path
 								);
 							}
@@ -189,7 +189,7 @@ class ControllerExtensionInstaller extends Controller {
 						// Clear temporary files
 						$json['step'][] = array(
 							'text' => $this->language->get('text_remove'),
-							'href' => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'token=' . $this->session->data['token'], true)),
 							'path' => $path
 						);
 
@@ -208,11 +208,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
  
 	public function unzip() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -243,11 +243,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function ftp() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -357,11 +357,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function sql() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -402,11 +402,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function xml() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -417,7 +417,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('extension/modification');
+			$this->load->model('setting/modification');
 
 			// If xml file just put it straight into the DB
 			$xml = file_get_contents($file);
@@ -441,7 +441,7 @@ class ControllerExtensionInstaller extends Controller {
 						$code = $code->nodeValue;
 
 						// Check to see if the modification is already installed or not.
-						$modification_info = $this->model_extension_modification->getModificationByCode($code);
+						$modification_info = $this->model_setting_modification->getModificationByCode($code);
 
 						if ($modification_info) {
 							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
@@ -486,7 +486,7 @@ class ControllerExtensionInstaller extends Controller {
 					);
 
 					if (!$json) {
-						$this->model_extension_modification->addModification($modification_data);
+						$this->model_setting_modification->addModification($modification_data);
 					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
@@ -499,11 +499,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function php() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -526,11 +526,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function remove() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -584,11 +584,11 @@ class ControllerExtensionInstaller extends Controller {
 	}
 
 	public function clear() {
-		$this->load->language('extension/installer');
+		$this->load->language('marketplace/installer');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

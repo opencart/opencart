@@ -21,7 +21,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			if (isset($this->request->post['language_reload'])) {
 				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], true));
 			} else {
-				$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+				$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 			}
 		}
 
@@ -145,7 +145,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -155,7 +155,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/amazon_login_pay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_amazon_login_pay_merchant_id'])) {
 			$data['payment_amazon_login_pay_merchant_id'] = $this->request->post['payment_amazon_login_pay_merchant_id'];
@@ -378,18 +378,18 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/amazon_login_pay');
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 		$this->model_extension_payment_amazon_login_pay->install();
-		$this->model_extension_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'extension/payment/amazon_login_pay/capture');
-		$this->model_extension_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/payment/amazon_login_pay/capture');
+		$this->model_setting_event->addEvent('amazon_edit_capture', 'catalog/model/checkout/order/after', 'extension/payment/amazon_login_pay/capture');
+		$this->model_setting_event->addEvent('amazon_history_capture', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/payment/amazon_login_pay/capture');
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/amazon_login_pay');
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 		$this->model_extension_payment_amazon_login_pay->uninstall();
-		$this->model_extension_event->deleteEvent('amazon_edit_capture');
-		$this->model_extension_event->deleteEvent('amazon_history_capture');
+		$this->model_setting_event->deleteEvent('amazon_edit_capture');
+		$this->model_setting_event->deleteEvent('amazon_history_capture');
 	}
 
 	public function order() {

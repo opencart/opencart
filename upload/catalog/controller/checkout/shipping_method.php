@@ -7,9 +7,9 @@ class ControllerCheckoutShippingMethod extends Controller {
 			// Shipping Methods
 			$method_data = array();
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {

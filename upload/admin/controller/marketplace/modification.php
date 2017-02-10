@@ -4,29 +4,29 @@
  *
  * https://github.com/opencart/opencart/wiki/Modification-System
  */
-class ControllerExtensionModification extends Controller {
+class ControllerMarketplaceModification extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		$this->getList();
 	}
 
 	public function delete() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			foreach ($this->request->post['selected'] as $modification_id) {
-				$this->model_extension_modification->deleteModification($modification_id);
+				$this->model_setting_modification->deleteModification($modification_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -45,18 +45,18 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function refresh($data = array()) {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
 			// Just before files are deleted, if config settings say maintenance mode is off then turn it on
@@ -123,7 +123,7 @@ class ControllerExtensionModification extends Controller {
 			}
 
 			// Get the default modification file
-			$results = $this->model_extension_modification->getModifications();
+			$results = $this->model_setting_modification->getModifications();
 
 			foreach ($results as $result) {
 				if ($result['status']) {
@@ -440,18 +440,18 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-		//	$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+		//	$this->response->redirect($this->url->link(!empty($data['redirect']) ? $data['redirect'] : 'marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function clear() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
 			$files = array();
@@ -507,21 +507,21 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function enable() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
-			$this->model_extension_modification->enableModification($this->request->get['modification_id']);
+			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -539,21 +539,21 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function disable() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+		$this->load->model('setting/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
-			$this->model_extension_modification->disableModification($this->request->get['modification_id']);
+			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -571,14 +571,14 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function clearlog() {
-		$this->load->language('extension/modification');
+		$this->load->language('marketplace/modification');
 
 		if ($this->validate()) {
 			$handle = fopen(DIR_LOGS . 'ocmod.log', 'w+');
@@ -601,7 +601,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -649,12 +649,12 @@ class ControllerExtensionModification extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, true);
-		$data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['refresh'] = $this->url->link('marketplace/modification/refresh', 'token=' . $this->session->data['token'] . $url, true);
+		$data['clear'] = $this->url->link('marketplace/modification/clear', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('marketplace/modification/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['modifications'] = array();
 
@@ -665,9 +665,9 @@ class ControllerExtensionModification extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$modification_total = $this->model_extension_modification->getTotalModifications();
+		$modification_total = $this->model_setting_modification->getTotalModifications();
 
-		$results = $this->model_extension_modification->getModifications($filter_data);
+		$results = $this->model_setting_modification->getModifications($filter_data);
 
 		foreach ($results as $result) {
 			$data['modifications'][] = array(
@@ -678,8 +678,8 @@ class ControllerExtensionModification extends Controller {
 				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
-				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
-				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
+				'enable'          => $this->url->link('marketplace/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
+				'disable'         => $this->url->link('marketplace/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], true),
 				'enabled'         => $result['status']
 			);
 		}
@@ -742,11 +742,11 @@ class ControllerExtensionModification extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, true);
-		$data['sort_version'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=version' . $url, true);
-		$data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_name'] = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_author'] = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, true);
+		$data['sort_version'] = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . '&sort=version' . $url, true);
+		$data['sort_status'] = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -762,7 +762,7 @@ class ControllerExtensionModification extends Controller {
 		$pagination->total = $modification_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -780,17 +780,17 @@ class ControllerExtensionModification extends Controller {
 			$data['log'] = '';
 		}
 
-		$data['clear_log'] = $this->url->link('extension/modification/clearlog', 'token=' . $this->session->data['token'], true);
+		$data['clear_log'] = $this->url->link('marketplace/modification/clearlog', 'token=' . $this->session->data['token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/modification', $data));
+		$this->response->setOutput($this->load->view('marketplace/modification', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/modification')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

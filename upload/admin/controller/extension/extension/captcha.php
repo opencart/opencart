@@ -5,7 +5,7 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/captcha');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/captcha');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('captcha', $this->request->get['extension']);
+			$this->model_setting_extension->install('captcha', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -39,10 +39,10 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/captcha');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('captcha', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('captcha', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/captcha/' . $this->request->get['extension'] . '/uninstall');
@@ -80,11 +80,11 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('captcha');
+		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('captcha', $value);
+				$this->model_setting_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
 			}

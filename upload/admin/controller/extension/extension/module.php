@@ -5,9 +5,9 @@ class ControllerExtensionExtensionModule extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/module');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		$this->getList();
 	}
@@ -15,12 +15,12 @@ class ControllerExtensionExtensionModule extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/module');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('module', $this->request->get['extension']);
+			$this->model_setting_extension->install('module', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -41,14 +41,14 @@ class ControllerExtensionExtensionModule extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/module');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('module', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('module', $this->request->get['extension']);
 
-			$this->model_extension_module->deleteModulesByCode($this->request->get['extension']);
+			$this->model_setting_module->deleteModulesByCode($this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/module/' . $this->request->get['extension'] . '/uninstall');
@@ -62,14 +62,14 @@ class ControllerExtensionExtensionModule extends Controller {
 	public function add() {
 		$this->load->language('extension/extension/module');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		if ($this->validate()) {
 			$this->load->language('module' . '/' . $this->request->get['extension']);
 			
-			$this->model_extension_module->addModule($this->request->get['extension'], $this->language->get('heading_title'));
+			$this->model_setting_module->addModule($this->request->get['extension'], $this->language->get('heading_title'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -80,12 +80,12 @@ class ControllerExtensionExtensionModule extends Controller {
 	public function delete() {
 		$this->load->language('extension/extension/module');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$this->load->model('extension/module');
+		$this->load->model('setting/module');
 
 		if (isset($this->request->get['module_id']) && $this->validate()) {
-			$this->model_extension_module->deleteModule($this->request->get['module_id']);
+			$this->model_setting_module->deleteModule($this->request->get['module_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -124,15 +124,15 @@ class ControllerExtensionExtensionModule extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('module');
+		$extensions = $this->model_setting_extension->getInstalled('module');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/module/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('module', $value);
+				$this->model_setting_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
 				
-				$this->model_extension_module->deleteModulesByCode($value);
+				$this->model_setting_module->deleteModulesByCode($value);
 			}
 		}
 
@@ -149,7 +149,7 @@ class ControllerExtensionExtensionModule extends Controller {
 
 				$module_data = array();
 
-				$modules = $this->model_extension_module->getModulesByCode($extension);
+				$modules = $this->model_setting_module->getModulesByCode($extension);
 
 				foreach ($modules as $module) {
 					if ($module['setting']) {

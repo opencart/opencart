@@ -153,63 +153,63 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 			
 			// Extension
-			$extension = array();
+			$marketplace = array();
 			
-			if ($this->user->hasPermission('access', 'extension/marketplace')) {		
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/marketplace')) {		
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_marketplace'),
-					'href'     => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/marketplace', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);					
 			}
 			
-			if ($this->user->hasPermission('access', 'extension/installer')) {		
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/installer')) {		
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_installer'),
-					'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/installer', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);					
 			}	
 			
-			if ($this->user->hasPermission('access', 'extension/extension')) {		
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/extension')) {		
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_extension'),
-					'href'     => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);
 			}
 			
-			if ($this->user->hasPermission('access', 'extension/translation')) {
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/translation')) {
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_translation'),
-					'href'     => $this->url->link('extension/translation', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/translation', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	
 			}
 								
-			if ($this->user->hasPermission('access', 'extension/modification')) {
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/modification')) {
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_modification'),
-					'href'     => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/modification', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);
 			}
 			
-			if ($this->user->hasPermission('access', 'extension/event')) {
-				$extension[] = array(
+			if ($this->user->hasPermission('access', 'marketplace/event')) {
+				$marketplace[] = array(
 					'name'	   => $this->language->get('text_event'),
-					'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
+					'href'     => $this->url->link('marketplace/event', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);
 			}
 					
-			if ($extension) {					
+			if ($marketplace) {					
 				$data['menus'][] = array(
 					'id'       => 'menu-extension',
 					'icon'	   => 'fa-puzzle-piece', 
 					'name'	   => $this->language->get('text_extension'),
 					'href'     => '',
-					'children' => $extension
+					'children' => $marketplace
 				);		
 			}
 			
@@ -224,17 +224,9 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}
 			
-			if ($this->user->hasPermission('access', 'design/menu')) {	
-				$design[] = array(
-					'name'	   => $this->language->get('text_menu'),
-					'href'     => $this->url->link('design/menu', 'token=' . $this->session->data['token'], true),
-					'children' => array()		
-				);	
-			}
-			
 			if ($this->user->hasPermission('access', 'design/theme')) {	
 				$design[] = array(
-					'name'	   => $this->language->get('text_theme_editor'),
+					'name'	   => $this->language->get('text_theme'),
 					'href'     => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true),
 					'children' => array()		
 				);	

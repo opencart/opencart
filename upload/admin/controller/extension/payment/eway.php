@@ -15,7 +15,7 @@ class ControllerExtensionPaymentEway extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -100,7 +100,7 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -109,7 +109,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		);
 
 		$data['action'] = $this->url->link('extension/payment/eway', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['payment_eway_payment_gateway'])) {
 			$data['payment_eway_payment_gateway'] = $this->request->post['payment_eway_payment_gateway'];

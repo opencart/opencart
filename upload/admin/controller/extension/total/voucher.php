@@ -14,7 +14,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -44,7 +44,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -54,7 +54,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 		$data['action'] = $this->url->link('extension/total/voucher', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
 		if (isset($this->request->post['total_voucher_status'])) {
 			$data['total_voucher_status'] = $this->request->post['total_voucher_status'];
@@ -85,15 +85,15 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 	public function install() {
 		// Register the event triggers
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
-		$this->model_extension_event->addEvent('voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send');
+		$this->model_setting_event->addEvent('voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'extension/total/voucher/send');
 	}
 
 	public function uninstall() {
 		// delete the event triggers
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
-		$this->model_extension_event->deleteEvent('voucher');
+		$this->model_setting_event->deleteEvent('voucher');
 	}
 }

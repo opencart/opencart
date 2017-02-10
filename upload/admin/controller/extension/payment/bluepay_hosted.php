@@ -14,7 +14,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -87,7 +87,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -97,7 +97,7 @@ class ControllerExtensionPaymentBluePayHosted extends Controller {
 
 		$data['action'] = $this->url->link('extension/payment/bluepay_hosted', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_bluepay_hosted_account_name'])) {
 			$data['payment_bluepay_hosted_account_name'] = $this->request->post['payment_bluepay_hosted_account_name'];

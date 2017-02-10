@@ -3,7 +3,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	public function install() {
 		$this->load->model('extension/openbay/amazonus');
 		$this->load->model('setting/setting');
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/amazonus_listing');
@@ -17,10 +17,10 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 	public function uninstall() {
 		$this->load->model('extension/openbay/amazonus');
 		$this->load->model('setting/setting');
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->model_extension_openbay_amazonus->uninstall();
-		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
@@ -490,7 +490,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('extension/module/openstock');
 			$this->load->model('tool/image');
-			$variants = $this->model_extension_module_openstock->getVariants($this->request->get['product_id']);
+			$variants = $this->model_setting_module_openstock->getVariants($this->request->get['product_id']);
 		}
 
 		if (empty($variants)) {
@@ -524,7 +524,7 @@ class ControllerExtensionOpenbayAmazonus extends Controller {
 				$logger->write('Using openStock');
 				$this->load->model('tool/image');
 				$this->load->model('extension/module/openstock');
-				$option_stocks = $this->model_extension_module_openstock->getVariants($product_id);
+				$option_stocks = $this->model_setting_module_openstock->getVariants($product_id);
 
 				$quantity_data = array();
 

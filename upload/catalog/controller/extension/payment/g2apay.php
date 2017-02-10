@@ -19,7 +19,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$order_data = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -34,7 +34,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 		$i = 0;
 
-		$results = $this->model_extension_extension->getExtensions('total');
+		$results = $this->model_setting_extension->getExtensions('total');
 
 		foreach ($results as $result) {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {

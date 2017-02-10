@@ -224,7 +224,7 @@ class ControllerApiCart extends Controller {
 			}
 
 			// Totals
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
 			$totals = array();
 			$taxes = $this->cart->getTaxes();
@@ -239,7 +239,7 @@ class ControllerApiCart extends Controller {
 			
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');

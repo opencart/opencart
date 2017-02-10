@@ -14,7 +14,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -77,7 +77,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -87,7 +87,7 @@ class ControllerExtensionModulePPLogin extends Controller {
 
 		$data['action'] = $this->url->link('extension/module/pp_login', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		if (isset($this->request->post['module_pp_login_client_id'])) {
 			$data['module_pp_login_client_id'] = $this->request->post['module_pp_login_client_id'];
@@ -315,14 +315,14 @@ class ControllerExtensionModulePPLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
-		$this->model_extension_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'extension/module/pp_login/logout');
+		$this->model_setting_event->addEvent('pp_login', 'catalog/controller/account/logout/after', 'extension/module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
-		$this->model_extension_event->deleteEvent('pp_login');
+		$this->model_setting_event->deleteEvent('pp_login');
 	}
 }

@@ -5,7 +5,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/payment');
 		
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/payment');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('payment', $this->request->get['extension']);
+			$this->model_setting_extension->install('payment', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/payment');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('payment', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/payment/' . $this->request->get['extension'] . '/uninstall');
@@ -77,13 +77,13 @@ class ControllerExtensionExtensionPayment extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('payment');
+		$extensions = $this->model_setting_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('payment', $value);
+				$this->model_setting_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
 			}

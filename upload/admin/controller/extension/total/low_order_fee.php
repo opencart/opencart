@@ -14,7 +14,7 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -50,7 +50,7 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -60,7 +60,7 @@ class ControllerExtensionTotalLowOrderFee extends Controller {
 
 		$data['action'] = $this->url->link('extension/total/low_order_fee', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=total', true);
 
 		if (isset($this->request->post['total_low_order_fee_total'])) {
 			$data['total_low_order_fee_total'] = $this->request->post['total_low_order_fee_total'];

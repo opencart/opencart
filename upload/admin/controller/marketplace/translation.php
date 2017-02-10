@@ -1,26 +1,26 @@
 <?php
-class ControllerExtensionTranslation extends Controller {
+class ControllerMarketplaceTranslation extends Controller {
 	public $error = array();
 	
 	public function index() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 		
 		$this->getList();
 	}
 	
 	public function refresh() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 		
 		if ($this->validate()) {
-			$this->model_extension_translation->clear();
+			$this->model_setting_translation->clear();
 			
 			// Make a CURL request
 			$curl = curl_init('https://s3.amazonaws.com/opencart-language/' . VERSION . '.json');
@@ -42,7 +42,7 @@ class ControllerExtensionTranslation extends Controller {
 			
 			if ($translations) {
 				foreach ($translations as $translation) {
-					$this->model_extension_translation->addTranslation($translation);
+					$this->model_setting_translation->addTranslation($translation);
 				}
 			}
 		}
@@ -72,16 +72,16 @@ class ControllerExtensionTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/translation', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('marketplace/translation', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['refresh'] = $this->url->link('extension/translation/refresh', 'token=' . $this->session->data['token'] . $url, true);
+		$data['refresh'] = $this->url->link('marketplace/translation/refresh', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['translations'] = array();
 
-		$translation_total = $this->model_extension_translation->getTotalTranslations();
+		$translation_total = $this->model_setting_translation->getTotalTranslations();
 
-		$results = $this->model_extension_translation->getTranslations(($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
+		$results = $this->model_setting_translation->getTranslations(($page - 1) * $this->config->get('config_limit_admin'), $this->config->get('config_limit_admin'));
 			
 		foreach ($results as $result){
 			if (is_dir(DIR_LANGUAGE . $result['code'])) {
@@ -143,7 +143,7 @@ class ControllerExtensionTranslation extends Controller {
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('extension/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -153,11 +153,11 @@ class ControllerExtensionTranslation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/translation', $data));
+		$this->response->setOutput($this->load->view('marketplace/translation', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -165,11 +165,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -179,9 +179,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -190,7 +190,7 @@ class ControllerExtensionTranslation extends Controller {
 		if (!$json) {		
 			$json['text'] = $this->language->get('text_download');
 					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -198,11 +198,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -212,9 +212,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}		
 
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -302,11 +302,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 	
 	public function download() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -316,9 +316,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -355,7 +355,7 @@ class ControllerExtensionTranslation extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 			}
 			
 			curl_close($curl);	
@@ -366,11 +366,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 	
 	public function unzip() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -380,9 +380,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -410,7 +410,7 @@ class ControllerExtensionTranslation extends Controller {
 			
 			$json['text'] = $this->language->get('text_move');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -418,11 +418,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function move() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -432,9 +432,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -494,7 +494,7 @@ class ControllerExtensionTranslation extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_db');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -502,11 +502,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 
 	public function db() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
@@ -516,9 +516,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');
@@ -543,7 +543,7 @@ class ControllerExtensionTranslation extends Controller {
 				
 			$json['text'] = $this->language->get('text_remove');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('extension/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -551,11 +551,11 @@ class ControllerExtensionTranslation extends Controller {
 	}
 	
 	public function remove() {
-		$this->load->language('extension/translation');
+		$this->load->language('marketplace/translation');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/translation')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/translation')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -565,9 +565,9 @@ class ControllerExtensionTranslation extends Controller {
 			$code = '';
 		}
 		
-		$this->load->model('extension/translation');
+		$this->load->model('setting/translation');
 			
-		$translation_info = $this->model_extension_translation->getTranslationByCode($code);		
+		$translation_info = $this->model_setting_translation->getTranslationByCode($code);		
 		
 		if (!$translation_info) {
 			$json['error'] = $this->language->get('error_code');

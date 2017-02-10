@@ -37,6 +37,9 @@ $_['text_move']          = 'Copying files!';
 $_['text_xml']           = 'Applying modifications!';
 $_['text_remove']        = 'Removing temporary files!';
 
+// Button
+$_['button_api']         = 'Modifiy API Credentials';
+
 // Tab
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';

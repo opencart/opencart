@@ -1335,9 +1335,9 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$extensions = $this->model_extension_extension->getInstalled('fraud');
+			$extensions = $this->model_setting_extension->getInstalled('fraud');
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get('fraud_' . $extension . '_status')) {

@@ -14,7 +14,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -66,7 +66,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -76,7 +76,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['action'] = $this->url->link('extension/fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=fraud', true);
 
 		if (isset($this->request->post['fraud_fraudlabspro_key'])) {
 			$data['fraud_fraudlabspro_key'] = $this->request->post['fraud_fraudlabspro_key'];

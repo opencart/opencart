@@ -2,11 +2,11 @@
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		// Analytics
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$data['analytics'] = array();
 
-		$analytics = $this->model_extension_extension->getExtensions('analytics');
+		$analytics = $this->model_setting_extension->getExtensions('analytics');
 
 		foreach ($analytics as $analytic) {
 			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {

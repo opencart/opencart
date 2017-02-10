@@ -317,9 +317,9 @@ class ModelExtensionPaymentLaybuy extends Model {
 			PRIMARY KEY (`laybuy_revise_request_id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
 
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
-		$this->model_extension_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'extension/payment/laybuy/deleteOrder');
+		$this->model_setting_event->addEvent('laybuy', 'catalog/model/checkout/order/deleteOrder/after', 'extension/payment/laybuy/deleteOrder');
 	}
 
 	public function log($data, $step = 6) {
@@ -337,9 +337,9 @@ class ModelExtensionPaymentLaybuy extends Model {
 
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "laybuy_revise_request`");
 
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
-		$this->model_extension_event->deleteEvent('laybuy');
+		$this->model_setting_event->deleteEvent('laybuy');
 	}
 
 	public function updateOrderStatus($order_id, $order_status_id, $comment) {

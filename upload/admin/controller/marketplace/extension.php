@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionExtension extends Controller {
+class ControllerMarketplaceExtension extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/extension');
+		$this->load->language('marketplace/extension');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -16,7 +16,7 @@ class ControllerExtensionExtension extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -60,6 +60,6 @@ class ControllerExtensionExtension extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/extension', $data));
+		$this->response->setOutput($this->load->view('marketplace/extension', $data));
 	}
 }

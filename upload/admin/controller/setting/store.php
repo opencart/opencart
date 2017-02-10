@@ -405,9 +405,9 @@ class ControllerSettingStore extends Controller {
 
 		$data['themes'] = array();
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
-		$extensions = $this->model_extension_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/theme/' . $code);

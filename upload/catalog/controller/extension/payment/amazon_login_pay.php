@@ -109,7 +109,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->load->language('checkout/checkout');
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		// capital L in Amazon cookie name is required, do not alter for coding standards
@@ -186,7 +186,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$sort_order = array();
 
-		$results = $this->model_extension_extension->getExtensions('total');
+		$results = $this->model_setting_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
 			if (isset($value['code'])) {
@@ -627,7 +627,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 	public function shippingQuotes() {
 		$this->load->language('extension/payment/amazon_login_pay');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 		$this->load->model('extension/payment/amazon_login_pay');
 
 		$json = array();
@@ -719,7 +719,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 			$quotes = array();
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
 

@@ -4,7 +4,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 		$this->load->language('extension/openbay/ebay');
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('setting/setting');
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 		$this->load->model('user/user_group');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay/ebay_profile');
@@ -18,10 +18,10 @@ class ControllerExtensionOpenbayEbay extends Controller {
 	public function uninstall() {
 		$this->load->model('extension/openbay/ebay');
 		$this->load->model('setting/setting');
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->model_extension_openbay_ebay->uninstall();
-		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
@@ -1158,7 +1158,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 			if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
 				$this->load->model('extension/module/openstock');
 				$data['addon']['openstock'] = true;
-				$product_info['options'] = $this->model_extension_module_openstock->getVariants($this->request->get['product_id']);
+				$product_info['options'] = $this->model_setting_module_openstock->getVariants($this->request->get['product_id']);
 				$product_info['option_groups'] = $this->model_extension_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 
 				$t = array();
@@ -1349,7 +1349,7 @@ class ControllerExtensionOpenbayEbay extends Controller {
 				if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
 					$this->load->model('extension/module/openstock');
 					$data['addon']['openstock'] = true;
-					$product_info['options'] = $this->model_extension_module_openstock->getVariants($this->request->get['product_id']);
+					$product_info['options'] = $this->model_setting_module_openstock->getVariants($this->request->get['product_id']);
 					$product_info['option_groups'] = $this->model_extension_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 
 					$option_group_array = array();

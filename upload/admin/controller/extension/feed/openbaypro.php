@@ -16,7 +16,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -24,7 +24,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 			'href' => $this->url->link('extension/feed/openbay', 'token=' . $this->session->data['token'], true),
 		);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=feed', true);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -47,7 +47,7 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 
 	public function install() {
 		$this->load->model('setting/setting');
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay');
@@ -56,23 +56,23 @@ class ControllerExtensionFeedOpenbaypro extends Controller {
 		$settings['openbaypro_status'] = 1;
 		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
-		$this->model_extension_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
+		$this->model_setting_event->addEvent('openbay_product_del_after', 'admin/model/catalog/product/deleteProduct/after', 'extension/openbay/eventDeleteProduct');
 
-		$this->model_extension_event->addEvent('openbay_product_edit_after', 'admin/model/catalog/product/editProduct/after', 'extension/openbay/eventEditProduct');
+		$this->model_setting_event->addEvent('openbay_product_edit_after', 'admin/model/catalog/product/editProduct/after', 'extension/openbay/eventEditProduct');
 
-		$this->model_extension_event->addEvent('openbay_menu', 'admin/view/common/column_left/before', 'extension/openbay/eventMenu');
+		$this->model_setting_event->addEvent('openbay_menu', 'admin/view/common/column_left/before', 'extension/openbay/eventMenu');
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/setting');
-		$this->load->model('extension/event');
+		$this->load->model('marketplace/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_status'] = 0;
 		$this->model_setting_setting->editSetting('feed_openbaypro', $settings);
 
-		$this->model_extension_event->deleteEvent('openbay_product_del_after');
-		$this->model_extension_event->deleteEvent('openbay_product_edit_after');
-		$this->model_extension_event->deleteEvent('openbay_menu');
+		$this->model_setting_event->deleteEvent('openbay_product_del_after');
+		$this->model_setting_event->deleteEvent('openbay_product_edit_after');
+		$this->model_setting_event->deleteEvent('openbay_menu');
 	}
 }

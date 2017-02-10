@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="{{ api }}" data-toggle="tooltip" title="{{ button_api }}" class="btn btn-danger"><i class="fa fa-key"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -28,18 +28,18 @@
         </ul>
         <div class="tab-content">
           <div id="tab-description" class="tab-pane active">
-             <fieldset>
-              <legend>Details</legend>           
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td><strong>{{ text_price }}</strong></td>
-                  <td>{% if license %}
-                    {{ price }}
-                    {% else %}
-                    Free
-                    {% endif %}</td>
-                </tr>
+            <fieldset>
+              <legend>Extension Details</legend>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td><strong>{{ text_price }}</strong></td>
+                    <td>{% if license %}
+                      {{ price }}
+                      {% else %}
+                      Free
+                      {% endif %}</td>
+                  </tr>
                 {% if license %}
                 <tr>
                   <td><strong>{{ text_license }}</strong></td>
@@ -58,36 +58,37 @@
                   <td><strong>{{ text_compatibility }}</strong></td>
                   <td>{{ compatibility }}</td>
                 </tr>
-              <tr>
-                <td><strong>{{ text_rating }}</strong></td>
-                <td>{% for i in 1..4 %}
-                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                  {% endfor %}</td>
-              </tr>
-              <tr>
-                <td><strong>{{ text_date_added }}</strong></td>
-                <td>{{ date_added }}</td>
-              </tr>
-              <tr>
-                <td><strong>{{ text_date_modified }}</strong></td>
-                <td>{{ date_modified }}</td>
-              </tr>
-              <tr>
-                <td><strong>{{ text_sales }}</strong></td>
-                <td>{{ sales }}</td>
-              </tr>
-              <tr>
-                <td><strong>{{ text_downloaded }}</strong></td>
-                <td>{{ downloaded }}</td>
-              </tr>
-            </tbody>
-            </table>
+                <tr>
+                  <td><strong>{{ text_rating }}</strong></td>
+                  <td>{% for i in 1..4 %}
+                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                    {% endfor %}</td>
+                </tr>
+                <tr>
+                  <td><strong>{{ text_date_added }}</strong></td>
+                  <td>{{ date_added }}</td>
+                </tr>
+                <tr>
+                  <td><strong>{{ text_date_modified }}</strong></td>
+                  <td>{{ date_modified }}</td>
+                </tr>
+                <tr>
+                  <td><strong>{{ text_sales }}</strong></td>
+                  <td>{{ sales }}</td>
+                </tr>
+                <tr>
+                  <td><strong>{{ text_downloaded }}</strong></td>
+                  <td>{{ downloaded }}</td>
+                </tr>
+                  </tbody>
+                
+              </table>
             </fieldset>
-                       <fieldset>
-              <legend>Description</legend>   
-            {{ description }} 
-              </fieldset>
-            </div>
+            <fieldset>
+              <legend>Extension Description</legend>
+              {{ description }}
+            </fieldset>
+          </div>
           <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
           <div id="tab-download" class="tab-pane">
             <fieldset>
@@ -109,19 +110,17 @@
               {% endif %}
               <table class="table table-bordered">
                 <thead>
-                  <th>Download Name</th>
+                <th>Download Name</th>
                   <th>Date Added</th>
                   <th class="text-right">Action</th>
-                </thead>
+                    </thead>
                 <tbody>
                 
                 {% for download in downloads %}
                 <tr>
                   <td>{{ download.name }}</td>
                   <td>{{ download.date_added }}</td>
-                  <td class="text-right">
-                  
-                    {% if not download.installed %}
+                  <td class="text-right"> {% if not download.installed %}
                     <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
                     {% else %}
                     <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
@@ -132,9 +131,7 @@
                     <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
                     {% else %}
                     <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
-                    {% endif %}
-                    
-                    </td>
+                    {% endif %} </td>
                 </tr>
                 {% endfor %}
                   </tbody>
@@ -371,7 +368,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 	
 	$.ajax({
-		url: 'index.php?route=extension/marketplace/purchase&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',

@@ -14,7 +14,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -26,7 +26,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -53,7 +53,7 @@ class ControllerExtensionModuleLaybuyLayout extends Controller {
 
 		$data['action'] = $this->url->link('extension/module/laybuy_layout', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		if (isset($this->request->post['module_laybuy_layout_status'])) {
 			$data['module_laybuy_layout_status'] = $this->request->post['module_laybuy_layout_status'];

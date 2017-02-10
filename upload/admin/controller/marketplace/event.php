@@ -1,26 +1,26 @@
 <?php
-class ControllerExtensionEvent extends Controller {
+class ControllerMarketplaceEvent extends Controller {
 	private $error = array();
 	
 	public function index() {
-		$this->load->language('extension/event');
+		$this->load->language('marketplace/event');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
 		$this->getList();
 	}
 
 	public function enable() {
-		$this->load->language('extension/event');
+		$this->load->language('marketplace/event');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
 		if (isset($this->request->get['event_id']) && $this->validate()) {
-			$this->model_extension_event->enableEvent($this->request->get['event_id']);
+			$this->model_setting_event->enableEvent($this->request->get['event_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -38,21 +38,21 @@ class ControllerExtensionEvent extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
 	}
 
 	public function disable() {
-		$this->load->language('extension/event');
+		$this->load->language('marketplace/event');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/event');
+		$this->load->model('setting/event');
 
 		if (isset($this->request->get['event_id']) && $this->validate()) {
-			$this->model_extension_event->disableEvent($this->request->get['event_id']);
+			$this->model_setting_event->disableEvent($this->request->get['event_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -70,7 +70,7 @@ class ControllerExtensionEvent extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -118,7 +118,7 @@ class ControllerExtensionEvent extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$data['events'] = array();
@@ -130,9 +130,9 @@ class ControllerExtensionEvent extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$event_total = $this->model_extension_event->getTotalEvents();
+		$event_total = $this->model_setting_event->getTotalEvents();
 
-		$results = $this->model_extension_event->getEvents($filter_data);
+		$results = $this->model_setting_event->getEvents($filter_data);
 
 		foreach ($results as $result) {
 			$data['events'][] = array(
@@ -142,8 +142,8 @@ class ControllerExtensionEvent extends Controller {
 				'action'     => $result['action'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'enable'     => $this->url->link('extension/event/enable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
-				'disable'    => $this->url->link('extension/event/disable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
+				'enable'     => $this->url->link('marketplace/event/enable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
+				'disable'    => $this->url->link('marketplace/event/disable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
 				'enabled'    => $result['status']
 			);
 		}
@@ -196,11 +196,11 @@ class ControllerExtensionEvent extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_code'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
-		$data['sort_trigger'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=trigger' . $url, true);
-		$data['sort_action'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=action' . $url, true);
-		$data['sort_status'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_code'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
+		$data['sort_trigger'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=trigger' . $url, true);
+		$data['sort_action'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=action' . $url, true);
+		$data['sort_status'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -216,7 +216,7 @@ class ControllerExtensionEvent extends Controller {
 		$pagination->total = $event_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -229,11 +229,11 @@ class ControllerExtensionEvent extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/event', $data));
+		$this->response->setOutput($this->load->view('marketplace/event', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/event')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

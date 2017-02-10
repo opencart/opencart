@@ -5,7 +5,7 @@ class ControllerExtensionExtensionTheme extends Controller {
 	public function index() {
 		$this->load->language('extension/extension/theme');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$this->getList();
 	}
@@ -13,10 +13,10 @@ class ControllerExtensionExtensionTheme extends Controller {
 	public function install() {
 		$this->load->language('extension/extension/feed');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->install('theme', $this->request->get['extension']);
+			$this->model_setting_extension->install('theme', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -35,10 +35,10 @@ class ControllerExtensionExtensionTheme extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/extension/theme');
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_extension_extension->uninstall('theme', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('theme', $this->request->get['extension']);
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
@@ -76,11 +76,11 @@ class ControllerExtensionExtensionTheme extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_extension_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $key => $value) {
 			if (!is_file(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
-				$this->model_extension_extension->uninstall('theme', $value);
+				$this->model_setting_extension->uninstall('theme', $value);
 
 				unset($extensions[$key]);
 			}

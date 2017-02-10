@@ -17,7 +17,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -67,7 +67,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -77,7 +77,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		$data['action'] = $this->url->link('extension/module/amazon_login', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -127,13 +127,13 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 	}
 
 	public function install() {
-			$this->load->model('extension/event');
-			$this->model_extension_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
+			$this->load->model('marketplace/event');
+			$this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('amazon_login');
+		$this->load->model('marketplace/event');
+		$this->model_setting_event->deleteEvent('amazon_login');
 	}
 
 }

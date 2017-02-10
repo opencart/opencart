@@ -377,11 +377,11 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			'total'  => &$total
 		);
 
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$sort_order = array();
 
-		$results = $this->model_extension_extension->getExtensions('total');
+		$results = $this->model_setting_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
 			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
@@ -485,7 +485,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		// Totals
-		$this->load->model('extension/extension');
+		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -502,7 +502,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_extension_extension->getExtensions('total');
+			$results = $this->model_setting_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
@@ -689,9 +689,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 					$method_data = array();
 
-					$this->load->model('extension/extension');
+					$this->load->model('setting/extension');
 
-					$results = $this->model_extension_extension->getExtensions('shipping');
+					$results = $this->model_setting_extension->getExtensions('shipping');
 
 					foreach ($results as $result) {
 						if ($this->config->get('shipping_' . $result['code'] . '_status')) {
@@ -1405,9 +1405,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			// Shipping Methods
 			$method_data = array();
 
-			$this->load->model('extension/extension');
+			$this->load->model('setting/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {

@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionTranslation extends Model {
+class ModelSettingTranslation extends Model {
 	public function addTranslation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "crowdin` SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', progress = '" . $this->db->escape($data['progress']) . "'");
 	}

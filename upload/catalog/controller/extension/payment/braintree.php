@@ -310,7 +310,7 @@ class ControllerExtensionPaymentBraintree extends Controller {
 
 			$this->model_extension_payment_braintree->log($nonce_info);
 
-			if ($nonce_info->type == 'CreditCard' && $nonce_info->details['cardType'] != 'American Express') {
+			if ($nonce_info->type == 'CreditCard' && $nonce_info->details['cardType'] != 'American Express' && $this->config->get('braintree_3ds_status') == 1) {
 				$create_sale['options']['three_d_secure'] = array(
 					'required' => true
 				);

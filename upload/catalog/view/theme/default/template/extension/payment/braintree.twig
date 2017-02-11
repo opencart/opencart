@@ -4,8 +4,8 @@
   {% if vaulted_payment_count > 0 %}
   <input type="hidden" name="payment_type" value="saved" id="tab-option" />
   <ul class="nav nav-tabs">
-    <li role="presentation" id="tab-saved" class="active"><a href="#" class="braintree-tab-link" id="saved-link">{{ entry_saved_methods }}</a></li>
-    <li role="presentation" id="tab-new"><a href="#" class="braintree-tab-link" id="new-link">{{ entry_new }}</a></li>
+    <li role="presentation" id="tab-saved" class="active"><a href="#" class="braintree-tab-link braintree-button" id="saved-link">{{ entry_saved_methods }}</a></li>
+    <li role="presentation" id="tab-new"><a href="#" class="braintree-tab-link braintree-button" id="new-link">{{ entry_new }}</a></li>
   </ul>
   {% endif %}
 </div>
@@ -67,7 +67,7 @@
     </div>
     <div class="form-group">
       <div class="col-sm-12">
-        <button type="submit" id="submit-new" class="btn btn-primary button-submit pull-right">{{ button_confirm }}</button>
+        <button type="submit" id="submit-new" class="btn btn-primary button-submit pull-right braintree-button">{{ button_confirm }}</button>
       </div>
     </div>
   </fieldset>
@@ -82,7 +82,7 @@
         <input type="hidden" id="vaulted-payment-cvv-nonce-{{ vaulted_payment_method.token }}" value="" />
       </div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
-      <div class="col-sm-4">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove_vault_method">{{ text_remove }}</a>]</div>
+      <div class="col-sm-4">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove-vault-method braintree-button">{{ text_remove }}</a>]</div>
       <div class="col-sm-2">{% if braintree_vault_cvv_3ds == 'cvv' %}<div class="form-control input-vaulted-cvv" id="input-vaulted-cvv-{{ vaulted_payment_method.token }}" style="display: none;"></div>{% endif %}</div>
     </div>
     <hr />
@@ -91,14 +91,14 @@
     <div class="row" id="vaulted-method-{{ vaulted_payment_method.token }}">
       <div class="col-sm-1"><input type="radio" name="vaulted_payment_method" class="form-control" value="{{ vaulted_payment_method.token }}"/></div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
-      <div class="col-sm-10">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove_vault_method">{{ text_remove }}</a>]</div>
+      <div class="col-sm-10">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove-vault-method braintree-button">{{ text_remove }}</a>]</div>
     </div>
     <hr />
     {% endfor %}
   </fieldset>
   <div class="form-group">
     <div class="col-sm-12">
-      <a id="submit-vaulted" class="btn btn-primary button-submit pull-right">{{ button_confirm }}</a>
+      <a id="submit-vaulted" class="btn btn-primary button-submit pull-right braintree-button">{{ button_confirm }}</a>
     </div>
   </div>
   {% endif %}
@@ -110,7 +110,7 @@
       <div class="panel-heading text-center">{{ text_authentication }}</div>
       <div class="panel-body" id="braintree-3ds-body"></div>
       <div class="panel-footer text-center">
-        <a id="braintree-3ds-close" href="#">{{ button_cancel }}</a>
+        <a id="braintree-3ds-close" href="#" class="braintree-button">{{ button_cancel }}</a>
       </div>
     </div>
   </div>
@@ -118,7 +118,6 @@
 </div>
 
 <script type="text/javascript">
-
   $('body').on('click', '.braintree-tab-link', function(event) {
     event.preventDefault();
 
@@ -138,8 +137,11 @@
   });
 
   var device_data_value = '';
+  var data_collector_instance;
+  var hosted_instance;
   var threed_secure_instance;
   var client_instance;
+  var paypal_instance;
   var cvv_instance = [];
   var bank_frame = document.querySelector('#braintree-3ds-body');
 
@@ -152,8 +154,10 @@
     braintree.client.create({
       authorization: '{{ client_token }}'
     }, function (client_error, braintree_client) {
+      console.log("Create Client");
+
       if (client_error) {
-        console.log(client_error);
+        console.error(client_error);
         return;
       }
 
@@ -164,16 +168,11 @@
             client: braintree_client
         }, function (error, instance) {
           if (error) {
-              // Handle error in 3D Secure component creation
+              console.error(error);
               return;
           }
 
           threed_secure_instance = instance;
-
-          $(document).delegate('#button-payment-method', 'click', function() {
-            instance.teardown();
-            $('body').off('click', "#bt-modal-close");
-          });
         });
       {% endif %}
 
@@ -216,32 +215,6 @@
       {% endif %}
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //@todo add onload check for default selected card to add the cvv box
-  //$(document).ready(function() {
-  //alert('change');
-  //$(':radio[value=87nhpd').attr("checked", true);
-  //});
 
   {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}
   // 3D Secure
@@ -320,18 +293,21 @@
           return;
       }
 
-      device_data_value = instance.deviceData;
+      data_collector_instance = instance;
 
-      $(document).delegate('#button-payment-method', 'click', function() {
-          instance.teardown();
-      });
+      device_data_value = instance.deviceData;
   }
 
   function hostedCallback(error, instance) {
     if (error) {
-      console.error(error);
+      console.log("Error code: " + error.code);
+      console.log("Error details: " + error.details);
+      console.log("Error message: " + error.message);
+      console.log("Error type: " + error.type);
       return;
     }
+
+    hosted_instance = instance;
 
     instance.on('ready', function (event) {
       {% if vaulted_payment_count > 0 %}
@@ -382,26 +358,19 @@
         {% endif %}
       });
     });
-
-    $(document).delegate('#button-payment-method', 'click', function() {
-      instance.teardown();
-      $('body').off('click', '#submit-new');
-      $('body').off('click', '#submit-vaulted');
-      $('body').off('click', ".remove_vault_method");
-    });
   }
 
   {% if braintree_paypal_option %}
   function paypalCallback(error, instance) {
       if (error) {
-          console.error(error);
-          return;
+        console.error(error);
+        return;
       }
 
-    // Enable the button.
+      paypal_instance = instance;
+
     $('#paypal-button').prop('disabled', false);
 
-    // When the button is clicked, attempt to tokenize.
     $('body').on('click', '#paypal-button', function (event) {
       event.preventDefault();
 
@@ -442,24 +411,22 @@
         },
         {% endif %}
         shippingAddressEditable: false
-      }, function (tokenizeErr, payload) {
-        if (tokenizeErr) {
-          console.error('Error tokenizing:', tokenizeErr.details);
-
+      }, function (tokenize_error, payload) {
+        if (tokenize_error) {
           $('#paypal-button').prop('disabled', false);
 
-          switch (tokenizeErr.code) {
+          switch (tokenize_error.code) {
             case 'PAYPAL_POPUP_CLOSED':
               console.error('Customer closed PayPal popup.');
               break;
             case 'PAYPAL_ACCOUNT_TOKENIZATION_FAILED':
-              console.error('PayPal tokenization failed. See details:', tokenizeErr.details);
+              console.error('PayPal tokenization failed. See details:', tokenize_error.details);
               break;
             case 'PAYPAL_FLOW_FAILED':
-              console.error('Unable to initialize PayPal flow. Are your options correct?', tokenizeErr.details);
+              console.error('Unable to initialize PayPal flow. Are your options correct?', tokenize_error.details);
               break;
             default:
-              console.error('Error!', tokenizeErr);
+              console.error('Error!', tokenize_error);
           }
 
           return;
@@ -468,19 +435,10 @@
         }
       });
     });
-
-    // button-payment-address
-    // button-shipping-address
-    // button-shipping-method
-    $(document).delegate('#button-payment-method', 'click', function() {
-      instance.teardown();
-      $('body').off('click', '#paypal-button');
-    });
   }
   {% endif %}
 
   {% if braintree_vault_cvv_3ds == 'cvv' %}
-  // select vaulted method
   $('body').on('change', 'input[name=\'vaulted_payment_method\']', function (event) {
     $('.input-vaulted-cvv').hide();
 
@@ -513,10 +471,7 @@
   });
   {% endif %}
 
-
-
-  // remove vaulted method
-  $('body').on('click', '.remove_vault_method', function (event) {
+  $('body').on('click', '.remove-vault-method', function (event) {
     event.preventDefault();
 
     // get this id/var
@@ -549,7 +504,6 @@
     }
   });
 
-  //Use vaulted method
   $('body').on('click', '#submit-vaulted', function (event) {
     event.preventDefault();
 
@@ -667,4 +621,28 @@
 
     $('#braintree-new').submit();
   }
+
+  $(document).delegate('#button-payment-method', 'click', function() {
+    console.log("Teardown!");
+
+    $('#collapse-checkout-confirm .panel-body').empty();
+
+    {% if braintree_paypal_option %}
+      paypal_instance.teardown();
+    {% endif %}
+
+    {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}
+      threed_secure_instance.teardown();
+    {% endif %}
+
+    data_collector_instance.teardown();
+    hosted_instance.teardown();
+
+    $.each(cvv_instance, function (instance_object) {
+      instance_object.teardown();
+    });
+
+    $('body').off('click', '.braintree-button');
+    $('body').off('click', '#paypal-button');
+  });
 </script>

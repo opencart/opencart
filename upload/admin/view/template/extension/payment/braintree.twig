@@ -370,16 +370,156 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-3ds-full-liability-shift"><span data-toggle="tooltip" title="{{ help_3ds_full_liability_shift }}">{{ entry_3ds_full_liability_shift }}</span></label>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-unsupported-card">{{ entry_3ds_unsupported_card }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_full_liability_shift" id="input-3ds-full-liability-shift" class="form-control">
-                    {% if braintree_3ds_full_liability_shift == 1 %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
+                  <select name="braintree_3ds_unsupported_card" id="input-3ds-unsupported-card" class="form-control">
+                    {% if braintree_3ds_unsupported_card == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
                     {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-lookup-error">{{ entry_3ds_lookup_error }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_lookup_error" id="input-3ds-lookup-error" class="form-control">
+                    {% if braintree_3ds_lookup_error == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-lookup-enrolled">{{ entry_3ds_lookup_enrolled }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_lookup_enrolled" id="input-3ds-lookup-enrolled" class="form-control">
+                    {% if braintree_3ds_lookup_enrolled == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-not-participating">{{ entry_3ds_not_participating }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_not_participating" id="input-3ds-not-participating" class="form-control">
+                    {% if braintree_3ds_not_participating == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-unavailable">{{ entry_3ds_unavailable }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_unavailable" id="input-3ds-unavailable" class="form-control">
+                    {% if braintree_3ds_unavailable == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-signature-failed">{{ entry_3ds_signature_failed }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_signature_failed" id="input-3ds-signature-failed" class="form-control">
+                    {% if braintree_3ds_signature_failed == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-successful">{{ entry_3ds_successful }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_successful" id="input-3ds-successful" class="form-control">
+                    {% if braintree_3ds_successful == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-attempt-successful">{{ entry_3ds_attempt_successful }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_attempt_successful" id="input-3ds-attempt-successful" class="form-control">
+                    {% if braintree_3ds_attempt_successful == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-failed">{{ entry_3ds_failed }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_failed" id="input-3ds-failed" class="form-control">
+                    {% if braintree_3ds_failed == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-unable-to-auth">{{ entry_3ds_unable_to_auth }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_unable_to_auth" id="input-3ds-unable-to-auth" class="form-control">
+                    {% if braintree_3ds_unable_to_auth == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group three-ds-status">
+                <label class="col-sm-2 control-label" for="input-3ds-error">{{ entry_3ds_error }}</label>
+                <div class="col-sm-10">
+                  <select name="braintree_3ds_error" id="input-3ds-error" class="form-control">
+                    {% if braintree_3ds_error == 1 %}
+                      <option value="1" selected="selected">{{ text_accept }}</option>
+                      <option value="0">{{ text_decline }}</option>
+                    {% else %}
+                      <option value="1">{{ text_accept }}</option>
+                      <option value="0" selected="selected">{{ text_decline }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -736,6 +876,22 @@ $(document).on('click', '.transaction-id', function(event) {
 	event.preventDefault();
 
 	getTransaction($(this).attr('data-id'));
+});
+
+$(document).ready(function() {
+    if ($('#input-3ds-status').val() == 1) {
+        $('.three-ds-status').show();
+    } else {
+        $('.three-ds-status').hide();
+    }
+});
+
+$('#input-3ds-status').on('change', function() {
+    if ($(this).val() == 1) {
+        $('.three-ds-status').show();
+    } else {
+        $('.three-ds-status').hide();
+    }
 });
 
 function getTransaction(transaction_id) {

@@ -51,6 +51,8 @@ $_['text_preferred_li_2']			 = 'Accept payments from around the world';
 $_['text_preferred_li_3']			 = 'Improve conversion with PayPal One Touch';
 $_['text_preferred_li_4']			 = 'Achieve PCI DSS v3.0 SAQ-A compliance using Hosted Fields';
 $_['text_learn_more']			 	 = 'Learn more';
+$_['text_accept']			 	 	 = 'Accept';
+$_['text_decline']			 	 	 = 'Decline';
 
 // Column
 $_['column_void']					 = 'Void';
@@ -104,8 +106,6 @@ $_['entry_settled']					 = 'Settled';
 $_['entry_settling']				 = 'Settling';
 $_['entry_submitted_for_settlement'] = 'Submitted For Settlement';
 $_['entry_voided']					 = 'Voided';
-$_['entry_3ds_status']				 = 'Enable 3-D Secure';
-$_['entry_3ds_full_liability_shift'] = 'Full Liability Shift Required?';
 $_['entry_transaction_id']			 = 'Transaction ID';
 $_['entry_transaction_type']		 = 'Transaction Type';
 $_['entry_date_from']				 = 'Date From';
@@ -122,6 +122,19 @@ $_['entry_paypal_button_colour']	 = 'Button Colour';
 $_['entry_paypal_button_shape']		 = 'Button Shape';
 $_['entry_paypal_button_size']		 = 'Button Size';
 $_['entry_paypal_billing_agreement'] = 'Billing agreement description';
+$_['entry_3ds_status']				 = 'Enable 3-D Secure';
+
+$_['entry_3ds_unsupported_card'] 		= 'Unsupported Card<br />Default: Accept';
+$_['entry_3ds_lookup_error'] 			= 'Lookup Error<br />Default: Accept';
+$_['entry_3ds_lookup_enrolled'] 		= 'Lookup Enrolled<br />Default: Accept';
+$_['entry_3ds_not_participating'] 		= 'Auth Success, Issuer Not Participating<br />Default: Accept';
+$_['entry_3ds_unavailable'] 			= 'Auth Unavailable<br />Default: Accept';
+$_['entry_3ds_signature_failed'] 		= 'Auth Signature Verification Failed<br />Default: Decline';
+$_['entry_3ds_successful'] 				= 'Auth Successful<br />Default: Accept';
+$_['entry_3ds_attempt_successful'] 		= 'Auth Attempt Successful<br />Default: Accept';
+$_['entry_3ds_failed'] 					= 'Auth Failed<br />Default: Decline';
+$_['entry_3ds_unable_to_auth'] 			= 'Unable To Authenticate<br />Default: Accept';
+$_['entry_3ds_error'] 					= 'Authentication Error<br />Default: Accept';
 
 // Help
 $_['help_settlement_type']			 = 'Immediate will Submit For Settlement straight away. Deferred will set the transaction to Authorized and the merchant must Submit For Settlement manually in the OpenCart order details.';
@@ -131,7 +144,6 @@ $_['help_debug']					 = 'Enabling debug will write sensitive data to a log file.
 $_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
 $_['help_paypal_option']			 = 'If you have your PayPal account linked with Braintree you can display the PayPal payment option as well';
 $_['help_paypal_billing_agreement']	 = 'You can add a billing agreement description that will be shown to users in the PayPal window when opting to vault their PayPal account';
-$_['help_3ds_full_liability_shift']	 = 'Only transactions that pass 3D Secure checks and shift the liability (of charge backs) to the bank';
 
 // Button
 $_['button_void']					 = 'Void';

@@ -64,6 +64,8 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['text_braintree_learn'] = $this->language->get('text_braintree_learn');
 		$data['text_3ds'] = $this->language->get('text_3ds');
 		$data['text_cvv'] = $this->language->get('text_cvv');
+		$data['text_accept'] = $this->language->get('text_accept');
+		$data['text_decline'] = $this->language->get('text_decline');
 
 		$data['column_transaction_id'] = $this->language->get('column_transaction_id');
 		$data['column_amount'] = $this->language->get('column_amount');
@@ -97,8 +99,6 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['entry_settling'] = $this->language->get('entry_settling');
 		$data['entry_submitted_for_settlement'] = $this->language->get('entry_submitted_for_settlement');
 		$data['entry_voided'] = $this->language->get('entry_voided');
-		$data['entry_3ds_status'] = $this->language->get('entry_3ds_status');
-		$data['entry_3ds_full_liability_shift'] = $this->language->get('entry_3ds_full_liability_shift');
 		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
 		$data['entry_transaction_type'] = $this->language->get('entry_transaction_type');
 		$data['entry_date_from'] = $this->language->get('entry_date_from');
@@ -115,6 +115,18 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['entry_paypal_button_shape'] = $this->language->get('entry_paypal_button_shape');
 		$data['entry_paypal_button_size'] = $this->language->get('entry_paypal_button_size');
 		$data['entry_paypal_billing_agreement'] = $this->language->get('entry_paypal_billing_agreement');
+		$data['entry_3ds_status'] = $this->language->get('entry_3ds_status');
+		$data['entry_3ds_unsupported_card'] = $this->language->get('entry_3ds_unsupported_card');
+		$data['entry_3ds_lookup_error'] = $this->language->get('entry_3ds_lookup_error');
+		$data['entry_3ds_lookup_enrolled'] = $this->language->get('entry_3ds_lookup_enrolled');
+		$data['entry_3ds_not_participating'] = $this->language->get('entry_3ds_not_participating');
+		$data['entry_3ds_unavailable'] = $this->language->get('entry_3ds_unavailable');
+		$data['entry_3ds_signature_failed'] = $this->language->get('entry_3ds_signature_failed');
+		$data['entry_3ds_successful'] = $this->language->get('entry_3ds_successful');
+		$data['entry_3ds_attempt_successful'] = $this->language->get('entry_3ds_attempt_successful');
+		$data['entry_3ds_failed'] = $this->language->get('entry_3ds_failed');
+		$data['entry_3ds_unable_to_auth'] = $this->language->get('entry_3ds_unable_to_auth');
+		$data['entry_3ds_error'] = $this->language->get('entry_3ds_error');
 
 		$data['help_settlement_type'] = $this->language->get('help_settlement_type');
 		$data['help_vault'] = $this->language->get('help_vault');
@@ -123,7 +135,6 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_paypal_option'] = $this->language->get('help_paypal_option');
 		$data['help_paypal_billing_agreement'] = $this->language->get('help_paypal_billing_agreement');
-		$data['help_3ds_full_liability_shift'] = $this->language->get('help_3ds_full_liability_shift');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -346,10 +357,70 @@ class ControllerExtensionPaymentBraintree extends Controller {
 			$data['braintree_3ds_status'] = $this->config->get('braintree_3ds_status');
 		}
 
-		if (isset($this->request->post['braintree_3ds_full_liability_shift'])) {
-			$data['braintree_3ds_full_liability_shift'] = $this->request->post['braintree_3ds_full_liability_shift'];
+		if (isset($this->request->post['braintree_3ds_unsupported_card'])) {
+			$data['braintree_3ds_unsupported_card'] = $this->request->post['braintree_3ds_unsupported_card'];
 		} else {
-			$data['braintree_3ds_full_liability_shift'] = $this->config->get('braintree_3ds_full_liability_shift');
+			$data['braintree_3ds_unsupported_card'] = $this->config->get('braintree_3ds_unsupported_card');
+		}
+
+		if (isset($this->request->post['braintree_3ds_lookup_error'])) {
+			$data['braintree_3ds_lookup_error'] = $this->request->post['braintree_3ds_lookup_error'];
+		} else {
+			$data['braintree_3ds_lookup_error'] = $this->config->get('braintree_3ds_lookup_error');
+		}
+
+		if (isset($this->request->post['braintree_3ds_lookup_enrolled'])) {
+			$data['braintree_3ds_lookup_enrolled'] = $this->request->post['braintree_3ds_lookup_enrolled'];
+		} else {
+			$data['braintree_3ds_lookup_enrolled'] = $this->config->get('braintree_3ds_lookup_enrolled');
+		}
+
+		if (isset($this->request->post['braintree_3ds_not_participating'])) {
+			$data['braintree_3ds_not_participating'] = $this->request->post['braintree_3ds_not_participating'];
+		} else {
+			$data['braintree_3ds_not_participating'] = $this->config->get('braintree_3ds_not_participating');
+		}
+
+		if (isset($this->request->post['braintree_3ds_unavailable'])) {
+			$data['braintree_3ds_unavailable'] = $this->request->post['braintree_3ds_unavailable'];
+		} else {
+			$data['braintree_3ds_unavailable'] = $this->config->get('braintree_3ds_unavailable');
+		}
+
+		if (isset($this->request->post['braintree_3ds_signature_failed'])) {
+			$data['braintree_3ds_signature_failed'] = $this->request->post['braintree_3ds_signature_failed'];
+		} else {
+			$data['braintree_3ds_signature_failed'] = $this->config->get('braintree_3ds_signature_failed');
+		}
+
+		if (isset($this->request->post['braintree_3ds_successful'])) {
+			$data['braintree_3ds_successful'] = $this->request->post['braintree_3ds_successful'];
+		} else {
+			$data['braintree_3ds_successful'] = $this->config->get('braintree_3ds_successful');
+		}
+
+		if (isset($this->request->post['braintree_3ds_attempt_successful'])) {
+			$data['braintree_3ds_attempt_successful'] = $this->request->post['braintree_3ds_attempt_successful'];
+		} else {
+			$data['braintree_3ds_attempt_successful'] = $this->config->get('braintree_3ds_attempt_successful');
+		}
+
+		if (isset($this->request->post['braintree_3ds_failed'])) {
+			$data['braintree_3ds_failed'] = $this->request->post['braintree_3ds_failed'];
+		} else {
+			$data['braintree_3ds_failed'] = $this->config->get('braintree_3ds_failed');
+		}
+
+		if (isset($this->request->post['braintree_3ds_unable_to_auth'])) {
+			$data['braintree_3ds_unable_to_auth'] = $this->request->post['braintree_3ds_unable_to_auth'];
+		} else {
+			$data['braintree_3ds_unable_to_auth'] = $this->config->get('braintree_3ds_unable_to_auth');
+		}
+
+		if (isset($this->request->post['braintree_3ds_error'])) {
+			$data['braintree_3ds_error'] = $this->request->post['braintree_3ds_error'];
+		} else {
+			$data['braintree_3ds_error'] = $this->config->get('braintree_3ds_error');
 		}
 
 		if (isset($this->request->post['braintree_paypal_option'])) {
@@ -486,6 +557,30 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/payment/braintree', $data));
+	}
+
+	public function install() {
+		$this->load->model('setting/setting');
+
+		$defaults = array();
+
+		// 3D secure defaults
+		$defaults['braintree_3ds_unsupported_card'] = 1;
+		$defaults['braintree_3ds_lookup_error'] = 1;
+		$defaults['braintree_3ds_lookup_enrolled'] = 1;
+		$defaults['braintree_3ds_issuer_not_participating'] = 1;
+		$defaults['braintree_3ds_unavailable'] = 1;
+		$defaults['braintree_3ds_signature_failed'] = 0;
+		$defaults['braintree_3ds_successful'] = 1;
+		$defaults['braintree_3ds_attempt_successful'] = 1;
+		$defaults['braintree_3ds_failed'] = 0;
+		$defaults['braintree_3ds_unable_to_authenticate'] = 1;
+		$defaults['braintree_3ds_error'] = 1;
+
+		// Order Status defaults
+
+
+		$this->model_setting_setting->editSetting('braintree', $defaults);
 	}
 
 	public function order() {
@@ -960,6 +1055,8 @@ class ControllerExtensionPaymentBraintree extends Controller {
 
 			$this->model_extension_extension->install('payment', 'braintree');
 
+			$this->install();
+
 			$curl = curl_init($this->opencart_connect_url);
 
 			$this->load->model('localisation/country');
@@ -998,7 +1095,7 @@ class ControllerExtensionPaymentBraintree extends Controller {
 	public function preferredSolution() {
 		$this->load->language('extension/payment/braintree');
 
-		$data = [];
+		$data = array();
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['text_preferred_main'] = $this->language->get('text_preferred_main');
 		$data['text_learn_more'] = $this->language->get('text_learn_more');

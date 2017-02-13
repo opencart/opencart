@@ -305,53 +305,64 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		}
 
 		// If the $payment_method_token is not empty it indicates the vaulted payment used CVV or was set to none
-		if ($success && (($this->config->get('braintree_3ds_status') && $payment_method_token == '') || ($this->config->get('braintree_vault_cvv_3ds') && $payment_method_token == ''))) {
+		if ($success && (($this->config->get('braintree_3ds_status') && $payment_method_token == '') || ($this->config->get('braintree_vault_cvv_3ds') == '3ds' && $payment_method_token != ''))) {
 			$nonce_info = $this->model_extension_payment_braintree->getPaymentMethodNonce($this->gateway, $payment_method_nonce);
 
 			$this->model_extension_payment_braintree->log($nonce_info);
 
-			if ($nonce_info->type == 'CreditCard' && $nonce_info->details['cardType'] != 'American Express' && $this->config->get('braintree_3ds_status') == 1) {
+			if ($nonce_info->type == 'CreditCard' && $this->config->get('braintree_3ds_status') == 1) {
 				$create_sale['options']['three_d_secure'] = array(
 					'required' => true
 				);
 
 				$three_ds_info = $nonce_info->threeDSecureInfo;
 
-				//$three_ds_info->enrolled
-				//$three_ds_info->status
-
 				if (!empty($three_ds_info)) {
-					if ($this->config->get('braintree_3ds_full_liability_shift')) {
-						if ($three_ds_info->liabilityShifted == false) {
-							$success = false;
-						}
-					} else {
-						switch ($three_ds_info->status) {
-							case 'authenticate_signature_verification_failed':
-								$success = false;
-								break;
-							case 'authenticate_failed':
-								$success = false;
-								break;
-						}
-					}
+					$success = false;
 
-					if ($three_ds_info->liabilityShiftPossible == true && $three_ds_info->liabilityShifted == false) {
-						$this->model_extension_payment_braintree->log('Liability shift failed, details below');
-						$this->model_extension_payment_braintree->log($three_ds_info);
-
-						$success = false;
+					switch ($three_ds_info->status) {
+						case 'unsupported_card':
+							if ($nonce_info->details['cardType'] == 'American Express') {
+								$success = true;
+							} else {
+								$success = $this->config->get('braintree_3ds_unsupported_card');
+							}
+							break;
+						case 'lookup_error':
+							$success = $this->config->get('braintree_3ds_lookup_error');
+							break;
+						case 'lookup_enrolled':
+							$success = $this->config->get('braintree_3ds_lookup_enrolled');
+							break;
+						case 'authenticate_successful_issuer_not_participating':
+							$success = $this->config->get('braintree_3ds_not_participating');
+							break;
+						case 'authentication_unavailable':
+							$success = $this->config->get('braintree_3ds_unavailable');
+							break;
+						case 'authenticate_signature_verification_failed':
+							$success = $this->config->get('braintree_3ds_signature_failed');
+							break;
+						case 'authenticate_successful':
+							$success = $this->config->get('braintree_3ds_successful');
+							break;
+						case 'authenticate_attempt_successful':
+							$success = $this->config->get('braintree_3ds_attempt_successful');
+							break;
+						case 'authenticate_failed':
+							$success = $this->config->get('braintree_3ds_failed');
+							break;
+						case 'authenticate_unable_to_authenticate':
+							$success = $this->config->get('braintree_3ds_unable_to_auth');
+							break;
+						case 'authenticate_error':
+							$success = $this->config->get('braintree_3ds_error');
+							break;
 					}
 				} else {
-					$this->model_extension_payment_braintree->log('Transaction was not 3D Secured');
+					$this->model_extension_payment_braintree->log('Liability shift failed, nonce was not 3D Secured');
 
-					if ($this->config->get('braintree_3ds_full_liability_shift')) {
-						$this->model_extension_payment_braintree->log('Liability shift failed, nonce was not 3D Secured');
-
-						$success = false;
-					} else {
-						$this->model_extension_payment_braintree->log('Liability shift failed, but settings allow failure');
-					}
+					$success = false;
 				}
 			}
 		}

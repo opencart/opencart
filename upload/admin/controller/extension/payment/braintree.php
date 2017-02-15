@@ -2,10 +2,8 @@
 class ControllerExtensionPaymentBraintree extends Controller {
 	private $error = array();
 	private $gateway = null;
-	private $opencart_connect_url = 'https://staging.opencart.com/index.php?route=external/braintree_auth/connect';
-	private $opencart_retrieve_url = 'https://staging.opencart.com/index.php?route=external/braintree_auth/retrieve';
-//	private $opencart_connect_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/connect';
-//	private $opencart_retrieve_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/retrieve';
+	private $opencart_connect_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/connect';
+	private $opencart_retrieve_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/retrieve';
 
 	public function index() {
 		$this->load->language('extension/payment/braintree');
@@ -578,7 +576,22 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$defaults['braintree_3ds_error'] = 1;
 
 		// Order Status defaults
+		$defaults['braintree_authorization_expired_id'] = 14;
+		$defaults['braintree_authorized_id'] = 2;
+		$defaults['braintree_authorizing_id'] = 1;
+		$defaults['braintree_failed_id'] = 10;
+		$defaults['braintree_gateway_rejected_id'] = 8;
+		$defaults['braintree_processor_declined_id'] = 8;
+		$defaults['braintree_settled_id'] = 2;
+		$defaults['braintree_settling_id'] = 2;
+		$defaults['braintree_settlement_pending_id'] = 2;
+		$defaults['braintree_submitted_for_settlement_id'] = 2;
+		$defaults['braintree_voided_id'] = 16;
 
+		// PayPal options
+		$defaults['braintree_paypal_option'] = 1;
+		$defaults['braintree_paypal_button_size'] = 'small';
+		$defaults['braintree_paypal_button_shape'] = 'rect';
 
 		$this->model_setting_setting->editSetting('braintree', $defaults);
 	}

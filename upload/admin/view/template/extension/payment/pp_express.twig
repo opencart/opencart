@@ -232,20 +232,6 @@
                   <input type="text" name="pp_express_sort_order" value="{{ pp_express_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-incontext-disable">{{ entry_incontext }}</label>
-                <div class="col-sm-10">
-                  <select name="pp_express_incontext_disable" id="input-incontext-disable" class="form-control">
-                    {% if pp_express_incontext_disable %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
-                    {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
-                    {% endif %}
-                  </select>
-                </div>
-              </div>
             </div>
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
@@ -402,18 +388,34 @@
                     <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
+                  <br />{{ text_incontext_not_supported }}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-color"><span data-toggle="tooltip" title="{{ help_colour }}">{{ entry_colour }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_colour" value="{{ pp_express_colour }}" placeholder="{{ entry_colour }}" id="input-color" class="form-control" />
+                  <br />{{ text_incontext_not_supported }}
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logo }}">{{ entry_logo }}</span></label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                   <input type="hidden" name="pp_express_logo" value="{{ pp_express_logo }}" id="input-logo" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-incontext-disable">{{ entry_incontext }}</label>
+                <div class="col-sm-10">
+                  <select name="pp_express_incontext_disable" id="input-incontext-disable" class="form-control">
+                    {% if pp_express_incontext_disable %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
                 </div>
               </div>
             </div>

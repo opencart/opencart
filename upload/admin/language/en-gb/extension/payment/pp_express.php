@@ -24,6 +24,7 @@ $_['text_preferred_li_2']			 = 'Accept payments from around the world';
 $_['text_preferred_li_3']			 = 'Easily accept PayPal on multiple devices';
 $_['text_preferred_li_4']			 = 'Use in-context checkout so a user never has to leave your site';
 $_['text_connect_paypal']			 = 'Connect with PayPal';
+$_['text_incontext_not_supported']	 = '* Not supported with In-Context Checkout';
 
 // Entry
 $_['entry_username']				 = 'API Username';
@@ -52,8 +53,8 @@ $_['entry_processed_status']		 = 'Processed Status';
 $_['entry_refunded_status']			 = 'Refunded Status';
 $_['entry_reversed_status']			 = 'Reversed Status';
 $_['entry_voided_status']			 = 'Voided Status';
-$_['entry_allow_notes']				 = 'Allow notes';
-$_['entry_colour']	      			 = 'Page background colour';
+$_['entry_allow_notes']				 = 'Allow Notes';
+$_['entry_colour']	      			 = 'Page Background Colour';
 $_['entry_logo']					 = 'Logo';
 $_['entry_incontext']				 = 'Disable In-Context Checkout';
 

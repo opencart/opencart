@@ -37,6 +37,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['text_quick_setup'] = $this->language->get('text_quick_setup');
 		$data['text_show_quick_setup'] = $this->language->get('text_show_quick_setup');
 		$data['text_paypal_consent'] = $this->language->get('text_paypal_consent');
+		$data['text_incontext_not_supported'] = $this->language->get('text_incontext_not_supported');
 
 		$data['error_consent'] = $this->language->get('error_consent');
 

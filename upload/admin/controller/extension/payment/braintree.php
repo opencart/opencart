@@ -1062,7 +1062,7 @@ class ControllerExtensionPaymentBraintree extends Controller {
 	}
 
 	public function connectRedirect() {
-		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/braintree')) {
+		if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
 			// Install the module before doing the redirect
 			$this->load->model('extension/extension');
 
@@ -1117,7 +1117,7 @@ class ControllerExtensionPaymentBraintree extends Controller {
 		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
 		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
 
-		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/braintree')) {
+		if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
 			$data['connect_link'] = $this->url->link('extension/payment/braintree/connectRedirect', 'token=' . $this->session->data['token'], true);
 		} else {
 			// user does not have permission to modify, show no link

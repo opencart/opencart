@@ -768,7 +768,6 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info) {
-			
 			$data['api_id'] = $api_info['api_id'];
 			$data['api_key'] = $api_info['key'];
 			$data['api_ip'] = $this->request->server['REMOTE_ADDR'];

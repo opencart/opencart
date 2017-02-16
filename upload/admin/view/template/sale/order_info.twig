@@ -536,7 +536,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
-var token = '';
+var api_token = '';
 
 // Login to the API
 $.ajax({
@@ -558,8 +558,8 @@ $.ajax({
     		}
         }
 
-        if (json['user_token']) {
-			token = json['user_token'];
+        if (json['api_token']) {
+			api_token = json['api_token'];
 		}
 	},
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -576,19 +576,8 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 $('#button-history').on('click', function() {
-	/*
-	if (typeof verifyStatusChange == 'function'){
-		if (verifyStatusChange() == false){
-			return false;
-		} else{
-			addOrderInfo();
-		}
-	} else{
-		addOrderInfo();
-	}*/
-
 	$.ajax({
-		url: '{{ catalog }}index.php?route=api/order/history&token=' + token + '&store_id={{ store_id }}&order_id={{ order_id }}',
+		url: '{{ catalog }}index.php?route=api/order/history&api_token=' + api_token + '&store_id={{ store_id }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&override=' + ($('input[name=\'override\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
@@ -617,39 +606,6 @@ $('#button-history').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
-
-function changeStatus(){
-	var status_id = $('select[name="order_status_id"]').val();
-
-	$('#openbay-info').remove();
-
-	$.ajax({
-		url: 'index.php?route=extension/openbay/getorderinfo&user_token={{ user_token }}&order_id={{ order_id }}&status_id=' + status_id,
-		dataType: 'html',
-		success: function(html) {
-			$('#history').after(html);
-		}
-	});
-}
-
-function addOrderInfo(){
-	var status_id = $('select[name="order_status_id"]').val();
-
-	$.ajax({
-		url: 'index.php?route=extension/openbay/addorderinfo&user_token={{ user_token }}&order_id={{ order_id }}&status_id=' + status_id,
-		type: 'post',
-		dataType: 'html',
-		data: $(".openbay-data").serialize()
-	});
-}
-
-$(document).ready(function() {
-	changeStatus();
-});
-
-$('select[name="order_status_id"]').change(function(){
-	changeStatus();
 });
 //--></script> 
 </div>

@@ -160,7 +160,7 @@ $('#button-list').bind('click', function(e) {
   }
 
   $.ajax({
-    url: 'index.php?route=extension/openbay/amazonus/doBulkList&token={{ token }}',
+    url: 'index.php?route=extension/openbay/amazonus/doBulkList&user_token={{ user_token }}',
     data: request_data,
     dataType: 'json',
     type: 'POST',
@@ -193,7 +193,7 @@ $('#button-search').bind('click', function(e) {
     request_data += '&marketplace={{ filter_marketplace }}';
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/amazonus/dobulksearch&token={{ token }}',
+      url: 'index.php?route=extension/openbay/amazonus/dobulksearch&user_token={{ user_token }}',
       data: request_data,
       dataType: 'json',
       type: 'POST',

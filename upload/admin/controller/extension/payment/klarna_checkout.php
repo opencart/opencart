@@ -14,7 +14,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -96,7 +96,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_settlement'] = $this->language->get('tab_settlement');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/language');
 
@@ -169,21 +169,21 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/klarna_checkout', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/klarna_checkout', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/klarna_checkout', 'token=' . $this->session->data['token'], true);
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['action'] = $this->url->link('extension/payment/klarna_checkout', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		if (isset($this->request->post['klarna_checkout_debug'])) {
 			$data['klarna_checkout_debug'] = $this->request->post['klarna_checkout_debug'];
@@ -385,7 +385,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->language('extension/payment/klarna_checkout');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/klarna_checkout_order', $data);
@@ -512,7 +512,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['button_new_refund'] = $this->language->get('button_new_refund');
 
 		$data['order_ref'] = $order_reference['order_ref'];
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		$data['order_id'] = $this->request->get['order_id'];
 		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 

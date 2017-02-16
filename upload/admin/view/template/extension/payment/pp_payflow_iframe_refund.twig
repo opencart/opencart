@@ -43,7 +43,7 @@ function refund() {
     type: 'POST',
     dataType: 'json',
     data: {'transaction_reference': '{{ transaction_reference }}', 'amount': amount },
-    url: 'index.php?route=extension/payment/pp_payflow_iframe/dorefund&token={{ token }}',
+    url: 'index.php?route=extension/payment/pp_payflow_iframe/dorefund&user_token={{ user_token }}',
 
     beforeSend: function () {
       $('#button-refund').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');

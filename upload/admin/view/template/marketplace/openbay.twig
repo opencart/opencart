@@ -109,7 +109,7 @@
     setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/version&token={{ token }}',
+        url: 'index.php?route=extension/openbay/version&user_token={{ user_token }}',
         dataType: 'json',
         success: function (json) {
           $('#openbay-version-loading').hide();
@@ -142,7 +142,7 @@
     setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/notifications&token={{ token }}',
+        url: 'index.php?route=extension/openbay/notifications&user_token={{ user_token }}',
         dataType: 'json',
         success: function (json) {
           html = '<h4><i class="fa fa-info-circle"></i>  {{ text_title_messages }}</h4>';

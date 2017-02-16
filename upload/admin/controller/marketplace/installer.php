@@ -9,12 +9,12 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/installer', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'], true)
 		);
 		
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -33,7 +33,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -87,14 +87,14 @@ class ControllerMarketplaceInstaller extends Controller {
 				if (file_exists($file)) {
 					$json['step'][] = array(
 						'text' => $this->language->get('text_xml'),
-						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'user_token=' . $this->session->data['user_token'], true)),
 						'path' => $path
 					);
 
 					// Clear temporary files
 					$json['step'][] = array(
 						'text' => $this->language->get('text_remove'),
-						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'token=' . $this->session->data['token'], true)),
+						'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'user_token=' . $this->session->data['user_token'], true)),
 						'path' => $path
 					);
 				} else {
@@ -115,14 +115,14 @@ class ControllerMarketplaceInstaller extends Controller {
 						// Zip
 						$json['step'][] = array(
 							'text' => $this->language->get('text_unzip'),
-							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/unzip', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/unzip', 'user_token=' . $this->session->data['user_token'], true)),
 							'path' => $path
 						);
 
 						// FTP
 						$json['step'][] = array(
 							'text' => $this->language->get('text_ftp'),
-							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/ftp', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/ftp', 'user_token=' . $this->session->data['user_token'], true)),
 							'path' => $path
 						);
 
@@ -134,7 +134,7 @@ class ControllerMarketplaceInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.sql') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_sql'),
-									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/sql', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/sql', 'user_token=' . $this->session->data['user_token'], true)),
 									'path' => $path
 								);
 							}
@@ -143,7 +143,7 @@ class ControllerMarketplaceInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.xml') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_xml'),
-									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/xml', 'user_token=' . $this->session->data['user_token'], true)),
 									'path' => $path
 								);
 							}
@@ -152,7 +152,7 @@ class ControllerMarketplaceInstaller extends Controller {
 							if (substr($zip_name, 0, 11) == 'install.php') {
 								$json['step'][] = array(
 									'text' => $this->language->get('text_php'),
-									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/php', 'token=' . $this->session->data['token'], true)),
+									'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/php', 'user_token=' . $this->session->data['user_token'], true)),
 									'path' => $path
 								);
 							}
@@ -189,7 +189,7 @@ class ControllerMarketplaceInstaller extends Controller {
 						// Clear temporary files
 						$json['step'][] = array(
 							'text' => $this->language->get('text_remove'),
-							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'token=' . $this->session->data['token'], true)),
+							'href' => str_replace('&amp;', '&', $this->url->link('marketplace/installer/remove', 'user_token=' . $this->session->data['user_token'], true)),
 							'path' => $path
 						);
 

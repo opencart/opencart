@@ -11,12 +11,12 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -27,7 +27,7 @@ class ControllerMarketplaceExtension extends Controller {
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
@@ -51,7 +51,7 @@ class ControllerMarketplaceExtension extends Controller {
 				$data['categories'][] = array(
 					'code' => $extension,
 					'text' => $this->language->get('heading_title') . ' (' . count($files) .')',
-					'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->data['token'], true)
+					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}			
 		}

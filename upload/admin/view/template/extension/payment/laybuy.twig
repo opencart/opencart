@@ -424,7 +424,7 @@
 	$('input[name="category"]').autocomplete({
 		source: function(request, response) {
 			$.ajax({
-				url: 'index.php?route=catalog/category/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+				url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 				dataType: 'json',
 				success: function(json) {
 					response($.map(json, function(item) {
@@ -454,7 +454,7 @@
 	$('input[name="customer_group"]').autocomplete({
 		source: function(request, response) {
 			$.ajax({
-				url: 'index.php?route=extension/payment/laybuy/autocomplete&token={{ token }}&filter_customer_group=' +  encodeURIComponent(request),
+				url: 'index.php?route=extension/payment/laybuy/autocomplete&user_token={{ user_token }}&filter_customer_group=' +  encodeURIComponent(request),
 				dataType: 'json',
 				success: function(json) {
 					response($.map(json, function(item) {
@@ -484,7 +484,7 @@
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -504,7 +504,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=extension/payment/laybuy&token={{ token }}';
+	url = 'index.php?route=extension/payment/laybuy&user_token={{ user_token }}';
 
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 

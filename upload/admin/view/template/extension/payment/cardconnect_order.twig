@@ -85,7 +85,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#capture_amount').val()},
-				url: 'index.php?route=extension/payment/cardconnect/capture&token={{ token }}',
+				url: 'index.php?route=extension/payment/cardconnect/capture&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#button-capture, #capture_amount').hide();
 					$('#img_loading_capture').show();
@@ -134,7 +134,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#refund_amount').val()},
-				url: 'index.php?route=extension/payment/cardconnect/refund&token={{ token }}',
+				url: 'index.php?route=extension/payment/cardconnect/refund&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#button-refund, #refund_amount').hide();
 					$('#img_loading_refund').show();
@@ -182,7 +182,7 @@
 			type: 'POST',
 			dataType: 'json',
 			data: {'order_id': {{ order_id }}, 'retref': $(this).data('inquire-retref')},
-			url: 'index.php?route=extension/payment/cardconnect/inquire&token={{ token }}',
+			url: 'index.php?route=extension/payment/cardconnect/inquire&user_token={{ user_token }}',
 			beforeSend: function() {
 				button.hide();
 				button.next().show();
@@ -216,7 +216,7 @@
 			type: 'POST',
 			dataType: 'json',
 			data: {'order_id': {{ order_id }}, 'retref': $(this).data('void-retref')},
-			url: 'index.php?route=extension/payment/cardconnect/void&token={{ token }}',
+			url: 'index.php?route=extension/payment/cardconnect/void&user_token={{ user_token }}',
 			beforeSend: function() {
 				button.hide();
 				button.next().show();

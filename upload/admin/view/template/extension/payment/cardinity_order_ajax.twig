@@ -75,7 +75,7 @@ $('.button-command').on('click', function() {
 
 	if (confirm(confirm_text)) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/cardinity/refund&token={{ token }}',
+			url: 'index.php?route=extension/payment/cardinity/refund&user_token={{ user_token }}',
 			type: 'post',
 			data: {
 				payment_id: '{{ payment_id }}',

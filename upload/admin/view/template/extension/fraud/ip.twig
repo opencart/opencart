@@ -104,11 +104,11 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
+$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
 
 $('#button-ip-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/addip&token={{ token }}',
+		url: 'index.php?route=extension/fraud/ip/addip&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
@@ -128,7 +128,7 @@ $('#button-ip-add').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
 				
 				$('#input-ip').val('');
 			}
@@ -143,7 +143,7 @@ $('#ip').delegate('button', 'click', function() {
 	var element = this;
 	
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/removeip&token={{ token }}',
+		url: 'index.php?route=extension/fraud/ip/removeip&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($(element).val()),
@@ -163,7 +163,7 @@ $('#ip').delegate('button', 'click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&token={{ token }}');
+				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

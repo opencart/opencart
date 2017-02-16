@@ -14,7 +14,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,22 +63,22 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/cardinity', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/cardinity', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_cardinity_key'])) {
 			$data['payment_cardinity_key'] = $this->request->post['payment_cardinity_key'];
@@ -147,7 +147,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$this->load->language('extension/payment/cardinity');
 
 		$data['text_payment_info'] = $this->language->get('text_payment_info');
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		$data['order_id'] = $this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/cardinity_order', $data);
@@ -172,7 +172,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['button_refund'] = $this->language->get('button_refund');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$client = $this->model_extension_payment_cardinity->createClient(array(
 			'key'    => $this->config->get('payment_cardinity_key'),

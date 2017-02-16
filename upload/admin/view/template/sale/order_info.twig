@@ -360,7 +360,7 @@
   <script type="text/javascript"><!--
 $(document).delegate('#button-ip-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=user/api/addip&token={{ token }}&api_id={{ api_id }}',
+		url: 'index.php?route=user/api/addip&user_token={{ user_token }}&api_id={{ api_id }}',
 		type: 'post',
 		data: 'ip={{ api_ip }}',
 		dataType: 'json',
@@ -389,7 +389,7 @@ $(document).delegate('#button-ip-add', 'click', function() {
 
 $(document).delegate('#button-invoice', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/createinvoiceno&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-invoice').button('loading');
@@ -418,7 +418,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 
 $(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addreward&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addreward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -448,7 +448,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 
 $(document).delegate('#button-reward-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removereward&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removereward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -478,7 +478,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 
 $(document).delegate('#button-commission-add', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/addcommission&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -508,7 +508,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 
 $(document).delegate('#button-commission-remove', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/removecommission&token={{ token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order/removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -558,8 +558,8 @@ $.ajax({
     		}
         }
 
-        if (json['token']) {
-			token = json['token'];
+        if (json['user_token']) {
+			token = json['user_token'];
 		}
 	},
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -573,7 +573,7 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/order/history&token={{ token }}&order_id={{ order_id }}');
+$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 $('#button-history').on('click', function() {
 	/*
@@ -606,7 +606,7 @@ $('#button-history').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#history').load('index.php?route=sale/order/history&token={{ token }}&order_id={{ order_id }}');
+				$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
 				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
@@ -625,7 +625,7 @@ function changeStatus(){
 	$('#openbay-info').remove();
 
 	$.ajax({
-		url: 'index.php?route=extension/openbay/getorderinfo&token={{ token }}&order_id={{ order_id }}&status_id=' + status_id,
+		url: 'index.php?route=extension/openbay/getorderinfo&user_token={{ user_token }}&order_id={{ order_id }}&status_id=' + status_id,
 		dataType: 'html',
 		success: function(html) {
 			$('#history').after(html);
@@ -637,7 +637,7 @@ function addOrderInfo(){
 	var status_id = $('select[name="order_status_id"]').val();
 
 	$.ajax({
-		url: 'index.php?route=extension/openbay/addorderinfo&token={{ token }}&order_id={{ order_id }}&status_id=' + status_id,
+		url: 'index.php?route=extension/openbay/addorderinfo&user_token={{ user_token }}&order_id={{ order_id }}&status_id=' + status_id,
 		type: 'post',
 		dataType: 'html',
 		data: $(".openbay-data").serialize()

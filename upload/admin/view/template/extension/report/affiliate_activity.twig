@@ -84,7 +84,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/affiliate_activity&token={{ token }}';
+	url = 'index.php?route=report/affiliate_activity&user_token={{ user_token }}';
 
 	var filter_affiliate = $('input[name=\'filter_affiliate\']').val();
 
@@ -117,7 +117,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=marketing/affiliate/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=marketing/affiliate/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {

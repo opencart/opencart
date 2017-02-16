@@ -17,7 +17,7 @@ $.extend({
 
 function faq(){
     var route = $.getUrlVar('route');
-    var token = $.getUrlVar('token');
+    var token = $.getUrlVar('user_token');
 
     $.ajax({
         url: 'index.php?route=extension/openbay/faq&token='+token+'&qry_route='+route,
@@ -50,7 +50,7 @@ function faq(){
 
 function faqclose() {
     var route = $.getUrlVar('route');
-    var token = $.getUrlVar('token');
+    var token = $.getUrlVar('user_token');
 
     $('#faq').slideUp();
 

@@ -165,7 +165,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=sale/order&token={{ token }}';
+	url = 'index.php?route=sale/order&user_token={{ user_token }}';
 
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
@@ -210,7 +210,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

@@ -101,7 +101,7 @@ $('table').on('click', '.btn-success', function(e) {
 	$('#progress-text').html('');
 				
 	$.ajax({
-		url: 'index.php?route=extension/translation/install&token={{ token }}&code=' + $(element).val(),
+		url: 'index.php?route=extension/translation/install&user_token={{ user_token }}&code=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('table button').prop('disabled', true);	
@@ -188,7 +188,7 @@ $('table').on('click', '.btn-danger', function() {
 	var node = this;
 	
 	$.ajax({
-		url: 'index.php?route=extension/translation/uninstall&token={{ token }}&code=' + $(node).val(),
+		url: 'index.php?route=extension/translation/uninstall&user_token={{ user_token }}&code=' + $(node).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');

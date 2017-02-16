@@ -263,7 +263,7 @@
 </div>
 <script type="text/javascript"><!--
   function filter() {
-      url = 'index.php?route=extension/openbay/items&token={{ token }}';
+      url = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
 
       var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -344,7 +344,7 @@
     var request_data = $('input[name="selected[]"]:checked').serialize();
 
     if (request_data != '') {
-      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&token={{ token }}').submit();
+      $('#form').attr('action', 'index.php?route=extension/openbay/ebay/createBulk&user_token={{ user_token }}').submit();
     } else {
       alert('{{ error_select_items }}');
     }

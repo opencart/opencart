@@ -74,7 +74,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': {{ order_id }} },
-        url: 'index.php?route=extension/payment/realex_remote/void&token={{ token }}',
+        url: 'index.php?route=extension/payment/realex_remote/void&user_token={{ user_token }}',
         beforeSend: function() {
           $('#button-void').hide();
           $('#img_loading_void').show();
@@ -114,7 +114,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': {{ order_id }}, 'amount' : $('#capture_amount').val() },
-        url: 'index.php?route=extension/payment/realex_remote/capture&token={{ token }}',
+        url: 'index.php?route=extension/payment/realex_remote/capture&user_token={{ user_token }}',
         beforeSend: function() {
           $('#button_capture').hide();
           $('#capture_amount').hide();
@@ -169,7 +169,7 @@
         type:'POST',
         dataType: 'json',
         data: {'order_id': {{ order_id }}, 'amount' : $('#rebate_amount').val() },
-        url: 'index.php?route=extension/payment/realex_remote/rebate&token={{ token }}',
+        url: 'index.php?route=extension/payment/realex_remote/rebate&user_token={{ user_token }}',
         beforeSend: function() {
           $('#button-rebate').hide();
           $('#rebate_amount').hide();

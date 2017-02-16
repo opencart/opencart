@@ -149,7 +149,7 @@
 
   function load(){
         $.ajax({
-            url: 'index.php?route=extension/openbay/ebay/editLoad&token={{ token }}&product_id={{ product_id }}',
+            url: 'index.php?route=extension/openbay/ebay/editLoad&user_token={{ user_token }}&product_id={{ product_id }}',
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){
@@ -278,7 +278,7 @@
     var item_id = $('#item-id').val();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ebay/getItemRecommendations&token={{ token }}&item_id=' + item_id,
+      url: 'index.php?route=extension/openbay/ebay/getItemRecommendations&user_token={{ user_token }}&item_id=' + item_id,
       type: 'GET',
       dataType: 'json',
       success: function(data) {
@@ -309,7 +309,7 @@
   $('#button-save').bind('click', function() {
     $.ajax({
       type: 'POST',
-      url: 'index.php?route=extension/openbay/ebay/editSave&token={{ token }}',
+      url: 'index.php?route=extension/openbay/ebay/editSave&user_token={{ user_token }}',
       dataType: 'json',
       data: $("#form").serialize(),
       beforeSend: function(){
@@ -359,14 +359,14 @@
     if (pass == true) {
       $.ajax({
         type: 'GET',
-        url: 'index.php?route=extension/openbay/ebay/removeItemLink&token={{ token }}&product_id={{ product_id }}',
+        url: 'index.php?route=extension/openbay/ebay/removeItemLink&user_token={{ user_token }}&product_id={{ product_id }}',
         dataType: 'json',
         beforeSend: function(){
           $('#button-remove-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         },
         success: function () {
           alert('{{ text_alert_removed }}');
-          window.location = 'index.php?route=extension/openbay/items&token={{ token }}';
+          window.location = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) {
@@ -386,7 +386,7 @@
       if (item_id !== '') {
         $.ajax({
           type: 'GET',
-          url: 'index.php?route=extension/openbay/ebay/endItem&token={{ token }}&item_id=' + item_id,
+          url: 'index.php?route=extension/openbay/ebay/endItem&user_token={{ user_token }}&item_id=' + item_id,
           dataType: 'json',
           beforeSend: function(){
             $('#button-end-item').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
@@ -396,7 +396,7 @@
               alert(data.msg);
             } else {
               alert('{{ text_alert_ended }}');
-              window.location = 'index.php?route=extension/openbay/items&token={{ token }}';
+              window.location = 'index.php?route=extension/openbay/items&user_token={{ user_token }}';
             }
           },
           error: function (xhr, ajaxOptions, thrownError) {

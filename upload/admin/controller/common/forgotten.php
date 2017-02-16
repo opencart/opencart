@@ -3,7 +3,7 @@ class ControllerCommonForgotten extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
+		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->response->redirect($this->url->link('common/dashboard', '', true));
 		}
 
@@ -77,7 +77,7 @@ class ControllerCommonForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten', 'token=' . '', true)
+			'href' => $this->url->link('common/forgotten', 'user_token=' . '', true)
 		);
 
 		$data['action'] = $this->url->link('common/forgotten', '', true);

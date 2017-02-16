@@ -14,7 +14,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -129,22 +129,22 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/firstdata_remote', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'], true);
 		
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		if (isset($this->request->post['firstdata_remote_merchant_id'])) {
 			$data['firstdata_remote_merchant_id'] = $this->request->post['firstdata_remote_merchant_id'];
@@ -363,7 +363,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 				$data['button_void'] = $this->language->get('button_void');
 
 				$data['order_id'] = $this->request->get['order_id'];
-				$data['token'] = $this->request->get['token'];
+				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/firstdata_remote_order', $data);
 			}

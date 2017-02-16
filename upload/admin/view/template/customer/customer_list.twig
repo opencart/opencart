@@ -169,9 +169,9 @@
                     <div class="btn-group" data-toggle="tooltip" title="{{ button_login }}">
                       <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
                       <ul class="dropdown-menu pull-right">
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
+                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id=0" target="_blank">{{ text_default }}</a></li>
                         {% for store in stores %}
-                        <li><a href="index.php?route=customer/customer/login&token={{ token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
+                        <li><a href="index.php?route=customer/customer/login&user_token={{ user_token }}&customer_id={{ customer.customer_id }}&store_id={{ store.store_id }}" target="_blank">{{ store.name }}</a></li>
                         {% endfor %}
                       </ul>
                     </div>
@@ -201,7 +201,7 @@
   </div>
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=customer/customer&token={{ token }}';
+	url = 'index.php?route=customer/customer&user_token={{ user_token }}';
 	
 	var filter_name = $('input[name=\'filter_name\']').val();
 	
@@ -252,7 +252,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -272,7 +272,7 @@ $('input[name=\'filter_name\']').autocomplete({
 $('input[name=\'filter_email\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&token={{ token }}&filter_email=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_email=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {

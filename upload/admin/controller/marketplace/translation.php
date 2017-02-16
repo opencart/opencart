@@ -67,15 +67,15 @@ class ControllerMarketplaceTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/translation', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('marketplace/translation', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['refresh'] = $this->url->link('marketplace/translation/refresh', 'token=' . $this->session->data['token'] . $url, true);
+		$data['refresh'] = $this->url->link('marketplace/translation/refresh', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['translations'] = array();
 
@@ -121,7 +121,7 @@ class ControllerMarketplaceTranslation extends Controller {
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -143,7 +143,7 @@ class ControllerMarketplaceTranslation extends Controller {
 		$pagination->total = $translation_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('marketplace/translation', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/translation', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -190,7 +190,7 @@ class ControllerMarketplaceTranslation extends Controller {
 		if (!$json) {		
 			$json['text'] = $this->language->get('text_download');
 					
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/download', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -355,7 +355,7 @@ class ControllerMarketplaceTranslation extends Controller {
 				
 				$json['text'] = $this->language->get('text_unzip');
 				
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/unzip', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/unzip', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));		
 			}
 			
 			curl_close($curl);	
@@ -410,7 +410,7 @@ class ControllerMarketplaceTranslation extends Controller {
 			
 			$json['text'] = $this->language->get('text_move');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/move', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/move', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -494,7 +494,7 @@ class ControllerMarketplaceTranslation extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_db');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/db', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/db', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));		
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -543,7 +543,7 @@ class ControllerMarketplaceTranslation extends Controller {
 				
 			$json['text'] = $this->language->get('text_remove');
 				
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/remove', 'token=' . $this->session->data['token'] . '&code=' . $code, true));		
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/translation/remove', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true));		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

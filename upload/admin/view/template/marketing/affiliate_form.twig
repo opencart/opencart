@@ -332,7 +332,7 @@
   <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -389,11 +389,11 @@ $('#transaction').delegate('.pagination a', 'click', function(e) {
 	$('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=marketing/affiliate/transaction&token={{ token }}&affiliate_id={{ affiliate_id }}');
+$('#transaction').load('index.php?route=marketing/affiliate/transaction&user_token={{ user_token }}&affiliate_id={{ affiliate_id }}');
 
 $('#button-transaction').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketing/affiliate/addtransaction&token={{ token }}&affiliate_id={{ affiliate_id }}',
+		url: 'index.php?route=marketing/affiliate/addtransaction&user_token={{ user_token }}&affiliate_id={{ affiliate_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
@@ -413,7 +413,7 @@ $('#button-transaction').on('click', function() {
 			if (json['success']) {
 				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#transaction').load('index.php?route=marketing/affiliate/transaction&token={{ token }}&affiliate_id={{ affiliate_id }}');
+				$('#transaction').load('index.php?route=marketing/affiliate/transaction&user_token={{ user_token }}&affiliate_id={{ affiliate_id }}');
 	
 				$('#tab-transaction input[name=\'amount\']').val('');
 				$('#tab-transaction input[name=\'description\']').val('');			

@@ -61,12 +61,12 @@ class ControllerReportSaleOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('report/sale_order', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		$this->load->model('report/sale');
@@ -118,7 +118,7 @@ class ControllerReportSaleOrder extends Controller {
 
 		$data['button_filter'] = $this->language->get('button_filter');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/order_status');
 
@@ -168,7 +168,7 @@ class ControllerReportSaleOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/sale_order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

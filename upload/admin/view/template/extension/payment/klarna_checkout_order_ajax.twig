@@ -624,7 +624,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 
 	if (confirm(confirm_text)) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/klarna_checkout/transactionCommand&token={{ token }}&order_id={{ order_id }}',
+			url: 'index.php?route=extension/payment/klarna_checkout/transactionCommand&user_token={{ user_token }}&order_id={{ order_id }}',
 			type: 'post',
 			data: {
 				type: type,
@@ -674,7 +674,7 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
                             }
 
                             if (json['success']) {
-                                $('#history').load('index.php?route=sale/order/history&token={{ token }}&order_id={{ order_id }}');
+                                $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
                                 $('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 

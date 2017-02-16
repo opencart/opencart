@@ -11,12 +11,12 @@ class ControllerDesignTranslation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/translation', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -33,7 +33,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_reset'] = $this->language->get('button_reset');
 		
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 		
 		$data['stores'] = array();
 		
@@ -120,8 +120,8 @@ class ControllerDesignTranslation extends Controller {
 				'route'    => $result['route'],
 				'language' => $result['language'],
 				'key'      => $result['key'],
-				'edit'     => $this->url->link('design/translation/edit', 'token=' . $this->session->data['token'], true),
-				'delete'   => $this->url->link('design/translation/delete', 'token=' . $this->session->data['token'] . '&translation_id=' . $result['translation_id'], true)
+				'edit'     => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'], true),
+				'delete'   => $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'], true)
 			);			
 		}
 
@@ -129,7 +129,7 @@ class ControllerDesignTranslation extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('design/translation/history', 'token=' . $this->session->data['token'] . '&page={page}', true);
+		$pagination->url = $this->url->link('design/translation/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

@@ -36,7 +36,7 @@
 <script type="text/javascript"><!--
   $('#button-import').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=extension/openbay/ebay/importOrdersManual&token={{ token }}',
+      url: 'index.php?route=extension/openbay/ebay/importOrdersManual&user_token={{ user_token }}',
       beforeSend: function(){
         $('#button-import').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },

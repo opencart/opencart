@@ -113,10 +113,10 @@ class ControllerExtensionExtensionPayment extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/payment/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/payment/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

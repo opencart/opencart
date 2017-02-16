@@ -55,7 +55,7 @@ class ControllerToolUpload extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -118,15 +118,15 @@ class ControllerToolUpload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('tool/upload/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['uploads'] = array();
 
@@ -149,7 +149,7 @@ class ControllerToolUpload extends Controller {
 				'name'       => $result['name'],
 				'filename'   => $result['filename'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, true)
+				'download'   => $this->url->link('tool/upload/download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url, true)
 			);
 		}
 
@@ -171,7 +171,7 @@ class ControllerToolUpload extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -213,9 +213,9 @@ class ControllerToolUpload extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_filename'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=filename' . $url, true);
-		$data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_name'] = $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
+		$data['sort_filename'] = $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . '&sort=filename' . $url, true);
+		$data['sort_date_added'] = $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -239,7 +239,7 @@ class ControllerToolUpload extends Controller {
 		$pagination->total = $upload_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -313,12 +313,12 @@ class ControllerToolUpload extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'], true)
 			);
 
 			$data['header'] = $this->load->controller('common/header');

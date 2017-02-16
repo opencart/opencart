@@ -368,7 +368,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 	
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}&user_token={{ user_token }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',

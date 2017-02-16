@@ -568,7 +568,7 @@
   <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=setting/setting/theme&token={{ token }}&theme=' + this.value,
+		url: 'index.php?route=setting/setting/theme&user_token={{ user_token }}&theme=' + this.value,
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -589,7 +589,7 @@ $('select[name=\'config_theme\']').trigger('change');
 //--></script>   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

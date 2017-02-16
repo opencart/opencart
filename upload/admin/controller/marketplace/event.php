@@ -38,7 +38,7 @@ class ControllerMarketplaceEvent extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -70,7 +70,7 @@ class ControllerMarketplaceEvent extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 
 		$this->getList();
@@ -113,12 +113,12 @@ class ControllerMarketplaceEvent extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
 		$data['events'] = array();
@@ -142,8 +142,8 @@ class ControllerMarketplaceEvent extends Controller {
 				'action'     => $result['action'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'enable'     => $this->url->link('marketplace/event/enable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
-				'disable'    => $this->url->link('marketplace/event/disable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
+				'enable'     => $this->url->link('marketplace/event/enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'], true),
+				'disable'    => $this->url->link('marketplace/event/disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'], true),
 				'enabled'    => $result['status']
 			);
 		}
@@ -196,11 +196,11 @@ class ControllerMarketplaceEvent extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_code'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
-		$data['sort_trigger'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=trigger' . $url, true);
-		$data['sort_action'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=action' . $url, true);
-		$data['sort_status'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-		$data['sort_date_added'] = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_code'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url, true);
+		$data['sort_trigger'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=trigger' . $url, true);
+		$data['sort_action'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url, true);
+		$data['sort_status'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
+		$data['sort_date_added'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -216,7 +216,7 @@ class ControllerMarketplaceEvent extends Controller {
 		$pagination->total = $event_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('marketplace/event', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

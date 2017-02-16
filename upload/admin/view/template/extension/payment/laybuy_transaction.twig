@@ -253,8 +253,8 @@ $.ajax({
     		}
         }
 
-        if (json['token']) {
-			token = json['token'];
+        if (json['user_token']) {
+			token = json['user_token'];
 		}
 	},
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -267,7 +267,7 @@ $('#cancel-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=extension/payment/laybuy/cancel&token={{ token }}&id={{ id }}&source=extension',
+		url: 'index.php?route=extension/payment/laybuy/cancel&user_token={{ user_token }}&id={{ id }}&source=extension',
 		type: 'post',
 		dataType: 'json',
 		cache: false,
@@ -319,7 +319,7 @@ $('#revise-plan').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=extension/payment/laybuy/revise&token={{ token }}&id={{ id }}&source=extension',
+		url: 'index.php?route=extension/payment/laybuy/revise&user_token={{ user_token }}&id={{ id }}&source=extension',
 		type: 'post',
 		data: $('#payment-type, #amount, #down-payment, #months'),
 		dataType: 'json',

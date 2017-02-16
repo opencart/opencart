@@ -14,7 +14,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -40,22 +40,22 @@ class ControllerExtensionDashboardActivity extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/activity', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/dashboard/activity', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/dashboard/activity', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/dashboard/activity', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true);
 
 		if (isset($this->request->post['dashboard_activity_width'])) {
 			$data['dashboard_activity_width'] = $this->request->post['dashboard_activity_width'];
@@ -103,7 +103,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['activities'] = array();
 
@@ -122,10 +122,10 @@ class ControllerExtensionDashboardActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', true),
-				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', true),
-				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', true),
-				$this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=', true)
+				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=', true),
+				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=', true),
+				$this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=', true),
+				$this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=', true)
 			);
 
 			$data['activities'][] = array(

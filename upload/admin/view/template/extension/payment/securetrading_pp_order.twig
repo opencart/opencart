@@ -89,7 +89,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}},
-				url: 'index.php?route=extension/payment/securetrading_pp/void&token={{ token }}',
+				url: 'index.php?route=extension/payment/securetrading_pp/void&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#btn_void').hide();
 					$('#img_loading_void').show();
@@ -129,7 +129,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#release_amount').val()},
-				url: 'index.php?route=extension/payment/securetrading_pp/release&token={{ token }}',
+				url: 'index.php?route=extension/payment/securetrading_pp/release&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#btn_release').hide();
 					$('#release_amount').hide();
@@ -184,7 +184,7 @@
 				type: 'POST',
 				dataType: 'json',
 				data: {'order_id': {{ order_id }}, 'amount': $('#rebate_amount').val()},
-				url: 'index.php?route=extension/payment/securetrading_pp/rebate&token={{ token }}',
+				url: 'index.php?route=extension/payment/securetrading_pp/rebate&user_token={{ user_token }}',
 				beforeSend: function() {
 					$('#btn_rebate').hide();
 					$('#rebate_amount').hide();

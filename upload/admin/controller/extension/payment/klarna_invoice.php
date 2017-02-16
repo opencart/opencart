@@ -29,7 +29,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -86,22 +86,22 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/klarna_invoice', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/klarna_invoice', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		$data['countries'] = array();
 
@@ -157,7 +157,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 			$data['log'] = '';
 		}
 
-		$data['clear'] = $this->url->link('extension/payment/klarna_invoice/clear', 'token=' . $this->session->data['token'], true);
+		$data['clear'] = $this->url->link('extension/payment/klarna_invoice/clear', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -232,6 +232,6 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 
 		$this->session->data['success'] = $this->language->get('text_success');
 
-		$this->response->redirect($this->url->link('extension/payment/klarna_invoice', 'token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('extension/payment/klarna_invoice', 'user_token=' . $this->session->data['user_token'], true));
 	}
 }

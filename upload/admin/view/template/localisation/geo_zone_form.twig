@@ -105,7 +105,7 @@ function addGeoZone() {
 
 function country(element, index, zone_id) {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + element.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'zone_to_geo_zone[' + index + '][country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

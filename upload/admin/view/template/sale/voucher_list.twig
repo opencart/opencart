@@ -117,7 +117,7 @@
   <script type="text/javascript"><!--
 $('#button-send').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/voucher/send&token={{ token }}',
+		url: 'index.php?route=sale/voucher/send&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: $('input[name^=\'selected\']:checked'),

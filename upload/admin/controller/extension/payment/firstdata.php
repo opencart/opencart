@@ -14,7 +14,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -114,22 +114,22 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/firstdata', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata', 'user_token=' . $this->session->data['user_token'], true);
 		
-		$data['cancel'] = $this->url->link('marketplace/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 
 		if (isset($this->request->post['payment_firstdata_merchant_id'])) {
 			$data['payment_firstdata_merchant_id'] = $this->request->post['payment_firstdata_merchant_id'];
@@ -276,8 +276,8 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 
 				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('payment_firstdata_secret')));
 
-				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'token=' . $this->session->data['token'], true);
-				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'token=' . $this->session->data['token'], true);
+				$data['void_url'] = $this->url->link('extension/payment/firstdata/void', 'user_token=' . $this->session->data['user_token'], true);
+				$data['capture_url'] = $this->url->link('extension/payment/firstdata/capture', 'user_token=' . $this->session->data['user_token'], true);
 				$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/firstdata/notify';
 
 				if ($this->config->get('payment_firstdata_live_demo') == 1) {
@@ -336,7 +336,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
 
 				$data['order_id'] = $this->request->get['order_id'];
-				$data['token'] = $this->request->get['token'];
+				$data['user_token'] = $this->request->get['user_token'];
 
 				return $this->load->view('extension/payment/firstdata_order', $data);
 			}
@@ -358,7 +358,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->session->data['void_success'] = $this->language->get('success_void');
 		}
 
-		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token'], true));
 	}
 
 	public function capture() {
@@ -376,7 +376,7 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->session->data['capture_success'] = $this->language->get('success_capture');
 		}
 
-		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&token=' . $this->session->data['token'], true));
+		$this->response->redirect($this->url->link('sale/order/info', 'order_id=' . $this->request->post['order_id'] . '&user_token=' . $this->session->data['user_token'], true));
 	}
 
 	protected function validate() {

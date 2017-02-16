@@ -42,7 +42,7 @@ class ControllerApiLogin extends Controller {
 				$this->session->start('default');
 
 				// Create Token
-				$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);
+				$json['api_token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);
 			} else {
 				$json['error']['key'] = $this->language->get('error_key');
 			}

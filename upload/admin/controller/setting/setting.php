@@ -20,7 +20,7 @@ class ControllerSettingSetting extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -106,6 +106,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_processing_status'] = $this->language->get('entry_processing_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
 		$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
+		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
 		$data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
@@ -328,17 +329,17 @@ class ControllerSettingSetting extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_stores'),
-			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -349,11 +350,11 @@ class ControllerSettingSetting extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['token'] = $this->session->data['token'];
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->post['config_meta_title'])) {
 			$data['config_meta_title'] = $this->request->post['config_meta_title'];

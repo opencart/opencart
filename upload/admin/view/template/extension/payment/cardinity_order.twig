@@ -5,7 +5,7 @@
 <script type="text/javascript"><!--
 function getPayment() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/cardinity/getPayment&token={{ token }}',
+		url: 'index.php?route=extension/payment/cardinity/getPayment&user_token={{ user_token }}',
 		dataType: 'html',
 		data: {
 			order_id: '{{ order_id }}'

@@ -104,10 +104,10 @@ class ControllerExtensionExtensionCaptcha extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get('captcha_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/extension/captcha/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/captcha/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->link('extension/extension/captcha/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/extension/captcha/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/captcha/' . $extension, 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->link('extension/captcha/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

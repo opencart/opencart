@@ -660,7 +660,7 @@
   <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/customfield&token={{ token }}&customer_group_id=' + this.value,
+		url: 'index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();
@@ -899,7 +899,7 @@ function addAddress() {
   <script type="text/javascript"><!--
 function country(element, index, zone_id) {
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&token={{ token }}&country_id=' + element.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -947,13 +947,13 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer/history&token={{ token }}&customer_id={{ customer_id }}');
+$('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-history').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer/addhistory&token={{ token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer/addhistory&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
@@ -973,7 +973,7 @@ $('#button-history').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#history').load('index.php?route=customer/customer/history&token={{ token }}&customer_id={{ customer_id }}');
+				$('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-history textarea[name=\'comment\']').val('');
 			}
@@ -988,13 +988,13 @@ $('#transaction').delegate('.pagination a', 'click', function(e) {
 	$('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=customer/customer/transaction&token={{ token }}&customer_id={{ customer_id }}');
+$('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-transaction').on('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-		url: 'index.php?route=customer/customer/addtransaction&token={{ token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer/addtransaction&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
@@ -1014,7 +1014,7 @@ $('#button-transaction').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#transaction').load('index.php?route=customer/customer/transaction&token={{ token }}&customer_id={{ customer_id }}');
+				$('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-transaction input[name=\'amount\']').val('');
 				$('#tab-transaction input[name=\'description\']').val('');
@@ -1030,13 +1030,13 @@ $('#reward').delegate('.pagination a', 'click', function(e) {
 	$('#reward').load(this.href);
 });
 
-$('#reward').load('index.php?route=customer/customer/reward&token={{ token }}&customer_id={{ customer_id }}');
+$('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-reward').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer/addreward&token={{ token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer/addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
@@ -1056,7 +1056,7 @@ $('#button-reward').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-reward').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#reward').load('index.php?route=customer/customer/reward&token={{ token }}&customer_id={{ customer_id }}');
+				$('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-reward input[name=\'points\']').val('');
 				$('#tab-reward input[name=\'description\']').val('');
@@ -1071,7 +1071,7 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=customer/customer/ip&token={{ token }}&customer_id={{ customer_id }}');
+$('#ip').load('index.php?route=customer/customer/ip&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
 	var node = this;
@@ -1091,7 +1091,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload/upload&token={{ token }}',
+				url: 'index.php?route=tool/upload/upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

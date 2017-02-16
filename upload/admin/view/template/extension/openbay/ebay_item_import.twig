@@ -73,7 +73,7 @@
       if (import_categories == undefined){ import_categories = 0; }else{ import_categories = 1; }
 
       $.ajax({
-        url: 'index.php?route=extension/openbay/ebay/importItems&token={{ token }}&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
+        url: 'index.php?route=extension/openbay/ebay/importItems&user_token={{ user_token }}&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
         beforeSend: function(){
           $('#button-import').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         },

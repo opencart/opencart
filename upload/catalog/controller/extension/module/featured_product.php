@@ -14,7 +14,7 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 		
 		$results = array();
 		
-		$this->load->model('catalog/pro');
+		$this->load->model('catalog/cms');
 		
 			if (isset($this->request->get['manufacturer_id'])) {
 					
@@ -23,7 +23,7 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 						'limit' => $setting['limit']
 					);
 					
-					$results = $this->model_catalog_pro->getProductRelatedByManufacturer($filter_data);
+					$results = $this->model_catalog_cms->getProductRelatedByManufacturer($filter_data);
 				
 			} else {
 				
@@ -36,7 +36,7 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 							'limit' => $setting['limit']
 						);
 						
-					$results = $this->model_catalog_pro->getProductRelatedByCategory($filter_data);
+					$results = $this->model_catalog_cms->getProductRelatedByCategory($filter_data);
 								
 					}
 			}

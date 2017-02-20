@@ -1,14 +1,14 @@
 <?php
-class ControllerExtensionModulePPButton extends Controller {
+class ControllerExtensionModulePPBraintreeButton extends Controller {
 	public function index() {
-		$this->load->language('extension/module/pp_button');
+		$this->load->language('extension/module/pp_braintree_button');
 
 		$this->load->model('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_button', $this->request->post);
+			$this->model_setting_setting->editSetting('pp_braintree_button', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -50,28 +50,28 @@ class ControllerExtensionModulePPButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/module/pp_braintree_button', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/module/pp_button', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/module/pp_braintree_button', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
-		if (isset($this->request->post['pp_button_status'])) {
-			$data['pp_button_status'] = $this->request->post['pp_button_status'];
+		if (isset($this->request->post['pp_braintree_button_status'])) {
+			$data['pp_braintree_button_status'] = $this->request->post['pp_braintree_button_status'];
 		} else {
-			$data['pp_button_status'] = $this->config->get('pp_button_status');
+			$data['pp_braintree_button_status'] = $this->config->get('pp_braintree_button_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/module/pp_button', $data));
+		$this->response->setOutput($this->load->view('extension/module/pp_braintree_button', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module/pp_button')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/pp_braintree_button')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

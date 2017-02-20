@@ -1,0 +1,82 @@
+<div id="braintree-alert" class="alert alert-danger" style="display:none;"></div>
+<div class="panel panel-default">
+  <div class="panel-body" style="text-align: right;">
+    <div class="buttons">
+      <div class="pull-right">
+        <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ braintree_paypal_button_colour }}" data-size="{{ braintree_paypal_button_size }}" data-shape="{{ braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var device_data_value = '';
+  var data_collector_instance;
+  var client_instance;
+
+  $.getScript('https://js.braintreegateway.com/web/3.6.3/js/client.min.js', function() {
+    $.getScript('https://js.braintreegateway.com/web/3.6.3/js/paypal.min.js');
+
+    braintree.client.create({
+      authorization: '{{ client_token }}'
+    }, function (client_error, braintree_client) {
+      console.log("Create Client");
+
+      if (client_error) {
+        console.error(client_error);
+        return;
+      }
+
+      braintree.paypal.create({
+        client: braintree_client
+      }, function (error, instance) {
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        $('#paypal-button').prop('disabled', false);
+
+        $('body').on('click', '#paypal-button', function (event) {
+          event.preventDefault();
+
+          $('#paypal-button').attr('disabled', true);
+
+          instance.tokenize({
+            flow: "checkout",
+            {% if braintree_settlement_immediate == 1 %}
+            intent: "sale",
+            {% else %}
+            intent: "authorize",
+            {% endif %}
+            amount: {{ total }},
+            currency: '{{ currency_code }}',
+            enableShippingAddress: true,
+            shippingAddressEditable: true
+          }, function (tokenize_error, payload) {
+            if (tokenize_error) {
+              $('#paypal-button').prop('disabled', false);
+
+              switch (tokenize_error.code) {
+                case 'PAYPAL_POPUP_CLOSED':
+                  console.error('Customer closed PayPal popup.');
+                  break;
+                case 'PAYPAL_ACCOUNT_TOKENIZATION_FAILED':
+                  console.error('PayPal tokenization failed. See details:', tokenize_error.details);
+                  break;
+                case 'PAYPAL_FLOW_FAILED':
+                  console.error('Unable to initialize PayPal flow. Are your options correct?', tokenize_error.details);
+                  break;
+                default:
+                  console.error('Error!', tokenize_error);
+              }
+
+              return;
+            } else {
+              //submitOrder(payload.nonce);
+            }
+          });
+        });
+      });
+    });
+  });
+</script>

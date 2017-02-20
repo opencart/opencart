@@ -16,6 +16,16 @@ class ControllerExtensionModulePPButton extends Controller {
 				$data['mobile'] = false;
 			}
 
+			$data['pp_express_incontext_disable'] = $this->config->get('pp_express_incontext_disable');
+
+			if ($this->config->get('pp_express_test') == 1) {
+				$data['username'] = $this->config->get('pp_express_sandbox_username');
+				$data['environment'] = 'sandbox';
+			} else {
+				$data['username'] = $this->config->get('pp_express_username');
+				$data['environment'] = 'live';
+			}
+
 			$data['payment_url'] = $this->url->link('extension/payment/pp_express/express', '', true);
 
 			return $this->load->view('extension/module/pp_button', $data);

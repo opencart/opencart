@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -29,7 +29,7 @@ $_['entry_meta_h1'] 	     = 'HTML-тег H1';
 $_['entry_meta_keyword'] 	 = 'Мета-тег Keywords';
 $_['entry_meta_description'] = 'Мета-тег Description';
 $_['entry_keyword']          = 'SEO URL';
-$_['entry_bottom']           = 'Отображить в футере';
+$_['entry_bottom']           = 'Показывать в футере';
 $_['entry_status']           = 'Статус';
 $_['entry_noindex']          = 'Индексация';
 $_['entry_sort_order']       = 'Порядок сортировки';

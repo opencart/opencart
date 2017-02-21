@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -120,7 +120,7 @@ $_['tab_ftp']                       = 'FTP';
 $_['tab_ip']                        = 'IP адрес';
 $_['tab_links']                     = 'Связи';
 $_['tab_log']                       = 'Лог';
-$_['tab_image']                     = 'Изображение';
+$_['tab_image']                     = 'Изображения';
 $_['tab_option']                    = 'Опции';
 $_['tab_server']                    = 'Сервер';
 $_['tab_store']                     = 'Магазин';

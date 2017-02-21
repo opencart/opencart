@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -25,8 +25,8 @@ $_['column_description']          = 'Описание';
 $_['column_action']     	      = 'Действие';
 
 // Entry
-$_['image_description']       	  = 'Удаление кэш файлов изображений:';
-$_['system_description']     	  = 'Удаление системных кэш файлов:';
+$_['image_description']       	  = 'Удаление кэша изображений';
+$_['system_description']     	  = 'Удаление кэша системных файлов';
 
 // Error 
 $_['error_permission']  		  = 'У Вас нет прав для управления кэшем!';

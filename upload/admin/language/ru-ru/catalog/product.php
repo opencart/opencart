@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -70,6 +70,7 @@ $_['entry_length']           = 'Длина';
 $_['entry_width']            = 'Ширина';
 $_['entry_height']           = 'Высота';
 $_['entry_image']            = 'Изображение';
+$_['entry_additional_image'] = 'Дополнительные изображения';
 $_['entry_customer_group']   = 'Группа покупателей';
 $_['entry_date_start']       = 'Дата начала';
 $_['entry_date_end']         = 'Дата окончания';

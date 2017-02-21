@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -8,19 +8,20 @@
 $_['heading_title']      = 'Яндекс.Маркет';
 
 // Text
+$_['text_extension']   	 = 'Расширения';
 $_['text_feed']          = 'Каналы продвижения';
 $_['text_success']       = 'Настройки успешно изменены!';
 $_['text_edit']        	 = 'Редактирование';
 
 // Entry
-$_['entry_status']       = 'Статус:';
-$_['entry_data_feed']    = 'Адрес:';
-$_['entry_shopname']     = 'Название магазина:';
-$_['entry_company']      = 'Компания:';
-$_['entry_category']     = 'Категории:';
-$_['entry_currency']     = 'Валюта предложений:';
-$_['entry_in_stock']     = 'Статус &quot;В наличии&quot;:';
-$_['entry_out_of_stock'] = 'Статус &quot;Нет в наличии&quot;:';
+$_['entry_status']       = 'Статус';
+$_['entry_data_feed']    = 'Адрес';
+$_['entry_shopname']     = 'Название магазина';
+$_['entry_company']      = 'Компания';
+$_['entry_category']     = 'Категории';
+$_['entry_currency']     = 'Валюта предложений';
+$_['entry_in_stock']     = 'Статус &quot;В наличии&quot;';
+$_['entry_out_of_stock'] = 'Статус &quot;Нет в наличии&quot;';
 
 //Help
 $_['help_shopname']           = 'Короткое название магазина (название, которое выводится в списке найденных на Яндекс.Маркете товаров. Не должно содержать более 20 символов).';

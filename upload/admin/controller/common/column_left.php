@@ -640,180 +640,31 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 			
-			// Report
+			// Reports
 			$report = array();
-			
-			// Report Sales
-			$report_sale = array();	
-			
-			if ($this->user->hasPermission('access', 'report/sale_order')) {
-				$report_sale[] = array(
-					'name'	   => $this->language->get('text_report_sale_order'),
-					'href'     => $this->url->link('report/sale_order', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/sale_tax')) {
-				$report_sale[] = array(
-					'name'	   => $this->language->get('text_report_sale_tax'),
-					'href'     => $this->url->link('report/sale_tax', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()	
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/sale_shipping')) {
-				$report_sale[] = array(
-					'name'	   => $this->language->get('text_report_sale_shipping'),
-					'href'     => $this->url->link('report/sale_shipping', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()	
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/sale_return')) {	
-				$report_sale[] = array(
-					'name'	   => $this->language->get('text_report_sale_return'),
-					'href'     => $this->url->link('report/sale_return', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);	
-			}
-			
-			if ($this->user->hasPermission('access', 'report/sale_coupon')) {		
-				$report_sale[] = array(
-					'name'	   => $this->language->get('text_report_sale_coupon'),
-					'href'     => $this->url->link('report/sale_coupon', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-			
-			if ($report_sale) {
-				$report[] = array(
-					'name'	   => $this->language->get('text_report_sale'),
-					'href'     => '',
-					'children' => $report_sale
-				);			
-			}
-			
-			// Report Products			
-			$report_product = array();	
-			
-			if ($this->user->hasPermission('access', 'report/product_viewed')) {
-				$report_product[] = array(
-					'name'	   => $this->language->get('text_report_product_viewed'),
-					'href'     => $this->url->link('report/product_viewed', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()	
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/product_purchased')) {
-				$report_product[] = array(
-					'name'	   => $this->language->get('text_report_product_purchased'),
-					'href'     => $this->url->link('report/product_purchased', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()	
-				);
-			}
-			
-			if ($report_product) {	
-				$report[] = array(
-					'name'	   => $this->language->get('text_report_product'),
-					'href'     => '',
-					'children' => $report_product	
-				);		
-			}
-			
-			// Report Customers				
-			$report_customer = array();
-			
-			if ($this->user->hasPermission('access', 'report/customer_online')) {	
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_online'),
-					'href'     => $this->url->link('report/customer_online', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/customer_activity')) {
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_activity'),
-					'href'     => $this->url->link('report/customer_activity', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
 
-			if ($this->user->hasPermission('access', 'report/customer_search')) {
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_search'),
-					'href'     => $this->url->link('report/customer_search', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+			$this->load->model('setting/extension');
 
-			if ($this->user->hasPermission('access', 'report/customer_order')) {	
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_order'),
-					'href'     => $this->url->link('report/customer_order', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+			// Get a list of installed modules
+			$extensions = $this->model_setting_extension->getInstalled('report');
 			
-			if ($this->user->hasPermission('access', 'report/customer_reward')) {
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_reward'),
-					'href'     => $this->url->link('report/customer_reward', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
+			// Add all the modules which have multiple settings for each module
+			foreach ($extensions as $code) {
+				if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
+					$report[] = array(
+						'code'       => $code,
+						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order')
+					);
+				}
 			}
-			
-			if ($this->user->hasPermission('access', 'report/customer_credit')) {
-				$report_customer[] = array(
-					'name'	   => $this->language->get('text_report_customer_credit'),
-					'href'     => $this->url->link('report/customer_credit', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
+	
+			$sort_order = array();
+	
+			foreach ($report as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
 			}
-			
-			if ($report_customer) {	
-				$report[] = array(
-					'name'	   => $this->language->get('text_report_customer'),
-					'href'     => '',
-					'children' => $report_customer	
-				);
-			}
-			
-			// Report Marketing			
-			$report_marketing = array();			
-			
-			if ($this->user->hasPermission('access', 'report/marketing')) {
-				$report_marketing[] = array(
-					'name'	   => $this->language->get('text_report_marketing'),
-					'href'     => $this->url->link('report/marketing', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-			
-			if ($this->user->hasPermission('access', 'report/affiliate')) {
-				$report_marketing[] = array(
-					'name'	   => $this->language->get('text_report_affiliate'),
-					'href'     => $this->url->link('report/affiliate', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);		
-			}
-			
-			if ($this->user->hasPermission('access', 'report/affiliate_activity')) {
-				$report_marketing[] = array(
-					'name'	   => $this->language->get('text_report_affiliate_activity'),
-					'href'     => $this->url->link('report/affiliate_activity', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);		
-			}
-			
-			if ($report_marketing) {	
-				$report[] = array(
-					'name'	   => $this->language->get('text_report_marketing'),
-					'href'     => '',
-					'children' => $report_marketing	
-				);		
-			}
+	
+			array_multisort($sort_order, SORT_ASC, $report);		
 			
 			if ($report) {	
 				$data['menus'][] = array(
@@ -823,7 +674,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'href'     => '',
 					'children' => $report
 				);	
-			}		
+			}			
 			
 			// Stats
 			$data['text_complete_status'] = $this->language->get('text_complete_status');

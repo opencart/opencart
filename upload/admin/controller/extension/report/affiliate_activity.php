@@ -72,7 +72,15 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/affiliate_activity_form', $data));
 	}
-		
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/affiliate_activity')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+			
 	public function info() {
 		$this->load->language('report/affiliate_activity');
 

@@ -73,6 +73,14 @@ class ControllerExtensionReportMarketing extends Controller {
 		$this->response->setOutput($this->load->view('extension/report/marketing_form', $data));
 	}
 	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/marketing')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
 	public function info() {
 		$this->load->language('report/marketing');
 

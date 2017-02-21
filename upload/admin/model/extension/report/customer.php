@@ -1,5 +1,5 @@
 <?php
-class ModelReportCustomer extends Model {
+class ModelExtensionReportCustomer extends Model {
 	public function getTotalCustomersByDay() {
 		$customer_data = array();
 

@@ -72,7 +72,15 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_order_form', $data));
 	}
-		
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/customer_order')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+			
 	public function info() {
 		$this->load->language('report/customer_order');
 

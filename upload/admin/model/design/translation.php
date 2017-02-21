@@ -1,42 +1,43 @@
 <?php
 class ModelDesignTranslation extends Model {
-	public function editTranslation($store_id, $language_id, $route, $data) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation`  WHERE route = '" . $this->db->escape($route) . "'");
-
-		if (isset($data['translation'])) {
-			foreach ($data['translation'] as $translation) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET store_id = '" . (int)$translation['store_id'] . "', language_id = '" . (int)$translation['language_id'] . "', route = '" . $this->db->escape($route) . "', `key` = '" . $this->db->escape($translation['key']) . "', value = '" . $this->db->escape($translation['value']) . "'");
-			}
-		}
+	public function addTranslation($data) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `key` = '" . $this->db->escape($data['key']) . "', `value` = '" . $this->db->escape($data['value']) . "', `date_added` = NOW()");
+	}
+		
+	public function editTranslation($translation_id, $data) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape($data['route']) . "', `key` = '" . $this->db->escape($data['key']) . "', `value` = '" . $this->db->escape($data['value']) . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 
 	public function deleteTranslation($translation_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE translation_id = '" . (int)$translation_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 
+	public function getTranslation($translation_id) {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
+
+		return $query->row;
+	}
+	
 	public function getTranslations($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "translation`";
+		$sql = "SELECT *, (SELECT s.name FROM `" . DB_PREFIX . "store` s WHERE s.store_id = t.store_id) AS store, (SELECT l.name FROM `" . DB_PREFIX . "language` l WHERE l.language_id = t.language_id) AS language FROM `" . DB_PREFIX . "translation` t";
 		
-		$implode = array();
+		$sort_data = array(
+			'name',
+			'status'
+		);		
 		
-		if (isset($data['filter_store_id'])) {
-			$implode[] = "store_id = '" . (int)$data['filter_store_id'] . "'";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY store";
 		}
 
-		if (isset($data['filter_language_id'])) {
-			$implode[] = "language_id = '" . (int)$data['filter_language_id'] . "'";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
 		}
-		
-		if (isset($data['filter_route'])) {
-			$implode[] = "route LIKE '" . $this->db->escape($data['filter_route']) . "'";
-		}		
-		
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-		
-		$sql .= " ORDER BY date_added DESC";
-				
+
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -54,29 +55,9 @@ class ModelDesignTranslation extends Model {
 		return $query->rows;
 	}	
 
-	public function getTotalTranslations($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "translation`";
+	public function getTotalTranslations() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "translation`");
 		
-		$implode = array();
-		
-		if (isset($data['filter_store_id'])) {
-			$implode[] = "store_id = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (isset($data['filter_language_id'])) {
-			$implode[] = "language_id = '" . (int)$data['filter_language_id'] . "'";
-		}
-		
-		if (isset($data['filter_route'])) {
-			$implode[] = "route LIKE '" . $this->db->escape($data['filter_route']) . "'";
-		}		
-		
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-		
-		$query = $this->db->query($sql);
-
 		return $query->row['total'];
 	}	
 }

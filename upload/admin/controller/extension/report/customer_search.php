@@ -73,6 +73,14 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$this->response->setOutput($this->load->view('extension/report/customer_search_form', $data));
 	}
 	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/customer_search')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
 	public function info() {
 		$this->load->language('report/customer_search');
 

@@ -73,6 +73,14 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		$this->response->setOutput($this->load->view('extension/report/product_purchased_form', $data));
 	}
 	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/product_purchased')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+		
 	public function info() {
 		$this->load->language('report/product_purchased');
 

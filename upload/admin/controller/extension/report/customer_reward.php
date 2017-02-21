@@ -73,6 +73,14 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		$this->response->setOutput($this->load->view('extension/report/customer_reward_form', $data));
 	}
 	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/customer_reward')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+		
 	public function info() {
 		$this->load->language('report/customer_reward');
 

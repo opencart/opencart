@@ -72,6 +72,14 @@ class ControllerExtensionReportCustomerCredit extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_credit_form', $data));
 	}
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/report/customer_credit')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
 		
 	public function info() {
 		$this->load->language('report/customer_credit');

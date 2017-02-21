@@ -210,4 +210,6 @@ class ControllerExtensionReportAffiliate extends Controller {
 
 		$this->response->setOutput($this->load->view('report/affiliate', $data));
 	}
+	
+	
 }

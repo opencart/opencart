@@ -19,10 +19,10 @@ $_['db_port']          = DB_PORT;
 $_['session_autostart'] = false;
 
 // Template
-$_['template_engine']         = 'twig';
+$_['template_engine']   = 'twig';
 
 // Autoload Libraries
-$_['library_autoload'] = array(
+$_['library_autoload']  = array(
 	'openbay'
 );
 
@@ -38,9 +38,9 @@ $_['action_pre_action'] = array(
 
 // Action Events
 $_['action_event'] = array(
-	'view/*/before'                         => 'event/theme',
-	'model/*/after'                         => 'event/log',
-	//'language/extension/*/before'         => 'event/translation',
-	//'controller/*/before'                 => 'event/debug/before',
-	//'controller/*/after'                  => 'event/debug/after'
+	'view/*/before'     => 'event/theme',
+	'model/*/after'     => 'event/log',
+	'language/*/after'  => 'event/translation',
+	//'controller/*/before' => 'event/debug/before',
+	//'controller/*/after'  => 'event/debug/after'
 );

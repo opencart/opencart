@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Products Purchased Report';
 
 // Text
+$_['text_extension']    = 'Extensions';
 $_['text_list']         = 'Products Purchased List';
 $_['text_all_status']   = 'All Statuses';
 

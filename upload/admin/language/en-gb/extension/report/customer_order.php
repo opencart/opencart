@@ -3,6 +3,7 @@
 $_['heading_title']         = 'Customer Orders Report';
 
 // Text
+$_['text_extension']        = 'Extensions';
 $_['text_list']             = 'Customer Orders List';
 $_['text_all_status']       = 'All Statuses';
 

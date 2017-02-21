@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Affiliate Commission Report';
 
 // Text
+$_['text_extension']    = 'Extensions';
 $_['text_list']         = 'Affiliate Commission List';
 
 // Column
@@ -15,5 +16,10 @@ $_['column_total']      = 'Total';
 $_['column_action']     = 'Action';
 
 // Entry
+$_['entry_status']     = 'Status';
+$_['entry_sort_order'] = 'Sort Order';
 $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
+
+// Error
+$_['error_permission'] = 'Warning: You do not have permission to modify coupon total!';

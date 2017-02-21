@@ -1,5 +1,5 @@
 <?php
-class ControllerReportAffiliate extends Controller {
+class ControllerExtensionReportAffiliate extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -72,7 +72,7 @@ class ControllerReportAffiliate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/affiliate', $data));
+		$this->response->setOutput($this->load->view('extension/report/affiliate_form', $data));
 	}
 
 	protected function validate() {
@@ -82,11 +82,8 @@ class ControllerReportAffiliate extends Controller {
 
 		return !$this->error;
 	}
-}	
 	
-	
-	
-	public function report() {
+	public function info() {
 		$this->load->language('report/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));

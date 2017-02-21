@@ -3,6 +3,7 @@
 $_['heading_title']         = 'Customer Reward Points Report';
 
 // Text
+$_['text_extension']        = 'Extensions';
 $_['text_list']             = 'Customer Reward Points List';
 
 // Column

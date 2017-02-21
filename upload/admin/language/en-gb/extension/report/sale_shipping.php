@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Shipping Report';
 
 // Text
+$_['text_extension']    = 'Extensions';
 $_['text_list']         = 'Shipping List';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';

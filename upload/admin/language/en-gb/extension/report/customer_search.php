@@ -3,6 +3,7 @@
 $_['heading_title']       = 'Customer Searches Report';
 
 // Text
+$_['text_extension']      = 'Extensions';
 $_['text_list']           = 'Customer Searches List';
 $_['text_guest']          = 'Guest';
 $_['text_customer']       = '<a href="%s">%s</a>';

@@ -3,6 +3,7 @@
 $_['heading_title']    = 'Coupons Report';
 
 // Text
+$_['text_extension']   = 'Extensions';
 $_['text_list']        = 'Coupon List';
 
 // Column

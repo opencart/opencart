@@ -3,7 +3,7 @@
 $_['heading_title']    = 'Store Credit';
 
 // Text
-$_['text_total']       = 'Order Totals';
+$$_['text_extension']  = 'Extensions';
 $_['text_success']     = 'Success: You have modified store credit total!';
 $_['text_edit']        = 'Edit Store Credit Total';
 

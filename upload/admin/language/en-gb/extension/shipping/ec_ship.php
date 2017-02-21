@@ -4,7 +4,6 @@ $_['heading_title']                            = 'EC-Ship';
 
 // Text
 $_['text_extension']                           = 'Extension';
-$_['text_shipping']                            = 'Shipping';
 $_['text_success']                             = 'Success: You have modified EC-Ship shipping!';
 $_['text_edit']                                = 'Edit EC-Ship Shipping';
 $_['text_air_registered_mail']                 = 'Air Registered Mail';

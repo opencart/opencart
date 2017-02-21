@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right">
+        <button type="submit" data-toggle="tooltip" title="{{ button_save }}" form="form-api" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -35,8 +37,6 @@
               <div class="text-danger">{{ error_secret }}</div>
               {% endif %}</div>
           </div>
-          
-          <button type="submit" form="form-api" class="btn btn-primary btn-block">{{ button_save }}</button>
         </form>
       </div>
     </div>

@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="button" id="button-import" data-toggle="tooltip" title="{{ button_import }}" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
-        <button type="submit" form="form-google-base" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -26,7 +26,7 @@
       </div>
       <div class="panel-body">
         <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_import }} <button type="button" class="close" data-dismiss="alert">×</button></div>
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed" class="form-horizontal">
             <div id="category"></div>
             <br />
             <div class="form-group">

@@ -19,7 +19,15 @@
       <div class="panel-body">{% if banner %}
         <div class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
         {% endif %}
-        <div> {% for image in images %}<a href="{{ image.popup }}" class="colorbox" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
+        <div>
+        
+        {% for image in images %}
+        
+        <a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
+       
+       
+       
+       
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
           <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
@@ -103,39 +111,38 @@
             </fieldset>
             <fieldset>
               <legend>Available Installs</legend>
-              {% if not license %}
+              {% if license == '1' and purchased %}
               <div class="alert alert-warning"><i class="fa fa-alert"></i> You must buy a license.
                 <button type="button" id="button-buy" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-shopping-basket"></i> purchase</button>
               </div>
               {% endif %}
               <table class="table table-bordered">
                 <thead>
-                <th>Download Name</th>
+                  <th>Download Name</th>
                   <th>Date Added</th>
                   <th class="text-right">Action</th>
-                    </thead>
+                </thead>
                 <tbody>
-                
-                {% for download in downloads %}
-                <tr>
-                  <td>{{ download.name }}</td>
-                  <td>{{ download.date_added }}</td>
-                  <td class="text-right"> {% if not download.installed %}
-                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
-                    {% else %}
-                    <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" style="display: none;"><i class="fa fa-download"></i> Install</button>
-                    {% endif %}
-                    
-                    
-                    {% if download.installed %}
-                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                    {% else %}
-                    <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger" style="display: none;"><i class="fa fa-upload"></i> Uninstall</button>
-                    {% endif %} </td>
-                </tr>
-                {% endfor %}
-                  </tbody>
-                
+                 {% if downloads %}
+                  {% for download in downloads %}
+                  <tr>
+                    <td>{{ download.name }}</td>
+                    <td>{{ download.date_added }}</td>
+                    <td class="text-right">{% if download.installed %}
+                      <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                      {% elseif (license == '0') or (license == '1' and purchased) %}
+                      <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                      {% else %}
+                      <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                      {% endif %}</td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                   <tr>
+                    <td colspan="3" class="text-center">{{ text_no_results }}</td>
+                  </tr>                 
+                  {% endif %}
+                </tbody>
               </table>
             </fieldset>
           </div>
@@ -145,6 +152,73 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+$('#button-buy').on('click', function(e) {
+	e.preventDefault();
+
+	$('#modal-purchase').remove();
+
+	html  = '<div id="modal-purchase" class="modal">';
+	html += '  <div class="modal-dialog">';
+	html += '    <div class="modal-content">';
+	html += '      <div class="modal-header">';
+	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+	html += '        <h4 class="modal-title">Please confirm who you are!</h4>';
+	html += '      </div>';
+	html += '      <div class="modal-body">';
+	html += '        <p>Please enter your 4 digit PIN number. This PIN number is to protect your account. When ever you logon from a new device you will be asked for this PIN.</p>';
+	html += '        <p>Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.</p>';
+	html += '        <div class="form-group">';
+	html += '          <label for="input-pin">PIN</label>';
+	html += '          <input type="text" name="pin" value="" placeholder="PIN" id="input-pin" class="form-control" />';
+	html += '        </div>';
+	html += '        <div class="form-group text-right">';
+	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">Purchase</button>';
+	html += '        </div>';
+	html += '      </div>';
+	html += '    </div>';
+	html += '  </div>';
+	html += '</div>';
+
+	$('body').append(html);
+
+	$('#modal-purchase').modal('show');
+});
+
+$('body').on('click', '#modal-purchase #button-purchase', function(e) {
+	e.preventDefault();
+
+	var element = this;
+	
+	$.ajax({
+		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}&user_token={{ user_token }}',
+		type: 'post',
+		data: $('input[name=\'pin\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			console.log(json);
+			
+			if (json['error']) {
+				$('input[name=\'pin\']').after('<div class="text-danger">' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('#tab-download').prepend('<div class="alert alert-success">' + json['success'] + '</div>');
+				
+				$('#tab-download table button').prop('disabled', false);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});  
+  
 // Install  
 $('#tab-download .btn-primary').on('click', function(e) {
 	e.preventDefault();
@@ -322,71 +396,6 @@ $('#tab-download .btn-danger').on('click', function(e) {
 				$(element).hide();
 				
 				$(element).parent().find('.btn-primary').show();
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#button-buy').on('click', function(e) {
-	e.preventDefault();
-
-	$('#modal-purchase').remove();
-
-	html  = '<div id="modal-purchase" class="modal">';
-	html += '  <div class="modal-dialog">';
-	html += '    <div class="modal-content">';
-	html += '      <div class="modal-header">';
-	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '        <h4 class="modal-title">Please confirm who you are!</h4>';
-	html += '      </div>';
-	html += '      <div class="modal-body">';
-	html += '        <p>Please enter your 4 digit PIN number. This PIN number is to protect your account. When ever you logon from a new device you will be asked for this PIN.</p>';
-	html += '        <p>Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.</p>';
-	html += '        <div class="form-group">';
-	html += '          <label for="input-pin">PIN</label>';
-	html += '          <input type="text" name="pin" value="" placeholder="PIN" id="input-pin" class="form-control" />';
-	html += '        </div>';
-	html += '        <div class="form-group text-right">';
-	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">Continue</button>';
-	html += '        </div>';
-	html += '      </div>';
-	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
-
-	$('body').append(html);
-
-	$('#modal-purchase').modal('show');
-});
-
-$('body').on('click', '#modal-purchase #button-purchase', function(e) {
-	e.preventDefault();
-
-	var element = this;
-	
-	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}&user_token={{ user_token }}',
-		type: 'post',
-		data: $('input[name=\'pin\']'),
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			console.log(json);
-			
-			if (json['error']) {
-				$('input[name=\'pin\']').after('<div class="text-danger">' + json['error'] + '</div>');
-			}
-
-			if (json['success']) {
-				$('#tab-download table button').after('<div class="text-danger">' + json['error'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

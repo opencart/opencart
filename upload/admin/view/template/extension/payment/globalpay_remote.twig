@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-globalpay" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -24,7 +24,7 @@
       </div>
       <div class="panel-body">
         <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ text_ip_message }}</div>
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-globalpay" class="form-horizontal">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
           <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#tab-api" data-toggle="tab">{{ tab_api }}</a></li>
             <li><a href="#tab-account" data-toggle="tab">{{ tab_account }}</a></li>

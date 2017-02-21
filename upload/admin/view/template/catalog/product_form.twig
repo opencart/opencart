@@ -361,7 +361,7 @@
                     <div id="product-category{{ product_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ product_category.name }}
                       <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}" />
                     </div>
-                    {% endfor %} </div>
+                    {% endfor %}</div>
                 </div>
               </div>
               <div class="form-group">
@@ -372,7 +372,7 @@
                     <div id="product-filter{{ product_filter.filter_id }}"><i class="fa fa-minus-circle"></i> {{ product_filter.name }}
                       <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}" />
                     </div>
-                    {% endfor %} </div>
+                    {% endfor %}</div>
                 </div>
               </div>
               <div class="form-group">
@@ -380,13 +380,13 @@
                 <div class="col-sm-10">
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
                     <div class="checkbox">
-                      <label> {%  if 0 in product_store %}
+                      <label>{%  if 0 in product_store %}
                         <input type="checkbox" name="product_store[]" value="0" checked="checked" />
                         {{ text_default }}
                         {% else %}
                         <input type="checkbox" name="product_store[]" value="0" />
                         {{ text_default }}
-                        {% endif %} </label>
+                        {% endif %}</label>
                     </div>
                     {% for store in stores %}
                     <div class="checkbox">
@@ -398,7 +398,7 @@
                         {{ store.name }}
                         {% endif %} </label>
                     </div>
-                    {% endfor %} </div>
+                    {% endfor %}</div>
                 </div>
               </div>
               <div class="form-group">
@@ -409,7 +409,7 @@
                     <div id="product-download{{ product_download.download_id }}"><i class="fa fa-minus-circle"></i> {{ product_download.name }}
                       <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}" />
                     </div>
-                    {% endfor %} </div>
+                    {% endfor %}</div>
                 </div>
               </div>
               <div class="form-group">
@@ -420,7 +420,7 @@
                     <div id="product-related{{ product_related.product_id }}"><i class="fa fa-minus-circle"></i> {{ product_related.name }}
                       <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
                     </div>
-                    {% endfor %} </div>
+                    {% endfor %}</div>
                 </div>
               </div>
             </div>

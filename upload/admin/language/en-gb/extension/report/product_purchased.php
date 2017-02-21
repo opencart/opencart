@@ -4,7 +4,9 @@ $_['heading_title']     = 'Products Purchased Report';
 
 // Text
 $_['text_extension']    = 'Extensions';
+$_['text_success']      = 'Success: You have modified products purchased report!';
 $_['text_list']         = 'Products Purchased List';
+$_['text_edit']         = 'Edit Products Purchased Report';
 $_['text_all_status']   = 'All Statuses';
 
 // Column
@@ -19,3 +21,8 @@ $_['column_total']      = 'Total';
 $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
 $_['entry_status']      = 'Order Status';
+$_['entry_status']      = 'Status';
+$_['entry_sort_order']  = 'Sort Order';
+
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify products purchased report!';

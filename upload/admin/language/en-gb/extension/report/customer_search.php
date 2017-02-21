@@ -4,7 +4,9 @@ $_['heading_title']       = 'Customer Searches Report';
 
 // Text
 $_['text_extension']      = 'Extensions';
+$_['text_success']        = 'Success: You have modified customer searches report!';
 $_['text_list']           = 'Customer Searches List';
+$_['text_edit']           = 'Edit Customer Searches Report';
 $_['text_guest']          = 'Guest';
 $_['text_customer']       = '<a href="%s">%s</a>';
 
@@ -22,3 +24,8 @@ $_['entry_date_end']      = 'Date End';
 $_['entry_keyword']       = 'Keyword';
 $_['entry_customer']      = 'Customer';
 $_['entry_ip']            = 'IP';
+$_['entry_status']        = 'Status';
+$_['entry_sort_order']    = 'Sort Order';
+
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify customer searches report!';

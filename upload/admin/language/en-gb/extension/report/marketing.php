@@ -4,7 +4,9 @@ $_['heading_title']    = 'Marketing Report';
 
 // Text
 $_['text_extension']   = 'Extensions';
+$_['text_success']     = 'Success: You have modified marketing report!';
 $_['text_list']        = 'Marketing List';
+$_['text_edit']        = 'Edit Marketing Report';
 $_['text_all_status']  = 'All Statuses';
 
 // Column
@@ -18,3 +20,8 @@ $_['column_total']     = 'Total';
 $_['entry_date_start'] = 'Date Start';
 $_['entry_date_end']   = 'Date End';
 $_['entry_status']     = 'Order Status';
+$_['entry_status']     = 'Status';
+$_['entry_sort_order'] = 'Sort Order';
+
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify marketing report!';

@@ -3,7 +3,10 @@
 $_['heading_title']       = 'Customer Activity Report';
 
 // Text
+$_['text_extension']      = 'Extensions';
+$_['text_success']        = 'Success: You have modified customer activity report!';
 $_['text_list']           = 'Customer Activity List';
+$_['text_edit']           = 'Edit Customer Activity Report';
 $_['text_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';
@@ -29,3 +32,8 @@ $_['entry_customer']      = 'Customer';
 $_['entry_ip']            = 'IP';
 $_['entry_date_start']    = 'Date Start';
 $_['entry_date_end']      = 'Date End';
+$_['entry_status']        = 'Status';
+$_['entry_sort_order']    = 'Sort Order';
+
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify customer activity report!';

@@ -84,8 +84,6 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 	public function info() {
 		$this->load->language('report/customer_activity');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
@@ -238,10 +236,6 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$data['filter_ip'] = $filter_ip;
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/customer_activity', $data));
 	}

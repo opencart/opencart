@@ -14,6 +14,8 @@ $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Bank Transfer';
+$_['text_transaction']          = 'Transactions';
+$_['text_transaction_add']      = 'Add Transaction';
 
 // Column
 $_['column_name']               = 'Affiliate Name';

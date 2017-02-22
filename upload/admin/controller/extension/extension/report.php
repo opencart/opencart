@@ -53,6 +53,7 @@ class ControllerExtensionExtensionReport extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_name'] = $this->language->get('column_name');
+		$data['column_group'] = $this->language->get('column_group');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
@@ -100,12 +101,13 @@ class ControllerExtensionExtensionReport extends Controller {
 
 				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
+					'group'      => $this->language->get('text_group'),
 					'status'     => $this->config->get('report_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('report_' . $extension . '_sort_order'),
-					'install'   => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/extension/report/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('extension/report/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					'install'    => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'uninstall'  => $this->url->link('extension/extension/report/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension, true),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('extension/report/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
 			}
 		}

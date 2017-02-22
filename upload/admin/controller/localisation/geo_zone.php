@@ -263,6 +263,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['geo_zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
 
 		$data['entry_name'] = $this->language->get('entry_name');

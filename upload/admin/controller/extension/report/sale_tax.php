@@ -83,9 +83,7 @@ class ControllerExtensionReportSaleTax extends Controller {
 	
 	public function info() {
 		$this->load->language('report/sale_tax');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
+		
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -259,10 +257,6 @@ class ControllerExtensionReportSaleTax extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/sale_tax', $data));
 	}

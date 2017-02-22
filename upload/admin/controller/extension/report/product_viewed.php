@@ -84,8 +84,6 @@ class ControllerExtensionReportProductViewed extends Controller {
 	public function info() {
 		$this->load->language('report/product_viewed');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -188,10 +186,6 @@ class ControllerExtensionReportProductViewed extends Controller {
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/product_viewed', $data));
 	}

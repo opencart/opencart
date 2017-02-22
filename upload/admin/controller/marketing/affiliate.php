@@ -579,6 +579,8 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['text_cheque'] = $this->language->get('text_cheque');
 		$data['text_paypal'] = $this->language->get('text_paypal');
 		$data['text_bank'] = $this->language->get('text_bank');
+		$data['text_transaction'] = $this->language->get('text_transaction');
+		$data['text_transaction_add'] = $this->language->get('text_transaction_add');
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');

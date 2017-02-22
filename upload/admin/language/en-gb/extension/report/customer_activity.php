@@ -7,6 +7,7 @@ $_['text_extension']      = 'Extensions';
 $_['text_success']        = 'Success: You have modified customer activity report!';
 $_['text_list']           = 'Customer Activity List';
 $_['text_edit']           = 'Edit Customer Activity Report';
+$_['text_group']          = 'Customer';
 $_['text_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';

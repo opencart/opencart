@@ -640,44 +640,13 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 			
-			// Reports
-			$report = array();
-
-			$this->load->model('setting/extension');
-
-			// Get a list of installed modules
-			$extensions = $this->model_setting_extension->getInstalled('report');
-			
-			// Add all the modules which have multiple settings for each module
-			foreach ($extensions as $code) {
-				if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-					
-					
-					
-					$report[] = array(
-						'code'       => $code,
-						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order')
-					);
-				}
-			}
-	
-			$sort_order = array();
-	
-			foreach ($report as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-	
-			array_multisort($sort_order, SORT_ASC, $report);		
-			
-			if ($report) {	
-				$data['menus'][] = array(
-					'id'       => 'menu-report',
-					'icon'	   => 'fa-bar-chart-o', 
-					'name'	   => $this->language->get('text_reports'),
-					'href'     => '',
-					'children' => $report
-				);	
-			}			
+			$data['menus'][] = array(
+				'id'       => 'menu-report',
+				'icon'	   => 'fa-bar-chart-o', 
+				'name'	   => $this->language->get('text_reports'),
+				'href'     => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true),
+				'children' => array()
+			);	
 			
 			// Stats
 			$data['text_complete_status'] = $this->language->get('text_complete_status');

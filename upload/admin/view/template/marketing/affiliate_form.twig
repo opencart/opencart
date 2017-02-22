@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -42,8 +41,7 @@
                     <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
                     {% if error_firstname %}
                     <div class="text-danger">{{ error_firstname }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
@@ -51,8 +49,7 @@
                     <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
                     {% if error_lastname %}
                     <div class="text-danger">{{ error_lastname }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
@@ -60,8 +57,7 @@
                     <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
                     {% if error_email %}
                     <div class="text-danger">{{ error_email }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
@@ -69,8 +65,7 @@
                     <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
                     {% if error_telephone %}
                     <div class="text-danger">{{ error_telephone }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-fax">{{ entry_fax }}</label>
@@ -84,8 +79,7 @@
                     <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
                     {% if error_code %}
                     <div class="text-danger">{{ error_code }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
@@ -93,8 +87,7 @@
                     <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" autocomplete="off" id="input-password" class="form-control"  />
                     {% if error_password %}
                     <div class="text-danger">{{ error_password }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-confirm">{{ entry_confirm }}</label>
@@ -102,20 +95,25 @@
                     <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" autocomplete="off" id="input-confirm" class="form-control" />
                     {% if error_confirm %}
                     <div class="text-danger">{{ error_confirm }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <select name="status" id="input-status" class="form-control">
+                      
                       {% if status %}
+                      
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
+                      
                       {% else %}
+                      
                       <option value="1">{{ text_enabled }}</option>
                       <option value="0" selected="selected">{{ text_disabled }}</option>
+                      
                       {% endif %}
+                    
                     </select>
                   </div>
                 </div>
@@ -140,8 +138,7 @@
                     <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" />
                     {% if error_address_1 %}
                     <div class="text-danger">{{ error_address_1 }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-address-2">{{ entry_address_2 }}</label>
@@ -155,8 +152,7 @@
                     <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
                     {% if error_city %}
                     <div class="text-danger">{{ error_city }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
@@ -164,26 +160,30 @@
                     <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
                     {% if error_postcode %}
                     <div class="text-danger">{{ error_postcode }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-country">{{ entry_country }}</label>
                   <div class="col-sm-10">
                     <select name="country_id" id="input-country" class="form-control">
                       <option value="">{{ text_select }}</option>
+                      
                       {% for country in countries %}
                       {% if country.country_id == country_id %}
+                      
                       <option value="{{ country.country_id }}" selected="selected"> {{ country.name }} </option>
+                      
                       {% else %}
+                      
                       <option value="{{ country.country_id }}">{{ country.name }}</option>
+                      
                       {% endif %}
                       {% endfor %}
+                    
                     </select>
                     {% if error_country %}
                     <div class="text-danger">{{ error_country }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
@@ -192,8 +192,7 @@
                     </select>
                     {% if error_zone %}
                     <div class="text-danger">{{ error_zone }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
               </fieldset>
             </div>
@@ -214,8 +213,7 @@
                 <label class="col-sm-2 control-label">{{ entry_payment }}</label>
                 <div class="col-sm-10">
                   <div class="radio">
-                    <label>
-                      {% if payment == 'cheque' %}
+                    <label> {% if payment == 'cheque' %}
                       <input type="radio" name="payment" value="cheque" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="cheque" />
@@ -223,8 +221,7 @@
                       {{ text_cheque }}</label>
                   </div>
                   <div class="radio">
-                    <label>
-                      {% if payment == 'paypal' %}
+                    <label> {% if payment == 'paypal' %}
                       <input type="radio" name="payment" value="paypal" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="paypal" />
@@ -232,8 +229,7 @@
                       {{ text_paypal }}</label>
                   </div>
                   <div class="radio">
-                    <label>
-                      {% if payment == 'bank' %}
+                    <label> {% if payment == 'bank' %}
                       <input type="radio" name="payment" value="bank" checked="checked" />
                       {% else %}
                       <input type="radio" name="payment" value="bank" />
@@ -249,8 +245,7 @@
                     <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
                     {% if error_cheque %}
                     <div class="text-danger">{{ error_cheque }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
               </div>
               <div id="payment-paypal" class="payment">
@@ -260,8 +255,7 @@
                     <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
                     {% if error_paypal %}
                     <div class="text-danger">{{ error_paypal }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
               </div>
               <div id="payment-bank" class="payment">
@@ -289,8 +283,7 @@
                     <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
                     {% if error_bank_account_name %}
                     <div class="text-danger">{{ error_bank_account_name }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
@@ -298,15 +291,19 @@
                     <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
                     {% if error_bank_account_number %}
                     <div class="text-danger">{{ error_bank_account_number }}</div>
-                    {% endif %}
-                  </div>
+                    {% endif %} </div>
                 </div>
               </div>
             </div>
             {% if affiliate_id %}
             <div class="tab-pane" id="tab-transaction">
+            <fieldset>
+              <legend>{{ text_transaction }}</legend>
               <div id="transaction"></div>
-              <br />
+            </fieldset>
+            <br />
+            <fieldset>
+              <legend>{{ text_transaction_add }}</legend>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
                 <div class="col-sm-10">
@@ -322,9 +319,9 @@
               <div class="text-right">
                 <button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ button_transaction_add }}</button>
               </div>
-            </div>
-            {% endif %}
-          </div>
+              </div>
+            </fieldset>
+            {% endif %} </div>
         </form>
       </div>
     </div>

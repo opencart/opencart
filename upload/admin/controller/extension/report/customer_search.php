@@ -84,8 +84,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 	public function info() {
 		$this->load->language('report/customer_search');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -268,10 +266,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$data['filter_keyword'] = $filter_keyword;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/customer_search', $data));
 	}

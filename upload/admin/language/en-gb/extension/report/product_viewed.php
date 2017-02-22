@@ -7,6 +7,7 @@ $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified products viewed report!';
 $_['text_list']        = 'Products Viewed List';
 $_['text_edit']        = 'Edit Products Viewed Report';
+$_['text_group']       = 'Products';
 $_['text_success']     = 'Success: You have reset the products viewed report!';
 
 // Column

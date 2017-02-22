@@ -281,6 +281,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_percent'] = $this->language->get('text_percent');
 		$data['text_amount'] = $this->language->get('text_amount');
+		$data['text_coupon'] = $this->language->get('text_coupon');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');

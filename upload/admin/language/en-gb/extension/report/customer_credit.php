@@ -7,6 +7,7 @@ $_['text_extension']        = 'Extensions';
 $_['text_success']          = 'Success: You have modified customer credit report!';
 $_['text_list']             = 'Customer Credit List';
 $_['text_edit']             = 'Edit Customer Credit Report';
+$_['text_group']            = 'Customer';
 $_['column_customer']       = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';

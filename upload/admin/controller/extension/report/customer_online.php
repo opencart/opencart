@@ -84,8 +84,6 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 	public function info() {
 		$this->load->language('extension/report/customer_online');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];
 		} else {
@@ -209,10 +207,6 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/report/customer_online', $data));
 	}

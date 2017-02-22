@@ -564,6 +564,7 @@ class ControllerSaleReturn extends Controller {
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_history'] = $this->language->get('text_history');
+		$data['text_history_add'] = $this->language->get('text_history_add');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_customer'] = $this->language->get('entry_customer');

@@ -13,8 +13,7 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
+  <div class="container-fluid"> {% if error_warning %}
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -39,8 +38,7 @@
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
                   {% if error_name %}
                   <div class="text-danger">{{ error_name }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
@@ -48,23 +46,32 @@
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
                   {% if error_code %}
                   <div class="text-danger">{{ error_code }}</div>
-                  {% endif %}
-                </div>
+                  {% endif %} </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
                 <div class="col-sm-10">
                   <select name="type" id="input-type" class="form-control">
+                    
                     {% if type == 'P' %}
+                    
                     <option value="P" selected="selected">{{ text_percent }}</option>
+                    
                     {% else %}
+                    
                     <option value="P">{{ text_percent }}</option>
+                    
                     {% endif %}
                     {% if type == 'F' %}
+                    
                     <option value="F" selected="selected">{{ text_amount }}</option>
+                    
                     {% else %}
+                    
                     <option value="F">{{ text_amount }}</option>
+                    
                     {% endif %}
+                  
                   </select>
                 </div>
               </div>
@@ -83,73 +90,61 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logged }}">{{ entry_logged }}</span></label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
-                    {% if logged %}
+                  <label class="radio-inline"> {% if logged %}
                     <input type="radio" name="logged" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
                     <input type="radio" name="logged" value="1" />
                     {{ text_yes }}
-                    {% endif %}
-                  </label>
-                  <label class="radio-inline">
-                    {% if not logged %}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not logged %}
                     <input type="radio" name="logged" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
                     <input type="radio" name="logged" value="0" />
                     {{ text_no }}
-                    {% endif %}
-                  </label>
+                    {% endif %} </label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <label class="radio-inline">
-                    {% if shipping %}
+                  <label class="radio-inline"> {% if shipping %}
                     <input type="radio" name="shipping" value="1" checked="checked" />
                     {{ text_yes }}
                     {% else %}
                     <input type="radio" name="shipping" value="1" />
                     {{ text_yes }}
-                    {% endif %}
-                  </label>
-                  <label class="radio-inline">
-                    {% if not shipping %}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not shipping %}
                     <input type="radio" name="shipping" value="0" checked="checked" />
                     {{ text_no }}
                     {% else %}
                     <input type="radio" name="shipping" value="0" />
                     {{ text_no }}
-                    {% endif %}
-                  </label>
+                    {% endif %} </label>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for coupon_product in coupon_product %}
+                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
                     <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
                       <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
                     </div>
-                   {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
-                  <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                    {% for coupon_category in coupon_category %}
+                  <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
                     <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
                       <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
                     </div>
-                    {% endfor %}
-                  </div>
+                    {% endfor %} </div>
                 </div>
               </div>
               <div class="form-group">
@@ -188,23 +183,31 @@
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
+                    
                     {% if status %}
+                    
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
+                    
                     {% else %}
+                    
                     <option value="1">{{ text_enabled }}</option>
                     <option value="0" selected="selected">{{ text_disabled }}</option>
+                    
                     {% endif %}
+                  
                   </select>
                 </div>
               </div>
             </div>
             {% if coupon_id %}
             <div class="tab-pane" id="tab-history">
-              <div id="history"></div>
+              <fieldset>
+                <legend>{{ text_coupon }}</legend>
+                <div id="history"></div>
+              </fieldset>
             </div>
-            {% endif %}
-          </div>
+            {% endif %} </div>
         </form>
       </div>
     </div>
@@ -266,8 +269,8 @@ $('input[name=\'category\']').autocomplete({
 $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script>
-{% if coupon_id %}
+//--></script> 
+  {% if coupon_id %} 
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -276,8 +279,8 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 });			
 
 $('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&coupon_id={{ coupon_id }}');
-//--></script>
-{% endif %}
+//--></script> 
+  {% endif %} 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

@@ -7,6 +7,7 @@ $_['text_extension']          = 'Extensions';
 $_['text_success']            = 'Success: You have modified affiliate activity report!';
 $_['text_list']               = 'Affiliate Activity List';
 $_['text_edit']               = 'Edit Affiliate Activity Report';
+$_['text_group']              = 'Affiliate';
 $_['text_activity_edit']      = '<a href="affiliate_id=%d">%s</a> updated their account details.';
 $_['text_activity_forgotten'] = '<a href="affiliate_id=%d">%s</a> requested a new password.';
 $_['text_activity_login']     = '<a href="affiliate_id=%d">%s</a> logged in.';

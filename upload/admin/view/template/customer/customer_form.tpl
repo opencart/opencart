@@ -321,7 +321,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-safe"><?php echo $entry_safe; ?></label>
+                        <label class="col-sm-2 control-label" for="input-safe"><span data-toggle="tooltip" title="<?php echo $help_safe; ?>"><?php echo $entry_safe; ?></span></label>
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
                             <?php if ($safe) { ?>

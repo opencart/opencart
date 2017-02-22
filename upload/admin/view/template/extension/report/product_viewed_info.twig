@@ -1,45 +1,49 @@
-<div class="pull-right"><a onclick="confirm('{{ text_confirm }}') ? location.href='{{ reset }}' : false;" data-toggle="tooltip" title="{{ button_reset }}" class="btn btn-danger"><i class="fa fa-refresh"></i></a></div>
-{% if error_warning %}
-<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-</div>
-{% endif %}
-{% if success %}
-<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-</div>
-{% endif %}
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  {% if error_warning %}
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  {% if success %}
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+   <div class="text-center"><a onclick="confirm('{{ text_confirm }}') ? location.href='{{ reset }}' : false;" data-toggle="tooltip" title="{{ button_reset }}" class="btn btn-danger"><i class="fa fa-refresh"></i></a></div>
+  <br />
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class="text-left">{{ column_name }}</td>
+          <td class="text-left">{{ column_model }}</td>
+          <td class="text-right">{{ column_viewed }}</td>
+          <td class="text-right">{{ column_percent }}</td>
+        </tr>
+      </thead>
+      <tbody>
+      
+      {% if products %}
+      {% for product in products %}
       <tr>
-        <td class="text-left">{{ column_name }}</td>
-        <td class="text-left">{{ column_model }}</td>
-        <td class="text-right">{{ column_viewed }}</td>
-        <td class="text-right">{{ column_percent }}</td>
+        <td class="text-left">{{ product.name }}</td>
+        <td class="text-left">{{ product.model }}</td>
+        <td class="text-right">{{ product.viewed }}</td>
+        <td class="text-right">{{ product.percent }}</td>
       </tr>
-    </thead>
-    <tbody>
-    
-    {% if products %}
-    {% for product in products %}
-    <tr>
-      <td class="text-left">{{ product.name }}</td>
-      <td class="text-left">{{ product.model }}</td>
-      <td class="text-right">{{ product.viewed }}</td>
-      <td class="text-right">{{ product.percent }}</td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-      <td class="text-center" colspan="4">{{ text_no_results }}</td>
-    </tr>
-    {% endif %}
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="text-center" colspan="4">{{ text_no_results }}</td>
+      </tr>
+      {% endif %}
       </tbody>
-    
-  </table>
-</div>
-<div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+      
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-right">{{ results }}</div>
+  </div>
+</fieldset>

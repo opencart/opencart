@@ -1,86 +1,98 @@
-<div class="well">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
+<fieldset>
+  <legend>{{ text_filter }}</legend>
+  <div class="well">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label class="control-label" for="input-status">{{ entry_status }}</label>
-        <select name="filter_order_status_id" id="input-status" class="form-control">
-          <option value="0">{{ text_all_status }}</option>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="input-status">{{ entry_status }}</label>
+          <select name="filter_order_status_id" id="input-status" class="form-control">
+            <option value="0">{{ text_all_status }}</option>
+            
           
                   {% for order_status in order_statuses %}
                   {% if order_status.order_status_id == filter_order_status_id %}
                   
-          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+          
+            <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+            
           
                   {% else %}
                   
-          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+          
+            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+            
           
                   {% endif %}
                   {% endfor %}
                 
-        </select>
+        
+          </select>
+        </div>
+        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
       </div>
-      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
     </div>
   </div>
-</div>
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
+</fieldset>
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class="text-left">{{ column_campaign }}</td>
+          <td class="text-left">{{ column_code }}</td>
+          <td class="text-right">{{ column_clicks }}</td>
+          <td class="text-right">{{ column_orders }}</td>
+          <td class="text-right">{{ column_total }}</td>
+        </tr>
+      </thead>
+      <tbody>
+      
+      {% if marketings %}
+      {% for marketing in marketings %}
       <tr>
-        <td class="text-left">{{ column_campaign }}</td>
-        <td class="text-left">{{ column_code }}</td>
-        <td class="text-right">{{ column_clicks }}</td>
-        <td class="text-right">{{ column_orders }}</td>
-        <td class="text-right">{{ column_total }}</td>
+        <td class="text-left">{{ marketing.campaign }}</td>
+        <td class="text-left">{{ marketing.code }}</td>
+        <td class="text-right">{{ marketing.clicks }}</td>
+        <td class="text-right">{{ marketing.orders }}</td>
+        <td class="text-right">{{ marketing.total }}</td>
       </tr>
-    </thead>
-    <tbody>
-    
-    {% if marketings %}
-    {% for marketing in marketings %}
-    <tr>
-      <td class="text-left">{{ marketing.campaign }}</td>
-      <td class="text-left">{{ marketing.code }}</td>
-      <td class="text-right">{{ marketing.clicks }}</td>
-      <td class="text-right">{{ marketing.orders }}</td>
-      <td class="text-right">{{ marketing.total }}</td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-      <td class="text-center" colspan="5">{{ text_no_results }}</td>
-    </tr>
-    {% endif %}
-      </tbody>
-    
-  </table>
-</div>
-<div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="text-center" colspan="5">{{ text_no_results }}</td>
+      </tr>
+      {% endif %}
+        </tbody>
+      
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-right">{{ results }}</div>
+  </div>
+</fieldset>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/marketing&user_token={{ user_token }}';
+	var url = '';
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	
@@ -100,7 +112,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}	
 
-	location = url;
+	$('#report').load('index.php?route=extension/report/marketing/report&user_token={{ user_token }}' + url);
 });
 //--></script> 
 <script type="text/javascript"><!--

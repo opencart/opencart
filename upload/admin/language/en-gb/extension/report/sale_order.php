@@ -7,6 +7,7 @@ $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified sales report!';
 $_['text_list']         = 'Sales List';
 $_['text_edit']         = 'Edit Sales Report';
+$_['text_filter']       = 'Sales Filter';
 $_['text_group']        = 'Sales';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';

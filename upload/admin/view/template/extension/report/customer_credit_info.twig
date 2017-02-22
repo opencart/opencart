@@ -1,73 +1,79 @@
-<div class="well">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
+<fieldset>
+  <legend>{{ text_filter }}</legend>
+  <div class="well">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="input-customer">{{ entry_customer }}</label>
+          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+        </div>
       </div>
-      <div class="form-group">
-        <label class="control-label" for="input-customer">{{ entry_customer }}</label>
-        <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
+          <div class="input-group date">
+            <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
+        </div>
+        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
-        <div class="input-group date">
-          <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
-      </div>
-      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
     </div>
   </div>
-</div>
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
+</fieldset>
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class="text-left">{{ column_customer }}</td>
+          <td class="text-left">{{ column_email }}</td>
+          <td class="text-left">{{ column_customer_group }}</td>
+          <td class="text-left">{{ column_status }}</td>
+          <td class="text-right">{{ column_total }}</td>
+          <td class="text-right">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+      
+      {% if customers %}
+      {% for customer in customers %}
       <tr>
-        <td class="text-left">{{ column_customer }}</td>
-        <td class="text-left">{{ column_email }}</td>
-        <td class="text-left">{{ column_customer_group }}</td>
-        <td class="text-left">{{ column_status }}</td>
-        <td class="text-right">{{ column_total }}</td>
-        <td class="text-right">{{ column_action }}</td>
+        <td class="text-left">{{ customer.customer }}</td>
+        <td class="text-left">{{ customer.email }}</td>
+        <td class="text-left">{{ customer.customer_group }}</td>
+        <td class="text-left">{{ customer.status }}</td>
+        <td class="text-right">{{ customer.total }}</td>
+        <td class="text-right"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
       </tr>
-    </thead>
-    <tbody>
-    
-    {% if customers %}
-    {% for customer in customers %}
-    <tr>
-      <td class="text-left">{{ customer.customer }}</td>
-      <td class="text-left">{{ customer.email }}</td>
-      <td class="text-left">{{ customer.customer_group }}</td>
-      <td class="text-left">{{ customer.status }}</td>
-      <td class="text-right">{{ customer.total }}</td>
-      <td class="text-right"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-      <td class="text-center" colspan="6">{{ text_no_results }}</td>
-    </tr>
-    {% endif %}
-      </tbody>
-    
-  </table>
-</div>
-<div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="text-center" colspan="6">{{ text_no_results }}</td>
+      </tr>
+      {% endif %}
+        </tbody>
+      
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-right">{{ results }}</div>
+  </div>
+</fieldset>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/customer_credit&user_token={{ user_token }}';
+	var url = '';
 	
 	var filter_customer = $('input[name=\'filter_customer\']').val();
 	
@@ -87,7 +93,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 	
-	location = url;
+	$('#report').load('index.php?route=extension/report/customer_credit/report&user_token={{ user_token }}' + url);
 });
 //--></script> 
 <script type="text/javascript"><!--

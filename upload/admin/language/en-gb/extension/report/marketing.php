@@ -7,6 +7,7 @@ $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified marketing report!';
 $_['text_list']        = 'Marketing List';
 $_['text_edit']        = 'Edit Marketing Report';
+$_['text_filter']      = 'Marketing Filter';
 $_['text_group']       = 'Marketing';
 $_['text_all_status']  = 'All Statuses';
 

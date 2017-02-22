@@ -7,6 +7,7 @@ $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified affiliate commission report!';
 $_['text_list']         = 'Affiliate Commission List';
 $_['text_edit']         = 'Edit Affiliate Commission Report';
+$_['text_filter']       = 'Affiliate Commission Filter';
 $_['text_group']        = 'Affiliate';
 
 // Column

@@ -126,16 +126,17 @@ class ControllerExtensionReportProductPurchased extends Controller {
 
 		foreach ($results as $result) {
 			$data['products'][] = array(
-				'name'       => $result['name'],
-				'model'      => $result['model'],
-				'quantity'   => $result['quantity'],
-				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
+				'name'     => $result['name'],
+				'model'    => $result['model'],
+				'quantity' => $result['quantity'],
+				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
+		$data['text_filter'] = $this->language->get('text_filter');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_all_status'] = $this->language->get('text_all_status');

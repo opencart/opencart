@@ -7,6 +7,7 @@ $_['text_extension']    = 'Extensions';
 $_['text_success']      = 'Success: You have modified tax report!';
 $_['text_list']         = 'Tax List';
 $_['text_edit']         = 'Edit Tax Report';
+$_['text_filter']       = 'Report Filter';
 $_['text_group']        = 'Sales';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';

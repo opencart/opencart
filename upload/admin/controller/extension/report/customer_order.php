@@ -140,13 +140,14 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 				'orders'         => $result['orders'],
 				'products'       => $result['products'],
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url, true)
+				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
+		$data['text_filter'] = $this->language->get('text_filter');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_all_status'] = $this->language->get('text_all_status');

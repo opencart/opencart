@@ -56,7 +56,9 @@ $registry->set('event', $event);
 // Event Register
 if ($config->has('action_event')) {
 	foreach ($config->get('action_event') as $key => $value) {
-		$event->register($key, new Action($value));
+		foreach ($value as $action) {
+			$event->register($key, new Action($action));
+		}
 	}
 }
 

@@ -9,6 +9,13 @@ $_['text_add']              = 'Add Customer';
 $_['text_edit']             = 'Edit Customer';
 $_['text_default']          = 'Default';
 $_['text_balance']          = 'Balance';
+$_['text_history']          = 'History';
+$_['text_history_add']      = 'Add History';
+$_['text_transaction']      = 'Transactions';
+$_['text_transaction_add']  = 'Add Transaction';
+$_['text_reward']           = 'Reward Points';
+$_['text_reward_add']       = 'Add Reward Points';
+$_['text_ip']               = 'IP';
 
 // Column
 $_['column_name']           = 'Customer Name';

@@ -679,9 +679,14 @@ class ControllerCustomerCustomer extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
-		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
-
+		$data['text_history'] = $this->language->get('text_history');
+		$data['text_history_add'] = $this->language->get('text_history_add');
+		$data['text_transaction'] = $this->language->get('text_transaction');
+		$data['text_transaction_add'] = $this->language->get('text_transaction_add');
+		$data['text_reward'] = $this->language->get('text_reward');
+		$data['text_reward_add'] = $this->language->get('text_reward_add');
+		$data['text_ip'] = $this->language->get('text_ip');
+		
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');

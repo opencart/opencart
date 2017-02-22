@@ -105,11 +105,11 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->load->model('report/sale');
+		$this->load->model('dashboard/sale');
 
-		$today = $this->model_report_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$today = $this->model_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$yesterday = $this->model_report_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+		$yesterday = $this->model_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
 		$difference = $today - $yesterday;
 

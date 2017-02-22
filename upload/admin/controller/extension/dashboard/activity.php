@@ -33,7 +33,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$data['error_warning'] = '';
+			$data['error_warning'] = ''; 
 		}
 
 		$data['breadcrumbs'] = array();
@@ -107,9 +107,9 @@ class ControllerExtensionDashboardActivity extends Controller {
 
 		$data['activities'] = array();
 
-		$this->load->model('report/activity');
+		$this->load->model('extension/dashboard/activity');
 
-		$results = $this->model_report_activity->getActivities();
+		$results = $this->model_extension_dashboard_activity->getActivities();
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));

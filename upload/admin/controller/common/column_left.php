@@ -651,6 +651,9 @@ class ControllerCommonColumnLeft extends Controller {
 			// Add all the modules which have multiple settings for each module
 			foreach ($extensions as $code) {
 				if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
+					
+					
+					
 					$report[] = array(
 						'code'       => $code,
 						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order')

@@ -20,10 +20,8 @@ class ControllerReportReport extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
-		$data['text_type'] = $this->language->get('text_type');
+		$data['text_group'] = $this->language->get('text_group');
 		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

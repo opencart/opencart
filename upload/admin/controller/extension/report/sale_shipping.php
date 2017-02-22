@@ -81,7 +81,7 @@ class ControllerExtensionReportSaleShipping extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/sale_shipping');
 	
 		if (isset($this->request->get['filter_date_start'])) {

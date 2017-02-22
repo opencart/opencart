@@ -81,7 +81,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/product_viewed');
 
 		if (isset($this->request->get['page'])) {

@@ -81,7 +81,7 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 		return !$this->error;
 	}
 			
-	public function info() {
+	public function report() {
 		$this->load->language('extension/report/customer_online');
 
 		if (isset($this->request->get['filter_ip'])) {

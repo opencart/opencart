@@ -81,7 +81,7 @@ class ControllerExtensionReportCustomerReward extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/customer_reward');
 
 		if (isset($this->request->get['filter_date_start'])) {

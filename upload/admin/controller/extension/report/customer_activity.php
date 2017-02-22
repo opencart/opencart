@@ -81,7 +81,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/customer_activity');
 
 		if (isset($this->request->get['filter_customer'])) {

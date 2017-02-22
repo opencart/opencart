@@ -83,7 +83,7 @@ class ControllerExtensionReportAffiliate extends Controller {
 		return !$this->error;
 	}
 	
-	public function info() {
+	public function report() {
 		$this->load->language('report/affiliate');
 
 		if (isset($this->request->get['filter_date_start'])) {

@@ -81,7 +81,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/product_purchased');
 
 		if (isset($this->request->get['filter_date_start'])) {

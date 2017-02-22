@@ -81,7 +81,7 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/sale_order');
 
 		if (isset($this->request->get['filter_date_start'])) {

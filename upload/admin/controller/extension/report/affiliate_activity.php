@@ -81,7 +81,7 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 		return !$this->error;
 	}
 			
-	public function info() {
+	public function report() {
 		$this->load->language('report/affiliate_activity');
 
 		if (isset($this->request->get['filter_affiliate'])) {

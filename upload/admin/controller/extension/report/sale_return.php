@@ -81,7 +81,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		return !$this->error;
 	}
 	
-	public function info() {
+	public function report() {
 		$this->load->language('report/sale_return');
 
 		if (isset($this->request->get['filter_date_start'])) {

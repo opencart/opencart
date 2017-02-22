@@ -81,7 +81,7 @@ class ControllerExtensionReportCustomerCredit extends Controller {
 		return !$this->error;
 	}
 		
-	public function info() {
+	public function report() {
 		$this->load->language('report/customer_credit');
 
 		if (isset($this->request->get['filter_date_start'])) {

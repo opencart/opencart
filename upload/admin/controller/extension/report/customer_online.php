@@ -102,33 +102,7 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-			'text' => $this->language->get('text_home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/report/customer_online', 'user_token=' . $this->session->data['user_token'] . $url, true),
-			'text' => $this->language->get('heading_title')
-		);
-
-		$this->load->model('report/customer');
+		$this->load->model('extension/report/customer');
 		$this->load->model('customer/customer');
 
 		$data['customers'] = array();
@@ -140,9 +114,9 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 			'limit'           => $this->config->get('config_limit_admin')
 		);
 
-		$customer_total = $this->model_report_customer->getTotalCustomersOnline($filter_data);
+		$customer_total = $this->model_extension_report_customer->getTotalCustomersOnline($filter_data);
 
-		$results = $this->model_report_customer->getCustomersOnline($filter_data);
+		$results = $this->model_extension_report_customer->getCustomersOnline($filter_data);
 
 		foreach ($results as $result) {
 			$customer_info = $this->model_customer_customer->getCustomer($result['customer_id']);
@@ -208,6 +182,6 @@ class ControllerExtensionReportCustomerOnline extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		$this->response->setOutput($this->load->view('extension/report/customer_online', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_online_info', $data));
 	}
 }

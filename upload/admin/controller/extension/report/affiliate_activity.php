@@ -82,7 +82,7 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 	}
 			
 	public function report() {
-		$this->load->language('report/affiliate_activity');
+		$this->load->language('extension/report/affiliate_activity');
 
 		if (isset($this->request->get['filter_affiliate'])) {
 			$filter_affiliate = $this->request->get['filter_affiliate'];
@@ -114,41 +114,7 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_affiliate'])) {
-			$url .= '&filter_affiliate=' . urlencode($this->request->get['filter_affiliate']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-			'text' => $this->language->get('text_home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/affiliate_activity', 'user_token=' . $this->session->data['user_token'] . $url, true),
-			'text' => $this->language->get('heading_title')
-		);
-
-		$this->load->model('report/affiliate');
+		$this->load->model('extension/report/affiliate');
 
 		$data['activities'] = array();
 
@@ -161,9 +127,9 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 			'limit'             => 20
 		);
 
-		$activity_total = $this->model_report_affiliate->getTotalAffiliateActivities($filter_data);
+		$activity_total = $this->model_extension_report_affiliate->getTotalAffiliateActivities($filter_data);
 
-		$results = $this->model_report_affiliate->getAffiliateActivities($filter_data);
+		$results = $this->model_extension_report_affiliate->getAffiliateActivities($filter_data);
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
@@ -227,6 +193,6 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		$this->response->setOutput($this->load->view('report/affiliate_activity', $data));
+		$this->response->setOutput($this->load->view('extension/report/affiliate_activity_info', $data));
 	}
 }

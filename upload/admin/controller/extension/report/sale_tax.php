@@ -82,7 +82,7 @@ class ControllerExtensionReportSaleTax extends Controller {
 	}
 	
 	public function report() {
-		$this->load->language('report/sale_tax');
+		$this->load->language('extension/report/sale_tax');
 		
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -114,41 +114,7 @@ class ControllerExtensionReportSaleTax extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['filter_group'])) {
-			$url .= '&filter_group=' . $this->request->get['filter_group'];
-		}
-
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/sale_tax', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/sale');
+		$this->load->model('extension/report/sale');
 
 		$data['orders'] = array();
 
@@ -161,11 +127,11 @@ class ControllerExtensionReportSaleTax extends Controller {
 			'limit'                  => $this->config->get('config_limit_admin')
 		);
 
-		$order_total = $this->model_report_sale->getTotalTaxes($filter_data);
+		$order_total = $this->model_extension_report_sale->getTotalTaxes($filter_data);
 
 		$data['orders'] = array();
 
-		$results = $this->model_report_sale->getTaxes($filter_data);
+		$results = $this->model_extension_report_sale->getTaxes($filter_data);
 
 		foreach ($results as $result) {
 			$data['orders'][] = array(
@@ -258,6 +224,6 @@ class ControllerExtensionReportSaleTax extends Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('report/sale_tax', $data));
+		$this->response->setOutput($this->load->view('extension/report/sale_tax_info', $data));
 	}
 }

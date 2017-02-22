@@ -82,7 +82,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 	}
 		
 	public function report() {
-		$this->load->language('report/sale_coupon');
+		$this->load->language('extension/report/sale_coupon');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -102,33 +102,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/sale_coupon', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/coupon');
+		$this->load->model('extension/report/coupon');
 
 		$data['coupons'] = array();
 
@@ -139,9 +113,9 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 			'limit'             => $this->config->get('config_limit_admin')
 		);
 
-		$coupon_total = $this->model_report_coupon->getTotalCoupons($filter_data);
+		$coupon_total = $this->model_extension_report_coupon->getTotalCoupons($filter_data);
 
-		$results = $this->model_report_coupon->getCoupons($filter_data);
+		$results = $this->model_extension_report_coupon->getCoupons($filter_data);
 
 		foreach ($results as $result) {
 			$data['coupons'][] = array(
@@ -196,6 +170,6 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		$this->response->setOutput($this->load->view('report/sale_coupon', $data));
+		$this->response->setOutput($this->load->view('extension/report/sale_coupon_info', $data));
 	}
 }

@@ -82,7 +82,7 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 	}
 	
 	public function report() {
-		$this->load->language('report/customer_search');
+		$this->load->language('extension/report/customer_search');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -120,45 +120,7 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode($this->request->get['filter_keyword']);
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-			'text' => $this->language->get('text_home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/customer_search', 'user_token=' . $this->session->data['user_token'] . $url, true),
-			'text' => $this->language->get('heading_title')
-		);
-
-		$this->load->model('report/customer');
+		$this->load->model('extension/report/customer');
 		$this->load->model('catalog/category');
 
 		$data['searches'] = array();
@@ -173,9 +135,9 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 			'limit'             => 20
 		);
 
-		$search_total = $this->model_report_customer->getTotalCustomerSearches($filter_data);
+		$search_total = $this->model_extension_report_customer->getTotalCustomerSearches($filter_data);
 
-		$results = $this->model_report_customer->getCustomerSearches($filter_data);
+		$results = $this->model_extension_report_customer->getCustomerSearches($filter_data);
 
 		foreach ($results as $result) {
 			$category_info = $this->model_catalog_category->getCategory($result['category_id']);
@@ -267,6 +229,6 @@ class ControllerExtensionReportCustomerSearch extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		$this->response->setOutput($this->load->view('report/customer_search', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_search_info', $data));
 	}
 }

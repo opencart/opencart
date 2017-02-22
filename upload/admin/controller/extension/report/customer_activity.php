@@ -82,7 +82,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 	}
 		
 	public function report() {
-		$this->load->language('report/customer_activity');
+		$this->load->language('extension/report/customer_activity');
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
@@ -114,41 +114,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true),
-			'text' => $this->language->get('text_home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('report/customer_activity', 'user_token=' . $this->session->data['user_token'] . $url, true),
-			'text' => $this->language->get('heading_title')
-		);
-
-		$this->load->model('report/customer');
+		$this->load->model('extension/report/customer');
 
 		$data['activities'] = array();
 
@@ -161,9 +127,9 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 			'limit'             => 20
 		);
 
-		$activity_total = $this->model_report_customer->getTotalCustomerActivities($filter_data);
+		$activity_total = $this->model_extension_report_customer->getTotalCustomerActivities($filter_data);
 
-		$results = $this->model_report_customer->getCustomerActivities($filter_data);
+		$results = $this->model_extension_report_customer->getCustomerActivities($filter_data);
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
@@ -237,6 +203,6 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		$this->response->setOutput($this->load->view('report/customer_activity', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_activity_info', $data));
 	}
 }

@@ -13,19 +13,19 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</h3>
+        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_list }}</h3>
       </div>
       <div class="panel-body">
         <fieldset>
           <legend>{{ text_type }}</legend>
           <div class="well">
             <div class="input-group">
-              <select name="type" class="form-control">
-                {% for category in categories %}
-                {% if type == category.code %}
-                <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+              <select name="report" class="form-control">
+                {% for report in reports %}
+                {% if code == report.code %}
+                <option value="{{ report.href }}" selected="selected">{{ report.text }}</option>
                 {% else %}
-                <option value="{{ category.href }}">{{ category.text }}</option>
+                <option value="{{ report.href }}">{{ report.text }}</option>
                 {% endif %}
                 {% endfor %}
               </select>
@@ -33,15 +33,15 @@
             </div>
           </div>
         </fieldset>
-        <div id="extension"></div>
+        <div id="report"></div>
       </div>
     </div>
   </div>
-  {% if categories %}
+  {% if reports %}
   <script type="text/javascript"><!--
-$('select[name="type"]').on('change', function() {
+$('select[name="report"]').on('change', function() {
 	$.ajax({
-		url: $('select[name="type"]').val(),
+		url: $('select[name="report"]').val(),
 		dataType: 'html',
 		beforeSend: function() {
 			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
@@ -50,10 +50,9 @@ $('select[name="type"]').on('change', function() {
 		complete: function() {
 			$('.fa-circle-o-notch').addClass('fa-filter');
 			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
-			
 		},
 		success: function(html) {
-			$('#extension').html(html);
+			$('#report').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -61,9 +60,9 @@ $('select[name="type"]').on('change', function() {
 	});
 });
 
-$('select[name="type"]').trigger('change');
+$('select[name="report"]').trigger('change');
 
-$('#extension').on('click', '.btn-success', function(e) {
+$('#report').on('click', '.btn-success', function(e) {
 	e.preventDefault();
 	
 	var element = this;
@@ -78,7 +77,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 			$(element).button('reset');
 		},
 		success: function(html) {
-			$('#extension').html(html);
+			$('#report').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -86,7 +85,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 	});
 });
 
-$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
+$('#report').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
 	
 	if (confirm('{{ text_confirm }}')) {
@@ -102,7 +101,8 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 				$(element).button('reset');
 			},
 			success: function(html) {
-				$('#extension').html(html);
+				alert(html);
+				$('#report').html(html);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -111,6 +111,6 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	}
 });
 //--></script>
-  {% endif %}
+{% endif %}
 </div>
 {{ footer }} 

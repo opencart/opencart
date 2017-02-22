@@ -1,71 +1,78 @@
+<fieldset>
+<legend>{{ heading_title }}</legend>
+<div class="well">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
+        <div class="input-group date">
+          <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="input-affiliate">{{ entry_affiliate }}</label>
+        <input type="text" name="filter_affiliate" value="{{ filter_affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control" />
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
+        <div class="input-group date">
+          <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="input-ip">{{ entry_ip }}</label>
+        <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
+      </div>
+      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+    </div>
+  </div>
+</div>
+</fieldset>
 
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-date-start">{{ entry_date_start }}</label>
-                <div class="input-group date">
-                  <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-affiliate">{{ entry_affiliate }}</label>
-                <input type="text" name="filter_affiliate" value="{{ filter_affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-date-end">{{ entry_date_end }}</label>
-                <div class="input-group date">
-                  <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="input-ip">{{ entry_ip }}</label>
-                <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
-              </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-left">{{ column_comment }}</td>
-                <td class="text-left">{{ column_ip }}</td>
-                <td class="text-left">{{ column_date_added }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {% if activities %}
-              {% for activity in activities %}
-              <tr>
-                <td class="text-left">{{ activity.comment }}</td>
-                <td class="text-left">{{ activity.ip }}</td>
-                <td class="text-left">{{ activity.date_added }}</td>
-              </tr>
-              {% endfor %}
-              {% else %}
-              <tr>
-                <td class="text-center" colspan="4">{{ text_no_results }}</td>
-              </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
-        </div>
-
-  <script type="text/javascript"><!--
+<fieldset>
+<legend>{{ heading_title }}</legend>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_comment }}</td>
+        <td class="text-left">{{ column_ip }}</td>
+        <td class="text-left">{{ column_date_added }}</td>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% if activities %}
+    {% for activity in activities %}
+    <tr>
+      <td class="text-left">{{ activity.comment }}</td>
+      <td class="text-left">{{ activity.ip }}</td>
+      <td class="text-left">{{ activity.date_added }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td class="text-center" colspan="3">{{ text_no_results }}</td>
+    </tr>
+    {% endif %}
+      </tbody>
+    
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+</fieldset>
+<script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/affiliate_activity&user_token={{ user_token }}';
+	url = '';
 
 	var filter_affiliate = $('input[name=\'filter_affiliate\']').val();
 
@@ -91,10 +98,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 
-	location = url;
+	$('#report').load('index.php?route=report/affiliate_activity&user_token={{ user_token }}');
 });
-//--></script>
-  <script type="text/javascript"><!--
+//--></script> 
+<script type="text/javascript"><!--
 $('input[name=\'filter_affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -114,10 +121,9 @@ $('input[name=\'filter_affiliate\']').autocomplete({
 		$('input[name=\'filter_affiliate\']').val(item['label']);
 	}	
 });
-//--></script>
-  <script type="text/javascript"><!--
+//--></script> 
+<script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
 });
-//--></script></div>
-{{ footer }}
+//--></script>

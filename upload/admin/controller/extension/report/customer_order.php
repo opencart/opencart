@@ -82,7 +82,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 	}
 			
 	public function report() {
-		$this->load->language('report/customer_order');
+		$this->load->language('extension/report/customer_order');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -114,41 +114,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/customer_order', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/customer');
+		$this->load->model('extension/report/customer');
 
 		$data['customers'] = array();
 
@@ -161,9 +127,9 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 			'limit'						=> $this->config->get('config_limit_admin')
 		);
 
-		$customer_total = $this->model_report_customer->getTotalOrders($filter_data);
+		$customer_total = $this->model_extension_report_customer->getTotalOrders($filter_data);
 
-		$results = $this->model_report_customer->getOrders($filter_data);
+		$results = $this->model_extension_report_customer->getOrders($filter_data);
 
 		foreach ($results as $result) {
 			$data['customers'][] = array(
@@ -241,6 +207,6 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('report/customer_order', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_order_info', $data));
 	}
 }

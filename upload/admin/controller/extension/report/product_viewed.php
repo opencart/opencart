@@ -82,7 +82,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 	}
 		
 	public function report() {
-		$this->load->language('report/product_viewed');
+		$this->load->language('extension/report/product_viewed');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -90,25 +90,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/product_viewed', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/product');
+		$this->load->model('extension/report/product');
 
 		$filter_data = array(
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
@@ -117,11 +99,11 @@ class ControllerExtensionReportProductViewed extends Controller {
 
 		$data['products'] = array();
 
-		$product_viewed_total = $this->model_report_product->getTotalProductViews();
+		$product_viewed_total = $this->model_extension_report_product->getTotalProductViews();
 
-		$product_total = $this->model_report_product->getTotalProductsViewed();
+		$product_total = $this->model_extension_report_product->getTotalProductsViewed();
 
-		$results = $this->model_report_product->getProductsViewed($filter_data);
+		$results = $this->model_extension_report_product->getProductsViewed($filter_data);
 
 		foreach ($results as $result) {
 			if ($result['viewed']) {
@@ -187,7 +169,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
 
-		$this->response->setOutput($this->load->view('report/product_viewed', $data));
+		$this->response->setOutput($this->load->view('extension/report/product_viewed_info', $data));
 	}
 
 	public function reset() {
@@ -203,6 +185,6 @@ class ControllerExtensionReportProductViewed extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('report/product_viewed', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->redirect($this->url->link('extension/report/product_viewed_info', 'user_token=' . $this->session->data['user_token'], true));
 	}
 }

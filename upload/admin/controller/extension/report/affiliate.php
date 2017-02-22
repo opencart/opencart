@@ -84,7 +84,7 @@ class ControllerExtensionReportAffiliate extends Controller {
 	}
 	
 	public function report() {
-		$this->load->language('report/affiliate');
+		$this->load->language('extension/report/affiliate');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -104,33 +104,7 @@ class ControllerExtensionReportAffiliate extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/affiliate', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/affiliate');
+		$this->load->model('extension/report/affiliate');
 
 		$data['affiliates'] = array();
 
@@ -141,9 +115,9 @@ class ControllerExtensionReportAffiliate extends Controller {
 			'limit'             => $this->config->get('config_limit_admin')
 		);
 
-		$affiliate_total = $this->model_report_affiliate->getTotalCommission($filter_data);
+		$affiliate_total = $this->model_extension_report_affiliate->getTotalCommission($filter_data);
 
-		$results = $this->model_report_affiliate->getCommission($filter_data);
+		$results = $this->model_extension_report_affiliate->getCommission($filter_data);
 
 		foreach ($results as $result) {
 			$data['affiliates'][] = array(
@@ -153,7 +127,7 @@ class ControllerExtensionReportAffiliate extends Controller {
 				'commission' => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'orders'     => $result['orders'],
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'       => $this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, true)
+				'edit'       => $this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=' . $result['affiliate_id'], true)
 			);
 		}
 
@@ -202,6 +176,6 @@ class ControllerExtensionReportAffiliate extends Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		$this->response->setOutput($this->load->view('report/affiliate', $data));
+		$this->response->setOutput($this->load->view('extension/report/affiliate_info', $data));
 	}
 }

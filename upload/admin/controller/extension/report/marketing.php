@@ -82,7 +82,7 @@ class ControllerExtensionReportMarketing extends Controller {
 	}
 	
 	public function report() {
-		$this->load->language('report/marketing');
+		$this->load->language('extension/report/marketing');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -108,37 +108,7 @@ class ControllerExtensionReportMarketing extends Controller {
 			$page = 1;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
-		}
-
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/marketing', 'user_token=' . $this->session->data['user_token'] . $url, true)
-		);
-
-		$this->load->model('report/marketing');
+		$this->load->model('extension/report/marketing');
 
 		$data['marketings'] = array();
 
@@ -150,25 +120,18 @@ class ControllerExtensionReportMarketing extends Controller {
 			'limit'                  => $this->config->get('config_limit_admin')
 		);
 
-		$marketing_total = $this->model_report_marketing->getTotalMarketing($filter_data);
+		$marketing_total = $this->model_extension_report_marketing->getTotalMarketing($filter_data);
 
-		$results = $this->model_report_marketing->getMarketing($filter_data);
+		$results = $this->model_extension_report_marketing->getMarketing($filter_data);
 
 		foreach ($results as $result) {
-			$action = array();
-
-			$action[] = array(
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
-			);
-
 			$data['marketings'][] = array(
 				'campaign' => $result['campaign'],
 				'code'     => $result['code'],
 				'clicks'   => $result['clicks'],
 				'orders'   => $result['orders'],
 				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'action'   => $action
+				'action'   => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url, true)
 			);
 		}
 
@@ -190,6 +153,7 @@ class ControllerExtensionReportMarketing extends Controller {
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
 		$data['entry_status'] = $this->language->get('entry_status');
 
+		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_filter'] = $this->language->get('button_filter');
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -226,6 +190,6 @@ class ControllerExtensionReportMarketing extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('report/marketing', $data));
+		$this->response->setOutput($this->load->view('extension/report/marketing_info', $data));
 	}
 }

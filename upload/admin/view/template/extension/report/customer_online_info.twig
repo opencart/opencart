@@ -1,84 +1,62 @@
-{{ header }}{{ column_left }}
-<div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart"></i> {{ text_list }}</h3>
-      </div>
-      <div class="panel-body">
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-ip">{{ entry_ip }}</label>
-                <input type="text" name="filter_ip" value="{{ filter_ip }}" id="input-ip" placeholder="{{ entry_ip }}" i class="form-control" />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="control-label" for="input-customer">{{ entry_customer }}</label>
-                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
-              </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <td class="text-left">{{ column_ip }}</td>
-                <td class="text-left">{{ column_customer }}</td>
-                <td class="text-left">{{ column_url }}</td>
-                <td class="text-left">{{ column_referer }}</td>
-                <td class="text-left">{{ column_date_added }}</td>
-                <td class="text-right">{{ column_action }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {% if customers %}
-              {% for customer in customers %}
-              <tr>
-                <td class="text-left"><a href="http://whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
-                <td class="text-left">{{ customer.customer }}</td>
-                <td class="text-left"><a href="{{ customer.url }}" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
-                <td class="text-left">{% if customer.referer %}
-                  <a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>
-                  {% endif %}</td>
-                <td class="text-left">{{ customer.date_added }}</td>
-                <td class="text-right">{% if customer.customer_id %}
-                  <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                  {% else %}
-                  <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
-                  {% endif %}</td>
-              </tr>
-              {% endfor %}
-              {% else %}
-              <tr>
-                <td class="text-center" colspan="6">{{ text_no_results }}</td>
-              </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
-        </div>
+<div class="well">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="input-ip">{{ entry_ip }}</label>
+        <input type="text" name="filter_ip" value="{{ filter_ip }}" id="input-ip" placeholder="{{ entry_ip }}" i class="form-control" />
       </div>
     </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="input-customer">{{ entry_customer }}</label>
+        <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+      </div>
+      <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+    </div>
   </div>
-  <script type="text/javascript"><!--
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_ip }}</td>
+        <td class="text-left">{{ column_customer }}</td>
+        <td class="text-left">{{ column_url }}</td>
+        <td class="text-left">{{ column_referer }}</td>
+        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-right">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% if customers %}
+    {% for customer in customers %}
+    <tr>
+      <td class="text-left"><a href="http://whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
+      <td class="text-left">{{ customer.customer }}</td>
+      <td class="text-left"><a href="{{ customer.url }}" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
+      <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
+      <td class="text-left">{{ customer.date_added }}</td>
+      <td class="text-right">{% if customer.customer_id %} <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>{% else %}
+        <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+        {% endif %}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td class="text-center" colspan="6">{{ text_no_results }}</td>
+    </tr>
+    {% endif %}
+      </tbody>
+    
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+</div>
+<script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_online&user_token={{ user_token }}';
 
@@ -96,26 +74,25 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script>
-  <script type="text/javascript"><!--
+//--></script> 
+<script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({
-  'source': function(request, response) {
-    $.ajax({
-      url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-      dataType: 'json',
-      success: function(json) {
-        response($.map(json, function(item) {
-          return {
-            label: item['name'],
-            value: item['customer_id']
-          }
-        }));
-      }
-    });
-  },
-  'select': function(item) {
-    $('input[name=\'filter_customer\']').val(item['label']);
-  }
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_customer\']').val(item['label']);
+	}
 });
-//--></script></div>
-{{ footer }}
+//--></script>

@@ -61,55 +61,6 @@ $('select[name="report"]').on('change', function() {
 });
 
 $('select[name="report"]').trigger('change');
-
-$('#report').on('click', '.btn-success', function(e) {
-	e.preventDefault();
-	
-	var element = this;
-
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'html',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(html) {
-			$('#report').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#report').on('click', '.btn-danger, .btn-warning', function(e) {
-	e.preventDefault();
-	
-	if (confirm('{{ text_confirm }}')) {
-		var element = this;
-	
-		$.ajax({
-			url: $(element).attr('href'),
-			dataType: 'html',
-			beforeSend: function() {
-				$(element).button('loading');
-			},
-			complete: function() {
-				$(element).button('reset');
-			},
-			success: function(html) {
-				alert(html);
-				$('#report').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-});
 //--></script>
 {% endif %}
 </div>

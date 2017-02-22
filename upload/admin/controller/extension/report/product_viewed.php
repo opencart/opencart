@@ -132,31 +132,13 @@ class ControllerExtensionReportProductViewed extends Controller {
 		$data['column_percent'] = $this->language->get('column_percent');
 
 		$data['button_reset'] = $this->language->get('button_reset');
+		
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['reset'] = $this->url->link('report/product_viewed/reset', 'user_token=' . $this->session->data['user_token'] . $url, true);
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
 		}
 
 		$pagination = new Pagination();
@@ -173,18 +155,21 @@ class ControllerExtensionReportProductViewed extends Controller {
 	}
 
 	public function reset() {
-		$this->load->language('report/product_viewed');
+		$this->load->language('extension/report/product_viewed');
 
-		if (!$this->user->hasPermission('modify', 'report/product_viewed')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/report/product_viewed')) {
+			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('report/product');
+			$this->load->model('extension/report/product');
 
-			$this->model_report_product->reset();
+			$this->model_extension_report_product->reset();
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('extension/report/product_viewed_info', 'user_token=' . $this->session->data['user_token'], true));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

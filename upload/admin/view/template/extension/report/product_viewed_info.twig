@@ -1,17 +1,5 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-  {% if error_warning %}
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  {% endif %}
-  {% if success %}
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  {% endif %}
-   <div class="text-center"><a onclick="confirm('{{ text_confirm }}') ? location.href='{{ reset }}' : false;" data-toggle="tooltip" title="{{ button_reset }}" class="btn btn-danger"><i class="fa fa-refresh"></i></a></div>
-  <br />
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -46,4 +34,42 @@
     <div class="col-sm-6 text-left">{{ pagination }}</div>
     <div class="col-sm-6 text-right">{{ results }}</div>
   </div>
+  <br />
+  <div class="text-center"><button type="button" id="button-reset" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button></div>
+
+
+<script type="text/javascript"><!--
+$('#button-reset').on('click', function() {
+	if (confirm('{{ text_confirm }}')) {
+		$.ajax({
+			url: 'index.php?route=extension/report/product_viewed/reset&user_token={{ user_token }}',
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-reset').button('loading');
+			},
+			complete: function() {
+				$('#button-reset').button('reset');
+			},			
+			success: function(json) {
+				console.log(json);
+				
+				if (json['error']) {
+					 $('#report').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				if (json['success']) {
+					$('#report').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert"><i class="fa fa-circle-o-notch fa-spin"></i> </button></div>');
+					
+					setTimeout(function() {
+						$('#report').load('index.php?route=extension/report/product_viewed/report&user_token={{ user_token }}');
+					}, 3000);
+				}	
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
 </fieldset>

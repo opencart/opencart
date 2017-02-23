@@ -105,11 +105,11 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->load->model('dashboard/sale');
+		$this->load->model('extension/dashboard/sale');
 
-		$today = $this->model_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$today = $this->model_extension_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$yesterday = $this->model_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+		$yesterday = $this->model_extension_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
 		$difference = $today - $yesterday;
 
@@ -119,7 +119,7 @@ class ControllerExtensionDashboardSale extends Controller {
 			$data['percentage'] = 0;
 		}
 
-		$sale_total = $this->model_report_sale->getTotalSales();
+		$sale_total = $this->model_extension_dashboard_sale->getTotalSales();
 
 		if ($sale_total > 1000000000000) {
 			$data['total'] = round($sale_total / 1000000000000, 1) . 'T';

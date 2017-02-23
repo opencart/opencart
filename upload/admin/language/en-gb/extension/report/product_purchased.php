@@ -8,7 +8,6 @@ $_['text_success']      = 'Success: You have modified products purchased report!
 $_['text_list']         = 'Products Purchased List';
 $_['text_edit']         = 'Edit Products Purchased Report';
 $_['text_filter']       = 'Products Purchased Filter';
-$_['text_group']        = 'Products';
 $_['text_all_status']   = 'All Statuses';
 
 // Column

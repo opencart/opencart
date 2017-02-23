@@ -8,7 +8,6 @@ $_['text_success']      = 'Success: You have modified returns report!';
 $_['text_list']         = 'Returns List';
 $_['text_edit']         = 'Edit Returns Report';
 $_['text_filter']       = 'Returns Filter';
-$_['text_group']        = 'Sales';
 $_['text_year']         = 'Years';
 $_['text_month']        = 'Months';
 $_['text_week']         = 'Weeks';

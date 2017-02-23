@@ -15,7 +15,6 @@
       <thead>
         <tr>
           <td class="text-left">{{ column_name }}</td>
-          <td class="text-left">{{ column_group }}</td>
           <td class="text-left">{{ column_status }}</td>
           <td class="text-right">{{ column_sort_order }}</td>
           <td class="text-right">{{ column_action }}</td>
@@ -26,7 +25,6 @@
         {% for extension in extensions %}
         <tr>
           <td class="text-left">{{ extension.name }}</td>
-          <td class="text-left">{{ extension.group }}</td><br />
           <td class="text-left">{{ extension.status }}</td>
           <td class="text-right">{{ extension.sort_order }}</td>
           <td class="text-right">{% if extension.installed %}
@@ -43,7 +41,7 @@
         {% endfor %}
         {% else %}
         <tr>
-          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
         </tr>
         {% endif %}
       </tbody>

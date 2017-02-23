@@ -8,7 +8,6 @@ $_['text_success']      = 'Success: You have modified customers online report!';
 $_['text_list']         = 'Customers Online List';
 $_['text_edit']         = 'Edit Customers Online Report';
 $_['text_filter']       = 'Customers Online Filter';
-$_['text_group']        = 'Customer';
 $_['text_guest']        = 'Guest';
 
 // Column

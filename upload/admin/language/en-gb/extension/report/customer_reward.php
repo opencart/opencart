@@ -8,7 +8,6 @@ $_['text_success']          = 'Success: You have modified customer reward points
 $_['text_list']             = 'Customer Reward Points List';
 $_['text_edit']             = 'Edit Customer Reward Points Report';
 $_['text_filter']           = 'Customer Reward Points Filter';
-$_['text_group']            = 'Customer';
 
 // Column
 $_['column_customer']       = 'Customer Name';

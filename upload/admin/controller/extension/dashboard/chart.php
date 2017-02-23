@@ -117,7 +117,7 @@ class ControllerExtensionDashboardChart extends Controller {
 
 		$json = array();
 
-		$this->load->model('report/sale');
+		$this->load->model('extension/dashboard/sale');
 		$this->load->model('report/customer');
 
 		$json['order'] = array();
@@ -138,7 +138,7 @@ class ControllerExtensionDashboardChart extends Controller {
 		switch ($range) {
 			default:
 			case 'day':
-				$results = $this->model_report_sale->getTotalOrdersByDay();
+				$results = $this->model_extension_dashboard_sale->getTotalOrdersByDay();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = array($key, $value['total']);

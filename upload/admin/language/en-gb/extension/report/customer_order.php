@@ -8,7 +8,6 @@ $_['text_success']          = 'Success: You have modified customer orders report
 $_['text_list']             = 'Customer Orders List';
 $_['text_edit']             = 'Edit Customer Orders Report';
 $_['text_filter']           = 'Customer Orders Filter';
-$_['text_group']            = 'Customer';
 $_['text_all_status']       = 'All Statuses';
 
 // Column

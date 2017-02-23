@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -40,7 +40,7 @@ $_['entry_telephone']           = 'Телефон';
 $_['entry_fax']                 = 'Факс';
 $_['entry_status']              = 'Статус';
 $_['entry_password']            = 'Пароль';
-$_['entry_confirm']             = 'Подтвердить';
+$_['entry_confirm']             = 'Подтвердить пароль';
 $_['entry_company']             = 'Компания';
 $_['entry_website']             = 'Веб-сайт';
 $_['entry_address_1']           = 'Адрес 1';

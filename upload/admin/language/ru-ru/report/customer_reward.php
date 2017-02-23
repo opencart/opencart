@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -23,3 +23,4 @@ $_['column_action']         = 'Действие';
 // Entry
 $_['entry_date_start']      = 'Дата начала';
 $_['entry_date_end']        = 'Дата окончания';
+$_['entry_customer']		= 'Имя покупателя';

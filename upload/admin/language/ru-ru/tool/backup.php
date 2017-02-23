@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -15,6 +15,7 @@ $_['text_list']        = 'Список загрузок';
 // Entry
 $_['entry_restore']    = 'Восcтановить базу данных';
 $_['entry_export']     = 'Экспорт';
+$_['entry_import']     = 'Импорт';
 $_['entry_backup']     = 'Бэкап';
 
 // Error

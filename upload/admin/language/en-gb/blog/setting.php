@@ -1,5 +1,5 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2016.
+// *	@copyright	OPENCART.PRO 2011 - 2017.
 // *	@forum	http://forum.opencart.pro
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
@@ -39,7 +39,7 @@ $_['help_article_limit'] 	           = 'Determines how many catalog items are sh
 $_['help_article_description_length']  = 'In the list view, short description character limit (categories, etc).';
 $_['help_limit_admin']   	           = 'Determines how many admin items are shown per page (articles, categories, etc).';
 $_['help_article_count']               = 'Show the number of articles inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
-$_['help_menu']       	           	   = 'Show the top horizontal menu link on the blog.';
+$_['help_blog_menu']       	           = 'Show the top horizontal menu link on the blog.';
 $_['help_review']       	           = 'Enable/Disable new review entry and display of existing reviews.';
 $_['help_review_guest']       	       = 'Allow guests to post reviews.';
 $_['help_review_mail']                 = 'Send an email to the store owner when a new review is created.';

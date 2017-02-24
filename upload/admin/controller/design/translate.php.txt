@@ -1,0 +1,119 @@
+<?php 
+class ControllerDesignTranslate extends Controller {
+	private $error = array();
+
+	public function index()
+	{
+		
+		$this->load->language('design/translate');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true)
+			);
+
+		$data['heading_title'] = $this->language->get('heading_title');
+
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_store'] = $this->language->get('text_store');
+		$data['text_language'] = $this->language->get('text_language');
+		$data['text_translation'] = $this->language->get('text_translation');
+		$data['text_default'] = $this->language->get('text_default');
+
+		$data['token'] = $this->session->data['token'];
+
+		$data['stores'] = array();
+
+		$this->load->model('setting/store');
+
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = array(
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
+				);
+		}
+
+		$data['languages'] = array();
+
+		$this->load->model('localisation/language');
+
+		$results = $this->model_localisation_language->getLanguages();
+
+		foreach ($results as $result) {
+			$data['languages'][] = array(
+				'language_id' => $result['language_id'],
+				'name'        => $result['name']
+				);
+		}
+
+		$data['language_id'] = $this->config->get('config_language_id');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$curl = curl_init('https://api.crowdin.com/api/project/opencart/status?key=a00e7b58c0790df4126273119b318db5&json');
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+		$response = curl_exec($curl);
+
+		if (!$response) {
+			echo 'API ERROR :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')';
+		}
+
+		$data['language_data'] = json_decode($response);
+
+		// foreach ($decoded as $decode) {
+
+		// 	$name_array[$decode->code] = $decode->translated_progress;
+		// 	$code_array[$decode->code] = $decode->name;
+
+		// }
+		curl_close($curl);
+
+		$this->response->setOutput($this->load->view('design/translate', $data));
+
+	}
+
+	public function download()
+	{
+		
+
+		$code = $this->request->post['code'];
+		//download language pack
+		ini_set('auto_detect_line_endings', 1);
+
+		ini_set('default_socket_timeout', 5); // socket timeout, just in case
+
+		file_put_contents(DIR_UPLOAD."/".$code.".zip", file_get_contents("https://api.crowdin.com/api/project/opencart/download/".$code.".zip?key=a00e7b58c0790df4126273119b318db5"));
+
+		$this->load->controller('extension/installer');
+
+		
+		// $zip = new ZipArchive;
+		// $res = $zip->open('file.zip');
+		// if ($res === TRUE) {
+		// 	$zip->extractTo('/myzips/extract_path/');
+		// 	$zip->close();
+		// 	echo 'woot!';
+		// } else {
+		// 	echo 'doh!';
+		// }
+	}
+
+}
+

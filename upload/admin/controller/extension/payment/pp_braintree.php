@@ -2,8 +2,8 @@
 class ControllerExtensionPaymentPPBraintree extends Controller {
 	private $error = array();
 	private $gateway = null;
-	private $opencart_connect_url = 'https://dev.opencart.com/index.php?route=external/braintree_auth/connect';
-	private $opencart_retrieve_url = 'https://dev.opencart.com/index.php?route=external/braintree_auth/retrieve';
+	private $opencart_connect_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/connect';
+	private $opencart_retrieve_url = 'https://www.opencart.com/index.php?route=external/braintree_auth/retrieve';
 
 	public function index() {
 		$this->load->language('extension/payment/pp_braintree');

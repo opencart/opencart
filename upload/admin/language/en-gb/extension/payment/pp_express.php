@@ -25,6 +25,7 @@ $_['text_preferred_li_3']			 = 'Easily accept PayPal on multiple devices';
 $_['text_preferred_li_4']			 = 'Use in-context checkout so a user never has to leave your site';
 $_['text_connect_paypal']			 = 'Connect with PayPal';
 $_['text_incontext_not_supported']	 = '* Not supported with In-Context Checkout';
+$_['text_retrieve']	 				 = 'Your details have been entered from PayPal';
 
 // Entry
 $_['entry_username']				 = 'API Username';

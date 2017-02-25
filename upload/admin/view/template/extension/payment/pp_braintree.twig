@@ -32,7 +32,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-braintree" class="form-horizontal">
           <ul class="nav nav-tabs" id="tabs">
             <li class="active"><a href="#tab-setting" data-toggle="tab">{{ tab_setting }}</a></li>
-            {% if braintree_access_token is empty %}
+            {% if pp_braintree_access_token is empty %}
               <li><a href="#tab-currency" data-toggle="tab">{{ tab_currency }}</a></li>
             {% endif %}
 			      <li><a href="#tab-order-status" data-toggle="tab">{{ tab_order_status }}</a></li>
@@ -43,18 +43,18 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-setting">
-              {% if braintree_access_token is not empty %}
-                <input type="hidden" name="braintree_access_token" value="{{ braintree_access_token }}" />
-                <input type="hidden" name="braintree_refresh_token" value="{{ braintree_refresh_token }}" />
-                <input type="hidden" name="braintree_merchant_id" value="{{ braintree_merchant_id }}" />
-                <input type="hidden" name="braintree_public_key" value="" />
-                <input type="hidden" name="braintree_private_key" value="" />
-                <input type="hidden" name="braintree_environment" value="sandbox" />
+              {% if pp_braintree_access_token is not empty %}
+                <input type="hidden" name="pp_braintree_access_token" value="{{ pp_braintree_access_token }}" />
+                <input type="hidden" name="pp_braintree_refresh_token" value="{{ pp_braintree_refresh_token }}" />
+                <input type="hidden" name="pp_braintree_merchant_id" value="{{ pp_braintree_merchant_id }}" />
+                <input type="hidden" name="pp_braintree_public_key" value="" />
+                <input type="hidden" name="pp_braintree_private_key" value="" />
+                <input type="hidden" name="pp_braintree_environment" value="sandbox" />
 
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{ entry_connection }}</label>
                   <div class="col-sm-10">
-                    <div class="alert alert-info"><i class="fa fa-check"></i> {{ text_app_connected }} ({{ braintree_merchant_id }})</div>
+                    <div class="alert alert-info"><i class="fa fa-check"></i> {{ text_app_connected }} ({{ text_merchant_connected }}{{ pp_braintree_merchant_id }})</div>
                   </div>
                 </div>
               {% else %}
@@ -65,26 +65,26 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="braintree_merchant_id" value="{{ braintree_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
+                    <input type="text" name="pp_braintree_merchant_id" value="{{ pp_braintree_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="input-merchant-id" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-public-key">{{ entry_public_key }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="braintree_public_key" value="{{ braintree_public_key }}" placeholder="{{ entry_public_key }}" id="input-public-key" class="form-control" />
+                    <input type="text" name="pp_braintree_public_key" value="{{ pp_braintree_public_key }}" placeholder="{{ entry_public_key }}" id="input-public-key" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-private-key">{{ entry_private_key }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="braintree_private_key" value="{{ braintree_private_key }}" placeholder="{{ entry_private_key }}" id="input-private-key" class="form-control" />
+                    <input type="text" name="pp_braintree_private_key" value="{{ pp_braintree_private_key }}" placeholder="{{ entry_private_key }}" id="input-private-key" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
                   <div class="col-sm-10">
-                    <select name="braintree_environment" id="input-environment" class="form-control">
-                      {% if braintree_environment == 'production' %}
+                    <select name="pp_braintree_environment" id="input-environment" class="form-control">
+                      {% if pp_braintree_environment == 'production' %}
                         <option value="sandbox">{{ text_sandbox }}</option>
                         <option value="production" selected="selected">{{ text_production }}</option>
                       {% else %}
@@ -99,8 +99,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-settlement-immediate"><span data-toggle="tooltip" title="{{ help_settlement_type }}">{{ entry_settlement_type }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
-                    {% if braintree_settlement_immediate == 1 %}
+                  <select name="pp_braintree_settlement_immediate" id="input-settlement-immediate" class="form-control">
+                    {% if pp_braintree_settlement_immediate == 1 %}
 					            <option value="1">{{ text_immediate }}</option>
                       <option value="0" selected="selected">{{ text_deferred }}</option>
                     {% else %}
@@ -113,8 +113,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_debug" id="input-debug" class="form-control">
-                    {% if braintree_debug %}
+                  <select name="pp_braintree_debug" id="input-debug" class="form-control">
+                    {% if pp_braintree_debug %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -127,16 +127,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="braintree_total" value="{{ braintree_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+                  <input type="text" name="pp_braintree_total" value="{{ pp_braintree_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_geo_zone_id" id="input-geo-zone" class="form-control">
+                  <select name="pp_braintree_geo_zone_id" id="input-geo-zone" class="form-control">
                   <option value="0">{{ text_all_zones }}</option>
                   {% for geo_zone in geo_zones %}
-                    {% if geo_zone.geo_zone_id == braintree_geo_zone_id %}
+                    {% if geo_zone.geo_zone_id == pp_braintree_geo_zone_id %}
                       <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                      {% else %}
                       <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -148,8 +148,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_status" id="input-status" class="form-control">
-                    {% if braintree_status %}
+                  <select name="pp_braintree_status" id="input-status" class="form-control">
+                    {% if pp_braintree_status %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -162,7 +162,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="braintree_sort_order" value="{{ braintree_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                  <input type="text" name="pp_braintree_sort_order" value="{{ pp_braintree_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                 </div>
               </div>
             </div>
@@ -180,15 +180,15 @@
                     {% for currency in currencies %}
                       <tr>
                         <td class="text-center">
-                          {% if braintree_account[currency.code].status == 1 %}
-                            <input type="checkbox" name="braintree_account[{{ currency.code }}][status]" value="1" checked="checked" />
+                          {% if pp_braintree_account[currency.code].status == 1 %}
+                            <input type="checkbox" name="pp_braintree_account[{{ currency.code }}][status]" value="1" checked="checked" />
                           {% else %}
-                            <input type="checkbox" name="braintree_account[{{ currency.code }}][status]" value="1" />
+                            <input type="checkbox" name="pp_braintree_account[{{ currency.code }}][status]" value="1" />
                           {% endif %}
                         </td>
                         <td class="text-left">{{ currency.code }}</td>
                         <td class="text-left">
-                          <input type="text" name="braintree_account[{{ currency.code }}][merchant_account_id]" value="{{ braintree_account[currency.code].merchant_account_id }}" placeholder="{{ text_merchant_account_id }}" class="form-control" />
+                          <input type="text" name="pp_braintree_account[{{ currency.code }}][merchant_account_id]" value="{{ pp_braintree_account[currency.code].merchant_account_id }}" placeholder="{{ text_merchant_account_id }}" class="form-control" />
                           {% if error_account[currency.code] %}
                             <div class="text-danger">{{ error_account[currency.code] }}</div>
                           {% endif %}
@@ -203,9 +203,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-authorization-expired">{{ entry_authorization_expired }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_authorization_expired_id" id="input-order-status-authorization-expired" class="form-control">
+                  <select name="pp_braintree_authorization_expired_id" id="input-order-status-authorization-expired" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_authorization_expired_id %}
+                      {% if order_status.order_status_id == pp_braintree_authorization_expired_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -217,9 +217,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-authorized">{{ entry_authorized }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_authorized_id" id="input-order-status-authorized" class="form-control">
+                  <select name="pp_braintree_authorized_id" id="input-order-status-authorized" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_authorized_id %}
+                      {% if order_status.order_status_id == pp_braintree_authorized_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -231,9 +231,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-authorizing">{{ entry_authorizing }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_authorizing_id" id="input-order-status-authorizing" class="form-control">
+                  <select name="pp_braintree_authorizing_id" id="input-order-status-authorizing" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_authorizing_id %}
+                      {% if order_status.order_status_id == pp_braintree_authorizing_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -245,9 +245,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-settlement-pending">{{ entry_settlement_pending }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_settlement_pending_id" id="input-order-status-settlement-pending" class="form-control">
+                  <select name="pp_braintree_settlement_pending_id" id="input-order-status-settlement-pending" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_settlement_pending_id %}
+                      {% if order_status.order_status_id == pp_braintree_settlement_pending_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -259,9 +259,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-failed">{{ entry_failed }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_failed_id" id="input-order-status-failed" class="form-control">
+                  <select name="pp_braintree_failed_id" id="input-order-status-failed" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_failed_id %}
+                      {% if order_status.order_status_id == pp_braintree_failed_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -273,9 +273,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-gateway-rejected">{{ entry_gateway_rejected }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_gateway_rejected_id" id="input-order-status-gateway-rejected" class="form-control">
+                  <select name="pp_braintree_gateway_rejected_id" id="input-order-status-gateway-rejected" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_gateway_rejected_id %}
+                      {% if order_status.order_status_id == pp_braintree_gateway_rejected_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -287,9 +287,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-processor-declined">{{ entry_processor_declined }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_processor_declined_id" id="input-order-status-processor-declined" class="form-control">
+                  <select name="pp_braintree_processor_declined_id" id="input-order-status-processor-declined" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_processor_declined_id %}
+                      {% if order_status.order_status_id == pp_braintree_processor_declined_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -301,9 +301,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-settled">{{ entry_settled }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_settled_id" id="input-order-status-settled" class="form-control">
+                  <select name="pp_braintree_settled_id" id="input-order-status-settled" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_settled_id %}
+                      {% if order_status.order_status_id == pp_braintree_settled_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -315,9 +315,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-settling">{{ entry_settling }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_settling_id" id="input-order-status-settling" class="form-control">
+                  <select name="pp_braintree_settling_id" id="input-order-status-settling" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_settling_id %}
+                      {% if order_status.order_status_id == pp_braintree_settling_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -329,9 +329,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-submitted-for-settlement">{{ entry_submitted_for_settlement }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_submitted_for_settlement_id" id="input-order-status-submitted-for-settlement" class="form-control">
+                  <select name="pp_braintree_submitted_for_settlement_id" id="input-order-status-submitted-for-settlement" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_submitted_for_settlement_id %}
+                      {% if order_status.order_status_id == pp_braintree_submitted_for_settlement_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -343,9 +343,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-voided">{{ entry_voided }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_voided_id" id="input-order-status-voided" class="form-control">
+                  <select name="pp_braintree_voided_id" id="input-order-status-voided" class="form-control">
                     {% for order_status in order_statuses %}
-                      {% if order_status.order_status_id == braintree_voided_id %}
+                      {% if order_status.order_status_id == pp_braintree_voided_id %}
                         <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                       {% else %}
                         <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -359,8 +359,8 @@
 			        <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-3ds-status">{{ entry_3ds_status }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_status" id="input-3ds-status" class="form-control">
-                    {% if braintree_3ds_status == 1 %}
+                  <select name="pp_braintree_3ds_status" id="input-3ds-status" class="form-control">
+                    {% if pp_braintree_3ds_status == 1 %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -373,8 +373,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-unsupported-card">{{ entry_3ds_unsupported_card }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_unsupported_card" id="input-3ds-unsupported-card" class="form-control">
-                    {% if braintree_3ds_unsupported_card == 1 %}
+                  <select name="pp_braintree_3ds_unsupported_card" id="input-3ds-unsupported-card" class="form-control">
+                    {% if pp_braintree_3ds_unsupported_card == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -387,8 +387,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-lookup-error">{{ entry_3ds_lookup_error }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_lookup_error" id="input-3ds-lookup-error" class="form-control">
-                    {% if braintree_3ds_lookup_error == 1 %}
+                  <select name="pp_braintree_3ds_lookup_error" id="input-3ds-lookup-error" class="form-control">
+                    {% if pp_braintree_3ds_lookup_error == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -401,8 +401,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-lookup-enrolled">{{ entry_3ds_lookup_enrolled }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_lookup_enrolled" id="input-3ds-lookup-enrolled" class="form-control">
-                    {% if braintree_3ds_lookup_enrolled == 1 %}
+                  <select name="pp_braintree_3ds_lookup_enrolled" id="input-3ds-lookup-enrolled" class="form-control">
+                    {% if pp_braintree_3ds_lookup_enrolled == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -415,8 +415,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-not-participating">{{ entry_3ds_not_participating }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_not_participating" id="input-3ds-not-participating" class="form-control">
-                    {% if braintree_3ds_not_participating == 1 %}
+                  <select name="pp_braintree_3ds_not_participating" id="input-3ds-not-participating" class="form-control">
+                    {% if pp_braintree_3ds_not_participating == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -429,8 +429,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-unavailable">{{ entry_3ds_unavailable }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_unavailable" id="input-3ds-unavailable" class="form-control">
-                    {% if braintree_3ds_unavailable == 1 %}
+                  <select name="pp_braintree_3ds_unavailable" id="input-3ds-unavailable" class="form-control">
+                    {% if pp_braintree_3ds_unavailable == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -443,8 +443,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-signature-failed">{{ entry_3ds_signature_failed }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_signature_failed" id="input-3ds-signature-failed" class="form-control">
-                    {% if braintree_3ds_signature_failed == 1 %}
+                  <select name="pp_braintree_3ds_signature_failed" id="input-3ds-signature-failed" class="form-control">
+                    {% if pp_braintree_3ds_signature_failed == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -457,8 +457,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-successful">{{ entry_3ds_successful }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_successful" id="input-3ds-successful" class="form-control">
-                    {% if braintree_3ds_successful == 1 %}
+                  <select name="pp_braintree_3ds_successful" id="input-3ds-successful" class="form-control">
+                    {% if pp_braintree_3ds_successful == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -471,8 +471,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-attempt-successful">{{ entry_3ds_attempt_successful }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_attempt_successful" id="input-3ds-attempt-successful" class="form-control">
-                    {% if braintree_3ds_attempt_successful == 1 %}
+                  <select name="pp_braintree_3ds_attempt_successful" id="input-3ds-attempt-successful" class="form-control">
+                    {% if pp_braintree_3ds_attempt_successful == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -485,8 +485,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-failed">{{ entry_3ds_failed }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_failed" id="input-3ds-failed" class="form-control">
-                    {% if braintree_3ds_failed == 1 %}
+                  <select name="pp_braintree_3ds_failed" id="input-3ds-failed" class="form-control">
+                    {% if pp_braintree_3ds_failed == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -499,8 +499,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-unable-to-auth">{{ entry_3ds_unable_to_auth }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_unable_to_auth" id="input-3ds-unable-to-auth" class="form-control">
-                    {% if braintree_3ds_unable_to_auth == 1 %}
+                  <select name="pp_braintree_3ds_unable_to_auth" id="input-3ds-unable-to-auth" class="form-control">
+                    {% if pp_braintree_3ds_unable_to_auth == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -513,8 +513,8 @@
               <div class="form-group three-ds-status">
                 <label class="col-sm-2 control-label" for="input-3ds-error">{{ entry_3ds_error }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_3ds_error" id="input-3ds-error" class="form-control">
-                    {% if braintree_3ds_error == 1 %}
+                  <select name="pp_braintree_3ds_error" id="input-3ds-error" class="form-control">
+                    {% if pp_braintree_3ds_error == 1 %}
                       <option value="1" selected="selected">{{ text_accept }}</option>
                       <option value="0">{{ text_decline }}</option>
                     {% else %}
@@ -529,8 +529,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-vault"><span data-toggle="tooltip" title="{{ help_vault }}">{{ entry_vault }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_vault" id="input-vault" class="form-control">
-                    {% if braintree_vault %}
+                  <select name="pp_braintree_vault" id="input-vault" class="form-control">
+                    {% if pp_braintree_vault %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -543,12 +543,12 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-vault-cvv-3ds"><span data-toggle="tooltip" title="{{ help_vault_cvv_3ds }}">{{ entry_vault_cvv_3ds }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_vault_cvv_3ds" id="input-vault-cvv-3ds" class="form-control">
-                    {% if braintree_vault_cvv_3ds == "cvv" %}
+                  <select name="pp_braintree_vault_cvv_3ds" id="input-vault-cvv-3ds" class="form-control">
+                    {% if pp_braintree_vault_cvv_3ds == "cvv" %}
                       <option value="0">{{ text_disabled }}</option>
                       <option value="cvv" selected="selected">{{ text_cvv }}</option>
                       <option value="3ds">{{ text_3ds }}</option>
-                    {% elseif braintree_vault_cvv_3ds == "3ds" %}
+                    {% elseif pp_braintree_vault_cvv_3ds == "3ds" %}
                       <option value="0">{{ text_disabled }}</option>
                       <option value="cvv">{{ text_cvv }}</option>
                       <option value="3ds" selected="selected">{{ text_3ds }}</option>
@@ -565,8 +565,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-paypal-option"><span data-toggle="tooltip" title="{{ help_paypal_option }}">{{ entry_paypal_option }}</span></label>
                 <div class="col-sm-10">
-                  <select name="braintree_paypal_option" id="input-vault" class="form-control">
-                    {% if braintree_paypal_option %}
+                  <select name="pp_braintree_paypal_option" id="input-vault" class="form-control">
+                    {% if pp_braintree_paypal_option %}
                       <option value="1" selected="selected">{{ text_enabled }}</option>
                       <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -579,35 +579,35 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-paypal-billing-agreement"><span data-toggle="tooltip" title="{{ help_paypal_billing_agreement }}">{{ entry_paypal_billing_agreement }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="braintree_billing_agreement" value="{{ braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
+                  <input type="text" name="pp_braintree_billing_agreement" value="{{ pp_braintree_billing_agreement }}" placeholder="{{ entry_paypal_billing_agreement }}" id="input-paypal-billing-agreement" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-paypal-button-colour">{{ entry_paypal_button_colour }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
-                    <option value="gold"{% if braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
-                    <option value="blue"{% if braintree_paypal_button_colour == "blue" %} selected="selected"{% endif %}>{{ text_paypal_blue }}</option>
-                    <option value="silver"{% if braintree_paypal_button_colour == "silver" %} selected="selected"{% endif %}>{{ text_paypal_silver }}</option>
+                  <select name="pp_braintree_paypal_button_colour" id="input-paypal-button-colour" class="form-control">
+                    <option value="gold"{% if pp_braintree_paypal_button_colour == "gold" %} selected="selected"{% endif %}>{{ text_paypal_gold }}</option>
+                    <option value="blue"{% if pp_braintree_paypal_button_colour == "blue" %} selected="selected"{% endif %}>{{ text_paypal_blue }}</option>
+                    <option value="silver"{% if pp_braintree_paypal_button_colour == "silver" %} selected="selected"{% endif %}>{{ text_paypal_silver }}</option>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-paypal-button-size">{{ entry_paypal_button_size }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
-                    <option value="tiny"{% if braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
-                    <option value="small"{% if braintree_paypal_button_size == "small" %} selected="selected"{% endif %}>{{ text_paypal_small }}</option>
-                    <option value="medium"{% if braintree_paypal_button_size == "medium" %} selected="selected"{% endif %}>{{ text_paypal_medium }}</option>
+                  <select name="pp_braintree_paypal_button_size" id="input-paypal-button-size" class="form-control">
+                    <option value="tiny"{% if pp_braintree_paypal_button_size == "tiny" %} selected="selected"{% endif %}>{{ text_paypal_tiny }}</option>
+                    <option value="small"{% if pp_braintree_paypal_button_size == "small" %} selected="selected"{% endif %}>{{ text_paypal_small }}</option>
+                    <option value="medium"{% if pp_braintree_paypal_button_size == "medium" %} selected="selected"{% endif %}>{{ text_paypal_medium }}</option>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-paypal-button-shape">{{ entry_paypal_button_shape }}</label>
                 <div class="col-sm-10">
-                  <select name="braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
-                    <option value="pill"{% if braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
-                    <option value="rect"{% if braintree_paypal_button_shape == "rect" %} selected="selected"{% endif %}>{{ text_paypal_rectangular }}</option>
+                  <select name="pp_braintree_paypal_button_shape" id="input-paypal-button-shape" class="form-control">
+                    <option value="pill"{% if pp_braintree_paypal_button_shape == "pill" %} selected="selected"{% endif %}>{{ text_paypal_pill }}</option>
+                    <option value="rect"{% if pp_braintree_paypal_button_shape == "rect" %} selected="selected"{% endif %}>{{ text_paypal_rectangular }}</option>
                   </select>
                 </div>
               </div>
@@ -618,9 +618,9 @@
                      data-merchant="braintree"
                      data-id="paypal-button"
                      data-button="checkout"
-                     data-color="{{ braintree_paypal_button_colour }}"
-                     data-size="{{ braintree_paypal_button_size }}"
-                     data-shape="{{ braintree_paypal_button_shape }}"
+                     data-color="{{ pp_braintree_paypal_button_colour }}"
+                     data-size="{{ pp_braintree_paypal_button_size }}"
+                     data-shape="{{ pp_braintree_paypal_button_shape }}"
                      data-button_type="submit"
                      data-button_disabled="true"
                  ></script>
@@ -628,7 +628,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-transaction">
-              {% if braintree_status == 1 %}
+              {% if pp_braintree_status == 1 %}
               <div class="well">
                 <div class="row">
                 <div class="col-sm-3">
@@ -713,9 +713,9 @@
                   <label class="control-label" for="input-merchant-account-id">{{ entry_merchant_account_id }}</label>
                   <select name="filter_merchant_account_id" id="input-merchant-account-id" class="form-control">
                     <option value="*">All</option>
-                    {% for braintree_account_value in braintree_account %}
-                      {% if braintree_account_value.merchant_account_id %}
-                        <option value="{{ braintree_account_value.merchant_account_id }}">{{ braintree_account_value.merchant_account_id }}</option>
+                    {% for pp_braintree_account_value in pp_braintree_account %}
+                      {% if pp_braintree_account_value.merchant_account_id %}
+                        <option value="{{ pp_braintree_account_value.merchant_account_id }}">{{ pp_braintree_account_value.merchant_account_id }}</option>
                       {% endif %}
                     {% endfor %}
                   </select>
@@ -751,7 +751,7 @@ $('.date').datetimepicker({
 $('#button-filter').on('click', function(event) {
 	event.preventDefault();
 
-	var url = 'index.php?route=extension/payment/braintree/search&token={{ token }}';
+	var url = 'index.php?route=extension/payment/pp_braintree/search&token={{ token }}';
 
 	var filter_transaction_id = $('input[name=\'filter_transaction_id\']').val();
 
@@ -896,7 +896,7 @@ $('#input-3ds-status').on('change', function() {
 
 function getTransaction(transaction_id) {
 	$.ajax({
-		url: 'index.php?route=extension/payment/braintree/getTransaction&token={{ token }}',
+		url: 'index.php?route=extension/payment/pp_braintree/getTransaction&token={{ token }}',
 		dataType: 'html',
 		data: {
 			transaction_id: transaction_id

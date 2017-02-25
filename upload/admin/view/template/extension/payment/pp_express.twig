@@ -24,6 +24,9 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
+        {% if retrieve_success == 1 %}
+          <div class="alert alert-success"><i class="fa fa-check"></i> {{ text_retrieve }}</div>
+        {% endif %}
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pp-express" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-api" data-toggle="tab">{{ tab_api }}</a></li>

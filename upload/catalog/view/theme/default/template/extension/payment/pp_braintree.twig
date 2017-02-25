@@ -11,7 +11,7 @@
 </div>
 <form id="braintree-new" style="display:none;" method="post" action="{{ payment_url }}" class="form-horizontal" autocomplete="off">
   <fieldset>
-    {% if braintree_vault %}
+    {% if pp_braintree_vault %}
       <div class="form-group row">
         <label class="col-sm-2" style="text-align: right;">{{ entry_remember_method }}</label>
         <div class="col-sm-10">
@@ -25,11 +25,11 @@
       <hr />
     {% endif %}
 
-    {% if braintree_paypal_option %}
+    {% if pp_braintree_paypal_option %}
       <div class="form-group">
         <label class="col-sm-2 control-label">{{ text_pay_by_paypal }}</label>
         <div class="col-sm-10">
-            <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ braintree_paypal_button_colour }}" data-size="{{ braintree_paypal_button_size }}" data-shape="{{ braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
+            <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ pp_braintree_paypal_button_colour }}" data-size="{{ pp_braintree_paypal_button_size }}" data-shape="{{ pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
         </div>
       </div>
       <hr />
@@ -83,7 +83,7 @@
       </div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
       <div class="col-sm-4">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove-vault-method braintree-button">{{ text_remove }}</a>]</div>
-      <div class="col-sm-2">{% if braintree_vault_cvv_3ds == 'cvv' %}<div class="form-control input-vaulted-cvv" id="input-vaulted-cvv-{{ vaulted_payment_method.token }}" style="display: none;"></div>{% endif %}</div>
+      <div class="col-sm-2">{% if pp_braintree_vault_cvv_3ds == 'cvv' %}<div class="form-control input-vaulted-cvv" id="input-vaulted-cvv-{{ vaulted_payment_method.token }}" style="display: none;"></div>{% endif %}</div>
     </div>
     <hr />
     {% endfor %}
@@ -148,8 +148,8 @@
   $.getScript('https://js.braintreegateway.com/web/3.6.3/js/client.min.js', function() {
     $.getScript('https://js.braintreegateway.com/web/3.6.3/js/hosted-fields.min.js');
     $.getScript('https://js.braintreegateway.com/web/3.6.3/js/data-collector.min.js');
-    {% if braintree_paypal_option %}$.getScript('https://js.braintreegateway.com/web/3.6.3/js/paypal.min.js');{% endif %}
-    {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}$.getScript('https://js.braintreegateway.com/web/3.6.3/js/three-d-secure.min.js');{% endif %}
+    {% if pp_braintree_paypal_option %}$.getScript('https://js.braintreegateway.com/web/3.6.3/js/paypal.min.js');{% endif %}
+    {% if pp_braintree_3ds_status or pp_braintree_vault_cvv_3ds == '3ds' %}$.getScript('https://js.braintreegateway.com/web/3.6.3/js/three-d-secure.min.js');{% endif %}
 
     braintree.client.create({
       authorization: '{{ client_token }}'
@@ -163,7 +163,7 @@
 
       client_instance = braintree_client;
 
-      {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}
+      {% if pp_braintree_3ds_status or pp_braintree_vault_cvv_3ds == '3ds' %}
         braintree.threeDSecure.create({
             client: braintree_client
         }, function (error, instance) {
@@ -208,7 +208,7 @@
         paypal: true
       }, dataCollectorCallback);
 
-      {% if braintree_paypal_option %}
+      {% if pp_braintree_paypal_option %}
       braintree.paypal.create({
         client: braintree_client
       }, paypalCallback);
@@ -216,7 +216,7 @@
     });
   });
 
-  {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}
+  {% if pp_braintree_3ds_status or pp_braintree_vault_cvv_3ds == '3ds' %}
   // 3D Secure
   $('body').on('click', '#braintree-3ds-close', function (event) {
     event.preventDefault();
@@ -351,7 +351,7 @@
           return;
         }
 
-        {% if braintree_3ds_status %}
+        {% if pp_braintree_3ds_status %}
           verifyNew3DSecure(payload.nonce);
         {% else %}
           submitOrder(payload.nonce);
@@ -360,7 +360,7 @@
     });
   }
 
-  {% if braintree_paypal_option %}
+  {% if pp_braintree_paypal_option %}
   function paypalCallback(error, instance) {
       if (error) {
         console.error(error);
@@ -378,7 +378,7 @@
 
       var flow = "checkout";
 
-      {% if braintree_vault == 1 and guest != true %}
+      {% if pp_braintree_vault == 1 and guest != true %}
         if ($('#vault-method').is(':checked')) {
           flow = "vault";
         }
@@ -386,7 +386,7 @@
 
       instance.tokenize({
         flow: flow,
-        {% if braintree_settlement_immediate == 1 %}
+        {% if pp_braintree_settlement_immediate == 1 %}
         intent: "sale",
         {% else %}
         intent: "authorize",
@@ -394,8 +394,8 @@
         useraction: "commit",
         amount: {{ total }},
         currency: "{{ currency_code }}",
-        {% if braintree_vault == 1 and braintree_billing_agreement is not empty %}
-        billingAgreementDescription: "{{ braintree_billing_agreement }}",
+        {% if pp_braintree_vault == 1 and pp_braintree_billing_agreement is not empty %}
+        billingAgreementDescription: "{{ pp_braintree_billing_agreement }}",
         {% endif %}
         {% if customer_shipping_address is not empty %}
         enableShippingAddress: true,
@@ -438,7 +438,7 @@
   }
   {% endif %}
 
-  {% if braintree_vault_cvv_3ds == 'cvv' %}
+  {% if pp_braintree_vault_cvv_3ds == 'cvv' %}
   $('body').on('change', 'input[name=\'vaulted_payment_method\']', function (event) {
     $('.input-vaulted-cvv').hide();
 
@@ -479,7 +479,7 @@
 
     if (confirm('{{ text_remove_confirm }}')) {
       $.ajax({
-        url: 'index.php?route=extension/payment/braintree/remove',
+        url: 'index.php?route=extension/payment/pp_braintree/remove',
         type: 'post',
         data: { vaulted_payment_method: vaulted_payment_token },
         dataType: 'json',
@@ -514,7 +514,7 @@
     var vaulted_payment_token = $('input[name=\'vaulted_payment_method\']:checked').val();
 
     if ($('input[name=\'vaulted_payment_method\']:checked').hasClass('vaulted-card')) {
-      {% if braintree_vault_cvv_3ds == 'cvv' %}
+      {% if pp_braintree_vault_cvv_3ds == 'cvv' %}
         cvv_instance[vaulted_payment_token].tokenize(function (error, payload) {
             if (error) {
                 switch (error.code) {
@@ -541,9 +541,9 @@
               submitVaultOrder(vaulted_payment_token, payload.nonce);
             }
         });
-      {% elseif braintree_vault_cvv_3ds == '3ds' %}
+      {% elseif pp_braintree_vault_cvv_3ds == '3ds' %}
         $.ajax({
-          url: 'index.php?route=extension/payment/braintree/getNonceFromToken',
+          url: 'index.php?route=extension/payment/pp_braintree/getNonceFromToken',
           type: 'post',
           data: { vaulted_payment_token: vaulted_payment_token },
           dataType: 'json',
@@ -627,11 +627,11 @@
 
     $('#collapse-checkout-confirm .panel-body').empty();
 
-    {% if braintree_paypal_option %}
+    {% if pp_braintree_paypal_option %}
       paypal_instance.teardown();
     {% endif %}
 
-    {% if braintree_3ds_status or braintree_vault_cvv_3ds == '3ds' %}
+    {% if pp_braintree_3ds_status or pp_braintree_vault_cvv_3ds == '3ds' %}
       threed_secure_instance.teardown();
     {% endif %}
 

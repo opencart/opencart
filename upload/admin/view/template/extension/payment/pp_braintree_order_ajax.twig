@@ -180,7 +180,7 @@ $('.button-command').on('click', function() {
 
 	if (confirm(confirm_text)) {
 		$.ajax({
-			url: 'index.php?route=extension/payment/braintree/transactionCommand&token={{ token }}',
+			url: 'index.php?route=extension/payment/pp_braintree/transactionCommand&token={{ token }}',
 			type: 'post',
 			data: {
 				type: type,

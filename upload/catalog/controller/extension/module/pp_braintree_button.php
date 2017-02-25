@@ -3,7 +3,7 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 	private $gateway = null;
 
 	public function index() {
-		if ($this->config->get('braintree_status') == 1) {
+		if ($this->config->get('pp_braintree_status') == 1) {
 			$this->initialise();
 
 			$status = true;
@@ -14,16 +14,16 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 
 			if ($status) {
 				$this->load->model('checkout/order');
-				$this->load->model('extension/payment/braintree');
+				$this->load->model('extension/payment/pp_braintree');
 
 				$create_token = array();
 
-				$data['client_token'] = $this->model_extension_payment_braintree->generateToken($this->gateway, $create_token);
+				$data['client_token'] = $this->model_extension_payment_pp_braintree->generateToken($this->gateway, $create_token);
 
-				$data['braintree_settlement_immediate'] = $this->config->get('braintree_settlement_immediate');
-				$data['braintree_paypal_button_colour'] = $this->config->get('braintree_paypal_button_colour');
-				$data['braintree_paypal_button_size'] = $this->config->get('braintree_paypal_button_size');
-				$data['braintree_paypal_button_shape'] = $this->config->get('braintree_paypal_button_shape');
+				$data['pp_braintree_settlement_immediate'] = $this->config->get('pp_braintree_settlement_immediate');
+				$data['pp_braintree_paypal_button_colour'] = $this->config->get('pp_braintree_paypal_button_colour');
+				$data['pp_braintree_paypal_button_size'] = $this->config->get('pp_braintree_paypal_button_size');
+				$data['pp_braintree_paypal_button_shape'] = $this->config->get('pp_braintree_paypal_button_shape');
 
 				/*
 				 * The auth total is just a guess as to what the end total will be since the user has not
@@ -39,12 +39,12 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 	}
 
 	private function initialise() {
-		$this->load->model('extension/payment/braintree');
+		$this->load->model('extension/payment/pp_braintree');
 
-		if ($this->config->get('braintree_access_token') != '') {
-			$this->gateway = $this->model_extension_payment_braintree->setGateway($this->config->get('braintree_access_token'));
+		if ($this->config->get('pp_braintree_access_token') != '') {
+			$this->gateway = $this->model_extension_payment_pp_braintree->setGateway($this->config->get('pp_braintree_access_token'));
 		} else {
-			$this->model_extension_payment_braintree->setCredentials();
+			$this->model_extension_payment_pp_braintree->setCredentials();
 		}
 	}
 }

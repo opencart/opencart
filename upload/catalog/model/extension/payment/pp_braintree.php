@@ -131,10 +131,10 @@ class ModelExtensionPaymentBraintree extends Model {
 	}
 
 	public function setCredentials() {
-		Braintree_Configuration::environment($this->config->get('braintree_environment'));
-		Braintree_Configuration::merchantId($this->config->get('braintree_merchant_id'));
-		Braintree_Configuration::publicKey($this->config->get('braintree_public_key'));
-		Braintree_Configuration::privateKey($this->config->get('braintree_private_key'));
+		Braintree_Configuration::environment($this->config->get('pp_braintree_environment'));
+		Braintree_Configuration::merchantId($this->config->get('pp_braintree_merchant_id'));
+		Braintree_Configuration::publicKey($this->config->get('pp_braintree_public_key'));
+		Braintree_Configuration::privateKey($this->config->get('pp_braintree_private_key'));
 	}
 
 	public function setGateway($access_token) {
@@ -142,13 +142,13 @@ class ModelExtensionPaymentBraintree extends Model {
 	}
 
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/braintree');
+		$this->load->language('extension/payment/pp_braintree');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('braintree_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('pp_braintree_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
-		if ($this->config->get('braintree_total') > 0 && $this->config->get('braintree_total') > $total) {
+		if ($this->config->get('pp_braintree_total') > 0 && $this->config->get('pp_braintree_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('braintree_geo_zone_id')) {
+		} elseif (!$this->config->get('pp_braintree_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -160,10 +160,10 @@ class ModelExtensionPaymentBraintree extends Model {
 
 		if ($status) {
 			$method_data = array(
-				'code'		 => 'braintree',
+				'code'		 => 'pp_braintree',
 				'title'		 => $this->language->get('text_title'),
 				'terms'		 => '',
-				'sort_order' => $this->config->get('braintree_sort_order')
+				'sort_order' => $this->config->get('pp_braintree_sort_order')
 			);
 		}
 
@@ -173,7 +173,7 @@ class ModelExtensionPaymentBraintree extends Model {
 	public function getSupportedCurrencies() {
 		$currencies = array();
 
-		foreach ($this->config->get('braintree_account') as $currency => $account) {
+		foreach ($this->config->get('pp_braintree_account') as $currency => $account) {
 			if ($account['status']) {
 				$currencies[] = $currency;
 			}
@@ -183,7 +183,7 @@ class ModelExtensionPaymentBraintree extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('braintree_debug')) {
+		if ($this->config->get('pp_braintree_debug')) {
 			$log = new Log('braintree.log');
 			$log->write(print_r($data, true));
 		}

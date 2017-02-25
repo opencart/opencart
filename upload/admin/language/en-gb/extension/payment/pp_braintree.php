@@ -3,6 +3,7 @@
 $_['heading_title']					 = 'PayPal (Powered by Braintree)';
 
 // Text
+$_['text_pp_braintree']				 = '<img src="view/image/payment/paypal.png" alt="PayPal (Powered by Braintree)" title="PayPal (Powered by Braintree)" style="border: 1px solid #EEEEEE;" />';
 $_['text_payment']					 = 'Payment';
 $_['text_success']					 = 'Success: You have modified Braintree account details!';
 $_['text_success_connect']			 = 'Success: You have connected your PayPal (Powered by Braintree) account!';
@@ -53,6 +54,7 @@ $_['text_preferred_li_4']			 = 'Use PayPal in-context checkout so a user never h
 $_['text_learn_more']			 	 = 'Learn more';
 $_['text_accept']			 	 	 = 'Accept';
 $_['text_decline']			 	 	 = 'Decline';
+$_['text_merchant_connected']		 = 'Connected Merchant ID: ';
 
 // Column
 $_['column_void']					 = 'Void';

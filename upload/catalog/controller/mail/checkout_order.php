@@ -83,7 +83,7 @@ class ControllerMailOrderHistory extends Controller {
 		// Load the language for any mails that might be required to be sent out
 		$language = new Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
-		$language->load('mail/order');
+		$language->load('mail/checkout_order');
 
 		$subject = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 
@@ -271,10 +271,21 @@ class ControllerMailOrderHistory extends Controller {
 		}
 
 		// Text Mail
-		$text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
-		$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
-		$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-		$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+		$data['text_new_greeting'] = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$data['text_new_order_id'] = $language->get('text_new_order_id');
+		$data['text_new_date_added'] = $language->get('text_new_date_added');
+		$data['text_new_order_status'] = $language->get('text_new_order_status');
+		$data['text_new_instruction'] = $language->get('text_new_instruction');
+		$data['text_new_link'] = $language->get('text_new_link');
+		$data['text_new_download'] = $language->get('text_new_download');
+		$data['text_new_comment'] = $language->get('text_new_comment');
+		$data['text_new_footer'] = $language->get('text_new_footer');
+		
+		$data['order_id'] = $order_id;
+		$data['order_status'] = $order_status;
+		$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
+		$data['comment'] = $comment;
+		$data['notify'] = $notify;
 
 		if ($comment && $notify) {
 			$text .= $language->get('text_new_instruction') . "\n\n";
@@ -351,7 +362,7 @@ class ControllerMailOrderHistory extends Controller {
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-		$mail->setHtml($this->load->view('mail/order', $data));
+		$mail->setHtml($this->load->view('mail/checkout_order', $data));
 		$mail->setText($text);
 		$mail->send();
 	}

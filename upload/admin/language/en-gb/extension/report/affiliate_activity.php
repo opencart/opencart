@@ -10,6 +10,7 @@ $_['text_edit']               = 'Edit Affiliate Activity Report';
 $_['text_filter']             = 'Affiliate Activity Filter';
 $_['text_activity_edit']      = '<a href="affiliate_id=%d">%s</a> updated their account details.';
 $_['text_activity_forgotten'] = '<a href="affiliate_id=%d">%s</a> requested a new password.';
+$_['text_activity_reset']     = '<a href="customer_id=%d">%s</a> reset their account password.';
 $_['text_activity_login']     = '<a href="affiliate_id=%d">%s</a> logged in.';
 $_['text_activity_password']  = '<a href="affiliate_id=%d">%s</a> updated their account password.';
 $_['text_activity_payment']   = '<a href="affiliate_id=%d">%s</a> updated their payment details.';
@@ -30,4 +31,4 @@ $_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sort Order';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify affiliate activity report!';
+$_['error_permission']        = 'Warning: You do not have permission to modify affiliate activity report!';

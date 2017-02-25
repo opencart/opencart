@@ -132,7 +132,7 @@ class ControllerExtensionReportAffiliateActivity extends Controller {
 		$results = $this->model_extension_report_affiliate->getAffiliateActivities($filter_data);
 
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
+			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
 
 			$data['activities'][] = array(
 				'comment'    => str_replace('affiliate_id=', $this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=', true), $comment),

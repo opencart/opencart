@@ -88,10 +88,10 @@ $_['action_event'] = array(
 	'model/account/return/addReturn/after' => array(
 		'event/customer_activity/addReturn',
 	),	
-	'model/account/affiliate/addAffiliate/after' => array(
-		'mail/register',
-	),
 	'model/affiliate/affiliate/addAffiliate/after' => array(
+		// E-Mail
+		'mail/affiliate_register',
+		// Activity
 		'event/affiliate_activity/addAffiliate',
 	),	
 	'model/affiliate/affiliate/editAffiliate/after' => array(

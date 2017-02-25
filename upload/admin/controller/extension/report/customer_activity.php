@@ -132,7 +132,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$results = $this->model_extension_report_customer->getCustomerActivities($filter_data);
 
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
+			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
 
 			$find = array(
 				'customer_id=',

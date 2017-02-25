@@ -160,18 +160,6 @@ class ControllerExtensionModulePPLogin extends Controller {
 			$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 		}
 
-		// Add to activity log
-		if ($this->config->get('config_customer_activity')) {
-			$this->load->model('account/activity');
-
-			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-			);
-
-			$this->model_account_activity->addActivity('login', $activity_data);
-		}
-
 		if ($this->config->get('module_pp_login_seamless')) {
 			$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
 			$this->session->data['pp_login']['seamless']['access_token'] = $access_token;

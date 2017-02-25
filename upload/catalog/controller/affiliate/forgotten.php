@@ -16,49 +16,11 @@ class ControllerAffiliateForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->language('mail/forgotten');
 
-			$password = token(10);
+			$code = token(40);
 
-			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
-
-			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-
-			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $this->language->get('text_password') . "\n\n";
-			$message .= $password;
-
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($this->request->post['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject($subject);
-			$mail->setText($message);
-			$mail->send();
+			$this->model_affiliate_affiliate->editCode($this->request->post['email'], $code);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
-
-				if ($affiliate_info) {
-					$this->load->model('affiliate/activity');
-
-					$activity_data = array(
-						'affiliate_id' => $affiliate_info['affiliate_id'],
-						'name'         => $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname']
-					);
-
-					$this->model_affiliate_activity->addActivity('forgotten', $activity_data);
-				}
-			}
 
 			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}

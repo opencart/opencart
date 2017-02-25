@@ -16,21 +16,9 @@ class ControllerAffiliatePayment extends Controller {
 		$this->load->model('affiliate/affiliate');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			$this->model_affiliate_affiliate->editPayment($this->request->post);
+			$this->model_affiliate_affiliate->editPayment($this->affiliate->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('affiliate/activity');
-
-				$activity_data = array(
-					'affiliate_id' => $this->affiliate->getId(),
-					'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
-				);
-
-				$this->model_affiliate_activity->addActivity('payment', $activity_data);
-			}
 
 			$this->response->redirect($this->url->link('affiliate/account', '', true));
 		}

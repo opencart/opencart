@@ -101,18 +101,6 @@ class ControllerCheckoutLogin extends Controller {
 				}
 			}
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
-
-				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-				);
-
-				$this->model_account_activity->addActivity('login', $activity_data);
-			}
-
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 

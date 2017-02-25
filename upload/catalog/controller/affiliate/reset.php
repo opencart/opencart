@@ -1,14 +1,10 @@
 <?php
-class ControllerCommonReset extends Controller {
+class ControllerAffiliateReset extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', '', true));
-		}
-
-		if (!$this->config->get('config_password')) {
-			$this->response->redirect($this->url->link('common/login', '', true));
+		if ($this->affiliate->isLogged()) {
+			$this->response->redirect($this->url->link('affiliate/affiliate', '', true));
 		}
 
 		if (isset($this->request->get['code'])) {
@@ -17,21 +13,21 @@ class ControllerCommonReset extends Controller {
 			$code = '';
 		}
 
-		$this->load->model('user/user');
+		$this->load->model('affiliate/affiliate');
 
-		$user_info = $this->model_user_user->getUserByCode($code);
+		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($code);
 
-		if ($user_info) {
-			$this->load->language('common/reset');
+		if ($affiliate_info) {
+			$this->load->language('affiliate/reset');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-				$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
+				$this->model_affiliate_affiliate->editPassword($affiliate_info['email'], $this->request->post['password']);
 
 				$this->session->data['success'] = $this->language->get('text_success');
 
-				$this->response->redirect($this->url->link('common/login', '', true));
+				$this->response->redirect($this->url->link('affiliate/login', '', true));
 			}
 
 			$data['heading_title'] = $this->language->get('heading_title');
@@ -41,19 +37,24 @@ class ControllerCommonReset extends Controller {
 			$data['entry_password'] = $this->language->get('entry_password');
 			$data['entry_confirm'] = $this->language->get('entry_confirm');
 
-			$data['button_save'] = $this->language->get('button_save');
-			$data['button_cancel'] = $this->language->get('button_cancel');
+			$data['button_continue'] = $this->language->get('button_continue');
+			$data['button_back'] = $this->language->get('button_back');
 
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', '', true)
+				'href' => $this->url->link('common/home')
+			);
+
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_account'),
+				'href' => $this->url->link('affiliate/account', '', true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('common/reset', '', true)
+				'href' => $this->url->link('affiliate/reset', '', true)
 			);
 
 			if (isset($this->error['password'])) {
@@ -68,9 +69,9 @@ class ControllerCommonReset extends Controller {
 				$data['error_confirm'] = '';
 			}
 
-			$data['action'] = $this->url->link('common/reset', 'code=' . $code, true);
+			$data['action'] = $this->url->link('affiliate/reset', 'code=' . $code, true);
 
-			$data['cancel'] = $this->url->link('common/login', '', true);
+			$data['back'] = $this->url->link('affiliate/login', '', true);
 
 			if (isset($this->request->post['password'])) {
 				$data['password'] = $this->request->post['password'];
@@ -84,16 +85,20 @@ class ControllerCommonReset extends Controller {
 				$data['confirm'] = '';
 			}
 
-			$data['header'] = $this->load->controller('common/header');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('common/reset', $data));
+			$this->response->setOutput($this->load->view('affiliate/reset', $data));
 		} else {
-			$this->load->model('setting/setting');
+			$this->load->language('affiliate/reset');
 
-			$this->model_setting_setting->editSettingValue('config', 'config_password', '0');
+			$this->session->data['error'] = $this->language->get('error_code');
 
-			return new Action('common/login');
+			return new Action('affiliate/login');
 		}
 	}
 

@@ -182,17 +182,6 @@ class ControllerCheckoutShippingAddress extends Controller {
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
-
-					if ($this->config->get('config_customer_activity')) {
-						$this->load->model('account/activity');
-
-						$activity_data = array(
-							'customer_id' => $this->customer->getId(),
-							'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-						);
-
-						$this->model_account_activity->addActivity('address_add', $activity_data);
-					}
 				}
 			}
 		}

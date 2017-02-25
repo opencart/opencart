@@ -51,8 +51,8 @@ $_['action_event'] = array(
 		'mail/register',
 	),	
 	'model/account/customer/editCode/after' => array(
-		'mail/forgotten',
 		'event/customer_activity',
+		'mail/forgotten',
 	),	
 	'model/checkout/order/addOrderHistory/before' => array(
 		'mail/order_history/before',
@@ -88,21 +88,31 @@ $_['action_event'] = array(
 	'model/account/address/deleteAddress/after' => array(
 		'event/customer_activity/deleteAddress',
 	),
-	'model/checkout/order/addOrderHistory/afterr' => array(
+	'model/checkout/order/addOrderHistory/after' => array(
 		'event/customer_activity/addOrderHistory',
-	),		
+	),
 	'model/account/return/addReturn/after' => array(
 		'event/customer_activity/addReturn',
 	),
 	
-	
 	'model/affiliate/affiliate/addAffiliate/after' => array(
-		'event/activity/addAffiliate',
+		'event/affiliate_activity/addAffiliate',
 	),	
 	'model/affiliate/affiliate/editAffiliate/after' => array(
-		'event/activity/editAffiliate',
+		'event/affiliate_activity/editAffiliate',
 	),	
-					
+	'model/affiliate/affiliate/editPassword/after' => array(
+		'event/affiliate_activity/editPassword',
+	),
+	'model/affiliate/affiliate/editPayment/after' => array(
+		'event/affiliate_activity/editPayment',
+	),			
+	'model/affiliate/affiliate/editCode/after' => array(
+		'event/affiliate_activity/forgotten',
+	),	
+	'model/affiliate/affiliate/deleteLoginAttempts/after' => array(
+		'event/affiliate_activity/login',
+	),						
 	//'controller/*/before' => array(
 	//	'event/debug/before'
 	//),
@@ -110,12 +120,6 @@ $_['action_event'] = array(
 	//	'event/debug/after'
 	//)
 );
-
-
-
-$_['text_customer_order_account']  = '<a href="customer_id=%d">%s</a> added a <a href="order_id=%d">new order</a>.';
-$_['text_customer_order_guest']    = '%s created a <a href="order_id=%d">new order</a>.';
-
 
 $_['text_affiliate_edit']          = '<a href="affiliate_id=%d">%s</a> updated their account details.';
 $_['text_affiliate_forgotten']     = '<a href="affiliate_id=%d">%s</a> has requested a new password.';

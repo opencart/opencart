@@ -1,19 +1,19 @@
-		$this->load->language('mail/customer');
+<?php
+class ControllerMailAccountRegister extends Controller {
+	public function index(&$route, &$args, &$output) {
+		$this->load->language('mail/account_register');
 
 		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-		$message = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$data['text_login'] = $this->language->get('text_login');
+		$data['text_approval'] = $this->language->get('text_approval');
+		$data['text_services'] = $this->language->get('text_services');
+		$data['text_thanks'] = $this->language->get('text_thanks');
 
-		if (!$customer_group_info['approval']) {
-			$message .= $this->language->get('text_login') . "\n";
-		} else {
-			$message .= $this->language->get('text_approval') . "\n";
-		}
-
-		$message .= $this->url->link('account/login', '', true) . "\n\n";
-		$message .= $this->language->get('text_services') . "\n\n";
-		$message .= $this->language->get('text_thanks') . "\n";
-		$message .= html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['approval'] = $customer_group_info['approval'];
+		$data['login'] = $this->url->link('account/login', '', true);		
+		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$mail = new Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
@@ -24,22 +24,39 @@
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-		$mail->setTo($data['email']);
+		$mail->setTo($args[0]['email']);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject($subject);
-		$mail->setText($message);
+		$mail->setText($this->load->view('mail/account_register_text', $data));
 		$mail->send();
 
 		// Send to main admin email if new account email is enabled
 		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {
-			$message  = $this->language->get('text_signup') . "\n\n";
-			$message .= $this->language->get('text_website') . ' ' . html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . "\n";
-			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
-			$message .= $this->language->get('text_lastname') . ' ' . $data['lastname'] . "\n";
-			$message .= $this->language->get('text_customer_group') . ' ' . $customer_group_info['name'] . "\n";
-			$message .= $this->language->get('text_email') . ' '  .  $data['email'] . "\n";
-			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
+			$data['text_signup'] = $this->language->get('text_signup');
+			$data['text_website'] = $this->language->get('text_website');
+			$data['text_firstname'] = $this->language->get('text_firstname');
+			$data['text_lastname'] = $this->language->get('text_lastname');
+			$data['text_customer_group'] = $this->language->get('text_customer_group');
+			$data['text_email'] = $this->language->get('text_email');
+			$data['text_telephone'] = $this->language->get('text_telephone');
+			
+			$data['website']  = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$data['firstname'] = $args[0]['firstname'];
+			$data['lastname'] = $args[0]['lastname'];
+			
+			$this->load->language('account/customer_group');
+			
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroupId($args[0]['customer_group_id']);
+			
+			if ($customer_group_info) {
+				$data['customer_group'] = $customer_group_info['name'];
+			} else {
+				$data['customer_group'] = '';
+			}
+			
+			$data['email'] = $args[0]['email'];
+			$data['telephone'] = $args[0]['telephone'];
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
@@ -54,7 +71,7 @@
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
-			$mail->setText($message);
+			$mail->setText($this->load->view('mail/account_register_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled
@@ -67,3 +84,5 @@
 				}
 			}
 		}
+	}
+}		

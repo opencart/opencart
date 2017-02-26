@@ -52,7 +52,8 @@ $(document).ready(function() {
 
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search';
+		var site_host = $('base').attr('href') ? $('base').attr('href') : location.protocol + "//" + location.host + '/';
+		var url = site_host + 'index.php?route=product/search';
 
 		var value = $('header #search input[name=\'search\']').val();
 

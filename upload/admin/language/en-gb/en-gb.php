@@ -102,6 +102,7 @@ $_['button_order_recurring']        = 'View Recurring Order';
 $_['button_buy']                    = 'Buy';
 
 // Tab
+$_['tab_affiliate']                 = 'Affiliate';
 $_['tab_address']                   = 'Address';
 $_['tab_additional']                = 'Additional';
 $_['tab_admin']                     = 'Admin';

@@ -99,9 +99,9 @@ class ModelUpgrade1007 extends Model {
 			$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image`");
 
 			foreach ($banner_image_query->rows as $banner_image) {
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE banner_image_id = '" . $banner_image['banner_image_id'] . "'");
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "'");
 				
-				$banner_image_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description` WHERE banner_image_id = '" . $banner_image['banner_image_id'] . "'");
+				$banner_image_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description` WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "'");
 				
 				foreach ($banner_image_description_query->rows as $banner_image_description) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$banner_image_description['language_id'] . "', title = '" . $this->db->escape($banner_image_description['title']) . "', link = '" . $this->db->escape($banner_image['link']) . "', image = '" . $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "'");

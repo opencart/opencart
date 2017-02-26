@@ -26,6 +26,7 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li><a href="#tab-affiliate" data-toggle="tab">{{ tab_affiliate }}</a></li>
             {% if customer_id %}
             <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
             <li><a href="#tab-transaction" data-toggle="tab">{{ tab_transaction }}</a></li>
@@ -57,8 +58,12 @@
                             
                             
                             
+                            
+                            
                             {% for customer_group in customer_groups %}
                             {% if customer_group.customer_group_id == customer_group_id %}
+                            
+                            
                             
                             
                             
@@ -66,7 +71,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -74,8 +83,12 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
                             {% endfor %}
+                          
+                          
                           
                           
                           
@@ -131,8 +144,12 @@
                             
                             
                             
+                            
+                            
                             {% for custom_field_value in custom_field.custom_field_value %}
                             {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
+                            
+                            
                             
                             
                             
@@ -140,7 +157,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -148,8 +169,12 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
                             {% endfor %}
+                          
+                          
                           
                           
                           
@@ -297,7 +322,11 @@
                             
                             
                             
+                            
+                            
                             {% if newsletter %}
+                            
+                            
                             
                             
                             
@@ -306,7 +335,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -315,7 +348,11 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
+                          
+                          
                           
                           
                           
@@ -329,7 +366,11 @@
                             
                             
                             
+                            
+                            
                             {% if status %}
+                            
+                            
                             
                             
                             
@@ -338,7 +379,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -347,7 +392,11 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
+                          
+                          
                           
                           
                           
@@ -361,7 +410,11 @@
                             
                             
                             
+                            
+                            
                             {% if approved %}
+                            
+                            
                             
                             
                             
@@ -370,7 +423,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -379,7 +436,11 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
+                          
+                          
                           
                           
                           
@@ -393,7 +454,11 @@
                             
                             
                             
+                            
+                            
                             {% if safe %}
+                            
+                            
                             
                             
                             
@@ -402,7 +467,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -411,7 +480,11 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
+                          
+                          
                           
                           
                           
@@ -483,8 +556,12 @@
                             
                             
                             
+                            
+                            
                             {% for country in countries %}
                             {% if country.country_id == address.country_id %}
+                            
+                            
                             
                             
                             
@@ -492,7 +569,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -500,8 +581,12 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
                             {% endfor %}
+                          
+                          
                           
                           
                           
@@ -530,8 +615,12 @@
                             
                             
                             
+                            
+                            
                             {% for custom_field_value in custom_field.custom_field_value %}
                             {% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %}
+                            
+                            
                             
                             
                             
@@ -539,7 +628,11 @@
                             
                             
                             
+                            
+                            
                             {% else %}
+                            
+                            
                             
                             
                             
@@ -547,8 +640,12 @@
                             
                             
                             
+                            
+                            
                             {% endif %}
                             {% endfor %}
+                          
+                          
                           
                           
                           
@@ -676,7 +773,7 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ entry_default }}</label>
                         <div class="col-sm-10">
-                          <label class="radio"> {% if address.address_id == address_id or not addresses %}
+                          <label class="radio">{% if address.address_id == address_id or not addresses %}
                             <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" checked="checked" />
                             {% else %}
                             <input type="radio" name="address[{{ address_row }}][default]" value="{{ address_row }}" />
@@ -688,6 +785,142 @@
                     {% endfor %} </div>
                 </div>
               </div>
+            </div>
+            <div class="tab-pane" id="tab-affiliate">
+              <fieldset>
+                <legend>{{ text_affiliate }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-affiliate"><span data-toggle="tooltip" title="{{ help_affiliate }}">{{ entry_affiliate }}</span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline"> {% if affiliate %}
+                      <input type="radio" name="affiliate" value="1" checked="checked" />
+                      {{ text_yes }}
+                      {% else %}
+                      <input type="radio" name="affiliate" value="1" />
+                      {{ text_yes }}
+                      {% endif %} </label>
+                    <label class="radio-inline"> {% if not affiliate %}
+                      <input type="radio" name="affiliate" value="0" checked="checked" />
+                      {{ text_no }}
+                      {% else %}
+                      <input type="radio" name="affiliate" value="0" />
+                      {{ text_no }}
+                      {% endif %} </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-website">{{ entry_website }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control" />
+                  </div>
+                </div>             
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-tracking"><span data-toggle="tooltip" title="{{ help_tracking }}">{{ entry_tracking }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-commission"><span data-toggle="tooltip" title="{{ help_commission }}">{{ entry_commission }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_payment }}</legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="tax" value="{{ tax }}" placeholder="{{ entry_tax }}" id="input-tax" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">{{ entry_payment }}</label>
+                  <div class="col-sm-10">
+                    <div class="radio">
+                      <label>{% if payment == 'cheque' %}
+                        <input type="radio" name="payment" value="cheque" checked="checked" />
+                        {% else %}
+                        <input type="radio" name="payment" value="cheque" />
+                        {% endif %}
+                        {{ text_cheque }}</label>
+                    </div>
+                    <div class="radio">
+                      <label> {% if payment == 'paypal' %}
+                        <input type="radio" name="payment" value="paypal" checked="checked" />
+                        {% else %}
+                        <input type="radio" name="payment" value="paypal" />
+                        {% endif %}
+                        {{ text_paypal }}</label>
+                    </div>
+                    <div class="radio">
+                      <label> {% if payment == 'bank' %}
+                        <input type="radio" name="payment" value="bank" checked="checked" />
+                        {% else %}
+                        <input type="radio" name="payment" value="bank" />
+                        {% endif %}
+                        {{ text_bank }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div id="payment-cheque" class="payment">
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-cheque">{{ entry_cheque }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" />
+                      {% if error_cheque %}
+                      <div class="text-danger">{{ error_cheque }}</div>
+                      {% endif %} </div>
+                  </div>
+                </div>
+                <div id="payment-paypal" class="payment">
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-paypal">{{ entry_paypal }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" />
+                      {% if error_paypal %}
+                      <div class="text-danger">{{ error_paypal }}</div>
+                      {% endif %} </div>
+                  </div>
+                </div>
+                <div id="payment-bank" class="payment">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-bank-name">{{ entry_bank_name }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-bank-branch-number">{{ entry_bank_branch_number }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-bank-swift-code">{{ entry_bank_swift_code }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-bank-account-name">{{ entry_bank_account_name }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" />
+                      {% if error_bank_account_name %}
+                      <div class="text-danger">{{ error_bank_account_name }}</div>
+                      {% endif %} </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" />
+                      {% if error_bank_account_number %}
+                      <div class="text-danger">{{ error_bank_account_number }}</div>
+                      {% endif %} </div>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             {% if customer_id %}
             <div class="tab-pane" id="tab-history">
@@ -1298,5 +1531,15 @@ $('#tab-customer .form-group[data-sort]').detach().each(function() {
 	}
 });
 {% endfor %}
-//--></script></div>
+//--></script> 
+  <script type="text/javascript"><!--
+$('input[name=\'payment\']').on('change', function() {
+	$('.payment').hide();
+
+	$('#payment-' + this.value).show();
+});
+
+$('input[name=\'payment\']:checked').trigger('change');
+//--></script> 
+</div>
 {{ footer }} 

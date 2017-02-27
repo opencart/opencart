@@ -43,62 +43,6 @@
             <div class="tab-content">
               <div id="tab-description" class="tab-pane active">
                 <fieldset>
-                  <legend>Extension Details</legend>
-                  <table class="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <td><strong>{{ text_price }}</strong></td>
-                        <td>{% if license %}
-                          {{ price }}
-                          {% else %}
-                          Free
-                          {% endif %}</td>
-                      </tr>
-                    {% if license %}
-                    <tr>
-                      <td><strong>{{ text_license }}</strong></td>
-                      <td>{% if license_period %}
-                        {{ license_period }}
-                        {% else %}
-                        Unlimited
-                        {% endif %}</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                      <td><strong>Developer</strong></td>
-                      <td><a href="{{ filter_member }}">{{ member_username }}</a></td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_compatibility }}</strong></td>
-                      <td>{{ compatibility }}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_rating }}</strong></td>
-                      <td>{% for i in 1..4 %}
-                        {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                        {% endfor %}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_date_added }}</strong></td>
-                      <td>{{ date_added }}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_date_modified }}</strong></td>
-                      <td>{{ date_modified }}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_sales }}</strong></td>
-                      <td>{{ sales }}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>{{ text_downloaded }}</strong></td>
-                      <td>{{ downloaded }}</td>
-                    </tr>
-                      </tbody>
-
-                  </table>
-                </fieldset>
-                <fieldset>
                   <legend>Extension Description</legend>
                   {{ description }}
                 </fieldset>
@@ -159,8 +103,12 @@
             <div id="buy" class="well">
               <a href="https://www.opencart.com/index.php?route=marketplace/purchase&amp;extension_id=10197" class="btn btn-success btn-lg btn-block">Buy</a>
               <div id="price" class="row">
-                <div class="col-xs-5"><strong>Price</strong></div>
-                <div class="col-xs-7 text-right">$109.99</div>
+                <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
+                <div class="col-xs-7 text-right">{% if license %}
+                  {{ price }}
+                  {% else %}
+                  Free
+                  {% endif %}</div>
               </div>
               <hr>
               <ul class="list-check">
@@ -170,29 +118,34 @@
               </ul>
               <hr>
               <div class="row">
-                <div class="col-xs-5"><strong>Rating</strong></div>
-                <div class="col-xs-7 text-right"> <i class="opencart-icon-star-light"></i> <i class="opencart-icon-star-light"></i> <i class="opencart-icon-star-light"></i> <i class="opencart-icon-star-light"></i> <i class="opencart-icon-star-light"></i> </div>
+                <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
+                <div class="col-xs-7 text-right">
+                  {% for i in 1..4 %}
+                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% endfor %}
+                </div>
               </div>
               <hr>
               <div class="row">
-                <div class="col-xs-5"><strong>Last Update</strong></div>
-                <div class="col-xs-7 text-right">14 Feb 2017</div>
+                <div class="col-xs-5"><strong>{{ text_date_modified }}</strong></div>
+                <div class="col-xs-7 text-right">{{ date_modified }}</div>
               </div>
               <hr>
               <div class="row">
-                <div class="col-xs-5"><strong>Created</strong></div>
-                <div class="col-xs-7 text-right">24 Jan 2013</div>
+                <div class="col-xs-5"><strong>{{ text_date_added }}</strong></div>
+                <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
             <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
-              <strong>1563</strong> Sales
+              <strong>{{ sales }}</strong> {{ text_sales }}
             </div>
-            <div id="comment" class="well"><i class="opencart-icon-comment"></i>
-              <strong>780</strong> Comments</div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
+              <strong>{{ downloaded }}</strong> {{ text_downloaded }}
+            </div>
             <div class="well">
               <div class="media">
                 <div class="media-left media-middle"><img src="https:////image.opencart.com/cache/560cf92ba7308-resize-60x60.jpg" alt="iSense" title="iSense" class="media-object img-circle"></div>
-                <div class="media-body"> <span>iSense</span><br>
+                <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
                 <small>Member since: 16 May 2012</small> </div>
               </div>
               <br>

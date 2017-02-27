@@ -168,4 +168,3 @@ $('input[name=\'filter_parent\']').autocomplete({
 //--></script>
 </div>
 <?php echo $footer; ?>
-

@@ -1,6 +1,5 @@
 <?php
 // Text
-$_['text_affiliate']                 = 'Affiliates';
 $_['text_api']                       = 'API';
 $_['text_attribute']                 = 'Attributes';
 $_['text_attribute_group']           = 'Attribute Groups';

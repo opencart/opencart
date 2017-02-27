@@ -111,6 +111,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
 		$data['entry_affiliate_approval'] = $this->language->get('entry_affiliate_approval');
+		$data['entry_affiliate_group'] = $this->language->get('entry_affiliate_group');
 		$data['entry_affiliate_auto'] = $this->language->get('entry_affiliate_auto');
 		$data['entry_affiliate_commission'] = $this->language->get('entry_affiliate_commission');
 		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
@@ -179,8 +180,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
 		$data['help_stock_warning'] = $this->language->get('help_stock_warning');
 		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
-		$data['help_affiliate_approval'] = $this->language->get('help_affiliate_approval');
-		$data['help_affiliate_auto'] = $this->language->get('help_affiliate_auto');
+		$data['help_affiliate_approval'] = $this->language->get('help_affiliate_approval');		$data['help_affiliate_auto'] = $this->language->get('help_affiliate_auto');
 		$data['help_affiliate_commission'] = $this->language->get('help_affiliate_commission');
 		$data['help_affiliate'] = $this->language->get('help_affiliate');
 		$data['help_commission'] = $this->language->get('help_commission');
@@ -761,6 +761,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_stock_checkout'] = $this->request->post['config_stock_checkout'];
 		} else {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
+		}
+
+		if (isset($this->request->post['config_affiliate_group_id'])) {
+			$data['config_affiliate_group_id'] = $this->request->post['config_affiliate_group_id'];
+		} else {
+			$data['config_affiliate_group_id'] = $this->config->get('config_affiliate_group_id');
 		}
 
 		if (isset($this->request->post['config_affiliate_approval'])) {

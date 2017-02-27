@@ -370,14 +370,6 @@ class ControllerCommonColumnLeft extends Controller {
 				);	
 			}
 			
-			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
-				$marketing[] = array(
-					'name'	   => $this->language->get('text_affiliate'),
-					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()		
-				);
-			}
-			
 			if ($this->user->hasPermission('access', 'marketing/coupon')) {	
 				$marketing[] = array(
 					'name'	   => $this->language->get('text_coupon'),

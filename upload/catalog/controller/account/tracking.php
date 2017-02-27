@@ -1,13 +1,13 @@
 <?php
-class ControllerAffiliateTracking extends Controller {
+class ControllerAccountTracking extends Controller {
 	public function index() {
-		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/tracking', '', true);
+		if (!$this->customer->isLogged()) {
+			$this->session->data['redirect'] = $this->url->link('account/tracking', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', true));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->load->language('affiliate/tracking');
+		$this->load->language('account/tracking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -25,7 +25,7 @@ class ControllerAffiliateTracking extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('affiliate/tracking', '', true)
+			'href' => $this->url->link('account/tracking', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -39,10 +39,11 @@ class ControllerAffiliateTracking extends Controller {
 		$data['help_generator'] = $this->language->get('help_generator');
 
 		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 
 		$data['code'] = $this->affiliate->getCode();
 
-		$data['continue'] = $this->url->link('affiliate/account', '', true);
+		$data['continue'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -51,7 +52,7 @@ class ControllerAffiliateTracking extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/tracking', $data));
+		$this->response->setOutput($this->load->view('account/tracking', $data));
 	}
 
 	public function autocomplete() {
@@ -71,7 +72,7 @@ class ControllerAffiliateTracking extends Controller {
 			foreach ($results as $result) {
 				$json[] = array(
 					'name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $this->affiliate->getCode()))
+					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $this->customer->getTracking()))
 				);
 			}
 		}

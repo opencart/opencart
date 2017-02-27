@@ -320,6 +320,7 @@ class ControllerCustomerCustomField extends Controller {
 		$data['text_time'] = $this->language->get('text_time');
 		$data['text_account'] = $this->language->get('text_account');
 		$data['text_address'] = $this->language->get('text_address');
+		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_regex'] = $this->language->get('text_regex');

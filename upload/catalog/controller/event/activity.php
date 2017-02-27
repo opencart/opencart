@@ -1,5 +1,5 @@
 <?php
-class ControllerEventCustomerActivity extends Controller {
+class ControllerEventActivity extends Controller {
 	// model/account/customer/addCustomer/after
 	public function addCustomer(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
@@ -10,7 +10,7 @@ class ControllerEventCustomerActivity extends Controller {
 				'name'        => $args[0]['firstname'] . ' ' . $args[0]['lastname']
 			);
 
-			$this->model_account_activity->addActivity('register', $activity_data);
+			$this->model_account_activity->addActivity('account_register', $activity_data);
 		}
 	}
 	
@@ -55,6 +55,34 @@ class ControllerEventCustomerActivity extends Controller {
 		}
 	}
 	
+	// model/account/customer/addAffiliate/after
+	public function addAffiliate(&$route, &$args, &$output) {
+		if ($this->config->get('config_customer_activity')) {
+			$this->load->model('account/activity');
+
+			$activity_data = array(
+				'customer_id' => $output,
+				'name'        => $args[0]['firstname'] . ' ' . $args[0]['lastname']
+			);
+
+			$this->model_account_activity->addActivity('affiliate_register', $activity_data);
+		}
+	}	
+	
+	// model/account/customer/editAffiliate/after
+	public function editAffiliate(&$route, &$args, &$output) {
+		if ($this->config->get('config_customer_activity')) {
+			$this->load->model('account/activity');
+
+			$activity_data = array(
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+			);
+
+			$this->model_account_activity->addActivity('affiliate', $activity_data);
+		}
+	}
+		
 	// model/account/customer/deleteLoginAttempts
 	public function login(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && ($this->request->get['route'] == 'account/login' || $this->request->get['route'] == 'checkout/login/save') && $this->config->get('config_customer_activity')) {

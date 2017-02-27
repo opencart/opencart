@@ -35,6 +35,7 @@ class ControllerAccountAccount extends Controller {
 
 		$data['text_my_account'] = $this->language->get('text_my_account');
 		$data['text_my_orders'] = $this->language->get('text_my_orders');
+		$data['text_my_affiliate'] = $this->language->get('text_my_affiliate');
 		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_password'] = $this->language->get('text_password');
@@ -48,8 +49,7 @@ class ControllerAccountAccount extends Controller {
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_my_tracking'] = $this->language->get('text_my_tracking');
-		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_tracking'] = $this->language->get('text_tracking');
 
 		$data['edit'] = $this->url->link('account/edit', '', true);
@@ -87,7 +87,7 @@ class ControllerAccountAccount extends Controller {
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
-		$data['payment'] = $this->url->link('account/payment', '', true);
+		$data['affiliate'] = $this->url->link('account/affiliate', '', true);
 		$data['tracking'] = $this->url->link('account/tracking', '', true);
 		
 		$data['column_left'] = $this->load->controller('common/column_left');

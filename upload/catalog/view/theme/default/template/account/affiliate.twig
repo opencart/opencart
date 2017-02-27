@@ -17,7 +17,22 @@
       <h1>{{ heading_title }}</h1>
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <legend>{{ text_your_payment }}</legend>
+          <legend>{{ text_my_affiliate }}</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-website">{{ entry_website }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control" />
+            </div>
+          </div>
+       </fieldset>   
+       <fieldset>
+          <legend>{{ text_payment }}</legend>          
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax">{{ entry_tax }}</label>
             <div class="col-sm-10">
@@ -28,8 +43,7 @@
             <label class="col-sm-2 control-label">{{ entry_payment }}</label>
             <div class="col-sm-10">
               <div class="radio">
-                <label>
-                  {% if payment == 'cheque' %}
+                <label>{% if payment == 'cheque' %}
                   <input type="radio" name="payment" value="cheque" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="cheque" />
@@ -37,8 +51,7 @@
                   {{ text_cheque }}</label>
               </div>
               <div class="radio">
-                <label>
-                  {% if payment == 'paypal' %}
+                <label>{% if payment == 'paypal' %}
                   <input type="radio" name="payment" value="paypal" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="paypal" />
@@ -46,8 +59,7 @@
                   {{ text_paypal }}</label>
               </div>
               <div class="radio">
-                <label>
-                  {% if payment == 'bank' %}
+                <label>{% if payment == 'bank' %}
                   <input type="radio" name="payment" value="bank" checked="checked" />
                   {% else %}
                   <input type="radio" name="payment" value="bank" />
@@ -119,5 +131,5 @@ $('input[name=\'payment\']').on('change', function() {
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script>
+//--></script> 
 {{ footer }}

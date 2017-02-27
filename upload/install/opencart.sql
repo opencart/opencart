@@ -1047,6 +1047,7 @@ CREATE TABLE `oc_customer_affiliate` (
   `bank_swift_code` varchar(64) NOT NULL,
   `bank_account_name` varchar(64) NOT NULL,
   `bank_account_number` varchar(64) NOT NULL,
+  `custom_field` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
@@ -1243,7 +1244,7 @@ CREATE TABLE `oc_custom_field` (
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
   `validation` varchar(255) NOT NULL,
-  `location` varchar(7) NOT NULL,
+  `location` varchar(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)

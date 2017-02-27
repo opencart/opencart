@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentBraintree extends Model {
+class ModelExtensionPaymentPPBraintree extends Model {
 	public function generateToken($gateway, $data) {
 		try {
 			if ($gateway != null) {

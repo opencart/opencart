@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ api }}" data-toggle="tooltip" title="{{ button_api }}" class="btn btn-danger"><i class="fa fa-key"></i></a></div>    
+      <div class="pull-right"><a href="{{ api }}" data-toggle="tooltip" title="{{ button_api }}" class="btn btn-danger"><i class="fa fa-key"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -34,7 +34,6 @@
             </div>
           </div>
         </div>
-        </fieldset>
         <div class="row">
           <div class="col-sm-9 col-xs-7">
             <div class="btn-group">{% for license in licenses %}
@@ -45,53 +44,68 @@
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
-                
-                
+
+
                   {% for sorts in sorts %}
                   {% if sorts.value == sort %}
-                  
+
                 <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                
+
                   {% else %}
-                  
+
                 <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                
+
                   {% endif %}
                   {% endfor %}
-                  
+
               </select>
             </div>
           </div>
         </div>
         <br />
         {% if extensions %}
-        {% for row in extensions|batch(3, '') %}
-        <div class="row">{% for extension in row %}
-        {% if extension %}
-        
-          <div class="col-sm-4">
-            <div class="thumbnail"><a href="{{ extension.href }}"><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a>
-              <div class="caption">
-                <div>
-                  <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
-                  {{ extension.price }} </div>
-                  {% for i in 1..5 %}
-                  {% if i < extension.rating %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %} 
-                  {% endfor %}
-                <div>{{ extension.comment_total }}</div>
+          <div id="extension-list">
+
+            {% for row in extensions|batch(4, '') %}
+            <div class="row">{% for extension in row %}
+            {% if extension %}
+
+              <div class="col-sm-3">
+                <section>
+                  <div class="extension-preview"><a href="{{ extension.href }}">
+                    <div class="extension-description"></div>
+                    <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a>
+                  </div>
+                  <div class="extension-name">
+                    <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                    {{ extension.price }}
+                  </div>
+                  <div class="extension-rate">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        {% for i in 1..5 %}
+                        {% if i < extension.rating %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="text-right">{{ extension.comment_total }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </section>
               </div>
+              {% endif %}
+              {% endfor %}</div>
+            {% endfor %}
+            <div class="row">
+              <div class="col-sm-12 text-center">{{ pagination }}</div>
             </div>
+            {% else %}
+            <div>{{ no_results }}</div>
           </div>
-          {% endif %}
-          {% endfor %}</div>
-        {% endfor %}
-        <div class="row">
-          <div class="col-sm-12 text-center">{{ pagination }}</div>
-        </div>
-        {% else %}
-        <div>{{ no_results }}</div>
         {% endif %} </div>
     </div>
   </div>
 </div>
-{{ footer }} 
+{{ footer }}

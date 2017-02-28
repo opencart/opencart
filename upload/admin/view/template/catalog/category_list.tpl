@@ -97,7 +97,7 @@
   </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	var url = 'catalog/category&';
+	var url = '?route=catalog/category&token=<?php echo $token; ?>&';
 
 	var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -120,7 +120,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'catalog/category/autocomplete&&filter_name=' +  encodeURIComponent(request),
+			url: '?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -142,7 +142,7 @@ $('input[name=\'filter_name\']').autocomplete({
 $('input[name=\'filter_parent\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'catalog/category/autocomplete&&filter_name=' +  encodeURIComponent(request),
+			url: '?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({

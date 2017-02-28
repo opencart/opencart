@@ -113,10 +113,10 @@ class ControllerCheckoutConfirm extends Controller {
 					$order_data['store_url'] = HTTP_SERVER;
 				}
 			}
+			
+			$this->load->model('account/customer');
 
 			if ($this->customer->isLogged()) {
-				$this->load->model('account/customer');
-
 				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 
 				$order_data['customer_id'] = $this->customer->getId();
@@ -268,12 +268,10 @@ class ControllerCheckoutConfirm extends Controller {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				$this->load->model('affiliate/affiliate');
-
-				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+				$affiliate_info = $this->model_account_customer->getAffiliateByTracking($this->request->cookie['tracking']);
 
 				if ($affiliate_info) {
-					$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
+					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 				} else {
 					$order_data['affiliate_id'] = 0;

@@ -49,7 +49,8 @@ class ControllerAccountAccount extends Controller {
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
+		$data['text_affiliate_add'] = $this->language->get('text_affiliate_add');
+		$data['text_affiliate_edit'] = $this->language->get('text_affiliate_edit');
 		$data['text_tracking'] = $this->language->get('text_tracking');
 
 		$data['edit'] = $this->url->link('account/edit', '', true);
@@ -87,8 +88,18 @@ class ControllerAccountAccount extends Controller {
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
+		
 		$data['affiliate'] = $this->url->link('account/affiliate', '', true);
-		$data['tracking'] = $this->url->link('account/tracking', '', true);
+		
+		$this->load->model('account/customer');
+
+		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+			
+		if ($affiliate_info) {		
+			$data['tracking'] = $this->url->link('account/tracking', '', true);
+		} else {
+			$data['tracking'] = '';
+		}
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

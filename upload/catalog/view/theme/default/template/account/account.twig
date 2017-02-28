@@ -45,8 +45,12 @@
       </ul>
       <h2>{{ text_my_affiliate }}</h2>
       <ul class="list-unstyled">
-        <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+        {% if not tracking %}
+        <li><a href="{{ affiliate }}">{{ text_affiliate_add }}</a></li>
+        {% else %}
+        <li><a href="{{ affiliate }}">{{ text_affiliate_edit }}</a></li>
         <li><a href="{{ tracking }}">{{ text_tracking }}</a></li>
+        {% endif %}
       </ul>
       <h2>{{ text_my_newsletter }}</h2>
       <ul class="list-unstyled">

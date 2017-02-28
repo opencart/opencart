@@ -120,5 +120,11 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row;
-	}		
+	}
+	
+	public function getAffiliateByTracking($tracking) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($tracking) . "'");
+
+		return $query->row;
+	}			
 }

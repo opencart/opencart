@@ -413,11 +413,11 @@ class ControllerMailOrderHistory extends Controller {
 		$mail->send();
 	}
 	
-	public function admin($order_info, $order_status_id) {
+	public function alert($order_info, $order_status_id) {
 		// Admin Alert Mail
-		if (in_array('order', (array)$this->config->get('config_mail_alert'))) {
-			$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
-
+		if (!$args['last_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
+			$this->language->load('mail/order');
+			
 			// HTML Mail
 			$data['text_greeting'] = $language->get('text_new_received');
 
@@ -444,11 +444,11 @@ class ControllerMailOrderHistory extends Controller {
 			$data['download'] = '';
 
 			// Text
-			$text  = $language->get('text_new_received') . "\n\n";
-			$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
-			$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-			$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
-			$text .= $language->get('text_new_products') . "\n";
+			$text  = $this->language->get('text_new_received') . "\n\n";
+			$text .= $this->language->get('text_new_order_id') . ' ' . $order_id . "\n";
+			$text .= $this->language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
+			$text .=$this->language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
+			$text .= $this->language->get('text_new_products') . "\n";
 
 			foreach ($order_product_query->rows as $product) {
 				$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
@@ -497,7 +497,7 @@ class ControllerMailOrderHistory extends Controller {
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode(sprintf($language->get('text_new_subject'), $this->config->get('config_name'), $order_id), ENT_QUOTES, 'UTF-8'));
 			$mail->setHtml($this->load->view('mail/order', $data));
 			$mail->setText($text);
 			$mail->send();

@@ -49,6 +49,7 @@ $_['action_event'] = array(
 	'model/account/customer/addCustomer/after' => array(
 		// E-Mail
 		'mail/register',
+		'mail/register/alert',
 		// Activity
 		'event/activity/addCustomer'
 	),
@@ -81,11 +82,12 @@ $_['action_event'] = array(
 	),	
 	// We want to do a before to grab the last order status
 	'model/checkout/order/addOrderHistory/before' => array(
-		'mail/order_history/before',
+		'mail/order/before',
 	),		
 	'model/checkout/order/addOrderHistory/after' => array(
 		// E-Mail
-		'mail/checkout/after',
+		'mail/order/after',
+		'mail/order/alert',
 		// Activity
 		'event/activity/addOrderHistory',
 	),
@@ -95,6 +97,7 @@ $_['action_event'] = array(
 	'model/account/customer/addAffiliate/after' => array(
 		// E-Mail
 		'mail/affiliate',
+		'mail/affiliate/alert',
 		// Activity
 		'event/activity/addAffiliate',
 	),	

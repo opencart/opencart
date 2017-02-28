@@ -42,6 +42,8 @@ class ControllerMailAccountRegister extends Controller {
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new affiliate email is enabled
 		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
+			$this->load->language('mail/affiliate');
+			
 			$data['text_signup'] = $this->language->get('text_signup');
 			$data['text_website'] = $this->language->get('text_website');
 			$data['text_firstname'] = $this->language->get('text_firstname');

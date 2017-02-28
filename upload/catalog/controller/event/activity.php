@@ -65,13 +65,15 @@ class ControllerEventActivity extends Controller {
 				'name'        => $args[0]['firstname'] . ' ' . $args[0]['lastname']
 			);
 
-			$this->model_account_activity->addActivity('affiliate_register', $activity_data);
+			$this->model_account_activity->addActivity('affiliate', $activity_data);
 		}
 	}	
 	
 	// model/account/customer/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
+			
+			
 			$this->load->model('account/activity');
 
 			$activity_data = array(
@@ -80,6 +82,9 @@ class ControllerEventActivity extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('affiliate', $activity_data);
+			
+			
+			
 		}
 	}
 		
@@ -119,6 +124,30 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
+	// model/account/customer/addTransaction/after'
+	public function addTransaction(&$route, &$args, &$output) {
+		if ($this->config->get('config_customer_activity') && $output) {
+			$this->load->model('account/activity');
+
+			if ($this->customer->isLogged()) {
+				$activity_data = array(
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+					'return_id'   => $output
+				);
+
+				$this->model_account_activity->addActivity('return_account', $activity_data);
+			} else {
+				$activity_data = array(
+					'name'      => $args[0]['firstname'] . ' ' . $args[0]['lastname'],
+					'return_id' => $output
+				);
+
+				$this->model_account_activity->addActivity('transaction', $activity_data);
+			}
+		}
+	}	
+		
 	// model/account/address/addAddress/after
 	public function addAddress(&$route, &$args, &$output) { 
 		if ($this->config->get('config_customer_activity')) {

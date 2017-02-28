@@ -1064,11 +1064,19 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->post['affiliate'])) {
 			$data['affiliate'] = $this->request->post['affiliate'];
 		} elseif (!empty($affiliate_info)) {
-			$data['affiliate'] = $affiliate_info['affiliate'];
+			$data['affiliate'] = $affiliate_info['status'];
 		} else {
 			$data['affiliate'] = '';
 		}	
 		
+		if (isset($this->request->post['company'])) {
+			$data['company'] = $this->request->post['company'];
+		} elseif (!empty($affiliate_info)) {
+			$data['company'] = $affiliate_info['company'];
+		} else {
+			$data['company'] = '';
+		}
+			
 		if (isset($this->request->post['website'])) {
 			$data['website'] = $this->request->post['website'];
 		} elseif (!empty($affiliate_info)) {

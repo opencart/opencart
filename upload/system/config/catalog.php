@@ -48,7 +48,7 @@ $_['action_event'] = array(
 	),
 	'model/account/customer/addCustomer/after' => array(
 		// E-Mail
-		'mail/account_register',
+		'mail/register',
 		// Activity
 		'event/activity/addCustomer'
 	),
@@ -60,10 +60,13 @@ $_['action_event'] = array(
 	),
 	'model/account/customer/editCode/after' => array(
 		// E-Mail
-		'mail/account_forgotten',
+		'mail/forgotten',
 		// Activity
 		'event/activity/forgotten',
 	),		
+	'model/account/customer/addTransaction/after' => array(
+		'event/activity/addTransaction',
+	),	
 	'model/account/customer/deleteLoginAttempts/after' => array(
 		'event/activity/login',
 	),		
@@ -76,12 +79,13 @@ $_['action_event'] = array(
 	'model/account/address/deleteAddress/after' => array(
 		'event/activity/deleteAddress',
 	),	
+	// We want to do a before to grab the last order status
 	'model/checkout/order/addOrderHistory/before' => array(
 		'mail/order_history/before',
 	),		
 	'model/checkout/order/addOrderHistory/after' => array(
 		// E-Mail
-		'mail/order_history/after',
+		'mail/checkout/after',
 		// Activity
 		'event/activity/addOrderHistory',
 	),
@@ -90,9 +94,9 @@ $_['action_event'] = array(
 	),	
 	'model/account/customer/addAffiliate/after' => array(
 		// E-Mail
-		'mail/affiliate_register',
+		'mail/affiliate',
 		// Activity
-		'event/activity/addCustomer',
+		'event/activity/addAffiliate',
 	),	
 	'model/account/customer/editAffiliate/after' => array(
 		'event/activity/editAffiliate',

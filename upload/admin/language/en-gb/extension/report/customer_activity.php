@@ -12,6 +12,7 @@ $_['text_activity_address_add']    = '<a href="customer_id=%d">%s</a> added a ne
 $_['text_activity_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_activity_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';
 $_['text_activity_edit']           = '<a href="customer_id=%d">%s</a> updated their account details.';
+$_['text_activity_affiliate']      = '<a href="customer_id=%d">%s</a> updated their affiliate details.';
 $_['text_activity_forgotten']      = '<a href="customer_id=%d">%s</a> requested a reset password.';
 $_['text_activity_reset']          = '<a href="customer_id=%d">%s</a> reset their account password.';
 $_['text_activity_login']          = '<a href="customer_id=%d">%s</a> logged in.';
@@ -29,12 +30,12 @@ $_['column_ip']                    = 'IP';
 $_['column_date_added']            = 'Date Added';
 
 // Entry
-$_['entry_customer']      = 'Customer';
-$_['entry_ip']            = 'IP';
-$_['entry_date_start']    = 'Date Start';
-$_['entry_date_end']      = 'Date End';
-$_['entry_status']        = 'Status';
-$_['entry_sort_order']    = 'Sort Order';
+$_['entry_customer']               = 'Customer';
+$_['entry_ip']                     = 'IP';
+$_['entry_date_start']             = 'Date Start';
+$_['entry_date_end']               = 'Date End';
+$_['entry_status']                 = 'Status';
+$_['entry_sort_order']             = 'Sort Order';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify customer activity report!';
+$_['error_permission']             = 'Warning: You do not have permission to modify customer activity report!';

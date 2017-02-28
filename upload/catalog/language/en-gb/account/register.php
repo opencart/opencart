@@ -18,7 +18,6 @@ $_['entry_firstname']      = 'First Name';
 $_['entry_lastname']       = 'Last Name';
 $_['entry_email']          = 'E-Mail';
 $_['entry_telephone']      = 'Telephone';
-$_['entry_fax']            = 'Fax';
 $_['entry_company']        = 'Company';
 $_['entry_address_1']      = 'Address 1';
 $_['entry_address_2']      = 'Address 2';

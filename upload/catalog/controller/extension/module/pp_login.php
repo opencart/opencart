@@ -115,7 +115,6 @@ class ControllerExtensionModulePPLogin extends Controller {
 					'lastname'          => $user->family_name,
 					'email'             => $user->email,
 					'telephone'         => $user->phone_number,
-					'fax'               => '',
 					'password'          => uniqid(rand(), true),
 					'company'           => '',
 					'address_1'         => $user->address->street_address,

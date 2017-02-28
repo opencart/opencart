@@ -25,7 +25,7 @@ class ControllerAccountTracking extends Controller {
 	
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('affiliate/account', '', true)
+				'href' => $this->url->link('account/account', '', true)
 			);
 	
 			$data['breadcrumbs'][] = array(
@@ -67,6 +67,12 @@ class ControllerAccountTracking extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
+			if (isset($this->request->get['tracking'])) {
+				$tracking = $this->request->get['tracking'];
+			} else {
+				$tracking = '';
+			}
+			
 			$this->load->model('catalog/product');
 
 			$filter_data = array(
@@ -80,7 +86,7 @@ class ControllerAccountTracking extends Controller {
 			foreach ($results as $result) {
 				$json[] = array(
 					'name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $this->customer->getTracking()))
+					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $tracking))
 				);
 			}
 		}

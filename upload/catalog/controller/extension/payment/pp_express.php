@@ -143,8 +143,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$this->session->data['guest']['telephone'] = '';
 			}
 
-			$this->session->data['guest']['fax'] = '';
-
 			$this->session->data['guest']['payment']['firstname'] = trim($result['FIRSTNAME']);
 			$this->session->data['guest']['payment']['lastname'] = trim($result['LASTNAME']);
 
@@ -868,7 +866,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$data['lastname'] = $this->customer->getLastName();
 				$data['email'] = $this->customer->getEmail();
 				$data['telephone'] = $this->customer->getTelephone();
-				$data['fax'] = $this->customer->getFax();
 
 				$this->load->model('account/address');
 
@@ -880,7 +877,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				$data['lastname'] = $this->session->data['guest']['lastname'];
 				$data['email'] = $this->session->data['guest']['email'];
 				$data['telephone'] = $this->session->data['guest']['telephone'];
-				$data['fax'] = $this->session->data['guest']['fax'];
 
 				$payment_address = $this->session->data['guest']['payment'];
 			}

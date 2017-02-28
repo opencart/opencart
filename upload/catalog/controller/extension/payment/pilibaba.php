@@ -143,7 +143,6 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 				$order_data['lastname'] = '';
 				$order_data['email'] = '';
 				$order_data['telephone'] = '';
-				$order_data['fax'] = '';
 				$order_data['custom_field'] = null;
 
 				$order_data['payment_firstname'] = '';
@@ -183,7 +182,6 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 				$this->session->data['guest']['lastname'] = '';
 				$this->session->data['guest']['email'] = '';
 				$this->session->data['guest']['telephone'] = '';
-				$this->session->data['guest']['fax'] = '';
 				$this->session->data['guest']['custom_field'] = array();
 
 				$order_data['products'] = array();

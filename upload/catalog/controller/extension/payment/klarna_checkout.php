@@ -1462,7 +1462,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$order_data['lastname'] = $customer_info['lastname'];
 			$order_data['email'] = $customer_info['email'];
 			$order_data['telephone'] = $customer_info['telephone'];
-			$order_data['fax'] = $customer_info['fax'];
 			$order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
 		} elseif (isset($this->session->data['guest'])) {
 			$order_data['customer_id'] = 0;
@@ -1471,7 +1470,6 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$order_data['lastname'] = $this->session->data['guest']['lastname'];
 			$order_data['email'] = $this->session->data['guest']['email'];
 			$order_data['telephone'] = $this->session->data['guest']['telephone'];
-			$order_data['fax'] = $this->session->data['guest']['fax'];
 			$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
 		}
 

@@ -111,7 +111,6 @@ class ControllerApiOrder extends Controller {
 				$order_data['lastname'] = $this->session->data['customer']['lastname'];
 				$order_data['email'] = $this->session->data['customer']['email'];
 				$order_data['telephone'] = $this->session->data['customer']['telephone'];
-				$order_data['fax'] = $this->session->data['customer']['fax'];
 				$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 				// Payment Details
@@ -489,7 +488,6 @@ class ControllerApiOrder extends Controller {
 					$order_data['lastname'] = $this->session->data['customer']['lastname'];
 					$order_data['email'] = $this->session->data['customer']['email'];
 					$order_data['telephone'] = $this->session->data['customer']['telephone'];
-					$order_data['fax'] = $this->session->data['customer']['fax'];
 					$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 					// Payment Details

@@ -114,7 +114,6 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 					'lastname' => $last_name,
 					'email' => $user->email,
 					'telephone' => '',
-					'fax' => '',
 					'password' => uniqid(rand(), true),
 					'company' => '',
 					'address_1' => '',

@@ -93,7 +93,7 @@ class ModelUpgrade1001 extends Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'custom_field'");
 
 		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `custom_field` TEXT NOT NULL AFTER `fax`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `custom_field` TEXT NOT NULL AFTER `telephone`");
 		}
 
 		// order

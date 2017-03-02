@@ -269,7 +269,8 @@ class ModelExtensionShippingECShip extends Model {
 			'AE2' => $this->config->get('shipping_ec_ship_e_express_service_two'),
 			'EMS' => $this->config->get('shipping_ec_ship_speed_post'),
 			'SMP' => $this->config->get('shipping_ec_ship_smart_post'),
-			'LCP' => $this->config->get('shipping_ec_ship_local_courier_post')
+			'LCP' => $this->config->get('shipping_ec_ship_local_courier_post'),
+			'LPL' => $this->config->get('ec_ship_local_parcel')
 		);
 
 		//Countries available service
@@ -360,7 +361,8 @@ class ModelExtensionShippingECShip extends Model {
 
 			'HKG' => array(
 				'SMP' => $this->language->get('text_smart_post'),
-				'LCP' => $this->language->get('text_local_courier_post')
+				'LCP' => $this->language->get('text_local_courier_post'),
+				'LPL' => $this->language->get('text_local_parcel')
 			),
 
 			'OTHERS' => array(

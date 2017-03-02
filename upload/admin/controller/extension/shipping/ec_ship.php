@@ -41,6 +41,7 @@ class ControllerExtensionShippingECShip extends Controller {
 		$data['text_speed_post'] = $this->language->get('text_speed_post');
 		$data['text_smart_post'] = $this->language->get('text_smart_post');
 		$data['text_local_courier_post'] = $this->language->get('text_local_courier_post');
+		$data['text_local_parcel'] = $this->language->get('text_local_parcel');
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_api_username'] = $this->language->get('entry_api_username');
@@ -209,6 +210,12 @@ class ControllerExtensionShippingECShip extends Controller {
 			$data['shipping_ec_ship_local_courier_post'] = $this->request->post['shipping_ec_ship_local_courier_post'];
 		} else {
 			$data['shipping_ec_ship_local_courier_post'] = $this->config->get('shipping_ec_ship_local_courier_post');
+		}
+
+		if (isset($this->request->post['shipping_ec_ship_local_parcel'])) {
+			$data['shipping_ec_ship_local_parcel'] = $this->request->post['shipping_ec_ship_local_parcel'];
+		} else {
+			$data['shipping_ec_ship_local_parcel'] = $this->config->get('shipping_ec_ship_local_parcel');
 		}
 
 		if (isset($this->request->post['shipping_ec_ship_weight_class_id'])) {

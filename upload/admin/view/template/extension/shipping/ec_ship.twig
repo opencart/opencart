@@ -200,6 +200,17 @@
                       {% endif %}
                     </label>
                   </div>
+                  <div class="checkbox">
+ +                    <label>
+ +                      {% if shipping_ec_ship_local_parcel %}
+ +                      <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" checked="checked" />
+ +                      {{ text_local_parcel }}
+ +                      {% else %}
+ +                      <input type="checkbox" name="shipping_ec_ship_local_parcel" value="1" />
+ +                      {{ text_local_parcel }}
+ +                      {% endif %}
+ +                    </label>
+                  </div>
               </div>
               <a onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a> </div>
           </div>

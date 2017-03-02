@@ -13,6 +13,7 @@ $_['text_e_express_service_two']               = 'e-Express service';
 $_['text_speed_post']                          = 'SpeedPost (Standard Service)';
 $_['text_smart_post']                          = 'Smart Post';
 $_['text_local_courier_post']                  = 'Local Courier Post (Counter Collection)';
+$_['text_local_parcel']                        = 'Local Parcel';
 
 //error
 $_['text_unavailable']                         = 'No shipping service available';

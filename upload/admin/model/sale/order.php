@@ -63,15 +63,9 @@ class ModelSaleOrder extends Model {
 				$reward += $product['reward'];
 			}
 			
-			if ($order_query->row['affiliate_id']) {
-				$affiliate_id = $order_query->row['affiliate_id'];
-			} else {
-				$affiliate_id = 0;
-			}
+			$this->load->model('customer/customer');
 
-			$this->load->model('marketing/affiliate');
-
-			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
+			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
 
 			if ($affiliate_info) {
 				$affiliate_firstname = $affiliate_info['firstname'];

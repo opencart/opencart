@@ -1,6 +1,8 @@
 <?php
 class ControllerMailOrderHistory extends Controller {
 	public function before(&$route, &$args, &$output) {
+		$this->log->write($args);
+		
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {
@@ -18,6 +20,8 @@ class ControllerMailOrderHistory extends Controller {
 	}
 	
 	public function after(&$route, &$args, &$output) {
+		$this->log->write($args);
+		
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {

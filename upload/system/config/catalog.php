@@ -54,55 +54,56 @@ $_['action_event'] = array(
 		'event/activity/addCustomer'
 	),
 	'model/account/customer/editCustomer/after' => array(
-		'event/activity/editCustomer',
+		'event/activity/editCustomer'
 	),	
 	'model/account/customer/editPassword/after' => array(
-		'event/activity/editPassword',
+		'event/activity/editPassword'
 	),
 	'model/account/customer/editCode/after' => array(
 		// E-Mail
 		'mail/forgotten',
 		// Activity
-		'event/activity/forgotten',
+		'event/activity/forgotten'
 	),		
 	'model/account/customer/addTransaction/after' => array(
-		'event/activity/addTransaction',
+		'event/activity/addTransaction'
+		
 	),	
 	'model/account/customer/deleteLoginAttempts/after' => array(
-		'event/activity/login',
+		'event/activity/login'
 	),		
 	'model/account/address/addAddress/after' => array(
-		'event/activity/addAddress',
+		'event/activity/addAddress'
 	),
 	'model/account/address/editAddress/after' => array(
-		'event/activity/editAddress',
+		'event/activity/editAddress'
 	),	
 	'model/account/address/deleteAddress/after' => array(
-		'event/activity/deleteAddress',
+		'event/activity/deleteAddress'
 	),	
 	// We want to do a before to grab the last order status
 	'model/checkout/order/addOrderHistory/before' => array(
-		'mail/order/before',
+		'mail/order/before'
 	),		
 	'model/checkout/order/addOrderHistory/after' => array(
 		// E-Mail
-		'mail/order/after',
-		'mail/order/alert',
+		//'mail/order/after',
+		//'mail/order/alert',
 		// Activity
-		'event/activity/addOrderHistory',
+		//'event/activity/addOrderHistory'
 	),
 	'model/account/return/addReturn/after' => array(
-		'event/activity/addReturn',
+		'event/activity/addReturn'
 	),	
 	'model/account/customer/addAffiliate/after' => array(
 		// E-Mail
 		'mail/affiliate',
 		'mail/affiliate/alert',
 		// Activity
-		'event/activity/addAffiliate',
+		//'event/activity/addAffiliate'
 	),	
 	'model/account/customer/editAffiliate/after' => array(
-		'event/activity/editAffiliate',
+		'event/activity/editAffiliate'
 	),			
 	//'controller/*/before' => array(
 	//	'event/debug/before'

@@ -156,6 +156,7 @@ $_['help_api']                     = 'Default API user the admin should use.';
 $_['help_stock_display']           = 'Display stock quantity on the product page.';
 $_['help_stock_warning']           = 'Display out of stock message on the shopping cart page if a product is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)';
 $_['help_stock_checkout']          = 'Allow customers to still checkout if the products they are ordering are not in stock.';
+$_['help_affiliate_approval']      = 'Automatically approve any new affiliates who sign up.';
 $_['help_affiliate_auto']          = 'Automatically add commission when each order reaches the complete status.';
 $_['help_affiliate_commission']    = 'The default affiliate commission percentage.';
 $_['help_affiliate']               = 'Forces people to agree to terms before an affiliate account can be created.';

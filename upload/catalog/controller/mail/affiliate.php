@@ -1,5 +1,5 @@
 <?php
-class ControllerMailAccountRegister extends Controller {
+class ControllerMailAffiliate extends Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
         
@@ -11,7 +11,7 @@ class ControllerMailAccountRegister extends Controller {
 
 		$this->load->model('account/customer_group');
 		
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroupId($args[0]['customer_group_id']);
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($args[0]['customer_group_id']);
 		
 		if ($customer_group_info) {
 			$data['approval'] = ($this->config->get('config_affiliate_approval') || $customer_group_info['approval']);
@@ -35,7 +35,7 @@ class ControllerMailAccountRegister extends Controller {
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
-		$mail->setText($this->load->view('mail/affiliate_text', $data));
+		$mail->setText($this->load->view('mail/affiliate', $data));
 		$mail->send();
  	}
 	
@@ -58,7 +58,7 @@ class ControllerMailAccountRegister extends Controller {
 			
 			$this->load->model('account/customer_group');
 			
-			$customer_group_info = $this->model_account_customer_group->getCustomerGroupId($args[0]['customer_group_id']);
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($args[0]['customer_group_id']);
 			
 			if ($customer_group_info) {
 				$data['customer_group'] = $customer_group_info['name'];
@@ -70,7 +70,18 @@ class ControllerMailAccountRegister extends Controller {
 			$data['email'] = $args[0]['email'];
 			$data['telephone'] = $args[0]['telephone'];
 
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($this->config->get('config_email'));
+			$mail->setFrom($this->config->get('config_email'));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));			
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();

@@ -8,7 +8,6 @@ $_['text_service']        = 'Upon logging in, you will be able to access other s
 $_['text_thanks']         = 'Thanks,';
 $_['text_new_customer']   = 'New customer';
 $_['text_signup']         = 'A new customer has signed up:';
-$_['text_website']        = 'Web Site:';
 $_['text_customer_group'] = 'Customer Group:';
 $_['text_firstname']      = 'First Name:';
 $_['text_lastname']       = 'Last Name:';

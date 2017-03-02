@@ -63,7 +63,7 @@
               <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control" />
             </div>
           </div>
-         {% for custom_field in custom_fields %}
+          {% for custom_field in custom_fields %}
           {% if custom_field.location == 'account' %}
           {% if custom_field.type == 'select' %}
           <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">

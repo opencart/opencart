@@ -1114,16 +1114,16 @@ class ControllerSaleOrder extends Controller {
 			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 
 			if ($order_info['affiliate_id']) {
-				$data['affiliate'] = $this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=' . $order_info['affiliate_id'], true);
+				$data['affiliate'] = $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id'], true);
 			} else {
 				$data['affiliate'] = '';
 			}
 
 			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 
-			$this->load->model('marketing/affiliate');
+			$this->load->model('customer/customer');
 
-			$data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($this->request->get['order_id']);
 
 			$this->load->model('localisation/order_status');
 
@@ -1501,9 +1501,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			if ($order_info) {
-				$this->load->model('marketing/affiliate');
+				$this->load->model('customer/customer');
 
-				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($order_id);
+				$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
 				if (!$affiliate_total) {
 					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
@@ -1536,9 +1536,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			if ($order_info) {
-				$this->load->model('marketing/affiliate');
+				$this->load->model('customer/customer');
 
-				$this->model_marketing_affiliate->deleteTransaction($order_id);
+				$this->model_customer_customer->deleteTransactionByOrderId($order_id);
 			}
 
 			$json['success'] = $this->language->get('text_commission_removed');

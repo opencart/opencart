@@ -15,7 +15,7 @@ class ControllerAccountAffiliate extends Controller {
 
 		$this->load->model('account/customer');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->editAffiliate($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -32,7 +32,7 @@ class ControllerAccountAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', true)
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -62,7 +62,43 @@ class ControllerAccountAffiliate extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
+	
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+				
+		if (isset($this->error['cheque'])) {
+			$data['error_cheque'] = $this->error['cheque'];
+		} else {
+			$data['error_cheque'] = '';
+		}
 
+		if (isset($this->error['paypal'])) {
+			$data['error_paypal'] = $this->error['paypal'];
+		} else {
+			$data['error_paypal'] = '';
+		}
+
+		if (isset($this->error['bank_account_name'])) {
+			$data['error_bank_account_name'] = $this->error['bank_account_name'];
+		} else {
+			$data['error_bank_account_name'] = '';
+		}
+
+		if (isset($this->error['bank_account_number'])) {
+			$data['error_bank_account_number'] = $this->error['bank_account_number'];
+		} else {
+			$data['error_bank_account_number'] = '';
+		}
+		
+		if (isset($this->error['custom_field'])) {
+			$data['error_custom_field'] = $this->error['custom_field'];
+		} else {
+			$data['error_custom_field'] = array();
+		}
+				
 		$data['action'] = $this->url->link('account/affiliate', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
@@ -164,13 +200,15 @@ class ControllerAccountAffiliate extends Controller {
 
 		if (isset($this->request->post['custom_field'])) {
 			$data['affiliate_custom_field'] = $this->request->post['custom_field'];
-		} elseif (isset($customer_info)) {
-			$data['affiliate_custom_field'] = json_decode($customer_info['custom_field'], true);
+		} elseif (isset($affiliate_info)) {
+			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
 		} else {
 			$data['affiliate_custom_field'] = array();
 		}
 
-		if (empty($affiliate_info) && $this->config->get('config_affiliate_id')) {
+		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
+
+		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
@@ -216,23 +254,12 @@ class ControllerAccountAffiliate extends Controller {
 				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}
 		}
-	
-		if (!$this->request->post['tracking']) {
-			$this->error['tracking'] = $this->language->get('error_tracking');
-		}
-	
-		$affiliate_info = $this->model_customer_customer->getAffliateByTracking($this->request->post['tracking']);
-	
-		if (!isset($this->request->get['customer_id'])) {
-			if ($affiliate_info) {
-				$this->error['tracking'] = $this->language->get('error_tracking_exists');
-			}
-		} else {
-			if ($affiliate_info && ($this->request->get['customer_id'] != $affiliate_info['customer_id'])) {
-				$this->error['tracking'] = $this->language->get('error_tracking_exists');
-			}
-		}
 		
+		// Custom field validation
+		$this->load->model('account/custom_field');
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
@@ -240,8 +267,11 @@ class ControllerAccountAffiliate extends Controller {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
 		}			
+		
+		// Validate agree only if customer not already an affiliate
+		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
 				
-		if ($this->config->get('config_affiliate_id')) {
+		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));

@@ -10,7 +10,7 @@ class ControllerEventActivity extends Controller {
 				'name'        => $args[0]['firstname'] . ' ' . $args[0]['lastname']
 			);
 
-			$this->model_account_activity->addActivity('account_register', $activity_data);
+			$this->model_account_activity->addActivity('account', $activity_data);
 		}
 	}
 	
@@ -71,9 +71,7 @@ class ControllerEventActivity extends Controller {
 	
 	// model/account/customer/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
-		if ($this->config->get('config_customer_activity')) {
-			
-			
+		if ($this->config->get('config_customer_activity') && $output) {
 			$this->load->model('account/activity');
 
 			$activity_data = array(
@@ -82,9 +80,6 @@ class ControllerEventActivity extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('affiliate', $activity_data);
-			
-			
-			
 		}
 	}
 		
@@ -109,6 +104,8 @@ class ControllerEventActivity extends Controller {
 	// model/account/customer/editCode
 	public function forgotten(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'account/forgotten' && $this->config->get('config_customer_activity')) {
+			$this->load->model('account/customer');
+			
 			$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
 
 			if ($customer_info) {
@@ -126,23 +123,20 @@ class ControllerEventActivity extends Controller {
 	
 	// model/account/customer/addTransaction/after'
 	public function addTransaction(&$route, &$args, &$output) {
-		if ($this->config->get('config_customer_activity') && $output) {
-			$this->load->model('account/activity');
+		if ($this->config->get('config_customer_activity')) {
+			$this->load->model('account/customer');
+			
+			$order_info = $this->model_checkout_order->getCustomer($args[0]);
 
-			if ($this->customer->isLogged()) {
+			if ($order_info) {
+				$this->load->model('account/activity');
+	
 				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
-					'return_id'   => $output
+					'customer_id' => $order_info['customer_id'],
+					'name'        => $order_info['firstname'] . ' ' . $order_info['lastname'],
+					'order_id'    => $args[0]
 				);
-
-				$this->model_account_activity->addActivity('return_account', $activity_data);
-			} else {
-				$activity_data = array(
-					'name'      => $args[0]['firstname'] . ' ' . $args[0]['lastname'],
-					'return_id' => $output
-				);
-
+	
 				$this->model_account_activity->addActivity('transaction', $activity_data);
 			}
 		}
@@ -216,6 +210,8 @@ class ControllerEventActivity extends Controller {
 	
 	// model/checkout/order/addOrderHistory/after
 	public function addOrderHistory(&$route, &$args, &$output) {	
+		$this->log->write($args);
+	
 		if ($this->config->get('config_customer_activity') && isset($args['last_status_id'])) {
 			// If last order status idf is 0 and new order status is not then record as new order
 			if (!$args['last_status_id'] && $args[1]) {

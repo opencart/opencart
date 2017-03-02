@@ -1,9 +1,9 @@
 <?php
 //Headings
-$_['heading_title']                = 'Login and Pay with Amazon';
+$_['heading_title']                = 'Amazon Pay';
 
 // Text
-$_['text_success']                 = 'Login and Pay with Amazon module has been updated';
+$_['text_success']                 = 'Amazon Pay module has been updated';
 $_['text_ipn_url']				   = 'Cron Job\'s URL';
 $_['text_ipn_token']			   = 'Secret Token';
 $_['text_us']					   = 'American';
@@ -17,8 +17,8 @@ $_['text_eu_region']               = 'Euro region';
 $_['text_uk_region']               = 'United Kingdom';
 $_['text_live']                    = 'Live';
 $_['text_sandbox']                 = 'Sandbox';
-$_['text_auth']			   = 'Authorization';
-$_['text_payment']		   = 'Payment';
+$_['text_auth']		           	   = 'Authorization';
+$_['text_payment']		           = 'Payment';
 $_['text_extension']               = 'Extensions';
 $_['text_account']                 = 'Account';
 $_['text_guest']				   = 'Guest';
@@ -36,9 +36,9 @@ $_['text_medium']                  = 'Medium';
 $_['text_large']                   = 'Large';
 $_['text_x_large']                 = 'Extra large';
 $_['text_background']              = 'Background';
-$_['text_edit']					   = 'Edit Login and Pay with Amazon';
-$_['text_amazon_login_pay']        = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><img src="view/image/payment/amazon.png" alt="Login and Pay with Amazon" title="Login and Pay with Amazon" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join']             = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><u>Sign-up to Login and Pay with Amazon</u></a>';
+$_['text_edit']					   = 'Edit Amazon Pay';
+$_['text_amazon_login_pay']        = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Amazon Pay"><img src="view/image/payment/amazonpay.png" alt="Amazon Pay" title="Amazon Pay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_amazon_join']             = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Amazon Pay"><u>Sign-up to Amazon Pay</u></a>';
 $_['text_payment_info']			   = 'Payment information';
 $_['text_capture_ok']			   = 'Capture was successful';
 $_['text_capture_ok_order']		   = 'Capture was successful, authorization has been fully captured';
@@ -71,7 +71,7 @@ $_['text_amazon_invalid']          = 'InvalidPaymentMethod';
 $_['text_amazon_rejected']         = 'AmazonRejected';
 $_['text_amazon_timeout']          = 'TransactionTimedOut';
 $_['text_amazon_no_declined']      = '--- No Automatic Declined Authorization ---';
-$_['text_amazon_signup']		   = 'Sign-up to Login and Pay with Amazon';
+$_['text_amazon_signup']		   = 'Sign-up to Amazon Pay';
 $_['text_credentials']			   = 'Please paste your keys here (in JSON format)';
 $_['text_validate_credentials']	   = 'Validate and Use Credentials';
 

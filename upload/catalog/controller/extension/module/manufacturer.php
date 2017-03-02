@@ -22,7 +22,7 @@ class ControllerExtensionModuleManufacturer extends Controller {
 
 		$this->load->model('catalog/product');
 
-		$data['manufacturer'] = array();
+		$data['manufacturers'] = array();
 
 		$manufacturers = $this->model_catalog_manufacturer->getManufacturers();
 

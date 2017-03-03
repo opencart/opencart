@@ -11,142 +11,147 @@
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
+  <div id="marketplace-extension-info" class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
       </div>
-      <div class="panel-body">{% if banner %}
-        <div class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
-        {% endif %}
-        <div>
-        
-        {% for image in images %}
-        
-        <a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
-       
-       
-       
-       
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
-          <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
-          <li><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
-          <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
-        </ul>
-        <div class="tab-content">
-          <div id="tab-description" class="tab-pane active">
-            <fieldset>
-              <legend>Extension Details</legend>
-              <table class="table table-bordered">
-                <tbody>
-                  <tr>
-                    <td><strong>{{ text_price }}</strong></td>
-                    <td>{% if license %}
-                      {{ price }}
-                      {% else %}
-                      Free
-                      {% endif %}</td>
-                  </tr>
-                {% if license %}
-                <tr>
-                  <td><strong>{{ text_license }}</strong></td>
-                  <td>{% if license_period %}
-                    {{ license_period }}
-                    {% else %}
-                    Unlimited
-                    {% endif %}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                  <td><strong>Developer</strong></td>
-                  <td><a href="{{ filter_member }}">{{ member_username }}</a></td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_compatibility }}</strong></td>
-                  <td>{{ compatibility }}</td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_rating }}</strong></td>
-                  <td>{% for i in 1..4 %}
-                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                    {% endfor %}</td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_date_added }}</strong></td>
-                  <td>{{ date_added }}</td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_date_modified }}</strong></td>
-                  <td>{{ date_modified }}</td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_sales }}</strong></td>
-                  <td>{{ sales }}</td>
-                </tr>
-                <tr>
-                  <td><strong>{{ text_downloaded }}</strong></td>
-                  <td>{{ downloaded }}</td>
-                </tr>
-                  </tbody>
-                
-              </table>
-            </fieldset>
-            <fieldset>
-              <legend>Extension Description</legend>
-              {{ description }}
-            </fieldset>
-          </div>
-          <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
-          <div id="tab-download" class="tab-pane">
-            <fieldset>
-              <legend>Progress</legend>
-              <div id="progress">
-                <div class="progress">
-                  <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-                </div>
-                <div id="progress-text"></div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-8">
+
+            {% if banner %}
+            <div id="banner" class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
+            {% endif %}
+            <div class="row">
+              <div class="col-xs-4 col-sm-2">
+              {% for image in images %}
+                <a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>
+              {% endfor %}
               </div>
-              <hr />
-            </fieldset>
-            <fieldset>
-              <legend>Available Installs</legend>
-              {% if license == '1' and purchased %}
-              <div class="alert alert-warning"><i class="fa fa-alert"></i> You must buy a license.
-                <button type="button" id="button-buy" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-shopping-basket"></i> purchase</button>
+            </div>
+
+
+
+
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
+              <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
+              <li><a href="#tab-download" data-toggle="tab">{{ tab_download }}</a></li>
+              <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-description" class="tab-pane active">
+                <fieldset>
+                  <legend>Extension Description</legend>
+                  {{ description }}
+                </fieldset>
               </div>
-              {% endif %}
-              <table class="table table-bordered">
-                <thead>
-                  <th>Download Name</th>
-                  <th>Date Added</th>
-                  <th class="text-right">Action</th>
-                </thead>
-                <tbody>
-                 {% if downloads %}
-                  {% for download in downloads %}
-                  <tr>
-                    <td>{{ download.name }}</td>
-                    <td>{{ download.date_added }}</td>
-                    <td class="text-right">{% if download.installed %}
-                      <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                      {% elseif (license == '0') or (license == '1' and purchased) %}
-                      <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
-                      {% else %}
-                      <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
-                      {% endif %}</td>
-                  </tr>
-                  {% endfor %}
-                  {% else %}
-                   <tr>
-                    <td colspan="3" class="text-center">{{ text_no_results }}</td>
-                  </tr>                 
+              <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
+              <div id="tab-download" class="tab-pane">
+                <fieldset>
+                  <legend>Progress</legend>
+                  <div id="progress">
+                    <div class="progress">
+                      <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div id="progress-text"></div>
+                  </div>
+                  <hr />
+                </fieldset>
+                <fieldset>
+                  <legend>Available Installs</legend>
+                  {% if license == '1' and purchased %}
+                  <div class="alert alert-warning"><i class="fa fa-alert"></i> You must buy a license.
+                    <button type="button" id="button-buy" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-shopping-basket"></i> purchase</button>
+                  </div>
                   {% endif %}
-                </tbody>
-              </table>
-            </fieldset>
+                  <table class="table table-bordered">
+                    <thead>
+                      <th>Download Name</th>
+                      <th>Date Added</th>
+                      <th class="text-right">Action</th>
+                    </thead>
+                    <tbody>
+                     {% if downloads %}
+                      {% for download in downloads %}
+                      <tr>
+                        <td>{{ download.name }}</td>
+                        <td>{{ download.date_added }}</td>
+                        <td class="text-right">{% if download.installed %}
+                          <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                          {% elseif (license == '0') or (license == '1' and purchased) %}
+                          <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                          {% else %}
+                          <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                          {% endif %}</td>
+                      </tr>
+                      {% endfor %}
+                      {% else %}
+                       <tr>
+                        <td colspan="3" class="text-center">{{ text_no_results }}</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </fieldset>
+              </div>
+              <div id="tab-comment" class="tab-pane"></div>
+            </div>
           </div>
-          <div id="tab-comment" class="tab-pane"></div>
+          <div class="col-sm-4">
+            <div id="buy" class="well">
+              <a href="https://www.opencart.com/index.php?route=marketplace/purchase&amp;extension_id=10197" class="btn btn-success btn-lg btn-block">Buy</a>
+              <div id="price" class="row">
+                <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
+                <div class="col-xs-7 text-right">{% if license %}
+                  {{ price }}
+                  {% else %}
+                  Free
+                  {% endif %}</div>
+              </div>
+              <hr>
+              <ul class="list-check">
+                <li>Developed by OpenCart Partner</li>
+                <li>12 Months Free Support</li>
+                <li>Documentation Included</li>
+              </ul>
+              <hr>
+              <div class="row">
+                <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
+                <div class="col-xs-7 text-right">
+                  {% for i in 1..4 %}
+                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-xs-5"><strong>{{ text_date_modified }}</strong></div>
+                <div class="col-xs-7 text-right">{{ date_modified }}</div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-xs-5"><strong>{{ text_date_added }}</strong></div>
+                <div class="col-xs-7 text-right">{{ date_added }}</div>
+              </div>
+            </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
+              <strong>{{ sales }}</strong> {{ text_sales }}
+            </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
+              <strong>{{ downloaded }}</strong> {{ text_downloaded }}
+            </div>
+            <div class="well">
+              <div class="media">
+                <div class="media-left media-middle"><img src="https:////image.opencart.com/cache/560cf92ba7308-resize-60x60.jpg" alt="iSense" title="iSense" class="media-object img-circle"></div>
+                <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
+                <small>Member since: 16 May 2012</small> </div>
+              </div>
+              <br>
+              <a href="https://www.opencart.com/index.php?route=marketplace/extension&amp;filter_member=iSense" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id=10197" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -188,7 +193,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	e.preventDefault();
 
 	var element = this;
-	
+
 	$.ajax({
 		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}&user_token={{ user_token }}',
 		type: 'post',
@@ -202,14 +207,14 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 		},
 		success: function(json) {
 			console.log(json);
-			
+
 			if (json['error']) {
 				$('input[name=\'pin\']').after('<div class="text-danger">' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
 				$('#tab-download').prepend('<div class="alert alert-success">' + json['success'] + '</div>');
-				
+
 				$('#tab-download table button').prop('disabled', false);
 			}
 		},
@@ -217,20 +222,20 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});  
-  
-// Install  
+});
+
+// Install
 $('#tab-download .btn-primary').on('click', function(e) {
 	e.preventDefault();
-	
+
 	var i = 1;
 	var element = this;
-	
+
 	// Reset everything
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');	
-	
+	$('#progress-text').html('');
+
 	$.ajax({
 		url: $(this).attr('value'),
 		dataType: 'json',
@@ -239,31 +244,31 @@ $('#tab-download .btn-primary').on('click', function(e) {
 		},
 		complete: function() {
 			$('#tab-download button').button('reset');
-		},		
+		},
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				
+
 				$(element).button('reset');
 			}
-			
+
 			if (json['text']) {
 				$('#progress-bar').css('width', (i * 20) + '%');
 				$('#progress-text').html(json['text']);
 			}
-			
+
 			if (json['next']) {
 				$(element).attr('value', json['next']);
-				
-				
+
+
 			}
-				
+
 
 			next = '';
-			
+
 			$(element).attr('data-next', '');
-			
+
 			$.ajax({
 				url: next,
 				dataType: 'json',
@@ -275,30 +280,30 @@ $('#tab-download .btn-primary').on('click', function(e) {
 				},
 				success: function(json) {
 					$('#progress-bar').css('width', (i * 20) + '%');
-					
+
 					if (json['error']) {
 						$('#progress-bar').addClass('progress-bar-danger');
 						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-						
+
 						$(element).button('reset');
 					}
-		 
+
 					if (json['text']) {
 						$('#progress-text').html(json['text']);
 					}
-					
+
 					if (json['next']) {
 						$(element).attr('data-next', json['next']);
 					}
-					
+
 					if (json['success']) {
 						$('#progress-bar').addClass('progress-bar-success');
 						$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-						
+
 						$(element).hide();
-			
+
 						$(element).parent().find('.btn-danger').show();
-						
+
 						$(element).button('reset');
 					}
 				},
@@ -316,7 +321,7 @@ $('#tab-download .btn-primary').on('click', function(e) {
 
 function next(url, element, i) {
 	i = i + 1;
-	
+
 	$.ajax({
 		url: url,
 		dataType: 'json',
@@ -328,30 +333,30 @@ function next(url, element, i) {
 		},
 		success: function(json) {
 			$('#progress-bar').css('width', (i * 20) + '%');
-			
+
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				
+
 				$(element).button('reset');
 			}
- 
+
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
 			}
-			
+
 			if (json['next']) {
 				next(json['next'], element, i);
 			}
-						
+
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				
+
 				$(element).hide();
-	
+
 				$(element).parent().find('.btn-danger').show();
-				
+
 				$(element).button('reset');
 			}
 		},
@@ -364,13 +369,13 @@ function next(url, element, i) {
 // Uninstall
 $('#tab-download .btn-danger').on('click', function(e) {
 	e.preventDefault();
-	
+
 	var element = this;
-	
+
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('');
-	
+
 	$.ajax({
 		url: $(this).attr('value'),
 		dataType: 'json',
@@ -382,7 +387,7 @@ $('#tab-download .btn-danger').on('click', function(e) {
 		},
 		success: function(json) {
 			console.log(json);
-			
+
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html(json['error']);
@@ -394,7 +399,7 @@ $('#tab-download .btn-danger').on('click', function(e) {
 				$('#progress-text').html(json['success']);
 
 				$(element).hide();
-				
+
 				$(element).parent().find('.btn-primary').show();
 			}
 		},
@@ -403,6 +408,6 @@ $('#tab-download .btn-danger').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
 </div>
-{{ footer }} 
+{{ footer }}

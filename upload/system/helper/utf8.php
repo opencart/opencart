@@ -15,11 +15,7 @@ if (extension_loaded('mbstring')) {
 	}
 
 	function utf8_substr($string, $offset, $length = null) {
-		if ($length === null) {
-			return mb_substr($string, $offset, utf8_strlen($string));
-		} else {
-			return mb_substr($string, $offset, $length);
-		}
+		return mb_substr($string, $offset, $length === null ? mb_strlen($string) : $length);
 	}
 
 	function utf8_strtoupper($string) {

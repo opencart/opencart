@@ -771,7 +771,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     padding-bottom: 30px; } }
 
 
-.list-check { 
+.list-check {
   list-style: none; }
   .list-check li::before {
     font-family: 'FontAwesome';

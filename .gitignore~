@@ -12,7 +12,6 @@
 !/upload/image/cache/index.html
 
 # System Cache Files
-/upload/system/storage/*
 /upload/system/storage/cache/*
 !/upload/system/storage/cache/index.html
 

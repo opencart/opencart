@@ -1,0 +1,85 @@
+    
+    
+    
+    
+    
+   {% for product in products %}
+   
+   {{ product.quantity }}x {{ product.name }} ({{ product.model }}) {{ product.total }}
+  
+  
+   hr(9) . '-' . option.name {{ option.value }}
+   
+   
+    
+$product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+	
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_info['order_id'] . "' AND order_product_id = '" . $product['order_product_id'] . "'");
+	
+					foreach ($order_option_query->rows as $option) {
+						if ($option['type'] != 'file') {
+							$value = $option['value'];
+						} else {
+							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+						}
+	
+						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value) . "\n";
+					}
+				}
+	
+				foreach ($order_voucher_query->rows as $voucher) {
+					$text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
+				}
+	
+				$text .= "\n";
+	
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+	
+				foreach ($order_total_query->rows as $total) {
+					$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+				}
+	
+				$text .= "\n";
+	
+				if ($order_info['comment']) {
+					$text .=  . "\n\n";
+					$text .= $order_info['comment'] . "\n\n";
+				}
+                
+                
+                
+                
+                
+                
+    
+    
+    {% for product in products %}
+    <tr>
+      <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+        {% for option in product.option %}<br />
+        &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>{% endfor %}</td>
+      <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"></td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;"></td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ product.price }}</td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;"></td>
+    </tr>
+    {% endfor %}
+    {% for voucher in vouchers %}
+    <tr>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">{{ voucher.description }}</td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"></td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">1</td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ voucher.amount }}</td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ voucher.amount }}</td>
+    </tr>
+    {% endfor %}
+      </tbody>
+    
+    <tfoot>
+    
+    {% for total in totals %}
+    <tr>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;" colspan="4"><b>{{ total.title }}:</b></td>
+      <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">{{ total.text }}</td>
+    </tr>
+    {% endfor %}

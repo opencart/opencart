@@ -236,7 +236,37 @@ class ModelCheckoutOrder extends Model {
 			return false;
 		}
 	}
+	
+	public function getOrderProducts($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		
+		return $query->rows;
+	}
 
+	public function getOrderProducts($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		
+		return $query->rows;
+	}
+	
+	public function getOrderOptions($order_id, $order_product_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+		
+		return $query->rows;
+	}
+	
+	public function getOrderVouchers($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
+	
+		return $query->rows;
+	}
+	
+	public function getOrderTotals($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+		
+		return $query->rows;
+	}	
+			
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$order_info = $this->getOrder($order_id);
 		
@@ -275,9 +305,9 @@ class ModelCheckoutOrder extends Model {
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
 			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Redeem coupon, vouchers and reward points
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+				$order_totals = $this->getOrderTotals($order_id);
 
-				foreach ($order_total_query->rows as $order_total) {
+				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/total/' . $order_total['code']);
 
 					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'confirm')) {
@@ -299,15 +329,15 @@ class ModelCheckoutOrder extends Model {
 				}
 
 				// Stock subtraction
-				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				$order_products = $this->getOrderProducts($order_id);
 
-				foreach ($order_product_query->rows as $order_product) {
+				foreach ($order_products as $order_product) {
 					$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product['order_product_id'] . "'");
+					$order_options = $this->getOrderOptions($order_id, $order_product['order_product_id']);
 
-					foreach ($order_option_query->rows as $option) {
-						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+					foreach ($order_options as $order_option) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
 				}
 			}
@@ -320,22 +350,22 @@ class ModelCheckoutOrder extends Model {
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
 			if (in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Restock
-				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				$order_products = $this->getOrderProducts($order_id);
 
-				foreach($product_query->rows as $product) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "' AND subtract = '1'");
+				foreach($order_products as $order_product) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
 
-					$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+					$order_options = $this->getOrderOptions($order_id, $order_product['order_product_id']);
 
-					foreach ($option_query->rows as $option) {
-						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+					foreach ($order_options as $order_option) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
 				}
 
 				// Remove coupon, vouchers and reward points history
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
-
-				foreach ($order_total_query->rows as $order_total) {
+				$order_totals = $this->getOrderTotal($order_id);
+				
+				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/total/' . $order_total['code']);
 
 					if (property_exists($this->{'model_extension_total_' . $order_total['code']}, 'unconfirm')) {

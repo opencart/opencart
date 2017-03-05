@@ -13,11 +13,9 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
-	console.log('hi');
-
 	$.ajax({
 		url: 'index.php?route=extension/payment/cheque/confirm',
-		dataType: 'html',
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
@@ -25,9 +23,6 @@ $('#button-confirm').on('click', function() {
 			$('#button-confirm').button('reset');
 		},
 		success: function(json) {
-			alert('hi');
-			console.log(json);
-			
 			if (json['redirect']) {
 				location = json['redirect'];	
 			}

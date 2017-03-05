@@ -333,10 +333,11 @@ class ControllerMailOrder extends Controller {
 		$mail->send();
 	}
 	
+	// Admin Alert Mail
 	public function alert(&$route, &$args, $output) {
-		// Admin Alert Mail
+		
 		if (!$args['last_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
-			$this->language->load('mail/order');
+			$this->language->load('mail/order_add');
 			
 			// HTML Mail
 			$data['text_greeting'] = $this->language->get('text_new_received');
@@ -418,7 +419,7 @@ class ControllerMailOrder extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode(sprintf($language->get('text_new_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
-			$mail->setHtml($this->load->view('mail/order', $data));
+			$mail->setHtml($this->load->view('mail/order_alert', $data));
 			$mail->setText($text);
 			$mail->send();
 

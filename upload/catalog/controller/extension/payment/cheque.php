@@ -32,12 +32,10 @@ class ControllerExtensionPaymentCheque extends Controller {
 			$comment .= $this->language->get('text_payment') . "\n";
 			
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cheque_order_status_id'), $comment, true);
-		echo 'hi';
+			
 			$json['redirect'] = $this->url->link('checkout/success');
 		}
 		
-		
-		echo 'hi';
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

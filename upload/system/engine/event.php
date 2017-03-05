@@ -31,22 +31,14 @@ class Event {
 	}
 
 	public function unregister($trigger, $route = '') {
-		if ($route) {
-			foreach ($this->data[$trigger] as $key => $action) {
-				if ($action->getId() == $route) {
-					unset($this->data[$trigger][$key]);
-				}
-			}
-		} else {
-			unset($this->data[$trigger]);
-		}
-	}
-
-	public function removeAction($trigger, $route) {
 		foreach ($this->data[$trigger] as $key => $action) {
 			if ($action->getId() == $route) {
 				unset($this->data[$trigger][$key]);
 			}
 		}
 	}
+	
+	public function clear($trigger) {
+		unset($this->data[$trigger]);
+	}	
 }

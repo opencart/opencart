@@ -238,8 +238,6 @@ class ModelCheckoutOrder extends Model {
 	}
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
-		$this->log->write('hi');
-		
 		$order_info = $this->getOrder($order_id);
 		
 		if ($order_info) {
@@ -335,8 +333,6 @@ class ModelCheckoutOrder extends Model {
 				}
 
 				// Remove coupon, vouchers and reward points history
-				$this->load->model('account/order');
-
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
 				foreach ($order_total_query->rows as $order_total) {

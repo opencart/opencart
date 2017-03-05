@@ -38,7 +38,7 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
-		if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
+		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			$file  = DIR_APPLICATION . 'model/' . $route . '.php';
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 			
@@ -51,7 +51,7 @@ final class Loader {
 					$proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
 				}
 				
-				$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
 				throw new \Exception('Error: Could not load model ' . $route . '!');
 			}
@@ -139,7 +139,7 @@ final class Loader {
 	
 	protected function callback($registry, $route) {
 		return function($args) use($registry, &$route) {
-			static $model = array(); 			
+			static $model;
 			
 			$output = '';
 			

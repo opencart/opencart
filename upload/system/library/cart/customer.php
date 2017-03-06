@@ -51,14 +51,14 @@ class Customer {
         $this->password    = $customer_query->row['password'];
         $this->salt        = $customer_query->row['salt'];
 
-        if(mb_strlen($this->password) == 32 && $this->password == md5($password) || mb_strlen($this->password) == 40 && $this->password == sha1($this->salt . sha1($this->salt . sha1($password)))) {
+        if (mb_strlen($this->password) == 32 && $this->password == md5($password) || mb_strlen($this->password) == 40 && $this->password == sha1($this->salt . sha1($this->salt . sha1($password)))) {
             $customer_query = $this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . password_hash($password, PASSWORD_DEFAULT) . "' WHERE customer_id = '" . $this->customer_id. "'");
 
             $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1' AND approved = '1'");
             $this->password = $customer_query->row['password'];
         }
 
-        if($override || password_verify($password, $this->password)) {
+        if ($override || password_verify($password, $this->password)) {
             $this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
             $this->customer_id = $customer_query->row['customer_id'];

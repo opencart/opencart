@@ -1,9 +1,6 @@
 <?php
 class ModelUpgrade1001 extends Model {
 	public function upgrade() {
-	    // user
-        $this->db->query("ALTER TABLE `" . DB_PREFIX . "user` CHANGE `password` `password` VARCHAR(255)");
-
 		// address
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` CHANGE `company` `company` VARCHAR(40) NOT NULL");
 
@@ -86,8 +83,6 @@ class ModelUpgrade1001 extends Model {
 		}
 
 		// customer
-        $this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` CHANGE `password` `password` VARCHAR(255)");
-
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'custom_field'");
 
 		if (!$query->num_rows) {

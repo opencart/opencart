@@ -45,20 +45,13 @@ class Customer {
 	}
 
     public function login($email, $password, $override = false) {
-        $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1' AND approved = '1'");
+		if ($override) {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
+		} else {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+		}
 
-        $this->customer_id = $customer_query->row['customer_id'];
-        $this->password    = $customer_query->row['password'];
-        $this->salt        = $customer_query->row['salt'];
-
-        if (mb_strlen($this->password) == 32 && $this->password == md5($password) || mb_strlen($this->password) == 40 && $this->password == sha1($this->salt . sha1($this->salt . sha1($password)))) {
-            $customer_query = $this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . password_hash($password, PASSWORD_DEFAULT) . "' WHERE customer_id = '" . $this->customer_id. "'");
-
-            $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1' AND approved = '1'");
-            $this->password = $customer_query->row['password'];
-        }
-
-        if ($override || password_verify($password, $this->password)) {
+        if ($customer_query->num_rows) {
             $this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
             $this->customer_id = $customer_query->row['customer_id'];

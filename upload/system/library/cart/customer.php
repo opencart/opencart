@@ -2,8 +2,6 @@
 namespace Cart;
 class Customer {
 	private $customer_id;
-    private $password;
-    private $salt;
 	private $firstname;
 	private $lastname;
 	private $customer_group_id;
@@ -44,40 +42,32 @@ class Customer {
 		}
 	}
 
-    public function login($email, $password, $override = false) {
-        $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1' AND approved = '1'");
+	public function login($email, $password, $override = false) {
+		if ($override) {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
+		} else {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
+		}
 
-        $this->customer_id = $customer_query->row['customer_id'];
-        $this->password    = $customer_query->row['password'];
-        $this->salt        = $customer_query->row['salt'];
+		if ($customer_query->num_rows) {
+			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
-        if(mb_strlen($this->password) == 32 && $this->password == md5($password) || mb_strlen($this->password) == 40 && $this->password == sha1($this->salt . sha1($this->salt . sha1($password)))) {
-            $customer_query = $this->db->query("UPDATE " . DB_PREFIX . "customer SET password = '" . password_hash($password, PASSWORD_DEFAULT) . "' WHERE customer_id = '" . $this->customer_id. "'");
+			$this->customer_id = $customer_query->row['customer_id'];
+			$this->firstname = $customer_query->row['firstname'];
+			$this->lastname = $customer_query->row['lastname'];
+			$this->customer_group_id = $customer_query->row['customer_group_id'];
+			$this->email = $customer_query->row['email'];
+			$this->telephone = $customer_query->row['telephone'];
+			$this->newsletter = $customer_query->row['newsletter'];
+			$this->address_id = $customer_query->row['address_id'];
+		
+			$this->db->query("UPDATE " . DB_PREFIX . "customer SET language_id = '" . (int)$this->config->get('config_language_id') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
-            $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1' AND approved = '1'");
-            $this->password = $customer_query->row['password'];
-        }
-
-        if($override || password_verify($password, $this->password)) {
-            $this->session->data['customer_id'] = $customer_query->row['customer_id'];
-
-            $this->customer_id = $customer_query->row['customer_id'];
-            $this->firstname = $customer_query->row['firstname'];
-            $this->lastname = $customer_query->row['lastname'];
-            $this->customer_group_id = $customer_query->row['customer_group_id'];
-            $this->email = $customer_query->row['email'];
-            $this->telephone = $customer_query->row['telephone'];
-            $this->fax = $customer_query->row['fax'];
-            $this->newsletter = $customer_query->row['newsletter'];
-            $this->address_id = $customer_query->row['address_id'];
-
-            $this->db->query("UPDATE " . DB_PREFIX . "customer SET language_id = '" . (int)$this->config->get('config_language_id') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
-
-            return true;
-        } else {
-            return false;
-        }
-    }
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public function logout() {
 		unset($this->session->data['customer_id']);

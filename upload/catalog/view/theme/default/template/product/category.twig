@@ -37,10 +37,10 @@
         </div>
       </div>
       {% else %}
-      <div class="row"> {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+      <div class="row"> {% for rows in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
         <div class="col-sm-3">
           <ul>
-            {% for category in categories %}
+            {% for category in rows %}
             <li><a href="{{ category.href }}">{{ category.name }}</a></li>
             {% endfor %}
           </ul>

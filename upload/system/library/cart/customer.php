@@ -42,7 +42,8 @@ class Customer {
 		}
 	}
 
-	public function login($email, $password, $override = false) {
+  public function login($email, $password, $override = false) {
+
 		if ($override) {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
 		} else {

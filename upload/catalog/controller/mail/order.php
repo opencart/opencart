@@ -239,7 +239,7 @@ class ControllerMailOrder extends Controller {
 		// Vouchers
 		$data['vouchers'] = array();
 
-		$order_vouchers = $this->model_checkout_order->getOrderVouchers($order_id);
+		$order_vouchers = $this->model_checkout_order->getOrderVouchers($order_info['order_id']);
 
 		foreach ($order_vouchers as $order_voucher) {
 			$data['vouchers'][] = array(
@@ -304,7 +304,7 @@ class ControllerMailOrder extends Controller {
 			$data['link'] = '';
 		}
 
-		$data['comment'] = strip_tags($comment) . "\n\n";
+		$data['comment'] = strip_tags($comment);
 
 		$mail = new Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
@@ -350,27 +350,26 @@ class ControllerMailOrder extends Controller {
 		}
 				
 		if (!$args['last_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
-
-					
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 			
 			if ($order_info) {			
 				$this->language->load('mail/order_alert');
 				
 				// HTML Mail
-				$data['text_greeting'] = $this->language->get('text_greeting');
 				$data['text_received'] = $this->language->get('text_received');
 				$data['text_order_id'] = $this->language->get('text_order_id');
 				$data['text_date_added'] = $this->language->get('text_date_added');
 				$data['text_order_status'] = $this->language->get('text_order_status');
-				$data['text_products'] = $this->language->get('text_products');
-				$data['text_order_total'] = $language->get('text_order_total');
+				$data['text_product'] = $this->language->get('text_product');
+				$data['text_total'] = $language->get('text_total');
 				$data['text_comment'] = $this->language->get('text_comment');
 				
-				$data['order_id'] = $order_info['order_id'] . "\n";
-				$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
-				$data['order_status'] = $order_info['order_status'] . "\n\n";
-	
+				$data['order_id'] = $order_info['order_id'];
+				$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
+				$data['order_status'] = $order_info['order_status'];
+				
+				$this->load->model('tool/upload');
+				
 				$data['products'] = array();
 	
 				$order_products = $this->model_checkout_order->getOrderProducts($order_id);
@@ -378,61 +377,59 @@ class ControllerMailOrder extends Controller {
 				foreach ($order_products as $order_product) {
 					$option_data = array();
 					
-						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_info['order_id'] . "' AND order_product_id = '" . $product['order_product_id'] . "'");
-		
-						foreach ($order_option_query->rows as $option) {
-							if ($option['type'] != 'file') {
-								$value = $option['value'];
-							} else {
-								$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
-							}
-		
-							$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value) . "\n";
-						}				
+					$order_options = $this->model_checkout_order->getOrderOptions($order_info['order_id'], $order_product['order_product_id']);
 					
-					$data['products'][] = array(
-						'name'     => $product['name']
-						'model'    => $product['model']
-						'quantity' => $product['quantity']
-						'total'    => $product['quantity']html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-					);
-					
-					
-					
-					
-					$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
-	
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_info['order_id'] . "' AND order_product_id = '" . $product['order_product_id'] . "'");
-	
-					foreach ($order_option_query->rows as $option) {
-						if ($option['type'] != 'file') {
-							$value = $option['value'];
+					foreach ($order_options as $order_option) {
+						if ($order_option['type'] != 'file') {
+							$value = $order_option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$upload_info = $this->model_tool_upload->getUploadByCode($order_option['value']);
+		
+							if ($upload_info) {
+								$value = $upload_info['name'];
+							} else {
+								$value = '';
+							}
 						}
-	
-						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value) . "\n";
+
+						$option_data[] = array(
+							'name'  => $order_option['name'],
+							'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+						);					
 					}
+						
+					$data['products'][] = array(
+						'name'     => $order_product['name'],
+						'model'    => $order_product['model'],
+						'quantity' => $order_product['quantity'],
+						'option'   => $option_data,
+						'total'    => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
+					);
+				}
+				
+				$data['vouchers'] = array();
+				
+				$order_vouchers = $this->model_checkout_order->getOrderVouchers($order_id);
+
+				foreach ($order_vouchers as $order_voucher) {
+					$data['vouchers'][] = array(
+						'description' => $order_voucher['description'],
+						'amount'      => html_entity_decode($this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
+					);					
 				}
 	
-				foreach ($order_voucher_query->rows as $voucher) {
-					$text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
+				$data['totals'] = array();
+				
+				$order_totals = $this->model_checkout_order->getOrderTotals($order_id);
+	
+				foreach ($order_totals as $order_total) {
+					$data['totals'] = array(
+						'title' => $order_total['title'],
+						'value' => html_entity_decode($this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
+					);
 				}
 	
-				$text .= "\n";
-	
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
-	
-				foreach ($order_total_query->rows as $total) {
-					$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
-				}
-	
-				$text .= "\n";
-	
-				if ($order_info['comment']) {
-					$text .=  . "\n\n";
-					$text .= $order_info['comment'] . "\n\n";
-				}
+				$data['comment'] = strip_tags($order_info['comment']);
 	
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
@@ -447,8 +444,7 @@ class ControllerMailOrder extends Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
-				$mail->setHtml($this->load->view('mail/order_alert', $data));
-				$mail->setText($text);
+				$mail->setText($this->load->view('mail/order_alert', $data));
 				$mail->send();
 	
 				// Send to additional alert emails
@@ -460,6 +456,7 @@ class ControllerMailOrder extends Controller {
 						$mail->send();
 					}
 				}
+			}
 		}
 	}
 }

@@ -361,11 +361,11 @@ class ControllerMailOrder extends Controller {
 				$data['text_date_added'] = $this->language->get('text_date_added');
 				$data['text_order_status'] = $this->language->get('text_order_status');
 				$data['text_product'] = $this->language->get('text_product');
-				$data['text_total'] = $language->get('text_total');
+				$data['text_total'] = $this->language->get('text_total');
 				$data['text_comment'] = $this->language->get('text_comment');
 				
 				$data['order_id'] = $order_info['order_id'];
-				$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
+				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 				$data['order_status'] = $order_info['order_status'];
 				
 				$this->load->model('tool/upload');
@@ -443,7 +443,7 @@ class ControllerMailOrder extends Controller {
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
 				$mail->setText($this->load->view('mail/order_alert', $data));
 				$mail->send();
 	

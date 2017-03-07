@@ -2280,6 +2280,7 @@ CREATE TABLE `oc_order_recurring_transaction` (
 -- Table structure for table `oc_order_shipment`
 --
 
+DROP TABLE IF EXISTS `oc_order_shipment`;
 CREATE TABLE `oc_order_shipment` (
   `order_shipment_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
@@ -2295,6 +2296,7 @@ CREATE TABLE `oc_order_shipment` (
 -- Table structure for table `oc_shipping_courier`
 --
 
+DROP TABLE IF EXISTS `oc_shipping_courier`;
 CREATE TABLE `oc_shipping_courier` (
   `shipping_courier_id` int(11) NOT NULL,
   `shipping_courier_code` varchar(255) NOT NULL DEFAULT '',

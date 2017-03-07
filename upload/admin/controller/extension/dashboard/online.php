@@ -106,10 +106,10 @@ class ControllerExtensionDashboardOnline extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		// Total Orders
-		$this->load->model('extension/dashboard/customer');
+		$this->load->model('extension/dashboard/online');
 
 		// Customers Online
-		$online_total = $this->model_extension_dashboard_customer->getTotalCustomersOnline();
+		$online_total = $this->model_extension_dashboard_online->getTotalOnline();
 
 		if ($online_total > 1000000000000) {
 			$data['total'] = round($online_total / 1000000000000, 1) . 'T';

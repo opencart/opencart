@@ -930,9 +930,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$allowed = array(
 					'admin/controller/extension/',
 					'admin/model/extension/',
+					'admin/view/image/extension/',
+					'admin/view/javascript/extension/',
+					'admin/view/stylesheet/extension/',
 					'admin/view/template/extension/',
 					'catalog/controller/extension/',
 					'catalog/model/extension/',
+					'catalog/view/javascript/extension/',
 					'catalog/view/theme/'
 				);
 

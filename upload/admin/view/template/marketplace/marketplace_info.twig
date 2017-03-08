@@ -78,13 +78,17 @@
                       <tr>
                         <td>{{ download.name }}</td>
                         <td>{{ download.date_added }}</td>
-                        <td class="text-right">{% if download.installed %}
+                        <td class="text-right">
+                          
+                          {% if download.installed %}
                           <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
                           {% elseif (license == '0') or (license == '1' and purchased) %}
                           <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
                           {% else %}
                           <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
-                          {% endif %}</td>
+                          {% endif %}
+                          
+                          </td>
                       </tr>
                       {% endfor %}
                       {% else %}

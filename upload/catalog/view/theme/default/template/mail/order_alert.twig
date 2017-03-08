@@ -4,18 +4,23 @@
 {{ text_date_added }} {{ date_added }}
 {{ text_order_status }} {{ order_status }}
 
-{{ text_products }}
+{{ text_product }}
 
 {% for product in products %}
 {{ product.quantity }}x {{ product.name }} ({{ product.model }}) {{ product.total }}
+{% if option %}
 {% for option in product.option %}
 	- {{ option.name }} {{ option.value }}
+{% endfor %}
+{% endif %}
 {% endfor %} 
-{% endfor %} 
+{% if vouchers %}
 
 {% for voucher in vouchers %}
 1x {{ voucher.description }} {{ voucher.amount }}
 {% endfor %} 
+{% endif %}
+{{ text_total }}
 
 {% for total in totals %}
 {{ total.title }}: {{ total.value }}
@@ -23,6 +28,7 @@
   
 {% if comment %}
 {{ text_comment }}
+
 {{ comment }}
 {% endif %}
 

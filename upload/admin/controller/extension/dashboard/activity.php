@@ -112,9 +112,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 		$results = $this->model_extension_dashboard_activity->getActivities();
 
 		foreach ($results as $result) {
-			echo 'hi';
-			
-			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
+			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
 
 			$find = array(
 				'customer_id=',

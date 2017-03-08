@@ -46,6 +46,8 @@ class ModelUpgrade1009 extends Model {
 					
 					$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_transaction_id = '" . (int)$affiliate_transaction['affiliate_transaction_id'] . "'");
 				}
+				
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `affiliate_id` = '" . (int)$customer_id . "' WHERE affiliate_id = '" . (int)$affiliate['affiliate_id'] . "'");
 			}
 			
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate`");

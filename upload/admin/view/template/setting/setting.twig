@@ -914,14 +914,14 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_affiliate_auto }}">{{ entry_affiliate_auto }}</span></label>
                   <div class="col-sm-10">
-                    <label class="radio-inline"> {% if config_stock_checkout %}
+                    <label class="radio-inline"> {% if config_affiliate_auto %}
                       <input type="radio" name="config_affiliate_auto" value="1" checked="checked" />
                       {{ text_yes }}
                       {% else %}
                       <input type="radio" name="config_affiliate_auto" value="1" />
                       {{ text_yes }}
                       {% endif %} </label>
-                    <label class="radio-inline"> {% if not config_stock_checkout %}
+                    <label class="radio-inline"> {% if not config_affiliate_auto %}
                       <input type="radio" name="config_affiliate_auto" value="0" checked="checked" />
                       {{ text_no }}
                       {% else %}

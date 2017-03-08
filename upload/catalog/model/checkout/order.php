@@ -315,13 +315,6 @@ class ModelCheckoutOrder extends Model {
 					}
 				}
 
-				// Add commission if sale is linked to affiliate referral.
-				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
-					$this->load->model('account/customer');
-
-					$this->model_account_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
-				}
-
 				// Stock subtraction
 				$order_products = $this->getOrderProducts($order_id);
 
@@ -332,6 +325,16 @@ class ModelCheckoutOrder extends Model {
 
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
+					}
+				}
+				
+				
+				// Add commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->model('account/customer');
+
+					if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
+						$this->model_account_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 					}
 				}
 			}
@@ -357,7 +360,7 @@ class ModelCheckoutOrder extends Model {
 				}
 
 				// Remove coupon, vouchers and reward points history
-				$order_totals = $this->getOrderTotal($order_id);
+				$order_totals = $this->getOrderTotals($order_id);
 				
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/total/' . $order_total['code']);
@@ -370,7 +373,7 @@ class ModelCheckoutOrder extends Model {
 				// Remove commission if sale is linked to affiliate referral.
 				if ($order_info['affiliate_id']) {
 					$this->load->model('account/customer');
-
+					
 					$this->model_account_customer->deleteTransactionByOrderId($order_id);
 				}
 			}

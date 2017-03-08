@@ -126,15 +126,15 @@ class ControllerEventActivity extends Controller {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
 			
-			$order_info = $this->model_checkout_order->getCustomer($args[0]);
+			$customer_info = $this->model_account_customer->getCustomer($args[0]);
 
-			if ($order_info) {
+			if ($customer_info) {
 				$this->load->model('account/activity');
 	
 				$activity_data = array(
-					'customer_id' => $order_info['customer_id'],
-					'name'        => $order_info['firstname'] . ' ' . $order_info['lastname'],
-					'order_id'    => $args[0]
+					'customer_id' => $customer_info['customer_id'],
+					'name'        => $customer_info['firstname'] . ' ' . $customer_info['lastname'],
+					'order_id'    => $args[3]
 				);
 	
 				$this->model_account_activity->addActivity('transaction', $activity_data);

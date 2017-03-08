@@ -66,8 +66,9 @@ $_['action_event'] = array(
 		'event/activity/forgotten'
 	),		
 	'model/account/customer/addTransaction/after' => array(
-		'event/activity/addTransaction'
-	),	
+		'event/activity/addTransaction',
+		'mail/transaction'
+	),
 	'model/account/customer/deleteLoginAttempts/after' => array(
 		'event/activity/login'
 	),		

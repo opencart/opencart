@@ -93,7 +93,7 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 	
-	$('#report').load('index.php?route=extension/report/customer_credit/report&user_token={{ user_token }}' + url);
+	$('#report').load('index.php?route=extension/report/customer_transaction/report&user_token={{ user_token }}' + url);
 });
 //--></script> 
 <script type="text/javascript"><!--

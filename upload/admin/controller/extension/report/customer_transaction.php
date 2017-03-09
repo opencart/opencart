@@ -1,16 +1,14 @@
 <?php
-class ControllerExtensionReportAffiliate extends Controller {
-	private $error = array();
-
+class ControllerExtensionReportCustomerTransaction extends Controller {
 	public function index() {
-		$this->load->language('extension/report/affiliate');
+		$this->load->language('extension/report/customer_transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('report_affiliate', $this->request->post);
+			$this->model_setting_setting->editSetting('report_customer_transaction', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -49,42 +47,42 @@ class ControllerExtensionReportAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/affiliate', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/report/affiliate', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report', true);
 
-		if (isset($this->request->post['report_affiliate_status'])) {
-			$data['report_affiliate_status'] = $this->request->post['report_affiliate_status'];
+		if (isset($this->request->post['report_customer_transaction_status'])) {
+			$data['report_customer_transaction_status'] = $this->request->post['report_customer_transaction_status'];
 		} else {
-			$data['report_affiliate_status'] = $this->config->get('report_affiliate_status');
+			$data['report_customer_transaction_status'] = $this->config->get('report_customer_transaction_status');
 		}
 
-		if (isset($this->request->post['report_affiliate_sort_order'])) {
-			$data['report_affiliate_sort_order'] = $this->request->post['report_affiliate_sort_order'];
+		if (isset($this->request->post['report_customer_transaction_sort_order'])) {
+			$data['report_customer_transaction_sort_order'] = $this->request->post['report_customer_transaction_sort_order'];
 		} else {
-			$data['report_affiliate_sort_order'] = $this->config->get('report_affiliate_sort_order');
+			$data['report_customer_transaction_sort_order'] = $this->config->get('report_customer_transaction_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/affiliate_form', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_transaction_form', $data));
 	}
-
+	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/affiliate')) {
+		if (!$this->user->hasPermission('modify', 'extension/report/customer_transaction')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;
 	}
-	
+		
 	public function report() {
-		$this->load->language('extension/report/affiliate');
+		$this->load->language('extension/report/customer_transaction');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -98,36 +96,42 @@ class ControllerExtensionReportAffiliate extends Controller {
 			$filter_date_end = '';
 		}
 
+		if (isset($this->request->get['filter_customer'])) {
+			$filter_customer = $this->request->get['filter_customer'];
+		} else {
+			$filter_customer = '';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		$this->load->model('extension/report/affiliate');
-
-		$data['affiliates'] = array();
+		$this->load->model('extension/report/customer_transaction');
+		
+		$data['customers'] = array();
 
 		$filter_data = array(
 			'filter_date_start'	=> $filter_date_start,
 			'filter_date_end'	=> $filter_date_end,
-			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'             => $this->config->get('config_limit_admin')
+			'filter_customer'	=> $filter_customer,
+			'start'				=> ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'				=> $this->config->get('config_limit_admin')
 		);
 
-		$affiliate_total = $this->model_extension_report_affiliate->getTotalCommission($filter_data);
+		$customer_total = $this->model_extension_report_customer_transaction->getTotalTransactions($filter_data);
 
-		$results = $this->model_extension_report_affiliate->getCommission($filter_data);
+		$results = $this->model_extension_report_customer_transaction->getTransactions($filter_data);
 
 		foreach ($results as $result) {
-			$data['affiliates'][] = array(
-				'affiliate'  => $result['affiliate'],
-				'email'      => $result['email'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'commission' => $this->currency->format($result['commission'], $this->config->get('config_currency')),
-				'orders'     => $result['orders'],
-				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'       => $this->url->link('marketing/affiliate/edit', 'user_token=' . $this->session->data['user_token'] . '&affiliate_id=' . $result['affiliate_id'], true)
+			$data['customers'][] = array(
+				'customer'       => $result['customer'],
+				'email'          => $result['email'],
+				'customer_group' => $result['customer_group'],
+				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
+				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
 			);
 		}
 
@@ -138,16 +142,16 @@ class ControllerExtensionReportAffiliate extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['column_affiliate'] = $this->language->get('column_affiliate');
+		$data['column_customer'] = $this->language->get('column_customer');
 		$data['column_email'] = $this->language->get('column_email');
+		$data['column_customer_group'] = $this->language->get('column_customer_group');
 		$data['column_status'] = $this->language->get('column_status');
-		$data['column_commission'] = $this->language->get('column_commission');
-		$data['column_orders'] = $this->language->get('column_orders');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
+		$data['entry_customer'] = $this->language->get('entry_customer');
 
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_filter'] = $this->language->get('button_filter');
@@ -164,19 +168,24 @@ class ControllerExtensionReportAffiliate extends Controller {
 			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
 		}
 
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
+		}
+
 		$pagination = new Pagination();
-		$pagination->total = $affiliate_total;
+		$pagination->total = $customer_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/affiliate', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('report/customer_transaction', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($affiliate_total - $this->config->get('config_limit_admin'))) ? $affiliate_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $affiliate_total, ceil($affiliate_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($customer_total - $this->config->get('config_limit_admin'))) ? $customer_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $customer_total, ceil($customer_total / $this->config->get('config_limit_admin')));
 
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
+		$data['filter_customer'] = $filter_customer;
 
-		$this->response->setOutput($this->load->view('extension/report/affiliate_info', $data));
+		$this->response->setOutput($this->load->view('extension/report/customer_transaction_info', $data));
 	}
 }

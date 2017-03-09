@@ -28,8 +28,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="report_customer_credit_status" id="input-status" class="form-control">
-                {% if report_customer_credit_status %}
+              <select name="report_customer_transaction_status" id="input-status" class="form-control">
+                {% if report_customer_transaction_status %}
                 <option value="1" selected="selected">{{ text_enabled }}</option>
                 <option value="0">{{ text_disabled }}</option>
                 {% else %}
@@ -42,7 +42,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="report_customer_credit_sort_order" value="{{ report_customer_credit_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+              <input type="text" name="report_customer_transaction_status_sort_order" value="{{ report_customer_transaction_status_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </form>

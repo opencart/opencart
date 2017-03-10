@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ api }}" data-toggle="tooltip" title="{{ button_api }}" class="btn btn-danger"><i class="fa fa-key"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -11,29 +11,23 @@
       </ul>
     </div>
   </div>
-  <div id="marketplace-extension-info" class="container-fluid">
+  <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-8">
-
-            {% if banner %}
+          <div class="col-sm-8">{% if banner %}
             <div id="banner" class="well well-sm text-center"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
             {% endif %}
             <div class="row">
-              <div class="col-xs-4 col-sm-2">
-              {% for image in images %}
-                <a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>
-              {% endfor %}
-              </div>
+              <div class="col-xs-4 col-sm-2">{% for image in images %}<a href="{{ image.popup }}" class="colorbox thumbnail" rel="colorbox"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="image" /></a>{% endfor %}</div>
             </div>
-
-
-
-
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
               <li><a href="#tab-documentation" data-toggle="tab">{{ tab_documentation }}</a></li>
@@ -41,12 +35,7 @@
               <li><a href="#tab-comment" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
             </ul>
             <div class="tab-content">
-              <div id="tab-description" class="tab-pane active">
-                <fieldset>
-                  <legend>Extension Description</legend>
-                  {{ description }}
-                </fieldset>
-              </div>
+              <div id="tab-description" class="tab-pane active">{{ description }}</div>
               <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
               <div id="tab-download" class="tab-pane">
                 <fieldset>
@@ -68,44 +57,56 @@
                   {% endif %}
                   <table class="table table-bordered">
                     <thead>
-                      <th>Download Name</th>
+                    <th>Download Name</th>
                       <th>Date Added</th>
                       <th class="text-right">Action</th>
-                    </thead>
+                        </thead>
                     <tbody>
-                     {% if downloads %}
-                      {% for download in downloads %}
-                      <tr>
-                        <td>{{ download.name }}</td>
-                        <td>{{ download.date_added }}</td>
-                        <td class="text-right">
-                          
-                          {% if download.installed %}
-                          <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                          {% elseif (license == '0') or (license == '1' and purchased) %}
-                          <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
-                          {% else %}
-                          <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
-                          {% endif %}
-                          
-                          </td>
-                      </tr>
-                      {% endfor %}
-                      {% else %}
-                       <tr>
-                        <td colspan="3" class="text-center">{{ text_no_results }}</td>
-                      </tr>
-                      {% endif %}
-                    </tbody>
+                    
+                    {% if downloads %}
+                    {% for download in downloads %}
+                    <tr>
+                      <td>{{ download.name }}</td>
+                      <td>{{ download.date_added }}</td>
+                      <td class="text-right">{% if download.installed %}
+                        <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                        {% elseif (license == '0') or (license == '1' and purchased) %}
+                        <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                        {% else %}
+                        <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                        {% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                      <td colspan="3" class="text-center">{{ text_no_results }}</td>
+                    </tr>
+                    {% endif %}
+                      </tbody>
+                    
                   </table>
                 </fieldset>
               </div>
-              <div id="tab-comment" class="tab-pane"></div>
+              <div id="tab-comment" class="tab-pane">
+                <fieldset>
+                  <legend>Leave your comment</legend>
+                  <div class="form-group">
+                    <textarea name="comment" rows="5" placeholder="Write your comment here..." id="input-comment" class="form-control"></textarea>
+                  </div>
+                  <div class="text-right">
+                    <button type="button" id="button-comment" class="btn btn-primary">Comment</button>
+                  </div>
+                  <br />
+                </fieldset>
+                <fieldset>
+                  <legend>Comments</legend>
+                  <div class="comment"></div>
+                </fieldset>
+              </div>
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well">
-              <a href="https://www.opencart.com/index.php?route=marketplace/purchase&amp;extension_id=10197" class="btn btn-success btn-lg btn-block">Buy</a>
+            <div id="buy" class="well"><a href="https://www.opencart.com/index.php?route=marketplace/purchase&amp;extension_id=10197" class="btn btn-success btn-lg btn-block">Buy</a>
               <div id="price" class="row">
                 <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
                 <div class="col-xs-7 text-right">{% if license %}
@@ -123,11 +124,9 @@
               <hr>
               <div class="row">
                 <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
-                <div class="col-xs-7 text-right">
-                  {% for i in 1..4 %}
-                    {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                  {% endfor %}
-                </div>
+                <div class="col-xs-7 text-right"> {% for i in 1..4 %}
+                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% endfor %}</div>
               </div>
               <hr>
               <div class="row">
@@ -140,21 +139,16 @@
                 <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
-              <strong>{{ sales }}</strong> {{ text_sales }}
-            </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i>
-              <strong>{{ downloaded }}</strong> {{ text_downloaded }}
-            </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }} </div>
+            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }} </div>
             <div class="well">
               <div class="media">
-                <div class="media-left media-middle"><img src="https:////image.opencart.com/cache/560cf92ba7308-resize-60x60.jpg" alt="iSense" title="iSense" class="media-object img-circle"></div>
+                <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
                 <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
-                <small>Member since: 16 May 2012</small> </div>
+                  <small>Member since: {{ member_date_added }}</small> </div>
               </div>
               <br>
-              <a href="https://www.opencart.com/index.php?route=marketplace/extension&amp;filter_member=iSense" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id=10197" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a>
-            </div>
+              <a href="https://www.opencart.com/index.php?route=marketplace/extension&amp;filter_member=iSense" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id=10197" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a> </div>
           </div>
         </div>
       </div>
@@ -412,6 +406,6 @@ $('#tab-download .btn-danger').on('click', function(e) {
 		}
 	});
 });
-//--></script>
+//--></script> 
 </div>
-{{ footer }}
+{{ footer }} 

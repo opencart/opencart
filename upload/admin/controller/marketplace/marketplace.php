@@ -232,8 +232,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['button_api'] = $this->language->get('button_api');
-
+		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+			$data['error_warning'] = $this->language->get('error_api');
+		} else {
+			$data['error_warning'] = '';
+		}
+		
 		// Categories
 		$url = '';
 
@@ -546,7 +550,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['tab_documentation'] = $this->language->get('tab_documentation');
 			$data['tab_download'] = $this->language->get('tab_download');
 			$data['tab_comment'] = $this->language->get('tab_comment');
-
+		
+			if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+				$data['error_warning'] = $this->language->get('error_api');
+			} else {
+				$data['error_warning'] = '';
+			}
+		
 			$data['user_token'] = $this->session->data['user_token'];
 
 			$url = '';
@@ -575,7 +585,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['api'] = $this->url->link('marketplace/api', 'user_token=' . $this->session->data['user_token'] . $url, true);
 			$data['cancel'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 			$data['breadcrumbs'] = array();
@@ -606,12 +615,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['sales'] = $response_info['sales'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
+			
 			$data['member_username'] = $response_info['member_username'];
 			$data['member_image'] = $response_info['member_image'];
 			$data['member_date_added'] = $response_info['member_date_added'];
 			$data['filter_member'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_member=' . $response_info['member_username']);
+			
 			$data['comment_total'] = $response_info['comment_total'];
-			$data['compatibility'] = $response_info['compatibility'];
 
 			$data['images'] = array();
 
@@ -684,7 +694,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('api_secret'), 1));
 
-			$url  = '&username=' . $this->config->get('api_username');
+			$url  = '&username=' . API_USERNAME;
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&time=' . $time;
@@ -704,17 +714,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			curl_close($curl);
 
-			$response_info = json_decode($response, true);
-
-			if ($response_info) {
-				if (isset($response_info['success'])) {
-					$json['success'] = $response_info['success'];
-				}
-
-				if (isset($response_info['error'])) {
-					$json['error'] = $response_info['error'];
-				}
-			}
+			$json = json_decode($response, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -726,7 +726,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$json = array();
 
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/purchase&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -738,9 +738,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		curl_close($curl);
 
-		$response_info = json_decode($response, true);
-
-
+		$json = json_decode($response, true);
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -749,6 +748,32 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->load->language('marketplace/marketplace');
 
 		$json = array();
+
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+		
+		if (isset($this->request->get['parent_id'])) {
+			$parent_id = $this->request->get['parent_id'];
+		} else {
+			$parent_id = 0;
+		}	
+		
+		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
+
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+
+		$json = json_decode($response, true);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

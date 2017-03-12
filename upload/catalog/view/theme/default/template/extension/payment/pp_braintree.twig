@@ -144,6 +144,18 @@
   var paypal_instance;
   var cvv_instance = [];
   var bank_frame = document.querySelector('#braintree-3ds-body');
+  var vault_payment = 1;
+
+
+{% if pp_braintree_vault == 1 and guest != true %}
+  $('body').on('change', '#vault-method', function (event) {
+     if ($(this).prop("checked"))  {
+         vault_payment = 1;
+     } else {
+         vault_payment = 0;
+     }
+  });
+{% endif %}
 
   $.getScript('https://js.braintreegateway.com/web/3.6.3/js/client.min.js', function() {
     $.getScript('https://js.braintreegateway.com/web/3.6.3/js/hosted-fields.min.js');
@@ -379,7 +391,7 @@
       var flow = "checkout";
 
       {% if pp_braintree_vault == 1 and guest != true %}
-        if ($('#vault-method').is(':checked')) {
+        if (vault_payment == 1) {
           flow = "vault";
         }
       {% endif %}
@@ -604,17 +616,17 @@
     var payment_method_nonce = $('<input>').attr('type', 'hidden').attr('name', 'payment_method_nonce').val(nonce);
     $('#braintree-new').append($(payment_method_nonce));
 
-    var vault_method;
+    {% if pp_braintree_vault == 1 and guest != true %}
+      var vault_method;
 
-    if ($('#vault-method').length) {
-      if ($('#vault-method').prop('checked')) {
+      if (vault_payment == 1) {
         var vault_method = $('<input>').attr('type', 'hidden').attr('name', 'vault_method').val('1');
       } else {
         var vault_method = $('<input>').attr('type', 'hidden').attr('name', 'vault_method').val('0');
       }
-    }
 
-    $('#braintree-new').append($(vault_method));
+      $('#braintree-new').append($(vault_method));
+    {% endif %}
 
     var device_data = $('<input>').attr('type', 'hidden').attr('name', 'device_data').val(device_data_value);
     $('#braintree-new').append($(device_data));

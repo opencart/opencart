@@ -1558,12 +1558,17 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$data['text_preferred_li_2'] = $this->language->get('text_preferred_li_2');
 		$data['text_preferred_li_3'] = $this->language->get('text_preferred_li_3');
 		$data['text_preferred_li_4'] = $this->language->get('text_preferred_li_4');
+		$data['text_edit'] = $this->language->get('text_edit');
 
-		if ($this->user->hasPermission('modify', 'extension/extension/payment') && $this->user->hasPermission('modify', 'extension/payment/pp_express')) {
-			$data['connect_link'] = $this->url->link('extension/payment/pp_express/connectRedirect', 'token=' . $this->session->data['token'], true);
+		$data['connect_link'] = '';
+		$data['module_link'] = '';
+
+		if ($this->config->get('pp_express_username') != 0 || !empty($this->config->get('pp_express_username')) || !empty($this->config->get('pp_express_sandbox_username'))) {
+			$data['module_link'] = $this->url->link('extension/payment/pp_express', 'token=' . $this->session->data['token'], true);
 		} else {
-			// user does not have permission to modify, show no link
-			$data['connect_link'] = '';
+			if ($this->user->hasPermission('modify', 'extension/extension/payment')) {
+				$data['connect_link'] = $this->url->link('extension/payment/pp_express/connectRedirect', 'token=' . $this->session->data['token'], true);
+			}
 		}
 
 		return $this->load->view('extension/payment/pp_express_preferred', $data);

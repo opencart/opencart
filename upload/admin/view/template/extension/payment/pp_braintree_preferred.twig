@@ -23,6 +23,9 @@
           {% if connect_link is not empty %}
             <br /><br /><a href="{{ connect_link }}" target="_blank" class="pull-right" style="margin-top:10px;"><img src="https://s3-us-west-1.amazonaws.com/bt-partner-assets/connect-braintree.png" alt="Connect with Braintree" class="img-responsive"></a>
           {% endif %}
+          {% if module_link is not empty %}
+            <br /><br /><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a>
+          {% endif %}
         </div>
       </div>
     </div>

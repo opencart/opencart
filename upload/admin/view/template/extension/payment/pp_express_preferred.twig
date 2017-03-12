@@ -22,6 +22,9 @@
           {% if connect_link is not empty %}
               <a class="btn btn-primary pull-right" href="{{ connect_link }}" target="_blank" title="{{ text_connect_paypal }}">{{ text_connect_paypal }}</a>
           {% endif %}
+          {% if module_link is not empty %}
+            <br /><br /><a href="{{ module_link }}" data-toggle="tooltip" title="" class="btn btn-primary pull-right" data-original-title="{{ text_edit }}"><i class="fa fa-pencil"></i></a>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@
     {% for vaulted_payment_method in vaulted_payment_methods.cards %}
     <div class="row" id="vaulted-method-{{ vaulted_payment_method.token }}">
       <div class="col-sm-1">
-        <input type="radio" name="vaulted_payment_method" class="form-control vaulted-card" value="{{ vaulted_payment_method.token }}" />
+        <input type="radio" name="vaulted_payment_method" class="pull-right vaulted-card" value="{{ vaulted_payment_method.token }}" />
         <input type="hidden" id="vaulted-payment-cvv-nonce-{{ vaulted_payment_method.token }}" value="" />
       </div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
@@ -89,7 +89,7 @@
     {% endfor %}
     {% for vaulted_payment_method in vaulted_payment_methods.paypal %}
     <div class="row" id="vaulted-method-{{ vaulted_payment_method.token }}">
-      <div class="col-sm-1"><input type="radio" name="vaulted_payment_method" class="form-control" value="{{ vaulted_payment_method.token }}"/></div>
+      <div class="col-sm-1"><input type="radio" name="vaulted_payment_method" class="pull-right" value="{{ vaulted_payment_method.token }}"/></div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
       <div class="col-sm-10">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove-vault-method braintree-button">{{ text_remove }}</a>]</div>
     </div>

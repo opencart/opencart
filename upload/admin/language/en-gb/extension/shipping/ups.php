@@ -3,6 +3,7 @@
 $_['heading_title']                = 'UPS';
 
 // Text
+$_['text_extension']               = 'Extension';
 $_['text_shipping']                = 'Shipping';
 $_['text_success']                 = 'Success: You have modified UPS shipping!';
 $_['text_edit']                    = 'Edit UPS Shipping';

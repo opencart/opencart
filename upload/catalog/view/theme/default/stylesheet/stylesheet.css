@@ -676,9 +676,15 @@ h2.price {
 	padding: 5px;
 	display: block;
 	border: 1px solid #ddd;
+	position: relative;
 }
 .image-additional {
 	max-width: 78px;
+}
+.image-additional a .zoom-in {
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }
 .thumbnails .image-additional {
 	float: left;

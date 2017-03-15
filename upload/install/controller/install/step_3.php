@@ -75,10 +75,11 @@ class ControllerInstallStep3 extends Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
-
-			$output .= 'define(\'API_USERNAME\', \'\');' . "\n\n";
-			$output .= 'define(\'API_SECRET\', \'\');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
+			
+			$output .= '// OpenCart API' . "\n";
+			$output .= 'define(\'OPENCART_USERNAME\', \'\');' . "\n\n";
+			$output .= 'define(\'OPENCART_SECRET\', \'\');' . "\n\n";
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 
@@ -266,16 +267,22 @@ class ControllerInstallStep3 extends Controller {
 		}
 
 		if ($this->request->post['db_driver'] == 'mysqli') {
-			$mysql = @new MySQLi($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
-
-			if ($mysql->connect_error) {
+			try {
+				$db = new \DB\MySQLi($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
+				
+				if (is_resource($db)) {
+					$db->close();
+				}
+			} catch(Exception $e) {
 				$this->error['warning'] = $mysql->connect_error;
-			} else {
-				$mysql->close();
 			}
 		} elseif ($this->request->post['db_driver'] == 'mpdo') {
 			try {
-				new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
+				$db = new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], $this->request->post['db_port']);
+			
+				if (is_resource($db)) {
+					$db->close();
+				}
 			} catch(Exception $e) {
 				$this->error['warning'] = $e->getMessage();
 			}

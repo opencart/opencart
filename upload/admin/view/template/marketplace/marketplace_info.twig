@@ -50,30 +50,24 @@
                 </fieldset>
                 <fieldset>
                   <legend>Available Installs</legend>
-                  {% if license == '1' and purchased %}
-                  <div class="alert alert-warning"><i class="fa fa-alert"></i> You must buy a license.
-                    <button type="button" id="button-buy" data-loading-text="{{ text_loading }}" class="btn btn-warning"><i class="fa fa-shopping-basket"></i> purchase</button>
-                  </div>
-                  {% endif %}
                   <table class="table table-bordered">
                     <thead>
-                    <th>Download Name</th>
+                      <th>Download Name</th>
                       <th>Date Added</th>
                       <th class="text-right">Action</th>
-                        </thead>
+                    </thead>
                     <tbody>
-                    
                     {% if downloads %}
                     {% for download in downloads %}
                     <tr>
                       <td>{{ download.name }}</td>
                       <td>{{ download.date_added }}</td>
                       <td class="text-right">{% if download.installed %}
-                        <button type="button" value="{{ download.uninstall }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
-                        {% elseif (license == '0') or (license == '1' and purchased) %}
-                        <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
+                        <button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>
+                        {% elseif download.status %}
+                        <button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>
                         {% else %}
-                        <button type="button" value="{{ download.install }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
+                        <button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-primary" disabled><i class="fa fa-download"></i> Install</button>
                         {% endif %}</td>
                     </tr>
                     {% endfor %}
@@ -82,8 +76,7 @@
                       <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
                     {% endif %}
-                      </tbody>
-                    
+                    </tbody>
                   </table>
                 </fieldset>
               </div>
@@ -106,8 +99,11 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well"><a href="https://www.opencart.com/index.php?route=marketplace/purchase&amp;extension_id=10197" class="btn btn-success btn-lg btn-block">Buy</a>
-              <div id="price" class="row">
+            <div id="buy" class="well">
+              {% if license == '1' and not purchased %}
+              <button id="button-buy" class="btn btn-success btn-lg btn-block">Buy</button>
+              {% endif %}
+               <div id="price" class="row">
                 <div class="col-xs-5"><strong>{{ text_price }}</strong></div>
                 <div class="col-xs-7 text-right">{% if license %}
                   {{ price }}
@@ -124,7 +120,7 @@
               <hr>
               <div class="row">
                 <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
-                <div class="col-xs-7 text-right"> {% for i in 1..4 %}
+                <div class="col-xs-7 text-right">{% for i in 1..5 %}
                   {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
                   {% endfor %}</div>
               </div>
@@ -145,10 +141,10 @@
               <div class="media">
                 <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
                 <div class="media-body"> <span><a href="{{ filter_member }}">{{ member_username }}</a></span><br>
-                  <small>Member since: {{ member_date_added }}</small> </div>
+                  <small>Member since: {{ member_date_added }}</small></div>
               </div>
-              <br>
-              <a href="https://www.opencart.com/index.php?route=marketplace/extension&amp;filter_member=iSense" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id=10197" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a> </div>
+              <br />
+              <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">View all extensions</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" class="btn btn-ghost-dark btn-lg btn-block">Get Support</a></div>
           </div>
         </div>
       </div>
@@ -172,7 +168,7 @@ $('#button-buy').on('click', function(e) {
 	html += '        <p>Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.</p>';
 	html += '        <div class="form-group">';
 	html += '          <label for="input-pin">PIN</label>';
-	html += '          <input type="text" name="pin" value="" placeholder="PIN" id="input-pin" class="form-control" />';
+	html += '          <input type="password" name="pin" value="" placeholder="PIN" id="input-pin" class="form-control" />';
 	html += '        </div>';
 	html += '        <div class="form-group text-right">';
 	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">Purchase</button>';
@@ -193,7 +189,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/purchase&extension_id={{ extension_id }}&user_token={{ user_token }}',
+		url: 'index.php?route=marketplace/marketplace/purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',
@@ -204,16 +200,16 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
+			$('.alert').remove();
+			
 			if (json['error']) {
-				$('input[name=\'pin\']').after('<div class="text-danger">' + json['error'] + '</div>');
+				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#tab-download').prepend('<div class="alert alert-success">' + json['success'] + '</div>');
+				$('#tab-download').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#tab-download table button').prop('disabled', false);
+				$('#modal-purchase').modal('destroy');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -223,93 +219,44 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 });
 
 // Install
-$('#tab-download .btn-primary').on('click', function(e) {
+$('#tab-download').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
 
-	var i = 1;
 	var element = this;
 
 	// Reset everything
 	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-bar').removeClass('progress-bar-success');
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: $(this).attr('value'),
+		url: 'index.php?route=marketplace/marketplace/download&user_token={{ user_token }}&extension_download_id=' + $(this).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#tab-download button').button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$('#tab-download button').button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
+			console.log(json);
+			
+			$('.alert').remove();
+			
 			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
+				$('#download').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button</div>');
+			
 				$(element).button('reset');
 			}
-
+			
 			if (json['text']) {
-				$('#progress-bar').css('width', (i * 20) + '%');
+				$('#progress-bar').css('width', '20%');
 				$('#progress-text').html(json['text']);
 			}
-
+			
 			if (json['next']) {
-				$(element).attr('value', json['next']);
-
-
+				next(json['next'], element, 1);
 			}
-
-
-			next = '';
-
-			$(element).attr('data-next', '');
-
-			$.ajax({
-				url: next,
-				dataType: 'json',
-				beforeSend: function() {
-					//$(element).button('loading');
-				},
-				complete: function() {
-					//$(element).button('reset');
-				},
-				success: function(json) {
-					$('#progress-bar').css('width', (i * 20) + '%');
-
-					if (json['error']) {
-						$('#progress-bar').addClass('progress-bar-danger');
-						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-						$(element).button('reset');
-					}
-
-					if (json['text']) {
-						$('#progress-text').html(json['text']);
-					}
-
-					if (json['next']) {
-						$(element).attr('data-next', json['next']);
-					}
-
-					if (json['success']) {
-						$('#progress-bar').addClass('progress-bar-success');
-						$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-
-						$(element).hide();
-
-						$(element).parent().find('.btn-danger').show();
-
-						$(element).button('reset');
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -323,13 +270,9 @@ function next(url, element, i) {
 	$.ajax({
 		url: url,
 		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			//$(element).button('reset');
-		},
 		success: function(json) {
+			console.log(json);
+			
 			$('#progress-bar').css('width', (i * 20) + '%');
 
 			if (json['error']) {
@@ -350,10 +293,8 @@ function next(url, element, i) {
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-
-				$(element).hide();
-
-				$(element).parent().find('.btn-danger').show();
+				
+				$(element).replaceWith('<button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
 
 				$(element).button('reset');
 			}
@@ -365,7 +306,7 @@ function next(url, element, i) {
 }
 
 // Uninstall
-$('#tab-download .btn-danger').on('click', function(e) {
+$('#tab-download').on('click', ' .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;
@@ -375,7 +316,7 @@ $('#tab-download .btn-danger').on('click', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: $(this).attr('value'),
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_download_id=' + $(this).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -385,7 +326,7 @@ $('#tab-download .btn-danger').on('click', function(e) {
 		},
 		success: function(json) {
 			console.log(json);
-
+			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html(json['error']);
@@ -395,10 +336,8 @@ $('#tab-download .btn-danger').on('click', function(e) {
 				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html(json['success']);
-
-				$(element).hide();
-
-				$(element).parent().find('.btn-primary').show();
+				
+				$(element).replaceWith('<button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

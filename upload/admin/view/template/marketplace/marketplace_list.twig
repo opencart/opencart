@@ -79,22 +79,22 @@
         </div>
         <br />
         {% if extensions %}
-        <div id="extension-list"> {% for row in extensions|batch(4, '') %}
+        <div id="extension-list">{% for row in extensions|batch(4, '') %}
           <div class="row">{% for extension in row %}
             {% if extension %}
             <div class="col-sm-3">
               <section>
                 <div class="extension-preview"><a href="{{ extension.href }}">
                   <div class="extension-description"></div>
-                  <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a> </div>
+                  <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive" /></a></div>
                 <div class="extension-name">
                   <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
                   {{ extension.price }} </div>
                 <div class="extension-rate">
                   <div class="row">
-                    <div class="col-xs-6"> {% for i in 1..5 %}
-                      {% if extension.rating >= i  %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
-                      {% endfor %} </div>
+                    <div class="col-xs-6">{% for i in 1..5 %}
+                      {% if extension.rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                      {% endfor %}</div>
                     <div class="col-xs-6">
                       <div class="text-right">{{ extension.comment_total }}</div>
                     </div>
@@ -111,7 +111,7 @@
           {% else %}
           <div>{{ no_results }}</div>
         </div>
-        {% endif %} </div>
+        {% endif %}</div>
     </div>
   </div>
 </div>

@@ -290,9 +290,9 @@ class ControllerApiOrder extends Controller {
 					$subtotal = $this->cart->getSubTotal();
 
 					// Affiliate
-					$this->load->model('affiliate/affiliate');
+					$this->load->model('account/customer');
 
-					$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->request->post['affiliate_id']);
+					$affiliate_info = $this->model_account_customer->getAffiliate($this->request->post['affiliate_id']);
 
 					if ($affiliate_info) {
 						$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
@@ -667,9 +667,9 @@ class ControllerApiOrder extends Controller {
 						$subtotal = $this->cart->getSubTotal();
 
 						// Affiliate
-						$this->load->model('affiliate/affiliate');
+						$this->load->model('account/customer');
 
-						$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->request->post['affiliate_id']);
+						$affiliate_info = $this->model_account_customer->getAffiliate($this->request->post['affiliate_id']);
 
 						if ($affiliate_info) {
 							$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];

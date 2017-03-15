@@ -51,9 +51,26 @@ class ModelUpgrade1009 extends Model {
 			}
 			
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate`");
-			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
-			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
+			
+			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
+			
+			if (!$affiliate_query->num_rows) {
+				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
+			}
+			
+			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
+			
+			if (!$affiliate_query->num_rows) {			
+				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
+			}
+			
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_transaction`");
 		}
+	
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
+		
+		if ($query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` CHANGE `name` `username` VARCHAR(64) NOT NULL");
+		}		
 	}
 }

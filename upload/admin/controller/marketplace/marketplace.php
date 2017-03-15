@@ -101,8 +101,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
-		$data['api'] = $this->url->link('marketplace/api', 'user_token=' . $this->session->data['user_token'] . $url, true);
-
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 
@@ -137,8 +135,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
+		
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api' . $url);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api' . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -234,10 +233,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 			$data['error_warning'] = $this->language->get('error_api');
+		} elseif (is_file(ini_get('upload_tmp_dir') . '/install.tmp') || is_dir(ini_get('upload_tmp_dir') . '/install/')) {
+			$data['error_warning'] = $this->language->get('error_install');
 		} else {
 			$data['error_warning'] = '';
 		}
-		
+				
 		// Categories
 		$url = '';
 
@@ -506,7 +507,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$url  = '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . VERSION;
 
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/info&extension_id=' . $extension_id . $url);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -541,7 +543,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$data['entry_pin'] = $this->language->get('entry_pin');
 
-			$data['button_api'] = $this->language->get('button_api');
 			$data['button_buy'] = $this->language->get('button_buy');
 			$data['button_install'] = $this->language->get('button_install');
 			$data['button_cancel'] = $this->language->get('button_cancel');
@@ -553,10 +554,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 		
 			if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
 				$data['error_warning'] = $this->language->get('error_api');
+			} elseif (is_file(ini_get('upload_tmp_dir') . '/install.tmp') || is_dir(ini_get('upload_tmp_dir') . '/install/')) {
+				$data['error_warning'] = $this->language->get('error_install');
 			} else {
 				$data['error_warning'] = '';
 			}
-		
+				
 			$data['user_token'] = $this->session->data['user_token'];
 
 			$url = '';
@@ -610,6 +613,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['price'] = $response_info['price'];
 			$data['license'] = $response_info['license'];
 			$data['license_period'] = $response_info['license_period'];
+			$data['purchased'] = $response_info['purchased'];
 			$data['rating'] = $response_info['rating'];
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
@@ -639,14 +643,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
 					$compatibility = explode(', ', $result['compatibility']);
-
+					
 					//if (in_array(VERSION, $compatibility)) {
 						$data['downloads'][] = array(
-							'name'       => $result['name'],
-							'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'install'    => $this->url->link('marketplace/marketplace/install', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id'], true),
-							'uninstall'  => $this->url->link('marketplace/marketplace/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id'], true),
-							'installed'  => $this->model_setting_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id'])
+							'extension_download_id' => $result['extension_download_id'],
+							'name'                  => $result['name'],
+							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+							'installed'             => $this->model_setting_extension->getTotalPathsByExtensionDownloadId($result['extension_download_id']),
+							'status'                => $result['status']
 						);
 					//}
 				}
@@ -666,35 +670,39 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->load->language('marketplace/marketplace');
 
 		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$this->request->post['pin']) {
-			$json['error'] = $this->language->get('error_pin');
-		}
-
+		
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = $this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
+		
+		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
+		if (!defined('OPENCART_USERNAME') || !defined('OPENCART_SECRET') || !OPENCART_USERNAME || !OPENCART_SECRET) {
+			$json['error'] = $this->language->get('error_api');
+		}
+		
+		if (!$this->request->post['pin']) {
+			$json['error'] = $this->language->get('error_pin');
+		}
+			
 		if (!$json) {
 			$time = time() + 30;
 
 			// We create a hash from the data in a similar method to how amazon does things.
-			$string  = $this->config->get('api_username') . "\n";
+			$string  = OPENCART_USERNAME . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $time . "\n";
 			$string .= $extension_id . "\n";
 			$string .= $this->request->post['pin'] . "\n";
 
-			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('api_secret'), 1));
+			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
 
-			$url  = '&username=' . API_USERNAME;
+			$url  = '&username=' . OPENCART_USERNAME;
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&time=' . $time;
@@ -721,13 +729,76 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function download() {
+		$this->load->language('marketplace/marketplace');
+		
+		$json = array();
+		
+		if (isset($this->request->get['extension_download_id'])) {
+			$extension_download_id = $this->request->get['extension_download_id'];
+		} else {
+			$extension_download_id = 0;
+		}
+							
+		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+		
+		if (!$json) {
+			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+			
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+					
+			$response = curl_exec($curl);
+			
+			$response_info = json_decode($response, true);
+			
+			curl_close($curl);
+			
+			if (isset($response_info['download'])) {
+				$download = file_get_contents($response_info['download']);
+				
+				$handle = fopen(ini_get('upload_tmp_dir') . '/install.tmp', 'w');
+				
+				fwrite($handle, $download);
+		
+				fclose($handle);
+				
+				$json['text'] = $this->language->get('text_install');
+				
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));		
+			} else {
+				$json['error'] = $this->language->get('error_download');
+			}
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}
+
 	public function comment() {
 		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
-
+		
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+				
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/comment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -740,8 +811,56 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$json = json_decode($response, true);
 		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->load->model('marketplace/extension');
+
+		$data['comments'] = array();
+				
+		$comment_total = $this->model_marketplace_extension->getTotalExtensionComments($extension_id);
+
+		$results = $this->model_marketplace_extension->getExtensionComments($extension_id, ($page - 1) * 20, 20);
+		
+		foreach ($results as $result) {
+			if (count($result['reply_total']) > 5) {
+				$next = $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=2');
+			} else {
+				$next = '';	
+			}
+					
+			$data['comments'][] = array(
+				'extension_comment_id' => $result['extension_comment_id'],
+				'member'               => $result['member'],
+				'image'                => $result['image'],
+				'comment'              => $result['comment'],
+				'date_added'           => $result['date_added'],
+				'reply'                => $result['reply'],
+				'add'                  => $this->url->link('marketplace/extension/addcomment', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $result['extension_id'] . '&parent_id=' . $result['extension_comment_id']),
+				'refresh'              => $this->url->link('marketplace/extension/reply', (isset($this->session->data['member_token']) ? 'member_token=' . $this->session->data['member_token'] : '') . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
+				'next'                 => $next
+			);
+		}
+		
+		$pagination = new Pagination();
+		$pagination->total = $comment_total;
+		$pagination->page = $page;
+		$pagination->limit = 20;
+		$pagination->url = $this->url->link('marketplace/extension/comment', 'extension_id=' . $extension_id . '&page={page}');
+
+		$data['pagination'] = $pagination->render();
+
+		$data['refresh'] = $this->url->link('marketplace/extension/comment', 'extension_id=' . $extension_id . '&page=' . $page);
+
+		// Comment
+		$data['comment_username'] = $this->member->getUsername();
+		
+		if ($this->member->isLogged()) {
+			$image = $this->member->getImage();
+		} else {
+			$image = $this->config->get('config_image_member_placeholder');
+		}
+
+		$data['comment_image'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . '//image.opencart.com/cache/' . substr($image, 0, strrpos($image, '.')) . '-resize-' . $this->config->get('config_image_member_width') . 'x' .  $this->config->get('config_image_member_height') . '.jpg';
+
+		$this->response->setOutput($this->load->view('marketplace/extension_comment', $data));
 	}
 
 	public function addComment() {
@@ -761,8 +880,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$parent_id = 0;
 		}	
 		
-		$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
-
+		//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/addcomment&extension_id=' . $extension_id . '&signature=' .  rawurlencode($signature));
+		$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+		
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -771,575 +891,59 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		curl_close($curl); 
 
 		$json = json_decode($response, true);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function install() {
-		$this->load->language('marketplace/marketplace');
-
+		
+		
+		
+		
+		
+		
+		
+		
 		$json = array();
+		
+		$this->load->model('marketplace/extension');
 
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			if (isset($this->request->get['extension_download_id'])) {
-				$extension_download_id = $this->request->get['extension_download_id'];
-			} else {
-				$extension_download_id = 0;
-			}
-
-			$json['text'] = $this->language->get('text_download');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/marketplace/download', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function download() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
 		} else {
-			$extension_download_id = 0;
+			$extension_id = 0;
 		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
-
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-
-			$response = curl_exec($curl);
-
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			curl_close($curl);
-
-			if ($response && $status == 200) {
-				$file = tempnam(ini_get('upload_tmp_dir'), 'ext');
-
-				$handle = fopen($file, 'w');
-
-				fwrite($handle, $response);
-
-				fclose($handle);
-
-				$json['text'] = $this->language->get('text_unzip');
-
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/marketplace/unzip', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id . '&download=' . basename($file, '.tmp'), true));
-			} else {
-				$json['error'] = $this->language->get('error_download');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function unzip() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+		
+		if (isset($this->request->get['parent_id'])) {
+			$parent_id = $this->request->get['parent_id'];
 		} else {
-			$extension_download_id = 0;
-		}
+			$parent_id = 0;
+		}	
+							
+		$extension_info = $this->model_marketplace_extension->getExtension($extension_id);
 
-		if ($this->request->get['download']) {
-			$download = $this->request->get['download'];
-		} else {
-			$download = '';
-		}
+		if ($extension_info) {
+			if (!$this->member->isLogged()) {
+				$json['error'] = 'Warning: You must be logged into comment!';	
+			}	
 
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Sanitize the filename
-		$directory = ini_get('upload_tmp_dir');
-
-		if (!is_file($directory . '/' . $download . '.tmp') || substr(str_replace('\\', '/', realpath($directory . '/' . $download . '.tmp')), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
-			$json['error'] = $this->language->get('error_file');
-		}
-
-		if (!$json) {
-			// Unzip the files
-			$zip = new ZipArchive();
-
-			if ($zip->open($directory . '/' . $download . '.tmp')) {
-				$zip->extractTo($directory . '/' . $download);
-				$zip->close();
-			} else {
-				$json['error'] = $this->language->get('error_unzip');
+			if (!isset($this->request->get['member_token']) || !isset($this->session->data['member_token']) || ($this->request->get['member_token'] != $this->session->data['member_token'])) {
+				$json['error'] = 'Invalid token session. Please login again.';
+			}	
+						
+			if (!isset($this->request->post['comment']) || (utf8_strlen($this->request->post['comment']) < 2) || (utf8_strlen($this->request->post['comment']) > 1000)) {
+				$json['error'] = 'Error: Comment must be greater than 2 and less than 1000 characters!';
 			}
-
-			// Remove Zip
-			unlink($directory . '/' . $download . '.tmp');
-
-			$json['text'] = $this->language->get('text_move');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/marketplace/move', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function move() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
-		} else {
-			$extension_download_id = 0;
-		}
-
-		if (isset($this->request->get['download'])) {
-			$download = $this->request->get['download'];
-		} else {
-			$download = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$directory = ini_get('upload_tmp_dir');
-
-		if (is_dir($directory . '/' . $download . '/upload/') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/upload/')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-			$files = array();
-
-			// Get a list of files ready to upload
-			$path = array($directory . '/' . $download . '/upload/*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			// First we need to do some checks
-			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
-
-				// Check if the file is not going into an allowed directory
-				$allowed = array(
-					'admin/controller/extension/',
-					'admin/model/extension/',
-					'admin/view/template/extension/',
-					'catalog/controller/extension/',
-					'catalog/model/extension/',
-					'catalog/view/theme/'
-				);
-
-				// Language Admin
-				$data['languages'] = array();
-
-				$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-
-				foreach ($folders as $folder) {
-					$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
-				}
-
-				// Language Catalog
-				$folders = glob(DIR_CATALOG . 'language/*', GLOB_ONLYDIR);
-
-				foreach ($folders as $folder) {
-					$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
-				}
-
-				$safe = false;
-
-				foreach ($allowed as $value) {
-					if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
-						$safe = true;
-
-						break;
-					}
-
-					if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
-						$safe = true;
-
-						break;
-					}
-				}
-
-				if ($safe) {
-					// Check if the copy location exists or not
-					if (substr($destination, 0, 5) == 'admin') {
-						$destination = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 7) == 'catalog') {
-						$destination = DIR_CATALOG . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 5) == 'image') {
-						$destination = DIR_IMAGE . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 6) == 'system') {
-						$destination = DIR_SYSTEM . substr($destination, 7);
-					}
-
-					if (is_file($destination)) {
-						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-
-						break;
-					}
-				} else {
-					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
-
-					break;
-				}
-			}
-
+			
 			if (!$json) {
-				$this->load->model('setting/extension');
+				$this->model_marketplace_extension->addExtensionComment($extension_id, $parent_id, $this->request->post['comment']);
 
-				foreach ($files as $file) {
-					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/' . $download . '/upload/')));
-
-					$path = '';
-
-					if (substr($destination, 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($destination, 8);
-					}
-
-					if (substr($destination, 0, 5) == 'image') {
-						$path = DIR_IMAGE . substr($destination, 6);
-					}
-
-					if (substr($destination, 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($destination, 7);
-					}
-
-					if (is_dir($file) && !is_dir($path)) {
-						if (mkdir($path, 0777)) {
-							$this->model_setting_extension->addPath($extension_download_id, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_move'), $path);
-						}
-					}
-
-					if (is_file($file)) {
-						if (rename($file, $path)) {
-							$this->model_setting_extension->addPath($extension_download_id, $destination);
-						} else {
-							$json['error'] = sprintf($this->language->get('error_move'), $file);
-						}
-					}
-				}
-			}
+				$json['success'] = 'Thank you for your comment!';
+			}		
 		}
-
-		if (!$json) {
-			$json['text'] = $this->language->get('text_xml');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/marketplace/xml', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));
-		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function xml() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
-		} else {
-			$extension_download_id = 0;
-		}
-
-		if ($this->request->get['download']) {
-			$download = $this->request->get['download'];
-		} else {
-			$download = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$directory = ini_get('upload_tmp_dir');
-
-		if (is_file($directory . '/' . $download . '/install.xml') && substr(str_replace('\\', '/', realpath($directory . '/' . $download . '/install.xml')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-			// If xml file just put it straight into the DB
-			$xml = file_get_contents($directory . '/' . $download . '/install.xml');
-
-			if ($xml) {
-				try {
-					$dom = new DOMDocument('1.0', 'UTF-8');
-					$dom->loadXml($xml);
-
-					$name = $dom->getElementsByTagName('name')->item(0);
-
-					if ($name) {
-						$name = $name->nodeValue;
-					} else {
-						$name = '';
-					}
-
-					$code = $dom->getElementsByTagName('code')->item(0);
-
-					if ($code) {
-						$code = $code->nodeValue;
-
-						// Check to see if the modification is already installed or not.
-						$modification_info = $this->model_setting_modification->getModificationByCode($code);
-
-						if ($modification_info) {
-							$json['error'] = sprintf($this->language->get('error_xml'), $modification_info['name']);
-						}
-					} else {
-						$json['error'] = $this->language->get('error_code');
-					}
-
-					$author = $dom->getElementsByTagName('author')->item(0);
-
-					if ($author) {
-						$author = $author->nodeValue;
-					} else {
-						$author = '';
-					}
-
-					$version = $dom->getElementsByTagName('version')->item(0);
-
-					if ($version) {
-						$version = $version->nodeValue;
-					} else {
-						$version = '';
-					}
-
-					$link = $dom->getElementsByTagName('link')->item(0);
-
-					if ($link) {
-						$link = $link->nodeValue;
-					} else {
-						$link = '';
-					}
-
-					if (!$json) {
-						$modification_data = array(
-							'extension_download_id' => $extension_download_id,
-							'name'                  => $name,
-							'code'                  => $code,
-							'author'                => $author,
-							'version'               => $version,
-							'link'                  => $link,
-							'xml'                   => $xml
-						);
-
-						$this->load->model('setting/modification');
-
-						$this->model_setting_modification->addModification($modification_data);
-					}
-				} catch(Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-				}
-			}
-		}
-
-		if (!$json) {
-			$json['text'] = $this->language->get('text_remove');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/marketplace/remove', 'user_token=' . $this->session->data['user_token'] . '&download=' . $download, true));
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function remove() {
-		$this->load->language('marketplace/marketplace');
-
-		$json = array();
-
-		if ($this->request->get['download']) {
-			$download = $this->request->get['download'];
-		} else {
-			$download = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$directory = ini_get('upload_tmp_dir');
-
-		if (!is_dir($directory . '/' . $download) || substr(str_replace('\\', '/', realpath($directory . '/' . $download)), 0, strlen($directory)) != str_replace('\\', '/', $directory)) {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
-		if (!$json) {
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory . '/' . $download . '/');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-					$file = $next . '/' . $file;
-
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			if (is_file($directory . '/' . $download . '.tmp')) {
-				unlink($directory . '/' . $download . '.tmp');
-			}
-
-			if (is_dir($directory . '/' . $download)) {
-				rmdir($directory . '/' . $download);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function uninstall() {
-		$this->load->language('marketplace/extension');
-
-		$json = array();
-
-		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
-		} else {
-			$extension_download_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/marketplace')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/extension');
-
-			$results = $this->model_setting_extension->getPathsByExtensionDownloadId($extension_download_id);
-
-			rsort($results);
-
-			foreach ($results as $result) {
-				$source = '';
-
-				// Check if the copy location exists or not
-				if (substr($result['path'], 0, 5) == 'admin') {
-					$source = DIR_APPLICATION . substr($result['path'], 6);
-				}
-
-				if (substr($result['path'], 0, 7) == 'catalog') {
-					$source = DIR_CATALOG . substr($result['path'], 8);
-				}
-
-				if (substr($result['path'], 0, 5) == 'image') {
-					$source = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				if (substr($result['path'], 0, 6) == 'system') {
-					$source = DIR_SYSTEM . substr($result['path'], 7);
-				}
-
-				if (is_file($source)) {
-					unlink($source);
-				}
-
-				if (is_dir($source)) {
-					// Get a list of files ready to upload
-					$files = array();
-
-					$path = array($source);
-
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						// We have to use scandir function because glob will not pick up dot files.
-						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-							$file = $next . '/' . $file;
-
-							if (is_dir($file)) {
-								$path[] = $file;
-							}
-
-							$files[] = $file;
-						}
-					}
-
-					rsort($files);
-
-					foreach ($files as $file) {
-						if (is_file($file)) {
-							unlink($file);
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
-
-					unlink($source);
-				}
-
-				$this->model_setting_extension->deletePath($result['extension_install_id']);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($json));	
 	}
 }

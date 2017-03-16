@@ -109,40 +109,40 @@ class ControllerMarketplaceInstall extends Controller {
 				}
 			}
 
+			// A list of allowed directories to be written to
+			$allowed = array(
+				'admin/controller/extension/',
+				'admin/model/extension/',
+				'admin/view/template/extension/',
+				
+				'catalog/controller/extension/',
+				'catalog/model/extension/',
+				'catalog/view/theme/',
+				
+				'system/vendor/',
+				'image/',
+				'system/vendor/'
+			);
+
+			// Language Admin
+			$data['languages'] = array();
+
+			$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
+
+			foreach ($folders as $folder) {
+				$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
+			}
+
+			// Language Catalog
+			$folders = glob(DIR_CATALOG . 'language/*', GLOB_ONLYDIR);
+
+			foreach ($folders as $folder) {
+				$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
+			}
+
 			// First we need to do some checks
 			foreach ($files as $file) {
-				$destination = str_replace('\\', '/', substr($file, strlen($directory . '/upload')));
-
-				echo $destination . "\n";
-
-				// Check if the file is not going into an allowed directory
-				$allowed = array(
-					'admin/controller/extension/',
-					'admin/model/extension/',
-					'admin/view/template/extension/',
-					'catalog/controller/extension/',
-					'catalog/model/extension/',
-					'catalog/view/theme/',
-					'system/vendor/',
-					'image/',
-					'system/vendor'
-				);
-
-				// Language Admin
-				$data['languages'] = array();
-
-				$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-
-				foreach ($folders as $folder) {
-					$allowed[] = 'admin/language/' . basename($folder) . '/extension/';
-				}
-
-				// Language Catalog
-				$folders = glob(DIR_CATALOG . 'language/*', GLOB_ONLYDIR);
-
-				foreach ($folders as $folder) {
-					$allowed[] = 'catalog/language/' . basename($folder) . '/extension/';
-				}
+				$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
 
 				$safe = false;
 
@@ -194,7 +194,7 @@ class ControllerMarketplaceInstall extends Controller {
 				$this->load->model('setting/extension');
 
 				foreach ($files as $file) {
-					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/install/upload/')));
+					$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
 
 					$path = '';
 
@@ -236,7 +236,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_xml');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id . '&download=' . $download, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/xml', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $extension_download_id, true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -340,7 +340,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_remove');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/remove', 'user_token=' . $this->session->data['user_token'] . '&download=' . $download, true));
+			$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/remove', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

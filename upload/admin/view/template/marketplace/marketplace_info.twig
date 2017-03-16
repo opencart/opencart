@@ -294,7 +294,7 @@ function next(url, element, i) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 				
-				$(element).replaceWith('<button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
 
 				$(element).button('reset');
 			}
@@ -337,7 +337,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 				$('#progress-bar').addClass('progress-bar-success');
 				$('#progress-text').html(json['success']);
 				
-				$(element).replaceWith('<button type="button" value="{{ download.extension_download_id }}" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-download"></i> Install</button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

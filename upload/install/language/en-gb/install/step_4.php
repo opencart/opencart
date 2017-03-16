@@ -4,8 +4,8 @@ $_['heading_title']               = 'Installation complete';
 
 // Text
 $_['text_step_4']                 = 'Ready to start selling!';
-$_['text_catalog']                = 'Go to your Online Shop';
-$_['text_admin']                  = 'Login to your Administration';
+$_['text_catalog']                = 'View your online shop';
+$_['text_admin']                  = 'Login administration';
 $_['text_loading']                = 'Loading modules...';
 $_['text_extension']              = 'visit the extensions store';
 $_['text_mail']                   = 'Join the mailing list';

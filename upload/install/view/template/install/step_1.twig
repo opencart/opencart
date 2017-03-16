@@ -1,19 +1,15 @@
 {{ header }}
 <div class="container">
-  <header>
-    <div class="row">
-      <div class="col-sm-6">
-        <h1 class="pull-left">1<small>/4</small></h1>
-        <h3>{{ heading_title }}<br>
-          <small>{{ text_step_1 }}</small></h3>
-      </div>
-      <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
-      </div>
-    </div>
-  </header>
+
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-md-8 col-md-offset-2">
+
+      <fieldset class="step-heading">
+        <h1><small>Step 1 /</small> {{ heading_title }}</h1>
+        <h3>{{ text_step_1 }}</h3>
+      </fieldset>
+      {{ column_left }}
+
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <div class="terms">{{ text_terms }}</div>
         <div class="buttons">
@@ -22,8 +18,9 @@
           </div>
         </div>
       </form>
+
+      <hr/>
     </div>
-    <div class="col-sm-3">{{ column_left }}</div>
   </div>
 </div>
 {{ footer }}

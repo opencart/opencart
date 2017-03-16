@@ -1,27 +1,26 @@
 {{ header }}
 <div class="container">
-  <header>
-    <div class="row">
-      <div class="col-sm-6">
-        <h1 class="pull-left">2<small>/4</small></h1>
-        <h3>{{ heading_title }}<br>
-          <small>{{ text_step_2 }}</small></h3>
-      </div>
-      <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
-      </div>
-    </div>
-  </header>
-  {% if error_warning %}
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  {% endif %}
+
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-md-8 col-md-offset-2">
+
+      <fieldset class="step-heading">
+        <h1><small>Step 2 /</small> {{ heading_title }}</h1>
+        <h3>{{ text_step_2 }}</h3>
+      </fieldset>
+      {{ column_left }}
+
+
+      {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %}
+
+
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
-        <p>{{ text_install_php }}</p>
         <fieldset>
+          <div class="description">{{ text_install_php }}</div>
           <table class="table">
             <thead>
               <tr>
@@ -37,9 +36,9 @@
                 <td>{{ php_version }}</td>
                 <td>5.4+</td>
                 <td class="text-center">{% if php_version >= '5.4' %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <span class="text-danger"><i class="fa fa-close"></i></span>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -51,7 +50,7 @@
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
                 <td class="text-center">{% if not register_globals %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -65,7 +64,7 @@
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
                 <td class="text-center">{% if not error_magic_quotes_gpc %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -79,7 +78,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if file_uploads %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -93,7 +92,7 @@
                   {% endif %}</td>
                 <td>{{ text_off }}</td>
                 <td class="text-center">{% if not session_auto_start %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -101,8 +100,9 @@
             </tbody>
           </table>
         </fieldset>
-        <p>{{ text_install_extension }}</p>
+
         <fieldset>
+          <div class="description">{{ text_install_extension }}</div>
           <table class="table">
             <thead>
               <tr>
@@ -122,7 +122,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if db %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -136,7 +136,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if gd %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -150,7 +150,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if curl %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -164,7 +164,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if mcrypt_encrypt %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -178,7 +178,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if zlib %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -192,7 +192,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if zip %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -207,7 +207,7 @@
                   {% endif %}</td>
                 <td>{{ text_on }}</td>
                 <td class="text-center">{% if mbstring %}
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <span class="text-success"><i class="fa fa-check"></i></span>
                   {% else %}
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
                   {% endif %}</td>
@@ -216,8 +216,8 @@
             </tbody>
           </table>
         </fieldset>
-        <p>{{ text_install_file }}</p>
         <fieldset>
+          <div class="description">{{ text_install_file }}</div>
           <table class="table">
             <thead>
               <tr>
@@ -245,8 +245,9 @@
             </tbody>
           </table>
         </fieldset>
-        <p>{{ text_install_directory }}</p>
+
         <fieldset>
+          <div class="description">{{ text_install_directory }}</div>
           <table class="table">
             <thead>
               <tr>
@@ -329,8 +330,8 @@
           </div>
         </div>
       </form>
+      <hr/>
     </div>
-    <div class="col-sm-3">{{ column_left }}</div>
   </div>
 </div>
 {{ footer }}

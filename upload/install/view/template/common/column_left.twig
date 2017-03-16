@@ -1,33 +1,35 @@
-<ul class="list-group">
+<ul class="list-step">
   {% if route|slice(0, 8) != 'upgrade/' %}
-  {% if route == 'install/step_1' %}
-  <li class="list-group-item"><b>{{ text_license }}</b></li>
+    {% if route == 'install/step_1' %}
+    <li class="active"><b>{{ text_license }}</b></li>
+    {% else %}
+    <li class="">{{ text_license }}</li>
+    {% endif %}
+    {% if route == 'install/step_2' %}
+    <li class="active"><b>{{ text_installation }}</b></li>
+    {% else %}
+    <li class="">{{ text_installation }}</li>
+    {% endif %}
+    {% if route == 'install/step_3' %}
+    <li class="active"><b>{{ text_configuration }}</b></li>
+    {% else %}
+    <li class="">{{ text_configuration }}</li>
+    {% endif %}
   {% else %}
-  <li class="list-group-item">{{ text_license }}</li>
-  {% endif %}
-  {% if route == 'install/step_2' %}
-  <li class="list-group-item"><b>{{ text_installation }}</b></li>
-  {% else %}
-  <li class="list-group-item">{{ text_installation }}</li>
-  {% endif %}
-  {% if route == 'install/step_3' %}
-  <li class="list-group-item"><b>{{ text_configuration }}</b></li>
-  {% else %}
-  <li class="list-group-item">{{ text_configuration }}</li>
-  {% endif %}
-  {% else %}
-  {% if route == 'upgrade/upgrade' %}
-  <li class="list-group-item"><b>{{ text_upgrade }}</b></li>
-  {% else %}
-  <li class="list-group-item">{{ text_upgrade }}</li>
-  {% endif %}
-  {% if route == 'upgrade/upgrade/success' %}
-  <li class="list-group-item"><b>{{ text_finished }}</b></li>
-  {% else %}
-  <li class="list-group-item">{{ text_finished }}</li>
-  {% endif %}
+    {% if route == 'upgrade/upgrade' %}
+    <li class="list-step-update active"><b>{{ text_upgrade }}</b></li>
+    {% else %}
+    <li class="list-step-update">{{ text_upgrade }}</li>
+    {% endif %}
+    {% if route == 'upgrade/upgrade/success' %}
+    <li class="list-step-update active"><b>{{ text_finished }}</b></li>
+    {% else %}
+    <li class="list-step-update">{{ text_finished }}</li>
+    {% endif %}
   {% endif %}
 </ul>
+
+<div class="hidden">
 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="language">
   <ul class="list-group">
     <li class="list-group-item">
@@ -53,4 +55,5 @@ $('#language a').on('click', function(e) {
 
 	$('#language').submit();
 });
---></script> 
+--></script>
+</div>

@@ -1,27 +1,26 @@
 {{ header }}
 <div class="container">
-  <header>
-    <div class="row">
-      <div class="col-sm-6">
-        <h1 class="pull-left">3<small>/4</small></h1>
-        <h3>{{ heading_title }}<br>
-          <small>{{ text_step_3 }}</small></h3>
-      </div>
-      <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"> <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
-      </div>
-    </div>
-  </header>
-  {% if error_warning %}
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  {% endif %}
+
   <div class="row">
-    <div class="col-sm-9">
+    <div class="col-md-8 col-md-offset-2">
+
+      <fieldset class="step-heading">
+        <h1><small>Step 3 /</small> {{ heading_title }}</h1>
+        <h3>{{ text_step_3 }}</h3>
+      </fieldset>
+      {{ column_left }}
+
+
+      {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      {% endif %}
+
+
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <p>{{ text_db_connection }}</p>
         <fieldset>
+          <div class="description">{{ text_db_connection }}</div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-db-driver">{{ entry_db_driver }}</label>
             <div class="col-sm-10">
@@ -102,8 +101,8 @@
             </div>
           </div>
         </fieldset>
-        <p>{{ text_db_administration }}</p>
         <fieldset>
+          <div class="description">{{ text_db_administration }}</div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-username">{{ entry_username }}</label>
             <div class="col-sm-10">
@@ -116,7 +115,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
-              <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control" />
+              <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control" />
               {% if error_password %}
               <div class="text-danger">{{ error_password }}</div>
               {% endif %}
@@ -139,8 +138,8 @@
           </div>
         </div>
       </form>
+      <hr/>
     </div>
-    <div class="col-sm-3">{{ column_left }}</div>
   </div>
 </div>
 {{ footer }}

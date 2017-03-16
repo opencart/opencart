@@ -113,15 +113,17 @@ class ControllerMarketplaceInstall extends Controller {
 			$allowed = array(
 				'admin/controller/extension/',
 				'admin/model/extension/',
+				'admin/view/image/',
+				'admin/view/javascript/',
+				'admin/view/stylesheet/',
 				'admin/view/template/extension/',
-				
 				'catalog/controller/extension/',
 				'catalog/model/extension/',
+				'catalog/view/javascript/',
 				'catalog/view/theme/',
-				
+				'system/config/',
 				'system/vendor/',
-				'image/',
-				'system/vendor/'
+				'image/catalog/'
 			);
 
 			// Language Admin

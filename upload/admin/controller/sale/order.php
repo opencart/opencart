@@ -765,7 +765,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$data['api_username'] = $api_info['api_username'];
+			$data['api_username'] = $api_info['username'];
 			$data['api_key'] = $api_info['key'];
 		} else {
 			$data['api_username'] = '';

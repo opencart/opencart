@@ -1,19 +1,13 @@
 <?php
 class ModelSettingEvent extends Model {
-	public function addEvent($code, $trigger, $action, $status = 1) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = now()");
+	public function addEvent($code, $trigger, $action, $status = 1, $sort_order = 0) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `sort_order` = '" . (int)$sort_order . "', `status` = '" . (int)$status . "', `date_added` = now()");
 	
 		return $this->db->getLastId();
 	}
 
 	public function deleteEvent($code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
-	}
-	
-	public function getEvent($code, $trigger, $action) {
-		$event = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' AND `trigger` = '" . $this->db->escape($trigger) . "' AND `action` = '" . $this->db->escape($action) . "'");
-		
-		return $event->rows;
 	}
 
 	public function enableEvent($event_id) {
@@ -36,6 +30,7 @@ class ModelSettingEvent extends Model {
 			'code',
 			'trigger',
 			'action',
+			'sort_order',
 			'status',
 			'date_added'
 		);
@@ -43,7 +38,7 @@ class ModelSettingEvent extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY `code`";
+			$sql .= " ORDER BY `sort_order`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -74,5 +69,4 @@ class ModelSettingEvent extends Model {
 
 		return $query->row['total'];
 	}
-	
 }

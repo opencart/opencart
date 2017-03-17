@@ -4,12 +4,7 @@ class ControllerEventTheme extends Controller {
 		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');
 		}
-		
-		// This is only here for compatibility with older extensions
-		if (substr($view, -3) == 'tpl') {
-			$view = substr($view, 0, -3);
-		}
-		
+				
 		// If the default theme is selected we need to know which directory its pointing to			
 		if ($this->config->get('config_theme') == 'default') {
 			$theme = $this->config->get('theme_default_directory');

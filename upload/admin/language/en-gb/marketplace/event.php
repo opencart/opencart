@@ -11,6 +11,7 @@ $_['text_event']        = 'Events are used by extensions to override the default
 $_['column_code']       = 'Event Code';
 $_['column_trigger']    = 'Trigger';
 $_['column_status']     = 'Status';
+$_['column_sort_order'] = 'Sort Order';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 

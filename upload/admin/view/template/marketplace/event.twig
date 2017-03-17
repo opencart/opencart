@@ -54,6 +54,11 @@
                   {% else %}
                   <a href="{{ sort_status }}">{{ column_status }}</a>
                   {% endif %}</td>
+                <td class="text-right">{% if sort == 'sort_order' %}
+                  <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+                  {% else %}
+                  <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                  {% endif %}</td>                  
                 <td class="text-left">{% if sort == 'date_added' %}
                   <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                   {% else %}
@@ -75,6 +80,7 @@
                 <td class="text-left">{{ event.trigger }}</td>
                 <td class="text-left">{{ event.action }}</td>
                 <td class="text-left">{{ event.status }}</td>
+                <td class="text-right">{{ event.sort_order }}</td>
                 <td class="text-left">{{ event.date_added }}</td>
                 <td class="text-right">{% if not event.enabled %}
                   <a href="{{ event.enable }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>

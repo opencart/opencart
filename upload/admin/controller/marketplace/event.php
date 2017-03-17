@@ -80,7 +80,7 @@ class ControllerMarketplaceEvent extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'code';
+			$sort = 'sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -140,6 +140,7 @@ class ControllerMarketplaceEvent extends Controller {
 				'code'       => $result['code'],
 				'trigger'    => $result['trigger'],
 				'action'     => $result['action'],
+				'sort_order' => $result['sort_order'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'enable'     => $this->url->link('marketplace/event/enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'], true),
@@ -157,6 +158,7 @@ class ControllerMarketplaceEvent extends Controller {
 		$data['column_code'] = $this->language->get('column_code');
 		$data['column_trigger'] = $this->language->get('column_trigger');
 		$data['column_action'] = $this->language->get('column_action');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
@@ -199,6 +201,7 @@ class ControllerMarketplaceEvent extends Controller {
 		$data['sort_code'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url, true);
 		$data['sort_trigger'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=trigger' . $url, true);
 		$data['sort_action'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url, true);
 		$data['sort_status'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
 		$data['sort_date_added'] = $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url, true);
 

@@ -302,6 +302,10 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$quantity = $product_info['minimum'] ? $product_info['minimum'] : 1;
 			}
+			$minimum_order = (int)$product_info['minimum'];
+			if ($minimum_order>1 && $minimum_order>$quantity) {
+				$quantity = $minimum_order;
+			}
 
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);

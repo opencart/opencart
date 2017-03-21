@@ -789,7 +789,6 @@ class ControllerApiOrder extends Controller {
 	public function history() {
 		$this->load->language('api/order');
 
-print_r($this->session->data);
 		$json = array();
 
 		if (!isset($this->session->data['api_id'])) {

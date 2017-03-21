@@ -191,7 +191,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['promotions'] = array();
 
-		if ($status == 200 && $page == 1) {
+		if ($response_info['promotions'] && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = array(
 					'name'         => $result['name'],
@@ -208,7 +208,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['extensions'] = array();
 
-		if ($status == 200) {
+		if ($response_info['extensions']) {
 			foreach ($response_info['extensions'] as $result) {
 				$data['extensions'][] = array(
 					'name'         => $result['name'],

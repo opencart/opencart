@@ -1,23 +1,30 @@
 <?php
 class Session {
-	public $session_id;
+	protected $session_id;
 	public $data = array();
-	private $adaptor;
 
-	public function __construct($session_id, $adaptor = 'file') {
+	public function __construct($session_id) {
 		if (preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
 			$this->session_id = $session_id;
 		} else {
 			exit('Error: Invalid session ID!');
 		}
 		
-		if (is_object($adaptor)) {
-			$this->adaptor = $adaptor;
-		} else {
-			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
-		}
+		$file = session_save_path() . '/sess_' . $session_id;
 		
-		$this->data = $this->adaptor->read($this->session_id);
+		if (is_file($file)) {
+			$handle = fopen($file, 'r');
+			
+			flock($handle, LOCK_SH);
+			
+			$data = fread($handle, filesize($file));
+			
+			flock($handle, LOCK_UN);
+			
+			fclose($handle);
+			
+			$this->data = unserialize($data);
+		}
 	}
 	
 	public function getId() {
@@ -25,12 +32,40 @@ class Session {
 	}
 	
 	public function __destruct() {
-		$this->adaptor->write($this->session_id, $this->data);
+		$file = session_save_path() . '/sess_' . $this->session_id;
+		
+		$handle = fopen($file, 'w');
+		
+		flock($handle, LOCK_EX);
+
+		fwrite($handle, serialize($this->data));
+
+		fflush($handle);
+
+		flock($handle, LOCK_UN);
+		
+		fclose($handle);
+		
+		if ((rand() % ini_get('session.gc_divisor')) < ini_get('session.gc_probability')) {
+			$expire = time() - ini_get('session.gc_maxlifetime');
+			
+			$files = glob(session_save_path() . '/sess_');
+				
+			foreach ($files as $file) {
+				if (filemtime($file) < $expire) {
+					unlink($file);
+				}
+			}
+		}				
 	}
 		
 	public function __destory() {
+		$file = session_save_path() . '/sess_' . $session_id;
+		
+		if (is_file($file)) {
+			unset($file);
+		}		
+		
 		setcookie(session_name(), '', time() - 42000, ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
-	
-		$this->adaptor->destroy($this->session_id);
 	}
 }

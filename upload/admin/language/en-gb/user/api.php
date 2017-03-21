@@ -12,9 +12,11 @@ $_['text_ip']              = 'Below you can create a list of IP\'s allowed to ac
 // Column
 $_['column_username']      = 'API Username';
 $_['column_status']        = 'Status';
+$_['column_token']         = 'Token';
+$_['column_ip']            = 'IP';
 $_['column_date_added']    = 'Date Added';
 $_['column_date_modified'] = 'Date Modified';
-$_['column_ip']            = 'IP';
+
 $_['column_action']        = 'Action';
 
 // Entry

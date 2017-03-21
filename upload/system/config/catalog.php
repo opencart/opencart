@@ -16,7 +16,7 @@ $_['db_database']       = DB_DATABASE;
 $_['db_port']           = DB_PORT;
 
 // Session
-$_['session_autostart'] = false;
+$_['session_autostart'] = true;
 
 // Template
 $_['template_engine']   = 'twig';

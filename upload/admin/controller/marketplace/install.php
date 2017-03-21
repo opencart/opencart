@@ -80,7 +80,7 @@ class ControllerMarketplaceInstall extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+			$extension_download_id = (int)$this->request->get['extension_download_id'];
 		} else {
 			$extension_download_id = 0;
 		}
@@ -176,8 +176,8 @@ class ControllerMarketplaceInstall extends Controller {
 						$destination = DIR_IMAGE . substr($destination, 6);
 					}
 
-					if (substr($destination, 0, 13) == substr('system/vendor', 0, strlen($destination))) {
-						$destination = DIR_SYSTEM . 'vendor/' . substr($destination, 14);
+					if (substr($destination, 0, 6) == 'system') {
+						$destination = DIR_SYSTEM . substr($destination, 7);
 					}
 
 					if (is_file($destination)) {
@@ -212,8 +212,8 @@ class ControllerMarketplaceInstall extends Controller {
 						$path = DIR_IMAGE . substr($destination, 6);
 					}
 
-					if (substr($destination, 0, 13) == 'system/vendor') {
-						$path = DIR_SYSTEM . substr($destination, 14);
+					if (substr($destination, 0, 6) == 'system') {
+						$path = DIR_SYSTEM . substr($destination, 7);
 					}
 
 					if (is_dir($file) && !is_dir($path)) {

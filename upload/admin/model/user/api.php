@@ -95,9 +95,23 @@ class ModelUserApi extends Model {
 		return $query->rows;
 	}
 
+	public function addApiSession($api_id, $session_id, $ip) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET api_id = '" . (int)$api_id . "', session_id = '" . $this->db->escape($session_id) . "', ip = '" . $this->db->escape($ip) . "', date_added = NOW(), date_modified = NOW()");
+
+		return $this->db->getLastId();
+	}
+	
 	public function getApiSessions($api_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE api_id = '" . (int)$api_id . "'");
 
 		return $query->rows;
 	}
+	
+	public function deleteApiSession($api_session_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE api_session_id = '" . (int)$api_session_id . "'");
+	}
+	
+	public function deleteApiSessionBySessonId($session_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE session_id = '" . $this->db->escape($session_id) . "'");
+	}		
 }

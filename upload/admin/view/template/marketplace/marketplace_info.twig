@@ -209,7 +209,9 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			if (json['success']) {
 				$('#tab-download').prepend('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#modal-purchase').modal('destroy');
+				$('#modal-purchase').modal('hide');
+				
+				$('#tab-download .btn-primary').prop('disabled', false);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -239,8 +241,6 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-			
 			$('.alert').remove();
 			
 			if (json['error']) {
@@ -271,8 +271,6 @@ function next(url, element, i) {
 		url: url,
 		dataType: 'json',
 		success: function(json) {
-			console.log(json);
-			
 			$('#progress-bar').css('width', (i * 20) + '%');
 
 			if (json['error']) {
@@ -281,22 +279,20 @@ function next(url, element, i) {
 
 				$(element).button('reset');
 			}
-
+			
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+				
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
+			}
+			
 			if (json['text']) {
 				$('#progress-text').html(json['text']);
 			}
 
 			if (json['next']) {
 				next(json['next'], element, i);
-			}
-
-			if (json['success']) {
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-upload"></i> Uninstall</button>');
-
-				$(element).button('reset');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -325,8 +321,6 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-			
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html(json['error']);

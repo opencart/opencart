@@ -1,5 +1,5 @@
 <?php
-final class Front {
+final class Router {
 	private $registry;
 	private $pre_action = array();
 	private $error;

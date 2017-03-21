@@ -56,7 +56,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 	public function send($route, $args, $output) {
 		$this->load->model('checkout/order');
 
-		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		// If order status in the complete range create any vouchers that where in the order need to be made available.
 		if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {

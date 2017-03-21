@@ -40,7 +40,7 @@ $_['cache_engine']         = 'file'; // apc, file or mem
 $_['cache_expire']         = 3600;
 
 // Session
-$_['session_engine']       = 'php';
+$_['session_engine']       = 'file';
 $_['session_autostart']    = true;
 $_['session_name']         = 'PHPSESSID';
 

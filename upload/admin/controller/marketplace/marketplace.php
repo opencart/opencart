@@ -745,8 +745,26 @@ class ControllerMarketplaceMarketplace extends Controller {
 		}
 		
 		if (!$json) {
+			$time = time() + 30;
+
+			// We create a hash from the data in a similar method to how amazon does things.
+			$string  = OPENCART_USERNAME . "\n";
+			$string .= $this->request->server['HTTP_HOST'] . "\n";
+			$string .= VERSION . "\n";
+			$string .= $time . "\n";
+			$string .= $extension_download_id . "\n";
+
+			$signature = base64_encode(hash_hmac('sha1', $string, OPENCART_SECRET, 1));
+
+			$url  = '&username=' . OPENCART_USERNAME;
+			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
+			$url .= '&version=' . VERSION;
+			$url .= '&time=' . $time;
+			$url .= '&extension_download_id=' . $extension_download_id;
+			$url .= '&signature=' .  rawurlencode($signature);
+			
 			//$curl = curl_init('https://www.opencart.com/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
-			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id);
+			$curl = curl_init('http://localhost/opencart-website/public_html/index.php?route=marketplace/api/download&extension_download_id=' . $extension_download_id . $url);
 			
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -755,6 +773,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 					
 			$response = curl_exec($curl);
+			
+			echo $response;
 			
 			$response_info = json_decode($response, true);
 			

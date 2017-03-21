@@ -8,7 +8,7 @@ class ControllerApiLogin extends Controller {
 		$this->load->model('account/api');
 
 		// Login with API Key
-		$api_info = $this->model_account_api->getApiByKey($this->request->post['key']);
+		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
 
 		if ($api_info) {
 			// Check if IP is allowed
@@ -26,23 +26,13 @@ class ControllerApiLogin extends Controller {
 				
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
-			
-				// We want to create a seperate session so changes do not interfere with the admin user.
-				$session_id_old = $this->session->getId();
 				
-				$session_id_new = $this->session->createId();
-				
-				$this->session->start('api', $session_id_new);
+				$this->model_account_api->addApiSession($api_info['api_id'], $this->session->getId(), $this->request->server['REMOTE_ADDR']);
 				
 				$this->session->data['api_id'] = $api_info['api_id'];
 				
-				// Close and write the new session.
-				//$session->close();
-
-				$this->session->start('default');
-
 				// Create Token
-				$json['api_token'] = $this->model_account_api->addApiSession($api_info['api_id'], $session_id_new, $this->request->server['REMOTE_ADDR']);
+				$json['api_token'] = $this->session->getId();
 			} else {
 				$json['error']['key'] = $this->language->get('error_key');
 			}

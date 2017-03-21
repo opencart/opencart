@@ -266,7 +266,6 @@ class ControllerSaleOrder extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
 		$data['button_view'] = $this->language->get('button_view');
-		$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -416,7 +415,6 @@ class ControllerSaleOrder extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
@@ -474,7 +472,6 @@ class ControllerSaleOrder extends Controller {
 		$data['button_apply'] = $this->language->get('button_apply');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
-		$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 		$data['tab_order'] = $this->language->get('tab_order');
 		$data['tab_customer'] = $this->language->get('tab_customer');
@@ -760,16 +757,21 @@ class ControllerSaleOrder extends Controller {
 		// API login
 		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 		
+		// API login
 		$this->load->model('user/api');
 
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$data['api_username'] = $api_info['api_username'];
-			$data['api_key'] = $api_info['key'];
+			$this->model_user_api->deleteApiSessionBySessonId($this->session->getId());
+			
+			$this->model_user_api->addApiSession($api_info['api_id'], $this->session->getId(), $this->request->server['REMOTE_ADDR']);
+			
+			$this->session->data['api_id'] = $api_info['api_id'];
+
+			$data['api_token'] = $this->session->getId();
 		} else {
-			$data['api_username'] = '';
-			$data['api_key'] = '';
+			$data['api_token'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -851,7 +853,6 @@ class ControllerSaleOrder extends Controller {
 			$data['button_commission_add'] = $this->language->get('button_commission_add');
 			$data['button_commission_remove'] = $this->language->get('button_commission_remove');
 			$data['button_history_add'] = $this->language->get('button_history_add');
-			$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 			$data['tab_history'] = $this->language->get('tab_history');
 			$data['tab_additional'] = $this->language->get('tab_additional');
@@ -1357,12 +1358,16 @@ class ControllerSaleOrder extends Controller {
 
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
-			if ($api_info) {
-				$data['api_username'] = $api_info['username'];
-				$data['api_key'] = $api_info['key'];
+			if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
+				$this->model_user_api->deleteApiSessionBySessonId($this->session->getId());
+				
+				$this->model_user_api->addApiSession($api_info['api_id'], $this->session->getId(), $this->request->server['REMOTE_ADDR']);
+				
+				$this->session->data['api_id'] = $api_info['api_id'];
+
+				$data['api_token'] = $this->session->getId();
 			} else {
-				$data['username'] = '';
-				$data['api_key'] = '';
+				$data['api_token'] = '';
 			}
 
 			$data['header'] = $this->load->controller('common/header');

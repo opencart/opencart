@@ -276,6 +276,7 @@ class ControllerUserApi extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
 		$data['column_username'] = $this->language->get('column_username');
+		$data['column_token'] = $this->language->get('column_token');
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_date_modified'] = $this->language->get('column_date_modified');
@@ -395,10 +396,11 @@ class ControllerUserApi extends Controller {
 			
 			foreach ($results as $result) {
 				$data['api_sessions'][] = array(
-					'username'      => $result['username'],
-					'ip'            => $result['ip'],
-					'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-					'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
+					'api_session_id' => $result['api_session_id'],
+					'session_id'     => $result['session_id'],
+					'ip'             => $result['ip'],
+					'date_added'     => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+					'date_modified'  => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
 				);
 			}
 		}
@@ -433,4 +435,23 @@ class ControllerUserApi extends Controller {
 
 		return !$this->error;
 	}
+
+	public function deleteSession() {
+		$this->load->language('user/api');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('user/api');
+
+			$this->model_user_api->deleteApiSession($this->request->get['api_session_id']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

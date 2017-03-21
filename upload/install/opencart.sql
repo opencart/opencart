@@ -71,11 +71,7 @@ DROP TABLE IF EXISTS `oc_api_session`;
 CREATE TABLE `oc_api_session` (
   `api_session_id` int(11) NOT NULL AUTO_INCREMENT,
   `api_id` int(11) NOT NULL,
-  
-  `token` varchar(32) NOT NULL,
   `session_id` varchar(32) NOT NULL,
-  `session_name` varchar(32) NOT NULL,
-    
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
